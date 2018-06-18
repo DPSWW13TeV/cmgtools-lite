@@ -11,7 +11,7 @@
 #include <map>
 #include <cstdlib> //as stdlib.h         
 #include <cstdio>
-
+#include <TMath.h>
 TH2 * helicityFractions_0 = 0;
 TH2 * helicityFractions_L = 0;
 TH2 * helicityFractions_R = 0;
@@ -19,7 +19,8 @@ TH2 * helicityFractions_R = 0;
 TH2 * FR_mu = 0;
 TH2 * FR_el = 0;
 TH2 * FRi_mu[30], *FRi_el[30];
-
+TH2 *PR_mu=0;
+TH2 *PR_el = 0;
 // TH2 * FRcorrectionForPFMET = 0;
 // TH2 * FRcorrectionForPFMET_i[5];
 
@@ -29,6 +30,8 @@ bool loadFRHisto(const std::string &histoName, const char *file, const char *nam
     if (histoName == "FR_mu")  { histo = & FR_mu;  hptr2 = & FRi_mu[0]; }
     else if (histoName == "FR_mu_qcdmc")  { histo = & FR_mu;  hptr2 = & FRi_mu[0]; }
     else if (histoName == "FR_el")  { histo = & FR_el;  hptr2 = & FRi_el[0]; }
+    else if (histoName == "PR_mu")  { histo = & PR_mu;  }
+    else if (histoName == "PR_el")  { histo = & PR_el;  }
     else if (histoName == "FR_el_qcdmc")  { histo = & FR_el;  hptr2 = & FRi_el[0]; }
     // else if (histoName == "FR_correction")  { histo = & FRcorrectionForPFMET; hptr2 = & FRcorrectionForPFMET_i[0]; }
     else if (TString(histoName).BeginsWith("FR_mu_i")) {histo = & FR_temp; hptr2 = & FRi_mu[TString(histoName).ReplaceAll("FR_mu_i","").Atoi()];}
@@ -300,47 +303,78 @@ float weights_TT_and_TL(float iso1, float iso2, float cut, int category){
   else return 0;
 }
 
-
-/*
-
-float fakeRateWeight_2lssMVA_TL(float l1pt, float l1eta, int l1pdgId, float l1mva,
-                         float l2pt, float l2eta, int l2pdgId, float l2mva, float WP)
-{
-    int nfail = (l1mva < WP)+(l2mva < WP);
-    
-    if (nfail == 1) {
-    double fpt,feta; int fid;
-    if (l1mva < l2mva) { fpt = l1pt; feta = std::abs(l1eta); fid = abs(l1pdgId); }
-    else               { fpt = l2pt; feta = std::abs(l2eta); fid = abs(l2pdgId); }
-    TH2 *hist = (fid == 11 ? FR_el : FR_mu);
-    int ptbin  = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(fpt)));
-    int etabin = std::max(1, std::min(hist->GetNbinsY(), hist->GetYaxis()->FindBin(feta)));
-    double fr = hist->GetBinContent(ptbin,etabin);
-    return fr/(1-fr);
-    }
-    else return 0;
-
+float eps_smoothFR(float lpt, float leta, int lpdgId){
+  TH2 *hist = (abs(lpdgId) == 11 ? FR_el : FR_mu);
+  int etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
+  float p0 = hist->GetBinContent(etabin, 1);
+  float p1 = hist->GetBinContent(etabin, 2);
+  float SFR = (lpt < 60.0 ? p0 + p1*lpt : p0 + p1*60);
+  return(SFR/(1-SFR));
+}
+float eta_smoothPR(float lpt, float leta, int lpdgId){
+  TH2 *hist = (abs(lpdgId) == 11 ? PR_el : PR_mu);
+  int etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
+  float p0 = hist->GetBinContent(etabin,1);
+  float p1 = hist->GetBinContent(etabin,2);
+  float p2 = hist->GetBinContent(etabin,3);
+  float SPR = p0*TMath::Erf((lpt-p1)/p2);
+  return((1-SPR)/SPR);
 }
 
-float fakeRateWeight_2lssMVA_LL(float l1pt, float l1eta, int l1pdgId, float l1mva,
-                         float l2pt, float l2eta, int l2pdgId, float l2mva, float WP)
+
+
+
+float fakeRateWeight_2lssMVA_usingPRs_smooth(float l1pt, float l1eta, int l1pdgId, float l1mva,
+                                             float l2pt, float l2eta, int l2pdgId, float l2mva, float WP)
 {
-    int nfail = (l1mva < WP)+(l2mva < WP);
-    if (nfail == 2) {
+  double  wSum =0.0;
+  double  qSum =0.0;
+  bool l1pass=l1mva > WP;
+  bool l2pass=l2mva > WP;
+
+  float Eta_l1=eta_smoothPR(l1pt,l1eta,l1pdgId);
+  float Eta_l2=eta_smoothPR(l2pt,l2eta,l2pdgId);
+  float Eps_l1=eps_smoothFR(l1pt,l1eta,l1pdgId);
+  float Eps_l2=eps_smoothFR(l2pt,l2eta,l2pdgId);
   
-      TH2 *hist1 = (abs(l1pdgId) == 11 ? FR_el : FR_mu);
-            int ptbin1  = std::max(1, std::min(hist1->GetNbinsX(), hist1->GetXaxis()->FindBin(l1pt)));
-            int etabin1 = std::max(1, std::min(hist1->GetNbinsY(), hist1->GetYaxis()->FindBin(std::abs(l1eta))));
-            double fr1 = hist1->GetBinContent(ptbin1,etabin1);
-            TH2 *hist2 = (abs(l2pdgId) == 11 ? FR_el : FR_mu);
-            int ptbin2  = std::max(1, std::min(hist2->GetNbinsX(), hist2->GetXaxis()->FindBin(l2pt)));
-            int etabin2 = std::max(1, std::min(hist2->GetNbinsY(), hist2->GetYaxis()->FindBin(std::abs(l2eta))));
-            double fr2 = hist2->GetBinContent(ptbin2,etabin2);
-            return -fr1*fr2/((1-fr1)*(1-fr2));
-        }
-    else return 0;
+  double  norm  = 1./((1-Eps_l1*Eta_l1)*(1-Eps_l2*Eta_l2));
+
+  if(l1pass && l2pass){
+    wSum = - (Eps_l1*Eta_l1 + Eps_l2*Eta_l2);
+    qSum =   Eps_l1*Eta_l1*Eps_l2*Eta_l2;
+    //    cout<<"weight is TT \t"<<(wSum+qSum)/norm<<endl;
+    return ((wSum+qSum)/norm);
+  }
+  else if (l1pass && !l2pass){
+    wSum     = (Eps_l2 + Eps_l1*Eta_l1*Eps_l2);
+    qSum     = -(Eps_l1*Eps_l2*Eta_l1);
+    //    cout<<"weight is TL \t"<<(wSum+qSum)/norm<<endl;
+    return ((wSum+qSum)/norm);
+  }
+  else if (!l1pass && l2pass){
+    wSum  = (Eps_l1 + Eps_l2*Eta_l2*Eps_l1);
+    qSum  = -(Eps_l1*Eps_l2*Eta_l2);
+    //cout<<"weight is LT \t"<<(wSum+qSum)/norm<<endl;
+    return ((wSum+qSum)/norm);
+  }
+  else if (!l1pass && !l2pass){
+    wSum     = -2*Eps_l1*Eps_l2;
+    qSum     = Eps_l1*Eps_l2;
+    //cout<<"weight is LL \t"<<(wSum+qSum)/norm<<endl;
+    return ((wSum+qSum)/norm);
+  }
+  else {
+    
+    cout<<"Unexpected 2l category, returning defaults"<<endl;
+    //    cout<<"MVA values"<<l1mva<<"\t"<<l2mva<<endl;
+    return 0;
+  }
+  
+
+
 }
 
-*/
+
+
 
 //#endif
