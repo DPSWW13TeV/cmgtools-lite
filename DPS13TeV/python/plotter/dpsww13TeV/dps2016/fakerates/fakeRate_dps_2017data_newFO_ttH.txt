@@ -1,0 +1,26 @@
+## Let the first and second lepton always pass the MVA cuts (set the value to 1)
+cut-change: LepGood1_mvaTTH : (LepGood1_mvaTTH > if3(abs(LepGood1_pdgId) == 13, -1.1, -1.1))
+cut-change: LepGood2_mvaTTH : (LepGood2_mvaTTH > if3(abs(LepGood2_pdgId) == 13, -1.1, -1.1))
+##cut-change: LepGood1_jetBTagCSV : LepGood1_jetBTagCSV < 0.07
+##cut-change: LepGood2_jetBTagCSV : LepGood2_jetBTagCSV < 0.07
+
+##cut-change:LepGood1_segmentCompatibility:(LepGood1_segmentCompatibility > if3(abs(LepGood1_pdgId) == 13, 0.3 ,-1.0))
+##cut-change:LepGood2_segmentCompatibility:(LepGood2_segmentCompatibility > if3(abs(LepGood2_pdgId) == 13, 0.3 ,-1.0))
+
+
+##cut-change: LepGood1_jetPtRatiov2 : LepGood1_jetPtRatiov2 > 0.6
+##cut-change: LepGood2_jetPtRatiov2 : LepGood2_jetPtRatiov2 >0.6
+
+## load histograms 
+load-histo: FR_mu  : dpsww13TeV/dps2016/fakerates/fakerate_promptrate_mu_smoothed_data_29082018.root: fakerates_smoothed_data
+load-histo: PR_mu  : dpsww13TeV/dps2016/fakerates/fakerate_promptrate_mu_smoothed_data_29082018.root : promptrates_smoothed_data
+load-histo: FR_el  : dpsww13TeV/dps2016/fakerates/fakerate_promptrate_mu_smoothed_data_29082018.root : fakerates_smoothed_data
+load-histo: PR_el  : dpsww13TeV/dps2016/fakerates/fakerate_promptrate_mu_smoothed_data_29082018.root : promptrates_smoothed_data 
+
+## more fancy way for later load-histo: FR_el : $DATA/fakerate/FR_ttl.root : FR_tight_el
+## define the FR weight
+##weight: fakeRateWeight_2lssMVA_smoothed_FR(LepGood1_pt,LepGood1_eta,LepGood1_pdgId,LepGood1_mvaTTH > if3(abs(LepGood1_pdgId)==13,0.9,0.9),LepGood2_pt,LepGood2_eta,LepGood2_pdgId,LepGood2_mvaTTH > if3(abs(LepGood2_pdgId)==13,0.9,0.9), 0.5) 
+
+weight: fakeRateWeight_2lssMVA_usingPRs_smooth(LepGood1_pt,LepGood1_eta,LepGood1_pdgId,LepGood1_mvaTTH,LepGood2_pt,LepGood2_eta,LepGood2_pdgId,LepGood2_mvaTTH,0) 
+
+
