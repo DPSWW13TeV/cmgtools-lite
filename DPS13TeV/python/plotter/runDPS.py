@@ -229,7 +229,8 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
                 #fmca   = 'dpsww13TeV/dps2016/results/mumuelmu_mca_July2018.txt'
                 #fcut   = 'dpsww13TeV/dps2016/results/cuts_results_MVA_tight_WP.txt'
                 fmca   = 'dpsww13TeV/dps2016/results/mumu_mca_2017.txt'
-                fcut   = 'dpsww13TeV/dps2016/results/cuts_results_MVA_tight_WP_fr2017.txt'
+                #fcut   = 'dpsww13TeV/dps2016/results/cuts_results_MVA_tight_WP_fr2017.txt'
+                fcut   = 'dpsww13TeV/dps2016/results/cuts_fr2017data.txt'
                 enable = ['trigmumu','mumu'] + ch
                 state='mumu'
             elif onlyEE:
