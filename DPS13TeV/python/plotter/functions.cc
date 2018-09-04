@@ -208,6 +208,9 @@ float _new_puwts2016[100]={0.366077,0.893925,1.19772,0.9627,1.12098,1.16486,0.79
 
 float new_puwts2016(int nTrueInt) { if (nTrueInt<100) return _new_puwts2016[nTrueInt]; else return 0; }
 
+float _puwts_Mu172017[60] = { 1.0, 0.00712094202047, 0.0739834796503, 0.213310405026, 0.36976138282, 0.575162494299, 0.750373877856, 0.932984169178, 1.10591185677, 1.13368433566, 1.14897745442, 1.25103914333, 1.27736569694, 1.27379786868, 1.34003158417, 1.33757283101, 1.34031312366, 1.35673792276, 1.33629502146, 1.32646031025, 1.32508863219, 1.31867042324, 1.25454316364, 1.22075032508, 1.17899105474, 1.16295862575, 1.08268900413, 1.07900123562, 1.05025219428, 1.02532882974, 0.957651940196, 0.931760693617, 0.91544891929, 0.878268237753, 0.896169799875, 0.842309369016, 0.811545662292, 0.76230151171, 0.780980772958, 0.710504873826, 0.665170513299, 0.5927336972, 0.56081757048, 0.515622222995, 0.46766879288, 0.39776814903, 0.384208433401, 0.328151047699, 0.307207669765, 0.265408561756, 0.262697526325, 0.21663906328, 0.208163370388, 0.196497235176, 0.169600414723, 0.147222879296, 0.145135990052, 0.111223972955, 0.0915786306637, 0.0751816689203 };
+float puwtsMu172017(int nVert) { return _puwts_Mu172017[std::min(nVert,59)] * (367451.0/204252278.255); }
+
 float _new_puwts_HLT_Ele12_prescaled_2016[100]={2.75572,3.26561,3.39527,1.46399,1.77265,1.88686,1.48536,2.26117,4.33675,3.67411,3.03011,2.84148,2.5912,2.42474,2.29697,2.15414,1.97498,1.76292,1.5127,1.25696,1.0431,0.886597,0.787004,0.719569,0.672394,0.642142,0.621938,0.604979,0.593663,0.586311,0.569034,0.554639,0.526194,0.491115,0.446967,0.396596,0.340905,0.285737,0.232259,0.184334,0.138977,0.101221,0.0718936,0.0492075,0.0333019,0.0217615,0.0135377,0.00848631,0.00516764,0.00313836,0.00187523,0.00115506,0.000748393,0.000536696,0.000499682,0.000575907,0.000730489,0.00102678,0.00151582,0.00214482,0.00350559,0.00466592,0.00555445,0.00599003,0.00659298,0.00628491,0.00569882,0.00502567,0.00457254,0.00404294,0.00354145,0.00307944,0.00266324,0.0023081,0.00196392,1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
 
 float new_puwts_HLT_Ele12_prescaled_2016(int nTrueInt) { if (nTrueInt<100) return _new_puwts_HLT_Ele12_prescaled_2016[nTrueInt]; else return 0;}
@@ -922,15 +925,37 @@ float conept_TTH(float lpt, int lpdgId, bool lmediumMuonId, float lmva, float lj
   
 }
 
-bool clean_n_FO_selection_TTH(float Lpt, float Leta,int LpdgId, bool LmediumMuonId, float LmvaTTH, float LjetPtRatiov2,float LjetBTagCSV, float LidEmuTTH, float LsegmentCompatibility){//, float LmvaIdSpring16HZZ ){
-  bool final=(conept_TTH(Lpt,LpdgId,LmediumMuonId,LmvaTTH,LjetPtRatiov2) > 10.0 && LjetBTagCSV<0.8484 && (abs(LpdgId)!=11 || LidEmuTTH > 0) &&
-    (LmvaTTH>0.90 || (LjetPtRatiov2 > 0.5 && LjetBTagCSV<0.3 && 
-		      (abs(LpdgId)!=13 || LsegmentCompatibility>0.3))));// && (abs(LpdgId)!=11 ||  (LmvaIdSpring16HZZ > if3(abs(Leta) < 1.479,0.0,0.7))))));
-  //  std::cout<<"conept"<<conept_TTH(Lpt,LpdgId,LmediumMuonId,LmvaTTH,LjetPtRatiov2)<<"\t the long one "<<final<<std::endl;
 
-  return (final);
+float conept_TTH2017(float lpt, int lpdgId, bool lmediumMuonId, float lmva, float ljetPtRatiov2, float ljetBTagCSV,float lrelIso04){
 
-}
+  float ljetPtRatiov3 = 0.0;
+  if(ljetBTagCSV > -98){
+    ljetPtRatiov3= ljetPtRatiov2;
+  }
+  else{
+    ljetPtRatiov3= 1.0/(1.0 + lrelIso04);
+  }
+  if (abs(lpdgId)!=11 && abs(lpdgId)!=13) return lpt;
+  else if ((abs(lpdgId)!=13 || lmediumMuonId>0) && lmva > 0.90) return lpt;
+  else return (0.90 * lpt / ljetPtRatiov3);
+ }
+
+bool clean_and_FO_selection_TTH2017(float Lpt, bool LmediumMuonId, float LmvaTTH, float LjetBTagDeepCSV,float LsegmentCompatibility,float LjetPtRatiov2,float LjetBTagCSV,float LrelIso04){
+
+  float LjetPtRatiov3 = 0.0;
+  if(LjetBTagCSV > -98){
+    LjetPtRatiov3= LjetPtRatiov2;
+  }
+  else{
+    LjetPtRatiov3= 1.0/(1.0 + LrelIso04);
+  }
+
+  float lconept = conept_TTH2017(Lpt,13,LmediumMuonId,LmvaTTH,LjetPtRatiov2,LjetBTagCSV,LrelIso04);
+  bool final=  ( lconept > 10 && LjetBTagDeepCSV < 0.4941 && ( LmvaTTH > 0.90 || (LjetBTagDeepCSV<0.07 && LsegmentCompatibility > 0.3 && LjetPtRatiov3 > 0.60 )));
+		 return final;
+		 }
+
+
 int leppair_eta(float L1eta, float L2eta){
   if(abs(L1eta) < 1.479 && abs(L2eta)< 1.479) return 1;
   else if ((abs(L1eta) < 1.479 && abs(L2eta) > 1.479) || (abs(L1eta) > 1.479 && abs(L2eta) < 1.479)) return 2;

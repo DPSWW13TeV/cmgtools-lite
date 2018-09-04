@@ -117,7 +117,88 @@ float fakeRateWeight_2lssMVA(float l1pt, float l1eta, int l1pdgId, float l1mva,
         default: return 0;
     }
 }
+///////////////// testing ttH numbers from AN2018_098_v18
 
+float coneptTTH(float leppt, int leppdgId, bool lepmediumMuonId, float lepmva, float lepjetPtRatiov2){
+  if (abs(leppdgId)!=11 && abs(leppdgId)!=13) return leppt;
+  else if ((abs(leppdgId)!=13 || lepmediumMuonId>0) && lepmva > 0.90) return leppt;
+  else return (0.90 * leppt / lepjetPtRatiov2);
+
+}
+
+float Conept_TTH2017(float lpt, int lpdgId, bool lmediumMuonId, float lmva, float ljetPtRatiov2, float ljetBTagCSV,float lrelIso04){
+
+  float ljetPtRatiov3 = 0.0;
+  if(ljetBTagCSV > -98){
+    ljetPtRatiov3= ljetPtRatiov2;
+  }
+  else{
+    ljetPtRatiov3= 1.0/(1.0 + lrelIso04);
+  }
+  if (abs(lpdgId)!=11 && abs(lpdgId)!=13) return lpt;
+  else if ((abs(lpdgId)!=13 || lmediumMuonId>0) && lmva > 0.90) return lpt;
+  else return (0.90 * lpt / ljetPtRatiov3);
+ }
+
+
+//float ttH_FR(float conept,float Leta,int LpdgId,bool LmediumMuonId,float Lmva,float LjetPtRatiov2, float LjetBTagCSV,float LrelIso04){
+float ttH_FR(float conept,float Leta){
+  float FR=0.;
+  //float conept=Conept_TTH2017(Lpt,LpdgId,LmediumMuonId,Lmva,LjetPtRatiov2,LjetBTagCSV,LrelIso04);
+  if (Leta < 1.2){
+    if (conept < 15) FR=0.024;
+    else if (conept < 20 && conept > 15) FR = 0.086;
+	      else if (conept < 32 && conept > 20) FR = 0.095;
+	      else if (conept < 45 && conept > 32) FR =0.080;
+	      else if (conept < 65 && conept > 45) FR =0.093;
+	      else FR =0.093;
+	    }
+	    else{
+	      if (conept < 15) FR=0.007;
+	      else if (conept < 20 && conept > 15) FR = 0.066;
+	      else if (conept < 32 && conept > 20) FR = 0.109;
+	      else if (conept < 45 && conept > 32) FR =0.090;
+	      else if (conept < 65 && conept > 45) FR =0.089;
+	      else FR =0.084;
+	    }
+  return FR;
+}
+
+
+
+//float fakeRateWeights_direct(float l1pt, float l1eta,float l1mva,float l1jetPtRatiov2,float l1jetBTagCSV,float l1relIso04,float l2pt, float l2eta,float l2mva,float l2jetPtRatiov2,float l2jetBTagCSV,float l2relIso04)
+
+float fakeRateWeights_direct(float l1pt,float l1eta,float l1mva,float l2pt, float l2eta,float l2mva)
+{
+  float WP = 0.9;
+  float fr=0.0;
+  float fr1=0.0;
+  float fr2=0.0;
+  int l1pdgId=13;
+  int l2pdgId=13;
+
+    int nfail = (l1mva < WP)+(l2mva < WP);
+    switch (nfail) {
+        case 1: {
+	  double fpt,feta; int fid; //bool fmediumMuonId;float fmva; float fjetPtRatiov2; float frelIso04; float fjetBTagCSV;
+	  if (l1mva < l2mva) { fpt = l1pt; feta = std::abs(l1eta); fid = abs(l1pdgId);} 
+	    //fmediumMuonId=l1mediumMuonId; fjetPtRatiov2=l1jetPtRatiov2;fmva=l1mva; fjetBTagCSV= l1jetBTagCSV; frelIso04=l1relIso04;}
+	  else { fpt = l2pt; feta = std::abs(l2eta); fid = abs(l2pdgId);}// fmediumMuonId=l2mediumMuonId; fjetPtRatiov2=l2jetPtRatiov2;fmva=l2mva; fjetBTagCSV= l2jetBTagCSV; frelIso04=l2relIso04;}
+	  //	  fr=ttH_FR(fpt,feta,fid,fmediumMuonId,fmva,fjetPtRatiov2,fjetBTagCSV,frelIso04);
+	  fr=ttH_FR(fpt,feta);
+            return fr/(1-fr);
+        }
+        case 2: {
+	  fr1=ttH_FR(l1pt,l1eta);
+	  fr2=ttH_FR(l2pt,l2eta);
+	  //	  fr1=ttH_FR(l1pt,l1eta,l1pdgId,l1mediumMuonId,l1mva,l1jetPtRatiov2,l1jetBTagCSV,l1relIso04);
+	  //fr2=ttH_FR(l2pt,l2eta,l2pdgId,l2mediumMuonId,l2mva,l2jetPtRatiov2,l2jetBTagCSV,l2relIso04);
+
+	  return -fr1*fr2/((1-fr1)*(1-fr2));
+        }
+        default: return 0;
+    }
+}
 /////////////////////////////////////////////////
 
 float fakeRateWeight_2lssMVA_smoothed_FR(float l1pt, float l1eta, int l1pdgId, float l1mva,
@@ -414,7 +495,6 @@ float fakeRateWeight_2lssMVA_usingPRs_smooth(float l1pt, float l1eta, int l1pdgI
 }  
 
   // for syst uncertainty on Fake ratios
-
 
 
 
