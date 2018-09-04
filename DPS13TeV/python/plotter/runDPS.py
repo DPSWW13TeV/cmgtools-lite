@@ -189,10 +189,10 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
     targetcarddir = 'cards_{date}{pf}_MuMu_Fakes_syst_included'.format(date=date, pf=('-'+postfix if postfix else '') )
     #trees     = '/eos/user/m/mdunser/dps-13TeV-combination/TREES_latest/'
     #friends = [trees+'/friends_jet_pu_lepSF/', trees+'/friends_latest_bdt/']
-    trees = 'test_DPS_trees/'
+    #trees = 'test_DPS_trees/'
     #trees='signal_DPS_trees/'
-    trees1='/afs/cern.ch/user/p/peruzzi/work/tthtrees/TREES_TTH_190418_Fall17_skim2lss3l/'
-    friends  =[trees1+'/1_recleaner_180518_v2/',trees1+'/5_triggerDecision_230418_v1/']#../postprocessing/Friends_fullDPSCleaner_Aug28_2lss_v1/' ,trees1+'/8_vtxWeight2017_v1/'
+    trees='/afs/cern.ch/user/p/peruzzi/work/tthtrees/TREES_TTH_190418_Fall17_skim2lss3l/'
+    friends  =[trees+'/1_recleaner_180518_v2/',trees+'/7_tauTightSel_v2/']#,trees+'/5_triggerDecision_230418_v1/']#../postprocessing/Friends_fullDPSCleaner_Aug28_2lss_v1/' ,trees1+'/8_vtxWeight2017_v1/'
 #TREESONLYSKIM = "-P "+P0+"/TREES_TTH_190418_Fall17_skim2lss3l --Fs {P}/1_recleaner_180518_v2 --Fs {P}/2_eventVars_230418_v2 --Fs {P}/3_kinMVA_noMEM_200618_v5 --Fs {P}/4_BDTv8_Hj_200618_v1 --Fs {P}/4_BDTrTT_Hj_200618_v1 --Fs {P}/4_BDThttTT_Hj_200618_v4"
 
     targetdir = '/eos/user/a/anmehta/www/{date}{pf}Dimuon_2017data'.format(date=date, pf=('-'+postfix if postfix else '') ) 
@@ -220,8 +220,6 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
     binningBDT   = ' Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ) 15,1.0,16.0'
     nbinspostifx = '_15bins'
 
-    #fmca   = 'dpsww13TeV/dps2016/results/mumuelmu_mca_v1.txt'#elmu_mca_v1.txt'#
-    #fmca_elmu='dpsww13TeV/dps2016/results/elmu_mca_v1.txt'
     for bdt in ['wz']:
         for ich,ch in enumerate(loop):
             #if not ich: continue
@@ -252,7 +250,7 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
             extraopts = '--showIndivSigs'.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}
             randomvarsDump=['mcMatchId1','mcMatchId2','pt_mcMatchId2','pt_mcMatchId1','lepMVA1_mumu','lepMVA2_mumu','mtl1met','mtl2met','njetsclean','nbjetscleanCSVL25','nbjetscleanCSVM25','nbjetscleanCSVL30','nbjetscleanCSVM30','nhadtausclean','njets30clean','njets','nbjets','jetpt','jetbtagCSV','njetpt''jetdpt_old','jetdbtagCSV_old','njetd_old','jetdpt','jetdpt_old','jetdpt_cal','jetdpt_cat','njetd','njetd_old','njetd_cal','njetd_cat','jetdbtagCSV','jetdbtagCSV_old','jetdbtagCSV_cal','jetdbtagCSV_cat','BDTfakes_BDTWZ_mumu{ch}_20bins'.format(ch=(ch[0] if ch else ''))]
 
-            drawvars=['met']#,'nVert','met','mll','pt1','pt2','lepMVA1','lepMVA2','met','mll','pt1','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','njets']#,'nVert','njetsclean','jetclean_csva']
+            drawvars=['pt1']#,'nVert','met','mll','pt1','pt2','lepMVA1','lepMVA2','met','mll','pt1','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','njets']#,'nVert','njetsclean','jetclean_csva']
             
             if splitCharge or splitsign:
                 makeplots  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
@@ -260,7 +258,7 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
                 makeplots  = ['{}_{}'.format(a,state) for a in drawvars]
             
             #makeplots = ['BDTforCombine_elmu{ch}{nbins}'.format(ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_elmu{ch}_20bins'.format(ch=(ch[0] if ch else '')),'BDT_fakes_elmu{ch}_20bins'.format(ch=(ch[0] if ch else ''))]
-            #makeplots=['pt1_mumu']
+
             #makeplots=['pt1_mumu{ch}'.format(ch=(ch[0] if ch else '')),'met_mumu{ch}'.format(ch=(ch[0] if ch else ''))]#'nVert_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mt1_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mt2_mumu{ch}'.format(ch=(ch[0] if ch else '')),'dphiLep_mumu{ch}'.format(ch=(ch[0] if ch else '')),'pt2_mumu{ch}'.format(ch=(ch[0] if ch else '')),'eta_sum_mumu{ch}'.format(ch=(ch[0] if ch else '')),'dphilll2_mumu{ch}'.format(ch=(ch[0] if ch else '')),'etaprod_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mt1_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mt2ll_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mtll_mumu{ch}'.format(ch=(ch[0] if ch else '')),'dphil2met_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mll_mumu{ch}'.format(ch=(ch[0] if ch else ''))]#,'BDT_wz_mumu{ch}_20bins'.format(ch=(ch[0] if ch else '')),'BDT_fakes_mumu_{ch}20bins'.format(ch=(ch[0] if ch else ''))]
 
             runplots(trees, friends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)

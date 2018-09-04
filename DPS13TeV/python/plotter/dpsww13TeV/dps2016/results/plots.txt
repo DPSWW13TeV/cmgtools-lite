@@ -1,11 +1,12 @@
 #new frnds
-jetnLeptons_mumu:Jet_nLeptons:[0,1,2,3,4,5,6] ; XTitle='jet_nleptons'
+#jetnLeptons_mumu:Jet_nLeptons:[0,1,2,3,4,5,6] ; XTitle='jet_nleptons'
 #njets_mumu : Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5,6] ; XTitle='njets'
-nbjets_clean_mumu : Sum$(Jet_Clean_pt > 25 && Jet_Clean_btagCSV > 0.5426): [0,1,2,3,4,5,6] ; XTitle='nbjets_clean'
-njets_clean_mumu : Sum$(Jet_Clean_pt > 30): [0,1,2,3,4,5,6] ; XTitle='njets_clean'
-nbjets_mumu : Sum$(Jet_pt > 25 && Jet_btagCSV > 0.5426): [0,1,2,3,4,5,6] ; XTitle='nbjets'
-njets_mumu : Sum$(Jet_pt > 30): [0,1,2,3,4,5,6] ; XTitle='njets'
+#nbjets_clean_mumu : Sum$(Jet_Clean_pt > 25 && Jet_Clean_btagCSV > 0.5426): [0,1,2,3,4,5,6] ; XTitle='nbjets_clean'
+#njets_clean_mumu : Sum$(Jet_Clean_pt > 30): [0,1,2,3,4,5,6] ; XTitle='njets_clean'
+#nbjets_mumu : Sum$(Jet_pt > 25 && Jet_btagCSV > 0.5426): [0,1,2,3,4,5,6] ; XTitle='nbjets'
+#njets_mumu : Sum$(Jet_pt > 30): [0,1,2,3,4,5,6] ; XTitle='njets'
 
+njets_mumu  : Sum$(JetSel_Recl_pt > 30): [0,1,2] ; XTitle='njets'
 delRL1  : if3(LepGood1_mvaTTH < 0.9, deltaR(LepGood1_eta,LepGood1_phi,Jet_Clean_eta,Jet_Clean_phi),-999):10,-1,1; XTitle='delR_Llep1'
 delRT1  : if3(LepGood1_mvaTTH > 0.9, deltaR(LepGood1_eta,LepGood1_phi,Jet_Clean_eta,Jet_Clean_phi),-999):10,-1,1; XTitle='delRL_Tlep1'
 delRL2  : if3(LepGood2_mvaTTH < 0.9, deltaR(LepGood2_eta,LepGood2_phi,Jet_Clean_eta,Jet_Clean_phi),-999):10,-1,1; XTitle='delR_Llep2'
@@ -357,7 +358,7 @@ BDT_fakes_ll_20bins   : BDT_DPS_fakes            : 20,0.,1.0; XTitle="BDT fakes 
 mll_mumu           : m2l             : 15,0,200; XTitle="m_{ll}((#mu^{#pm}#mu^{#pm}) (GeV)"
 pt1_mumu           : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (#mu^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=160
 pt2_mumu           : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (#mu^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=320
-met_mumu           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (#mu^{#pm}#mu^{#pm}) (GeV)" ,YMin=0,YMax=300 
+met_mumu           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (#mu^{#pm}#mu^{#pm}) (GeV)" ,YMin=0,YMax=500 
 mt2ll_mumu         : mt2davis(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood2_pt,LepGood2_eta,LepGood2_phi,met_pt,met_phi) : 20,0,120 ; XTitle="M_{T2}^{ll} (#mu^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=310
 eta_sum_mumu       : abs(LepGood1_eta + LepGood2_eta)  : 20,0,5; XTitle="abs(#eta_{1}+#eta_{2}) (#mu^{#pm}#mu^{#pm})",YMin=0,YMax=110
 dphiLep_mumu       : abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (#mu^{#pm}#mu^{#pm}) (rad.)",Legend="TL",YMin=0,YMax=140
