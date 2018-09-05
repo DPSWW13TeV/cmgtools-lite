@@ -1,43 +1,38 @@
-event-filters : $DATA{Flag_HBHENoiseFilter>=1 && Flag_HBHENoiseIsoFilter>=1 && Flag_goodVertices>=1 && Flag_eeBadScFilter>=1 && Flag_EcalDeadCellTriggerPrimitiveFilter>=1 && Flag_globalTightHalo2016Filter >=1 } $MC{1}
-
+alwaystrue: 1
 SameSign     : LepGood_charge[iLepFO_Recl[0]] * LepGood_charge[iLepFO_Recl[1]] > 0
-25/20        : LepGood_pt[iLepFO_Recl[0]] > 25 && LepGood_pt[iLepFO_Recl[1]] > 20
-#25/15	     : LepGood_conePt[iLepFO_Recl[0]] > 25 && LepGood_conePt[iLepFO_Recl[1]] > 15
+#25/20        : LepGood_pt[iLepFO_Recl[0]] > 25 && LepGood_pt[iLepFO_Recl[1]] > 20
+25/15	     : LepGood_conePt[iLepFO_Recl[0]] > 25 && LepGood_conePt[iLepFO_Recl[1]] > 15
 metpt        : met_pt > 15
 met20        : met_pt > 20 ; Disable=True
 2l           : nLepFO_Recl ==2
-#tauveto	     : nTauSel_Recl_isTauTight ==0
-tauveto     : nTauSel_Recl ==0
+tauveto      : nTauSel_Recl ==0
 bveto 	     : nBJetLoose25_Recl == 0
 01jets       : Sum$(JetSel_Recl_pt > 30) < 2
 TT	     : LepGood_isLepTight_Recl[iLepFO_Recl[1]] && LepGood_isLepTight_Recl[iLepFO_Recl[0]]
-
-
-
+exclusive    : nLepTight_Recl<=2
 #looseleptons : clean_and_FO_selection_TTH2017(LepGood1_pt,LepGood1_mediumMuonId,LepGood1_mvaTTH,LepGood1_jetBTagDeepCSV,LepGood1_segmentCompatibility,LepGood1_jetPtRatiov2,LepGood1_jetBTagCSV,LepGood1_relIso04) && clean_and_FO_selection_TTH2017(LepGood2_pt,LepGood2_mediumMuonId,LepGood2_mvaTTH,LepGood2_jetBTagDeepCSV,LepGood2_segmentCompatibility,LepGood2_jetPtRatiov2,LepGood2_jetBTagCSV,LepGood2_relIso04) 
 
-etalep1      : abs(LepGood1_eta) < if3(abs(LepGood1_pdgId)==13,2.4,2.5)
-etalep2	     : abs(LepGood2_eta) < if3(abs(LepGood2_pdgId)==13,2.4,2.5)
+etalep1      : abs(LepGood_eta[iLepFO_Recl[0]]) < if3(abs(LepGood_pdgId[iLepFO_Recl[0]])==13,2.4,2.5)
+etalep2	     : abs(LepGood_eta[iLepFO_Recl[1]]) < if3(abs(LepGood_pdgId[iLepFO_Recl[2]])==13,2.4,2.5)
 
-etal1      : (abs(LepGood1_pdgId) == 13 || (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556 && abs(LepGood1_pdgId)==11))
-etal2      : (abs(LepGood2_pdgId) == 13 || (abs(LepGood2_eta) < 1.442 || abs(LepGood2_eta) > 1.556 && abs(LepGood2_pdgId)==11))
+#etal1      : (abs(LepGood1_pdgId) == 13 || (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556 && abs(LepGood1_pdgId)==11))
+#etal2      : (abs(LepGood2_pdgId) == 13 || (abs(LepGood2_eta) < 1.442 || abs(LepGood2_eta) > 1.556 && abs(LepGood2_pdgId)==11))
 
-Zee_veto: abs(LepGood1_pdgId)!=11 || abs(LepGood2_pdgId) != 11 || abs(mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2) > 10
+Zee_veto: abs(LepGood_pdgId[iLepFO_Recl[0]])!=11 || abs(LepGood_pdgId[iLepFO_Recl[1]]) != 11 || abs(mass_2(LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],LepGood_phi[iLepFO_Recl[0]],LepGood_mass[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],LepGood_phi[iLepFO_Recl[1]],LepGood_mass[iLepFO_Recl[1]])-91.2) > 10
 
 marc Emu2    : (LepGood1_idEmuTTH || abs(LepGood1_pdgId) == 13) && (LepGood2_idEmuTTH || abs(LepGood2_pdgId) == 13)
 
 
-
-
 ##exclusive: nLepTight_Recl == 2
 
-muTightCharge: (abs(LepGood1_pdgId)!=13 || LepGood1_tightCharge>=1) && (abs(LepGood2_pdgId)!=13 || LepGood2_tightCharge>=1)
+muTightCharge: (abs(LepGood_pdgId[iLepFO_Recl[0]])!=13 || LepGood_tightCharge[iLepFO_Recl[0]]>=1) && (abs(LepGood_pdgId[iLepFO_Recl[1]])!=13 || LepGood_tightCharge[iLepFO_Recl[1]]>=1)
 
 ###
 plusplus     : LepGood1_charge > 0                          ; Disable=True
 minusminus   : LepGood1_charge < 0                          ; Disable=True
 ###
-mumu         : abs(LepGood1_pdgId*LepGood2_pdgId) == 169           ; Disable=True
+##mumu         : abs(LepGood1_pdgId*LepGood2_pdgId) == 169           ; Disable=True
+mumu : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]])== 169    ; Disable=True	     
 trigmumu     :    (HLT_DoubleMu || HLT_SingleMu)       ; Disable=True
 
 #
