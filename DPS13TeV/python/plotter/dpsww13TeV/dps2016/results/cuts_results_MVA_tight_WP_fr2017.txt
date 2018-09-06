@@ -1,36 +1,28 @@
 event-filters : $DATA{Flag_HBHENoiseFilter>=1 && Flag_HBHENoiseIsoFilter>=1 && Flag_goodVertices>=1 && Flag_eeBadScFilter>=1 && Flag_EcalDeadCellTriggerPrimitiveFilter>=1 && Flag_globalTightHalo2016Filter >=1 } $MC{1}
 ##event-filters : $DATA{Flag_HBHENoiseFilter>=1 && Flag_HBHENoiseIsoFilter>=1 && Flag_goodVertices>=1 && Flag_eeBadScFilter>=1 && Flag_EcalDeadCellTriggerPrimitiveFilter>=1 && Flag_globalTightHalo2016Filter >=1 && Flag_badChargedHadronFilter>=1 && Flag_badMuonMoriond2017>=1 && Flag_badCloneMuonMoriond2017>=1} $MC{1}
-
 SameSign     : LepGood_charge[0] * LepGood_charge[1] > 0
-#10/10        : LepGood1_pt > 10 && LepGood2_pt > 10
-25/15	     :LepGood_conePt > 25 && LepGood_conePt > 15
+10/10        : LepGood1_pt > 25 && LepGood2_pt > 20
+#25/15	     :LepGood_conePt > 25 && LepGood_conePt > 15
 metpt        : met_pt > 15
 met20        : met_pt > 20 ; Disable=True
 2l           : nLepFO_Recl ==2
 #nLepGood == 2
 ##tauveto	     :nTauTight==0 
-##oTau       : nTauGoodHad_Clean == 0
+##noTau       : nTauGoodHad_Clean == 0
 #bVeto       : Sum$(JetSel_Recl_pt > 25 && JetSel_Recl_btagCSV > 0.5426) == 0
-tauveto	     : nTauSel_Recl ==0
-bveto 	     : nBJetMedium25_Recl == 0
-01jets       : Sum$(JetSel_Recl_pt > 30) < 2
-#JetSel_Recl_btagCSV
-#bVeto       : Sum$(Jet_pt > 25 && Jet_btagCSV > 0.5426) == 0
-#bVeto       : Sum$(Jet_Clean_against_LL_pt > 25 && Jet_Clean_against_LL_btagCSV > 0.5426) == 0
 
-looseleptons : clean_and_FO_selection_TTH2017(LepGood1_pt,LepGood1_mediumMuonId,LepGood1_mvaTTH,LepGood1_jetBTagDeepCSV,LepGood1_segmentCompatibility,LepGood1_jetPtRatiov2,LepGood1_jetBTagCSV,LepGood1_relIso04) && clean_and_FO_selection_TTH2017(LepGood2_pt,LepGood2_mediumMuonId,LepGood2_mvaTTH,LepGood2_jetBTagDeepCSV,LepGood2_segmentCompatibility,LepGood2_jetPtRatiov2,LepGood2_jetBTagCSV,LepGood2_relIso04) 
+#tauveto	     : nTauSel_Recl ==0
+#bveto 	     : nBJetMedium25_Recl == 0
+#01jets       : Sum$(JetSel_Recl_pt > 30) < 2
+
+#TT	  : min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.9 
+#MediumMuonid  : (abs(LepGood1_pdgId) !=13 || LepGood1_mediumMuonId > 0) && (abs(LepGood2_pdgId) !=13 || LepGood2_mediumMuonId > 0)
+
+TT	       :LepGood1_isLepTight_Recl && LepGood2_isLepTight_Recl
+
+#looseleptons : clean_and_FO_selection_TTH2017(LepGood1_pt,LepGood1_mediumMuonId,LepGood1_mvaTTH,LepGood1_jetBTagDeepCSV,LepGood1_segmentCompatibility,LepGood1_jetPtRatiov2,LepGood1_jetBTagCSV,LepGood1_relIso04) && clean_and_FO_selection_TTH2017(LepGood2_pt,LepGood2_mediumMuonId,LepGood2_mvaTTH,LepGood2_jetBTagDeepCSV,LepGood2_segmentCompatibility,LepGood2_jetPtRatiov2,LepGood2_jetBTagCSV,LepGood2_relIso04) 
 
 
-#LL       : max(LepGood1_mvaTTH,LepGood2_mvaTTH) < 0.9
-#TL       :  ((LepGood1_mvaTTH < 0.9 && LepGood2_mvaTTH > 0.9) || (LepGood1_mvaTTH > 0.9 && LepGood2_mvaTTH < 0.9))
-
-
-lepMVA	  : min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.9
-
-tightCharge  : LepGood1_tightCharge > 1 && LepGood2_tightCharge > 1
-chargecon    : (LepGood1_chargeConsistency >= 3 || abs(LepGood1_pdgId)==11) && (LepGood2_chargeConsistency >= 3 || abs(LepGood2_pdgId)==11)
-lostHits     : (LepGood1_lostHits ==  0 || abs(LepGood1_pdgId)==13) &&  (LepGood2_lostHits ==  0 || abs(LepGood2_pdgId)==13)
-convVeto     : (LepGood1_convVeto >   0 || abs(LepGood1_pdgId)==13) &&  (LepGood2_convVeto >   0 || abs(LepGood2_pdgId)==13)
 
 
 etalep1      : abs(LepGood1_eta) < if3(abs(LepGood1_pdgId)==13,2.4,2.5)
@@ -43,19 +35,19 @@ etael1      : (abs(LepGood2_pdgId) == 13 || (abs(LepGood2_eta) < 1.442 || abs(Le
 marc Emu2    : (LepGood1_idEmuTTH || abs(LepGood1_pdgId) == 13) && (LepGood2_idEmuTTH || abs(LepGood2_pdgId) == 13)
 
 
-MediumMuonid  : (abs(LepGood1_pdgId) !=13 || LepGood1_mediumMuonId > 0) && (abs(LepGood2_pdgId) !=13 || LepGood2_mediumMuonId > 0)
 
-#nearbyjetbtagcsv    :   LepGood1_jetBTagCSV < 0.4941 && LepGood2_jetBTagCSV < 0.4941
 
+exclusive: nLepTight_Recl == 2
+muTightCharge: (abs(LepGood1_pdgId)!=13 || LepGood1_tightCharge>=1) && (abs(LepGood2_pdgId)!=13 || LepGood2_tightCharge>=1)
 
 ###
 plusplus     : LepGood1_charge > 0                          ; Disable=True
 minusminus   : LepGood1_charge < 0                          ; Disable=True
 ###
 mumu         : abs(LepGood1_pdgId*LepGood2_pdgId) == 169           ; Disable=True
-##trigmumu     : (HLT_DoubleMu || HLT_SingleMu)                      ; Disable=True
+trigmumu     : (HLT_DoubleMu || HLT_SingleMu)                      ; Disable=True
 
-trigmumu     : Trigger_2lss                      ; Disable=True
+##trigmumu     : Trigger_2lss                      ; Disable=True
 
 
 

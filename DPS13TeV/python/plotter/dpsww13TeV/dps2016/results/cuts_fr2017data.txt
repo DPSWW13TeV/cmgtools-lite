@@ -10,39 +10,39 @@ bveto 	     : nBJetLoose25_Recl == 0
 01jets       : Sum$(JetSel_Recl_pt > 30) < 2
 TT	     : LepGood_isLepTight_Recl[iLepFO_Recl[1]] && LepGood_isLepTight_Recl[iLepFO_Recl[0]]
 exclusive    : nLepTight_Recl<=2
-#looseleptons : clean_and_FO_selection_TTH2017(LepGood1_pt,LepGood1_mediumMuonId,LepGood1_mvaTTH,LepGood1_jetBTagDeepCSV,LepGood1_segmentCompatibility,LepGood1_jetPtRatiov2,LepGood1_jetBTagCSV,LepGood1_relIso04) && clean_and_FO_selection_TTH2017(LepGood2_pt,LepGood2_mediumMuonId,LepGood2_mvaTTH,LepGood2_jetBTagDeepCSV,LepGood2_segmentCompatibility,LepGood2_jetPtRatiov2,LepGood2_jetBTagCSV,LepGood2_relIso04) 
+
 
 etalep1      : abs(LepGood_eta[iLepFO_Recl[0]]) < if3(abs(LepGood_pdgId[iLepFO_Recl[0]])==13,2.4,2.5)
 etalep2	     : abs(LepGood_eta[iLepFO_Recl[1]]) < if3(abs(LepGood_pdgId[iLepFO_Recl[2]])==13,2.4,2.5)
 
-#etal1      : (abs(LepGood1_pdgId) == 13 || (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556 && abs(LepGood1_pdgId)==11))
-#etal2      : (abs(LepGood2_pdgId) == 13 || (abs(LepGood2_eta) < 1.442 || abs(LepGood2_eta) > 1.556 && abs(LepGood2_pdgId)==11))
+etal1      : (abs(LepGood_pdgId[iLepFO_Recl[0]]) == 13 || (abs(LepGood_eta[iLepFO_Recl[0]]) < 1.442 || abs(LepGood_eta[iLepFO_Recl[0]]) > 1.556 && abs(LepGood_pdgId[iLepFO_Recl[0]])==11))
+etal2      : (abs(LepGood_pdgId[iLepFO_Recl[1]]) == 13 || (abs(LepGood_eta[iLepFO_Recl[1]]) < 1.442 || abs(LepGood_eta[iLepFO_Recl[1]]) > 1.556 && abs(LepGood_pdgId[iLepFO_Recl[1]])==11))
 
 Zee_veto: abs(LepGood_pdgId[iLepFO_Recl[0]])!=11 || abs(LepGood_pdgId[iLepFO_Recl[1]]) != 11 || abs(mass_2(LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],LepGood_phi[iLepFO_Recl[0]],LepGood_mass[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],LepGood_phi[iLepFO_Recl[1]],LepGood_mass[iLepFO_Recl[1]])-91.2) > 10
 
-marc Emu2    : (LepGood1_idEmuTTH || abs(LepGood1_pdgId) == 13) && (LepGood2_idEmuTTH || abs(LepGood2_pdgId) == 13)
+##marc Emu2    : (LepGood1_idEmuTTH || abs(LepGood1_pdgId) == 13) && (LepGood2_idEmuTTH || abs(LepGood2_pdgId) == 13)
 
-
-##exclusive: nLepTight_Recl == 2
+eleID: (abs(LepGood_pdgId[iLepFO_Recl[0]])!=11 || (LepGood_convVeto[iLepFO_Recl[0]] && LepGood_lostHits[iLepFO_Recl[0]]==0 && LepGood_tightCharge[iLepFO_Recl[0]]>=2)) && (abs(LepGood_pdgId[iLepFO_Recl[1]])!=11 || (LepGood_convVeto[iLepFO_Recl[1]] && LepGood_lostHits[iLepFO_Recl[1]]==0 && LepGood_tightCharge[iLepFO_Recl[1]]>=2))
 
 muTightCharge: (abs(LepGood_pdgId[iLepFO_Recl[0]])!=13 || LepGood_tightCharge[iLepFO_Recl[0]]>=1) && (abs(LepGood_pdgId[iLepFO_Recl[1]])!=13 || LepGood_tightCharge[iLepFO_Recl[1]]>=1)
 
+chargecon      : (abs(LepGood_pdgId[iLepFO_Recl[0]])!=13 || LepGood_chargeConsistency[iLepFO_Recl[0]]>4) && (abs(LepGood_pdgId[iLepFO_Recl[1]])!=13 || LepGood_chargeConsistency[iLepFO_Recl[1]]>4)
+
 ###
-plusplus     : LepGood1_charge > 0                          ; Disable=True
-minusminus   : LepGood1_charge < 0                          ; Disable=True
+plusplus     : LepGood_charge[iLepFO_Recl[0]] > 0                          ; Disable=True
+minusminus   : LepGood_charge[iLepFO_Recl[0]] < 0                          ; Disable=True
 ###
-##mumu         : abs(LepGood1_pdgId*LepGood2_pdgId) == 169           ; Disable=True
 mumu : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]])== 169    ; Disable=True	     
 trigmumu     :    (HLT_DoubleMu || HLT_SingleMu)       ; Disable=True
 
 #
-elmu         : abs(LepGood1_pdgId*LepGood2_pdgId) == 143                   ; Disable=True
+elmu         : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 143                   ; Disable=True
 trigelmu     : (HLT_MuEG || HLT_SingleMu || HLT_SingleEl)                  ; Disable=True
 #
-#mumuelmu     : abs(LepGood1_pdgId*LepGood2_pdgId) == 169 || abs(LepGood1_pdgId*LepGood2_pdgId) == 143      ; Disable=True
+#mumuelmu     : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 169 || abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 143      ; Disable=True
 #trigmumuelmu : (HLT_MuEG || HLT_SingleEl || HLT_DoubleMu || HLT_SingleMu)            ; Disable=True
 #
-elel         : abs(LepGood1_pdgId*LepGood2_pdgId) == 121 	   ; Disable=True
+elel         : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 121 	   ; Disable=True
 trigelel     : (HLT_SingleEl || HLT_DoubleEl)        	           ; Disable=True
 
 

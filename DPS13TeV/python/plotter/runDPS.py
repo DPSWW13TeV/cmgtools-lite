@@ -6,7 +6,10 @@ doPUreweighting_el = False
 doPUreweighting_mu = False
 doPUreweighting_mu_2017 = False
 doPUandSF = False
-donewPU = True
+doPUreweighting2017trigandlepSF = True
+
+
+
 def submitFRrecursive(ODIR, name, cmd, dryRun=False):
     outdir=ODIR+"/jobs/"
     if not os.path.isdir(outdir): 
@@ -69,7 +72,7 @@ def readFakerate(path, process):
     print('this is frs:', frs)
     return frs, errs
 
-def runCards(trees, friends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, extraopts = ''):
+def runCards(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, extraopts = ''):
 
     if not type(trees)==list: trees = [trees]
     treestring = ' '.join(' -P '+ t for t in list(trees))
@@ -79,12 +82,20 @@ def runCards(trees, friends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts,
     if friends:
         if not type(friends)==list: friends = [friends]
         for f in friends:
-            #cmd += ' -F Friends {friends}/tree_Friend_{{cname}}.root'.format(friends=f)
-            #cmd += ' -F Friends {friends}/evVarFriend_{{cname}}.root'.format(friends=f)
-            cmd += ' -F Friends {friends}/evVarFriend_{{cname}}.root --FMC sf/t {friends}/friends_sfFriend_{{cname}}.root'.format(friends=friends)
             #cmd += ' --Fs {friends}'.format(friends=f)
-    # cmd += ' --mcc ttH-multilepton/mcc-eleIdEmu2.txt '
-    cmd += ' -W puw*LepGood_effSF[0]*LepGood_effSF[1]' 
+            #cmd += ' -F Friends {friends}/evVarFriend_{{cname}}.root'.format(friends=f)
+            cmd += ' -F sf/t {friends}/evVarFriend_{{cname}}.root'.format(friends=f)# --FMC sf/t {friends}/friends_sfFriend_{{cname}}.root'.format(friends=friends)
+            #cmd += ' -F Friends {friends}/tree_Friend_{{cname}}.root'.format(friends=f)
+    if MCfriends:
+        if not type(MCfriends)==list: MCfriends = [MCfriends]
+        for f2 in MCfriends:
+            cmd += ' --FMC sf/t {MCfriends}/evVarFriend_{{cname}}.root'.format(MCfriends=f2)
+    if BDTfriends:
+        if not type(BDTfriends)==list: BDTfriends = [BDTfriends]
+        for f3 in BDTfriends:
+            cmd += ' -F Friends {BDTfriends}/tree_Friend_{{cname}}.root'.format(BDTfriends=f3)
+
+    cmd += ' -W vtxWeight2017*leptonSF_ttH(LepGood_pdgId[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],2)*leptonSF_ttH(LepGood_pdgId[iLepFO_Recl[1]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],2)*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[0]],LepGood_pdgId[iLepFO_Recl[1]],LepGood_pt[iLepFO_Recl[1]],nLepTight_Recl,0)'
     cmd += ' -p '+','.join(processes)
     cmd += ''.join(' -E ^'+cut for cut in enabledcuts )
     cmd += ''.join(' -X ^'+cut for cut in disabledcuts)
@@ -122,7 +133,7 @@ def runefficiencies(trees, friends, targetdir, fmca, fcut, ftight, fxvar, enable
     if doPUreweighting_mu: cmd += ' -W new_puwts_HLT_Mu17_prescaled_2016(nTrueInt)'#new_puwts2016(nTrueInt)'#puWeight' # ' ## adding pu weight
     if doPUreweighting_mu_2017: cmd += ' -W puwtsMu172017(nVert)'
     if doPUandSF and not '-W ' in extraopts: cmd += ' -W puw*LepGood_effSF[0]*LepGood_effSF[1]'
-    if  donewPU: cmd += ' -W vtxWeight2017' 
+    if  doPUreweighting2017trigandlepSF: cmd +=   ' -W vtxWeight2017*leptonSF_ttH(LepGood_pdgId[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],2)*leptonSF_ttH(LepGood_pdgId[iLepFO_Recl[1]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],2)*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[0]],LepGood_pdgId[iLepFO_Recl[1]],LepGood_pt[iLepFO_Recl[1]],nLepTight_Recl,0)'
     cmd += ''.join(' -E ^'+cut for cut in enabledcuts )
     cmd += ''.join(' -X ^'+cut for cut in disabledcuts)
     cmd += ' --compare {procs}'.format(procs=(','.join(compareprocesses)  ))
@@ -164,7 +175,7 @@ def runplots(trees, friends, targetdir, fmca, fcut, fplots, enabledcuts, disable
     if doPUreweighting_el: cmd += ' -W new_puwts_HLT_Ele12_prescaled_2016(nTrueInt)'
     if doPUreweighting_mu: cmd += ' -W new_puwts_HLT_Mu17_prescaled_2016(nTrueInt)'
     if doPUreweighting_mu_2017: cmd += ' -W puwtsMu172017(nVert)'
-    if donewPU: cmd += ' -W vtxWeight2017' 
+    if doPUreweighting2017trigandlepSF: cmd += ' -W vtxWeight2017*leptonSF_ttH(LepGood_pdgId[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],2)*leptonSF_ttH(LepGood_pdgId[iLepFO_Recl[1]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],2)*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[0]],LepGood_pdgId[iLepFO_Recl[1]],LepGood_pt[iLepFO_Recl[1]],nLepTight_Recl,0)'
     cmd += ' -o '+targetdir+'/'+'_AND_'.join(plot for plot in plotlist)+'.root'
     if fitdataprocess:
         cmd+= ' --fitData '
@@ -183,7 +194,7 @@ def runplots(trees, friends, targetdir, fmca, fcut, fplots, enabledcuts, disable
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-def runplots1(trees, friends, MCfriends, targetdir, fmca, fcut, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, extraopts = '', invertedcuts = []):
+def runplots1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, extraopts = '', invertedcuts = []):
     
     if not type(trees)==list: trees = [trees]
     treestring = ' '.join(' -P '+ t for t in list(trees))
@@ -199,6 +210,12 @@ def runplots1(trees, friends, MCfriends, targetdir, fmca, fcut, fplots, enabledc
         if not type(MCfriends)==list: MCfriends = [MCfriends]
         for f2 in MCfriends:
             cmd += ' --FMC sf/t {MCfriends}/evVarFriend_{{cname}}.root'.format(MCfriends=f2)
+    if BDTfriends:
+        if not type(BDTfriends)==list: BDTfriends = [BDTfriends]
+        for f3 in BDTfriends:
+            cmd += ' -F Friends {BDTfriends}/tree_Friend_{{cname}}.root'.format(BDTfriends=f3)
+
+
 
     cmd += ''.join(' -E ^'+cut for cut in enabledcuts )
     cmd += ''.join(' -X ^'+cut for cut in disabledcuts)
@@ -211,7 +228,7 @@ def runplots1(trees, friends, MCfriends, targetdir, fmca, fcut, fplots, enabledc
     if doPUreweighting_el: cmd += ' -W new_puwts_HLT_Ele12_prescaled_2016(nTrueInt)'
     if doPUreweighting_mu: cmd += ' -W new_puwts_HLT_Mu17_prescaled_2016(nTrueInt)'
     if doPUreweighting_mu_2017: cmd += ' -W puwtsMu172017(nVert)'
-    if donewPU: cmd += ' -W vtxWeight2017' 
+    if doPUreweighting2017trigandlepSF: cmd += ' -W vtxWeight2017*leptonSF_ttH(LepGood_pdgId[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],2)*leptonSF_ttH(LepGood_pdgId[iLepFO_Recl[1]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],2)*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[0]],LepGood_pdgId[iLepFO_Recl[1]],LepGood_pt[iLepFO_Recl[1]],nLepTight_Recl,0)'
     cmd += ' -o '+targetdir+'/'+'_AND_'.join(plot for plot in plotlist)+'.root'
     if fitdataprocess:
         cmd+= ' --fitData '
@@ -230,22 +247,17 @@ def runplots1(trees, friends, MCfriends, targetdir, fmca, fcut, fplots, enabledc
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = False): #sfdate, onlyMM = True, splitCharge = True):
+def makeResults(onlyEE = False,onlyMM = False, splitsign =False, splitCharge = False): #sfdate, onlyMM = True, splitCharge = True):
 #def runCards(trees, friends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, extraopts = ''):
 #python makeShapeCardsSusy.py --s2v -P /afs/cern.ch/work/e/efascion/DPStrees/TREES_110816_2muss/ --Fs /afs/cern.ch/work/e/efascion/public/friendsForDPS_110816/ -l 12.9 dps-ww/final_mca.txt dps-ww/cutfinal.txt finalMVA_DPS 10,0.,1.0  --od dps-ww/cards -p DPSWW,WZ,ZZ,WWW,WpWpJJ,Wjets  -W 0.8874 --asimov dps-ww/syst.txt
     
     #sfs = calculateScalefactors(False, sfdate)
     targetcarddir = 'cards_{date}{pf}_MuMu_Fakes_syst_included'.format(date=date, pf=('-'+postfix if postfix else '') )
-    #trees     = '/eos/user/m/mdunser/dps-13TeV-combination/TREES_latest/'
-    #friends = [trees+'/friends_jet_pu_lepSF/', trees+'/friends_latest_bdt/']
-    #trees = 'test_DPS_trees/'
-    #trees='signal_DPS_trees/'
     trees='/afs/cern.ch/user/p/peruzzi/work/tthtrees/TREES_TTH_190418_Fall17_skim2lss3l/'
     friends  =[trees+'/1_recleaner_180518_v2/',trees+'/7_tauTightSel_v2/',trees+'/5_triggerDecision_230418_v1/']
     MCfriends = trees+'/8_vtxWeight2017_v1/'
-#TREESONLYSKIM = "-P "+P0+"/TREES_TTH_190418_Fall17_skim2lss3l --Fs {P}/1_recleaner_180518_v2 --Fs {P}/2_eventVars_230418_v2 --Fs {P}/3_kinMVA_noMEM_200618_v5 --Fs {P}/4_BDTv8_Hj_200618_v1 --Fs {P}/4_BDTrTT_Hj_200618_v1 --Fs {P}/4_BDThttTT_Hj_200618_v4"
-
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}Dimuon_2017data'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    BDTfriends = '../postprocessing/Friends_BDT_Sep6_2lss/'
+    targetdir = '/eos/user/a/anmehta/www/{date}{pf}Dimuon2017'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots_2017.txt'
     fsyst  = 'dpsww13TeV/dps2016/results/syst_July2018.txt'
 
@@ -274,9 +286,8 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
         for ich,ch in enumerate(loop):
             #if not ich: continue
             if onlyMM:
-                #fmca   = 'dpsww13TeV/dps2016/results/mumuelmu_mca_July2018.txt'
-                #fcut   = 'dpsww13TeV/dps2016/results/cuts_results_MVA_tight_WP.txt'
                 fmca   = 'dpsww13TeV/dps2016/results/mumu_mca_2017.txt'
+                #fcut   = 'dpsww13TeV/dps2016/results/dimu_chargecon.txt'
                 #fcut   = 'dpsww13TeV/dps2016/results/cuts_results_MVA_tight_WP_fr2017.txt'
                 fcut   = 'dpsww13TeV/dps2016/results/cuts_fr2017data.txt'
                 enable = ['trigmumu','mumu'] + ch
@@ -289,7 +300,7 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
             else:
                 enable    = ['trigelmu','elmu'] + ch
                 fmca='dpsww13TeV/dps2016/results/elmu_mca_2017data.txt'
-                fcut   = 'dpsww13TeV/dps2016/results/cuts_results_MVA_tight_WP_fr2017.txt'
+                fcut   = 'dpsww13TeV/dps2016/results/cuts_fr2017data.txt'
                 state='elmu'
 
             disable   = []
@@ -297,10 +308,11 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
             scalethem = {}#'DPSWW':'{sf:.3f}'.format(sf=0.50)}#'WZ': '{sf:.3f}'.format(sf=1.04),
                          #'ZZ': '{sf:.3f}'.format(sf=1.21)}
             mumusf = 0.95
-            extraopts = '--showIndivSigs'.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}
+            extraopts = ' --showIndivSigs'.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}
             randomvarsDump=['mcMatchId1','mcMatchId2','pt_mcMatchId2','pt_mcMatchId1','lepMVA1_mumu','lepMVA2_mumu','mtl1met','mtl2met','njetsclean','nbjetscleanCSVL25','nbjetscleanCSVM25','nbjetscleanCSVL30','nbjetscleanCSVM30','nhadtausclean','njets30clean','njets','nbjets','jetpt','jetbtagCSV','njetpt''jetdpt_old','jetdbtagCSV_old','njetd_old','jetdpt','jetdpt_old','jetdpt_cal','jetdpt_cat','njetd','njetd_old','njetd_cal','njetd_cat','jetdbtagCSV','jetdbtagCSV_old','jetdbtagCSV_cal','jetdbtagCSV_cat','BDTfakes_BDTWZ_mumu{ch}_20bins'.format(ch=(ch[0] if ch else ''))]
 
-            drawvars=['met','nVert','met','mll','pt1','pt2','lepMVA1','lepMVA2','met','mll','pt1','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','njets']#,'nVert','njetsclean','jetclean_csva']
+            drawvars_dimu=['recopt_minus_genpt1','recopt_minus_genpt2','chargecon1_full','chargecon2_full','recopt_minus_genpt1','recopt_minus_genpt2','recopdgid_over_genpdgid1','recopdgid_over_genpdgid2','genpt1_with_cclt3','genpt2_with_cclt3','genpt1','genpt2']
+            drawvars=['met']#'chargecon1','chargecon2','nVert','mll','pt1','pt2','lepMVA1','lepMVA2','met','mll','pt1','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','njets']#,'nVert','njetsclean','jetclean_csva']
             
             if splitCharge or splitsign:
                 makeplots  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
@@ -308,16 +320,13 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
                 makeplots  = ['{}_{}'.format(a,state) for a in drawvars]
             
             #makeplots = ['BDTforCombine_elmu{ch}{nbins}'.format(ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_elmu{ch}_20bins'.format(ch=(ch[0] if ch else '')),'BDT_fakes_elmu{ch}_20bins'.format(ch=(ch[0] if ch else ''))]
-
-            #makeplots=['pt1_mumu{ch}'.format(ch=(ch[0] if ch else '')),'met_mumu{ch}'.format(ch=(ch[0] if ch else ''))]#'nVert_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mt1_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mt2_mumu{ch}'.format(ch=(ch[0] if ch else '')),'dphiLep_mumu{ch}'.format(ch=(ch[0] if ch else '')),'pt2_mumu{ch}'.format(ch=(ch[0] if ch else '')),'eta_sum_mumu{ch}'.format(ch=(ch[0] if ch else '')),'dphilll2_mumu{ch}'.format(ch=(ch[0] if ch else '')),'etaprod_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mt1_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mt2ll_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mtll_mumu{ch}'.format(ch=(ch[0] if ch else '')),'dphil2met_mumu{ch}'.format(ch=(ch[0] if ch else '')),'mll_mumu{ch}'.format(ch=(ch[0] if ch else ''))]#,'BDT_wz_mumu{ch}_20bins'.format(ch=(ch[0] if ch else '')),'BDT_fakes_mumu_{ch}20bins'.format(ch=(ch[0] if ch else ''))]
-
-            runplots1(trees, friends, MCfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
+            runplots1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
             ## ==================================
             ## running datacards
             ## ==================================
             #extraoptscards = ' -W {sf:.3f} -o mumu{ch} -b mumu{ch} '.format(sf=mumusf, ch=(ch[0] if ch else ''))
             extraoptscards = ' -o mumu{ch} -b mumu{ch} '.format(ch=(ch[0] if ch else ''))
-            #runCards(trees, friends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
+            #runCards(trees, friends, MCfriends, BDTfriends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
             
 
 def simplePlot():
@@ -407,7 +416,7 @@ def fakeShapes():
     runplots(trees, friends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, showratio, extraopts, invert)
 
 
-
+## CAUTION: Selection criteria MIGHT NOT BE UP-TO-DATE !!! 
 def makeFakeRatesFast(recalculate):
     ## in order to calculate the fakerates (and submit the jobs to the batch) one has to run (i think):
 
@@ -416,8 +425,7 @@ def makeFakeRatesFast(recalculate):
     ## this here is the usual stuff, but the paths are still wrong. we need to find the 1l skims that have mvaTTH inside
     leptontype = 'mu'
     trees ='/eos/user/m/mdunser/dps-13TeV-combination/TREES_2017_FR_1l/TREES_94X_FR_240518/'
-    friends   = ''#/afs/cern.ch/work/a/anmehta/public/Friends_DPSCleaner_Aug28/'
-    #    friends   = '../postprocessing/Friends_DPSCleaner_Aug28/'#trees+'/1_jetPtRatiov3_v1/'
+    friends   = ''
     targetdir = '/eos/user/a/anmehta/www/{date}{pf}MuFR_2017_with_ttH_FO_sel/'.format(date=date, pf=('-'+postfix if postfix else '') )
     ## accordingly we have to change the mca file here. we also need to adapt the cuts file here.
     ## also the tight cut should now be 0.9 if we are moving to what the tHq people use
@@ -435,7 +443,7 @@ def makeFakeRatesFast(recalculate):
     if leptontype == 'mu':
         makeplots = ['mtl1pf','pfmet','nVert','l1mvaTTH','ptl1','etal1','pfmet','rho']
         binning = [20,23,26,29,32,35,38,41,45,50,55,65,100]
-        binningeta = [0.,0.5]#,1.0,1.5,2.0,2.5]
+        binningeta = [0.,0.5,1.0,1.5,2.0,2.5]
     else:
         makeplots = ['pfmet','mtl1pf','rho','nVert','l1mvaTTH','ptl1','etal1']
         binning = [20,25,30,40,60]
