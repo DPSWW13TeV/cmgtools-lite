@@ -16,7 +16,7 @@
 TH2 * helicityFractions_0 = 0;
 TH2 * helicityFractions_L = 0;
 TH2 * helicityFractions_R = 0;
-
+TH2 * QF_el = 0;
 TH2 * FR_mu = 0;
 TH2 * FR_el = 0;
 TH2 * FRi_mu[30], *FRi_el[30];
@@ -37,6 +37,7 @@ bool loadFRHisto(const std::string &histoName, const char *file, const char *nam
     // else if (histoName == "FR_correction")  { histo = & FRcorrectionForPFMET; hptr2 = & FRcorrectionForPFMET_i[0]; }
     else if (TString(histoName).BeginsWith("FR_mu_i")) {histo = & FR_temp; hptr2 = & FRi_mu[TString(histoName).ReplaceAll("FR_mu_i","").Atoi()];}
     else if (TString(histoName).BeginsWith("FR_el_i")) {histo = & FR_temp; hptr2 = & FRi_el[TString(histoName).ReplaceAll("FR_el_i","").Atoi()];}
+    else if (histoName == "QF_el") histo = & QF_el;
     else if (TString(histoName).Contains("helicityFractions_0")) { histo = & helicityFractions_0; }
     else if (TString(histoName).Contains("helicityFractions_L")) { histo = & helicityFractions_L; }
     else if (TString(histoName).Contains("helicityFractions_R")) { histo = & helicityFractions_R; }
@@ -535,7 +536,24 @@ float fakeRateWeight_2lss(float l1pt, float l1eta, int l1pdgId, float l1pass,
 
 
 
-
+float chargeFlipWeight_2lss(float l1pt, float l1eta, int l1pdgId, int l1charge, 
+			    float l2pt, float l2eta, int l2pdgId, int l2charge) 
+{
+  if (l1pdgId * l2pdgId > 0) return 0.;
+  //if (l1charge * l2charge > 0) return 0.;
+  double w = 0;
+  if (abs(l1pdgId) == 11) {
+    int ptbin  = std::max(1, std::min(QF_el->GetNbinsX(), QF_el->GetXaxis()->FindBin(l1pt)));
+    int etabin = std::max(1, std::min(QF_el->GetNbinsY(), QF_el->GetYaxis()->FindBin(std::abs(l1eta))));
+    w += QF_el->GetBinContent(ptbin,etabin);
+  }
+  if (abs(l2pdgId) == 11) {
+    int ptbin  = std::max(1, std::min(QF_el->GetNbinsX(), QF_el->GetXaxis()->FindBin(l2pt)));
+    int etabin = std::max(1, std::min(QF_el->GetNbinsY(), QF_el->GetYaxis()->FindBin(std::abs(l2eta))));
+    w += QF_el->GetBinContent(ptbin,etabin);
+  }
+  return w;
+}
 
 
 //#endif
