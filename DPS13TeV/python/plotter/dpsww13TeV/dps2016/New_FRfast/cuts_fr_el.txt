@@ -18,7 +18,7 @@ etacut	    :abs(LepGood1_eta) < 2.5
 ## =============================================
 lpt25         : LepGood1_pt > 20.
 
-awayJet30 : Sum$(Jet_Clean_pt > 50. && abs(deltaPhi(LepGood1_phi,Jet_Clean_phi)) > 0.7 ) >= 1
+awayJet30 : Sum$(Jet_Clean_pt > 30. && abs(deltaPhi(LepGood1_phi,Jet_Clean_phi)) > 0.7 ) >= 1
 
 
 

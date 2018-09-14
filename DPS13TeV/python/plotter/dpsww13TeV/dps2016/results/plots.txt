@@ -1,11 +1,13 @@
+ptFO_mumu : LepGood1_pt\:LepGood_pt[iLepFO_Recl[0]]  : 25,20.,70.,25,20,70; XTitle="p_{T}^{FOlept}";YTitle: "ptLepGood"
 #new frnds
-jetnLeptons_mumu:Jet_nLeptons:[0,1,2,3,4,5,6] ; XTitle='jet_nleptons'
+#jetnLeptons_mumu:Jet_nLeptons:[0,1,2,3,4,5,6] ; XTitle='jet_nleptons'
 #njets_mumu : Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5,6] ; XTitle='njets'
-nbjets_clean_mumu : Sum$(Jet_Clean_pt > 25 && Jet_Clean_btagCSV > 0.5426): [0,1,2,3,4,5,6] ; XTitle='nbjets_clean'
-njets_clean_mumu : Sum$(Jet_Clean_pt > 30): [0,1,2,3,4,5,6] ; XTitle='njets_clean'
-nbjets_mumu : Sum$(Jet_pt > 25 && Jet_btagCSV > 0.5426): [0,1,2,3,4,5,6] ; XTitle='nbjets'
-njets_mumu : Sum$(Jet_pt > 30): [0,1,2,3,4,5,6] ; XTitle='njets'
+#nbjets_clean_mumu : Sum$(Jet_Clean_pt > 25 && Jet_Clean_btagCSV > 0.5426): [0,1,2,3,4,5,6] ; XTitle='nbjets_clean'
+#njets_clean_mumu : Sum$(Jet_Clean_pt > 30): [0,1,2,3,4,5,6] ; XTitle='njets_clean'
+#nbjets_mumu : Sum$(Jet_pt > 25 && Jet_btagCSV > 0.5426): [0,1,2,3,4,5,6] ; XTitle='nbjets'
+#njets_mumu : Sum$(Jet_pt > 30): [0,1,2,3,4,5,6] ; XTitle='njets'
 
+njets_mumu  : Sum$(JetSel_Recl_pt > 30): [0,1,2] ; XTitle='njets'
 delRL1  : if3(LepGood1_mvaTTH < 0.9, deltaR(LepGood1_eta,LepGood1_phi,Jet_Clean_eta,Jet_Clean_phi),-999):10,-1,1; XTitle='delR_Llep1'
 delRT1  : if3(LepGood1_mvaTTH > 0.9, deltaR(LepGood1_eta,LepGood1_phi,Jet_Clean_eta,Jet_Clean_phi),-999):10,-1,1; XTitle='delRL_Tlep1'
 delRL2  : if3(LepGood2_mvaTTH < 0.9, deltaR(LepGood2_eta,LepGood2_phi,Jet_Clean_eta,Jet_Clean_phi),-999):10,-1,1; XTitle='delR_Llep2'
@@ -208,12 +210,12 @@ BDTfakes_BDTWZ_mumu_20bins   : BDT_DPS_WZ\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; 
 BDTfakes_BDTWZ_mumuplusplus_20bins   : BDT_DPS_WZ\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{+}#mu^{+})", YTitle="BDT_WZ(#mu^{+}#mu^{+})"
 
 
-BDTforCombine_mumuplusplus_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{+}#mu^{+})",YMin=0,YMax=140
+BDTforCombine_mumuplusplus_15bins   :  Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{+}#mu^{+})",YMin=0,YMax=140
 
-BDTforCombine_mumuminusminus_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{-}#mu^{-})",YMin=0,YMax=110
+BDTforCombine_mumuminusminus_15bins   :  Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{-}#mu^{-})",YMin=0,YMax=110
 
 
-BDTforCombine_mumu_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"
+BDTforCombine_mumu_15bins   :  Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"
 
 BDTfakes_BDTWZ_mumuminusminus_varbins   : BDT_DPS_WZ\:BDT_DPS_fakes  :[0.25,0.45,0.6,0.7,0.8,0.82,0.84,0.86,0.88,0.9,0.92,0.94,0.96,0.98,1.0]*[0.25,0.45,0.6,0.7,0.8,0.82,0.84,0.86,0.88,0.9,0.92,0.94,0.96,0.98,1.0] ; XTitle="BDT_fakes(#mu^{-}#mu^{-})", YTitle="BDT_WZ(#mu^{-}#mu^{-})"
 
@@ -263,12 +265,12 @@ met_elmuplusplus           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (
 
 
 
-BDTforCombine_elmuplusplus_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{+}#mu^{+})",YMin=0,YMax=250
+BDTforCombine_elmuplusplus_15bins   :  Binnumberset1D_emu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{+}#mu^{+})",YMin=0,YMax=250
 
-BDTforCombine_elmu_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{#pm}#mu^{#pm})",YMin=0,YMax=450
+BDTforCombine_elmu_15bins   :  Binnumberset1D_emu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{#pm}#mu^{#pm})",YMin=0,YMax=450
 
 
-BDTforCombine_elmuminusminus_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{-}#mu^{-})",YMin=0,YMax=200
+BDTforCombine_elmuminusminus_15bins   :  Binnumberset1D_emu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{-}#mu^{-})",YMin=0,YMax=200
 
 pt1_elmu           : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (e^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=350
 pt2_elmu           : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=750
@@ -357,7 +359,7 @@ BDT_fakes_ll_20bins   : BDT_DPS_fakes            : 20,0.,1.0; XTitle="BDT fakes 
 mll_mumu           : m2l             : 15,0,200; XTitle="m_{ll}((#mu^{#pm}#mu^{#pm}) (GeV)"
 pt1_mumu           : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (#mu^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=160
 pt2_mumu           : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (#mu^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=320
-met_mumu           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (#mu^{#pm}#mu^{#pm}) (GeV)" ,YMin=0,YMax=300 
+met_mumu           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (#mu^{#pm}#mu^{#pm}) (GeV)" ,YMin=0,YMax=500 
 mt2ll_mumu         : mt2davis(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood2_pt,LepGood2_eta,LepGood2_phi,met_pt,met_phi) : 20,0,120 ; XTitle="M_{T2}^{ll} (#mu^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=310
 eta_sum_mumu       : abs(LepGood1_eta + LepGood2_eta)  : 20,0,5; XTitle="abs(#eta_{1}+#eta_{2}) (#mu^{#pm}#mu^{#pm})",YMin=0,YMax=110
 dphiLep_mumu       : abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (#mu^{#pm}#mu^{#pm}) (rad.)",Legend="TL",YMin=0,YMax=140
@@ -553,3 +555,12 @@ avgXpartons : (initial_x1+initial_x2)/2. : 20,0,0.1 ; XTitle="avg. x"
 parton1ID   :  abs(initial_id1) : 22,0,22 ; XTitle="| parton 1 pdgId |"
 parton2ID   :  abs(initial_id2) : 22,0,22 ; XTitle="| parton 2 pdgId |"
 charge1     : LepGood1_charge : 3,-1.5,1.5; XTitle="charge", Legend="TL"
+
+
+
+chargecon1_mumu : LepGood1_chargeConsistency : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5]; XTitle="chargecon_lep1"
+chargecon2_mumu : LepGood2_chargeConsistency : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5]; XTitle="chargecon_lep2"
+
+
+chargecon1_elmu : LepGood1_chargeConsistency : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5]; XTitle="chargecon_lep1"
+chargecon2_elmu : LepGood2_chargeConsistency : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5]; XTitle="chargecon_lep2"
