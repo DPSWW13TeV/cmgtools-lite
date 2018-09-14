@@ -1,7 +1,7 @@
 alwaystrue: 1
 SameSign     : LepGood_charge[iLepFO_Recl[0]] * LepGood_charge[iLepFO_Recl[1]] > 0
 #25/20        : LepGood_pt[iLepFO_Recl[0]] > 25 && LepGood_pt[iLepFO_Recl[1]] > 20
-25/15	     : LepGood_conePt[iLepFO_Recl[0]] > 25 && LepGood_conePt[iLepFO_Recl[1]] > 15
+25/20	     : LepGood_conePt[iLepFO_Recl[0]] > 25 && LepGood_conePt[iLepFO_Recl[1]] > 20
 metpt        : met_pt > 15
 met20        : met_pt > 20 ; Disable=True
 2l           : nLepFO_Recl ==2

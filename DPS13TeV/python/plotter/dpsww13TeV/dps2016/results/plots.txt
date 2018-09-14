@@ -210,12 +210,12 @@ BDTfakes_BDTWZ_mumu_20bins   : BDT_DPS_WZ\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; 
 BDTfakes_BDTWZ_mumuplusplus_20bins   : BDT_DPS_WZ\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{+}#mu^{+})", YTitle="BDT_WZ(#mu^{+}#mu^{+})"
 
 
-BDTforCombine_mumuplusplus_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{+}#mu^{+})",YMin=0,YMax=140
+BDTforCombine_mumuplusplus_15bins   :  Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{+}#mu^{+})",YMin=0,YMax=140
 
-BDTforCombine_mumuminusminus_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{-}#mu^{-})",YMin=0,YMax=110
+BDTforCombine_mumuminusminus_15bins   :  Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{-}#mu^{-})",YMin=0,YMax=110
 
 
-BDTforCombine_mumu_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"
+BDTforCombine_mumu_15bins   :  Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"
 
 BDTfakes_BDTWZ_mumuminusminus_varbins   : BDT_DPS_WZ\:BDT_DPS_fakes  :[0.25,0.45,0.6,0.7,0.8,0.82,0.84,0.86,0.88,0.9,0.92,0.94,0.96,0.98,1.0]*[0.25,0.45,0.6,0.7,0.8,0.82,0.84,0.86,0.88,0.9,0.92,0.94,0.96,0.98,1.0] ; XTitle="BDT_fakes(#mu^{-}#mu^{-})", YTitle="BDT_WZ(#mu^{-}#mu^{-})"
 
@@ -265,12 +265,12 @@ met_elmuplusplus           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (
 
 
 
-BDTforCombine_elmuplusplus_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{+}#mu^{+})",YMin=0,YMax=250
+BDTforCombine_elmuplusplus_15bins   :  Binnumberset1D_emu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{+}#mu^{+})",YMin=0,YMax=250
 
-BDTforCombine_elmu_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{#pm}#mu^{#pm})",YMin=0,YMax=450
+BDTforCombine_elmu_15bins   :  Binnumberset1D_emu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{#pm}#mu^{#pm})",YMin=0,YMax=450
 
 
-BDTforCombine_elmuminusminus_15bins   :  Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{-}#mu^{-})",YMin=0,YMax=200
+BDTforCombine_elmuminusminus_15bins   :  Binnumberset1D_emu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{-}#mu^{-})",YMin=0,YMax=200
 
 pt1_elmu           : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (e^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=350
 pt2_elmu           : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=750
@@ -555,3 +555,12 @@ avgXpartons : (initial_x1+initial_x2)/2. : 20,0,0.1 ; XTitle="avg. x"
 parton1ID   :  abs(initial_id1) : 22,0,22 ; XTitle="| parton 1 pdgId |"
 parton2ID   :  abs(initial_id2) : 22,0,22 ; XTitle="| parton 2 pdgId |"
 charge1     : LepGood1_charge : 3,-1.5,1.5; XTitle="charge", Legend="TL"
+
+
+
+chargecon1_mumu : LepGood1_chargeConsistency : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5]; XTitle="chargecon_lep1"
+chargecon2_mumu : LepGood2_chargeConsistency : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5]; XTitle="chargecon_lep2"
+
+
+chargecon1_elmu : LepGood1_chargeConsistency : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5]; XTitle="chargecon_lep1"
+chargecon2_elmu : LepGood2_chargeConsistency : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5]; XTitle="chargecon_lep2"

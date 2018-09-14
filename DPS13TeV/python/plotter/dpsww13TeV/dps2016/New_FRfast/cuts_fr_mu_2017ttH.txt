@@ -14,24 +14,14 @@ csvM	      : LepGood1_jetBTagDeepCSV < 0.4941
 ptfCut75      : LepGood1_mvaTTH > 0.90 || LepGood1_jetPtRatiov2 > 0.60
 minimal	      : LepGood1_awayJet_pt > 30 
 muonTightMVA  : LepGood1_mvaTTH > 0.9 && LepGood1_mediumMuonId > 0 
-conePt10      : LepGood1_pt*if3(LepGood1_mvaTTH>0.90&&LepGood1_mediumMuonId>0, 1.0, 0.90/LepGood1_jetPtRatiov2) > 10
-
-#FO: LepGood1_jetBTagDeepCSV < 0.4941 && (LepGood1_mvaTTH>0.90 || (LepGood1_jetPtRatiov2>0.5 && LepGood1_jetBTagDeepCSV<0.1522 &&  LepGood1_segmentCompatibility > 0.3))
-#conept : conept_TTH(LepGood1_pt,LepGood1_pdgId,LepGood1_mediumMuonId,LepGood1_mvaTTH,LepGood1_jetPtRatiov2) > 10
-
-dcvsvlDen: LepGood1_mvaTTH > 0.90 || ( LepGood1_jetBTagDeepCSV < 0.07 && (abs(LepGood1_pdgId)==13 && LepGood1_segmentCompatibility > 0.3))
+trigMu17      : LepGood1_pt > 17 
+trigMu17conpt : LepGood1_pt*if3(LepGood_mvaTTH>0.90&&LepGood_mediumMuonId>0, 1.0, 0.90/LepGood_jetPtRatiov2) > 25
+dcvsvlDen: LepGood1_mvaTTH > 0.90 || ( LepGood1_jetBTagDeepCSV < 0.07 && LepGood1_segmentCompatibility > 0.3)
 
 ## kinematic selection
 ## =============================================
-lpt25         : LepGood1_pt > 20.
-
-#awayJet40 : Sum$(Jet_Clean_pt > 30. && abs(deltaPhi(LepGood1_phi,Jet_Clean_phi)) > 0.7 ) >= 1
-#awayJet40 : Sum$(Jet_pt > 30. && abs(deltaPhi(LepGood1_phi,Jet_phi)) > 0.7 ) >= 1
-#awayJet40 : Sum$(Jet_Clean_against_LL_pt > 30. && abs(deltaPhi(LepGood1_phi,Jet_Clean_against_LL_phi)) > 0.7 ) >= 1
-
-tkmet15max   : met_trkPt < 15.                                          ; Disable=True
-#mtl1tk40max : mt_2(LepGood1_pt,LepGood1_phi,met_trkPt,met_trkPhi) < 40. ; Disable=True
-pfmet15max   : met_pt < 40.                                             ; Disable=False
+##lpt25         : LepGood1_pt > 20.
+pfmet15max   : met_pt < 40.                                             ; Disable=True
 mtl1pf40max : mt_2(LepGood1_pt,LepGood1_phi,met_pt,met_phi)  < 40.      ; Disable=True
 
 barrel      : abs(LepGood1_eta) <=1.2                                   ; Disable=True

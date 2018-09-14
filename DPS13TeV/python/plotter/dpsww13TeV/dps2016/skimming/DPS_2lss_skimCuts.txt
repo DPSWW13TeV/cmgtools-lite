@@ -1,0 +1,4 @@
+alwaystrue : 1
+2l     : nLepGood == 2
+same-sign : LepGood_charge[0] * LepGood_charge[1] > 0
+

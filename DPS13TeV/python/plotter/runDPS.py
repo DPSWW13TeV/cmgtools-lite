@@ -4,9 +4,9 @@ import numpy as np
 doPUreweighting = False
 doPUreweighting_el = False
 doPUreweighting_mu = False
-doPUreweighting_mu_2017 = False
+doPUreweighting_mu_2017 = True
 doPUandSF = False
-doPUreweighting2017trigandlepSF = True
+doPUreweighting2017trigandlepSF = False
 
 
 
@@ -256,8 +256,8 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
     trees='/afs/cern.ch/user/p/peruzzi/work/tthtrees/TREES_TTH_190418_Fall17_skim2lss3l/'
     friends  =[trees+'/1_recleaner_180518_v2/',trees+'/7_tauTightSel_v2/',trees+'/5_triggerDecision_230418_v1/']
     MCfriends = trees+'/8_vtxWeight2017_v1/'
-    BDTfriends = ''#../postprocessing/Friends_BDT_Sep6_2lss/'
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    BDTfriends = '../postprocessing/Friends_BDT_Sep6_2lss/'
+    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017_Fakes_syst_varby20p'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots_2017.txt'
     fsyst  = 'dpsww13TeV/dps2016/results/syst_July2018.txt'
 
@@ -276,7 +276,7 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
 
     print 'did i split the charge? %i' %splitCharge
 
-    processes= ['DPSWW','WZ','data','ZZ','fakes_data','rares','Flips']#'WG_wg
+    processes= ['fakes_data','fakes_data_ptdown','fakes_data_ptup','fakes_data_etadown','fakes_data_etaup','fakes_data_ptetadown','fakes_data_ptetaup']#,'WZ','data','ZZ','fakes_data','rares','Flips','WG_wg']
     #processesCards = ['data', 'DPSWW', 'WZ', 'ZZ', 'WG_wg', 'rares', 'fakes_data', 'WZamcatnlo', 'DPSWW_alt','fakes_shape']
 
     binningBDT   = ' Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ) 15,1.0,16.0'
@@ -304,23 +304,22 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
                 state='elmu'
 
             disable   = []
-            fittodata = []#'fakes_data']
+            fittodata = []
             scalethem = {}#'DPSWW':'{sf:.3f}'.format(sf=0.50)}#'WZ': '{sf:.3f}'.format(sf=1.04),
                          #'ZZ': '{sf:.3f}'.format(sf=1.21)}
             mumusf = 0.95
-            extraopts = ' --showIndivSigs'.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}
-            randomvarsDump=['mcMatchId1','mcMatchId2','pt_mcMatchId2','pt_mcMatchId1','lepMVA1_mumu','lepMVA2_mumu','mtl1met','mtl2met','njetsclean','nbjetscleanCSVL25','nbjetscleanCSVM25','nbjetscleanCSVL30','nbjetscleanCSVM30','nhadtausclean','njets30clean','njets','nbjets','jetpt','jetbtagCSV','njetpt''jetdpt_old','jetdbtagCSV_old','njetd_old','jetdpt','jetdpt_old','jetdpt_cal','jetdpt_cat','njetd','njetd_old','njetd_cal','njetd_cat','jetdbtagCSV','jetdbtagCSV_old','jetdbtagCSV_cal','jetdbtagCSV_cat','BDTfakes_BDTWZ_mumu{ch}_20bins'.format(ch=(ch[0] if ch else ''))]
+            extraopts = '--plotmode=norm --showIndivSigs'.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}
 
-            drawvars_mumu=['recopt_minus_genpt1','recopt_minus_genpt2','chargecon1_full','chargecon2_full','recopt_minus_genpt1','recopt_minus_genpt2','recopdgid_over_genpdgid1','recopdgid_over_genpdgid2','genpt1','genpt2']#'genpt1_with_cclt3','genpt2_with_cclt3',
-            drawvars=['dphil2met']#'met','nVert','mll','pt1','pt2','lepMVA1','lepMVA2','met','mll','pt1','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','njets']#,'nVert','njetsclean','jetclean_csva']
+            drawvars_mumu=['recopt_minus_genpt1','recopt_minus_genpt2','chargecon1_full','chargecon2_full','recopt_minus_genpt1','recopt_minus_genpt2','recopdgid_over_genpdgid1','recopdgid_over_genpdgid2','genpt1','genpt2']#'SubLeadingFO','LeadingFO','genpt1_with_cclt3','genpt2_with_cclt3',
+            drawvars=['met_jecDown','met_jecUp','met']#'dphil2met','met','nVert','mll','pt1','pt2','lepMVA1','lepMVA2','met','mll','pt1','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','njets']#,'nVert','njetsclean','jetclean_csva']
             
-            if splitCharge or splitsign:
-                makeplots  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
-            else:
-                makeplots  = ['{}_{}'.format(a,state) for a in drawvars]
+            #if splitCharge or splitsign:
+                #makeplots  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
+            #else:
+                #makeplots  = ['{}_{}'.format(a,state) for a in drawvars]
             
-            #makeplots = ['BDTforCombine_elmu{ch}{nbins}'.format(ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_elmu{ch}_20bins'.format(ch=(ch[0] if ch else '')),'BDT_fakes_elmu{ch}_20bins'.format(ch=(ch[0] if ch else ''))]
-            runplots1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
+            makeplots = ['BDTforCombine_mumu{ch}{nbins}'.format(ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_mumu{ch}_20bins'.format(ch=(ch[0] if ch else '')),'BDT_fakes_mumu{ch}_20bins'.format(ch=(ch[0] if ch else ''))]
+            runplots1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, False, extraopts)
             ## ==================================
             ## running datacards
             ## ==================================
@@ -435,7 +434,7 @@ def makeFakeRatesFast(recalculate):
     ## this here is the usual stuff, but the paths are still wrong. we need to find the 1l skims that have mvaTTH inside
     leptontype = 'mu'
     trees ='/eos/user/m/mdunser/dps-13TeV-combination/TREES_2017_FR_1l/TREES_94X_FR_240518/'
-    friends   = ''
+    friends   = trees+'/1_jetPtRatiov3_v1/'
     targetdir = '/eos/user/a/anmehta/www/{date}{pf}MuFR_2017_with_ttH_FO_sel/'.format(date=date, pf=('-'+postfix if postfix else '') )
     ## accordingly we have to change the mca file here. we also need to adapt the cuts file here.
     ## also the tight cut should now be 0.9 if we are moving to what the tHq people use
@@ -452,8 +451,9 @@ def makeFakeRatesFast(recalculate):
     ## these are the plots that are made. a scale factor is derived from the first plot in this list. in this case MT
     if leptontype == 'mu':
         makeplots = ['mtl1pf','pfmet','nVert','l1mvaTTH','ptl1','etal1','pfmet','rho']
-        binning = [20,23,26,29,32,35,38,41,45,50,55,65,100]
-        binningeta = [0.,0.5,1.0,1.5,2.0,2.5]
+        binning = [20,32,45,65,100]#[25,32,45,65,100]#[20,23,26,29,32,35,38,41,45,50,55,65,100]
+        #binningeta = [0.,0.5,1.0,1.5,2.0,2.4]
+        binningeta = [0.,1.2,2.4]
     else:
         makeplots = ['pfmet','mtl1pf','rho','nVert','l1mvaTTH','ptl1','etal1']
         binning = [20,25,30,40,60]
@@ -556,8 +556,8 @@ def makeFakeRatesFast(recalculate):
                      }
 
         ## this file has the pT binning that we want for the FR
-        fxvar  = 'dpsww13TeV/dps2016/New_FRfast/xvars_{leptype}.txt'.format(leptype = leptontype)
-
+        #fxvar  = 'dpsww13TeV/dps2016/New_FRfast/xvars_{leptype}.txt'.format(leptype = leptontype)
+        fxvar  = 'dpsww13TeV/dps2016/New_FRfast/xvars_ptcoarse.txt'
         ## this now remakes the plots with the MT cut included after scaling the QCD and the WandZ
         printAggressive('SCALING THE PROCESSES BY FACTORS')
         print scalethem
@@ -675,7 +675,7 @@ def makeFakeRatesFast(recalculate):
             for rate in ['pr', 'fr']:
 
                 pol0 = ROOT.TF1("{r}_pol0_{eta}".format(r=rate,eta=etastring), "[0]        ", 20., 45.)
-                pol1 = ROOT.TF1("{r}_pol1_{eta}".format(r=rate,eta=etastring), "[1]*x + [0]", 20., 45.)
+                pol1 = ROOT.TF1("{r}_pol1_{eta}".format(r=rate,eta=etastring), "[1]*x + [0]", 20., 60.)
                 errf= ROOT.TF1("{r}_errf_{eta}".format(r=rate,eta=etastring), "[0]*TMath::Erf((x-[1])/[2])", 20., 100.)
                 
                 if rate == 'fr':
@@ -687,8 +687,8 @@ def makeFakeRatesFast(recalculate):
                     #graph.SetTitle(";p_{T}#mu;Ratios");
                     #graph.GetXaxis().SetTitle("p_{T}#mu");
                     #pol0.SetParLimits(1, 0.1, 0.4)
-                    #pol1.SetParLimits(1, -0.1  , 0.1)
-                    #pol1.SetParLimits(0,  0.1  , 1.1)
+                    pol1.SetParameter(1, -0.2)
+                    pol1.SetParameter(0,  0.2)
 
                 else:
                     graph = graph_file.Get(leptontype+'TightId_pt_fine_binned_WandZ')
@@ -698,9 +698,9 @@ def makeFakeRatesFast(recalculate):
                     #pol0.SetLineColor(ROOT.kBlue)   ; pol0.SetLineWidth(2)
                     #pol1.SetLineColor(ROOT.kAzure-3); pol1.SetLineWidth(2)
                     errf.SetLineColor(ROOT.kCyan); errf.SetLineWidth(2)
-                    errf.SetParameter(0, 2.1);
-                    errf.SetParameter(1, 2.1);
-                    errf.SetParameter(2, 1.52);
+                    errf.SetParameter(0, 0.9);
+                    errf.SetParameter(1, 2.9);
+                    errf.SetParameter(2, 2.8);
                     ERRF=errf.Clone()
                     #pol0.SetParLimits(1, 0.1, 1.1)
                     #pol1.SetParLimits(1, -0.1  , 0.1)
@@ -715,12 +715,12 @@ def makeFakeRatesFast(recalculate):
                     
                     pol0_chi2 = pol0.GetChisquare(); pol0_ndf = pol0.GetNDF()
                     pol1_chi2 = pol1.GetChisquare(); pol1_ndf = pol1.GetNDF()
-                    rchi2_0 = pol0_chi2/pol0_ndf
-                    rchi2_1 = pol1_chi2/pol1_ndf
-                    bestfunc = pol0 if rchi2_0 < rchi2_1 else pol1
-                    worstfun = pol0 if rchi2_0 > rchi2_1 else pol1
-                    print '{r} and {eta}: chi2 of pol0 = {chi0}/{ndf0} = {red0}'.format(r=rate,eta=etastring,chi0=pol0_chi2,ndf0=pol0_ndf, red0=rchi2_0)
-                    print '{r} and {eta}: chi2 of pol1 = {chi1}/{ndf1} = {red1}'.format(r=rate,eta=etastring,chi1=pol1_chi2,ndf1=pol1_ndf, red1=rchi2_1)
+                    #rchi2_0 = pol0_chi2/pol0_ndf
+                    #rchi2_1 = pol1_chi2/pol1_ndf
+                    bestfunc = pol1 #pol0 if rchi2_0 < rchi2_1 else pol1
+                    worstfun = pol0 #pol0 if rchi2_0 > rchi2_1 else pol1
+                    #print '{r} and {eta}: chi2 of pol0 = {chi0}/{ndf0} = {red0}'.format(r=rate,eta=etastring,chi0=pol0_chi2,ndf0=pol0_ndf, red0=rchi2_0)
+                    #print '{r} and {eta}: chi2 of pol1 = {chi1}/{ndf1} = {red1}'.format(r=rate,eta=etastring,chi1=pol1_chi2,ndf1=pol1_ndf, red1=rchi2_1)
 
                 if rate == 'pr':
                     graph.Fit("{r}_errf_{eta}".format(r=rate,eta=etastring), "M", "", 20., 100.)
@@ -728,15 +728,15 @@ def makeFakeRatesFast(recalculate):
                     #pol1_chi2 = pol1.GetChisquare(); pol1_ndf = pol1.GetNDF()
                     errf_chi2 = errf.GetChisquare(); errf_ndf = errf.GetNDF()
                     #rchi2_1 = pol1_chi2/pol1_ndf
-                    rchi2_0 = errf_chi2/errf_ndf
+                    #rchi2_0 = errf_chi2/errf_ndf
                     bestfunc = errf #if rchi2_0 < rchi2_1 else pol1
                     worstfun = '' #if rchi2_0 > rchi2_1 else pol1
 
 
-                    print '{r} and {eta}: chi2 of errf = {chi0}/{ndf0} = {red0}'.format(r=rate,eta=etastring,chi0=errf_chi2,ndf0=errf_ndf, red0=rchi2_0)
+                    #print '{r} and {eta}: chi2 of errf = {chi0}/{ndf0} = {red0}'.format(r=rate,eta=etastring,chi0=errf_chi2,ndf0=errf_ndf, red0=rchi2_0)
                     #print '{r} and {eta}: chi2 of pol1 = {chi1}/{ndf1} = {red1}'.format(r=rate,eta=etastring,chi1=pol1_chi2,ndf1=pol1_ndf, red1=rchi2_1)
 
-                print 'the better function is {func}'.format(func=bestfunc.GetName())
+                #print 'the better function is {func}'.format(func=bestfunc.GetName())
 
                 #print '{eta}: compared to {func}         .   value={val:.3f}'.format(eta=eta, func = worstfun.GetName(), val=worstfun.GetChisquare()/worstfun.GetNDF())
                 

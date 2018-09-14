@@ -1,0 +1,16 @@
+DPSWW      : WWDoubleTo2L
+DPSWW_alt  : WW_DPS_herwig
+DY	   : DYJetsToLL_M50_LO_ext_part* 
+data : DoubleMuon_2016* 
+data : SingleMuon_2016* 
+data : MuonEG_2016*
+data : SingleElectron_2016*
+rares    : WpWpJJ      
+rares    : WWW         
+rares    : TTZ_LO      
+rares    : ZGTo2LG_ext 
+ZZ         : ZZTo4L    
+WZ         : WZTo3LNu  
+WZamcatnlo : WZTo3LNu_amcatnlo 
+WG_wg     : WZTo3LNu_mll01* 
+

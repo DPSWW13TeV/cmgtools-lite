@@ -169,20 +169,20 @@ def runplots(trees, friends, targetdir, fmca, fcut, fplots, enabledcuts, disable
     print 'running: python', cmd
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
-def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge = False): #sfdate, onlyMM = True, splitCharge = True):
+def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = True): #sfdate, onlyMM = True, splitCharge = True):
 #def runCards(trees, friends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, extraopts = ''):
 #python makeShapeCardsSusy.py --s2v -P /afs/cern.ch/work/e/efascion/DPStrees/TREES_110816_2muss/ --Fs /afs/cern.ch/work/e/efascion/public/friendsForDPS_110816/ -l 12.9 dps-ww/final_mca.txt dps-ww/cutfinal.txt finalMVA_DPS 10,0.,1.0  --od dps-ww/cards -p DPSWW,WZ,ZZ,WWW,WpWpJJ,Wjets  -W 0.8874 --asimov dps-ww/syst.txt
     
     #sfs = calculateScalefactors(False, sfdate)
 #/afs/cern.ch/user/p/peruzzi/work/tthtrees/TREES_TTH_190418_Fall17_skim2lss3l/8_vtxWeight2017_v1/evVarFriend_WW_DPS.root
     targetcarddir = 'cards_{date}{pf}_ElMu_Fakes_syst_included'.format(date=date, pf=('-'+postfix if postfix else '') )
-    trees     = '/eos/user/m/mdunser/dps-13TeV-combination/TREES_latest/'
-    friends = [trees+'/friends_jet_pu_lepSF/', trees+'/friends_latest_bdt/']
+    trees     = 'skimmed_2lss_2016/'#/eos/user/m/mdunser/dps-13TeV-combination/TREES_latest/'
+    friends = ['skimmed_Friends_BDT_2lss_2016/','skimmed_Friends_2lss_2016/']#[trees+'/friends_jet_pu_lepSF/', trees+'/friends_latest_bdt/']
     #friends = ['frnds/', trees+'/friends_latest_bdt/']
     targetdir = '/eos/user/a/anmehta/www/{date}{pf}2016'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots.txt'
     # fsyst  = 'dpsww13TeV/dps2016/results/syst.txt'
-    fsyst  = 'dpsww13TeV/dps2016/results/syst_July2018.txt'
+    fsyst  = 'dpsww13TeV/dps2016/results/syst_2016.txt'
 
     print '=========================================='
     print 'run results for MUMU'
@@ -224,7 +224,7 @@ def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge = Fal
                 state='elel'
             else:
                 enable    = ['trigelmu','elmu'] + ch
-                fmca='dpsww13TeV/dps2016/results/elmu_mca_July2018.txt'
+                fmca='dpsww13TeV/dps2016/results/elmu_mca_v1.txt'
                 fcut   = 'dpsww13TeV/dps2016/results/cuts_results_MVA_tight_WP.txt'
                 state='elmu'
 
@@ -238,14 +238,14 @@ def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge = Fal
             
             randomvarsDump=['mcMatchId1','mcMatchId2','pt_mcMatchId2','pt_mcMatchId1','lepMVA1_mumu','lepMVA2_mumu','mtl1met','mtl2met','njetsclean','nbjetscleanCSVL25','nbjetscleanCSVM25','nbjetscleanCSVL30','nbjetscleanCSVM30','nhadtausclean','njets30clean','njets','nbjets','jetpt','jetbtagCSV','njetpt''jetdpt_old','jetdbtagCSV_old','njetd_old','jetdpt','jetdpt_old','jetdpt_cal','jetdpt_cat','njetd','njetd_old','njetd_cal','njetd_cat','jetdbtagCSV','jetdbtagCSV_old','jetdbtagCSV_cal','jetdbtagCSV_cat','BDTfakes_BDTWZ_mumu{ch}_20bins'.format(ch=(ch[0] if ch else ''))]
 
-            drawvars=['nVert','dphil2met']#pt1','mll','met','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','dphil2met']#,'nVert','njetsclean','jetclean_csva']
+            drawvars=['chargecon2','chargecon1','met','nVert','dphil2met','pt1','mll','met','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','dphil2met']#,'nVert','njetsclean','jetclean_csva']
             
-            if splitCharge or splitsign:
-                makeplots  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
-            else:
-                makeplots  = ['{}_{}'.format(a,state) for a in drawvars]
+            #if splitCharge or splitsign:
+                #makeplots  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
+            #else:
+                #makeplots  = ['{}_{}'.format(a,state) for a in drawvars]
             
-            #makeplots = ['BDTforCombine_elmu{ch}{nbins}'.format(ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_elmu{ch}_20bins'.format(ch=(ch[0] if ch else '')),'BDT_fakes_elmu{ch}_20bins'.format(ch=(ch[0] if ch else ''))]
+            makeplots = ['BDTforCombine_elmu{ch}{nbins}'.format(ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_elmu{ch}_20bins'.format(ch=(ch[0] if ch else '')),'BDT_fakes_elmu{ch}_20bins'.format(ch=(ch[0] if ch else ''))]
 
             runplots(trees, friends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
             ## ==================================
