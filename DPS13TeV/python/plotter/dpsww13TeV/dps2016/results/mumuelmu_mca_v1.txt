@@ -17,7 +17,8 @@ rares    : ZGTo2LG_ext : xsec   : LepGood1_mcMatchId != 0 && LepGood2_mcMatchId 
 
 ZZ         : ZZTo4L            : xsec : 1  ; FillColor=ROOT.kYellow+2 , Label="ZZ"      , NormSystematic=0.30
 WZ         : WZTo3LNu          : xsec : 1  ; FillColor=ROOT.kAzure+1  , Label="WZ"      , NormSystematic=0.16
-WZamcatnlo : WZTo3LNu_amcatnlo : xsec : 1  ; FillColor=ROOT.kAzure+1  , Label="WZ"      , NormSystematic=0.16, SkipMe=True
+WZamcatnlo : WZTo3LNu_amcatnlo : xsec : 1  ; FillColor=ROOT.kRed+1  , Label="WZ"      , NormSystematic=0.16
+#, SkipMe=True
 
 
 

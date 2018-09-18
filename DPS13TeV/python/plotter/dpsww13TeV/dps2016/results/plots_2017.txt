@@ -206,16 +206,6 @@ BDT_fakes_mumuplusplus_20bins   : BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT fakes (
 
 BDT_fakes_mumuminusminus_20bins : BDT_DPS_fakes  : 20,0.,1.0; XTitle="BDT fakes (#mu^{-}#mu^{-})" 
 
-BDT_fakes_elmuminusminus_20bins : BDT_DPS_fakes  : 20,0.,1.0; XTitle="BDT fakes (e^{-}#mu^{-})"   
-BDT_fakes_elmuplusplus_20bins   : BDT_DPS_fakes  : 20,0.,1.0; XTitle="BDT fakes (e^{+}#mu^{-})"
-BDT_wz_elmuminusminus_15bins    : BDT_DPS_WZ     : 15,0.,1.0; XTitle="BDT WZ (e^{-}#mu^{-})"   
-BDT_wz_elmuplusplus_15bins      : BDT_DPS_WZ     : 15,0.,1.0; XTitle="BDT WZ (e^{+}#mu^{+})"
-BDT_wz_elmuminusminus_20bins    : BDT_DPS_WZ     : 20,0.,1.0; XTitle="BDT WZ(e^{-}#mu^{-})"   
-BDT_prod_elmuminusminus_20bins  : BDT_DPS_WZ*BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT WZ x fakes (e^{-}#mu^{-})"   
-BDT_prod_elmuplusplus_20bins    : BDT_DPS_WZ*BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT WZ x fakes (e^{+}#mu^{+})"   
-
-
-
 BDTfakes_BDTWZ_mumuminusminus_20bins   : BDT_DPS_WZ\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{-}#mu^{-})", YTitle="BDT_WZ(#mu^{-}#mu^{-})"
 
 BDTfakes_BDTWZ_mumuplusplus_20bins   : BDT_DPS_WZ\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{+}#mu^{+})", YTitle="BDT_WZ(#mu^{+}#mu^{+})"
@@ -226,6 +216,23 @@ BDTfakes_BDTWZ_mumuplusplus_20bins   : BDT_DPS_WZ\:BDT_DPS_fakes  : 20,0,1.0,20,
 
 met_elmuminusminus           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (e^{-}#mu^{-}) (GeV)" ,YMin=0,YMax=400 
 met_elmuplusplus           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (e^{+}#mu^{+}) (GeV)" ,YMin=0,YMax=400 
+
+
+BDT_fakes_elmuminusminus_20bins : BDT_DPS_fakes  : 20,0.,1.0; XTitle="BDT fakes (e^{-}#mu^{-})"   
+BDT_fakes_elmuplusplus_20bins   : BDT_DPS_fakes  : 20,0.,1.0; XTitle="BDT fakes (e^{+}#mu^{-})"
+BDT_wz_elmuminusminus_15bins    : BDT_DPS_WZ     : 15,0.,1.0; XTitle="BDT WZ (e^{-}#mu^{-})"   
+BDT_wz_elmuplusplus_15bins      : BDT_DPS_WZ     : 15,0.,1.0; XTitle="BDT WZ (e^{+}#mu^{+})"
+
+
+BDT_fakes_elmu_20bins : BDT_DPS_fakes  : 20,0.,1.0; XTitle="BDT fakes (e^{#pm}#mu^{#pm})"   
+BDT_wz_elmu_20bins    : BDT_DPS_WZ     : 20,0.,1.0; XTitle="BDT WZ (e^{#pm}#mu^{#pm})"   
+
+
+BDT_wz_elmuminusminus_20bins    : BDT_DPS_WZ     : 20,0.,1.0; XTitle="BDT WZ(e^{-}#mu^{-})"   
+BDT_prod_elmuminusminus_20bins  : BDT_DPS_WZ*BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT WZ x fakes (e^{-}#mu^{-})"   
+BDT_prod_elmuplusplus_20bins    : BDT_DPS_WZ*BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT WZ x fakes (e^{+}#mu^{+})"   
+
+
 
 BDTforCombine_elmuplusplus_15bins   :  Binnumberset1D_emu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{+}#mu^{+})",YMin=0,YMax=250
 BDTforCombine_elmu_15bins   :  Binnumberset1D_emu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{#pm}#mu^{#pm})",YMin=0,YMax=450
