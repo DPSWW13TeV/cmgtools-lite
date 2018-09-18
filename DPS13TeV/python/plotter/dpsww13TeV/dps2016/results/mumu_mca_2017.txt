@@ -18,11 +18,6 @@ Flips : TBar_tWch_noFullyHad : xsec : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && L
 Flips : WWTo2L2Nu : xsec : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0 && !((LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_pdgId[iLepFO_Recl[0]]==LepGood_mcMatchPdgId[iLepFO_Recl[0]]) && (LepGood_mcMatchId[iLepFO_Recl[1]]!=0 && LepGood_pdgId[iLepFO_Recl[1]]==LepGood_mcMatchPdgId[iLepFO_Recl[1]]))) ; Label="Flips", FillColor=ROOT.kCyan-10
 
 
-DY      : DYJetsToLL_M10to50_LO : xsec : 1; FillColor=ROOT.kViolet-3
-DY      : DYJetsToLL_M50_LO : xsec : 1; FillColor=ROOT.kViolet-3
-
-#(LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_pdgId[iLepFO_Recl[0]]==LepGood_mcMatchPdgId[iLepFO_Recl[0]]) && (LepGood_mcMatchId[iLepFO_Recl[1]]!=0 && LepGood_pdgId[iLepFO_Recl[1]]==LepGood_mcMatchPdgId[iLepFO_Recl[1]])
-
 WJinc	     : WJetsToLNu_LO      : xsec  : 1 ; FillColor=ROOT.kBlue, Label="WJMC"
 WG_wg	     : W4JetsToLNu_LO_skimSameSign : xsec  : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0) ; FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50
 WG_wg	     : W3JetsToLNu_LO_skimSameSign : xsec  : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0) ; FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50
@@ -187,6 +182,24 @@ fakes_data_ptetadown : SingleMuon_2017E : 1 ; FillColor=ROOT.kBlue, FillStyle=30
 
 fakes_data_ptetadown : DoubleMuon_2017F : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
 fakes_data_ptetadown : SingleMuon_2017F : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+
+#######################
+
+fakes_data_shape : DoubleMuon_2017B : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+fakes_data_shape : SingleMuon_2017B : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+
+fakes_data_shape : DoubleMuon_2017C : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+fakes_data_shape : SingleMuon_2017C : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+
+fakes_data_shape : DoubleMuon_2017D : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+fakes_data_shape : SingleMuon_2017D : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+
+fakes_data_shape : DoubleMuon_2017E : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+fakes_data_shape : SingleMuon_2017E : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+
+fakes_data_shape : DoubleMuon_2017F : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+fakes_data_shape : SingleMuon_2017F : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+
 
 
 

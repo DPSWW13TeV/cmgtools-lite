@@ -4,9 +4,9 @@ import numpy as np
 doPUreweighting = False
 doPUreweighting_el = False
 doPUreweighting_mu = False
-doPUreweighting_mu_2017 = True
+doPUreweighting_mu_2017 = False
 doPUandSF = False
-doPUreweighting2017trigandlepSF = False
+doPUreweighting2017trigandlepSF = True
 
 
 
@@ -94,7 +94,6 @@ def runCards(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fsyst
         if not type(BDTfriends)==list: BDTfriends = [BDTfriends]
         for f3 in BDTfriends:
             cmd += ' -F Friends {BDTfriends}/tree_Friend_{{cname}}.root'.format(BDTfriends=f3)
-
     cmd += ' -W vtxWeight2017*leptonSF_ttH(LepGood_pdgId[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],2)*leptonSF_ttH(LepGood_pdgId[iLepFO_Recl[1]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],2)*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[0]],LepGood_pdgId[iLepFO_Recl[1]],LepGood_pt[iLepFO_Recl[1]],nLepTight_Recl,0)'
     cmd += ' -p '+','.join(processes)
     cmd += ''.join(' -E ^'+cut for cut in enabledcuts )
@@ -112,7 +111,7 @@ def runCards(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fsyst
     print 'running: python', cmd
     print '============================================================================================='
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
-    
+
 
 def runefficiencies(trees, friends, targetdir, fmca, fcut, ftight, fxvar, enabledcuts, disabledcuts, scaleprocesses, compareprocesses, showratio, extraopts = ''):
     
@@ -194,7 +193,7 @@ def runplots(trees, friends, targetdir, fmca, fcut, fplots, enabledcuts, disable
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-def runplots1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, extraopts = '', invertedcuts = []):
+def runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, extraopts = '', invertedcuts = []):
     
     if not type(trees)==list: trees = [trees]
     treestring = ' '.join(' -P '+ t for t in list(trees))
@@ -202,10 +201,7 @@ def runplots1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplo
     if friends:
         if not type(friends)==list: friends = [friends]
         for f in friends:
-            #cmd += ' --Fs {friends}'.format(friends=f)
-            #cmd += ' -F Friends {friends}/evVarFriend_{{cname}}.root'.format(friends=f)
-            cmd += ' -F sf/t {friends}/evVarFriend_{{cname}}.root'.format(friends=f)# --FMC sf/t {friends}/friends_sfFriend_{{cname}}.root'.format(friends=friends)
-            #cmd += ' -F Friends {friends}/tree_Friend_{{cname}}.root'.format(friends=f)
+            cmd += ' -F sf/t {friends}/evVarFriend_{{cname}}.root'.format(friends=f)
     if MCfriends:
         if not type(MCfriends)==list: MCfriends = [MCfriends]
         for f2 in MCfriends:
@@ -247,7 +243,7 @@ def runplots1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplo
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = False): #sfdate, onlyMM = True, splitCharge = True):
+def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = True): 
 #def runCards(trees, friends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, extraopts = ''):
 #python makeShapeCardsSusy.py --s2v -P /afs/cern.ch/work/e/efascion/DPStrees/TREES_110816_2muss/ --Fs /afs/cern.ch/work/e/efascion/public/friendsForDPS_110816/ -l 12.9 dps-ww/final_mca.txt dps-ww/cutfinal.txt finalMVA_DPS 10,0.,1.0  --od dps-ww/cards -p DPSWW,WZ,ZZ,WWW,WpWpJJ,Wjets  -W 0.8874 --asimov dps-ww/syst.txt
     
@@ -257,9 +253,9 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
     friends  =[trees+'/1_recleaner_180518_v2/',trees+'/7_tauTightSel_v2/',trees+'/5_triggerDecision_230418_v1/']
     MCfriends = trees+'/8_vtxWeight2017_v1/'
     BDTfriends = '../postprocessing/Friends_BDT_Sep6_2lss/'
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017_Fakes_syst_varby20p'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots_2017.txt'
-    fsyst  = 'dpsww13TeV/dps2016/results/syst_July2018.txt'
+    fsyst  = 'dpsww13TeV/dps2016/results/syst_2017.txt'
 
     print '=========================================='
     print 'run results for MUMU'
@@ -276,8 +272,9 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
 
     print 'did i split the charge? %i' %splitCharge
 
-    processes= ['fakes_data','fakes_data_ptdown','fakes_data_ptup','fakes_data_etadown','fakes_data_etaup','fakes_data_ptetadown','fakes_data_ptetaup']#,'WZ','data','ZZ','fakes_data','rares','Flips','WG_wg']
-    #processesCards = ['data', 'DPSWW', 'WZ', 'ZZ', 'WG_wg', 'rares', 'fakes_data', 'WZamcatnlo', 'DPSWW_alt','fakes_shape']
+    #processes= ['fakes_data','fakes_data_ptdown','fakes_data_ptup','fakes_data_etadown','fakes_data_etaup','fakes_data_ptetadown','fakes_data_ptetaup']
+    processes=['DPSWW','WZ','data','ZZ','fakes_data','rares','Flips','WG_wg']
+    processesCards = ['data', 'DPSWW', 'WZ', 'ZZ', 'WG_wg','Flips','rares','fakes_data','fakes_data_shape']
 
     binningBDT   = ' Binnumberset1D(BDT_DPS_fakes,BDT_DPS_WZ) 15,1.0,16.0'
     nbinspostifx = '_15bins'
@@ -311,21 +308,22 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
             extraopts = '--plotmode=norm --showIndivSigs'.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}
 
             drawvars_mumu=['recopt_minus_genpt1','recopt_minus_genpt2','chargecon1_full','chargecon2_full','recopt_minus_genpt1','recopt_minus_genpt2','recopdgid_over_genpdgid1','recopdgid_over_genpdgid2','genpt1','genpt2']#'SubLeadingFO','LeadingFO','genpt1_with_cclt3','genpt2_with_cclt3',
-            drawvars=['met_jecDown','met_jecUp','met']#'dphil2met','met','nVert','mll','pt1','pt2','lepMVA1','lepMVA2','met','mll','pt1','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','njets']#,'nVert','njetsclean','jetclean_csva']
+            drawvars=['met']#met_jecDown','met_jecUp','met']#'dphil2met','met','nVert','mll','pt1','pt2','lepMVA1','lepMVA2','met','mll','pt1','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','njets']#,'nVert','njetsclean','jetclean_csva']
             
-            #if splitCharge or splitsign:
-                #makeplots  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
-            #else:
-                #makeplots  = ['{}_{}'.format(a,state) for a in drawvars]
+            if splitCharge or splitsign:
+                makeplots1  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
+            else:
+                makeplots1  = ['{}_{}'.format(a,state) for a in drawvars]
             
-            makeplots = ['BDTforCombine_mumu{ch}{nbins}'.format(ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_mumu{ch}_20bins'.format(ch=(ch[0] if ch else '')),'BDT_fakes_mumu{ch}_20bins'.format(ch=(ch[0] if ch else ''))]
-            runplots1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, False, extraopts)
+            makeplots2 = ['BDTforCombine_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
+            makeplots=makeplots1+makeplots2    
+            #runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, False, extraopts)
             ## ==================================
             ## running datacards
             ## ==================================
             #extraoptscards = ' -W {sf:.3f} -o mumu{ch} -b mumu{ch} '.format(sf=mumusf, ch=(ch[0] if ch else ''))
-            extraoptscards = ' -o mumu{ch} -b mumu{ch} '.format(ch=(ch[0] if ch else ''))
-            #runCards(trees, friends, MCfriends, BDTfriends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
+            extraoptscards = ' -o {fstate}{ch} -b {fstate}{ch} '.format(fstate=state,ch=(ch[0] if ch else ''))
+            runCards(trees, friends, MCfriends, BDTfriends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
             
 
 def simplePlot():
@@ -357,7 +355,7 @@ def simplePlot():
     makeplots=['recopt_minus_genpt1_mumu','recopt_minus_genpt2_mumu','chargecon1_full_mumu','chargecon2_full_mumu','recopt_minus_genpt1_mumu','recopt_minus_genpt2_mumu','recopdgid_over_genpdgid1_mumu','recopdgid_over_genpdgid2_mumu','genpt1_with_cclt3_mumu','genpt2_with_cclt3_mumu','genpt1_mumu','genpt2_mumu']
     #    makeplots = ['l1mvaTTH']
     showratio = False
-    runplots1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
+    runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
 
     
 def fakesDataMC():
