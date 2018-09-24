@@ -169,7 +169,7 @@ def runplots(trees, friends, targetdir, fmca, fcut, fplots, enabledcuts, disable
     print 'running: python', cmd
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
-def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge = True): #sfdate, onlyMM = True, splitCharge = True):
+def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = True): #sfdate, onlyMM = True, splitCharge = True):
 #def runCards(trees, friends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, extraopts = ''):
 #python makeShapeCardsSusy.py --s2v -P /afs/cern.ch/work/e/efascion/DPStrees/TREES_110816_2muss/ --Fs /afs/cern.ch/work/e/efascion/public/friendsForDPS_110816/ -l 12.9 dps-ww/final_mca.txt dps-ww/cutfinal.txt finalMVA_DPS 10,0.,1.0  --od dps-ww/cards -p DPSWW,WZ,ZZ,WWW,WpWpJJ,Wjets  -W 0.8874 --asimov dps-ww/syst.txt
     
@@ -202,7 +202,7 @@ def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge = Tru
     #    processes=['DPSWW','WZ','TTZ','fakes_data']
     processes = ['DPSWW', 'WZ', 'ZZ', 'WG_wg', 'rares','data','fakes_data','Flips']
     #processes= ['sig1','sig3','sig2']#,'fakes_data_up','fakes_data_Down']#fakes_data_Up','fakes_data','fakes_data_Down']
-    processesCards = ['data', 'DPSWW', 'WZ', 'ZZ', 'WG_wg', 'rares', 'fakes_data', 'WZamcatnlo', 'DPSWW_alt','fakes_data_shape','Flips']
+    processesCards = ['data', 'DPSWW', 'WZ', 'ZZ', 'WG_wg', 'rares', 'fakes_data', 'WZamcatnlo', 'DPSWW_alt','Flips','fakes_data_FRbypt25_Dn','fakes_data_FRbypt25_Up','fakes_data_jetpT_Dn','fakes_data_jetpT_Up']
 
     if onlyMM:
         binningBDT   = ' Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ) 15,1.0,16.0'
