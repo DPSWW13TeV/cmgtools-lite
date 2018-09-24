@@ -537,56 +537,46 @@ float fakeRateWeight_2lss(float l1pt, float l1eta, int l1pdgId, float l1pass,
 float fakeRateWeight_2lss(float l1pt, float l1eta, int l1pdgId, float l1pass,
 			  float l2pt, float l2eta, int l2pdgId, float l2pass, int varUorD) 
 {
-  // varUorD == 0 for nominal FRs, {1 for up variation, 2 for down variation in pT}
-  // 3 for up in eta and 4 for down in eta
-  // 5 for up in both eta and pT and 6 for both down in pT and eta
+  // varUorD == 0 for nominal FRs, {1 for up variation, 2 for down variation as a function of lepton eta}
   if (varUorD == 0) {
   return fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
 				 l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
   else if (varUorD == 1) {
-      float L1pt=l1pt*(1.0+0.2*l1pt);
-      float L2pt=l2pt*(1.0+0.2*l2pt);
-      return fakeRateWeight_2lssCB_i(L1pt, l1eta, l1pdgId, -l1pass,
-				     L2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
-  else if (varUorD == 2) {
-      float L1pt=l1pt*(1.0-0.2*l1pt);
-      float L2pt=l2pt*(1.0-0.2*l2pt);
-      return fakeRateWeight_2lssCB_i(L1pt, l1eta, l1pdgId, -l1pass,
-				     L2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+    float varWeight = 1.05+(fabs(l1eta)+fabs(l2eta))/2.*0.0625;
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
 
-  else if (varUorD == 3){
-    float L1eta=l1eta*(1.0+0.2*l1eta);
-    float L2eta=l2eta*(1.0+0.2*l2eta);
-    return fakeRateWeight_2lssCB_i(l1pt, L1eta, l1pdgId, -l1pass,
-				   l2pt, L2eta, l2pdgId, -l2pass, -0.5, 0);}
-  
-  else if (varUorD == 4){
-    float L1eta=l1eta*(1.0-0.2*l1eta);
-    float L2eta=l2eta*(1.0-0.2*l2eta);
-    return fakeRateWeight_2lssCB_i(l1pt, L1eta, l1pdgId, -l1pass,
-				   l2pt, L2eta, l2pdgId, -l2pass, -0.5, 0);}
-  
-  else if (varUorD == 5){
-    float L1pt=l1pt*(1.0+0.2*l1pt);
-    float L2pt=l2pt*(1.0+0.2*l2pt);
-    float L1eta=l1eta*(1.0+0.2*l1eta);
-    float L2eta=l2eta*(1.0+0.2*l2eta);
-    return fakeRateWeight_2lssCB_i(L1pt, L1eta, l1pdgId, -l1pass,
-				   L2pt, L2eta, l2pdgId, -l2pass, -0.5, 0);}
-  
-  else if (varUorD == 6){
-    float L1pt=l1pt*(1.0-0.2*l1pt);
-    float L2pt=l2pt*(1.0-0.2*l2pt);
-    float L1eta=l1eta*(1.0-0.2*l1eta);
-    float L2eta=l2eta*(1.0-0.2*l2eta);
-    return fakeRateWeight_2lssCB_i(L1pt, L1eta, l1pdgId, -l1pass,
-				   L2pt, L2eta, l2pdgId, -l2pass, -0.5, 0);}
+  else if (varUorD == 2) {
+    float varWeight = 0.95-(fabs(l1eta)+fabs(l2eta))/2*0.0625;
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+  else if (varUorD == 3) {
+    float varWeight = 1.05 + (fabs(l1eta)*0.0625);
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+
+  else if (varUorD == 4) {
+    float varWeight = 0.95 - (fabs(l1eta)*0.0625);
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+
+  else if (varUorD == 5) {
+    float ptwt= 0.0025 * (l1pt < 50 ? l1pt : 50); 
+    float varWeight = 1.05 + (fabs(l1eta)*0.0625) + ptwt;
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+
+  else if (varUorD == 6) {
+    float ptwt= 0.0025 * (l1pt < 50 ? l1pt : 50);
+    float varWeight = 0.95 - (fabs(l1eta)*0.0625) - ptwt;
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+
+
   
   else {
     return fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
 				   l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
-  
-
 
 }
 

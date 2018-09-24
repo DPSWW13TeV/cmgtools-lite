@@ -82,7 +82,7 @@ phi1_mumu          : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead."
 phi2_mumu          : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail."
 lepMVA1_mumu       : LepGood1_mvaTTH : 20,-1,1; XTitle="LepMVA1" 
 lepMVA2_mumu       : LepGood2_mvaTTH : 20,-1,1; XTitle="LepMVA2"
-
+eta_mumu          : LepGood_eta    : 10,-2.5,2.5; XTitle="#eta lep."
 
 BDT_prod_mumu_20bins    : BDT_DPS_WZ*BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT WZ x fakes (#mu^{#pm}#mu^{#pm})" ,Legend="TL",YLim=0,60
 

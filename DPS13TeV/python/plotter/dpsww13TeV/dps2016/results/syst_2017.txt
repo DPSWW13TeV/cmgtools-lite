@@ -11,12 +11,6 @@ rares_shape     : rares      : .*             : 1.05       : shapeOnly
 flips_norm      : Flips      : .*             : 1.30
 flips_norm      : Flips      : .*   	      : 1.30
 flips_norm      : Flips      : .*	      : 1.30
-fakes_mumu_alt_shape	: fakes_data : mumu	      : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
-fakes_mumu_alt_shape	: fakes_data : mumuplusplus   : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
-fakes_mumu_alt_shape	: fakes_data : mumuminusminus : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
-fakes_elmu_alt_shape	: fakes_data : elmu	      : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
-fakes_elmu_alt_shape	: fakes_data : elmuplusplus   : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
-fakes_elmu_alt_shape	: fakes_data : elmuminusminus : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
 mumu_fakes_norm     : fakes_data : mumu           : 1.25
 elmu_fakes_norm     : fakes_data : elmu           : 1.40
 mumu_fakes_norm     : fakes_data : mumuplusplus   : 1.25
@@ -24,3 +18,10 @@ elmu_fakes_norm     : fakes_data : elmuplusplus   : 1.40
 mumu_fakes_norm     : fakes_data : mumuminusminus : 1.25
 elmu_fakes_norm     : fakes_data : elmuminusminus : 1.40
 
+
+fakes_mumu_template_shape	: fakes_data : mumu	      : FR	: templates
+fakes_mumu_template_shape	: fakes_data : mumuplusplus   : FR	: templates
+fakes_mumu_template_shape	: fakes_data : mumuminusminus : FR	: templates
+fakes_elmu_template_shape	: fakes_data : elmu	      : FR	: templates
+fakes_elmu_template_shape	: fakes_data : elmuplusplus   : FR	: templates
+fakes_elmu_template_shape	: fakes_data : elmuminusminus : FR	: templates

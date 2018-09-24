@@ -272,10 +272,10 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Tr
 
     print 'did i split the charge? %i' %splitCharge
 
-    #processes= ['fakes_data','fakes_data_ptdown','fakes_data_ptup','fakes_data_etadown','fakes_data_etaup','fakes_data_ptetadown','fakes_data_ptetaup']
+    #processes= ['fakes_data','fakes_data_pteta_Dn','fakes_data_pteta_Up']#'fakes_data_avgetaup','fakes_data_avgetadown']
     #processes=['WZ','fakes_data']
     processes=['DPSWW','WZ','fakes_data','data','ZZ','rares','Flips','WG_wg']
-    processesCards = ['data', 'DPSWW', 'WZ', 'ZZ', 'WG_wg','Flips','rares','fakes_data','fakes_data_ptetaby20perc_Down']
+    processesCards = ['data', 'DPSWW', 'WZ', 'ZZ', 'WG_wg','Flips','rares','fakes_data','fakes_data_FR_Dn','fakes_data_FR_Up']
     if onlyMM:
         binningBDT   = ' Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ) 15,1.0,16.0'
     else:
@@ -309,10 +309,10 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Tr
             scalethem = {}#'DPSWW':'{sf:.3f}'.format(sf=0.50)}#'WZ': '{sf:.3f}'.format(sf=1.04),
                          #'ZZ': '{sf:.3f}'.format(sf=1.21)}
             mumusf = 0.95
-            extraopts = '--showIndivSigs'.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}
+            extraopts = '--plotmode=norm  --showIndivSigs'.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}
 
             drawvars_mumu=['recopt_minus_genpt1','recopt_minus_genpt2','chargecon1_full','chargecon2_full','recopt_minus_genpt1','recopt_minus_genpt2','recopdgid_over_genpdgid1','recopdgid_over_genpdgid2','genpt1','genpt2','met_jecDown','met_jecUp','met']#'SubLeadingFO','LeadingFO','genpt1_with_cclt3','genpt2_with_cclt3',
-            drawvars=['dphil2met','met','nVert','mll','pt1','pt2','lepMVA1','lepMVA2','met','mll','pt1','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','njets']#,'nVert','njetsclean','jetclean_csva']
+            drawvars=['eta']#eta1','eta2','eta_sum']#'dphil2met','met','nVert','mll','pt1','pt2','lepMVA1','lepMVA2','met','mll','pt1','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','njets']#,'nVert','njetsclean','jetclean_csva']
             
             if splitCharge or splitsign:
                 makeplots1  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
@@ -322,7 +322,7 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Tr
             makeplots2 = ['BDTforCombine_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
             makeplots=makeplots2#+makeplots1  
             targetcarddir = 'cards_{date}{pf}_{fstate}_2017_test'.format(fstate=state,date=date, pf=('-'+postfix if postfix else '') )  
-            #runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
+            #runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, False, extraopts)
 
             ## ==================================
             ## running datacards
