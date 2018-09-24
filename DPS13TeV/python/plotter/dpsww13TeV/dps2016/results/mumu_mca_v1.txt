@@ -42,17 +42,17 @@ fakes_data_up : SingleMuon_2016* : 1 ; FillColor=ROOT.kMagenta, FillStyle=3005, 
 fakes_data_down : DoubleMuon_2016* : 1 ; FillColor=ROOT.kCyan, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_down.txt', Label="FRdownbypt25" , SkipMe=True
 fakes_data_down : SingleMuon_2016* : 1 ; FillColor=ROOT.kCyan, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_down.txt', Label="FRdownbypt25" , SkipMe=True
 
-############
-fakes_data_shape : DoubleMuon_2016* : 1 ; FillColor=ROOT.kMagenta, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_syst2.txt', Label="jetpTgt50" , SkipMe=True
-fakes_data_shape : SingleMuon_2016* : 1 ; FillColor=ROOT.kMagenta, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_syst2.txt', Label="jetpTgt50" , SkipMe=True
+############ for cards 
+fakes_data_jetpT_Up : DoubleMuon_2016* : 1 ; FillColor=ROOT.kMagenta, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_syst2.txt', Label="jetpTgt50" , SkipMe=True
+fakes_data_jetpT_Up : SingleMuon_2016* : 1 ; FillColor=ROOT.kMagenta, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_syst2.txt', Label="jetpTgt50" , SkipMe=True
 
-#fakes_data_shape : DoubleMuon_2016* : 1 ; FillColor=ROOT.kCyan, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_syst.txt', Label="jetpTgt40" , SkipMe=True
-#fakes_data_shape : SingleMuon_2016* : 1 ; FillColor=ROOT.kCyan, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_syst.txt', Label="jetpTgt40" , SkipMe=True
+fakes_data_jetpT_Dn : DoubleMuon_2016* : 1 ; FillColor=ROOT.kCyan, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_syst.txt', Label="jetpTgt40" , SkipMe=True
+fakes_data_jetpT_Dn : SingleMuon_2016* : 1 ; FillColor=ROOT.kCyan, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_syst.txt', Label="jetpTgt40" , SkipMe=True
 
-fakes_data_shape : DoubleMuon_2016* : 1 ; FillColor=ROOT.kMagenta, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_up.txt', Label="FRupbypt25" , SkipMe=True
-fakes_data_shape : SingleMuon_2016* : 1 ; FillColor=ROOT.kMagenta, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_up.txt', Label="FRupbypt25" , SkipMe=True
+fakes_data_FRbypt25_Up : DoubleMuon_2016* : 1 ; FillColor=ROOT.kMagenta, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_up.txt', Label="FRupbypt25" , SkipMe=True
+fakes_data_FRbypt25_Up : SingleMuon_2016* : 1 ; FillColor=ROOT.kMagenta, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_up.txt', Label="FRupbypt25" , SkipMe=True
 
-#fakes_data_shape : DoubleMuon_2016* : 1 ; FillColor=ROOT.kCyan, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_down.txt', Label="FRdownbypt25"  , SkipMe=True
-#fakes_data_shape : SingleMuon_2016* : 1 ; FillColor=ROOT.kCyan, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_down.txt', Label="FRdownbypt25"  , SkipMe=True
+fakes_data_FRbypt25_Dn : DoubleMuon_2016* : 1 ; FillColor=ROOT.kCyan, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_down.txt', Label="FRdownbypt25"  , SkipMe=True
+fakes_data_FRbypt25_Dn : SingleMuon_2016* : 1 ; FillColor=ROOT.kCyan, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_v1_down.txt', Label="FRdownbypt25"  , SkipMe=True
 
 
