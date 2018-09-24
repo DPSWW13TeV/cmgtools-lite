@@ -25,18 +25,18 @@ mumu_fakes_norm     : fakes_data : mumuminusminus : 1.25
 elmu_fakes_norm     : fakes_data : elmuminusminus : 1.40
 
 
-fakes_mumu_jetpt_template_shape	: fakes_data : mumu	      : fakes_data_jetpt	: templates
-fakes_mumu_jetpt_template_shape	: fakes_data : mumuplusplus   : fakes_data_jetpt	: templates
-fakes_mumu_jetpt_template_shape	: fakes_data : mumuminusminus : fakes_data_jetpt	: templates
-fakes_mumu_FRbypt25_template_shape	: fakes_data : mumu	      : fakes_data_FRbypt25	: templates
-fakes_mumu_FRbypt25_template_shape	: fakes_data : mumuplusplus   : fakes_data_FRbypt25	: templates
-fakes_mumu_FRbypt25_template_shape	: fakes_data : mumuminusminus : fakes_data_FRbypt25	: templates
+fakes_mumu_jetpt_template_shape	: fakes_data : mumu	      : jetpt	: templates
+fakes_mumu_jetpt_template_shape	: fakes_data : mumuplusplus   : jetpt	: templates
+fakes_mumu_jetpt_template_shape	: fakes_data : mumuminusminus : jetpt	: templates
+fakes_mumu_FRbypt25_template_shape	: fakes_data : mumu	      : FRbypt25	: templates
+fakes_mumu_FRbypt25_template_shape	: fakes_data : mumuplusplus   : FRbypt25	: templates
+fakes_mumu_FRbypt25_template_shape	: fakes_data : mumuminusminus : FRbypt25	: templates
 
 
 
-fakes_elmu_jetpt_template_shape	: fakes_data : elmu	      : fakes_data_jetpt	: templates
-fakes_elmu_jetpt_template_shape	: fakes_data : elmuplusplus   : fakes_data_jetpt	: templates
-fakes_elmu_jetpt_template_shape	: fakes_data : elmuminusminus : fakes_data_jetpt	: templates
-fakes_elmu_FRbypt25_template_shape	: fakes_data : elmu	      : fakes_data_FRbypt25	: templates
-fakes_elmu_FRbypt25_template_shape	: fakes_data : elmuplusplus   : fakes_data_FRbypt25	: templates
-fakes_elmu_FRbypt25_template_shape	: fakes_data : elmuminusminus : fakes_data_FRbypt25	: templates
+fakes_elmu_jetpt_template_shape	: fakes_data : elmu	      : jetpt	: templates
+fakes_elmu_jetpt_template_shape	: fakes_data : elmuplusplus   : jetpt	: templates
+fakes_elmu_jetpt_template_shape	: fakes_data : elmuminusminus : jetpt	: templates
+fakes_elmu_FRbypt25_template_shape	: fakes_data : elmu	      : FRbypt25	: templates
+fakes_elmu_FRbypt25_template_shape	: fakes_data : elmuplusplus   : FRbypt25	: templates
+fakes_elmu_FRbypt25_template_shape	: fakes_data : elmuminusminus : FRbypt25	: templates
