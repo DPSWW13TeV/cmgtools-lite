@@ -1,26 +1,26 @@
-lumi_13TeV_2016 : DPSWW      : .*             : 1.026
-signal_shape    : DPSWW      : .*             : 1.10	   : shapeOnly
+lumi_13TeV_2017 : DPSWW      : .*             : 1.026
+signal_shape    : DPSWW      : .*             : 1.05	   : shapeOnly
 WZ_norm         : WZ         : .*             : 1.16
-WZ_shapeUnc     : WZ         : .*             : 1.20	   : shapeOnly
+WZ_shapeUnc     : WZ         : .*             : 1.10	   : shapeOnly
 ZZ_norm         : ZZ         : .*             : 1.30
 WG_norm         : WG_wg      : .*             : 1.50
 rares_norm      : rares      : .*             : 1.50
 ZZ_shape        : ZZ         : .*             : 1.05       : shapeOnly
-WG_shape        : WG_wg      : .*             : 1.05       : shapeOnly
+WG_shape        : WG_wg      : .*             : 2.00       : shapeOnly
 rares_shape     : rares      : .*             : 1.05       : shapeOnly
 flips_norm      : Flips      : .*             : 1.30
 flips_norm      : Flips      : .*   	      : 1.30
 flips_norm      : Flips      : .*	      : 1.30
-fakes_mumu_alt_shape	: fakes_data : mumu	      : fakes_data_shape	: alternateShapeOnly
-fakes_mumu_alt_shape	: fakes_data : mumuplusplus   : fakes_data_shape	: alternateShapeOnly
-fakes_mumu_alt_shape	: fakes_data : mumuminusminus : fakes_data_shape	: alternateShapeOnly
-fakes_elmu_alt_shape	: fakes_data : elmu	      : fakes_data_shape	: alternateShapeOnly
-fakes_elmu_alt_shape	: fakes_data : elmuplusplus   : fakes_data_shape	: alternateShapeOnly
-fakes_elmu_alt_shape	: fakes_data : elmuminusminus : fakes_data_shape	: alternateShapeOnly
-mumu_fakes      : fakes_data : mumu           : 1.25
-elmu_fakes      : fakes_data : elmu           : 1.40
-mumu_fakes      : fakes_data : mumuplusplus   : 1.25
-elmu_fakes      : fakes_data : elmuplusplus   : 1.40
-mumu_fakes      : fakes_data : mumuminusminus : 1.25
-elmu_fakes      : fakes_data : elmuminusminus : 1.40
+fakes_mumu_alt_shape	: fakes_data : mumu	      : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
+fakes_mumu_alt_shape	: fakes_data : mumuplusplus   : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
+fakes_mumu_alt_shape	: fakes_data : mumuminusminus : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
+fakes_elmu_alt_shape	: fakes_data : elmu	      : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
+fakes_elmu_alt_shape	: fakes_data : elmuplusplus   : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
+fakes_elmu_alt_shape	: fakes_data : elmuminusminus : fakes_data_ptetaby20perc_Down	: alternateShapeOnly
+mumu_fakes_norm     : fakes_data : mumu           : 1.25
+elmu_fakes_norm     : fakes_data : elmu           : 1.40
+mumu_fakes_norm     : fakes_data : mumuplusplus   : 1.25
+elmu_fakes_norm     : fakes_data : elmuplusplus   : 1.40
+mumu_fakes_norm     : fakes_data : mumuminusminus : 1.25
+elmu_fakes_norm     : fakes_data : elmuminusminus : 1.40
 

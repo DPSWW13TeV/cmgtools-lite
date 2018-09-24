@@ -185,20 +185,20 @@ fakes_data_ptetadown : SingleMuon_2017F : 1 ; FillColor=ROOT.kBlue, FillStyle=30
 
 #######################
 
-fakes_data_shape : DoubleMuon_2017B : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
-fakes_data_shape : SingleMuon_2017B : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+fakes_data_ptetaby20perc_Down : DoubleMuon_2017B : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", SkipMe=True
+fakes_data_ptetaby20perc_Down : SingleMuon_2017B : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", SkipMe=True
 
-fakes_data_shape : DoubleMuon_2017C : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
-fakes_data_shape : SingleMuon_2017C : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+fakes_data_ptetaby20perc_Down : DoubleMuon_2017C : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", SkipMe=True
+fakes_data_ptetaby20perc_Down : SingleMuon_2017C : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", SkipMe=True
 
-fakes_data_shape : DoubleMuon_2017D : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
-fakes_data_shape : SingleMuon_2017D : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+fakes_data_ptetaby20perc_Down : DoubleMuon_2017D : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", SkipMe=True
+fakes_data_ptetaby20perc_Down : SingleMuon_2017D : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", SkipMe=True
 
-fakes_data_shape : DoubleMuon_2017E : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
-fakes_data_shape : SingleMuon_2017E : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+fakes_data_ptetaby20perc_Down : DoubleMuon_2017E : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", SkipMe=True
+fakes_data_ptetaby20perc_Down : SingleMuon_2017E : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", SkipMe=True
 
-fakes_data_shape : DoubleMuon_2017F : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
-fakes_data_shape : SingleMuon_2017F : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", NormSystematic=0.35
+fakes_data_ptetaby20perc_Down : DoubleMuon_2017F : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", SkipMe=True
+fakes_data_ptetaby20perc_Down : SingleMuon_2017F : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_ptetadown.txt', Label="ptetaD", SkipMe=True
 
 
 
