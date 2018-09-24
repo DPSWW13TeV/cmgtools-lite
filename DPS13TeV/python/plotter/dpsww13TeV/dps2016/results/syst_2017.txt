@@ -1,13 +1,13 @@
 lumi_13TeV_2017 : DPSWW      : .*             : 1.026
-signal_shape    : DPSWW      : .*             : 1.05	   : shapeOnly
+##signal_shape    : DPSWW      : .*             : 1.05	   : shapeOnly
 WZ_norm         : WZ         : .*             : 1.16
-WZ_shapeUnc     : WZ         : .*             : 1.10	   : shapeOnly
+##WZ_shapeUnc     : WZ         : .*             : 1.10	   : shapeOnly
 ZZ_norm         : ZZ         : .*             : 1.30
-WG_norm         : WG_wg      : .*             : 1.50
+WG_norm         : WG_wg      : .*             : 2.00
 rares_norm      : rares      : .*             : 1.50
-ZZ_shape        : ZZ         : .*             : 1.05       : shapeOnly
-WG_shape        : WG_wg      : .*             : 2.00       : shapeOnly
-rares_shape     : rares      : .*             : 1.05       : shapeOnly
+##ZZ_shape        : ZZ         : .*             : 1.05       : shapeOnly
+##WG_shape        : WG_wg      : .*             : 1.50       : shapeOnly
+##rares_shape     : rares      : .*             : 1.05       : shapeOnly
 flips_norm      : Flips      : .*             : 1.30
 flips_norm      : Flips      : .*   	      : 1.30
 flips_norm      : Flips      : .*	      : 1.30

@@ -3,7 +3,7 @@ signal_shape    : DPSWW      : .*             : DPSWW_alt  : alternateShapeOnly
 WZ_norm         : WZ         : .*             : 1.16
 WZ_shapeUnc     : WZ         : .*             : WZamcatnlo : alternateShapeOnly
 ZZ_norm         : ZZ         : .*             : 1.30
-WG_norm         : WG_wg      : .*             : 1.50
+WG_norm         : WG_wg      : .*             : 2.00
 rares_norm      : rares      : .*             : 1.50
 ZZ_shape        : ZZ         : .*             : 1.05       : shapeOnly
 WG_shape        : WG_wg      : .*             : 1.05       : shapeOnly
