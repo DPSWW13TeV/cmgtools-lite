@@ -243,7 +243,7 @@ def runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, f
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-def makeResults(onlyEE = False,onlyMM = False, splitsign =False, splitCharge = False): 
+def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = True): 
 #def runCards(trees, friends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, extraopts = ''):
 #python makeShapeCardsSusy.py --s2v -P /afs/cern.ch/work/e/efascion/DPStrees/TREES_110816_2muss/ --Fs /afs/cern.ch/work/e/efascion/public/friendsForDPS_110816/ -l 12.9 dps-ww/final_mca.txt dps-ww/cutfinal.txt finalMVA_DPS 10,0.,1.0  --od dps-ww/cards -p DPSWW,WZ,ZZ,WWW,WpWpJJ,Wjets  -W 0.8874 --asimov dps-ww/syst.txt
     
@@ -274,8 +274,8 @@ def makeResults(onlyEE = False,onlyMM = False, splitsign =False, splitCharge = F
 
     #processes= ['fakes_data','fakes_data_ptdown','fakes_data_ptup','fakes_data_etadown','fakes_data_etaup','fakes_data_ptetadown','fakes_data_ptetaup']
     #processes=['WZ','fakes_data']
-    processes=['DPSWW','WZ','fakes_data']#'data','ZZ','rares','Flips','WG_wg']
-    processesCards = ['data', 'DPSWW', 'WZ', 'ZZ', 'WG_wg','Flips','rares','fakes_data','fakes_data_shape']
+    processes=['DPSWW','WZ','fakes_data','data','ZZ','rares','Flips','WG_wg']
+    processesCards = ['data', 'DPSWW', 'WZ', 'ZZ', 'WG_wg','Flips','rares','fakes_data','fakes_data_ptetaby20perc_Down']
     if onlyMM:
         binningBDT   = ' Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ) 15,1.0,16.0'
     else:
@@ -322,14 +322,14 @@ def makeResults(onlyEE = False,onlyMM = False, splitsign =False, splitCharge = F
             makeplots2 = ['BDTforCombine_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
             makeplots=makeplots2#+makeplots1  
             targetcarddir = 'cards_{date}{pf}_{fstate}_2017_test'.format(fstate=state,date=date, pf=('-'+postfix if postfix else '') )  
-            runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
+            #runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
 
             ## ==================================
             ## running datacards
             ## ==================================
 
             extraoptscards = ' -o {fstate}{ch} -b {fstate}{ch} '.format(fstate=state,ch=(ch[0] if ch else ''))
-            #runCards(trees, friends, MCfriends, BDTfriends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
+            runCards(trees, friends, MCfriends, BDTfriends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
             
 
 def simplePlot():

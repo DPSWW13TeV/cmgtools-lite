@@ -25,18 +25,18 @@ mumu_fakes_norm     : fakes_data : mumuminusminus : 1.25
 elmu_fakes_norm     : fakes_data : elmuminusminus : 1.40
 
 
-fakes_mumu_jetpt_template_shape	: fakes_data : mumu	      : jetpt	: templates
-fakes_mumu_jetpt_template_shape	: fakes_data : mumuplusplus   : jetpt	: templates
-fakes_mumu_jetpt_template_shape	: fakes_data : mumuminusminus : jetpt	: templates
+fakes_mumu_jetpT_template_shape	: fakes_data : mumu	      : jetpT	: templates
+fakes_mumu_jetpT_template_shape	: fakes_data : mumuplusplus   : jetpT	: templates
+fakes_mumu_jetpT_template_shape	: fakes_data : mumuminusminus : jetpT	: templates
 fakes_mumu_FRbypt25_template_shape	: fakes_data : mumu	      : FRbypt25	: templates
 fakes_mumu_FRbypt25_template_shape	: fakes_data : mumuplusplus   : FRbypt25	: templates
 fakes_mumu_FRbypt25_template_shape	: fakes_data : mumuminusminus : FRbypt25	: templates
 
 
 
-fakes_elmu_jetpt_template_shape	: fakes_data : elmu	      : jetpt	: templates
-fakes_elmu_jetpt_template_shape	: fakes_data : elmuplusplus   : jetpt	: templates
-fakes_elmu_jetpt_template_shape	: fakes_data : elmuminusminus : jetpt	: templates
+fakes_elmu_jetpT_template_shape	: fakes_data : elmu	      : jetpT	: templates
+fakes_elmu_jetpT_template_shape	: fakes_data : elmuplusplus   : jetpT	: templates
+fakes_elmu_jetpT_template_shape	: fakes_data : elmuminusminus : jetpT	: templates
 fakes_elmu_FRbypt25_template_shape	: fakes_data : elmu	      : FRbypt25	: templates
 fakes_elmu_FRbypt25_template_shape	: fakes_data : elmuplusplus   : FRbypt25	: templates
 fakes_elmu_FRbypt25_template_shape	: fakes_data : elmuminusminus : FRbypt25	: templates
