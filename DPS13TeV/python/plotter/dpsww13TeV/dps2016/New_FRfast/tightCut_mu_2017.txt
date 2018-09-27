@@ -1,0 +1,1 @@
+muTightId : LepGood1_mvaTTH >0.9 && LepGood1_mediumMuonId > 0: 2,-0.5,1.5; XTitle="MVA > 0.9 + Med.id"
