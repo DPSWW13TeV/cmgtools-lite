@@ -33,11 +33,11 @@ minusminus   : LepGood_charge[iLepFO_Recl[0]] < 0                          ; Dis
 
 ### dimuon 
 mumu : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]])== 169    ; Disable=True	     
-trigmumu     :    (HLT_DoubleMu || HLT_SingleMu)       ; Disable=True
+trigmumu     :    (Trigger_1m || Trigger_2m)       ; Disable=True
 
 ### electron-muon
 elmu         : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 143 ; Disable=True
-trigelmu     : (HLT_MuEG || HLT_SingleMu || HLT_SingleEl)                  ; Disable=True
+trigelmu     : (Trigger_em || Trigger_1m || Trigger_1e)                  ; Disable=True
 
 ### mumu+elmu
 #mumuelmu     : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 169 || abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 143      ; Disable=True

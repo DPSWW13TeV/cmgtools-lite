@@ -6,11 +6,10 @@ ZZ_norm         : ZZ         : .*             : 1.30
 WG_norm         : WG_wg      : .*             : 1.50
 rares_norm      : rares      : .*             : 1.50
 ZZ_shape        : ZZ         : .*             : 1.05       : shapeOnly
-WG_shape        : WG_wg      : .*             : 2.00       : shapeOnly
 rares_shape     : rares      : .*             : 1.05       : shapeOnly
-flips_norm      : Flips      : .*             : 1.30
-flips_norm      : Flips      : .*   	      : 1.30
-flips_norm      : Flips      : .*	      : 1.30
+flips_norm      : Flips      : .elmu             : 1.30
+flips_norm      : Flips      : .elmuplusplus   	      : 1.30
+flips_norm      : Flips      : .elmuminusminus	      : 1.30
 mumu_fakes_norm     : fakes_data : mumu           : 1.25
 elmu_fakes_norm     : fakes_data : elmu           : 1.40
 mumu_fakes_norm     : fakes_data : mumuplusplus   : 1.25

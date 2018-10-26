@@ -1,5 +1,15 @@
 #changed deltaPHI to deltaPhi
 ################### Generic
+
+mllOS_3l :		   if3((LepGood1_charge + LepGood2_charge) == 0,mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass), if3((LepGood2_charge + LepGood3_charge) == 0,mass_2(LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass), mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) ) : 100, 0,120; XTitle="m_{l^{#pm}l^{#mp}} (GeV)"
+
+genmllOS_3l : if3( (genLep_charge[0] + genLep_charge[1]) == 0, mass_2(genLep_pt[0],genLep_eta[0],genLep_phi[0],genLep_mass[0],genLep_pt[1],genLep_eta[1],genLep_phi[1],genLep_mass[1]), if3((genLep_charge[1] + genLep_charge[2]) == 0, mass_2(genLep_pt[2],genLep_eta[2],genLep_phi[2],genLep_mass[2],genLep_pt[1],genLep_eta[1],genLep_phi[1],genLep_mass[1]), mass_2(genLep_pt[0],genLep_eta[0],genLep_phi[0],genLep_mass[0],genLep_pt[2],genLep_eta[2],genLep_phi[2],genLep_mass[2])) ) : 100,0,120; XTitle="gen m_{l^{#pm}l^{#mp}} (GeV)"
+
+pt1_3l           : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (l^{#pm}l^{#pm}l^{#mp}) (GeV)",YMin=0,YMax=320
+pt2_3l           : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (l^{#pm}l^{#pm}l^{#mp}) (GeV)",YMin=0,YMax=750
+pt3_3l           : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (l^{#pm}l^{#pm}l^{#mp}) (GeV)",YMin=0,YMax=750
+met_3l           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (l^{#pm}l^{#pm}l^{#mp}) (GeV)" ,YMin=0,YMax=500 
+
 mt2ll         : mt2davis(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood2_pt,LepGood2_eta,LepGood2_phi,met_pt,met_phi) : 20,0,120 ; XTitle="M_{T2}^{ll} (GeV)"
 
 detaLep       : LepGood1_eta-LepGood2_eta  : 40,-5.00,5.00; XTitle="#Delta#eta_{ll}"

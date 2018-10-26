@@ -12,10 +12,14 @@ Flips : DYJetsToLL_M50_LO : xsec : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepG
 Flips : T_tWch_noFullyHad : xsec : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0 && !((LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_pdgId[iLepFO_Recl[0]]==LepGood_mcMatchPdgId[iLepFO_Recl[0]]) && (LepGood_mcMatchId[iLepFO_Recl[1]]!=0 && LepGood_pdgId[iLepFO_Recl[1]]==LepGood_mcMatchPdgId[iLepFO_Recl[1]]))) ; Label="Flips", FillColor=ROOT.kCyan-10
 Flips : TBar_tWch_noFullyHad : xsec : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0 && !((LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_pdgId[iLepFO_Recl[0]]==LepGood_mcMatchPdgId[iLepFO_Recl[0]]) && (LepGood_mcMatchId[iLepFO_Recl[1]]!=0 && LepGood_pdgId[iLepFO_Recl[1]]==LepGood_mcMatchPdgId[iLepFO_Recl[1]]))) ; Label="Flips", FillColor=ROOT.kCyan-10
 Flips : WWTo2L2Nu : xsec : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0 && !((LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_pdgId[iLepFO_Recl[0]]==LepGood_mcMatchPdgId[iLepFO_Recl[0]]) && (LepGood_mcMatchId[iLepFO_Recl[1]]!=0 && LepGood_pdgId[iLepFO_Recl[1]]==LepGood_mcMatchPdgId[iLepFO_Recl[1]]))) ; Label="Flips", FillColor=ROOT.kCyan-10
-WG_wg	     : W4JetsToLNu_LO_skimSameSign : xsec  : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0) ; FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50
-WG_wg	     : W3JetsToLNu_LO_skimSameSign : xsec  : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0) ; FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50
-WG_wg	     : W2JetsToLNu_LO_skimSameSign : xsec  : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0) ; FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50
-WG_wg	     : W1JetsToLNu_LO_skimSameSign : xsec  :  (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0); FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50
+
+WG_wg	     : WZ1+WZ2+WZ3+WZ4+WZ5+WZ6+WZ7+WZ8+WZ9+WZ10+WZ11+WZ12+WZ13+WZ14+WZ15+WZ16+WZ17  : 0.7*58.59  : (Sum$(abs(GenPart_pdgId)==23 && GenPart_mass < 4. && GenPart_status==62)==1) ; FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50, ObjName="Events"
+
+##WG_wg	     : WZTo3LNu_minmll01  : xsec  : maxMllAFOS < 4 ;	 FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50
+WG_wg1	     : W4JetsToLNu_LO_skimSameSign : xsec  : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0) ; FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50
+WG_wg1	     : W3JetsToLNu_LO_skimSameSign : xsec  : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0) ; FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50
+WG_wg1	     : W2JetsToLNu_LO_skimSameSign : xsec  : (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0) ; FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50
+WG_wg1	     : W1JetsToLNu_LO_skimSameSign : xsec  :  (LepGood_mcMatchId[iLepFO_Recl[0]]!=0 && LepGood_mcMatchId[iLepFO_Recl[1]]!=0); FillColor=ROOT.kOrange-5, Label="W\#gamma^{*}",NormSystematic=0.50
 
 
 

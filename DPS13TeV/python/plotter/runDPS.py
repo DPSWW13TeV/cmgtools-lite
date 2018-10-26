@@ -243,17 +243,17 @@ def runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, f
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = True): 
+def makeResults(onlyEE = False,onlyMM = False, splitsign =False, splitCharge = True):
 #def runCards(trees, friends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, extraopts = ''):
 #python makeShapeCardsSusy.py --s2v -P /afs/cern.ch/work/e/efascion/DPStrees/TREES_110816_2muss/ --Fs /afs/cern.ch/work/e/efascion/public/friendsForDPS_110816/ -l 12.9 dps-ww/final_mca.txt dps-ww/cutfinal.txt finalMVA_DPS 10,0.,1.0  --od dps-ww/cards -p DPSWW,WZ,ZZ,WWW,WpWpJJ,Wjets  -W 0.8874 --asimov dps-ww/syst.txt
     
     #sfs = calculateScalefactors(False, sfdate)
 
-    trees='/afs/cern.ch/user/p/peruzzi/work/tthtrees/TREES_TTH_190418_Fall17_skim2lss3l/'
-    friends  =[trees+'/1_recleaner_180518_v2/',trees+'/7_tauTightSel_v2/',trees+'/5_triggerDecision_230418_v1/']
-    MCfriends = trees+'/8_vtxWeight2017_v1/'
-    BDTfriends = '../postprocessing/Friends_BDT_Sep6_2lss/'
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017_SMP_PAG'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    trees='test_DPS_trees2017/'
+    friends=['Jetrecleaner_friends_2017/','TriggerDecision_friends_2017/']
+    MCfriends = 'VtxWeight_friends_2017/'
+    BDTfriends = ['../postprocessing/Friends_BDT_Sep6_2lss/','CollectionMerger/']
+    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots_2017.txt'
     fsyst  = 'dpsww13TeV/dps2016/results/syst_2017.txt'
 
@@ -273,7 +273,7 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Tr
     print 'did i split the charge? %i' %splitCharge
 
     #processes= ['fakes_data','fakes_data_pteta_Dn','fakes_data_pteta_Up']#'fakes_data_avgetaup','fakes_data_avgetadown']
-    #processes=['WZ','fakes_data']
+    #processes=['WZ','data']#,'data']
     processes=['DPSWW','WZ','fakes_data','data','ZZ','rares','Flips','WG_wg']
     processesCards = ['data', 'DPSWW', 'WZ', 'ZZ', 'WG_wg','Flips','rares','fakes_data','fakes_data_FR_Dn','fakes_data_FR_Up']
     if onlyMM:
@@ -291,6 +291,7 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Tr
                 #fcut   = 'dpsww13TeV/dps2016/results/dimu_chargecon.txt'
                 #fcut   = 'dpsww13TeV/dps2016/results/cuts_results_MVA_tight_WP_fr2017.txt'
                 fcut   = 'dpsww13TeV/dps2016/results/cuts_fr2017data.txt'
+                #fcut   = 'dpsww13TeV/dps2016/results/cuts_fr2017datatmp.txt'
                 enable = ['trigmumu','mumu'] + ch
                 state='mumu'
             elif onlyEE:
@@ -299,9 +300,9 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Tr
                 enable = ['trigelel','elel'] + ch
                 state='elel'
             else:
-                enable    = ['trigelmu','elmu'] + ch
                 fmca='dpsww13TeV/dps2016/results/elmu_mca_2017.txt'
                 fcut   = 'dpsww13TeV/dps2016/results/cuts_fr2017data.txt'
+                enable    = ['trigelmu','elmu'] + ch
                 state='elmu'
 
             disable   = []
@@ -309,10 +310,11 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Tr
             scalethem = {}#'DPSWW':'{sf:.3f}'.format(sf=0.50)}#'WZ': '{sf:.3f}'.format(sf=1.04),
                          #'ZZ': '{sf:.3f}'.format(sf=1.21)}
             mumusf = 0.95
-            extraopts = '--plotmode=norm  --showIndivSigs'.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}
+            extraopts = ' --showIndivSigs'.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}
 
             drawvars_mumu=['recopt_minus_genpt1','recopt_minus_genpt2','chargecon1_full','chargecon2_full','recopt_minus_genpt1','recopt_minus_genpt2','recopdgid_over_genpdgid1','recopdgid_over_genpdgid2','genpt1','genpt2','met_jecDown','met_jecUp','met']#'SubLeadingFO','LeadingFO','genpt1_with_cclt3','genpt2_with_cclt3',
-            drawvars=['eta']#eta1','eta2','eta_sum']#'dphil2met','met','nVert','mll','pt1','pt2','lepMVA1','lepMVA2','met','mll','pt1','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','njets']#,'nVert','njetsclean','jetclean_csva']
+            drawvars=['pt1','dphil2met','mll','dphil2met','met','mll','pt1','pt2','met','eta_sum','etaprod','mt2ll','mtll','mt1','mt2','dphiLep','dphilll2','lepMVA1','lepMVA2']#'nVert'
+            drawvars1=['drlep1jet','drlep2jet']#'mtll','mt1','mt2','dphiLep','dphilll2']#,'lepMVA1','lepMVA2','njets']#,'nVert','njetsclean','jetclean_csva']
             
             if splitCharge or splitsign:
                 makeplots1  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
@@ -320,9 +322,10 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Tr
                 makeplots1  = ['{}_{}'.format(a,state) for a in drawvars]
             
             makeplots2 = ['BDTforCombine_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
-            makeplots=makeplots2#+makeplots1  
+            makeplots3=['mllOS_3l','pt1_3l','pt2_3l','pt3_3l','met_3l']#'genmllOS_3l'
+            makeplots=makeplots2#+makeplots1
             targetcarddir = 'cards_{date}{pf}_{fstate}_2017_test'.format(fstate=state,date=date, pf=('-'+postfix if postfix else '') )  
-            #runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, False, extraopts)
+            #runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots,True, extraopts)
 
             ## ==================================
             ## running datacards
