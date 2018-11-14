@@ -1,4 +1,5 @@
 event-filters : $DATA{Flag_HBHENoiseFilter>=1 && Flag_HBHENoiseIsoFilter>=1 && Flag_goodVertices>=1 && Flag_eeBadScFilter>=1 && Flag_EcalDeadCellTriggerPrimitiveFilter>=1 && Flag_globalTightHalo2016Filter >=1 && Flag_badChargedHadronFilter>=1 && Flag_badMuonMoriond2017>=1 && Flag_badCloneMuonMoriond2017>=1} $MC{1}
+
 SameSign     : LepGood_charge[0] * LepGood_charge[1] > 0
 25/20        : LepGood1_pt > 25 && LepGood2_pt > 20
 #bump        :  LepGood1_pt > 80 && LepGood1_pt < 90
@@ -16,10 +17,10 @@ chargecon    : (LepGood1_chargeConsistency >= 3 || abs(LepGood1_pdgId)==11) && (
 lostHits     : (LepGood1_lostHits ==  0 || abs(LepGood1_pdgId)==13) &&  (LepGood2_lostHits ==  0 || abs(LepGood2_pdgId)==13)
 convVeto     : (LepGood1_convVeto > 0 || abs(LepGood1_pdgId)==13) && (LepGood2_convVeto > 0 || abs(LepGood2_pdgId)==13)
 
-Zee_veto : abs(LepGood1_pdgId)!=11 || abs(LepGood2_pdgId) != 11 || abs(mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2) > 10
+##Zee_veto : abs(LepGood1_pdgId)!=11 || abs(LepGood2_pdgId) != 11 || abs(mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2) > 10
 
 etalep1      : abs(LepGood1_eta) < if3(abs(LepGood1_pdgId)==13,2.4,2.5)
-etalep2	     : abs(LepGood2_eta) < if3(abs(LepGood1_pdgId)==13,2.4,2.5)
+etalep2	     : abs(LepGood2_eta) < if3(abs(LepGood2_pdgId)==13,2.4,2.5)
 
 etael1      : (abs(LepGood1_pdgId) == 13 || (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556 && abs(LepGood1_pdgId)==11))
 etael1      : (abs(LepGood2_pdgId) == 13 || (abs(LepGood2_eta) < 1.442 || abs(LepGood2_eta) > 1.556 && abs(LepGood2_pdgId)==11))
