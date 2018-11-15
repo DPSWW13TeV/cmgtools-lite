@@ -64,18 +64,6 @@ WZ         : WZTo3LNu_fxfx  : xsec : 1  ; FillColor=ROOT.kAzure+1  , Label="WZ",
 #WZamcatnlo : WZTo3LNu_amcatnlo : xsec : 1  ; FillColor=ROOT.kAzure+1  , Label="WZ" , NormSystematic=0.16, SkipMe=True
 
 
-#fakeRate_dps_2017data.txt
-#fakeRate-2lss-frdata.txt
-
-fakes_data : DoubleMuon_2017B+DoubleMuon_2017C+DoubleMuon_2017D+DoubleMuon_2017E+DoubleMuon_2017F+SingleMuon_2017B+SingleMuon_2017C+SingleMuon_2017D+SingleMuon_2017E+SingleMuon_2017F : 1 ; FillColor=ROOT.kGray, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata.txt', Label="Fakes", NormSystematic=0.35
-
-fakes_data_eta_Up : DoubleMuon_2017B+DoubleMuon_2017C+DoubleMuon_2017D+DoubleMuon_2017E+DoubleMuon_2017F+SingleMuon_2017B+SingleMuon_2017C+SingleMuon_2017D+SingleMuon_2017E+SingleMuon_2017F : 1 ; FillColor=ROOT.kYellow, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_etaup.txt', Label="etaUp", NormSystematic=0.35
-
-fakes_data_eta_Dn : DoubleMuon_2017B+DoubleMuon_2017C+DoubleMuon_2017D+DoubleMuon_2017E+DoubleMuon_2017F+SingleMuon_2017B+SingleMuon_2017C+SingleMuon_2017D+SingleMuon_2017E+SingleMuon_2017F : 1 ; FillColor=ROOT.kOrange, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_etadown.txt', Label="etaDown", NormSystematic=0.35
-
-fakes_data_avgeta_Up : DoubleMuon_2017B+DoubleMuon_2017C+DoubleMuon_2017D+DoubleMuon_2017E+DoubleMuon_2017F+SingleMuon_2017B+SingleMuon_2017C+SingleMuon_2017D+SingleMuon_2017E+SingleMuon_2017F : 1 ; FillColor=ROOT.kGreen, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_avgetaup.txt', Label="avgetaU", NormSystematic=0.35
-
-fakes_data_avgeta_Dn : DoubleMuon_2017B+DoubleMuon_2017C+DoubleMuon_2017D+DoubleMuon_2017E+DoubleMuon_2017F+SingleMuon_2017B+SingleMuon_2017C+SingleMuon_2017D+SingleMuon_2017E+SingleMuon_2017F : 1 ; FillColor=ROOT.kBlue, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate-2lss-frdata_avgetadown.txt', Label="avgetaD", NormSystematic=0.35
 
 #######################
 

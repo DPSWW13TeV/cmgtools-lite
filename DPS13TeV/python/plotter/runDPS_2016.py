@@ -168,11 +168,11 @@ def runplots(trees, friends, targetdir, fmca, fcut, fplots, enabledcuts, disable
     print 'running: python', cmd
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
-def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = False):
+def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge = False):
     
     trees     = 'skimmed_2lss_2016/'
     friends=['skimmed_Friends_BDT_2lss_2016/','skimmed_Friends_2lss_2016/']
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2016_AFFAN/'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2016_smu_fakes/'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots.txt'
     fsyst  = 'dpsww13TeV/dps2016/results/syst_2016.txt'
     print '=========================================='
@@ -189,7 +189,7 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = Fa
 
     print 'did i split the charge? %i' %splitCharge
 
-    #processes=['fakes_data','fakes_data_FR_Dn','fakes_data_FR_Up','fakes_data_jetpT_Dn','fakes_data_jetpT_Up']
+    #processes=['fakes_data_FR_Dn','fakes_data_FR_Up','fakes_data_jetpT_Dn','fakes_data_jetpT_Up','fakes_data']
     processes = ['DPSWW','WZ','fakes_data','ZZ','WG_wg','rares','Flips','data']
     processesCards = ['DPSWW','WZ','WG_wg','rares','Flips','data','WZamcatnlo','DPSWW_alt','fakes_data_FR_Dn','fakes_data_jetpT_Dn','fakes_data_jetpT_Up','ZZ','fakes_data_FR_Up','fakes_data']
 
@@ -223,16 +223,16 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = Fa
             disable   = []
             fittodata = []
             scalethem = {}
-            extraopts = '--showIndivSigs'       
-            drawvars=['eta_sum']#'dphiLep','dphilll2','mt2ll','pt1','chargecon2','chargecon1','met','nVert','dphil2met','pt1','mll','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','dphil2met']#,'nVert'
+            extraopts = '--showIndivSigs '# --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up,fakes_data_jetpT_Dn,fakes_data_jetpT_Up ratioDen fakes_data'       --plotmode=nostack
+            drawvars=['dphiLep','dphilll2','mt2ll','pt1','chargecon2','chargecon1','met','nVert','dphil2met','pt1','mll','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','dphil2met']#,'nVert'
             
             if splitCharge or splitsign:
                 makeplots1  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
             else:
                 makeplots1  = ['{}_{}'.format(a,state) for a in drawvars]
 
-            makeplots2 = ['BDTforCombine_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
-            makeplots=makeplots2
+            makeplots2 = ['BDTforCombine_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx)]#,'BDT_wz_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
+            makeplots=makeplots2#+makeplots2
             runplots(trees, friends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
             ## ==================================
             ## running datacards
@@ -240,7 +240,7 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = Fa
 
             targetcarddir = 'cards_{date}{pf}_{fstate}_2016'.format(fstate=state,date=date, pf=('-'+postfix if postfix else '') )
             extraoptscards = ' -o {fstate}{ch} -b {fstate}{ch} '.format(fstate=state,ch=(ch[0] if ch else ''))
-            runCards(trees, friends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
+            #runCards(trees, friends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
             
 
 def simplePlot():

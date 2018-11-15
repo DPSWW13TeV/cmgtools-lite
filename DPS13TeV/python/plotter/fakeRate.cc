@@ -19,6 +19,16 @@ TH2 * helicityFractions_R = 0;
 TH2 * QF_el = 0;
 TH2 * FR_mu = 0;
 TH2 * FR_el = 0;
+TH2 * FR_el_jptgt40 =0;
+TH2 * FR_el_jptgt50 =0;
+TH2 * PR_el_jptgt40 =0;
+TH2 * PR_el_jptgt50 =0;
+TH2 * FR_mu_jptgt40 =0;
+TH2 * FR_mu_jptgt50 =0;
+TH2 * PR_mu_jptgt40 =0;
+TH2 * PR_mu_jptgt50 =0;
+
+
 TH2 * FRi_mu[30], *FRi_el[30];
 TH2 *PR_mu=0;
 TH2 *PR_el = 0;
@@ -34,6 +44,16 @@ bool loadFRHisto(const std::string &histoName, const char *file, const char *nam
     else if (histoName == "PR_mu")  { histo = & PR_mu;  }
     else if (histoName == "PR_el")  { histo = & PR_el;  }
     else if (histoName == "FR_el_qcdmc")  { histo = & FR_el;  hptr2 = & FRi_el[0]; }
+    else if(histoName == "PR_mu_jptgt50"){ histo = & PR_mu_jptgt50;  }
+    else if(histoName == "FR_mu_jptgt50"){ histo = & FR_mu_jptgt50;  }
+    else if(histoName == "PR_mu_jptgt40"){ histo = & PR_mu_jptgt40;  }
+    else if(histoName == "FR_mu_jptgt40"){ histo = & FR_mu_jptgt40;  }
+    else if(histoName == "PR_el_jptgt50"){ histo = & PR_el_jptgt50;  }
+    else if(histoName == "FR_el_jptgt50"){ histo = & FR_el_jptgt50;  }
+    else if(histoName == "PR_el_jptgt40"){ histo = & PR_el_jptgt40;  }
+    else if(histoName == "FR_el_jptgt40"){ histo = & FR_el_jptgt40;  }
+
+
     // else if (histoName == "FR_correction")  { histo = & FRcorrectionForPFMET; hptr2 = & FRcorrectionForPFMET_i[0]; }
     else if (TString(histoName).BeginsWith("FR_mu_i")) {histo = & FR_temp; hptr2 = & FRi_mu[TString(histoName).ReplaceAll("FR_mu_i","").Atoi()];}
     else if (TString(histoName).BeginsWith("FR_el_i")) {histo = & FR_temp; hptr2 = & FRi_el[TString(histoName).ReplaceAll("FR_el_i","").Atoi()];}
