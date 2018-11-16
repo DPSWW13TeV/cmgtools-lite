@@ -33,10 +33,12 @@ MediumMuonid  : (abs(LepGood1_pdgId) !=13 || LepGood1_mediumMuonId > 0) && (abs(
  
 
 ###
-plusplus     : LepGood1_charge > 0                                                ; Disable=True
-minusminus   : LepGood1_charge < 0                                                ; Disable=True
 
-###
+dilepton        : (abs(LepGood1_pdgId*LepGood2_pdgId) == 169 || (abs(LepGood1_pdgId*LepGood2_pdgId) == 143 ))    ; Disable=True
+trigdilep     	: (HLT_MuEG || HLT_SingleMu || HLT_SingleEl || HLT_DoubleMu) ; Disable=True
+
+#######
+
 mumu         : abs(LepGood1_pdgId*LepGood2_pdgId) == 169                          ; Disable=True
 trigmumu     : (HLT_DoubleMu || HLT_SingleMu)                                     ; Disable=True
 
@@ -45,9 +47,7 @@ elmu         : abs(LepGood1_pdgId*LepGood2_pdgId) == 143                        
 trigelmu     : (HLT_MuEG || HLT_SingleMu || HLT_SingleEl)                         ; Disable=True
 
 
-###
-elel         : abs(LepGood1_pdgId*LepGood2_pdgId) == 121        ; Disable=True
-trigelel     : (HLT_SingleEl || HLT_DoubleEl)                    ; Disable=True
+
 
 
 ##DataBDTblind : $DATA{finalMVA_DPS<0.7} $MC{1}                              ; Disable=True

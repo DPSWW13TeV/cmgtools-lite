@@ -4,7 +4,7 @@ import re, sys, os, os.path, copy
 systs = {}
 
 #if "/fakeRate_cc.so" not in ROOT.gSystem.GetLibraries():
-compileMacro("src/CMGTools/DPS13TeV/python/plotter/fakeRate.cc")
+#compileMacro("src/CMGTools/DPS13TeV/python/plotter/fakeRate.cc")
 
 from optparse import OptionParser
 parser = OptionParser(usage="%prog [options] mc.txt cuts.txt var bins systs.txt ")
@@ -84,7 +84,7 @@ todo = []
 if len(options.infile)>0:
     for inf in options.infile:
         thefile = ROOT.TFile(inf,"read")
-	print 'i am reading from this root {FILE}'.format(FILE=thefile)
+	#print 'i am reading from this root {FILE}'.format(FILE=thefile)
         for p in mca.listSignals(True)+mca.listBackgrounds(True)+['data']:
             n = p if options.infilepfx==None else options.infilepfx+"_"+p
             h = copy.deepcopy(thefile.Get(n))
@@ -92,7 +92,7 @@ if len(options.infile)>0:
         thefile.Close()
     for p in mca.listSignals(True)+mca.listBackgrounds(True)+['data']:
         if not p in report.keys() and not p in options.ignore: todo.append(p)
-    print report.keys()
+    #print report.keys()
     print todo
     for p in todo:
         report.update(mca.getPlotsRaw("x", args[2], args[3], cuts.allCuts(), nodata=options.asimov, process=p, closeTreeAfter=True))
@@ -133,7 +133,7 @@ else:
     report['data_obs'] = report['data'].Clone("x_data_obs") 
 
 allyields = dict([(p,h.Integral()) for p,h in report.iteritems()])
-print allyields
+#print allyields
 procs = []; iproc = {}
 signals, backgrounds = [], []
 for i,s in enumerate(mca.listSignals()):
@@ -142,7 +142,7 @@ for i,s in enumerate(mca.listSignals()):
     procs.append(s); iproc[s] = i-len(mca.listSignals())+1
 for i,b in enumerate(mca.listBackgrounds()):
     if (b not in allyields) or allyields[b] == 0: continue
-    print 'name of the processes {bname} '.format(bname=b)
+    #print 'name of the processes {bname} '.format(bname=b)
     backgrounds.append(b)
     procs.append(b); iproc[b] = i+1
 
@@ -254,15 +254,10 @@ for name in systsEnv.keys():
             for h in p2up, p2dn: h.SetLineColor(2)
         elif mode in ["templates"]:
             nominal = report[p]
-	    print 'name of the nominal is {HERE}'.format(HERE=nominal)
-            print 'integral of the nominal is {HEREIN}'.format(HEREIN=nominal.Integral())
+	    #print 'name of the nominal is {HERE}'.format(HERE=nominal)
+            #print 'integral of the nominal is {HEREIN}'.format(HEREIN=nominal.Integral())
             p0Up = report["%s_%s_Up" % (p, effect)]
             p0Dn = report["%s_%s_Dn" % (p, effect)]
-	    print 'and the effect being considred is {EFFECT}'.format(EFFECT=effect)
-	    print 'here check nominal once more {NOM}'.format(NOM=nominal)
-	    print 'nominal {integral}'.format(integral=nominal.Integral())
-	    print 'up integral {variation}'.format(variation=p0Up.Integral())
-	    print 'down integral {variation}'.format(variation=p0Dn.Integral())
             if not p0Up or not p0Dn: 
                 raise RuntimeError, "Missing templates %s_%s_(Up,Dn) for %s" % (p,effect,name)
             if options.noNegVar:
@@ -270,11 +265,6 @@ for name in systsEnv.keys():
                 p0Dn = fixNegVariations(p0Dn, report[p])
             p0Up.SetName("%s_%sUp"   % (nominal.GetName(),name))
             p0Dn.SetName("%s_%sDown" % (nominal.GetName(),name))
-	    print 'name of p0Up in negative variation thing {PNAME}'.format(PNAME=p0Up)
-	    print 'nominal {integral}'.format(integral=nominal.Integral())
-	    print 'up integral {variation}'.format(variation=p0Up.Integral())
-	    print 'down integral {variation}'.format(variation=p0Dn.Integral())
-
             report[str(p0Up.GetName())[2:]] = p0Up
             report[str(p0Dn.GetName())[2:]] = p0Dn
             effect0  = "1"

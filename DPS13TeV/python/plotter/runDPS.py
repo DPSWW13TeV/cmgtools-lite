@@ -243,7 +243,7 @@ def runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, f
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = False):
+def makeResults(onlyEE = False,onlyMM = False, splitsign =False, splitCharge = False, combination = False):
 #def runCards(trees, friends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, extraopts = ''):
 #python makeShapeCardsSusy.py --s2v -P /afs/cern.ch/work/e/efascion/DPStrees/TREES_110816_2muss/ --Fs /afs/cern.ch/work/e/efascion/public/friendsForDPS_110816/ -l 12.9 dps-ww/final_mca.txt dps-ww/cutfinal.txt finalMVA_DPS 10,0.,1.0  --od dps-ww/cards -p DPSWW,WZ,ZZ,WWW,WpWpJJ,Wjets  -W 0.8874 --asimov dps-ww/syst.txt
     
@@ -253,9 +253,11 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
     friends=['Jetrecleaner_friends_2017/','TriggerDecision_friends_2017/']#,taufriends]
     MCfriends = 'VtxWeight_friends_2017/'
     BDTfriends = ['../postprocessing/Friends_BDT_Sep6_2lss/','CollectionMerger/']
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017_FFAN'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017_SW'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots_2017_v1.txt'
     fsyst  = 'dpsww13TeV/dps2016/results/syst_2017.txt'
+    fmca   = 'dpsww13TeV/dps2016/results/elmu_mumu_mca_2017.txt'
+    fcut   = 'dpsww13TeV/dps2016/results/cuts_2017.txt'
 
     print '=========================================='
     print 'run results for MUMU'
@@ -273,8 +275,9 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
     print 'did i split the charge? %i' %splitCharge
     #processes= ['fakes_data','fakes_data_pteta_Dn','fakes_data_pteta_Up']#'fakes_data_avgetaup','fakes_data_avgetadown']
     processesforscalevariationsWZ=['WZwt0','WZwt1','WZwt2','WZwt3','WZwt4','WZwt5','WZwt6','WZwt7','WZwt8','WZnom']
-    processes=['WZ','ZZ','rares','Flips','fakes_data','WG_wg','DPSWW','data']
+    processes=['DPSWW','WZ','fakes_data','ZZ','rares','Flips','WG_wg','data']
     processesCards = ['data', 'DPSWW','DPSWW_alt','WZ', 'ZZ', 'WG_wg','Flips','rares','fakes_data','fakes_data_FR_Dn','fakes_data_FR_Up','WZamcatnlo']
+    
     if onlyMM:
         binningBDT   = ' Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ) 15,1.0,16.0'
     else:
@@ -286,23 +289,21 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
         for ich,ch in enumerate(loop):
             #if not ich: continue
             if onlyMM:
-                fmca   = 'dpsww13TeV/dps2016/results/mumu_mca_2017.txt'
-                #fmca   = 'dpsww13TeV/dps2016/results/mumu_mca_2017tmp.txt'
-                #fcut   = 'dpsww13TeV/dps2016/results/dimu_chargecon.txt'
-                #fcut   = 'dpsww13TeV/dps2016/results/cuts_results_MVA_tight_WP_fr2017.txt'
-                fcut   = 'dpsww13TeV/dps2016/results/cuts_fr2017data.txt'
-                #fcut = 'dpsww13TeV/dps2016/results/cuts_3l.txt'
-                #fcut   = 'dpsww13TeV/dps2016/results/cuts_fr2017datatmp.txt'
+                #fmca   = 'dpsww13TeV/dps2016/results/mumu_mca_2017.txt'
+                #fcut   = 'dpsww13TeV/dps2016/results/cuts_fr2017data.txt'
                 enable = ['trigmumu','mumu'] + ch
                 state='mumu'
             elif onlyEE:
-                fmca='dpsww13TeV/dps2016/results/elel_mca.txt'
-                fcut   = 'dpsww13TeV/dps2016/results/cuts_results_DY.txt'
+                #fmca='dpsww13TeV/dps2016/results/elel_mca.txt'
+                #fcut   = 'dpsww13TeV/dps2016/results/cuts_results_DY.txt'
                 enable = ['trigelel','elel'] + ch
                 state='elel'
+            elif combination:
+                enable = ['trigdilep','dilepton'] + ch
+                state='ll'
             else:
-                fmca='dpsww13TeV/dps2016/results/elmu_mca_2017.txt'
-                fcut   = 'dpsww13TeV/dps2016/results/cuts_fr2017data.txt'
+                #fmca='dpsww13TeV/dps2016/results/elmu_mca_2017.txt'
+                #fcut   = 'dpsww13TeV/dps2016/results/cuts_fr2017data.txt'
                 enable    = ['trigelmu','elmu'] + ch
                 state='elmu'
 
@@ -310,9 +311,9 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
             fittodata = []#'WZ']#,'rares','Flips']
             scalethem = {}#'ZZ': '{sf:.3f}'.format(sf=1.21)}#'WZ': '{sf:.3f}'.format(sf=1.04),
             mumusf = 0.95
-            extraopts = ' --showIndivSigs '.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f} --plotmode=norm --ratioNums WZpow --ratioDen WZ --fix-process ZZ
+            extraopts = ' --showIndivSigs'# --scaleSigToData'#.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f} --plotmode=norm --ratioNums WZpow --ratioDen WZ --fix-process ZZ
             drawvars_mumu=['recopt_minus_genpt1','recopt_minus_genpt2','chargecon1_full','chargecon2_full','recopt_minus_genpt1','recopt_minus_genpt2','recopdgid_over_genpdgid1','recopdgid_over_genpdgid2','genpt1','genpt2','met_jecDown','met_jecUp','met']#'SubLeadingFO','LeadingFO','genpt1_with_cclt3','genpt2_with_cclt3','drlep1jet','drlep2jet'
-            drawvars=['conept1','conept2','pt1','pt2','met','dphil2met','dphilll2','dphiLep','mt2ll','mt1','mtll','eta_sum','etaprod','mll']#'nVert','lepMVA1','lepMVA2''mll'
+            drawvars=['conept1']#,'conept2','pt1','pt2','met','dphil2met','dphilll2','dphiLep','mt2ll','mt1','mtll','eta_sum','etaprod']#,'mll','nVert','lepMVA1','lepMVA2''mll'
 
             if splitCharge or splitsign:
                 makeplots1  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
@@ -321,9 +322,11 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge = Fa
             
             makeplots4=['BDT_wz_30bins','BDT_wz_25bins','BDT_wz_20bins']
             makeplots2 = ['BDTforCombine_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
+            makeplots5 = ['BDT_wz_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
+
             makeplots3=['met_3l','pt1_3l','pt2_3l','pt3_3l']#'genmllOS_3l'mllOS_3l',
-            makeplots=makeplots2+makeplots1
-            targetcarddir = 'cards_fac_{date}{pf}_{fstate}_2017'.format(fstate=state,date=date, pf=('-'+postfix if postfix else '') )
+            makeplots=makeplots1#+makeplots1
+            targetcarddir = 'cards_{date}{pf}_{fstate}_2017'.format(fstate=state,date=date, pf=('-'+postfix if postfix else '') )
             runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, extraopts)
 
             ## ==================================
