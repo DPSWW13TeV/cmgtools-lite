@@ -596,20 +596,20 @@ float tkmt_tkmetEleCorr(float tkmet_pt, float tkmet_phi, float lep_pt, float lep
 //==================================================
 int Binnumberset1D_elmu(float BDTx,float BDTy){
   if(BDTx  > 0.1 && BDTx <=0.25 && BDTy >0.1 && BDTy <= 0.35)return 1;
-  else if((BDTx  > 0.95 && BDTy > 0.75 && BDTy <=0.8)||  (BDTx  > 0.85 && BDTx <= 0.95 && BDTy > 0.75 && BDTy <=0.9) )return 2;
-  else if(BDTx  > 0.65 && BDTx <=0.8 && BDTy >0.35 && BDTy <= 0.65)return 3;
-  else if((BDTx  > 0.3  && BDTx <= 0.65  && BDTy > 0.65) || (BDTx  > 0.35 && BDTx <=0.65 && BDTy >0.6 ))return 4;
-  else if(BDTx  > 0.35 && BDTx <=0.65 && BDTy >0.35 && BDTy <= 0.6)return 5;
-  else if((BDTx > 0.25  && BDTx <=0.8 && BDTy <= 0.35) || (BDTx > 0.1 && BDTx <= 0.25 && BDTy <= 0.1) )return 6;
-  else if((BDTx  > 0.9 && BDTy <=0.75) || (BDTx  > 0.85 && BDTx  <=0.9 && BDTy > 0.65 && BDTy <=0.75) ) return 7;
-  else if((BDTx > 0.8  && BDTx <=0.95 && BDTy > 0.95) || (BDTx > 0.85 && BDTy > 0.90 && BDTy <= 0.95) )return 8;
-  else if(BDTx  > 0.95  && BDTy > 0.95)return 9;
-  else if((BDTx > 0.1 && BDTx <=0.3 && BDTy >0.35) || (BDTx  > 0.3 && BDTx <=0.35 && BDTy >0.35 && BDTy <= 0.65))return 10;
-  else if(BDTx  > 0.8 && BDTx <=0.9 && BDTy <=0.65)return 11;
-  else if(BDTx  <= 0.1 )return 12;
+  else if((BDTx  > 0.95 && BDTy > 0.75 && BDTy <=0.8)||  (BDTx  > 0.85 && BDTx <= 0.95 && BDTy > 0.75 && BDTy <=0.9) )return 12;
+  else if(BDTx  > 0.65 && BDTx <=0.8 && BDTy >0.35 && BDTy <= 0.65)return 5;
+  else if((BDTx  > 0.3  && BDTx <= 0.65  && BDTy > 0.65) || (BDTx  > 0.35 && BDTx <=0.65 && BDTy >0.6 ))return 7;
+  else if(BDTx  > 0.35 && BDTx <=0.65 && BDTy >0.35 && BDTy <= 0.6)return 6;
+  else if((BDTx > 0.25  && BDTx <=0.8 && BDTy <= 0.35) || (BDTx > 0.1 && BDTx <= 0.25 && BDTy <= 0.1) )return 3;
+  else if((BDTx  > 0.9 && BDTy <=0.75) || (BDTx  > 0.85 && BDTx  <=0.9 && BDTy > 0.65 && BDTy <=0.75) ) return 10;
+  else if((BDTx > 0.8  && BDTx <=0.95 && BDTy > 0.95) || (BDTx > 0.85 && BDTy > 0.90 && BDTy <= 0.95) )return 14;
+  else if(BDTx  > 0.95  && BDTy > 0.95)return 15;
+  else if((BDTx > 0.1 && BDTx <=0.3 && BDTy >0.35) || (BDTx  > 0.3 && BDTx <=0.35 && BDTy >0.35 && BDTy <= 0.65))return 2;
+  else if(BDTx  > 0.8 && BDTx <=0.9 && BDTy <=0.65)return 9;
+  else if(BDTx  <= 0.1 )return 4;
   else if((BDTx > 0.65 && BDTx <=0.8 && BDTy >0.75) || (BDTx  > 0.8 && BDTx <=0.85 && BDTy > 0.75 && BDTy <=0.95) )return 13;
-  else if(BDTx  > 0.95  && BDTy > 0.8 && BDTy <=0.9)return 14;
-  else if(BDTx  > 0.65 && BDTx <=0.85 && BDTy >0.65 && BDTy <=0.75)return 15;  
+  else if(BDTx  > 0.95  && BDTy > 0.8 && BDTy <=0.9)return 11;
+  else if(BDTx  > 0.65 && BDTx <=0.85 && BDTy >0.65 && BDTy <=0.75)return 8;  
   else{
   std::cout << "values of BDT variables are out of bounds, please check" << std::endl;
     exit(EXIT_FAILURE);}
@@ -1208,6 +1208,14 @@ float leptonSF_ttH(int pdgid, float pt, float eta, int nlep, float var=0){
 
 }
 
+float leptonSF_ttH_var(int pdgid, float pt, float eta, int nlep, float var_e, float var_m){
+
+  if (abs(pdgid)==11) return (var_e==0) ? 1 : leptonSF_ttH(pdgid,pt,eta,nlep,var_e)/leptonSF_ttH(pdgid,pt,eta,nlep);
+  if (abs(pdgid)==13) return (var_m==0) ? 1 : leptonSF_ttH(pdgid,pt,eta,nlep,var_m)/leptonSF_ttH(pdgid,pt,eta,nlep);
+
+  return 1;
+
+}
 
 void functions() {}
 

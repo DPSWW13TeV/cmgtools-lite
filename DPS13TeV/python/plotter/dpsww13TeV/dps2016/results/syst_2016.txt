@@ -1,16 +1,19 @@
-lumi_13TeV_2016 : DPSWW      : .*             : 1.025
+lumi_13TeV_2016 : DPSWW|WZ|ZZ|WG|Conv|rares      : .*             : 1.025
 signal_shape    : DPSWW      : .*             : DPSWW_alt  : alternateShapeOnly
+jec		: WZ|DPSWW   : .*             : 1.02
 WZ_norm         : WZ         : .*             : 1.16
-WZ_shapeUnc     : WZ         : .*             : WZamcatnlo : alternateShapeOnly
+WZ_shape	: WZ         : .*             : WZamcatnlo : alternateShapeOnly
 ZZ_norm         : ZZ         : .*             : 1.30
 WG_norm         : WG_wg      : .*             : 1.50
+WG_shape        : WG_wg      : .*             : 1.05       : shapeOnly
 rares_norm      : rares      : .*             : 1.50
 ZZ_shape        : ZZ         : .*             : 1.05       : shapeOnly
-WG_shape        : WG_wg      : .*             : 1.05       : shapeOnly
+Conv_norm       : Conv	     : .*             : 1.50
+Conv_shape	: Conv	     : .*             : 1.05       : shapeOnly
 rares_shape     : rares      : .*             : 1.05       : shapeOnly
-flips_norm      : Flips : elmu           : 1.30
-flips_norm      : Flips : elmuplusplus   : 1.30
-flips_norm      : Flips : elmuminusminus : 1.30
+flips_norm      : flips_data : elmu           : 1.30
+flips_norm      : flips_data : elmuplusplus   : 1.30
+flips_norm      : flips_data : elmuminusminus : 1.30
 mumu_fakes_norm     : fakes_data : mumu           : 1.25
 elmu_fakes_norm     : fakes_data : elmu           : 1.40
 mumu_fakes_norm     : fakes_data : mumuplusplus   : 1.25
@@ -25,9 +28,43 @@ fakes_elmu_jetpT_template_shape	: fakes_data : elmu	      : jetpT	: templates
 fakes_elmu_jetpT_template_shape	: fakes_data : elmuplusplus   : jetpT	: templates
 fakes_elmu_jetpT_template_shape	: fakes_data : elmuminusminus : jetpT	: templates
 
-fakes_mumu_template_shape	: fakes_data : mumu	      : FR	: templates
-fakes_mumu_template_shape	: fakes_data : mumuplusplus   : FR	: templates
-fakes_mumu_template_shape	: fakes_data : mumuminusminus : FR	: templates
-fakes_elmu_template_shape	: fakes_data : elmu	      : FR	: templates
-fakes_elmu_template_shape	: fakes_data : elmuplusplus   : FR	: templates
-fakes_elmu_template_shape	: fakes_data : elmuminusminus : FR	: templates
+fakes_mumu_slope_template_shape	: fakes_data : mumu	      : slope	: templates
+fakes_mumu_slope_template_shape	: fakes_data : mumuplusplus   : slope	: templates
+fakes_mumu_slope_template_shape	: fakes_data : mumuminusminus : slope	: templates
+fakes_elmu_slope_template_shape	: fakes_data : elmu	      : slope	: templates
+fakes_elmu_slope_template_shape	: fakes_data : elmuplusplus   : slope	: templates
+fakes_elmu_slope_template_shape	: fakes_data : elmuminusminus : slope	: templates
+
+
+lepEff_mutight : signal|WZ|ZZ|WG|rares|Conv : .* : 1.06
+
+lepEff_muloose : signal|WZ|ZZ|WG|rares|Conv : mumu : 1.04
+lepEff_muloose : signal|WZ|ZZ|WG|rares|Conv : mumuplusplus : 1.04
+lepEff_muloose : signal|WZ|ZZ|WG|rares|Conv : mumuminusminus : 1.04
+
+
+
+
+## trig. eff. for mumu
+trigger_mm	: signal|WZ|ZZ|WG|rares|Conv : mumu : 1.01
+trigger_mm	: signal|WZ|ZZ|WG|rares|Conv : mumuplusplus : 1.01
+trigger_mm	: signal|WZ|ZZ|WG|rares|Conv : mumuminusminus : 1.01
+
+
+
+
+############# lepton id for emu 
+lepEff_muloose : signal|WZ|ZZ|WG|rares|Conv : elmu : 1.02
+lepEff_muloose : signal|WZ|ZZ|WG|rares|Conv : elmuplusplus : 1.02
+lepEff_muloose : signal|WZ|ZZ|WG|rares|Conv : elmuminusminus : 1.02
+
+lepEff_elloose : signal|WZ|ZZ|WG|rares|Conv : elmu : 1.02
+lepEff_elloose : signal|WZ|ZZ|WG|rares|Conv : elmuplusplus : 1.02
+lepEff_elloose : signal|WZ|ZZ|WG|rares|Conv : elmuminusminus : 1.02
+
+
+# trigger efficiencies for emu
+trigger_em	: signal|WZ|ZZ|WG|rares|Conv : elmu : 1.02
+trigger_em	: signal|WZ|ZZ|WG|rares|Conv : elmuplusplus : 1.02
+trigger_em	: signal|WZ|ZZ|WG|rares|Conv : elmuminusminus : 1.02
+

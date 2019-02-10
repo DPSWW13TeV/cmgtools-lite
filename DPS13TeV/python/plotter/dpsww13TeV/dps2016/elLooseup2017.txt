@@ -1,0 +1,4 @@
+weight : leptonSF_ttH_var(LepGood_pdgId[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],2,1,0)*leptonSF_ttH_var(LepGood_pdgId[iLepFO_Recl[1]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],2,1,0)
+
+
+#weight : leptonSF_ttH_var(LepGood_pdgId\[iLepFO_Recl\[0\]\],LepGood_pt\[iLepFO_Recl\[0\]\],LepGood_eta\[iLepFO_Recl\[0\]\],2,1,0)*leptonSF_ttH_var(LepGood_pdgId\[iLepFO_Recl\[1\]\],LepGood_pt\[iLepFO_Recl\[1\]\],LepGood_eta\[iLepFO_Recl\[1\]\],2,1,0)
