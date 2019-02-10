@@ -594,8 +594,7 @@ float tkmt_tkmetEleCorr(float tkmet_pt, float tkmet_phi, float lep_pt, float lep
 }
 
 //==================================================
-int Binnumberset1D_emu(float BDTx,float BDTy){
-
+int Binnumberset1D_elmu(float BDTx,float BDTy){
   if(BDTx  > 0.1 && BDTx <=0.25 && BDTy >0.1 && BDTy <= 0.35)return 1;
   else if((BDTx  > 0.95 && BDTy > 0.75 && BDTy <=0.8)||  (BDTx  > 0.85 && BDTx <= 0.95 && BDTy > 0.75 && BDTy <=0.9) )return 2;
   else if(BDTx  > 0.65 && BDTx <=0.8 && BDTy >0.35 && BDTy <= 0.65)return 3;
@@ -1087,8 +1086,11 @@ float _get_recoToLoose_leptonSF_ttH(int pdgid, float pt, float eta, int nlep, fl
 
     TH2F *hist = (pt<30) ? _histo_recoToLoose_leptonSF_mu1_lt30 : _histo_recoToLoose_leptonSF_mu1_gt30;
     int ptbin  = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(pt)));
-    int etabin = std::max(1, std::min(hist->GetNbinsY(), hist->GetYaxis()->FindBin(fabs(eta))));
-    out *= (pt>=15 && pt<30 && fabs(eta)>=2.1 && fabs(eta)<2.4) ? 1 : hist->GetBinContent(ptbin,etabin)+var*hist->GetBinError(ptbin,etabin); // careful: workaround, SF was not measured there
+    int etabin = std::max(1, std::min(hist->GetNbinsY(), hist->GetYaxis()->FindBin(std::abs(eta))));
+    if(pt < 15 || fabs(eta) > 2.4) out *=1;  
+    else
+      {out *= (pt>=15 && pt<30 && fabs(eta)>=2.1 && fabs(eta)<2.4) ? 1 : hist->GetBinContent(ptbin,etabin)+var*hist->GetBinError(ptbin,etabin);} // careful: workaround, SF was not measured there
+    // cout<<"careful: workaround, SF was not measured there\t"<<ptbin<<"\t"<<etabin<<"\t"<<out<<endl;
 
     if (_histo_recoToLoose_leptonSF_mu2){
     hist = _histo_recoToLoose_leptonSF_mu2;

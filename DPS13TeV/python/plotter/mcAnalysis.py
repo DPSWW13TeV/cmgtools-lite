@@ -177,7 +177,7 @@ class MCAnalysis:
                     # Heppy calls the tree just 'tree.root'
                     rootfile = "%s/%s/%s/tree.root" % (basepath, cname, treename)
                     rootfile = open(rootfile+".url","r").readline().strip()
-                pckfile = basepath+"/%s/skimAnalyzerCount/SkimReport.pck" % cname
+                ##pckfile = basepath+"/%s/skimAnalyzerCount/SkimReport.pck" % cname
 
                 tty = TreeToYield(rootfile, options, settings=extra, name=pname, cname=cname, objname=objname); ttys.append(tty)
                 if signal: 
@@ -191,13 +191,30 @@ class MCAnalysis:
                 if pname in self._allData: self._allData[pname].append(tty)
                 else                     : self._allData[pname] =     [tty]
                 if "data" not in pname:
-                    pckobj  = pickle.load(open(pckfile,'r'))
-                    counters = dict(pckobj)
-                    if ('Sum Weights' in counters) and options.weight:
+                     ## get the counts from the histograms instead of pickle file
+                    tmp_rootfile = ROOT.TFile(rootfile, 'READ')
+                    histo_count        = tmp_rootfile.Get('Count')
+                    histo_sumgenweight = tmp_rootfile.Get('SumGenWeights')
+                    n_count=0
+                    n_sumgenweight=0.0
+                    if histo_count:
+                        n_count        = histo_count       .GetBinContent(1)
+                        n_sumgenweight = (histo_sumgenweight.GetBinContent(1) if histo_sumgenweight else n_count)
+                    else:
+                        gentree = tmp_rootfile.Get("Runs")
+                        for iev in gentree : 
+                            #xrange(gentree.GetEntries()):
+                            #gentree.GetEntry(iev)
+                            n_count +=  iev.genEventCount
+                            n_sumgenweight += iev.genEventSumw
+                            break
+                    tmp_rootfile.Close()
+                    if ( n_count != n_sumgenweight ) and options.weight:
                         if (is_w==0): raise RuntimeError, "Can't put together a weighted and an unweighted component (%s)" % cnames
                         is_w = 1; 
-                        total_w += counters['Sum Weights']
+                        total_w += n_sumgenweight
                         scale = "genWeight*(%s)" % field[2]
+
                     elif not options.weight:
                         scale = 1
                         total_w = 1
@@ -206,7 +223,7 @@ class MCAnalysis:
                     else:
                         if (is_w==1): raise RuntimeError, "Can't put together a weighted and an unweighted component (%s)" % cnames
                         is_w = 0;
-                        total_w += counters['All Events']
+                        total_w += n_count
                         scale = "(%s)" % field[2]
                     if len(field) == 4: scale += "*("+field[3]+")"
                     for p0,s in options.processesToScale:
@@ -238,6 +255,7 @@ class MCAnalysis:
                 for tty in ttys: 
                     if options.weight: 
                         tty.setScaleFactor("%s*%g" % (scale, 1000.0/total_w))
+
                     else: 
                         tty.setScaleFactor(1)
         #if len(self._signals) == 0: raise RuntimeError, "No signals!"

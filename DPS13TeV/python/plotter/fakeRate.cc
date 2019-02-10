@@ -19,21 +19,75 @@ TH2 * helicityFractions_R = 0;
 TH2 * QF_el = 0;
 TH2 * FR_mu = 0;
 TH2 * FR_el = 0;
+TH2 * FR_el_jptgt40 =0;
+TH2 * FR_el_jptgt50 =0;
+TH2 * PR_el_jptgt40 =0;
+TH2 * PR_el_jptgt50 =0;
+TH2 * FR_mu_jptgt40 =0;
+TH2 * FR_mu_jptgt50 =0;
+TH2 * PR_mu_jptgt40 =0;
+TH2 * PR_mu_jptgt50 =0;
+
+TH2 * PR_mu_down =0;
+TH2 * FR_mu_down =0;
+TH2 * FR_el_up =0;
+TH2 * PR_el_up =0;
+
+TH2 * PR_mu_up =0;
+TH2 * FR_mu_up =0;
+TH2 * FR_el_down =0;
+TH2 * PR_el_down =0;
+
+TH2 *FR_mu_2017_up=0;
+TH2 *FR_el_2017_up=0;
+TH2 *FR_mu_2017=0;
+TH2 *FR_el_2017=0;
+TH2 *FR_mu_2017_down=0;
+TH2 *FR_el_2017_down=0;
+
+
 TH2 * FRi_mu[30], *FRi_el[30];
+//TH2 * FRi_2016_mu[30], *FRi_2016_el[30];
 TH2 *PR_mu=0;
 TH2 *PR_el = 0;
+TH2 * PRi_mu[7] = {0};
 // TH2 * FRcorrectionForPFMET = 0;
 // TH2 * FRcorrectionForPFMET_i[5];
 
 bool loadFRHisto(const std::string &histoName, const char *file, const char *name) {
   TH2 **histo = 0, **hptr2 = 0;
   TH2 * FR_temp = 0;
-    if (histoName == "FR_mu")  { histo = & FR_mu;  hptr2 = & FRi_mu[0]; }
-    else if (histoName == "FR_mu_qcdmc")  { histo = & FR_mu;  hptr2 = & FRi_mu[0]; }
-    else if (histoName == "FR_el")  { histo = & FR_el;  hptr2 = & FRi_el[0]; }
+  if (histoName == "FR_mu")  { histo = & FR_mu; }
+  else if (histoName == "FR_mu_qcdmc")  { histo = & FR_mu; }
+  else if (histoName == "FR_el")  { histo = & FR_el;}//   hptr2 = & FRi_2016_el[0];}
     else if (histoName == "PR_mu")  { histo = & PR_mu;  }
     else if (histoName == "PR_el")  { histo = & PR_el;  }
+    else if (histoName == "FR_el_2017")  { histo = & FR_el_2017; hptr2 = & FRi_el[0]; }
+    else if (histoName == "FR_mu_2017")  { histo = & FR_mu_2017; hptr2 = & FRi_mu[0]; }
+    else if (histoName == "FR_el_up")  { histo = & FR_el_up;  }
+    else if (histoName == "PR_mu_up")  { histo = & PR_mu_up;  }
+    else if (histoName == "FR_mu_up")  { histo = & FR_mu_up;  }
+    else if (histoName == "PR_el_up")  { histo = & PR_el_up;  }
+    else if (histoName == "FR_el_down")  { histo = & FR_el_down;  }
+    else if (histoName == "PR_mu_down")  { histo = & PR_mu_down;  }
+    else if (histoName == "FR_mu_down")  { histo = & FR_mu_down;  }
+    else if (histoName == "PR_el_down")  { histo = & PR_el_down;  }
+
     else if (histoName == "FR_el_qcdmc")  { histo = & FR_el;  hptr2 = & FRi_el[0]; }
+    else if(histoName == "PR_mu_jptgt50"){ histo = & PR_mu_jptgt50;  }
+    else if(histoName == "FR_mu_jptgt50"){ histo = & FR_mu_jptgt50;  }
+    else if(histoName == "PR_mu_jptgt40"){ histo = & PR_mu_jptgt40;  }
+    else if(histoName == "FR_mu_jptgt40"){ histo = & FR_mu_jptgt40;  }
+    else if(histoName == "PR_el_jptgt50"){ histo = & PR_el_jptgt50;  }
+    else if(histoName == "FR_el_jptgt50"){ histo = & FR_el_jptgt50;  }
+    else if(histoName == "PR_el_jptgt40"){ histo = & PR_el_jptgt40;  }
+    else if(histoName == "FR_el_jptgt40"){ histo = & FR_el_jptgt40;  }
+    else if(histoName == "FR_mu_2017_up"){histo = &FR_mu_2017_up; hptr2 = &FRi_mu[0];}
+    else if(histoName == "FR_el_2017_up"){histo = &FR_el_2017_up; hptr2 = &FRi_el[0]; }
+    else if(histoName == "FR_mu_2017_down"){histo = &FR_mu_2017_down; hptr2 = &FRi_mu[0];}
+    else if(histoName == "FR_el_2017_down"){histo = &FR_el_2017_down; hptr2 = &FRi_el[0];}
+
+
     // else if (histoName == "FR_correction")  { histo = & FRcorrectionForPFMET; hptr2 = & FRcorrectionForPFMET_i[0]; }
     else if (TString(histoName).BeginsWith("FR_mu_i")) {histo = & FR_temp; hptr2 = & FRi_mu[TString(histoName).ReplaceAll("FR_mu_i","").Atoi()];}
     else if (TString(histoName).BeginsWith("FR_el_i")) {histo = & FR_temp; hptr2 = & FRi_el[TString(histoName).ReplaceAll("FR_el_i","").Atoi()];}
@@ -53,7 +107,7 @@ bool loadFRHisto(const std::string &histoName, const char *file, const char *nam
       } else {
           TH2* hnew = (TH2*) f->Get(name);
           if (hnew == 0 || hnew->GetNbinsX() != (*histo)->GetNbinsX() || hnew->GetNbinsY() != (*histo)->GetNbinsY()) {
-              std::cerr << "WARNING: overwriting histogram " << (*histo)->GetName() << std::endl;
+	    std::cerr << "WARNING: overwriting histogram " << (*histo)->GetName() << hnew->GetNbinsX()<<(*histo)->GetNbinsX()<<hnew->GetNbinsY()<<(*histo)->GetNbinsY()<<std::endl;
           } else {
               bool fail = false;
               for (int ix = 1; ix <= (*histo)->GetNbinsX(); ++ix) {
@@ -63,7 +117,7 @@ bool loadFRHisto(const std::string &histoName, const char *file, const char *nam
                       }
                   }
               }
-              if (fail) std::cerr << "WARNING: overwriting histogram " << (*histo)->GetName() << std::endl;
+              if (fail) std::cerr << "overwriting histogram " << (*histo)->GetName() << std::endl;
           }
       }
       delete *histo;
@@ -80,15 +134,15 @@ bool loadFRHisto(const std::string &histoName, const char *file, const char *nam
     return histo != 0;
 }
 
-// float puw2017_herwigg[80] = {0,0,0,2.27008,3.74564,2.25339,2.82139,2.97948,2.47187,2.77325,2.53951,2.33365,2.03668,1.88443,1.77833,1.67443,1.56289,1.3917,1.25253,1.06277,0.976758,0.870936,0.790535,0.713799,0.643822,0.551428,0.516994,0.465398,0.38879,0.349138,0.327546,0.30658,0.240941,0.251968,0.200709,0.181512,0.183967,0.157223,0.151671,0.106266,0.104634,0.0948796,0.0902638,0.0717555,0.0832775,0.0625131,0.0606511,0.0446805,0.036115,0.0295584,0.0344268,0.0403625,0.0211761,0.0270248,0.00522258,0.0136205,0.0214609,0.0390496,0.0286949,0.0197972,0.0425641,0,0.0236467,0.0257964,0,0,0,0.0405372,0,0,0,0,0,0,0,0,0,0,0,0};
-// float puw2017_CP5[80] = {0,0,0,0.0720495,0.396272,0.368435,1.04472,1.10326,1.26087,2.03283,2.41803,1.9437,1.61881,1.51869,1.59003,1.60409,1.48697,1.55307,1.42429,1.04643,0.977148,0.925688,0.89919,0.696008,0.652616,0.619487,0.529287,0.476657,0.363019,0.380386,0.38475,0.295426,0.227875,0.243373,0.189566,0.184144,0.194828,0.150433,0.177622,0.0854195,0.0947405,0.109906,0.0900619,0.104282,0.0827099,0.0577756,0.068155,0.0438763,0.0360248,0.0237005,0.0300206,0.0309588,0.0250172,0.0200138,0.00428866,0.0180124,0.0150103,0.0204686,0.0142203,0.0225155,0.0600413,0,0.0150103,0.0300206,0,0,0,0.0900619,0,0,0,0,0,0,0,0,0,0,0,0};
-// 
-// float puw_2017( int nVert, bool herwMC){
-//   if(herwMC == true) return puw2017_herwigg[nVert];
-//   else if (nVert > 80) return 0;
-//   else if(herwMC == false) return puw2017_CP5[nVert];
-//   else return 0;
-// }
+float puw2017_herwigg[80] = {0,0,0,2.27008,3.74564,2.25339,2.82139,2.97948,2.47187,2.77325,2.53951,2.33365,2.03668,1.88443,1.77833,1.67443,1.56289,1.3917,1.25253,1.06277,0.976758,0.870936,0.790535,0.713799,0.643822,0.551428,0.516994,0.465398,0.38879,0.349138,0.327546,0.30658,0.240941,0.251968,0.200709,0.181512,0.183967,0.157223,0.151671,0.106266,0.104634,0.0948796,0.0902638,0.0717555,0.0832775,0.0625131,0.0606511,0.0446805,0.036115,0.0295584,0.0344268,0.0403625,0.0211761,0.0270248,0.00522258,0.0136205,0.0214609,0.0390496,0.0286949,0.0197972,0.0425641,0,0.0236467,0.0257964,0,0,0,0.0405372,0,0,0,0,0,0,0,0,0,0,0,0};
+float puw2017_CP5[80] = {0,0,0,0.0720495,0.396272,0.368435,1.04472,1.10326,1.26087,2.03283,2.41803,1.9437,1.61881,1.51869,1.59003,1.60409,1.48697,1.55307,1.42429,1.04643,0.977148,0.925688,0.89919,0.696008,0.652616,0.619487,0.529287,0.476657,0.363019,0.380386,0.38475,0.295426,0.227875,0.243373,0.189566,0.184144,0.194828,0.150433,0.177622,0.0854195,0.0947405,0.109906,0.0900619,0.104282,0.0827099,0.0577756,0.068155,0.0438763,0.0360248,0.0237005,0.0300206,0.0309588,0.0250172,0.0200138,0.00428866,0.0180124,0.0150103,0.0204686,0.0142203,0.0225155,0.0600413,0,0.0150103,0.0300206,0,0,0,0.0900619,0,0,0,0,0,0,0,0,0,0,0,0};
+ 
+float puw_2017( int nVert, bool herwMC){
+   if(herwMC == true) return puw2017_herwigg[nVert];
+   else if (nVert > 80) return 0;
+   else if(herwMC == false) return puw2017_CP5[nVert];
+   else return 0;
+ }
 
 float fakeRateWeight_2lssMVA(float l1pt, float l1eta, int l1pdgId, float l1mva,
                          float l2pt, float l2eta, int l2pdgId, float l2mva, float WP)
@@ -106,7 +160,7 @@ float fakeRateWeight_2lssMVA(float l1pt, float l1eta, int l1pdgId, float l1mva,
             return fr/(1-fr);
         }
         case 2: {
-            TH2 *hist1 = (abs(l1pdgId) == 11 ? FR_el : FR_mu);
+	    TH2 *hist1 = (abs(l1pdgId) == 11 ? FR_el : FR_mu);
             int ptbin1  = std::max(1, std::min(hist1->GetNbinsX(), hist1->GetXaxis()->FindBin(l1pt)));
             int etabin1 = std::max(1, std::min(hist1->GetNbinsY(), hist1->GetYaxis()->FindBin(std::abs(l1eta))));
             double fr1 = hist1->GetBinContent(ptbin1,etabin1);
@@ -115,6 +169,7 @@ float fakeRateWeight_2lssMVA(float l1pt, float l1eta, int l1pdgId, float l1mva,
             int etabin2 = std::max(1, std::min(hist2->GetNbinsY(), hist2->GetYaxis()->FindBin(std::abs(l2eta))));
             double fr2 = hist2->GetBinContent(ptbin2,etabin2);
             return -fr1*fr2/((1-fr1)*(1-fr2));
+
         }
         default: return 0;
     }
@@ -143,59 +198,6 @@ float Conept_TTH2017(float lpt, int lpdgId, bool lmediumMuonId, float lmva, floa
  }
 
 
-
-float ttH_FR(float conept,float Leta){
-  float FR=0.;
-  if (Leta < 1.2){
-    if (conept < 15) FR=0.024;
-    else if (conept < 20 && conept > 15) FR = 0.086;
-	      else if (conept < 32 && conept > 20) FR = 0.095;
-	      else if (conept < 45 && conept > 32) FR =0.080;
-	      else if (conept < 65 && conept > 45) FR =0.093;
-	      else FR =0.093;
-	    }
-	    else{
-	      if (conept < 15) FR=0.007;
-	      else if (conept < 20 && conept > 15) FR = 0.066;
-	      else if (conept < 32 && conept > 20) FR = 0.109;
-	      else if (conept < 45 && conept > 32) FR =0.090;
-	      else if (conept < 65 && conept > 45) FR =0.089;
-	      else FR =0.084;
-	    }
-  return FR;
-}
-
-
-
-// only for muons
-float fakeRateWeights_direct(float l1pt,float l1eta,float l1mva,float l2pt, float l2eta,float l2mva)
-{
-  float WP = 0.9;
-  float fr=0.0;
-  float fr1=0.0;
-  float fr2=0.0;
-  int l1pdgId=13;
-  int l2pdgId=13;
-
-    int nfail = (l1mva < WP)+(l2mva < WP);
-    switch (nfail) {
-        case 1: {
-	  double fpt,feta; int fid; 
-	  if (l1mva < l2mva) { fpt = l1pt; feta = std::abs(l1eta); fid = abs(l1pdgId);} 
-	  else { fpt = l2pt; feta = std::abs(l2eta); fid = abs(l2pdgId);}
-	  fr=ttH_FR(fpt,feta);
-            return fr/(1-fr);
-        }
-        case 2: {
-	  fr1=ttH_FR(l1pt,l1eta);
-	  fr2=ttH_FR(l2pt,l2eta);
-	  return -fr1*fr2/((1-fr1)*(1-fr2));
-        }
-        default: return 0;
-    }
-}
-/////////////////////////////////////////////////
-
 float fakeRateWeight_2lssMVA_smoothed_FR(float l1pt, float l1eta, int l1pdgId, float l1mva,
                          float l2pt, float l2eta, int l2pdgId, float l2mva, float WP)
 {
@@ -208,10 +210,8 @@ float fakeRateWeight_2lssMVA_smoothed_FR(float l1pt, float l1eta, int l1pdgId, f
             TH2 *hist = (fid == 11 ? FR_el : FR_mu);
 	    int etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(feta)));
 	    float p0 = hist->GetBinContent(etabin, 1);
-	    float p1 = hist->GetBinContent(etabin, 2);
-	    
+	    float p1 = hist->GetBinContent(etabin, 2);	    
 	    float fr = (fpt < 60.0 ? p0 + p1*fpt : p0 + p1*60);
-	    //	    if(l1pt > 25 && l2pt > 20) cout<<"FT/TF "<<"\t eta \t"<<feta<<"\t pt \t"<<fpt<<" \t p0 \t"<<p0<<" \t p1 \t"<<p1<<"\t FR \t"<<(fr/(1-fr))<<endl;
             return fr/(1-fr);
 
         }
@@ -226,7 +226,6 @@ float fakeRateWeight_2lssMVA_smoothed_FR(float l1pt, float l1eta, int l1pdgId, f
 	    float p0_2 = hist2->GetBinContent(etabin2, 1);
             float p1_2 = hist2->GetBinContent(etabin2, 2);
             float fr2 = (l1pt < 60.0 ? p0_2 + p1_2*l2pt :  p0_2 + p1_2*60);
-	    // if(l1pt > 25 && l2pt > 20)cout<<"FF"<<"\t pt l1 \t"<<l1pt<<"\t eta l1 \t"<<abs(l1eta)<<"\t pt l2 \t"<<l2pt<<"\t eta l2 \t"<<abs(l2eta)<<" \t p0_1 \t"<<p0_1<<" \t p1_1 \t"<<p1_1<<" \t p0_2 \t"<<p0_2<<" \t p1_2 \t"<<p1_2<<"\t FR \t"<<(-fr1*fr2/((1-fr1)*(1-fr2)))<<endl;
          return -fr1*fr2/((1-fr1)*(1-fr2));
         }
         default: return 0;
@@ -381,10 +380,17 @@ float weights_TT_and_TL(float iso1, float iso2, float cut, int category){
 
 
 float eps_smoothFR(float lpt, float leta, int lpdgId, int variation){
+  
+  int etabin;
+  float p0 =0.0;
+  float p1 =0.0;
+  if (variation > 6) cout<<"you should enter a number less than 6"<<endl;
+
+  if (variation < 5){
   TH2 *hist = (abs(lpdgId) == 11 ? FR_el : FR_mu);
-  int etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
-  float p0 = hist->GetBinContent(etabin, 1);
-  float p1 = hist->GetBinContent(etabin, 2);
+   etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
+   p0 = hist->GetBinContent(etabin, 1);
+   p1 = hist->GetBinContent(etabin, 2);
   if(variation == 1){
     p0+=hist->GetBinError(etabin, 1);
     p1+=hist->GetBinError(etabin, 2);
@@ -398,25 +404,82 @@ float eps_smoothFR(float lpt, float leta, int lpdgId, int variation){
   }
   else if (variation == 4){
     p1+=0.25*p1;
-  }
-  
+  }  
   else{
     p0+=0;
     p1+=0;
-
   }  
+  }
+  else{
+    if(variation == 5){ // for jet pt gt 40 
+      TH2 *hist = (abs(lpdgId) == 11 ? FR_el_jptgt40 : FR_mu_jptgt40);
+      etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
+       p0 = hist->GetBinContent(etabin, 1);
+       p1 = hist->GetBinContent(etabin, 2);
+  }
+    else if (variation == 6){ // for jet pt gt 50
+      TH2 *hist = (abs(lpdgId) == 11 ? FR_el_jptgt50 : FR_mu_jptgt50);
+      etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
+       p0 = hist->GetBinContent(etabin, 1);
+       p1 = hist->GetBinContent(etabin, 2);
+  }
+
+  }
+
   float SFR = (lpt < 60.0 ? p0 + p1*lpt : p0 + p1*60);
   return(SFR/(1-SFR));
 }
 
 float eta_smoothPR(float lpt, float leta, int lpdgId, int variation){
+  int etabin;
+  float p0 =0.0;
+  float p1 =0.0;
+  float p2=0.0;
+  if (variation > 6) cout<<"you should enter a number less than 6"<<endl;  
+  if (variation == 0){
   TH2 *hist = (abs(lpdgId) == 11 ? PR_el : PR_mu);
-  int etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
-  
-  float p0 = hist->GetBinContent(etabin,1);
-  float p1 = hist->GetBinContent(etabin,2);
-  float p2 = hist->GetBinContent(etabin,3);
-  
+   etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
+   p0 = hist->GetBinContent(etabin,1);
+   p1 = hist->GetBinContent(etabin,2);
+   p2 = hist->GetBinContent(etabin,3);
+  }
+  else if (variation == 3){
+  TH2 *hist = (abs(lpdgId) == 11 ? PR_el_down : PR_mu_down);
+   etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
+   p0 = hist->GetBinContent(etabin,1);
+   p1 = hist->GetBinContent(etabin,2);
+   p2 = hist->GetBinContent(etabin,3);
+  }
+  else if (variation ==4){
+  TH2 *hist = (abs(lpdgId) == 11 ? PR_el_up : PR_mu_up);
+   etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
+   p0 = hist->GetBinContent(etabin,1);
+   p1 = hist->GetBinContent(etabin,2);
+   p2 = hist->GetBinContent(etabin,3);
+  }
+  else if (variation ==5){
+  TH2 *hist = (abs(lpdgId) == 11 ? PR_el_jptgt40 : PR_mu_jptgt40);
+   etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
+   p0 = hist->GetBinContent(etabin,1);
+   p1 = hist->GetBinContent(etabin,2);
+   p2 = hist->GetBinContent(etabin,3);
+  }
+  else if (variation ==6){
+  TH2 *hist = (abs(lpdgId) == 11 ? PR_el_jptgt50 : PR_mu_jptgt50);
+   etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
+   p0 = hist->GetBinContent(etabin,1);
+   p1 = hist->GetBinContent(etabin,2);
+   p2 = hist->GetBinContent(etabin,3);
+  }
+  else{
+  TH2 *hist = (abs(lpdgId) == 11 ? PR_el : PR_mu);
+   etabin = std::max(1, std::min(hist->GetNbinsX(), hist->GetXaxis()->FindBin(abs(leta))));
+   p0 = hist->GetBinContent(etabin,1);
+   p1 = hist->GetBinContent(etabin,2);
+   p2 = hist->GetBinContent(etabin,3);
+  }
+
+  /*
   if(variation == 1){
     p0+=hist->GetBinError(etabin, 1);
     p1+=hist->GetBinError(etabin, 2);
@@ -427,12 +490,8 @@ float eta_smoothPR(float lpt, float leta, int lpdgId, int variation){
     p1-=hist->GetBinError(etabin, 2);
     p2-=hist->GetBinError(etabin, 3);
   }
-  else{
-    p0+=0;
-    p1+=0;
-    p2+=0;
+  */
 
-  }  
 
   float SPR = p0*TMath::Erf((lpt-p1)/p2);
   return((1-SPR)/SPR);
@@ -525,68 +584,51 @@ float fakeRateWeight_2lssCB_i(float l1pt, float l1eta, int l1pdgId, float l1relI
   default: return 0;
   }
 }
-/*
-float fakeRateWeight_2lss(float l1pt, float l1eta, int l1pdgId, float l1pass,
-			  float l2pt, float l2eta, int l2pdgId, float l2pass) 
-{
-  return fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
-				 l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);
-}
-*/
+
   // for syst uncertainty on Fake ratios
 float fakeRateWeight_2lss(float l1pt, float l1eta, int l1pdgId, float l1pass,
 			  float l2pt, float l2eta, int l2pdgId, float l2pass, int varUorD) 
 {
-  // varUorD == 0 for nominal FRs, {1 for up variation, 2 for down variation in pT}
-  // 3 for up in eta and 4 for down in eta
-  // 5 for up in both eta and pT and 6 for both down in pT and eta
+  // varUorD == 0 for nominal FRs, {1 for up variation, 2 for down variation as a function of lepton eta}
   if (varUorD == 0) {
   return fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
 				 l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
   else if (varUorD == 1) {
-      float L1pt=l1pt*(1.0+0.2*l1pt);
-      float L2pt=l2pt*(1.0+0.2*l2pt);
-      return fakeRateWeight_2lssCB_i(L1pt, l1eta, l1pdgId, -l1pass,
-				     L2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
-  else if (varUorD == 2) {
-      float L1pt=l1pt*(1.0-0.2*l1pt);
-      float L2pt=l2pt*(1.0-0.2*l2pt);
-      return fakeRateWeight_2lssCB_i(L1pt, l1eta, l1pdgId, -l1pass,
-				     L2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+    float varWeight = 1.05+(fabs(l1eta)+fabs(l2eta))/2.*0.0625;
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
 
-  else if (varUorD == 3){
-    float L1eta=l1eta*(1.0+0.2*l1eta);
-    float L2eta=l2eta*(1.0+0.2*l2eta);
-    return fakeRateWeight_2lssCB_i(l1pt, L1eta, l1pdgId, -l1pass,
-				   l2pt, L2eta, l2pdgId, -l2pass, -0.5, 0);}
-  
-  else if (varUorD == 4){
-    float L1eta=l1eta*(1.0-0.2*l1eta);
-    float L2eta=l2eta*(1.0-0.2*l2eta);
-    return fakeRateWeight_2lssCB_i(l1pt, L1eta, l1pdgId, -l1pass,
-				   l2pt, L2eta, l2pdgId, -l2pass, -0.5, 0);}
-  
-  else if (varUorD == 5){
-    float L1pt=l1pt*(1.0+0.2*l1pt);
-    float L2pt=l2pt*(1.0+0.2*l2pt);
-    float L1eta=l1eta*(1.0+0.2*l1eta);
-    float L2eta=l2eta*(1.0+0.2*l2eta);
-    return fakeRateWeight_2lssCB_i(L1pt, L1eta, l1pdgId, -l1pass,
-				   L2pt, L2eta, l2pdgId, -l2pass, -0.5, 0);}
-  
-  else if (varUorD == 6){
-    float L1pt=l1pt*(1.0-0.2*l1pt);
-    float L2pt=l2pt*(1.0-0.2*l2pt);
-    float L1eta=l1eta*(1.0-0.2*l1eta);
-    float L2eta=l2eta*(1.0-0.2*l2eta);
-    return fakeRateWeight_2lssCB_i(L1pt, L1eta, l1pdgId, -l1pass,
-				   L2pt, L2eta, l2pdgId, -l2pass, -0.5, 0);}
+  else if (varUorD == 2) {
+    float varWeight = 0.95-(fabs(l1eta)+fabs(l2eta))/2*0.0625;
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+  else if (varUorD == 3) {
+    float varWeight = 1.05 + (fabs(l1eta)*0.0625);
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+
+  else if (varUorD == 4) {
+    float varWeight = 0.95 - (fabs(l1eta)*0.0625);
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+
+  else if (varUorD == 5) {
+    float ptwt= 0.0025 * (l1pt < 50 ? l1pt : 50); 
+    float varWeight = 1.05 + (fabs(l1eta)*0.0625) + ptwt;
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+
+  else if (varUorD == 6) {
+    float ptwt= 0.0025 * (l1pt < 50 ? l1pt : 50);
+    float varWeight = 0.95 - (fabs(l1eta)*0.0625) - ptwt;
+    return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
+					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
+
+
   
   else {
     return fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
 				   l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
-  
-
 
 }
 

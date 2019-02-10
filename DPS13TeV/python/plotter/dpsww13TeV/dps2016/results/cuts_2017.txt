@@ -11,14 +11,11 @@ bveto 	     : nBJetLoose25_Recl == 0
 TT	     : LepGood_isLepTight_Recl[iLepFO_Recl[1]] && LepGood_isLepTight_Recl[iLepFO_Recl[0]]
 exclusive    : nLepTight_Recl<=2
 
-
 etalep1      : abs(LepGood_eta[iLepFO_Recl[0]]) < if3(abs(LepGood_pdgId[iLepFO_Recl[0]])==13,2.4,2.5)
-etalep2	     : abs(LepGood_eta[iLepFO_Recl[1]]) < if3(abs(LepGood_pdgId[iLepFO_Recl[2]])==13,2.4,2.5)
+etalep2	     : abs(LepGood_eta[iLepFO_Recl[1]]) < if3(abs(LepGood_pdgId[iLepFO_Recl[1]])==13,2.4,2.5)
 
 etal1      : (abs(LepGood_pdgId[iLepFO_Recl[0]]) == 13 || (abs(LepGood_eta[iLepFO_Recl[0]]) < 1.442 || abs(LepGood_eta[iLepFO_Recl[0]]) > 1.556 && abs(LepGood_pdgId[iLepFO_Recl[0]])==11))
 etal2      : (abs(LepGood_pdgId[iLepFO_Recl[1]]) == 13 || (abs(LepGood_eta[iLepFO_Recl[1]]) < 1.442 || abs(LepGood_eta[iLepFO_Recl[1]]) > 1.556 && abs(LepGood_pdgId[iLepFO_Recl[1]])==11))
-
-Zee_veto: abs(LepGood_pdgId[iLepFO_Recl[0]])!=11 || abs(LepGood_pdgId[iLepFO_Recl[1]]) != 11 || abs(mass_2(LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],LepGood_phi[iLepFO_Recl[0]],LepGood_mass[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],LepGood_phi[iLepFO_Recl[1]],LepGood_mass[iLepFO_Recl[1]])-91.2) > 10
 
 
 eleID: (abs(LepGood_pdgId[iLepFO_Recl[0]])!=11 || (LepGood_convVeto[iLepFO_Recl[0]] && LepGood_lostHits[iLepFO_Recl[0]]==0 && LepGood_tightCharge[iLepFO_Recl[0]]>=2)) && (abs(LepGood_pdgId[iLepFO_Recl[1]])!=11 || (LepGood_convVeto[iLepFO_Recl[1]] && LepGood_lostHits[iLepFO_Recl[1]]==0 && LepGood_tightCharge[iLepFO_Recl[1]]>=2))
@@ -31,21 +28,20 @@ chargecon     : (abs(LepGood_pdgId[iLepFO_Recl[0]])!=13 || LepGood_chargeConsist
 plusplus     : LepGood_charge[iLepFO_Recl[0]] > 0                          ; Disable=True
 minusminus   : LepGood_charge[iLepFO_Recl[0]] < 0                          ; Disable=True
 
+### electron-muon + dimuon 
+##dilepton        : (abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 143 || abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]])== 169 ); Disable=True
+
+##trigdilep     : (Trigger_em || Trigger_1m || Trigger_1e || Trigger_2m)                  ; Disable=True
+
 ### dimuon 
+
 mumu : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]])== 169    ; Disable=True	     
-trigmumu     :    (HLT_DoubleMu || HLT_SingleMu)       ; Disable=True
+trigmumu     :    (Trigger_1m || Trigger_2m || Trigger_em || Trigger_1e )       ; Disable=True
 
 ### electron-muon
+
 elmu         : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 143 ; Disable=True
-trigelmu     : (HLT_MuEG || HLT_SingleMu || HLT_SingleEl)                  ; Disable=True
-
-### mumu+elmu
-#mumuelmu     : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 169 || abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 143      ; Disable=True
-#trigmumuelmu : (HLT_MuEG || HLT_SingleEl || HLT_DoubleMu || HLT_SingleMu)            ; Disable=True
-
-### dielectron
-elel         : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 121 	   ; Disable=True
-trigelel     : (HLT_SingleEl || HLT_DoubleEl)        	           ; Disable=True
+trigelmu     : (Trigger_em || Trigger_1m || Trigger_1e || Trigger_2m)                  ; Disable=True
 
 
 ##DataBDTblind : $DATA{finalMVA_DPS<0.7} $MC{1}                              ; Disable=True
