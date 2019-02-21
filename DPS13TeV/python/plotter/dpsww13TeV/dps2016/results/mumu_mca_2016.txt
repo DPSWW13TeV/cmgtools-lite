@@ -2,12 +2,6 @@
 * ; TreeName="treeProducerSusyMultilepton"
 
 DPSWW+       : WWDoubleTo2L             : 0.1729 : 1 ; FillColor=ROOT.kRed+1   , Label="DPS"
-DPSWW_jec_Dn : WWDoubleTo2L_jecdown 	: 0.1729 : 1 ; FillColor=ROOT.kGreen+1   , Label="DPS jecdown" ##, SkipMe=True
-DPSWW_jec_Up : WWDoubleTo2L_jecup 	: 0.1729 : 1 ; FillColor=ROOT.kOrange+1   , Label="DPS jecup"  ##, SkipMe=True
-WZ_jec_Up   : WZTo3LNu_jecup  : xsec : 1  ; FillColor=ROOT.kRed+1  , Label="WZ jecup"      , NormSystematic=0.16 
-##, SkipMe=True
-WZ_jec_Dn   : WZTo3LNu_jecdown  : xsec : 1  ; FillColor=ROOT.kOrange+1  , Label="WZ jecdown"      , NormSystematic=0.16 
-##, SkipMe=True
 
 DPSWW_alt    : WW_DPS_herwig            : 0.1729 ; FakeRate='dpsww13TeV/dps2016/pureweighting_herwig.txt' , FillColor=ROOT.kGreen+1   , Label="DPS herwig" , SkipMe=True
 
@@ -27,7 +21,7 @@ Conv    : WGToLNuG : 405.271   : ((LepGood1_mcMatchId == 0 && LepGood1_mcPromptG
 
 ZZ         : ZZTo4L            : xsec : 1  ; FillColor=ROOT.kPink+7 , Label="ZZ"      , NormSystematic=0.30
 WZ         : WZTo3LNu          : xsec : 1  ; FillColor=ROOT.kAzure+1  , Label="WZ"      , NormSystematic=0.16
-WZamcatnlo : WZTo3LNu_amcatnlo : xsec : 1  ; FillColor=ROOT.kRed+1  , Label="WZ"      , NormSystematic=0.16, SkipMe=True
+WZamcatnlo : WZTo3LNu_amcatnlo : xsec : 1  ; FillColor=ROOT.kRed+1  , Label="WZ_amcatnlo" , NormSystematic=0.16 , SkipMe=True
 
 
 
@@ -98,6 +92,10 @@ WG2016	      :WGToLNuG : xsec : 1; FillColor=ROOT.kBlue+1   , Label="2016"
 #data: MuonEG_2016* 
 #data: SingleElectron_2016*
 Flips	     : DYJetsToLL_M50_LO_ext_part* : 2008.*3 : LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0 ; FillColor=ROOT.kCyan , Label="Flips" 		 
+DPSWW_jec_Dn : WWDoubleTo2L_jecdown 	: 0.1729 : 1 ; FillColor=ROOT.kGreen+1   , Label="DPS jecdown" , SkipMe=True
+DPSWW_jec_Up : WWDoubleTo2L_jecup 	: 0.1729 : 1 ; FillColor=ROOT.kOrange+1   , Label="DPS jecup"  , SkipMe=True
+WZ_jec_Up   : WZTo3LNu_jecup  : xsec : 1  ; FillColor=ROOT.kRed+1  , Label="WZ jecup"      , NormSystematic=0.16 , SkipMe=True
+WZ_jec_Dn   : WZTo3LNu_jecdown  : xsec : 1  ; FillColor=ROOT.kOrange+1  , Label="WZ jecdown"      , NormSystematic=0.16 , SkipMe=True
 
 
  LocalWords:  jetpT

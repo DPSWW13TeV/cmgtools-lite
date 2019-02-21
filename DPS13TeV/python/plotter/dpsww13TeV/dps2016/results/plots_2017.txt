@@ -67,6 +67,10 @@ genpt2_mumu           : LepGood2_mcPt     : 16,20,100; XTitle="gen. p_{T} trail.
 genpt1_with_cclt3_mumu           : LepGood1_mcPt     : 20,25,125; XTitle="gen. p_{T} lead. with_cclt3(GeV)"
 genpt2_with_cclt3_mumu           : LepGood2_mcPt     : 16,20,100; XTitle="gen. p_{T} trail. with_cclt3(GeV)"
 
+TT_mumu  : Sum$(LepGood_isLepTight_Recl[iLepFO_Recl[0]] && LepGood_isLepTight_Recl[iLepFO_Recl[1]]): [0,1,2] ; XTitle='TT' ,YMin=0,YMax=1600
+LL_mumu  : Sum$(!LepGood_isLepTight_Recl[iLepFO_Recl[0]] && !LepGood_isLepTight_Recl[iLepFO_Recl[1]]): [0,1,2] ; XTitle='TT' ,YMin=0,YMax=1600
+
+TL_mumu  : Sum$( (!LepGood_isLepTight_Recl[iLepFO_Recl[0]] && LepGood_isLepTight_Recl[iLepFO_Recl[1]]) || (LepGood_isLepTight_Recl[iLepFO_Recl[0]] && !LepGood_isLepTight_Recl[iLepFO_Recl[1]]) ): [0,1,2] ; XTitle='TL' ,YMin=0,YMax=1600
 
 
 
@@ -294,7 +298,6 @@ BDT_wz_elmuminusminus_20bins   : BDT_DPS_WZ               : 20,0.,1.0; XTitle="B
 BDT_fakes_elmuplusplus_20bins  : BDT_DPS_fakes            : 20,0.,1.0; XTitle="BDT fakes (e^{+}#mu^{+})"   ,Legend="TL",YLim=0,60
 BDT_fakes_elmuminusminus_20bins: BDT_DPS_fakes            : 20,0.,1.0; XTitle="BDT fakes (e^{-}#mu^{-})"   ,Legend="TL",YLim=0,60
 BDT_wz_elmuplusplus_20bins     : BDT_DPS_WZ               : 20,0.,1.0; XTitle="BDT WZ (e^{+}#mu^{+})"
-
 
 
 

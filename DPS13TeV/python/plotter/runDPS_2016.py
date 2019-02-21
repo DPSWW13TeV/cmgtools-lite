@@ -168,13 +168,13 @@ def runplots(trees, friends, targetdir, fmca, fcut, fplots, enabledcuts, disable
     print 'running: python', cmd
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
-def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge = False, combination = False):
+def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = True, combination = False):
     #trees='/afs/cern.ch/work/a/anmehta/work/Test/Test2/CMSSW_8_0_25/src/CMGTools/DPS13TeV/python/plotter/wgsamples/'
     trees     = '2016_trees_friends/skimmed_2lss_2016/'
     #olderversionfriends=['skimmed_Friends_BDT_2lss_2016/','skimmed_Friends_2lss_2016/']
     friends=['2016_trees_friends/skimmed_2lss_Friends_BDT_with_tight_MVA_2016_renamed/','2016_trees_friends/skimmed_Friends_2lss_2016/']
     #friends=['2016_trees_friends/BDTfriends_skimmed_2016_jecup/','2016_trees_friends/skimmed_Friends_2lss_2016/']
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2016_WZ2016_shapes/'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2016_puDown/'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots.txt'
     fsyst  = 'dpsww13TeV/dps2016/results/syst_2016.txt'
     print '=========================================='
@@ -194,9 +194,9 @@ def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge = Fal
     #processes=['fakes_data_jetpT_Dn','fakes_data_jetpT_Up','fakes_data','fakes_data_FR_Dn','fakes_data_FR_Up']
     #processes=['WG2017','WG2016']
     #processes = ['DPSWW_jec_Up','DPSWW','DPSWW_jec_Dn']
-    processes = ['WZ']#'DPSWW','WZ','fakes_data','ZZ','WG_wg','rares','flips_data','Conv']#'data',
+    processes = ['DPSWW','WZ','fakes_data','ZZ','WG_wg','rares','flips_data','Conv','data']
     #processes=['DPSWW','WZ','fakes_data','ZZ','flips_data','data','Conv','WG_wg','WG','WpWpJJ','WWW','TTZ']
-    processesCards = ['DPSWW','WZ','WG_wg','rares','flips_data','data','WZamcatnlo','DPSWW_alt','fakes_data_slope_Dn','fakes_data_jetpT_Dn','fakes_data_jetpT_Up','ZZ','fakes_data_slope_Up','fakes_data','Conv','DPSWW_jec_Up','DPSWW_jec_Dn','WZ_jec_Up','WZ_jec_Dn']
+    processesCards = ['DPSWW','WZ','WG_wg','rares','flips_data','data','WZamcatnlo','DPSWW_alt','fakes_data_slope_Dn','fakes_data_jetpT_Dn','fakes_data_jetpT_Up','ZZ','fakes_data_slope_Up','fakes_data','Conv']
     fcut   = 'dpsww13TeV/dps2016/results/cuts_2016.txt'
 
 
@@ -233,8 +233,8 @@ def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge = Fal
             disable   = []
             fittodata = []
             scalethem = {}
-            extraopts = '--showIndivSigs --plotmode=norm'# --plotmode=norm --ratioDen DPSWW --ratioNums DPSWW_jec_Up, DPSWW_jec_Dn --ratioYLabel=var./nom.' #--plotmode=norm'#  --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up,fakes_data_jetpT_Dn,fakes_data_jetpT_Up --ratioDen fakes_data --ratioYLabel=Var./Nom.'
-            drawvars=['dphiLep','dphilll2','mt2ll','pt1','chargecon2','chargecon1','met','nVert','dphil2met','pt1','mll','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','dphil2met']#,'nVert'
+            extraopts = '--showIndivSigs'# --plotmode=norm --ratioDen WZ --ratioNums WZamcatnlo --ratioYLabel=amcatnlo/powheg'# --plotmode=norm --ratioDen DPSWW --ratioNums DPSWW_jec_Up, DPSWW_jec_Dn --ratioYLabel=var./nom.' #--plotmode=norm'#  --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up,fakes_data_jetpT_Dn,fakes_data_jetpT_Up --ratioDen fakes_data --ratioYLabel=Var./Nom.'
+            drawvars=['dphiLep']#,'dphilll2','mt2ll','pt1','chargecon2','chargecon1','met','nVert','dphil2met','pt1','mll','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','dphil2met']#,'nVert'
             
             if splitCharge or splitsign:
                 makeplots1  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
@@ -247,15 +247,15 @@ def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge = Fal
 
             makeplots2spl = ['BDTforCombine_signal_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_signal_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_signal_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
 
-            makeplots=makeplots1+makeplots2
-            runplots(trees, friends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, False, extraopts)
+            makeplots=makeplots1#+makeplots2
+            #runplots(trees, friends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
             ## ==================================
             ## running datacards
             ## ==================================
 
             targetcarddir = 'Cards/cards_{date}{pf}_{fstate}_2016'.format(fstate=state,date=date, pf=('-'+postfix if postfix else '') )
             extraoptscards = ' -o {fstate}{ch} -b {fstate}{ch} '.format(fstate=state,ch=(ch[0] if ch else ''))
-            #runCards(trees, friends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
+            runCards(trees, friends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
             
 ####################################
 def EMUclassification(EMu = True,MuE =False):

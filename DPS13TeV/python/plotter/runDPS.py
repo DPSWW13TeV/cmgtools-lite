@@ -238,7 +238,7 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge =Tru
     MCfriends = '2017_trees_friends/VtxWeight_friends_2017/'
     ##BDTfriends = ['../postprocessing/Friends_BDT_Sep6_2lss/','CollectionMerger/']
     BDTfriends = ['2017_trees_friends/Friends_new_tighterMVA_BDT_2017_02122018/','2017_trees_friends/CollectionMerger/']
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017_WZshapes'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017_WZcomparisons'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots_2017_v1.txt'
     fsyst  = 'dpsww13TeV/dps2016/results/syst_2017.txt'
     fcut   = 'dpsww13TeV/dps2016/results/cuts_2017.txt'
@@ -259,11 +259,11 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge =Tru
     print 'did i split the charge? %i' %splitCharge
     processesFV= ['fakes_data','fakes_data_FR_Dn','fakes_data_FR_Up']
     processesforscalevariationsWZ=['WZwt0','WZwt1','WZwt2','WZwt3','WZwt4','WZwt5','WZwt6','WZwt7','WZwt8','WZnom']
-    #processes=['EWK','WG_wg','WG']
-    #processes=['DPSWW','DPSWW_jec_Up','DPSWW_jec_Dn']#,'DPSWW','DPSWW_jec_Up','DPSWW_jec_Dn']
+  
+    processesVar=['WZ','WZamcatnlo']#,'WZinclpow']#'DPSWW','DPSWW_jec_Up','DPSWW_jec_Dn']#,'DPSWW','DPSWW_jec_Up','DPSWW_jec_Dn']
     processes=['DPSWW','WZ','ZZ','rares','flips_data','Conv','fakes_data','WG_wg','data']#QCD WZ, 'data','top'
     #processes=['DPSWW','WZ','fakes_data','ZZ','flips_data','data','Conv','WG_wg','WG','WpWpJJ','WWW','TTZ']
-    processesCards = ['data', 'DPSWW','DPSWW_alt','WZ', 'ZZ', 'WG_wg','flips_data','rares','fakes_data','fakes_data_FR_Dn','fakes_data_FR_Up','WZamcatnlo','Conv','DPSWW_jec_Up','DPSWW_jec_Dn','WZ_jec_Up','WZ_jec_Dn','DPSWW_elLooseUnc_Up','DPSWW_elLooseUnc_Dn','DPSWW_muLooseUnc_Up','DPSWW_muLooseUnc_Dn','WZ_elLooseUnc_Up','WZ_elLooseUnc_Dn','WZ_muLooseUnc_Up','WZ_muLooseUnc_Dn','ZZ_elLooseUnc_Up','ZZ_elLooseUnc_Dn','ZZ_muLooseUnc_Up','ZZ_muLooseUnc_Dn','rares_elLooseUnc_Up','rares_elLooseUnc_Dn','rares_muLooseUnc_Up','rares_muLooseUnc_Dn','Conv_elLooseUnc_Up','Conv_elLooseUnc_Dn','Conv_muLooseUnc_Up','Conv_muLooseUnc_Dn','WG_wg_elLooseUnc_Up','WG_wg_elLooseUnc_Dn','WG_wg_muLooseUnc_Up','WG_wg_muLooseUnc_Dn']
+    processesCards = ['data', 'DPSWW','DPSWW_alt','WZ', 'ZZ', 'WG_wg','flips_data','rares','fakes_data','fakes_data_FR_Dn','fakes_data_FR_Up','WZamcatnlo','Conv','DPSWW_elLooseUnc_Up','DPSWW_elLooseUnc_Dn','DPSWW_muLooseUnc_Up','DPSWW_muLooseUnc_Dn','WZ_elLooseUnc_Up','WZ_elLooseUnc_Dn','WZ_muLooseUnc_Up','WZ_muLooseUnc_Dn','ZZ_elLooseUnc_Up','ZZ_elLooseUnc_Dn','ZZ_muLooseUnc_Up','ZZ_muLooseUnc_Dn','rares_elLooseUnc_Up','rares_elLooseUnc_Dn','rares_muLooseUnc_Up','rares_muLooseUnc_Dn','Conv_elLooseUnc_Up','Conv_elLooseUnc_Dn','Conv_muLooseUnc_Up','Conv_muLooseUnc_Dn','WG_wg_elLooseUnc_Up','WG_wg_elLooseUnc_Dn','WG_wg_muLooseUnc_Up','WG_wg_muLooseUnc_Dn']
     
     if onlyMM:
         binningBDT   = ' Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ) 15,1.0,16.0'
@@ -297,11 +297,11 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge =Tru
             disable   = []
             fittodata = []
             scalethem = {}
-            extraopts = '--plotmode=norm --showIndivSigs' #--ratioNums DPSWW_jec_Dn,DPSWW_jec_Up --ratioDen DPSWW --maxRatioRange 0.5 1.5 --fixRatioRange --ratioYLabel=Var./Nom.'# WZ_jec_Up--plotmode=norm --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up --ratioDen fakes_data'#  --plotmode=nostack'# --plotmode=norm'# --plotmode=norm --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up --ratioDen fakes_data --ratioYLabel=Var./Nom.'# --scaleSigToData'#.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}  --ratioNums WZpow --ratioDen WZ --fix-process ZZ
+            extraopts = '--showIndivSigs'# --plotmode=norm --ratioDen WZ --ratioNums WZamcatnlo --ratioYLabel=amc@tnlo/pow.'# --ratioDen WZ --ratioNums WZamcatnlo --ratioYLabel=amcatnlo/powheg' #--ratioNums DPSWW_jec_Dn,DPSWW_jec_Up --ratioDen DPSWW --maxRatioRange 0.5 1.5 --fixRatioRange --ratioYLabel=Var./Nom.'# WZ_jec_Up--plotmode=norm --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up --ratioDen fakes_data'#  --plotmode=nostack'# --plotmode=norm'# --plotmode=norm --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up --ratioDen fakes_data --ratioYLabel=Var./Nom.'# --scaleSigToData'#.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}  --ratioNums WZpow --ratioDen WZ --fix-process ZZ
             drawvars_mumu=['recopt_minus_genpt1','recopt_minus_genpt2','chargecon1_full','chargecon2_full','recopt_minus_genpt1','recopt_minus_genpt2','recopdgid_over_genpdgid1','recopdgid_over_genpdgid2','genpt1','genpt2','met_jecDown','met_jecUp','met','SubLeadingFO','LeadingFO','genpt1_with_cclt3','genpt2_with_cclt3','drlep1jet','drlep2jet']
             CRvars=['met_3l','pt1_3l','pt2_3l','pt3_3l']#'genmllOS_3l'mllOS_3l'
-            #drawvars=['nJet25_Recl','nJet25_jecDown_Recl','nJet25_jecUp_Recl',nBJetLoose25','nBJetMedium25','nBJetCSVLoose25','nBJetCSVMedium25','nBJetCSVTight25','nBJetDeepCSVLoose25','nBJetDeepCSVMedium25','nBJetDeepCSVTight25']
-            drawvars=['conept1','conept2','met','dphil2met','dphilll2','dphiLep','mt2ll','mt1','mtll','eta_sum','etaprod']#,'nVert','lepMVA1','lepMVA2','mll''pt1','pt2' 'chargetight1','chargetight2','chargecon2','chargecon1'
+            #drawvars=['nJet25_Recl','nJet25_jecDown_Recl','nJet25_jecUp_Recl','nBJetLoose25','nBJetMedium25','nBJetCSVLoose25','nBJetCSVMedium25','nBJetCSVTight25','nBJetDeepCSVLoose25','nBJetDeepCSVMedium25','nBJetDeepCSVTight25']
+            drawvars=['conept1','conept2','met','dphil2met','dphilll2','dphiLep','mt2ll','mt1','mtll','eta_sum','etaprod']#,'nVert','lepMVA1','lepMVA2','mll''pt1','pt2' 'chargetight1','chargetight2','chargecon2','chargecon1','eta1','eta2','phi1','phi2','pt1','pt2',
 
             if splitCharge or splitsign:
                 makeplots1  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
@@ -316,8 +316,8 @@ def makeResults(onlyEE = False,onlyMM = True, splitsign =False, splitCharge =Tru
             makeplots4 = ['TL_mumu','LL_mumu','TT_mumu']
             makeplots5=['ratioconept1_pt_mumu','ratioconept2_pt_mumu','conept1_pt_mumu','conept2_pt_mumu']
 
-            makeplots=makeplots1 ##+makeplots2
-            #runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata,makeplots,False, extraopts)
+            makeplots=makeplots2#+makeplots2
+            #runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, extraopts)
 
             ## ==================================
             ## running datacards
@@ -367,10 +367,10 @@ def threelepCRPlot():
     fmca   = 'dpsww13TeV/dps2016/results/mca_3lcr_2017.txt'
     fcut   = 'dpsww13TeV/dps2016/results/cuts_3l.txt'
     fplots = 'dpsww13TeV/dps2016/results/plots_2017_v1.txt'
-    processes=['WZ','ZZ','data']
+    processes=['WZ','ZZ','data','WG_wg','Conv','rares']
     enable    = []
     disable   = []
-    fittodata = ['ZZ','WZ']
+    fittodata = ['ZZ','WZ','WG_wg','Conv','rares']
     scalethem = {}
     extraopts = ''# '--scaleSigToData'#--fix-process ZZ'
     makeplots=['BDT_wz_3l','met_3l','pt1_3l','pt2_3l','pt3_3l']#'genmllOS_3l'mllOS_3l'

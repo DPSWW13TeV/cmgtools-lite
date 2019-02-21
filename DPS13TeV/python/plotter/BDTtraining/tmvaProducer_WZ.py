@@ -16,7 +16,7 @@ r.TMVA.Tools.Instance()
 # does not work. Make sure you don't overwrite an
 # existing file.
 
-output_fn  = 'training/TL_TMVAOutputTraining_WZ.root'
+output_fn  = 'TMVAOutputTraining_WZ.root'
 output_f   = r.TFile(output_fn,'RECREATE')
  
 factory = r.TMVA.Factory('TMVAClassification', output_f,
@@ -46,7 +46,7 @@ factory.AddVariable('abs(LepGood_eta[0]+LepGood_eta[1])','abs(#eta_{1}+#eta_{2})
 
 ## get background and signal trees/chains
 
-sig_tfile = r.TFile('/eos/user/m/mdunser/dps-13TeV-combination/TREES_latest/WW_DPS_herwig/treeProducerWMass/tree.root')
+sig_tfile = r.TFile('/eos/user/m/mdunser/dps-13TeV-combination/TREES_latest/WW_DPS_herwig/treeProducerSusyMultilepton/tree.root')
 
 useNLO = False
 if useNLO:
@@ -76,9 +76,9 @@ common_cuts = '(nLepGood==2 && LepGood_pt[0]>25. && LepGood_pt[1]>20. && met_pt 
 tightCharge = '(LepGood_chargeConsistency[0] ==2 || abs(LepGood_pdgId[0]) == 13) && (LepGood_chargeConsistency[1] ==2 || abs(LepGood_pdgId[1]) == 13)'
 mmac        = '(abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 169)'
 mmss        = '(LepGood_pdgId[0]*LepGood_pdgId[1] == 169)'
-afac        = '(abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 169 || abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 121)'
-afss        = '(LepGood_pdgId[0]*LepGood_pdgId[1] == 169 || LepGood_pdgId[0]*LepGood_pdgId[1] == 121)'
-TT          = 'LepGood_mvaTTH[0] > 0.75 && LepGood_mvaTTH[1] > 0.75'
+afac        = '(abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 169 || abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 121 ||  abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 143)'
+afss        = '(LepGood_pdgId[0]*LepGood_pdgId[1] == 169 || LepGood_pdgId[0]*LepGood_pdgId[1] == 121 || LepGood_pdgId[0]*LepGood_pdgId[1] == 143)'
+TT          = 'LepGood_mvaTTH[0] > 0.9 && LepGood_mvaTTH[1] > 0.9'
 sig_cutstring = ' && '.join([common_cuts, afac, tightCharge, TT])
 bkg_cutstring = ' && '.join([common_cuts, afss, tightCharge, TT])
 
@@ -96,7 +96,7 @@ factory.PrepareTrainingAndTestTree(sigCut,   # signal events p. 21
                                    ':'.join([
                                    'nTrain_Signal=0',
                                    'nTrain_Background=0',
-				                   'nTest_Signal=0',
+                                   'nTest_Signal=0',
                                    'nTest_Background=0', 
                                    'SplitMode=Random',
                                    'NormMode=NumEvents',
@@ -117,7 +117,7 @@ bdt = factory.BookMethod(r.TMVA.Types.kBDT, 'BDT',
                                     '!V', 
                                     'NTrees=850', 
                                     'MinNodeSize=0.05', 	
-				                    'MaxDepth=3', 
+                                    'MaxDepth=3', 
                                     'BoostType=AdaBoost', 
                                     'AdaBoostBeta=0.5', 
                                     'SeparationType=GiniIndex', 

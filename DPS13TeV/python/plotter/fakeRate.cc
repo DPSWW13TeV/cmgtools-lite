@@ -57,9 +57,9 @@ TH2 * PRi_mu[7] = {0};
 bool loadFRHisto(const std::string &histoName, const char *file, const char *name) {
   TH2 **histo = 0, **hptr2 = 0;
   TH2 * FR_temp = 0;
-  if (histoName == "FR_mu")  { histo = & FR_mu; }
+  if (histoName == "FR_mu")  { histo = & FR_mu;}// hptr2 = & FRi_mu[0];}
   else if (histoName == "FR_mu_qcdmc")  { histo = & FR_mu; }
-  else if (histoName == "FR_el")  { histo = & FR_el;}//   hptr2 = & FRi_2016_el[0];}
+  else if (histoName == "FR_el")  { histo = & FR_el;}//  hptr2 = & FRi_el[0];}
     else if (histoName == "PR_mu")  { histo = & PR_mu;  }
     else if (histoName == "PR_el")  { histo = & PR_el;  }
     else if (histoName == "FR_el_2017")  { histo = & FR_el_2017; hptr2 = & FRi_el[0]; }
@@ -89,8 +89,8 @@ bool loadFRHisto(const std::string &histoName, const char *file, const char *nam
 
 
     // else if (histoName == "FR_correction")  { histo = & FRcorrectionForPFMET; hptr2 = & FRcorrectionForPFMET_i[0]; }
-    else if (TString(histoName).BeginsWith("FR_mu_i")) {histo = & FR_temp; hptr2 = & FRi_mu[TString(histoName).ReplaceAll("FR_mu_i","").Atoi()];}
-    else if (TString(histoName).BeginsWith("FR_el_i")) {histo = & FR_temp; hptr2 = & FRi_el[TString(histoName).ReplaceAll("FR_el_i","").Atoi()];}
+    //else if (TString(histoName).BeginsWith("FR_mu_i")) {histo = & FR_temp; hptr2 = & FRi_mu[TString(histoName).ReplaceAll("FR_mu_i","").Atoi()];}
+    //else if (TString(histoName).BeginsWith("FR_el_i")) {histo = & FR_temp; hptr2 = & FRi_el[TString(histoName).ReplaceAll("FR_el_i","").Atoi()];}
     else if (histoName == "QF_el") histo = & QF_el;
     else if (TString(histoName).Contains("helicityFractions_0")) { histo = & helicityFractions_0; }
     else if (TString(histoName).Contains("helicityFractions_L")) { histo = & helicityFractions_L; }
@@ -107,7 +107,7 @@ bool loadFRHisto(const std::string &histoName, const char *file, const char *nam
       } else {
           TH2* hnew = (TH2*) f->Get(name);
           if (hnew == 0 || hnew->GetNbinsX() != (*histo)->GetNbinsX() || hnew->GetNbinsY() != (*histo)->GetNbinsY()) {
-	    std::cerr << "WARNING: overwriting histogram " << (*histo)->GetName() << hnew->GetNbinsX()<<(*histo)->GetNbinsX()<<hnew->GetNbinsY()<<(*histo)->GetNbinsY()<<std::endl;
+	    std::cerr << "WARNING: overwriting histogram " << (*histo)->GetName() << std::endl;
           } else {
               bool fail = false;
               for (int ix = 1; ix <= (*histo)->GetNbinsX(); ++ix) {
@@ -624,8 +624,6 @@ float fakeRateWeight_2lss(float l1pt, float l1eta, int l1pdgId, float l1pass,
     return varWeight*fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
 					     l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
 
-
-  
   else {
     return fakeRateWeight_2lssCB_i(l1pt, l1eta, l1pdgId, -l1pass,
 				   l2pt, l2eta, l2pdgId, -l2pass, -0.5, 0);}
@@ -649,6 +647,7 @@ float chargeFlipWeight_2lss(float l1pt, float l1eta, int l1pdgId, int l1charge,
     int etabin = std::max(1, std::min(QF_el->GetNbinsY(), QF_el->GetYaxis()->FindBin(std::abs(l2eta))));
     w += QF_el->GetBinContent(ptbin,etabin);
   }
+  //  cout<<"wt factor is"<<w<<endl;
   return w;
 }
 
