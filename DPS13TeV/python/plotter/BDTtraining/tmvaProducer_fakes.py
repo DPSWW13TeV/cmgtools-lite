@@ -16,12 +16,13 @@ r.TMVA.Tools.Instance()
 # does not work. Make sure you don't overwrite an
 # existing file.
 includePt = True
-useHerwig = False
+useHerwig = True
 trainagainstTL = True
 doublemudata = True
 includeEtasum = True
 includeEtadiff = False
-output_fn  = '{bkgsample}{DATAsample}_DPS{gen}_BDT{pt}{etadiff}{etasum}.root'.format(bkgsample='TL' if trainagainstTL else 'LL',DATAsample='_in_DblMu' if doublemudata else '',pt='_noPt1' if not includePt else '',gen='Herwigpp' if useHerwig else 'Pythia',etadiff='_noEtadiff' if not includeEtadiff else '',etasum='_noEtasum' if not includeEtasum else '')
+metvariation='jecUp'
+output_fn  = '{bkgsample}{DATAsample}_DPS{gen}_BDT{pt}{etadiff}{etasum}{metvar}.root'.format(bkgsample='TL' if trainagainstTL else 'LL',DATAsample='_in_DblMu' if doublemudata else '',pt='_noPt1' if not includePt else '',gen='Herwigpp' if useHerwig else 'Pythia',etadiff='_noEtadiff' if not includeEtadiff else '',etasum='_noEtasum' if not includeEtasum else '',metvar=metvariation)
 output_f   = r.TFile(output_fn,'RECREATE')
  
 factory = r.TMVA.Factory('TMVAClassification', output_f,
@@ -39,12 +40,13 @@ factory = r.TMVA.Factory('TMVAClassification', output_f,
 if includePt:
 	factory.AddVariable('LepGood_pt[0]','p_{T1}', 'F')
 factory.AddVariable('LepGood_pt[1]','p_{T2}', 'F') 
-factory.AddVariable('met_pt', 'F') 
-factory.AddVariable('mt2davis(LepGood_pt[0],LepGood_eta[0],LepGood_phi[0],LepGood_pt[1],LepGood_eta[1],LepGood_phi[1],met_pt,met_phi)','MT2_{ll}', 'F')
+#factory.AddVariable('metpt', 'F') 
+factory.AddVariable('met_jecUp_pt', 'F')
+factory.AddVariable('mt2davis(LepGood_pt[0],LepGood_eta[0],LepGood_phi[0],LepGood_pt[1],LepGood_eta[1],LepGood_phi[1],met_jecUp_pt,met_jecUp_phi)','MT2_{ll}', 'F')
 factory.AddVariable('mt_2(LepGood_pt[0],LepGood_phi[0],LepGood_pt[1],LepGood_phi[1])','MT l1 l2', 'F') 
-factory.AddVariable('mt_2(LepGood_pt[0],LepGood_phi[0],met_pt,met_phi)','MT l1 met', 'F') 
+factory.AddVariable('mt_2(LepGood_pt[0],LepGood_phi[0],met_jecUp_pt,met_jecUp_phi)','MT l1 met', 'F') 
 factory.AddVariable('abs(deltaPhi(LepGood_phi[0],LepGood_phi[1]))','#Delta #phi l1 l2', 'F') 
-factory.AddVariable('abs(deltaPhi(LepGood_phi[1],met_phi))','#Delta #phi l2 met', 'F') 
+factory.AddVariable('abs(deltaPhi(LepGood_phi[1],met_jecUp_phi))','#Delta #phi l2 met', 'F') 
 factory.AddVariable('abs(deltaPhi(phi_2(LepGood_pt[0],LepGood_eta[0],LepGood_phi[0],LepGood_mass[0],LepGood_pt[1],LepGood_eta[1],LepGood_phi[1],LepGood_mass[1]),LepGood_phi[1]))','#Delta #phi l1l2 l2', 'F')
 factory.AddVariable('LepGood_eta[0]*LepGood_eta[1]','#eta_{1}*#eta_{2}', 'F')
 if includeEtasum:
@@ -53,22 +55,6 @@ if includeEtadiff:
     factory.AddVariable('abs(LepGood_eta[0]-LepGood_eta[1])','abs(#eta_{1}-#eta_{2})','F')
 
 
-#factory.AddVariable('mt_2(LepGood_pt[1],LepGood_phi[1],met_pt,met_phi)','MT l2 met', 'F') 
-#factory.AddVariable('abs(deltaPhi(LepGood_phi[0],met_phi))','#Delta #phi l1 met', 'F') 
-#factory.AddVariable('abs(deltaPhi(deltaPhi(LepGood_phi[0],LepGood_phi[1]),met_phi))','#Delta #phi l1l2 met', 'F')
-
-
-
-
-
-#factory.AddVariable('abs(dphi_2(LepGood_pt[0],LepGood_eta[0],LepGood_phi[0],LepGood_pt[1],LepGood_eta[1],LepGood_phi[1],2))','#Delta #phi ll l2', 'F')
-
-    #factory.AddVariable('max(abs(mt_2(LepGood_pt[0],LepGood_phi[0],met_trkPt,met_trkPhi)-80.),abs(mt_2(LepGood_pt[1],LepGood_phi[1],met_trkPt,met_trkPhi)-80.))','maxThing','F')
-    #factory.AddVariable('min(mt_2(LepGood_pt[0],LepGood_phi[0],met_trkPt,met_trkPhi)-91.,mt_2(LepGood_pt[1],LepGood_phi[1],met_trkPt,met_trkPhi)-91.)','minThing','F')
-    #factory.AddVariable('mt_2(LepGood_pt[1],LepGood_phi[1],met_pt,met_phi)','MT l2 met', 'F') 
-    #factory.AddVariable('abs(deltaPhi(LepGood_phi[0],met_phi))','#Delta #phi 1', 'F') 
-    #factory.AddVariable('abs(eta_2(LepGood_pt[0],LepGood_eta[0],LepGood_phi[0],LepGood_mass[0],LepGood_pt[1],LepGood_eta[1],LepGood_phi[1],LepGood_mass[1]))','|#eta ll|','F')   
-
 
 ## get background tree and friends etc p. 16 
 #treePath = '/eos/user/m/mdunser/w-helicity-13TeV/trees/trees_all_skims/'
@@ -76,10 +62,9 @@ treePath = '/eos/cms/store/cmst3/group/tthlep/peruzzi/TREES_TTH_250117_Summer16_
 #bkgtreePath = '/eos/user/m/mdunser/w-helicity-13TeV/trees/trees_all_skims/SingleMuon_Run2016H_part'
 #from ROOT import TChain, TSelector, TTree
 bkg_tfile = r.TChain('tree')
-#list1 = ( list( i for i in os.listdir(treePath) if 'SingleMuon_Run2016G' in i) )
-#list1 = ( list( i for i in os.listdir(treePath) if 'SingleMuon_Run2016B' in i or 'SingleMuon_Run2016C' in i) )
 
 list1= (list (i for i in os.listdir(treePath) if re.match('DoubleMuon_2016'+'.*reMiniAOD',i) ) )
+#list1= (list (i for i in os.listdir(treePath) if re.match('*_2016'+'.*reMiniAOD',i) ) )
 n=len(list1)
 for d in list1:
     #temp = treePath+d+'/treeProducerWMass/tree.root'
@@ -116,20 +101,14 @@ factory.AddSignalTree    ( sig_tree, sig_weight)
 factory.AddBackgroundTree( bkg_tfile, bkg_weight)
 
 # cuts defining the signal and background sample
-common_cuts = '(LepGood_pt[0] > 25 && LepGood_pt[1] > 20 && nLepGood ==2 && met_pt > 15) &&'
 
-afac = '( abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 169 || abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 143 || abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 121) && LepGood_mvaTTH[0] > 0.75 && LepGood_mvaTTH[1] > 0.75'
+common_cuts = '(LepGood_pt[0] > 25 && LepGood_pt[1] > 20 && nLepGood ==2 && met_jecUp_pt > 15) &&'
+
+afac = '( abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 169 || abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 143 || abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 121) && LepGood_mvaTTH[0] > 0.9 && LepGood_mvaTTH[1] > 0.9'
 afss = '(LepGood_pdgId[0]*LepGood_pdgId[1] == 169) &&'
-TL='((LepGood_mvaTTH[0] > 0.75 && LepGood_mvaTTH[1] < 0.75) || (LepGood_mvaTTH[0] < 0.75 && LepGood_mvaTTH[1] > 0.75))'
-LL='(LepGood_mvaTTH[0] < 0.75 &&  LepGood_mvaTTH[1] < 0.75)'
+TL='((LepGood_mvaTTH[0] > 0.9 && LepGood_mvaTTH[1] < 0.9) || (LepGood_mvaTTH[0] < 0.9 && LepGood_mvaTTH[1] > 0.9))'
+LL='(LepGood_mvaTTH[0] < 0.9 &&  LepGood_mvaTTH[1] < 0.9)'
 
-
-#Old definitions
-#common_cuts = '(LepGood_pt[0] > 25 && LepGood_pt[1] > 20 && nLepGood ==2 && met_pt > 15 && LepGood_tightId[1] > 0 && LepGood_tightId[0] > 0) && LepGood_relIso03[0] < 1.0 &&  LepGood_relIso03[1] < 1.0 &&'
-#afac = '( abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 169 || abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 143 || abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 121) && LepGood_relIso03[0] < 0.1 &&  LepGood_relIso03[1] < 0.1'
-#TLnLL='(LepGood_mvaTTH[0] > 0.75 || LepGood_mvaTTH[1] > 0.75)'
-#TL='((LepGood_relIso03[0] > 0.1 && LepGood_relIso03[1] < 0.1) || (LepGood_relIso03[0] < 0.1 && LepGood_relIso03[1] > 0.1))'
-#LL='(LepGood_relIso03[0] > 0.1 &&  LepGood_relIso03[1] > 0.1)'
 
 sig_cutstring = common_cuts+afac
 if trainagainstTL:

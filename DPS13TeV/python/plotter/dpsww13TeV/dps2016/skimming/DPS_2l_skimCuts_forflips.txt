@@ -1,0 +1,12 @@
+alwaystrue : 1
+2l     : nLepGood == 2
+opp-sign : LepGood_charge[0] * LepGood_charge[1] < 0
+atleastoneel : (abs(LepGood_pdgId[0])==11 || abs(LepGood_pdgId[1])==11) 
+tightsel : min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) > 0.9 
+tightCharge  : LepGood_tightCharge[0] > 1 && LepGood_tightCharge[1] > 1
+chargecon    : (LepGood_chargeConsistency[0] >= 3 || abs(LepGood_pdgId[0])==11) && (LepGood_chargeConsistency[1] >= 3 || abs(LepGood_pdgId[1])==11)
+lostHits     : (LepGood_lostHits[0] ==  0 || abs(LepGood_pdgId[0])==13) &&  (LepGood_lostHits[1] ==  0 || abs(LepGood_pdgId[1])==13)
+convVeto     : (LepGood_convVeto[0] > 0 || abs(LepGood_pdgId[0])==13) && (LepGood_convVeto[1] > 0 || abs(LepGood_pdgId[1])==13)
+marc Emu2    : (LepGood_idEmuTTH[0] || abs(LepGood_pdgId[0]) == 13) && (LepGood_idEmuTTH[1] || abs(LepGood_pdgId[1]) == 13)
+
+

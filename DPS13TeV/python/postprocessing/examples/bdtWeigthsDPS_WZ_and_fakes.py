@@ -37,10 +37,22 @@ class BDT_DPS(Module):
             ## MVAVar('v10:= abs(deltaPhi(LepGood_phi[0],LepGood_phi[1]))'),
             ## MVAVar('v11:= abs(dphi_2(LepGood_pt[0],LepGood_eta[0],LepGood_phi[0],LepGood_pt[1],LepGood_eta[1],LepGood_phi[1],2))'),
         ]
-        Pwz='/afs/cern.ch/work/m/mdunser/public/cmssw/dpsww2018/CMSSW_8_0_25/src/CMGTools/DPS13TeV/python/plotter/weights/'
+        Pbase='/afs/cern.ch/work/a/anmehta/work/Test/Test2/CMSSW_8_0_25/src/CMGTools/DPS13TeV/python/plotter/BDTtraining/weights/'
+        Pwz='/afs/cern.ch/work/m/mdunser/public/cmssw/dpsww2018/CMSSW_8_0_25/src/CMGTools/DPS13TeV/python/plotter/BDTtraining/weights/'
         Pfakes='/afs/cern.ch/user/a/anmehta/public/'
-        self._MVAs['BDT_DPS_WZ']    = MVATool('BDT', Pwz   +'TMVAClassification_BDT.weights.xml', self._vars, rarity=True) 
-        self._MVAs['BDT_DPS_fakes'] = MVATool('BDT', Pfakes+'TMVAClassification_BDT_Doublemu.weights.xml', self._vars, rarity=True) 
+        Pvariation='/afs/cern.ch/work/a/anmehta/work/Test/Test2/CMSSW_8_0_25/src/CMGTools/DPS13TeV/python/plotter/BDTtraining/modified_byhand/'
+
+        self._MVAs['BDT_DPS_WZ']    = MVATool('BDT', Pbase   +'TMVAClassification_BDT_WZ.weights.xml', self._vars, rarity=True)
+        self._MVAs['BDT_DPS_fakes'] = MVATool('BDT', Pbase   +'TMVAClassification_BDT_fakes_HWpp_Doublemu.weights.xml', self._vars, rarity=True) 
+         
+        #old self._MVAs['BDT_DPS_fakes'] = MVATool('BDT', Pfakes+'TMVAClassification_BDT_Doublemu.weights.xml', self._vars, rarity=True) 
+##nominals
+        #self._MVAs['BDT_DPS_fakes'] = MVATool('BDT', Pfakes+'TMVAClassification_BDT_HWpp_Doublemu.weights.xml', self._vars, rarity=True) 
+        #self._MVAs['BDT_DPS_WZ']    = MVATool('BDT', Pfakes   +'TMVAClassification_BDT.weights.xml', self._vars, rarity=True)
+##jecvariations
+        #self._MVAs['BDT_DPS_fakes'] = MVATool('BDT', Pvariation +'BDT_fakes_jecdown.xml', self._vars, rarity=True) 
+        #self._MVAs['BDT_DPS_WZ']    = MVATool('BDT', Pvariation +'BDT_wz_jecdown.xml', self._vars, rarity=True)
+
 
     ## new stuff
     def beginJob(self):

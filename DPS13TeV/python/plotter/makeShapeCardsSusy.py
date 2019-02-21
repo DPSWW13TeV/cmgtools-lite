@@ -255,9 +255,9 @@ for name in systsEnv.keys():
         elif mode in ["templates"]:
             nominal = report[p]
 	    #print 'name of the nominal is {HERE}'.format(HERE=nominal)
-            #print 'integral of the nominal is {HEREIN}'.format(HEREIN=nominal.Integral())
             p0Up = report["%s_%s_Up" % (p, effect)]
             p0Dn = report["%s_%s_Dn" % (p, effect)]
+	    #print p0Up
             if not p0Up or not p0Dn: 
                 raise RuntimeError, "Missing templates %s_%s_(Up,Dn) for %s" % (p,effect,name)
             if options.noNegVar:
