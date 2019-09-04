@@ -7,6 +7,7 @@ def InputTree(tree,entrylist=None):
     if hasattr(tree, '_ttreereader'): return tree # don't initialize twice
     tree.entry = -1
     tree._entrylist = entrylist
+    print 'i am trying to construct a ttreereader with this', tree
     tree._ttreereader = ROOT.TTreeReader(tree)
     tree._ttreereader._isClean = True
     tree._ttrvs = {}

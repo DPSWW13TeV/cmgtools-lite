@@ -1,0 +1,6 @@
+# vim: syntax=sh
+* ; TreeName="treeProducerSusyMultilepton"
+
+DPSWW       : WWDoubleTo2L             : 0.1729 ; FakeRate='wt2016.txt' ,FillColor=ROOT.kRed+1   , Label="DPS"
+DPSWW       : WW_DPS_leptonic_pythia   : 0.1729 ; FakeRate='wt2017.txt' , FillColor=ROOT.kRed+1   , Label="DPS"
+

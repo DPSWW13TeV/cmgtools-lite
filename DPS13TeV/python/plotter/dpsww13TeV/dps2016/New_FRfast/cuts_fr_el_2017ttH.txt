@@ -1,0 +1,32 @@
+alwaystrue : 1
+## trigger selection
+## =============================================
+#trigger1el    : (HLT_BIT_HLT_Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30_v ==1 )
+#trigger1el    : HLT_FR_Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30 >0
+trigger1el     : (HLT_BIT_HLT_Ele17_CaloIdM_TrackIdM_PFJet30_v ==1)
+## electron selection
+## =============================================
+1l		  : nLepGood == 1
+electron          : abs(LepGood1_pdgId) == 11
+eleId		  : LepGood1_idEmuTTH == 1
+electronTightMVA : LepGood1_mvaTTH > 0.9 && LepGood_jetBTagCSV < 0.4941
+etatranscut 	  : (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556)
+etacut	    	  : abs(LepGood1_eta) < 2.5
+## kinematic selection
+## =============================================
+lpt25		  : LepGood1_pt > 20.
+#awayJet30        : Sum$(Jet_pt > 30. && abs(deltaPhi(LepGood1_phi,Jet_phi)) > 0.7 ) >= 1
+awayJet40         : Sum$(Jet_Clean_against_LL_pt > 30. && abs(deltaPhi(LepGood1_phi,Jet_Clean_against_LL_phi)) > 0.7 ) >= 1
+#FO       	  : LepGood1_mvaTTH > 0.9 || (LepGood_jetBTagCSV < 0.3 && LepGood_jetPtRatiov2 > 0.5)
+
+FO: LepGood1_jetBTagDeepCSV < 0.4941 && LepGood1_idEmuTTH && (LepGood1_mvaTTH>0.90 || (LepGood1_jetPtRatiov2>0.5 && LepGood1_jetBTagDeepCSV<0.1522 &&  LepGood1_mvaIdSpring16HZZ >if3(abs(LepGood1_eta)<1.479, 0.0, 0.7)))
+conept : conept_TTH(LepGood1_pt,LepGood1_pdgId,LepGood1_mediumMuonId,LepGood1_mvaTTH,LepGood_jetPtRatiov2) > 10
+pfmet15max   : met_pt < 40.                                             ; Disable=True
+mtl1pf40max : mt_2(LepGood1_pt,LepGood1_phi,met_pt,met_phi)  < 40.      ; Disable=True
+etacut 	    : (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556)
+barrel      : abs(LepGood1_eta) <=1.2                                   ; Disable=True
+endcap      : abs(LepGood1_eta) > 1.2                                   ; Disable=True
+##
+middle      : abs(LepGood1_eta) > 0.8 && abs(LepGood1_eta) < 1.4        ; Disable=True
+
+

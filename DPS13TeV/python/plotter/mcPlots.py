@@ -821,7 +821,7 @@ class PlotMaker:
                             plot.SetLineColor(plot.GetFillColor())
                             continue 
                         if plotmode == "stack":
-                            print 'from mCplots {PNAME} yields {YLD}'.format(PNAME=plot,YLD=plot.Integral())
+                            #print 'from mCplots {PNAME} yields {YLD}'.format(PNAME=plot,YLD=plot.Integral())
                             stack.Add(plot)
                             total.Add(plot)
                             totalSyst.Add(plot)

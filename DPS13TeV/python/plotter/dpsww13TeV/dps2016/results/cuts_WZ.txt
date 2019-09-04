@@ -1,0 +1,57 @@
+alwaystrue: 1
+###smallmll	     : if3((LepGood1_charge + LepGood2_charge) == 0,mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass), if3((LepGood2_charge + LepGood3_charge) == 0,mass_2(LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass), mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_pt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) ) 
+
+TTT	     : LepGood_isLepTight_Recl[iLepFO_Recl[1]] && LepGood_isLepTight_Recl[iLepFO_Recl[0]] && LepGood_isLepTight_Recl[iLepFO_Recl[2]]
+exclusive    : nLepTight_Recl<=3
+trilep: nLepFO_Recl>=3
+#cleanup: minMllAFAS > 12
+
+8/8	     : LepGood_conePt[iLepFO_Recl[0]] > 25 && LepGood_conePt[iLepFO_Recl[1]] > 15 && LepGood_conePt[iLepFO_Recl[2]] > 15
+
+##Zveto: abs(mZ1-91.2) > 10
+
+q1: abs(LepGood1_charge + LepGood2_charge + LepGood3_charge) == 1
+
+##3mu : abs(LepGood_pdgId[iLepFO_Recl[0]] == 13) && abs(LepGood_pdgId[iLepFO_Recl[1]] ==13) && abs(LepGood_pdgId[iLepFO_Recl[2]] ==13)
+
+metpt        : met_pt >25
+tauveto      : nTauSel_Recl ==0
+bveto 	     : nBJetLoose25_Recl == 0
+01jets       : Sum$(JetSel_Recl_pt > 30) < 2
+
+ele conv cuts: (abs(LepGood_pdgId[iLepFO_Recl[0]])!=11 || (LepGood_convVeto[iLepFO_Recl[0]] && LepGood_lostHits[iLepFO_Recl[0]]==0)) && (abs(LepGood_pdgId[iLepFO_Recl[1]])!=11 || (LepGood_convVeto[iLepFO_Recl[1]] && LepGood_lostHits[iLepFO_Recl[1]]==0)) && (abs(LepGood_pdgId[iLepFO_Recl[2]])!=11 || (LepGood_convVeto[iLepFO_Recl[2]] && LepGood_lostHits[iLepFO_Recl[2]]==0))
+
+muTightCharge: (abs(LepGood_pdgId[iLepFO_Recl[0]])!=13 || LepGood_tightCharge[iLepFO_Recl[0]]>=1) && (abs(LepGood_pdgId[iLepFO_Recl[1]])!=13 || LepGood_tightCharge[iLepFO_Recl[1]]>=1) && (abs(LepGood_pdgId[iLepFO_Recl[2]])!=13 || LepGood_tightCharge[iLepFO_Recl[2]]>=1)
+
+chargecon     : (abs(LepGood_pdgId[iLepFO_Recl[0]])!=13 || LepGood_chargeConsistency[iLepFO_Recl[0]]>4) && (abs(LepGood_pdgId[iLepFO_Recl[1]])!=13 || LepGood_chargeConsistency[iLepFO_Recl[1]]>4) && (abs(LepGood_pdgId[iLepFO_Recl[2]])!=13 || LepGood_chargeConsistency[iLepFO_Recl[2]]>4)
+
+###
+plusplus     : LepGood_charge[iLepFO_Recl[0]] > 0                          ; Disable=True
+minusminus   : LepGood_charge[iLepFO_Recl[0]] < 0                          ; Disable=True
+
+##############
+### trimuon 
+3l : abs(LepGood1_charge + LepGood2_charge + LepGood3_charge) == 1 ; Disable=True
+trig3l     :  Trigger_3l || Trigger_1e || Trigger_1m    ; Disable=True
+
+
+### dimuon 
+mumu : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]])== 169    ; Disable=True	     
+trigmumu     :    (HLT_DoubleMu || HLT_SingleMu)       ; Disable=True
+
+### electron-muon
+elmu         : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 143 ; Disable=True
+trigelmu     : (HLT_MuEG || HLT_SingleMu || HLT_SingleEl)                  ; Disable=True
+
+### mumu+elmu
+#mumuelmu     : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 169 || abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 143      ; Disable=True
+#trigmumuelmu : (HLT_MuEG || HLT_SingleEl || HLT_DoubleMu || HLT_SingleMu)            ; Disable=True
+
+### dielectron
+elel         : abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 121 	   ; Disable=True
+trigelel     : (HLT_SingleEl || HLT_DoubleEl)        	           ; Disable=True
+
+
+##DataBDTblind : $DATA{finalMVA_DPS<0.7} $MC{1}                              ; Disable=True
+matched      : LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0             ; Disable=True
+

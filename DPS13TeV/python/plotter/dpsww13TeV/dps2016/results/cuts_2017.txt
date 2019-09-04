@@ -10,7 +10,6 @@ TT	     : LepGood_isLepTight_Recl[iLepFO_Recl[0]] && LepGood_isLepTight_Recl[iLe
 exclusive    : nLepTight_Recl < 3
 cleanup	     : mass_2(LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],LepGood_phi[iLepFO_Recl[0]],LepGood_mass[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],LepGood_phi[iLepFO_Recl[1]],LepGood_mass[iLepFO_Recl[1]]) > 12
 
-
 eleID	     : (abs(LepGood_pdgId[iLepFO_Recl[0]])!=11 || (LepGood_convVeto[iLepFO_Recl[0]] && LepGood_lostHits[iLepFO_Recl[0]]==0 && LepGood_tightCharge[iLepFO_Recl[0]]>=2)) && (abs(LepGood_pdgId[iLepFO_Recl[1]])!=11 || (LepGood_convVeto[iLepFO_Recl[1]] && LepGood_lostHits[iLepFO_Recl[1]]==0 && LepGood_tightCharge[iLepFO_Recl[1]]>=2))
 
 muTightCharge : (abs(LepGood_pdgId[iLepFO_Recl[0]])!=13 || LepGood_tightCharge[iLepFO_Recl[0]]>=1) && (abs(LepGood_pdgId[iLepFO_Recl[1]])!=13 || LepGood_tightCharge[iLepFO_Recl[1]]>=1)
@@ -21,8 +20,10 @@ chargecon     : (abs(LepGood_pdgId[iLepFO_Recl[0]])!=13 || LepGood_chargeConsist
 plusplus     : LepGood_charge[iLepFO_Recl[0]] > 0                          ; Disable=True
 minusminus   : LepGood_charge[iLepFO_Recl[0]] < 0                          ; Disable=True
 
-### electron-muon + dimuon 
-dilepton        : (abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 143 || abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]])== 169 ); Disable=True
+### electron-muon + dimuon + dielectron
+
+dilepton        : (abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 143 || abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]])== 169); Disable=True
+
 trigdilep       : Trigger_2m || Trigger_1m || Trigger_em ||Trigger_1e   ; Disable=True
 
 ### dimuon 
@@ -35,8 +36,6 @@ elmu		: abs(LepGood_pdgId[iLepFO_Recl[0]] * LepGood_pdgId[iLepFO_Recl[1]]) == 14
 trigelmu       	: Trigger_em || Trigger_1m || Trigger_1e	   				; Disable=True
 
 ##########
-elel		: abs(LepGood_pdgId[iLepFO_Recl[0]]*LepGood_pdgId[iLepFO_Recl[1]]) == 121 ; Disable=True
-trigelel        : Trigger_2lss  		     		   				; Disable=True
 
 
 ##DataBDTblind : $DATA{finalMVA_DPS<0.7} $MC{1}                              ; Disable=True

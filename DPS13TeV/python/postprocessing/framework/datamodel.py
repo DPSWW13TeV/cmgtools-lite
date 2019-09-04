@@ -67,6 +67,9 @@ class Object:
         if name[:2] == "__" and name[-2:] == "__":
             raise AttributeError
         val = getattr(self._event,self._prefix+name)
+	#print 'self._index', self._index
+	#print 'self._event', self._event
+	#print 'va', val
         if self._index != None:
             val = val[self._index]
         val = ord(val) if type(val)==str else val # convert char to integer number

@@ -1,0 +1,5 @@
+# vim: syntax=sh
+* ; TreeName="treeProducerSusyMultilepton"
+
+WZamcatnlo : WZTo3LNu_amcatnlo : xsec : 1 : AddWeight= 'puw' ; FillColor=ROOT.kRed+1  , Label="WZ 2016"      , NormSystematic=0.16
+WZ         : WZTo3LNu_fxfx  :  4.42965  : 1 : AddWeight= 'vtxWeight2017'  ; FillColor=ROOT.kAzure+1  , Label="WZ 2017", NormSystematic=0.16

@@ -1,0 +1,11 @@
+WandZ     10237.43 +/-     34.67 (stat)
+QCD       20123.55 +/-    276.82 (stat)
+BACKGROUND  30360.99 +/-    278.99 (stat)
+----------------------------------------------------
+    DATA   30361
+
+
+ --- Fitting --- 
+Process WandZ scaled by 2.978 +/- 0.065
+Process QCD scaled by 0.795 +/- 0.010
+

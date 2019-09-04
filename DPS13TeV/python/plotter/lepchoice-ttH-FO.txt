@@ -1,0 +1,23 @@
+LepGood1_isLepTight : LepGood_isLepTight_Recl\[iLepFO_Recl\[0\]\]  ; AlsoData
+LepGood2_isLepTight : LepGood_isLepTight_Recl\[iLepFO_Recl\[1\]\]  ; AlsoData
+LepGood1_isMatchRightCharge : (LepGood_mcMatchId\[iLepFO_Recl\[0\]\]!=0 && LepGood_pdgId\[iLepFO_Recl\[0\]\]==LepGood_mcMatchPdgId\[iLepFO_Recl\[0\]\])  ; AlsoData
+LepGood2_isMatchRightCharge : (LepGood_mcMatchId\[iLepFO_Recl\[1\]\]!=0 && LepGood_pdgId\[iLepFO_Recl\[1\]\]==LepGood_mcMatchPdgId\[iLepFO_Recl\[1\]\])  ; AlsoData
+nLepFO : nLepFO_Recl  ; AlsoData
+nLepTight : nLepTight_Recl  ; AlsoData
+nTauFO : nTauSel_Recl ; AlsoData
+nTauTight : nTauSel_Recl_isTauTight ; AlsoData
+nJet25 : nJet25_Recl ; AlsoData
+nJet40 : nJet40_Recl ; AlsoData
+nBJetLoose25 : nBJetLoose25_Recl ; AlsoData
+nBJetMedium25 : nBJetMedium25_Recl ; AlsoData
+nBJetTight25 : nBJetTight25_Recl ; AlsoData
+nBJetLoose40 : nBJetLoose40_Recl ; AlsoData
+nBJetMedium40 : nBJetMedium40_Recl ; AlsoData
+nBJetTight40 : nBJetTight40_Recl ; AlsoData
+dTakingEra : if3(isData,(run>=275657)+(run>=276315)+(run>=276831)+(run>=277772)+(run>=278820)+(run>=280919),-1) ; AlsoData # 2016B==0,C,D,E,F,G,H
+elLooseUnc_up : leptonSF_ttH_var(LepGood_pdgId\[iLepFO_Recl\[0\]\],LepGood_pt\[iLepFO_Recl\[0\]\],LepGood_eta\[iLepFO_Recl\[0\]\],2,1,0)*leptonSF_ttH_var(LepGood_pdgId\[iLepFO_Recl\[1\]\],LepGood_pt\[iLepFO_Recl\[1\]\],LepGood_eta\[iLepFO_Recl\[1\]\],2,1,0)
+elLooseUnc_dn : leptonSF_ttH_var(LepGood_pdgId\[iLepFO_Recl\[0\]\],LepGood_pt\[iLepFO_Recl\[0\]\],LepGood_eta\[iLepFO_Recl\[0\]\],2,-1,0)*leptonSF_ttH_var(LepGood_pdgId\[iLepFO_Recl\[1\]\],LepGood_pt\[iLepFO_Recl\[1\]\],LepGood_eta\[iLepFO_Recl\[1\]\],2,-1,0)
+muLooseUnc_up : leptonSF_ttH_var(LepGood_pdgId\[iLepFO_Recl\[0\]\],LepGood_pt\[iLepFO_Recl\[0\]\],LepGood_eta\[iLepFO_Recl\[0\]\],2,0,1)*leptonSF_ttH_var(LepGood_pdgId\[iLepFO_Recl\[1\]\],LepGood_pt\[iLepFO_Recl\[1\]\],LepGood_eta\[iLepFO_Recl\[1\]\],2,0,1)
+muLooseUnc_dn : leptonSF_ttH_var(LepGood_pdgId\[iLepFO_Recl\[0\]\],LepGood_pt\[iLepFO_Recl\[0\]\],LepGood_eta\[iLepFO_Recl\[0\]\],2,0,-1)*leptonSF_ttH_var(LepGood_pdgId\[iLepFO_Recl\[1\]\],LepGood_pt\[iLepFO_Recl\[1\]\],LepGood_eta\[iLepFO_Recl\[1\]\],2,0,-1)
+triggerUnc_up : triggerSF_ttH(LepGood_pdgId\[iLepFO_Recl\[0\]\],LepGood_pt\[iLepFO_Recl\[0\]\],LepGood_pdgId\[iLepFO_Recl\[1\]\],LepGood_pt\[iLepFO_Recl\[1\]\],nLepTight_Recl,1)/triggerSF_ttH(LepGood_pdgId\[iLepFO_Recl\[0\]\],LepGood_pt\[iLepFO_Recl\[0\]\],LepGood_pdgId\[iLepFO_Recl\[1\]\],LepGood_pt\[iLepFO_Recl\[1\]\],nLepTight_Recl,0) ; AlsoData
+triggerUnc_dn : triggerSF_ttH(LepGood_pdgId\[iLepFO_Recl\[0\]\],LepGood_pt\[iLepFO_Recl\[0\]\],LepGood_pdgId\[iLepFO_Recl\[1\]\],LepGood_pt\[iLepFO_Recl\[1\]\],nLepTight_Recl,-1)/triggerSF_ttH(LepGood_pdgId\[iLepFO_Recl\[0\]\],LepGood_pt\[iLepFO_Recl\[0\]\],LepGood_pdgId\[iLepFO_Recl\[1\]\],LepGood_pt\[iLepFO_Recl\[1\]\],nLepTight_Recl,0) ; AlsoData

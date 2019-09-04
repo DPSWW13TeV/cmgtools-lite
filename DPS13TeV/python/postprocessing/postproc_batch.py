@@ -7,13 +7,16 @@ from glob import glob
 import re, pickle, math
 from CMGTools.DPS13TeV.postprocessing.framework.postprocessor import PostProcessor
 
-DEFAULT_MODULES = [("CMGTools.DPS13TeV.postprocessing.examples.puWeightProducer", "puWeight,puWeightXsecup,puWeightXsecdown"),
+DEFAULT_MODULES = [
+                   ("CMGTools.DPS13TeV.postprocessing.examples.puWeightProducer", "puWeight,puWeightXsecup,puWeightXsecdown"),
                    ("CMGTools.DPS13TeV.postprocessing.examples.lepSFProducer","lepSF,trgSF"),
                    ##("CMGTools.DPS13TeV.postprocessing.examples.lepVarProducer","eleRelIsoEA,lepQCDAwayJet,eleCalibrated"),
                    ##("CMGTools.DPS13TeV.postprocessing.examples.jetReCleaner","jetReCleaner"),
                    ##("CMGTools.DPS13TeV.postprocessing.examples.genFriendProducer","genQEDJets"),
                    ##("CMGTools.DPS13TeV.postprocessing.examples.bdtWeigthsDPS_WZ_and_fakes","BDT_WZ_and_fakes"),
-                   ("CMGTools.DPS13TeV.postprocessing.examples.DPSCleaner","TauHadFlag")
+                   ("CMGTools.DPS13TeV.postprocessing.examples.DPSCleaner","TauHadFlag"),
+                   ##("CMGTools.DPS13TeV.postprocessing.examples.somestuff","LepGoodColl")
+                   ##("CMGTools.DPS13TeV.postprocessing.examples.collectionMerger","lepMerger")
                    ]
 
 RECOILTEST_MODULES=[("CMGTools.DPS13TeV.postprocessing.examples.puWeightProducer", "puWeight,puWeightXsecup,puWeightXsecdown"),
@@ -43,6 +46,7 @@ if __name__ == "__main__":
     parser.add_option("-j", "--jobs",    dest="jobs",      type="int",    default=1, help="Use N threads");
     parser.add_option("-q", "--queue",   dest="queue",     type="string", default=None, help="Run jobs on lxbatch instead of locally");
     parser.add_option("-t", "--tree",    dest="tree",      default='treeProducerSusyMultilepton', help="Pattern for tree name");
+    parser.add_option(      "--treeName",    dest="treeName",      default='tree', help="Pattern for the actual ttree name");
     parser.add_option("--log", "--log-dir", dest="logdir", type="string", default=None, help="Directory of stdout and stderr");
     parser.add_option("--env",   dest="env", type="string", default="lxbatch", help="Give the environment on which you want to use the batch system (lxbatch, psi, oviedo)");
     parser.add_option("--run",   dest="runner",  type="string", default="lxbatch_runner.sh", help="Give the runner script (default: lxbatch_runner.sh)");
@@ -67,15 +71,16 @@ if __name__ == "__main__":
 
     jobs = []
     for D in glob(treedir+"/*"):
-        treename = "tree"
+        treename = options.treeName #"tree"
+        #fname = "%s" % (D) ### to produce friends for WGstar sample 
         fname    = "%s/%s/tree.root" % (D,options.tree)
-        pckfile  = "%s/skimAnalyzerCount/SkimReport.pck" % (D)
+        #pckfile  = "%s/skimAnalyzerCount/SkimReport.pck" % (D)
+        
         if (not os.path.exists(fname)) and os.path.exists("%s/%s/tree.root" % (D,options.tree)):
-            treename = "tree"
+            treename = options.treeName #"tree"
             fname    = "%s/%s/tree.root" % (D,options.tree)
-     
         if (not os.path.exists(fname)) and (os.path.exists("%s/%s/tree.root.url" % (D,options.tree)) ):
-            treename = "tree"
+            treename = options.treeName #"tree"
             fname    = "%s/%s/tree.root" % (D,options.tree)
             fname    = open(fname+".url","r").readline().strip()
      
@@ -85,15 +90,17 @@ if __name__ == "__main__":
                 if short not in options.datasets: continue
             data = any(x in short for x in "DoubleMu DoubleEG MuEG MuonEG SingleMuon SingleElectron".split())
             if data and options.mconly: continue
-            pckobj  = pickle.load(open(pckfile,'r'))
-            counters = dict(pckobj)
-            if ('Sum Weights' in counters):
-                sample_nevt = counters['Sum Weights']
-            else:
-                sample_nevt = counters['All Events']
+            ## pckobj  = pickle.load(open(pckfile,'r'))
+            ## counters = dict(pckobj)
+            ## if ('Sum Weights' in counters):
+            ##     sample_nevt = counters['Sum Weights']
+            ## else:
+            ##     sample_nevt = counters['All Events']
             f = ROOT.TFile.Open(fname);
             t = f.Get(treename)
             entries = t.GetEntries()
+            print 'found number of entries', entries
+	    sample_nevt = entries
             f.Close()
             chunk = options.chunkSize
             if entries < chunk:

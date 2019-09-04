@@ -168,15 +168,15 @@ def runplots(trees, friends, targetdir, fmca, fcut, fplots, enabledcuts, disable
     print 'running: python', cmd
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
-def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = True, combination = False):
+def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = False, combination = False):
     #trees='/afs/cern.ch/work/a/anmehta/work/Test/Test2/CMSSW_8_0_25/src/CMGTools/DPS13TeV/python/plotter/wgsamples/'
     trees     = '2016_trees_friends/skimmed_2lss_2016/'
     #olderversionfriends=['skimmed_Friends_BDT_2lss_2016/','skimmed_Friends_2lss_2016/']
     friends=['2016_trees_friends/skimmed_2lss_Friends_BDT_with_tight_MVA_2016_renamed/','2016_trees_friends/skimmed_Friends_2lss_2016/']
     #friends=['2016_trees_friends/BDTfriends_skimmed_2016_jecup/','2016_trees_friends/skimmed_Friends_2lss_2016/']
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2016_puDown/'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2016_2DBDTs/'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots.txt'
-    fsyst  = 'dpsww13TeV/dps2016/results/syst_2016.txt'
+    fsyst  = 'dpsww13TeV/dps2016/results/syst_2016.txt' #dummysyst.txt'
     print '=========================================='
     print 'run results for mumu {MUMU} /  emu {EMU}'.format(MUMU=onlyMM,EMU = not onlyMM)
     print '=========================================='
@@ -194,7 +194,7 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = Tr
     #processes=['fakes_data_jetpT_Dn','fakes_data_jetpT_Up','fakes_data','fakes_data_FR_Dn','fakes_data_FR_Up']
     #processes=['WG2017','WG2016']
     #processes = ['DPSWW_jec_Up','DPSWW','DPSWW_jec_Dn']
-    processes = ['DPSWW','WZ','fakes_data','ZZ','WG_wg','rares','flips_data','Conv','data']
+    processes = ['DPSWW']#,'WZ','fakes_data','ZZ','WG_wg','rares','flips_data','Conv']#,'data']
     #processes=['DPSWW','WZ','fakes_data','ZZ','flips_data','data','Conv','WG_wg','WG','WpWpJJ','WWW','TTZ']
     processesCards = ['DPSWW','WZ','WG_wg','rares','flips_data','data','WZamcatnlo','DPSWW_alt','fakes_data_slope_Dn','fakes_data_jetpT_Dn','fakes_data_jetpT_Up','ZZ','fakes_data_slope_Up','fakes_data','Conv']
     fcut   = 'dpsww13TeV/dps2016/results/cuts_2016.txt'
@@ -246,16 +246,16 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = Tr
             makeplots2 = ['BDTforCombine_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
 
             makeplots2spl = ['BDTforCombine_signal_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_signal_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_signal_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
-
-            makeplots=makeplots1#+makeplots2
-            #runplots(trees, friends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
+            makeplots2spll=['BDTfakes_BDTWZ_mumu_20bins']
+            makeplots=makeplots1 #2spll#+makeplots2
+            runplots(trees, friends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
             ## ==================================
             ## running datacards
             ## ==================================
 
             targetcarddir = 'Cards/cards_{date}{pf}_{fstate}_2016'.format(fstate=state,date=date, pf=('-'+postfix if postfix else '') )
             extraoptscards = ' -o {fstate}{ch} -b {fstate}{ch} '.format(fstate=state,ch=(ch[0] if ch else ''))
-            runCards(trees, friends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
+            #runCards(trees, friends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
             
 ####################################
 def EMUclassification(EMu = True,MuE =False):

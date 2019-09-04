@@ -1,0 +1,58 @@
+lumi_13TeV_2017 : DPSWW|WZ|ZZ|Conv|rares|WG_wg      : .*             : 1.023
+signal_shape    : DPSWW      : .*             	 : DPSWW_alt  : alternateShapeOnly
+jec		: DPSWW|WZ|ZZ|Conv|rares|WG_wg   : .*             	 : 1.02
+pu		: DPSWW|WZ|ZZ|Conv|rares|WG_wg   : .*             	 : 1.01
+WZ_norm         : WZ         : .*             : 1.16
+WZ_shape        : WZ         : .*             : WZamcatnlo  : alternateShapeOnly
+ZZ_norm         : ZZ         : .*             : 1.06
+ZZ_shape        : ZZ         : .*             : 1.05       : shapeOnly
+WG_norm         : WG_wg      : .*             : 1.50
+WG_shape        : WG_wg      : .*             : 1.05       : shapeOnly
+Conv_norm       : Conv	     : elmu             : 1.50
+Conv_shape	: Conv	     : elmu             : 1.05       : shapeOnly
+Conv_norm       : Conv	     : elmuminusminus             : 1.50
+Conv_shape	: Conv	     : elmuminusminus             : 1.05       : shapeOnly
+Conv_norm       : Conv	     : elmuplusplus             : 1.50
+Conv_shape	: Conv	     : elmuplusplus             : 1.05       : shapeOnly
+rares_norm      : rares      : .*             : 1.50
+rares_shape     : rares      : .*             : 1.05       : shapeOnly
+flips_norm      : flips_data      : elmu             : 1.30
+flips_norm      : flips_data      : elmuplusplus   	      : 1.30
+flips_norm      : flips_data      : elmuminusminus	      : 1.30
+mumu_fakes_norm     : fakes_data : mumu           : 1.25
+elmu_fakes_norm     : fakes_data : elmu           : 1.40
+mumu_fakes_norm     : fakes_data : mumuplusplus   : 1.25
+elmu_fakes_norm     : fakes_data : elmuplusplus   : 1.40
+mumu_fakes_norm     : fakes_data : mumuminusminus : 1.25
+elmu_fakes_norm     : fakes_data : elmuminusminus : 1.40
+
+fakes_mumu_template_shape	: fakes_data : mumu	      : FR	: templates
+fakes_mumu_template_shape	: fakes_data : mumuplusplus   : FR	: templates
+fakes_mumu_template_shape	: fakes_data : mumuminusminus : FR	: templates
+fakes_elmu_template_shape	: fakes_data : elmu	      : FR	: templates
+fakes_elmu_template_shape	: fakes_data : elmuplusplus   : FR	: templates
+fakes_elmu_template_shape	: fakes_data : elmuminusminus : FR	: templates
+
+
+lepEff2017_muloose : DPSWW|WZ|ZZ|Conv|rares|WG_wg : .* : muLooseUnc : templates
+
+
+lepEff_mutight : DPSWW|WZ|ZZ|Conv|rares|WG_wg : mumu  : 1.04
+lepEff_mutight : DPSWW|WZ|ZZ|Conv|rares|WG_wg : mumuplusplus  : 1.04
+lepEff_mutight : DPSWW|WZ|ZZ|Conv|rares|WG_wg : mumuminusminus  : 1.04
+
+lepEff_mutight : DPSWW|WZ|ZZ|Conv|rares|WG_wg : elmu  : 1.02
+lepEff_mutight : DPSWW|WZ|ZZ|Conv|rares|WG_wg : elmuplusplus  : 1.02
+lepEff_mutight : DPSWW|WZ|ZZ|Conv|rares|WG_wg : elmuminusminus  : 1.02
+
+lepEff_eltight : DPSWW|WZ|ZZ|Conv|rares|WG_wg : elmu : 1.03
+lepEff_eltight : DPSWW|WZ|ZZ|Conv|rares|WG_wg : elmuplusplus : 1.03
+lepEff_eltight : DPSWW|WZ|ZZ|Conv|rares|WG_wg : elmuminusminus : 1.03
+
+lepEff2017_elloose : DPSWW|WZ|ZZ|Conv|rares|WG_wg : elmu : elLooseUnc : templates
+lepEff2017_elloose : DPSWW|WZ|ZZ|Conv|rares|WG_wg : elmuplusplus : elLooseUnc : templates
+lepEff2017_elloose : DPSWW|WZ|ZZ|Conv|rares|WG_wg : elmuminusminus : elLooseUnc : templates
+
+### trigger efficiencies
+trigger2017	: DPSWW|WZ|ZZ|Conv|rares|WG_wg : .* : 1.02
+

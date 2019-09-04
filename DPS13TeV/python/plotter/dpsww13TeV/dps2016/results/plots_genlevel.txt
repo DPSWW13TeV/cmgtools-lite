@@ -1,0 +1,141 @@
+statusFlag_GenLep_ll	: GenPart_sel_statusFlags[0]: 300,8400,8700; XTitle="statusFlag"
+pt1_GenLep_llplusplus    : GenPart_sel_pt[0]     : 20,0,100; XTitle="p_{T} lead.  (GeV)"
+pt2_GenLep_llplusplus    : GenPart_sel_pt[1]     : 20,0,100; XTitle="p_{T} trail.  (GeV)" 
+eta1_GenLep_llplusplus   : GenPart_sel_eta[0]     : 60,-5,5; XTitle="#eta lead.  (GeV)"
+eta2_GenLep_llplusplus   : GenPart_sel_eta[1]     : 60,-5,5; XTitle="#eta trail.  (GeV)" 
+nGenlep_llplusplus	 : nGenPart_sel	          : [0,1,2,3,4,5]; XTile="No. of  gen leptons"
+pdgIdprod_GenLep_llplusplus	: GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]: 400,-200,200; XTitle="dressed: pdgId1 X pdgId2"
+
+pt1_GenLep_ll    : GenPart_sel_pt[0]     : 20,0,100; XTitle="p_{T} lead.  (GeV)"
+pt2_GenLep_ll    : GenPart_sel_pt[1]     : 20,0,100; XTitle="p_{T} trail.  (GeV)" 
+eta1_GenLep_ll   : GenPart_sel_eta[0]     : 60,-5,5; XTitle="#eta lead.  (GeV)"
+eta2_GenLep_ll   : GenPart_sel_eta[1]     : 60,-5,5; XTitle="#eta trail.  (GeV)" 
+nGenlep_ll	 : nGenPart_sel	          : [0,1,2,3,4,5]; XTile="No. of  gen leptons"
+pdgIdprod_GenLep_ll	: GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]: 400,-200,200; XTitle="dressed: pdgId1 X pdgId2"
+met_ll	: GenMET_pt		  : 20,0,100; XTitle="MET (GeV)"		
+#mll	:  mass_2(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],0,GenDressedLepton_pt[1], GenDressedLepton_eta[1], GenDressedLepton_phi[1],0): 25,0,500; XTitle="mll (GeV)"
+
+mll	: mass_4(GenPart_sel_pt[0],GenPart_sel_eta[0],GenPart_sel_phi[0],0,GenPart_sel_pt[1], GenPart_sel_eta[1], GenPart_sel_phi[1],0.0,GenNu_sel_pt[0],GenNu_sel_eta[0],GenNu_sel_phi[0],0,GenNu_sel_pt[1], GenNu_sel_eta[1], GenNu_sel_phi[1],0.0)
+
+mt_llmet : mt_llv(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenDressedLepton_pt[1],GenDressedLepton_phi[1],GenMET_pt, GenMET_phi): 25,0,500; XTitle="mt_llmet (GeV)"
+
+pt1_GenLep_llminusminus    : GenPart_sel_pt[0]     : 20,0,100; XTitle="p_{T} lead.  (GeV)"
+pt2_GenLep_llminusminus    : GenPart_sel_pt[1]     : 20,0,100; XTitle="p_{T} trail.  (GeV)" 
+eta1_GenLep_llminusminus   : GenPart_sel_eta[0]     : 60,-5,5; XTitle="#eta lead.  (GeV)"
+eta2_GenLep_llminusminus   : GenPart_sel_eta[1]     : 60,-5,5; XTitle="#eta trail.  (GeV)" 
+nGenlep_llminusminus	 : nGenPart_sel	          : [0,1,2,3,4,5]; XTile="No. of  gen leptons"
+pdgIdprod_GenLep_llminusminus	: GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]: 400,-200,200; XTitle="dressed: pdgId1 X pdgId2"
+
+pt1_GenLepdressed_llminusminus    : GenDressedLepton_pt[0]     : 20,0,100; XTitle="p_{T} dressed lead.  (GeV)"
+pt2_GenLepdressed_llminusminus    : GenDressedLepton_pt[1]     : 20,0,100; XTitle="p_{T} dressed trail.  (GeV)" 
+eta1_GenLepdressed_llminusminus   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead.  (GeV)"
+eta2_GenLepdressed_llminusminus   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail.  (GeV)" 
+nGenLepdressed_llminusminus	 : nGenDressedLepton	          : [0,1,2,3,4,5]; XTile="#dressed leptons"
+
+
+pdgIdprod_GenLepdressed_llminusminus	: GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]: 400,-200,200; XTitle="dressed: pdgId1 X pdgId2"
+
+
+
+pt1_GenLepdressed_ll    : GenDressedLepton_pt[0]     : 20,0,100; XTitle="p_{T} dressed lead.  (GeV)" 
+pt2_GenLepdressed_ll    : GenDressedLepton_pt[1]     : 20,0,100; XTitle="p_{T} dressed trail.  (GeV)" 
+eta1_GenLepdressed_ll   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead.  (GeV)" 
+eta2_GenLepdressed_ll   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail.  (GeV)" 
+nGenLepdressed_ll	 : nGenDressedLepton	          : [0,1,2,3,4,5]; XTile="# dressed leptons"
+pdgIdprod_GenLepdressed_ll	: GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]: 400,-200,200; XTitle="dressed: pdgId1 X pdgId2"
+
+
+pt1_GenLepdressed_llplusplus    : GenDressedLepton_pt[0]     : 20,0,100; XTitle="p_{T} dressed lead.  (GeV)"
+pt2_GenLepdressed_llplusplus    : GenDressedLepton_pt[1]     : 20,0,100; XTitle="p_{T} dressed trail.  (GeV)" 
+eta1_GenLepdressed_llplusplus   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead.  (GeV)"
+eta2_GenLepdressed_llplusplus   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail.  (GeV)" 
+nGenLepdressed_llplusplus	 : nGenDressedLepton	          : [0,1,2,3,4,5]; XTile="# dressed  leptons"
+
+pdgIdprod_GenLepdressed_llplusplus	: GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]: 400,-200,200; XTitle="dressed: pdgId1 X pdgId2"
+
+
+jetpt_ll	:GenJet_pt		  : 20,0,200; XTitle="jet pt"
+jeteta_ll	:GenJet_eta		  : 10,-5,5; XTitle="jet eta"
+ngenjets_ll	:Sum$(GenJet_pt>30 && abs(GenJet_eta) < 4.5)    : [2,3,4,5,6]; XTitle="N jets  pT > 30 and |eta| < 4.5"
+
+ngenbjets_sel_ll :Sum$(GenJet_pt>25 && abs(GenJet_eta)<2.5 && abs(GenJet_partonFlavour)==5)   : [0,1,2,3,4,5]; XTitle="N bjets pT > 25 and |eta| < 2.5"
+ngenbjets_ll :Sum$(GenJet_pt>0 && abs(GenJet_partonFlavour)==5)   : [0,1,2,3,4,5]; XTitle="N bjets"
+##########################################
+
+
+
+
+
+GenMET_pt_ll	:GenMET_pt		  : 20,0,100; XTitle="MET (GeV)"		
+GenJet_pt_ll	:GenJet_pt		  : 20,0,200; XTitle="jet pt"
+GenJet_eta_ll	:GenJet_eta		  : 10,-5,5; XTitle="jet eta"
+nGenJet_ll	:Sum$(GenJet_pt>0)    : [0,1,2,3,4,5]; XTitle="N jets"
+nGenJet_sel_ll	:Sum$(GenJet_pt>30 && abs(GenJet_eta)<2.5)   : [0,1,2,3,4,5]; XTitle="N jets pT > 30 and |eta| < 2.5"
+pdgIdprod_ll	: GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]: 400,-200,200; XTitle="pdgId1 X pdgId2"
+MpdgIdprod_ll	: GenW_sel_pdgId[0]*GenW_sel_pdgId[1]: 1200,-600,600; XTitle="MpdgId1 X MpdgId2"
+GenLep_sel_status1_ll           : GenPart_sel_status[0]     : 100,0,100; XTitle="status Lep1"
+GenLep_sel_status2_ll           : GenPart_sel_status[1]     : 100,0,100; XTitle="status Lep2"
+GenLep_sel_status3_ll           : GenPart_sel_status[2]     : 100,0,100; XTitle="status Lep3"
+
+
+GenLep_sel_pt1_ll           : GenPart_sel_pt[0]     : 20,0,100; XTitle="p_{T} lead.  (GeV)"
+GenLep_sel_pt2_ll           : GenPart_sel_pt[1]     : 20,0,100; XTitle="p_{T} trail.  (GeV)" 
+GenLep_sel_pt3_ll           : GenPart_sel_pt[2]     : 20,0,100; XTitle="p_{T} sec. trail.  (GeV)" 
+GenLep_sel_eta3_ll           : GenPart_sel_eta[2]     : 60,-5,5; XTitle="#eta sec. trail.  (GeV)" 
+GenLep_sel_eta1_ll           : GenPart_sel_eta[0]     : 60,-5,5; XTitle="#eta lead.  (GeV)"
+GenLep_sel_eta2_ll           : GenPart_sel_eta[1]     : 60,-5,5; XTitle="#eta trail.  (GeV)" 
+nGenlep_ll		   : nGenPart_sel	    : [0,1,2,3,4,5]; XTile="No. of  gen leptons"
+nGenJetdefault_ll      :nGenJet    : [0,1,2,3,4,5]; XTitle="N jets"
+
+
+GenEl1_sel_pt_ll : if3(abs(GenPart_sel_pdgId[0]) == 11,GenPart_sel_pt[0],-10): 20,-10,100; XTitle="p_{T} ele1 (GeV)"
+GenEl2_sel_pt_ll : if3(abs(GenPart_sel_pdgId[1]) == 11,GenPart_sel_pt[1],-10): 20,-10,100; XTitle="p_{T} ele2 (GeV)"
+GenMu1_sel_pt_ll : if3(abs(GenPart_sel_pdgId[0]) == 13,GenPart_sel_pt[0],-10): 20,-10,100; XTitle="p_{T} mu1 (GeV)"
+GenMu2_sel_pt_ll : if3(abs(GenPart_sel_pdgId[1]) == 13,GenPart_sel_pt[1],-10): 20,-10,100; XTitle="p_{T} mu2 (GeV)"
+
+GenEl1_sel_pt_llplusplus : if3(abs(GenPart_sel_pdgId[0]) == 11,GenPart_sel_pt[0],-10): 20,-10,100; XTitle="p_{T} ele1 (GeV)"
+GenEl2_sel_pt_llplusplus : if3(abs(GenPart_sel_pdgId[1]) == 11,GenPart_sel_pt[1],-10): 20,-10,100; XTitle="p_{T} ele2 (GeV)"
+GenMu1_sel_pt_llplusplus : if3(abs(GenPart_sel_pdgId[0]) == 13,GenPart_sel_pt[0],-10): 20,-10,100; XTitle="p_{T} mu1 (GeV)"
+GenMu2_sel_pt_llplusplus : if3(abs(GenPart_sel_pdgId[1]) == 13,GenPart_sel_pt[1],-10): 20,-10,100; XTitle="p_{T} mu2 (GeV)"
+
+nGenJet_sel_llplusplus	:Sum$(GenJet_pt>30 && abs(GenJet_eta)<2.5)   : [0,1,2,3,4,5]; XTitle="N jets pT > 30 and |eta| < 2.5"
+nGenJet_sel_llminusminus	:Sum$(GenJet_pt>30 && abs(GenJet_eta)<2.5)   : [0,1,2,3,4,5]; XTitle="N jets pT > 30 and |eta| < 2.5"
+
+
+nGenJetdefault_llplusplus      :nGenJet    : [0,1,2,3,4,5]; XTitle="N jets"
+
+nGenJetdefault_llminusminus      :nGenJet    : [0,1,2,3,4,5]; XTitle="N jets"
+GenEl1_sel_pt_llminusminus : if3(abs(GenPart_sel_pdgId[0]) == 11,GenPart_sel_pt[0],-10): 20,-10,100; XTitle="p_{T} ele1 (GeV)"
+GenEl2_sel_pt_llminusminus : if3(abs(GenPart_sel_pdgId[1]) == 11,GenPart_sel_pt[1],-10): 20,-10,100; XTitle="p_{T} ele2 (GeV)"
+GenMu1_sel_pt_llminusminus : if3(abs(GenPart_sel_pdgId[0]) == 13,GenPart_sel_pt[0],-10): 20,-10,100; XTitle="p_{T} mu1 (GeV)"
+GenMu2_sel_pt_llminusminus : if3(abs(GenPart_sel_pdgId[1]) == 13,GenPart_sel_pt[1],-10): 20,-10,100; XTitle="p_{T} mu2 (GeV)"
+
+
+
+GenMET_pt_llplusplus	:GenMET_pt		  : 20,0,100; XTitle="MET (GeV)"		
+GenJet_pt_llplusplus	:GenJet_pt		  : 20,0,200; XTitle="jet pt"
+GenJet_eta_llplusplus	:GenJet_eta		  : 10,-5,5; XTitle="jet eta"
+nGenJet_llplusplus	:Sum$(GenJet_pt>0)    : [0,1,2,3,4,5]; XTitle="N jets with pt gt 0"
+pdgIdprod_llplusplus	: GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]: 400,-200,200; XTitle="pdgId1 X pdgId2"
+GenLep_sel_pt1_llplusplus           : GenPart_sel_pt[0]     : 20,0,100; XTitle="p_{T} lead.  (GeV)"
+GenLep_sel_pt2_llplusplus           : GenPart_sel_pt[1]     : 20,0,100; XTitle="p_{T} trail.  (GeV)" 
+GenLep_sel_eta1_llplusplus           : GenPart_sel_eta[0]     : 60,-5,5; XTitle="#eta lead.  (GeV)"
+GenLep_sel_eta2_llplusplus           : GenPart_sel_eta[1]     : 60,-5,5; XTitle="#eta trail.  (GeV)" 
+nGenlep_llplusplus		   : nGenPart_sel	    : [0,1,2,3,4,5]; XTile="No. of  gen leptons"
+nGenJetdefault_llplusplus      :nGenJet    : [0,1,2,3,4,5]; XTitle="N jets"
+
+
+nGenJetdefault_llminusminus      :nGenJet    : [0,1,2,3,4,5]; XTitle="N jets"
+GenMET_pt_llminusminus	:GenMET_pt		  : 20,0,100; XTitle="MET (GeV)"		
+GenJet_pt_llminusminus	:GenJet_pt		  : 20,0,200; XTitle="jet pt"
+GenJet_eta_llminusminus	:GenJet_eta		  : 10,-5,5; XTitle="jet eta"
+nGenJet_llminusminus	:Sum$(GenJet_pt>0)   : [0,1,2,3,4,5]; XTitle="N jets with pt gt 0"
+pdgIdprod_llminusminus	: GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]: 400,-200,200; XTitle="pdgId1 X pdgId2"
+GenLep_sel_pt1_llminusminus           : GenPart_sel_pt[0]     : 20,0,100; XTitle="p_{T} lead.  (GeV)"
+GenLep_sel_pt2_llminusminus           : GenPart_sel_pt[1]     : 20,0,100; XTitle="p_{T} trail.  (GeV)" 
+GenLep_sel_eta1_llminusminus           : GenPart_sel_eta[0]     : 60,-5,5; XTitle="#eta lead.  (GeV)"
+GenLep_sel_eta2_llminusminus           : GenPart_sel_eta[1]     : 60,-5,5; XTitle="#eta trail.  (GeV)" 
+nGenlep_llminusminus		   : nGenPart_sel	    : [0,1,2,3,4,5]; XTile="No. of  gen leptons"
+
+
+GW_rapidity		    : rapidity(GenPart_sel_pt,GenPart_sel_eta,GenPart_sel_phi,GenPart_sel_mass): 100,-10,10; XTitle="y_W"

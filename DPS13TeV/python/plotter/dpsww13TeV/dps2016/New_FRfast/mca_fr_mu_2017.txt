@@ -1,0 +1,25 @@
+# vim: syntax=sh
+* ; TreeName="treeProducerSusyMultilepton"
+
+WandZ  : WJetsToLNu_LO           : xsec     ; FillColor=ROOT.kGreen+1 , Label="WandZ"    
+WandZ  : DYJetsToLL_M50_LO       : xsec     ; FillColor=ROOT.kGreen+1  , Label="WandZ"
+WandZ  : DYJetsToLL_M10to50_LO   : xsec     ; FillColor=ROOT.kGreen+1  , Label="WandZ"
+WandZ  : TTLep_pow               : xsec     ; FillColor=ROOT.kGreen+2   , Label="WandZ" 
+WandZ  : TTSemi_pow              : xsec     ; FillColor=ROOT.kGreen+1   , Label="WandZ"
+WandZ  : TBar_tch                : xsec     ; FillColor=ROOT.kGreen+1   , Label="WandZ"
+WandZ  : T_tch                   : xsec     ; FillColor=ROOT.kGreen+1   , Label="WandZ"
+QCD   : QCD_Mu15                 : xsec     ; FillColor=ROOT.kOrange-2 , Label="QCD"  
+
+data  : DoubleMuon_2017B
+data  : DoubleMuon_2017C
+data  : DoubleMuon_2017E
+data  : DoubleMuon_2017D
+data  : DoubleMuon_2017F
+data  : SingleMuon_2017B
+data  : SingleMuon_2017C
+data  : SingleMuon_2017D
+data  : SingleMuon_2017E
+data  : SingleMuon_2017F
+
+data_sub  : -                         ; FillColor=ROOT.kOrange+8 , FillStyle=3005, Label="Data - EWK"
+

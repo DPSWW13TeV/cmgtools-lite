@@ -1,0 +1,35 @@
+met_ll	: GenMET_pt		  : 20,0,100; XTitle="MET (GeV)"		
+#mll	:  mass_2(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],0,GenDressedLepton_pt[1], GenDressedLepton_eta[1], GenDressedLepton_phi[1],0): 25,0,500; XTitle="mll (GeV)"
+
+mt_llmet : mt_llv(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenDressedLepton_pt[1],GenDressedLepton_phi[1],GenMET_pt, GenMET_phi): 25,0,500; XTitle="mt_llmet (GeV)"
+
+
+pt1_ll    : GenDressedLepton_pt[0]     : 20,0,100; XTitle="p_{T} dressed lead.  (GeV)"
+pt2_ll    : GenDressedLepton_pt[1]     : 20,0,100; XTitle="p_{T} dressed trail.  (GeV)" 
+eta1_ll   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead.  (GeV)"
+eta2_ll   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail.  (GeV)" 
+ngenlep_ll	 : nGenDressedLepton	          : [0,1,2,3,4,5]; XTile="#dressed leptons"
+pdgIdprod_ll	: GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]: 400,-200,200; XTitle="dressed: pdgId1 X pdgId2"
+
+jetpt_ll	:GenJet_pt		  : 20,0,200; XTitle="jet pt"
+jeteta_ll	:GenJet_eta		  : 10,-5,5; XTitle="jet eta"
+ngenjets_sel_ll	:Sum$(GenJet_pt>30 && abs(GenJet_eta) < 4.5)    : [2,3,4,5,6]; XTitle="N jets  pT > 30 and |eta| < 4.5"
+ngenbjets_sel_ll :Sum$(GenJet_pt>25 && abs(GenJet_eta)<2.5 && abs(GenJet_partonFlavour)==5)   : [0,1,2,3,4,5]; XTitle="N bjets pT > 25 and |eta| < 2.5"
+ngenbjets_ll :Sum$(GenJet_pt>0 && abs(GenJet_partonFlavour)==5)   : [0,1,2,3,4,5]; XTitle="N bjets"
+ngenjets_ll      :nGenJet    : [0,1,2,3,4,5]; XTitle="N jets"
+
+
+
+mT2_ll         	 : mt2davis(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenDressedLepton_pt[1],GenDressedLepton_eta[1],GenDressedLepton_phi[1],GenMET_pt,GenMET_phi) : 20,0,120 ; XTitle="M_{T2}^{ll} (GeV)"
+etasum_ll        : abs(GenDressedLepton_eta[0] + GenDressedLepton_eta[1])  : 20,0,5; XTitle="abs(#eta_{1}+#eta_{2})"
+dphiLep_ll       : abs(deltaPhi(GenDressedLepton_phi[0],GenDressedLepton_phi[1])) : 20,0,3.15; XTitle="#Delta#phi_{ll} (rad.)"
+etaprod_ll       : GenDressedLepton_eta[0]*GenDressedLepton_eta[1] : 20,-6.25,6.25; XTitle="#eta_{1}*#eta_{2}"
+mt1_ll           : mt_2(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi) : 20,0,250; XTitle="m_{T} lepton 1 (GeV)"
+mt2_ll           : mt_2(GenDressedLepton_pt[1],GenDressedLepton_phi[1],GenMET_pt,GenMET_phi) : 20,0,250; XTitle="m_{T} lepton 2 (GeV)"
+mt_ll            : mt_2(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenDressedLepton_pt[1],GenDressedLepton_phi[1]) : 20,0,250; XTitle="m_{T} ll (GeV)"
+dphil2met_ll     : abs(deltaPhi(GenDressedLepton_phi[1],GenMET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (rad.)"
+dphil1met_ll     : abs(deltaPhi(GenDressedLepton_phi[0],GenMET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l1 MET} (rad.)"
+dphilll2_ll  	 :abs(deltaPhi(phi_2(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenDressedLepton_mass[0],GenDressedLepton_pt[1],GenDressedLepton_eta[1],GenDressedLepton_phi[1],GenDressedLepton_mass[1]),GenDressedLepton_phi[1])) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (rad.)"
+mll_ll           : mass_2(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenDressedLepton_mass[0],GenDressedLepton_pt[1],GenDressedLepton_eta[1],GenDressedLepton_phi[1],GenDressedLepton_mass[1])            : 15,0,200; XTitle="m_{ll}(GeV)"
+
+

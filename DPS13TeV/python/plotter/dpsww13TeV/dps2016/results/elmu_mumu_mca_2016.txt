@@ -20,7 +20,7 @@ rares    : TTZ_LO      : xsec   : 1                                             
 Conv    : ZGTo2LG_ext : 117.864   : ((LepGood1_mcMatchId == 0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId == 0 && LepGood2_mcPromptGamma==1))  ; FillColor=ROOT.kViolet+2 , Label="Convs" , NormSystematic=0.50
 Conv    : WGToLNuG : 405.271   : ((LepGood1_mcMatchId == 0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId == 0 && LepGood2_mcPromptGamma==1))  ; FillColor=ROOT.kViolet+2 , Label="Convs" , NormSystematic=0.50
 
-ZZ         : ZZTo4L            : xsec : 1  ; FillColor=ROOT.kPink+7 , Label="ZZ"      , NormSystematic=0.30
+ZZ         : ZZTo4L            : xsec : 1  ; FillColor=ROOT.kPink+7 , Label="ZZ"      , NormSystematic=0.05
 WZ         : WZTo3LNu          : xsec : 1  ; FillColor=ROOT.kAzure+1  , Label="WZ"      , NormSystematic=0.16
 WZamcatnlo : WZTo3LNu_amcatnlo : xsec : 1  ; FillColor=ROOT.kRed+1  , Label="WZ"      , NormSystematic=0.16, SkipMe=True
 

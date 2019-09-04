@@ -1,0 +1,10 @@
+# vim: syntax=sh
+* ; TreeName="treeProducerSusyMultilepton"
+
+
+DPS2017 : File0+File1+File2+File3+File4+File5+File6+File7+File8+File9+File10+File11+File12+File13+File14+File15+File16+File17+File18 :           0.1729 : 1 ; FillColor=ROOT.kRed+1   , Label="DPS WW" , ObjName="Events"
+SPS2017 : SPSWW0+SPSWW1+SPSWW2+SPSWW3+SPSWW4 :           0.1729 : 1 ; FillColor=ROOT.kGreen+1   , Label="SPS WW", ObjName="Events"
+
+#2017incl : WW-DPS2017-inclusive : 1.9 : 1 ; FillColor=ROOT.kBlue+1   , Label="Pyinc-17", ObjName ="Events"
+#2017HG : WW-DPS2017-comp-herwig : 0.1729 : 1 ; FillColor=ROOT.kOrange+1   , Label="HG-17", ObjName ="Events"
+

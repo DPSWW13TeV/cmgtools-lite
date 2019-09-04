@@ -1,0 +1,24 @@
+alwaystrue: 1
+SameSign     : GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1] > 0
+2l           : nGenDressedLepton ==2
+
+#25/20	     : GenDressedLepton_pt[0] > 25 && GenDressedLepton_pt[1] > 20
+
+#l1etacut     : abs(GenDressedLepton_eta[0]) < if3(abs(GenDressedLepton_pdgId[0])==13,2.4,2.5)
+#l2etacut     : abs(GenDressedLepton_eta[1]) < if3(abs(GenDressedLepton_pdgId[1])==13,2.4,2.5)
+#01jets	     : Sum$(GenJet_pt>30 && abs(GenJet_eta)<2.5) < 2
+#bveto : Sum$(GenJet_pt>25 && abs(GenJet_eta)<2.5 && abs(GenJet_partonFlavour)==5) == 0
+#etael1      : (abs(GenDressedLepton_pdgId[0]) == 13 || (abs(GenDressedLepton_eta[0]) < 1.442 || abs(GenDressedLepton_eta[0]) > 1.556 && abs(GenDressedLepton_pdgId[0])==11))
+#etael2      : (abs(GenDressedLepton_pdgId[1]) == 13 || (abs(GenDressedLepton_eta[1]) < 1.442 || abs(GenDressedLepton_eta[1]) > 1.556 && abs(GenDressedLepton_pdgId[1])==11))
+
+#metcut : GenMET_pt > 15.0
+plusplus     : GenDressedLepton_pdgId[0] > 0                          ; Disable=True
+minusminus   : GenDressedLepton_pdgId[0] < 0                          ; Disable=True
+
+
+#dilepton  : (abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 143 || abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 169) ; Disable=True
+
+
+
+
+

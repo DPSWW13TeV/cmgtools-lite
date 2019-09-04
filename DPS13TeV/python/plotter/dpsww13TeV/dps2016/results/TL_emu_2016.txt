@@ -1,0 +1,42 @@
+# vim: syntax=sh
+* ; TreeName="treeProducerSusyMultilepton"
+
+DPSWW+       : WWDoubleTo2L             : 0.1729 : 1 ; FillColor=ROOT.kRed+1   , Label="DPS"
+
+data : SingleMuon_2016B_reMiniAOD + SingleMuon_2016C_reMiniAOD + SingleMuon_2016D_reMiniAOD + SingleMuon_2016E_reMiniAOD + SingleMuon_2016F_reMiniAOD + SingleMuon_2016G_reMiniAOD + SingleMuon_2016H_ds1_reMiniAOD + SingleMuon_2016H_ds2_reMiniAOD 
+
+data : MuonEG_2016B_reMiniAOD + MuonEG_2016C_reMiniAOD + MuonEG_2016D_reMiniAOD + MuonEG_2016E_reMiniAOD + MuonEG_2016F_reMiniAOD + MuonEG_2016G_reMiniAOD + MuonEG_2016H_ds1_reMiniAOD + MuonEG_2016H_ds2_reMiniAOD
+
+data : SingleElectron_2016B_reMiniAOD + SingleElectron_2016C_reMiniAOD + SingleElectron_2016D_reMiniAOD + SingleElectron_2016E_reMiniAOD + SingleElectron_2016F_reMiniAOD + SingleElectron_2016G_reMiniAOD + SingleElectron_2016H_ds1_reMiniAOD + SingleElectron_2016H_ds2_reMiniAOD
+
+rares    : WpWpJJ      : 0.0539 : 1                                                   ; FillColor=ROOT.kSpring-2 , Label="rare MC" , NormSystematic=0.50
+rares    : WWW         : xsec   : 1                                                   ; FillColor=ROOT.kSpring-2 , Label="rare MC" , NormSystematic=0.50
+rares    : TTZ_LO      : xsec   : 1                                                   ; FillColor=ROOT.kSpring-2 , Label="rare MC" , NormSystematic=0.50
+
+Conv    : ZGTo2LG_ext : 117.864   : ((LepGood1_mcMatchId == 0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId == 0 && LepGood2_mcPromptGamma==1))  ; FillColor=ROOT.kViolet+2 , Label="Convs" , NormSystematic=0.50
+Conv    : WGToLNuG : 405.271   : ((LepGood1_mcMatchId == 0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId == 0 && LepGood2_mcPromptGamma==1))  ; FillColor=ROOT.kViolet+2 , Label="Convs" , NormSystematic=0.50
+
+ZZ         : ZZTo4L            : xsec : 1  ; FillColor=ROOT.kPink+7 , Label="ZZ"      , NormSystematic=0.30
+WZ         : WZTo3LNu          : xsec : 1  ; FillColor=ROOT.kAzure+1  , Label="WZ"      , NormSystematic=0.16
+WZamcatnlo : WZTo3LNu_amcatnlo : xsec : 1  ; FillColor=ROOT.kRed+1  , Label="WZ"      , NormSystematic=0.16, SkipMe=True
+
+
+WG_wg     : WZTo3LNu_mll01+WZTo3LNu_mll01_ext_part1+WZTo3LNu_mll01_ext_part2+WZTo3LNu_mll01_ext_part3 : 0.6*58.59 : (LepGood1_mcMatchId != 0 && LepGood2_mcMatchId != 0 && Sum$(abs(GenPart_pdgId)==23 && GenPart_mass < 4.) == 1 ) ; FillColor=ROOT.kOrange+1, Label="W\#gamma^{*}", NormSystematic=0.50
+
+flips_data : SingleMuon_2016B_reMiniAOD_forflips + SingleMuon_2016C_reMiniAOD_forflips + SingleMuon_2016D_reMiniAOD_forflips + SingleMuon_2016E_reMiniAOD_forflips + SingleMuon_2016F_reMiniAOD_forflips + SingleMuon_2016G_reMiniAOD_forflips + SingleMuon_2016H_ds1_reMiniAOD_forflips + SingleMuon_2016H_ds2_reMiniAOD_forflips     : 1 ; FillColor=ROOT.kCyan-10, FakeRate='dpsww13TeV/dps2016/fakerates/flipRate-2016-2lss-frdata.txt', Label="Flips", NormSystematic=0.30
+
+flips_data : MuonEG_2016B_reMiniAOD_forflips + MuonEG_2016C_reMiniAOD_forflips + MuonEG_2016D_reMiniAOD_forflips + MuonEG_2016E_reMiniAOD_forflips + MuonEG_2016F_reMiniAOD_forflips + MuonEG_2016G_reMiniAOD_forflips + MuonEG_2016H_ds1_reMiniAOD_forflips + MuonEG_2016H_ds2_reMiniAOD_forflips        : 1 ; FillColor=ROOT.kCyan-10, FakeRate='dpsww13TeV/dps2016/fakerates/flipRate-2016-2lss-frdata.txt', Label="Flips", NormSystematic=0.30
+
+flips_data : SingleElectron_2016B_reMiniAOD_forflips + SingleElectron_2016C_reMiniAOD_forflips + SingleElectron_2016D_reMiniAOD_forflips + SingleElectron_2016E_reMiniAOD_forflips + SingleElectron_2016F_reMiniAOD_forflips + SingleElectron_2016G_reMiniAOD_forflips + SingleElectron_2016H_ds1_reMiniAOD_forflips + SingleElectron_2016H_ds2_reMiniAOD_forflips : 1 ; FillColor=ROOT.kCyan-10, FakeRate='dpsww13TeV/dps2016/fakerates/flipRate-2016-2lss-frdata.txt', Label="Flips", NormSystematic=0.30
+
+fakes_data : SingleMuon_2016B_reMiniAOD + SingleMuon_2016C_reMiniAOD + SingleMuon_2016D_reMiniAOD + SingleMuon_2016E_reMiniAOD + SingleMuon_2016F_reMiniAOD + SingleMuon_2016G_reMiniAOD + SingleMuon_2016H_ds1_reMiniAOD + SingleMuon_2016H_ds2_reMiniAOD     : 1 ; FillColor=ROOT.kGray, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_TL.txt', Label="non-prompt", NormSystematic=0.35
+
+fakes_data : MuonEG_2016B_reMiniAOD + MuonEG_2016C_reMiniAOD + MuonEG_2016D_reMiniAOD + MuonEG_2016E_reMiniAOD + MuonEG_2016F_reMiniAOD+ MuonEG_2016G_reMiniAOD + MuonEG_2016H_ds1_reMiniAOD + MuonEG_2016H_ds2_reMiniAOD         : 1 ; FillColor=ROOT.kGray, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_TL.txt', Label="non-prompt", NormSystematic=0.35
+
+fakes_data : SingleElectron_2016B_reMiniAOD + SingleElectron_2016C_reMiniAOD + SingleElectron_2016D_reMiniAOD + SingleElectron_2016E_reMiniAOD + SingleElectron_2016F_reMiniAOD + SingleElectron_2016G_reMiniAOD + SingleElectron_2016H_ds1_reMiniAOD + SingleElectron_2016H_ds2_reMiniAOD : 1 ; FillColor=ROOT.kGray, FillStyle=3005, FakeRate='dpsww13TeV/dps2016/fakerates/fakeRate_dps_data_TL.txt', Label="non-prompt", NormSystematic=0.35
+
+
+WJMC: W1JetsToLNu_LO : 9644.5 :1 ;FillColor=ROOT.kMagenta-4, Label="W+jets MC"
+WJMC: W2JetsToLNu_LO : 3144.5 :1 ;FillColor=ROOT.kMagenta-4, Label="W+jets MC"
+WJMC: W3JetsToLNu_LO : 954.8  :1 ;FillColor=ROOT.kMagenta-4, Label="W+jets MC"
+WJMC: W4JetsToLNu_LO : 485.6  :1 ;FillColor=ROOT.kMagenta-4, Label="W+jets MC"

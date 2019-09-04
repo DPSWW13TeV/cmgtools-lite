@@ -18,8 +18,14 @@
 
 using namespace std;
 
+typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > FVector;
 //// UTILITY FUNCTIONS NOT IN TFORMULA ALREADY
+double rapidity(float pt1,float eta1,float phi1){
+    typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+    PtEtaPhiMVector p41(pt1,eta1,phi1,0.);
+    return p41.Rapidity();
 
+}
 float deltaPhi(float phi1, float phi2) {
     float result = phi1 - phi2;
     while (result > float(M_PI)) result -= float(2*M_PI);
@@ -125,7 +131,7 @@ float pt_4(float pt1, float phi1, float pt2, float phi2, float pt3, float phi3, 
     return hypot(pt1 + pt2 * std::cos(phi2) + pt3 * std::cos(phi3) + pt4 * std::cos(phi4), pt2*std::sin(phi2) + pt3*std::sin(phi3) + pt4*std::sin(phi4));
 }
  
-float mass_4(float pt1, float eta1, float phi1, float m1, float pt2, float eta2, float phi2, float m2, float pt3, float eta3, float phi3, float m3, float pt4, float eta4, float phi4, float m4) {
+float mass_4(float pt1, float eta1, float phi1, float m1,float pt2, float eta2, float phi2, float m2, float pt3, float eta3, float phi3, float m3, float pt4, float eta4, float phi4, float m4) {
     typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
     PtEtaPhiMVector p41(pt1,eta1,phi1,m1);
     PtEtaPhiMVector p42(pt2,eta2,phi2,m2);
@@ -133,6 +139,20 @@ float mass_4(float pt1, float eta1, float phi1, float m1, float pt2, float eta2,
     PtEtaPhiMVector p44(pt4,eta4,phi4,m4);
     return (p41+p42+p43+p44).M();
 }
+
+FVector dilep(float pt1, float eta1, float phi1,float m1,float pt2, float eta2, float phi2,float m2) {
+    typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+    PtEtaPhiMVector p41(pt1,eta1,phi1,m1);
+    PtEtaPhiMVector p42(pt2,eta2,phi2,m2);
+    PtEtaPhiMVector p4=(p41+p42);
+    return p4;
+}
+float fourlep(FVector &v1, FVector &v2){
+  //    typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+    FVector p5=(v1+v2);
+    return p5.M();
+}
+
 
 float mt_llv(float ptl1, float phil1, float ptl2, float phil2, float ptv, float phiv) {
     float px = ptl1*std::cos(phil1) + ptl2*std::cos(phil2) + ptv*std::cos(phiv);
@@ -1216,6 +1236,30 @@ float leptonSF_ttH_var(int pdgid, float pt, float eta, int nlep, float var_e, fl
   return 1;
 
 }
+bool GenPartStatusFlags(int status, int statusbit){
+  /* status bit
+    "0 : isPrompt, "
+    "1 : isDecayedLeptonHadron, "
+    "2 : isTauDecayProduct, "
+    "3 : isPromptTauDecayProduct, "
+    "4 : isDirectTauDecayProduct, "
+    "5 : isDirectPromptTauDecayProduct, "
+    "6 : isDirectHadronDecayProduct, "
+    "7 : isHardProcess, "
+    "8 : fromHardProcess, "
+    "9 : isHardProcessTauDecayProduct, "
+    "10 : isDirectHardProcessTauDecayProduct, "
+    "11 : fromHardProcessBeforeFSR, "
+    "12 : isFirstCopy, "
+    "13 : isLastCopy, "
+    "14 : isLastCopyBeforeFSR, "
+*/
+  // Events->Scan("GenPart_statusFlags","(GenPart_statusFlags & 1 << 0) |  (GenPart_statusFlags & 1 << 9) | (GenPart_statusFlags & 1 << 14) ")
+  return (status & 1 << statusbit);
+
+}
+
+
 
 void functions() {}
 

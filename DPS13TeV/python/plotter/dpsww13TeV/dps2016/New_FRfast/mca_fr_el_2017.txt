@@ -1,0 +1,36 @@
+# vim: syntax=sh
+* ; TreeName="treeProducerSusyMultilepton"
+
+
+WandZ	 : WJetsToLNu_LO	            : 3.*20508.9        : 1 ; FillColor=ROOT.kGreen+1   , Label="WandZ"
+WandZ  	 : DYJetsToLL_M50_LO  	    	    : 1921.8*3          : 1 ; FillColor=ROOT.kGreen+1   , Label="WandZ"
+WandZ  	 : DYJetsToLL_M10to50_LO	    : 15810		: 1 ; FillColor=ROOT.kGreen+1   , Label="WandZ"
+WandZ    : TBar_tWch_noFullyHad		    : 19.55		: 1 ; FillColor=ROOT.kGreen+1	  , Label="WandZ"
+WandZ    : TTLep_pow		    	    : xsec		: 1 ; FillColor=ROOT.kGreen+1     , Label="WandZ"
+
+WandZ    : T_tch			    : 136.02		: 1 ; FillColor=ROOT.kGreen+1     , Label="WandZ"
+WandZ    : TBar_tch		            : 80.95		: 1 ; FillColor=ROOT.kGreen+1     , Label="WandZ"
+
+WandZ    : T_tWch_noFullyHad		    : 19.55		: 1 ; FillColor=ROOT.kGreen+1     , Label="WandZ"
+
+QCD    : QCD_Pt15to20_EMEnriched       	    : xsec  		: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+QCD    : QCD_Pt20to30_EMEnriched       	    : xsec  		: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+QCD    : QCD_Pt30to50_EMEnriched	    : xsec   		: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+QCD    : QCD_Pt50to80_EMEnriched            : xsec    		: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+QCD    : QCD_Pt80to120_EMEnriched	    : 370900		: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+QCD    : QCD_Pt120to170_EMEnriched	    : 66760      	: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+QCD    : QCD_Pt170to300_EMEnriched	    : 16430      	: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+
+QCD    : QCD_Pt15to20_bcToE		    : 187000 		: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+QCD    : QCD_Pt20to30_bcToE		    : 313500 		: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+QCD    : QCD_Pt30to80_bcToE     	    : 361500 		: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+QCD    : QCD_Pt80to170_bcToE		    : 33770		: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+QCD    : QCD_Pt170to250_bcToE		    : 2126		: 1 ; FillColor=ROOT.kOrange-2    , Label="QCD"
+
+data: SingleElectron_2017C*
+data: SingleElectron_2017D*
+data: SingleElectron_2017E*
+data: SingleElectron_2017F*
+
+
+data_sub  : -                              ; FillColor=ROOT.kOrange+8 , FillStyle=3005, Label="Data - EWK"

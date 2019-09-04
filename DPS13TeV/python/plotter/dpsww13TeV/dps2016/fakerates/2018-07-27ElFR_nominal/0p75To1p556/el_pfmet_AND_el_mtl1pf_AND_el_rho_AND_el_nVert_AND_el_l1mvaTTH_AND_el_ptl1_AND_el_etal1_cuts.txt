@@ -1,0 +1,11 @@
+alwaystrue : 1
+ETA0p75To1p556 : abs(LepGood1_eta)>=0.75&&abs(LepGood1_eta)<1.556
+trigger1el : (HLT_BIT_HLT_Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30_v >0 )
+1l : nLepGood == 1
+electron : abs(LepGood1_pdgId) == 11
+eleId : LepGood1_idEmuTTH == 1
+etatranscut : (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556)
+etacut : abs(LepGood1_eta) < 2.5
+lpt25 : LepGood1_pt > 20.
+awayJet30 : Sum$(Jet_Clean_pt > 30. && abs(deltaPhi(LepGood1_phi,Jet_Clean_phi)) > 0.7 ) >= 1
+etacut : (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556)

@@ -1,0 +1,9 @@
+alwaystrue: 1
+SameSign     : LepGood_charge[0]*LepGood_charge[1] > 0
+metpt        : met_pt >  15
+dilepton        : (abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 143 || abs(LepGood_pdgId[0]*LepGood_pdgId[1])== 169)
+
+
+
+
+

@@ -77,7 +77,7 @@ class PostProcessor :
                 inFile = ROOT.TFile.Open(fname)
 
 	    #get input tree
-	    inTree = inFile.Get("tree")
+	    inTree = inFile.Get('tree')#Events
 
 	    # pre-skimming
 	    elist,jsonFilter = preSkim(inTree, self.json, self.cut)

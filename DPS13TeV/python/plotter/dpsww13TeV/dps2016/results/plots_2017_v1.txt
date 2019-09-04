@@ -5,6 +5,9 @@ pt1_3l           : LepGood_conePt[iLepFO_Recl[0]]     : 20,20,100; XTitle="p_{T}
 pt2_3l           : LepGood_conePt[iLepFO_Recl[1]]     : 20,20,100; XTitle="p_{T}2 (l^{#pm}l^{#pm}l^{#mp}) (GeV)",YMin=0,YMax=700
 pt3_3l           : LepGood_conePt[iLepFO_Recl[2]]     : 20,20,100; XTitle="p_{T}3 (l^{#pm}l^{#pm}l^{#mp}) (GeV)",YMin=0,YMax=700
 BDT_wz_3l        : BDT_DPS_WZ               : 20,0.,1.0; XTitle="BDT WZ         (l^{#pm}l^{#pm}l^{#mp})" ,Legend="TL"
+BDTforCombine_3l :  Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(l^{#pm}l^{#pm}l^{#mp})"
+
+
 ################## 4lepton cr
 
 pt1_4l           : LepGood_conePt[iLepFO_Recl[0]]     : 20,20,100; XTitle="p_{T}1 (2l^{#pm}2l^{#mp}) (GeV)",YMin=0,YMax=100
@@ -12,6 +15,8 @@ pt2_4l           : LepGood_conePt[iLepFO_Recl[1]]     : 20,20,100; XTitle="p_{T}
 pt3_4l           : LepGood_conePt[iLepFO_Recl[2]]     : 20,20,100; XTitle="p_{T}3 (2l^{#pm}2l^{#mp}) (GeV)",YMin=0,YMax=140
 pt4_4l           : LepGood_conePt[iLepFO_Recl[3]]     : 20,20,100; XTitle="p_{T}4 (2l^{#pm}2l^{#mp}) (GeV)",YMin=0,YMax=200
 4lep_mZ2_noRecl: mZ2 : 80,50,130; XTitle="Best second Z candidate mass (GeV)"
+BDTforCombine_4l :  Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(2l^{#pm}2l^{#mp})"
+
 
 ################### Generic
 nBJetLoose25_mumu : nBJetLoose25_Recl : [-0.5,0.5,1.5,2.5] ; XTitle='N(b-jet\, p_{T} > 25 GeV\, Loose)' 
@@ -78,6 +83,9 @@ conept2_ll           : LepGood_conePt[iLepFO_Recl[1]]     : 20,10,100; XTitle="p
 pt1_ll           : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (e^{#pm}#mu^{#pm} + #mu^{#pm}#mu^{#pm}) (GeV)"
 pt2_ll           : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm} + #mu^{#pm}#mu^{#pm}) (GeV)"
 met_ll           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (e^{#pm}#mu^{#pm} + #mu^{#pm}#mu^{#pm}) (GeV)"
+met_llplusplus           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (e^{++}#mu^{++} + #mu^{++}#mu^{++}) (GeV)"
+met_llminusminus           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (e^{--}#mu^{--} + #mu^{--}#mu^{--}) (GeV)"
+
 
 mt2ll_ll         : mt2davis(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood2_pt,LepGood2_eta,LepGood2_phi,met_pt,met_phi) : 20,0,120 ; XTitle="M_{T2}^{ll} (e^{#pm}#mu^{#pm} + #mu^{#pm}#mu^{#pm}) (GeV)"
 
@@ -97,6 +105,8 @@ BDT_fakes_ll_20bins   : BDT_DPS_fakes            : 20,0.,1.0; XTitle="BDT fakes 
 
 
 ############ Dimuon
+BDTfakes_BDTWZ_mumu_20bins   : BDT_DPS_WZ\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#pm}#mu^{#pm})", YTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
+
 BDT_wz_mumu      : BDT_DPS_WZ               : 20,0.,1.0; XTitle="BDT WZ         (#mu^{#pm}#mu^{#pm})" ,Legend="TL",YLim=0,60
 met_jecDown_mumu : met_jecDown_pt :  10,15,115 ; XTitle="E_{T}^{miss}(jecdown) (#mu^{#pm}#mu^{#pm}) (GeV)"
 met_jecUp_mumu : met_jecUp_pt :  10,15,115 ; XTitle="E_{T}^{miss}(jecup) (#mu^{#pm}#mu^{#pm}) (GeV)"
@@ -171,6 +181,7 @@ BDT_wz_signal_mumu_20bins    : BDT_DPS_WZ : 20,0.,1.0; XTitle="BDT WZ (#mu^{#pm}
 BDT_fakes_signal_mumu_20bins : BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT Fakes(#mu^{#pm}#mu^{#pm})",Legend="TL" 
 BDTforCombine_signal_mumu_15bins   :  Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"
 
+
 BDT_wz_signal_elmu_20bins    : BDT_DPS_WZ : 20,0.,1.0; XTitle="BDT WZ (e^{#pm}#mu^{#pm})" ,Legend="TL"
 BDT_fakes_signal_elmu_20bins : BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT Fakes(e^{#pm}#mu^{#pm})",Legend="TL" 
 BDTforCombine_signal_elmu_15bins   :  Binnumberset1D_elmu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"
@@ -179,12 +190,12 @@ BDTforCombine_signal_elmu_15bins   :  Binnumberset1D_elmu(BDT_DPS_fakes,BDT_DPS_
 ########################################## for documents-dimuon #####################
 conept1_mumu           : LepGood_conePt[iLepFO_Recl[0]]    : 20,20,100; XTitle=" p_{T} lead. (#mu^{#pm}#mu^{#pm}) (GeV)"
 ##,YMin=0,YMax=200
-conept2_mumu     : LepGood_conePt[iLepFO_Recl[1]]     : 20,10,100; XTitle="p_{T} trail. (#mu^{#pm}#mu^{#pm}) (GeV)"    
+conept2_mumu     : LepGood_conePt[iLepFO_Recl[1]]     : 20,20,100; XTitle="p_{T} trail. (#mu^{#pm}#mu^{#pm}) (GeV)"    
 ##,YMin=0,YMax=350
-pt1_mumu           : LepGood_pt[iLepFO_Recl[0]]     : 20,20,100; XTitle="p_{T} lead. (#mu^{#pm}#mu^{#pm}) (GeV)"   
- ##,YMin=0,YMax=200
-pt2_mumu           : LepGood_pt[iLepFO_Recl[1]]     : 20,10,100; XTitle="p_{T} trail. (#mu^{#pm}#mu^{#pm}) (GeV)"  
-  ##,YMin=0,YMax=400
+
+pt1_mumu           : LepGood_conePt[iLepFO_Recl[0]]     : 20,20,100; XTitle="p_{T} lead. (#mu^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=200
+
+pt2_mumu           : LepGood_conePt[iLepFO_Recl[1]]     : 20,20,100; XTitle="p_{T} trail. (#mu^{#pm}#mu^{#pm}) (GeV)" ,YMin=0,YMax=400
 met_mumu           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (#mu^{#pm}#mu^{#pm}) (GeV)"  
    ##,YMin=0,YMax=300 
 dphil2met_mumu     : abs(deltaPhi(LepGood_phi[iLepFO_Recl[1]],met_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (#mu^{#pm}#mu^{#pm}) (rad.)" 
@@ -304,9 +315,9 @@ nVert_elmu : nVert  : 50,0,50; XTitle="n_{vertices}"
 
 
 conept1_elmu           : LepGood_conePt[iLepFO_Recl[0]]    : 20,20,100; XTitle="p_{T} lead. (e^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=420
-conept2_elmu     : LepGood_conePt[iLepFO_Recl[1]]     : 20,10,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=650
+conept2_elmu     : LepGood_conePt[iLepFO_Recl[1]]     : 20,20,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=650
 pt1_elmu           : LepGood_conePt[iLepFO_Recl[0]]     : 20,20,100; XTitle="p_{T} lead. (e^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=420
-pt2_elmu           : LepGood_conePt[iLepFO_Recl[1]]     : 20,10,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=600
+pt2_elmu           : LepGood_conePt[iLepFO_Recl[1]]     : 20,20,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=600
 met_elmu           : met_pt          : 10,15,115; XTitle="E_{T}^{miss} (e^{#pm}#mu^{#pm}) (GeV)" ,YMin=0,YMax=530 
 mt2ll_elmu         : mt2davis(LepGood_conePt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],LepGood_phi[iLepFO_Recl[0]],LepGood_conePt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],LepGood_phi[iLepFO_Recl[1]],met_pt,met_phi) : 20,0,120 ; XTitle="M_{T2}^{ll} (e^{#pm}#mu^{#pm}) (GeV)",YMin=0,YMax=760
 eta_sum_elmu       : abs(LepGood_eta[iLepFO_Recl[0]] + LepGood_eta[iLepFO_Recl[1]])  : 20,0,5; XTitle="abs(#eta_{1}+#eta_{2}) (e^{#pm}#mu^{#pm})",YMin=0,YMax=400
@@ -372,4 +383,4 @@ BDT_fakes_elmuminusminus_20bins : BDT_DPS_fakes            : 20,0.,1.0; XTitle="
 BDTforCombine_elmuminusminus_15bins   :  Binnumberset1D_elmu(BDT_DPS_fakes,BDT_DPS_WZ): [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0] ; XTitle="Bin Number(e^{-}#mu^{-})",YMin=0,YMax=200
 #########
 conept1_elel           : LepGood_conePt[iLepFO_Recl[0]]    : 20,20,100; XTitle=" p_{T} lead. (el^{#pm}el^{#pm}) (GeV)",YMin=0,YMax=200
-conept2_elel     : LepGood_conePt[iLepFO_Recl[1]]     : 20,10,100; XTitle="p_{T} trail. (el^{#pm}el^{#pm}) (GeV)",YMin=0,YMax=400
+conept2_elel     : LepGood_conePt[iLepFO_Recl[1]]     : 20,20,100; XTitle="p_{T} trail. (el^{#pm}el^{#pm}) (GeV)",YMin=0,YMax=400

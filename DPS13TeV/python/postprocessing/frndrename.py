@@ -1,8 +1,8 @@
 #!/usr/bin/env python                                                                                                                           
 import os, sys
 import ROOT
-eospath = 'JetCleaning_ElEl_friendsMay21/'
-outputdir='JetCleaning_ElEl_friendsMay21_renamed/'
+eospath = 'Friends_BDT_with_tight_MVA_2016/'
+outputdir='Friends_BDT_with_tight_MVA_2016_renamed/'
 list1=( list( i for i in os.listdir(eospath) ) ) 
 
 for name in list1:
