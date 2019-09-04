@@ -178,8 +178,9 @@ class MCAnalysis:
                     rootfile = "%s/%s/%s/tree.root" % (basepath, cname, treename)
                     rootfile = open(rootfile+".url","r").readline().strip()
                 ##pckfile = basepath+"/%s/skimAnalyzerCount/SkimReport.pck" % cname
-
+                
                 tty = TreeToYield(rootfile, options, settings=extra, name=pname, cname=cname, objname=objname); ttys.append(tty)
+                
                 if signal: 
                     self._signals.append(tty)
                     self._isSignal[pname] = True
@@ -208,12 +209,14 @@ class MCAnalysis:
                             n_count +=  iev.genEventCount
                             n_sumgenweight += iev.genEventSumw
                             break
+
                     tmp_rootfile.Close()
                     if ( n_count != n_sumgenweight ) and options.weight:
                         if (is_w==0): raise RuntimeError, "Can't put together a weighted and an unweighted component (%s)" % cnames
                         is_w = 1; 
                         total_w += n_sumgenweight
                         scale = "genWeight*(%s)" % field[2]
+                         
 
                     elif not options.weight:
                         scale = 1
