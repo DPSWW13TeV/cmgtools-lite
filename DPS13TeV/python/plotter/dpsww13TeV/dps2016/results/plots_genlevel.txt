@@ -1,3 +1,38 @@
+nGenemutau_sel    : nGenPart_sel : [0,1,2,3,4,5]; XTitle="gen level e/mu/tau"
+Genemutaupt_sel    :  GenPart_sel_pt       :  20,0,100; XTitle="gen level e/mu/tau pT"
+Genemutaueta_sel    : GenPart_sel_eta       :  30,-5,5; XTitle="gen level e/mu/tau eta"
+Genemutauphi_sel    : GenPart_sel_phi       :  32,-4,4; XTitle="gen level e/mu/tau phi"
+Genemutausf_sel : GenPart_sel_statusFlags : 15000,0,15000 ; XTitle="gen level e/mu/tau SF"
+
+
+nGenemutauHW    : Sum$( (abs(GenPart_pdgId) == 13 || abs(GenPart_pdgId) == 11 || abs(GenPart_pdgId) == 15) && GenPart_status == if3(abs(GenPart_pdgId) == 15,2,1) && (GenPartStatusFlags(GenPart_statusFlags,8) || GenPartStatusFlags(GenPart_statusFlags,0))) : [0,1,2,3,4,5]; XTitle="gen level e/mu/tau for HW"
+
+nGenemutauPy    : Sum$( (abs(GenPart_pdgId) == 13 || abs(GenPart_pdgId) == 11 || abs(GenPart_pdgId) == 15) && GenPart_status == if3(abs(GenPart_pdgId) == 15,2,1) && (GenPartStatusFlags(GenPart_statusFlags,8) && GenPartStatusFlags(GenPart_statusFlags,0))) : [0,1,2,3,4,5]; XTitle="gen level e/mu/tau for Py"
+
+
+Genemutaupt    :  GenPart_pt       :  20,0,100; XTitle="gen level e/mu/tau pT"
+Genemutaueta    : GenPart_eta       :  30,-5,5; XTitle="gen level e/mu/tau eta"
+Genemutauphi    : GenPart_phi       :  32,-4,4; XTitle="gen level e/mu/tau phi"
+
+
+#nGenemutau:  Sum$(GenPart_pt > 0)   :  [0,1,2,3,4,5]; XTitle="gen level e/mu/tau" 
+
+nGenemutau: Sum$( (abs(GenPart_pdgId) == 15 || abs(GenPart_pdgId) == 11 || abs(GenPart_pdgId) == 13) && GenPart_status == if3(abs(GenPart_pdgId) == 15,2,1) && GenPartStatusFlags(GenPart_statusFlags,0) || GenPartStatusFlags(GenPart_statusFlags,8)):  [0,1,2,3,4,5]; XTitle="gen level e/mu/tau" 
+
+
+Genemutausf : GenPart_statusFlags : 15000,0,15000 ; XTitle="gen level e/mu/tau SF"
+
+pt_GendLep    : GenDressedLepton_pt     : 20,0,200; XTitle="p_{T} lep(GeV)", YMin=0,YMax=0.5
+phi_GendLep    : GenDressedLepton_phi     : 60,-3.2,3.2; XTitle="phi lep"
+eta_GendLep   : GenDressedLepton_eta     : 60,-3.0,3.0; XTitle="#eta lep"
+pdgId_GendLep   : GenDressedLepton_pdgId     : 28,-14,14; XTitle="lep pdgId"
+
+etaprod_GendLep : GenDressedLepton_eta[0]*GenDressedLepton_eta[1] : 10,-6.5,6.5; XTitle="etaprod", YMin=0,YMax=0.45
+
+etasum_GendLep : GenDressedLepton_eta[0]+GenDressedLepton_eta[1] : 10,-5,5 ; XTitle="etasum", YMin=0,YMax=0.35
+etapp_GendLep : GenDressedLepton_eta[0]*GenDressedLepton_eta[1] > 0 : 2,0,2 ; XTitle= "etaprod > 0" ,YMin=0.475,YMax=0.515
+etamm_GendLep : GenDressedLepton_eta[0]*GenDressedLepton_eta[1] < 0 : 2,0,2 ; XTitle="etaprod < 0" ,YMin=0.46,YMax=0.54
+nGendLep	 : nGenDressedLepton	          : [0,1,2,3,4,5]; XTile="#dressed leptons"
 statusFlag_GenLep_ll	: GenPart_sel_statusFlags[0]: 300,8400,8700; XTitle="statusFlag"
 pt1_GenLep_llplusplus    : GenPart_sel_pt[0]     : 20,0,100; XTitle="p_{T} lead.  (GeV)"
 pt2_GenLep_llplusplus    : GenPart_sel_pt[1]     : 20,0,100; XTitle="p_{T} trail.  (GeV)" 
@@ -28,8 +63,8 @@ pdgIdprod_GenLep_llminusminus	: GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]: 400,-
 
 pt1_GenLepdressed_llminusminus    : GenDressedLepton_pt[0]     : 20,0,100; XTitle="p_{T} dressed lead.  (GeV)"
 pt2_GenLepdressed_llminusminus    : GenDressedLepton_pt[1]     : 20,0,100; XTitle="p_{T} dressed trail.  (GeV)" 
-eta1_GenLepdressed_llminusminus   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead.  (GeV)"
-eta2_GenLepdressed_llminusminus   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail.  (GeV)" 
+eta1_GenLepdressed_llminusminus   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead. lepton"
+eta2_GenLepdressed_llminusminus   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail. lepton" 
 nGenLepdressed_llminusminus	 : nGenDressedLepton	          : [0,1,2,3,4,5]; XTile="#dressed leptons"
 
 
@@ -39,19 +74,38 @@ pdgIdprod_GenLepdressed_llminusminus	: GenDressedLepton_pdgId[0]*GenDressedLepto
 
 pt1_GenLepdressed_ll    : GenDressedLepton_pt[0]     : 20,0,100; XTitle="p_{T} dressed lead.  (GeV)" 
 pt2_GenLepdressed_ll    : GenDressedLepton_pt[1]     : 20,0,100; XTitle="p_{T} dressed trail.  (GeV)" 
-eta1_GenLepdressed_ll   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead.  (GeV)" 
-eta2_GenLepdressed_ll   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail.  (GeV)" 
+eta1_GenLepdressed_ll   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead. lep" 
+eta2_GenLepdressed_ll   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail. lep" 
 nGenLepdressed_ll	 : nGenDressedLepton	          : [0,1,2,3,4,5]; XTile="# dressed leptons"
 pdgIdprod_GenLepdressed_ll	: GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]: 400,-200,200; XTitle="dressed: pdgId1 X pdgId2"
 
 
 pt1_GenLepdressed_llplusplus    : GenDressedLepton_pt[0]     : 20,0,100; XTitle="p_{T} dressed lead.  (GeV)"
 pt2_GenLepdressed_llplusplus    : GenDressedLepton_pt[1]     : 20,0,100; XTitle="p_{T} dressed trail.  (GeV)" 
-eta1_GenLepdressed_llplusplus   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead.  (GeV)"
-eta2_GenLepdressed_llplusplus   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail.  (GeV)" 
+eta1_GenLepdressed_llplusplus   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead.  lep"
+eta2_GenLepdressed_llplusplus   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail.  lep" 
 nGenLepdressed_llplusplus	 : nGenDressedLepton	          : [0,1,2,3,4,5]; XTile="# dressed  leptons"
 
 pdgIdprod_GenLepdressed_llplusplus	: GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]: 400,-200,200; XTitle="dressed: pdgId1 X pdgId2"
+
+
+
+pt1_GenLepdressed_mumu    : GenDressedLepton_pt[0]     : 20,0,100; XTitle="p_{T} dressed lead.  mu (GeV)" 
+pt2_GenLepdressed_mumu    : GenDressedLepton_pt[1]     : 20,0,100; XTitle="p_{T} dressed trail. mu (GeV)" 
+eta1_GenLepdressed_mumu   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead. mu" 
+eta2_GenLepdressed_mumu   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail. mu" 
+nGenLepdressed_mumu	  : nGenDressedLepton	          : [0,1,2,3,4,5]; XTile="# dressed leptons"
+
+pdgIdprod_GenLepdressed_mumu	: GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]: 400,-200,200; XTitle="dressed: pdgId1 X pdgId2"
+
+
+pt1_GenLepdressed_elmu    : GenDressedLepton_pt[0]     : 20,0,100; XTitle="p_{T} dressed lead.  lep (GeV)" 
+pt2_GenLepdressed_elmu    : GenDressedLepton_pt[1]     : 20,0,100; XTitle="p_{T} dressed trail. lep (GeV)" 
+eta1_GenLepdressed_elmu   : GenDressedLepton_eta[0]     : 60,-5,5; XTitle="#eta dressed lead. lep" 
+eta2_GenLepdressed_elmu   : GenDressedLepton_eta[1]     : 60,-5,5; XTitle="#eta dressed trail. lep" 
+nGenLepdressed_elmu	  : nGenDressedLepton	          : [0,1,2,3,4,5]; XTile="# dressed leptons"
+pdgIdprod_GenLepdressed_elmu	: GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]: 400,-200,200; XTitle="dressed: pdgId1 X pdgId2"
+
 
 
 jetpt_ll	:GenJet_pt		  : 20,0,200; XTitle="jet pt"
@@ -138,4 +192,18 @@ GenLep_sel_eta2_llminusminus           : GenPart_sel_eta[1]     : 60,-5,5; XTitl
 nGenlep_llminusminus		   : nGenPart_sel	    : [0,1,2,3,4,5]; XTile="No. of  gen leptons"
 
 
-GW_rapidity		    : rapidity(GenPart_sel_pt,GenPart_sel_eta,GenPart_sel_phi,GenPart_sel_mass): 100,-10,10; XTitle="y_W"
+GW_rapidity	: rapidity(GenPart_pt,GenPart_eta,GenPart_phi,GenPart_mass): 32,-8,8; XTitle="y_W"
+GW_rapidityM	: rapidity(GenPart_pt,GenPart_eta,GenPart_phi,80.4): 32,-8,8; XTitle="y_W"
+GW_pt		: GenPart_pt: 20,0,200; XTitle="pT_W"
+GW_mass		: GenPart_mass: 100,50,200; XTitle="mass_W"
+GW_pz		: pZ(GenPart_pt,GenPart_eta,GenPart_phi,GenPart_mass): 50,-1000,1000; XTitle="pz_W"
+GW_eta		: GenPart_eta: 20,-10,10; XTitle="eta_W"
+ngenseljets	: Sum$(GenJet_pt>30 && abs(GenJet_eta) < 2.5)    : [0,1,2,3,4,5,6]; XTitle="N gen jets with pT > 30 and abs eta < 2.5"
+ngenseljets2lep : Sum$(GenJet_pt>30 && abs(GenJet_eta) < 2.5 && nGenDressedLepton == 2)    : [0,1,2,3,4,5,6]; XTitle="gen jets with pT > 30 & |eta| < 2.5 & 2 dleps"
+ngenjets	: nGenJet    : [0,1,2,3,4,5,6]; XTitle="N gen jets"
+Gw_p		: momentum(GenPart_pt,GenPart_eta,GenPart_phi,GenPart_mass):  20,0,200; XTitle="p_W"
+
+njets_ptW   : nGenJet\:GenPart_pt  : 5,0,5,20,0,80. ; XTitle="ngenjets", YTitle="pTW"
+njets_pW   : nGenJet\:momentum(GenPart_pt,GenPart_eta,GenPart_phi,GenPart_mass)  : 5,0,5,20,0,200. ; XTitle="ngenjets", YTitle="pW"
+ptjets_ptW  : Sum$(GenJet_pt > 0)\:GenPart_pt  : 20,0,500,20,0,80. ; XTitle="pTjet1", YTitle="pTW"
+ptjet1_ptW  : GenJet_pt[0]\:GenPart_pt  : 20,0,500,20,0,80. ; XTitle="pTjet1", YTitle="pTW"

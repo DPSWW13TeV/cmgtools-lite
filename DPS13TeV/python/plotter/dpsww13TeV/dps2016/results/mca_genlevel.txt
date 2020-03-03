@@ -7,4 +7,4 @@ DPS2017 : File0+File1+File2+File3+File4+File5+File6+File7+File8+File9+File10+Fil
 DPS2016 : WW-DPS2016 :           0.1729 : 1 ; FillColor=ROOT.kGreen+1   , Label="Py-16", ObjName="Events"
 2017incl : WW-DPS2017-inclusive : 1.9 : 1 ; FillColor=ROOT.kBlue+1   , Label="Pyinc-17", ObjName ="Events"
 2017HG : WW-DPS2017-comp-herwig : 0.1729 : 1 ; FillColor=ROOT.kOrange+1   , Label="HG-17", ObjName ="Events"
-#2017HG : WW-DPS2017-herwig : 0.1729*25545/940764 : 1 ; FillColor=ROOT.kOrange+1   , Label="HG-17", ObjName ="Events"
+

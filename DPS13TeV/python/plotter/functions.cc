@@ -20,10 +20,23 @@ using namespace std;
 
 typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > FVector;
 //// UTILITY FUNCTIONS NOT IN TFORMULA ALREADY
-double rapidity(float pt1,float eta1,float phi1){
+double rapidity(float pt1,float eta1,float phi1,float mass1){
     typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
-    PtEtaPhiMVector p41(pt1,eta1,phi1,0.);
+    PtEtaPhiMVector p41(pt1,eta1,phi1,mass1);
     return p41.Rapidity();
+}
+
+
+double pZ(float pt1,float eta1,float phi1,float mass1){
+    typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+    PtEtaPhiMVector p41(pt1,eta1,phi1,mass1);
+    return p41.Pz();
+
+}
+double momentum(float pt1,float eta1,float phi1,float mass1){
+    typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+    PtEtaPhiMVector p41(pt1,eta1,phi1,mass1);
+    return p41.P();
 
 }
 float deltaPhi(float phi1, float phi2) {

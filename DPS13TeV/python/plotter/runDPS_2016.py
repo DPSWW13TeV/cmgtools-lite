@@ -168,13 +168,14 @@ def runplots(trees, friends, targetdir, fmca, fcut, fplots, enabledcuts, disable
     print 'running: python', cmd
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
-def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = False, combination = False):
+def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge = False, combination = False):
     #trees='/afs/cern.ch/work/a/anmehta/work/Test/Test2/CMSSW_8_0_25/src/CMGTools/DPS13TeV/python/plotter/wgsamples/'
-    trees     = '2016_trees_friends/skimmed_2lss_2016/'
+    basedir='/eos/cms/store/cmst3/group/dpsww/DPS_trees_2016/'
+    trees     = basedir+'/skimmed_2lss_2016/'
     #olderversionfriends=['skimmed_Friends_BDT_2lss_2016/','skimmed_Friends_2lss_2016/']
-    friends=['2016_trees_friends/skimmed_2lss_Friends_BDT_with_tight_MVA_2016_renamed/','2016_trees_friends/skimmed_Friends_2lss_2016/']
+    friends=[basedir+'/skimmed_2lss_Friends_BDT_with_tight_MVA_2016_renamed/',basedir+'/skimmed_Friends_2lss_2016/']
     #friends=['2016_trees_friends/BDTfriends_skimmed_2016_jecup/','2016_trees_friends/skimmed_Friends_2lss_2016/']
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2016_2DBDTs/'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2016_testT3/'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots.txt'
     fsyst  = 'dpsww13TeV/dps2016/results/syst_2016.txt' #dummysyst.txt'
     print '=========================================='
@@ -194,7 +195,7 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = Fa
     #processes=['fakes_data_jetpT_Dn','fakes_data_jetpT_Up','fakes_data','fakes_data_FR_Dn','fakes_data_FR_Up']
     #processes=['WG2017','WG2016']
     #processes = ['DPSWW_jec_Up','DPSWW','DPSWW_jec_Dn']
-    processes = ['DPSWW']#,'WZ','fakes_data','ZZ','WG_wg','rares','flips_data','Conv']#,'data']
+    processes = ['DPSWW','WZ','fakes_data','ZZ','WG_wg','rares','flips_data','Conv','data']
     #processes=['DPSWW','WZ','fakes_data','ZZ','flips_data','data','Conv','WG_wg','WG','WpWpJJ','WWW','TTZ']
     processesCards = ['DPSWW','WZ','WG_wg','rares','flips_data','data','WZamcatnlo','DPSWW_alt','fakes_data_slope_Dn','fakes_data_jetpT_Dn','fakes_data_jetpT_Up','ZZ','fakes_data_slope_Up','fakes_data','Conv']
     fcut   = 'dpsww13TeV/dps2016/results/cuts_2016.txt'
@@ -234,7 +235,7 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = Fa
             fittodata = []
             scalethem = {}
             extraopts = '--showIndivSigs'# --plotmode=norm --ratioDen WZ --ratioNums WZamcatnlo --ratioYLabel=amcatnlo/powheg'# --plotmode=norm --ratioDen DPSWW --ratioNums DPSWW_jec_Up, DPSWW_jec_Dn --ratioYLabel=var./nom.' #--plotmode=norm'#  --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up,fakes_data_jetpT_Dn,fakes_data_jetpT_Up --ratioDen fakes_data --ratioYLabel=Var./Nom.'
-            drawvars=['dphiLep']#,'dphilll2','mt2ll','pt1','chargecon2','chargecon1','met','nVert','dphil2met','pt1','mll','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','dphil2met']#,'nVert'
+            drawvars=['dphiLep','dphilll2','mt2ll','pt1','chargecon2','chargecon1','met','nVert','dphil2met','pt1','mll','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','dphil2met','nVert']
             
             if splitCharge or splitsign:
                 makeplots1  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
@@ -247,7 +248,7 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge = Fa
 
             makeplots2spl = ['BDTforCombine_signal_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_signal_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_signal_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
             makeplots2spll=['BDTfakes_BDTWZ_mumu_20bins']
-            makeplots=makeplots1 #2spll#+makeplots2
+            makeplots=makeplots1+makeplots2
             runplots(trees, friends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
             ## ==================================
             ## running datacards
@@ -351,22 +352,23 @@ def dyComparison():
     print '=========================================='
     print 'running checks on DY '
     print '=========================================='
-    trees     = ['/eos/cms/store/group/phys_tracking/elisabetta/WSkims/']
-    friends   = '/eos/user/m/mdunser/w-helicity-13TeV/friends/friends_SFs_pu_awayJet-2017-12-11/'#2017-12-01/'
-    targetdir = '/afs/cern.ch/user/m/mdunser/www/private/w-helicity-13TeV/dy-dataMC/{date}{pf}/'.format(date=date, pf=('-'+postfix if postfix else '') )
-    fmca      = 'w-helicity-13TeV/wmass_mu/dy/mca.txt'
-    fcut      = 'w-helicity-13TeV/wmass_mu/dy/cuts.txt'
-    fplots    = 'w-helicity-13TeV/wmass_mu/dy/plots.txt'
 
-    enable    = []
+    basedir='/eos/cms/store/cmst3/group/dpsww/DPS_trees_2016/'
+    trees     = basedir
+    friends=[basedir+'/friends_BDT_2016_22102019/',basedir+'/friends_DPScleaner_pu_lepSF_18102019/']
+    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2016_testdy/'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    fplots = 'dpsww13TeV/dps2016/results/plots.txt'
+    fsyst  = 'dpsww13TeV/dps2016/results/syst_2016.txt' #dummysyst.txt'
+    processes = ['DPSWW','WZ','fakes_data','ZZ','WG_wg','rares','dy','Conv','data']
+    fcut   = 'dpsww13TeV/dps2016/results/cuts_dyTest_2016.txt'
+    fmca='dpsww13TeV/dps2016/results/mca_dyTest_2016.txt'
     disable   = []
-    processes = ['data', 'Z']## very small:, 'Top', 'DiBosons']
     fittodata = []
+    enable=[]
     scalethem = {}
-    extraopts = ' -W LepGood_effSF[0]*LepGood_effSF[1] --maxRatioRange 0.8 1.2 --fixRatioRange '# --maxRatioRange 0. 2. --fixRatioRange  '
-    makeplots = ['rho', 'nVert']#'etal2']#, 'ptl1', 'etal1', 'ptl2', 'mll']#'etal2', 'nVert', 'mll', 'tkmet', 'pfmet']
-    showratio = True
-    runplots(trees, friends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, showratio, extraopts)
+    extraopts = '--showIndivSigs'
+    makeplots=['pt1','pt2']#'dphiLep','dphilll2','mt2ll','pt1','chargecon2','chargecon1','met','nVert','dphil2met','pt1','mll','mtll','mt1','mt2','dphiLep','pt2','eta_sum','dphilll2','etaprod','mt2ll','dphil2met','nVert']
+    runplots(trees, friends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata, makeplots, True, extraopts)
     
 def fakeShapes():
     print '=========================================='

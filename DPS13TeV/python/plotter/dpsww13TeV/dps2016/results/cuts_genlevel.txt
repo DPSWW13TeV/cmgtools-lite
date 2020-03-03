@@ -1,32 +1,36 @@
 alwaystrue: 1
-#dressedpt1 : GenPart_sel_pt[0] > if3(nGenPart_sel>0,15,-99)
-#dressedpt2 : GenPart_sel_pt[1] > if3(nGenPart_sel>1,15,-99)
-#dressedeta1 : abs(GenPart_sel_eta[0]) < if3(nGenPart_sel>0,2.5,100)
-#dressedeta2 : abs(GenPart_sel_eta[1]) < if3(nGenPart_sel>1,2.5,100)
+
+#emutau:  abs(GenPart_pdgId) == 15 || abs(GenPart_pdgId) == 13 || abs(GenPart_pdgId) == 11
+#status:  GenPart_status == if3(abs(GenPart_pdgId) == 15,2,1)
+
+#flags:  GenPartStatusFlags(GenPart_statusFlags,0) || GenPartStatusFlags(GenPart_statusFlags,8)
 
 
-SameSign     : GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1] > 0
-2l           : nGenPart_sel == 2
 
-25/20	      : GenPart_sel_pt[0] > 25 && GenPart_sel_pt[1] > 20
-01jets       : Sum$(GenJet_pt > 30 && abs(GenJet_eta) < 2.5) < 2
-l1etacut     : abs(GenPart_sel_eta[0]) < if3(abs(GenPart_sel_pdgId[0])==13,2.4,2.5)
-l2etacut     : abs(GenPart_sel_eta[1]) < if3(abs(GenPart_sel_pdgId[1])==13,2.4,2.5)
+#SameSign     : GenPart_pdgId[0]*GenPart_pdgId[1] > 0
+#2l           : nGenPart == 2
 
-etael1      : (abs(GenPart_sel_pdgId[0]) == 13 || (abs(GenPart_sel_eta[0]) < 1.442 || abs(GenPart_sel_eta[0]) > 1.556 && abs(GenPart_sel_pdgId[0])==11))
-etael2      : (abs(GenPart_sel_pdgId[1]) == 13 || (abs(GenPart_sel_eta[1]) < 1.442 || abs(GenPart_sel_eta[1]) > 1.556 && abs(GenPart_sel_pdgId[1])==11))
+#25/20	      : GenPart_pt[0] > 25 && GenPart_pt[1] > 20
+#01jets       : Sum$(GenJet_pt > 30 && abs(GenJet_eta) < 2.5) < 2
+#l1etacut     : abs(GenPart_eta[0]) < if3(abs(GenPart_pdgId[0])==13,2.4,2.5)
+#l2etacut     : abs(GenPart_eta[1]) < if3(abs(GenPart_pdgId[1])==13,2.4,2.5)
 
-
-#isPrompt1 : GenPartStatusFlags(GenPart_sel_statusFlags[0],0) 
-#isPrompt2 : GenPartStatusFlags(GenPart_sel_statusFlags[1],0) 
+#etael1      : (abs(GenPart_pdgId[0]) == 13 || (abs(GenPart_eta[0]) < 1.442 || abs(GenPart_eta[0]) > 1.556 && abs(GenPart_pdgId[0])==11))
+#etael2      : (abs(GenPart_pdgId[1]) == 13 || (abs(GenPart_eta[1]) < 1.442 || abs(GenPart_eta[1]) > 1.556 && abs(GenPart_pdgId[1])==11))
 
 
+#isPrompt1 : GenPartStatusFlags(GenPart_statusFlags[0],0) 
+#isPrompt2 : GenPartStatusFlags(GenPart_statusFlags[1],0) 
+
+#isW : abs(GenPart_pdgId) == 24 && (GenPart_statusFlags == 10497 ||  GenPart_statusFlags == 12289)
+
+#ismu: GenPartStatusFlags(GenPart_statusFlags[0],0)
 #deltaR(float eta1, float phi1, float eta2, float phi2)
 
-plusplus     : GenPart_sel_pdgId[0] > 0                          ; Disable=True
-minusminus   : GenPart_sel_pdgId[0] < 0                          ; Disable=True
+#plusplus     : GenPart_pdgId[0] > 0                          ; Disable=True
+#minusminus   : GenPart_pdgId[0] < 0                          ; Disable=True
 
-
-dilepton  : abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 143 || abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 169 ; Disable=True
+emuplusplus   : GenPart_pdgId[0] > 0 and abs(GenPart_pdgId[0]*GenPart_pdgId[1]) == 143
+#dilepton  : abs(GenPart_pdgId[0]*GenPart_pdgId[1]) == 143 || abs(GenPart_pdgId[0]*GenPart_pdgId[1]) == 169 ; Disable=True
 
 

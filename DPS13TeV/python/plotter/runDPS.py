@@ -228,20 +228,20 @@ def runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, f
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge =False, combination = False):
+def makeResults(onlyEE = False,onlyMM =True, splitsign =False, splitCharge =False, combination = False):
 #def runCards(trees, friends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, extraopts = ''):
 #python makeShapeCardsSusy.py --s2v -P /afs/cern.ch/work/e/efascion/DPStrees/TREES_110816_2muss/ --Fs /afs/cern.ch/work/e/efascion/public/friendsForDPS_110816/ -l 12.9 dps-ww/final_mca.txt dps-ww/cutfinal.txt finalMVA_DPS 10,0.,1.0  --od dps-ww/cards -p DPSWW,WZ,ZZ,WWW,WpWpJJ,Wjets  -W 0.8874 --asimov dps-ww/syst.txt
     
-    trees='2017_trees_friends/test_DPS_trees2017/'
-    taufriends='/afs/cern.ch/user/p/peruzzi/work/tthtrees/TREES_TTH_190418_Fall17_skim2lss3l/7_tauTightSel_v2/'
-    friends=['2017_trees_friends/Jetrecleaner_friends_2017/','2017_trees_friends/TriggerDecision_friends_2017/']#'2017_trees_friends/btagging_sfs/']#,'TightTau_Friends_2017/']
-    MCfriends = '2017_trees_friends/VtxWeight_friends_2017/'
+    trees='/eos/cms/store/cmst3/group/dpsww/DPS_trees_2017/TREES_TTH_190418_Fall17_skim2lss3l/'
+    taufriends=trees+'7_tauTightSel_v2/'
+    friends=[trees+'1_recleaner_180518_v2/',trees+'5_triggerDecision_230418_v1/']#'2017_trees_friends/btagging_sfs/']#,'TightTau_Friends_2017/']
+    MCfriends = trees+'8_vtxWeight2017_v1/'
     ##BDTfriends = ['../postprocessing/Friends_BDT_Sep6_2lss/','CollectionMerger/']
-    BDTfriends = ['2017_trees_friends/Friends_new_tighterMVA_BDT_2017_02122018/','2017_trees_friends/CollectionMerger/']
+    BDTfriends = [trees+'Friends_new_tighterMVA_BDT_2017_02122018/',trees+'CollectionMerger/']
     targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017_DPS'.format(date=date, pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots_2017_v1.txt'
     fsyst  = 'dpsww13TeV/dps2016/results/syst_org_2017.txt'#syst_2017.txt'dummysyst.txt'
-    fcut   = 'dpsww13TeV/dps2016/results/cuts_test.txt'
+    fcut   = 'dpsww13TeV/dps2016/results/cuts_2017.txt'
 
     print '=========================================='
     print 'run results for something'
@@ -261,7 +261,7 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge =Fal
     processesforscalevariationsWZ=['WZwt0','WZwt1','WZwt2','WZwt3','WZwt4','WZwt5','WZwt6','WZwt7','WZwt8','WZnom']
   
     #processes=['WZ','WZamcatnlo','DPSWW','fakes_data']#,'WZinclpow']#'DPSWW','DPSWW_jec_Up','DPSWW_jec_Dn']#,'DPSWW','DPSWW_jec_Up','DPSWW_jec_Dn']
-    processes=['DPSWW']#,'WZ','ZZ','rares','flips_data','Conv','fakes_data','WG_wg','data']#QCD WZ, 'data','top'
+    processes=['DPSWW','WZ','ZZ','rares','flips_data','Conv','fakes_data','WG_wg','data']#QCD WZ, 'data','top'
     #processes=['DPSWW','WZ','fakes_data','ZZ','flips_data','data','Conv','WG_wg','WG','WpWpJJ','WWW','TTZ']
     processesCards = ['data', 'DPSWW','DPSWW_alt','WZ', 'ZZ', 'WG_wg','flips_data','rares','fakes_data','fakes_data_FR_Dn','fakes_data_FR_Up','WZamcatnlo','Conv','DPSWW_elLooseUnc_Up','DPSWW_elLooseUnc_Dn','DPSWW_muLooseUnc_Up','DPSWW_muLooseUnc_Dn','WZ_elLooseUnc_Up','WZ_elLooseUnc_Dn','WZ_muLooseUnc_Up','WZ_muLooseUnc_Dn','ZZ_elLooseUnc_Up','ZZ_elLooseUnc_Dn','ZZ_muLooseUnc_Up','ZZ_muLooseUnc_Dn','rares_elLooseUnc_Up','rares_elLooseUnc_Dn','rares_muLooseUnc_Up','rares_muLooseUnc_Dn','Conv_elLooseUnc_Up','Conv_elLooseUnc_Dn','Conv_muLooseUnc_Up','Conv_muLooseUnc_Dn','WG_wg_elLooseUnc_Up','WG_wg_elLooseUnc_Dn','WG_wg_muLooseUnc_Up','WG_wg_muLooseUnc_Dn']
     
@@ -297,11 +297,11 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge =Fal
             disable   = []
             fittodata = []
             scalethem = {}
-            extraopts = '--uf' # --showIndivSigs'# --plotmode=norm'## --plotmode=norm --ratioDen WZ --ratioNums WZamcatnlo --ratioYLabel=amc@t/pow.'# --ratioDen WZ --ratioNums WZamcatnlo --ratioYLabel=amcatnlo/powheg' #--ratioNums DPSWW_jec_Dn,DPSWW_jec_Up --ratioDen DPSWW --maxRatioRange 0.5 1.5 --fixRatioRange --ratioYLabel=Var./Nom.'# WZ_jec_Up--plotmode=norm --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up --ratioDen fakes_data'#  --plotmode=nostack'# --plotmode=norm'# --plotmode=norm --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up --ratioDen fakes_data --ratioYLabel=Var./Nom.'# --scaleSigToData'#.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}  --ratioNums WZpow --ratioDen WZ --fix-process ZZ
+            extraopts = '--showIndivSigs' #'--uf' # '# --plotmode=norm'## --plotmode=norm --ratioDen WZ --ratioNums WZamcatnlo --ratioYLabel=amc@t/pow.'# --ratioDen WZ --ratioNums WZamcatnlo --ratioYLabel=amcatnlo/powheg' #--ratioNums DPSWW_jec_Dn,DPSWW_jec_Up --ratioDen DPSWW --maxRatioRange 0.5 1.5 --fixRatioRange --ratioYLabel=Var./Nom.'# WZ_jec_Up--plotmode=norm --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up --ratioDen fakes_data'#  --plotmode=nostack'# --plotmode=norm'# --plotmode=norm --ratioNums fakes_data_FR_Dn,fakes_data_FR_Up --ratioDen fakes_data --ratioYLabel=Var./Nom.'# --scaleSigToData'#.format(sf=mumusf)# --scaleSigToData --sp fakes_data --plotmode=norm -W {sf:.3f}  --ratioNums WZpow --ratioDen WZ --fix-process ZZ
             drawvars_mumu=['recopt_minus_genpt1','recopt_minus_genpt2','chargecon1_full','chargecon2_full','recopt_minus_genpt1','recopt_minus_genpt2','recopdgid_over_genpdgid1','recopdgid_over_genpdgid2','genpt1','genpt2','met_jecDown','met_jecUp','met','SubLeadingFO','LeadingFO','genpt1_with_cclt3','genpt2_with_cclt3','drlep1jet','drlep2jet']
             CRvars=['met_3l','pt1_3l','pt2_3l','pt3_3l']#'genmllOS_3l'mllOS_3l'
             #drawvars=['nJet25_Recl','nJet25_jecDown_Recl','nJet25_jecUp_Recl','nBJetLoose25','nBJetMedium25','nBJetCSVLoose25','nBJetCSVMedium25','nBJetCSVTight25','nBJetDeepCSVLoose25','nBJetDeepCSVMedium25','nBJetDeepCSVTight25']
-            drawvars=['met']#'pt1','pt2','conept1','conept2','met','dphil2met','dphilll2','dphiLep','mt2ll','mt1','mtll','eta_sum','etaprod']#,'nVert','lepMVA1','lepMVA2','mll''pt1','pt2' 'chargetight1','chargetight2','chargecon2','chargecon1','eta1','eta2','phi1','phi2','pt1','pt2',
+            drawvars=['pt1','pt2','conept1','conept2','met','dphil2met','dphilll2','dphiLep','mt2ll','mt1','mtll','eta_sum','etaprod']#,'nVert','lepMVA1','lepMVA2','mll''pt1','pt2' 'chargetight1','chargetight2','chargecon2','chargecon1','eta1','eta2','phi1','phi2','pt1','pt2',
 
             if splitCharge or splitsign:
                 makeplots1  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
@@ -316,7 +316,7 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge =Fal
             makeplots4 = ['TL_mumu','LL_mumu','TT_mumu']
             makeplots5=['ratioconept1_pt_mumu','ratioconept2_pt_mumu','conept1_pt_mumu','conept2_pt_mumu']
 
-            makeplots=makeplots1#makeplots2spll#
+            makeplots=makeplots1+makeplots2
             runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, extraopts)
 
             ## ==================================
@@ -326,92 +326,17 @@ def makeResults(onlyEE = False,onlyMM =False, splitsign =False, splitCharge =Fal
             extraoptscards = ' -o {fstate}{ch} -b {fstate}{ch}'.format(fstate=state,ch=(ch[0] if ch else ''))
             #runCards(trees, friends, MCfriends, BDTfriends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processesCards, scalethem, extraoptscards)
 ########################################
-def makeResultsWWDPSNano(onlyEE = False,onlyMM =False, splitsign =False, splitCharge =True, combination = True):
-    
-    trees='FiducialXsec/WW-DPS'
-    taufriends=''
-    friends=['FiducialXsec/outputdir_jet/','FiducialXsec/outputdir_trig/']#'2017_trees_friends/btagging_sfs/']#,'TightTau_Friends_2017/']
-    MCfriends = 'FiducialXsec/outputdir_vert/'
-    BDTfriends = ['FiducialXsec/collectionMerger/','FiducialXsec/WWdressedLep/','FiducialXsec/genLeps/']
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}2017_DPS_Nano'.format(date=date, pf=('-'+postfix if postfix else '') ) 
-    fplots = 'dpsww13TeV/dps2016/results/plots_2017_v1.txt'
-    fsyst  = 'dpsww13TeV/dps2016/results/syst_org_2017.txt'#syst_2017.txt'dummysyst.txt'
-    fcut   = 'dpsww13TeV/dps2016/results/cuts_2017.txt'
 
-    print '=========================================='
-    print 'run results for something'
-    print '=========================================='
-    print 'confirm the binning of 1D BDT histogram'
-    print '=========================================='
-
-    if splitCharge: 
-        loop = [ ['minusminus'], ['plusplus']]
-    elif splitsign:
-        loop = [ ['SS'], ['OS']]
-    else:
-        loop = [ [] ]
-
-    print 'did i split the charge? %i' %splitCharge
-
-    processes=['DPSWWNano']
-    
-    if onlyMM:
-        binningBDT   = ' Binnumberset1D_mumu(BDT_DPS_fakes,BDT_DPS_WZ) 15,1.0,16.0'
-    else:
-        binningBDT   = ' Binnumberset1D_elmu(BDT_DPS_fakes,BDT_DPS_WZ) 15,1.0,16.0'
-
-    nbinspostifx = '_15bins'
-
-    for bdt in ['wz']:
-        for ich,ch in enumerate(loop):
-            #if not ich: continue
-            if onlyMM:
-                enable = ['trigmumu','mumu'] + ch
-                fmca   = 'dpsww13TeV/dps2016/results/mumu_mca_2017.txt'
-                state='mumu'
-            elif onlyEE:
-                fmca   = 'dpsww13TeV/dps2016/results/elmu_mumu_mca_2017.txt'
-                enable = ['trigelel','elel'] + ch
-                state='elel'
-            elif combination:
-                fmca   = 'dpsww13TeV/dps2016/results/elmu_mumu_mca_2017.txt'
-                enable = ['trigdilep','dilepton'] + ch
-                state='ll'
-            else:
-                fmca   = 'dpsww13TeV/dps2016/results/elmu_mumu_mca_2017.txt'
-                enable    = ['trigelmu','elmu'] + ch
-                state='elmu'
-
-            disable   = []
-            fittodata = []
-            scalethem = {}
-            extraopts = '--showIndivSigs'
-            drawvars=['met']#'pt1','pt2','conept1','conept2','met','dphil2met','dphilll2','dphiLep','mt2ll','mt1','mtll','eta_sum','etaprod']#,'nVert','lepMVA1','lepMVA2','mll''pt1','pt2' 'chargetight1','chargetight2','chargecon2','chargecon1','eta1','eta2','phi1','phi2','pt1','pt2',
-
-            if splitCharge or splitsign:
-                makeplots1  = ['{}_{}{}'.format(a,state,ch[0])  for a in drawvars]
-            else:
-                makeplots1  = ['{}_{}'.format(a,state) for a in drawvars]
-            
-            makeplots2 = ['BDTforCombine_{fstate}{ch}{nbins}'.format(fstate=state,ch=(ch[0] if ch else ''),nbins=nbinspostifx),'BDT_wz_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else '')),'BDT_fakes_{fstate}{ch}_20bins'.format(fstate=state,ch=(ch[0] if ch else ''))]
-
-            makeplots=makeplots1#makeplots2
-            runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, extraopts)
-          
-
-
-############
-def makegenLevelResults(onlyMM =False, splitCharge = True, combination = True, dressed = True):
-    trees='/eos/user/a/anmehta/DPSWW/'
+def makegenLevelResults(onlyEM=True, onlyMM =False, splitCharge = False, combination = False, dressed = True):
+    trees='/eos/cms/store/cmst3/group/dpsww/signal2018/'
     taufriends=''
     friends=''
     MCfriends = ''
     BDTfriends = ''
-    ##BDTfriends = ['../postprocessing/Friends_BDT_Sep6_2lss/','CollectionMerger/']    
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}DPS_dressedleps_SS_unNorm'.format(date=date, pf=('-'+postfix if postfix else '') ) 
+    targetdir = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}DPS_ss{lt}leps_2018shapes_noCuts'.format(date=date, lt=('dressed' if dressed else ''), pf=('-'+postfix if postfix else '') ) 
     fplots = 'dpsww13TeV/dps2016/results/plots_genlevel.txt'
-    fsyst  = 'dpsww13TeV/dps2016/results/syst_org_2017.txt'#syst_2017.txt'dummysyst.txt'
-    fmca = 'dpsww13TeV/dps2016/results/mca_genlevel.txt'
+    fsyst  = ''
+    fmca = 'dpsww13TeV/dps2016/results/mca_genlevel2018.txt'
     print '=========================================='
     print 'run results at gen level'
     print '=========================================='
@@ -422,74 +347,48 @@ def makegenLevelResults(onlyMM =False, splitCharge = True, combination = True, d
         loop = [ [] ]
 
     print 'did i split the charge? %i' %splitCharge
-    processes=['DPS2017','DPS2016','2017HG']
+    processes=['HWpp','WWTo2L2NuDPSpy8','WWDPSCP5py8']#,'WWDPSCP5py8']#,'WWTo2L2NuDPSCH3hw7','HWpp']
     if dressed:
         ltype='GenLepdressed'
-        fcut   = 'dpsww13TeV/dps2016/results/cuts_dressedLeps.txt'
+        fcut   = 'dpsww13TeV/dps2016/results/cuts_dressedLeps2018.txt'
     else:
         ltype='GenLep'
         fcut   = 'dpsww13TeV/dps2016/results/cuts_genlevel.txt'       
-        BDTfriends = '/eos/user/a/anmehta/DPSWW/WWDPS2016n2017_gen/'        
-    for bdt in ['wz']:
-        for ich,ch in enumerate(loop):
-            #if not ich: continue
-            if combination:
-                enable = ['dilepton'] + ch
-                state='ll'
-            else:
-                #enable    = ['elmu'] + ch
-                state='elmu'
-            
-
-            disable   = []
-            fittodata = []
-            scalethem = {}
-            extraopts = '--uf --plotmode=nostack --ratioNums 2017HG,DPS2016 --ratioDen DPS2017' # --maxRatioRange 0.7 1.4 --fixRatioRange' #--plotmode=nostack'# --uf --plotmode=norm --ratioNums DPS2017_incl,DPS2017_herwig,DPS2016 --ratioDen DPS2017 --maxRatioRange 0.7 1.4 --fixRatioRange'
-            drawvars1=['nGenlep']#,'GenLep_sel_pt3','GenLep_sel_eta3']#GenLep_sel_status1','GenLep_sel_status2','GenLep_sel_status3']#MpdgIdprod']#'nGenlep','GenLep_sel_pt1','GenLep_sel_pt2','GenLep_sel_eta1','GenLep_sel_eta2','GenMET_pt','GenJet_pt','GenJet_eta','nGenJet','pdgIdprod','GenEl1_sel_pt','GenEl2_sel_pt','GenMu1_sel_pt','GenMu2_sel_pt','nGenJetdefault','nGenJet_sel']#,'conept1','conept2','met','dphil2met','dphilll2','dphiLep','mt2ll','mt1','mtll','eta_sum','etaprod']#,'nVert','lepMVA1','lepMVA2','mll''pt1','pt2' 'chargetight1','chargetight2','chargecon2','chargecon1','eta1','eta2','phi1','phi2','pt1','pt2',
-            drawvars=['n']#,'pt1_','pt2_','eta1_','eta2_','pdgIdprod_']
-            if splitCharge:
-                makeplots  = ['{}{}_{}{}'.format(a,ltype,state,ch[0])  for a in drawvars]
-            else:
-                makeplots  = ['{}{}_{}'.format(a,ltype,state,ltype) for a in drawvars]
-            makeplots1=['met_ll']#'jetpt_ll','jeteta_ll','ngenjets_sel_ll','ngenjets_ll','ngenbjets_sel_ll','ngenbjets_ll']
-            runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, extraopts)
-
-
-def makeOSgenLevelResults(onlyMM =False, combination = True):
-    trees='/eos/user/a/anmehta/DPSWW/'
-    taufriends=''
-    friends=''
-    MCfriends = ''
-    BDTfriends = ''
-    targetdir = '/eos/user/a/anmehta/www/{date}{pf}DPS_dressedleps_OS_Norm'.format(date=date, pf=('-'+postfix if postfix else '') ) 
-    processes=['DPS2017','SPS2017']
-    fplots = 'dpsww13TeV/dps2016/results/plots_OSgenlevel.txt'
-    fsyst  = 'dpsww13TeV/dps2016/results/syst_org_2017.txt'#syst_2017.txt'dummysyst.txt'
-    fmca = 'dpsww13TeV/dps2016/results/mca_OSgenlevel.txt'
-    print '=========================================='
-    print 'run results at gen level'
-    print '=========================================='
-
-
-    fcut   = 'dpsww13TeV/dps2016/results/cuts_OSdressedLeps.txt'
-    
-    
-    if combination:
-        enable = ['dilepton']
-        state='ll'
-    else:
-        enable    = ['elmu']
-        state='elmu'
-            
+        BDTfriends = ['/eos/cms/store/cmst3/group/dpsww/genfriends_09122019/']
+        
+    for ich,ch in enumerate(loop):
+        if combination:
+            enable = ['dilepton'] + ch
+            state='ll'
+        elif onlyMM:
+            enable    = ['mumu'] + ch
+            state='mumu'
+        elif onlyEM:
+            enable    = ['elmu'] + ch
+            state='elmu'
+        else:
+            enable=[]
+            state=''
 
     disable   = []
     fittodata = []
     scalethem = {}
-    extraopts = '--plotmode=norm' #--uf --plotmode=nostack --ratioNums 2017HG,DPS2016 --ratioDen DPS2017' # --maxRatioRange 0.7 1.4 --fixRatioRange' #--plotmode=nostack'# --uf --plotmode=norm --ratioNums DPS2017_incl,DPS2017_herwig,DPS2016 --ratioDen DPS2017 --maxRatioRange 0.7 1.4 --fixRatioRange'
-    drawvars=['n']#,'pt1_','pt2_','eta1_','eta2_','pdgIdprod_']
-    #makeplots  = ['{}{}_{}'.format(a,ltype,state,ltype) for a in drawvars]
-    makeplots=['met_ll','jetpt_ll','jeteta_ll','ngenjets_sel_ll','ngenjets_ll','ngenbjets_sel_ll','ngenbjets_ll','pt1_ll','pt2_ll','eta1_ll','eta2_ll','pdgIdprod_ll','ngenlep_ll','mt2_ll','etasum_ll','dphiLep_ll','etaprod_ll','mt1_ll','mt2_ll','mt_ll','dphil2met_ll','dphilll2_ll','mll_ll','mT2_ll','dphil1met_ll']
-    runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata,makeplots,False, extraopts)
+    #HWpp,WWTo2L2NuDPSCH3hw7,
+    extraopts = '--plotmode=norm  --ratioNums HWpp,WWDPSCP5py8 --ratioDen WWTo2L2NuDPSpy8 --ratioYLabel Ratio' # --maxRatioRange 0.7 1.4 --fixRatioRange' #--plotmode=nostack'# --uf --plotmode=norm --ratioNums DPS2017_incl,DPS2017_herwig,DPS2016 --ratioDen DPS2017 --maxRatioRange 0.7 1.4 --fixRatioRange'
+    drawvars1=['nGenlep']#,'GenLep_sel_pt3','GenLep_sel_eta3']#GenLep_sel_status1','GenLep_sel_status2','GenLep_sel_status3']#MpdgIdprod']#'nGenlep','GenLep_sel_pt1','GenLep_sel_pt2','GenLep_sel_eta1','GenLep_sel_eta2','GenMET_pt','GenJet_pt','GenJet_eta','nGenJet','pdgIdprod','GenEl1_sel_pt','GenEl2_sel_pt','GenMu1_sel_pt','GenMu2_sel_pt','nGenJetdefault','nGenJet_sel']
+    drawvars=['n','pt1_','pt2_','eta1_','eta2_','pdgIdprod_']#WWDPSCP5py8,
+    if splitCharge:
+        makeplots2  = ['{}{}_{}{}'.format(a,ltype,state,ch[0])  for a in drawvars]
+    else:
+        makeplots2  = ['{}{}_{}'.format(a,ltype,state,ltype) for a in drawvars]
+
+    if(dressed):   
+        makeplots=['nGendLep','pt_GendLep','eta_GendLep','pdgId_GendLep','phi_GendLep','etapp_GendLep','etamm_GendLep','etasum_GendLep','etaprod_GendLep']#'jetpt_ll','jeteta_ll','ngenjets_sel_ll','ngenjets_ll','ngenbjets_sel_ll','ngenbjets_ll']
+    else:
+        makeplots=['nGenemutau_sel','Genemutausf_sel','Genemutaupt_sel','Genemutaueta_sel','Genemutauphi_sel']#nGenemutau']#'nGenemu','GW_pz','ngenseljets2lep','ngenseljets','ngenjets','Gw_p','GW_eta','GW_mass','GW_rapidity','GW_pt']#'ptjets_ptW','ptjet1_ptW','GW_rapidityM','GW_rapidityM','njets_ptW','njets_pW'
+
+    runplotsVer1(trees, friends, MCfriends, BDTfriends, targetdir, fmca, fcut, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, extraopts)
+
 
 
 def simplePlot():
@@ -523,11 +422,12 @@ def threelepCRPlot():
     print '=========================================='
     print 'running 3l control region  plots'
     print '=========================================='
-    trees='2017_trees_friends/test_DPS_trees2017/'
-    taufriends='/afs/cern.ch/user/p/peruzzi/work/tthtrees/TREES_TTH_190418_Fall17_skim2lss3l/7_tauTightSel_v2/'
-    friends=['2017_trees_friends/Jetrecleaner_friends_2017/','2017_trees_friends/TriggerDecision_friends_2017/','2017_trees_friends/TightTau_Friends_2017/']
-    MCfriends = '2017_trees_friends/VtxWeight_friends_2017/'
-    BDTfriends = ['2017_trees_friends/Friends_new_tighterMVA_BDT_2017_02122018/','2017_trees_friends/CollectionMerger/']
+    trees='/eos/cms/store/cmst3/group/dpsww/DPS_trees_2017/TREES_TTH_190418_Fall17_skim2lss3l/'
+    taufriends=trees+'7_tauTightSel_v2/'
+    friends=[trees+'1_recleaner_180518_v2/',trees+'5_triggerDecision_230418_v1/',trees+'7_tauTightSel_v2/']
+    MCfriends = trees+'8_vtxWeight2017_v1/'
+    BDTfriends = [trees+'Friends_new_tighterMVA_BDT_2017_02122018/',trees+'CollectionMerger/']
+
     targetdir = '/eos/user/a/anmehta/www/{date}{pf}20173lCR/'.format(date=date, pf=('-'+postfix if postfix else '') )
     fmca   = 'dpsww13TeV/dps2016/results/mca_3lcr_2017.txt'
     fcut   = 'dpsww13TeV/dps2016/results/cuts_3l.txt'
@@ -546,11 +446,11 @@ def fourlepCRPlot():
     print '=========================================='
     print 'running 3l control region  plots'
     print '=========================================='
-    trees='2017_trees_friends/test_DPS_trees2017/'
-    taufriends='/afs/cern.ch/user/p/peruzzi/work/tthtrees/TREES_TTH_190418_Fall17_skim2lss3l/7_tauTightSel_v2/'
-    friends=['2017_trees_friends/Jetrecleaner_friends_2017/','2017_trees_friends/TriggerDecision_friends_2017/','2017_trees_friends/TightTau_Friends_2017/']
-    MCfriends = '2017_trees_friends/VtxWeight_friends_2017/'
-    BDTfriends = ['2017_trees_friends/Friends_new_tighterMVA_BDT_2017_02122018/','2017_trees_friends/CollectionMerger/']
+    trees='/eos/cms/store/cmst3/group/dpsww/DPS_trees_2017/TREES_TTH_190418_Fall17_skim2lss3l/'
+    taufriends=trees+'7_tauTightSel_v2/'
+    friends=[trees+'1_recleaner_180518_v2/',trees+'5_triggerDecision_230418_v1/',trees+'7_tauTightSel_v2/']
+    MCfriends = trees+'8_vtxWeight2017_v1/'
+    BDTfriends = [trees+'Friends_new_tighterMVA_BDT_2017_02122018/',trees+'CollectionMerger/']
     targetdir = '/eos/user/a/anmehta/www/{date}{pf}20174lCR/'.format(date=date, pf=('-'+postfix if postfix else '') )
     fmca   = 'dpsww13TeV/dps2016/results/mca_3lcr_2017.txt'
     fcut   = 'dpsww13TeV/dps2016/results/cuts_4l.txt'
@@ -1045,9 +945,7 @@ if __name__ == '__main__':
     parser.add_option('--frp'       , '--fakerateplots', dest='fakeratePlots', type='string' , default='' , help='run fakerate plots and fitting')
     parser.add_option('--dy'        , '--dyComparison' , dest='dyComparison' , action='store_true' , default=False , help='make dy comparisons')
     parser.add_option('--results'   , '--makeResults'  , dest='results'      , action='store_true' , default=False , help='make results')
-    parser.add_option('--dpsnano'   , '--makeResultsWWDPSNano'  , dest='dpsnano'      , action='store_true' , default=False , help='make DPS Nano results')
     parser.add_option('--glr'   , '--makegenLevelResults'  , dest='glr'      , action='store_true' , default=False , help='make gen level plots')
-    parser.add_option('--OS'   , '--makeOSgenLevelResults'  , dest='OS'      , action='store_true' , default=False , help='make gen level plots for DPS WW OS')
 
     (opts, args) = parser.parse_args()
 
@@ -1097,10 +995,3 @@ if __name__ == '__main__':
     if opts.glr:
         print 'running gen level results'
         makegenLevelResults()
-    if opts.OS:
-        print 'running gen level results with DPS OS WW'
-        makeOSgenLevelResults()
-
-    if opts.dpsnano:
-        print 'running results for DPS nanoaod sample'
-        makeResultsWWDPSNano()
