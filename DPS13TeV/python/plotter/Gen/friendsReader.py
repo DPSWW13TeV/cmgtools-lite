@@ -10,7 +10,7 @@ from ROOT import TLorentzVector
 
 
 tName = 'Friends'
-basedir='/eos/cms/store/cmst3/group/dpsww/genfriends_09122019/'
+basedir='/eos/cms/store/cmst3/group/dpsww/genfriends_03022020/'
 def if3(cond, iftrue, iffalse):
     return iftrue if cond else iffalse
 
@@ -72,6 +72,10 @@ def fillmllHist(fName,outdir):
     etamu  =array('f',[0.])
     ptnn  =array('f',[0.])
     nleps=array('f',[0.])
+    mW1=array('f',[0.])
+    mW2=array('f',[0.])
+    outTree.Branch("mW1",mW1,"mW1/F")
+    outTree.Branch("mW2",mW2,"mW2/F")
     outTree.Branch("nleps ",nleps,"nleps/F")
     outTree.Branch("ptel ",ptel,"ptel/F")
     outTree.Branch("etael ",etael,"etael/F")
@@ -97,26 +101,34 @@ def fillmllHist(fName,outdir):
 
     evt=0.0; passed=0.0;
     for ev in t_ex0:
-        leptons=[];neutrinos=[];sorted_leptons=[];
+        leptons=[];sorted_leptons=[];   sorted_nuel=[];  nuel=[]; numu=[]; sorted_numu=[];
         evt+=1
         if(evt%200000 == 0):            print 'processed %f out of %f events' %(evt,t_ex0.GetEntries())
         for i in range(ev.nGenPart_sel):
-            if (abs(ev.GenPart_sel_pdgId[i]) in [11,13]):# and abs(ev.GenPart_sel_eta[i]) < 2.5 and ev.GenPart_sel_pt[i] > 20):
+            if (abs(ev.GenPart_sel_pdgId[i]) in [11,13]):
                 info={'pdgId':ev.GenPart_sel_pdgId[i],'pt':ev.GenPart_sel_pt[i],'eta':ev.GenPart_sel_eta[i],'phi':ev.GenPart_sel_phi[i],'mass':ev.GenPart_sel_mass[i]}
                 leptons.append(info)
                 #print info
-            if (abs(ev.GenPart_sel_pdgId[i]) in [12,14]):
+            if (abs(ev.GenPart_sel_pdgId[i]) == 12):
                 info={'pdgId':ev.GenPart_sel_pdgId[i],'pt':ev.GenPart_sel_pt[i],'eta':ev.GenPart_sel_eta[i],'phi':ev.GenPart_sel_phi[i],'mass':ev.GenPart_sel_mass[i]}
                 #print info
-                neutrinos.append(info)
+                nuel.append(info)
+            if (abs(ev.GenPart_sel_pdgId[i]) == 14):
+                info={'pdgId':ev.GenPart_sel_pdgId[i],'pt':ev.GenPart_sel_pt[i],'eta':ev.GenPart_sel_eta[i],'phi':ev.GenPart_sel_phi[i],'mass':ev.GenPart_sel_mass[i]}
+                #print info
+                numu.append(info)
+
+
             
         sorted_leptons= sorted(leptons, key = lambda i: i['pt'],reverse=True)
-        basesel= len(leptons) > 1
+        sorted_nuel= sorted(nuel, key = lambda i: i['pt'],reverse=True)
+        sorted_numu= sorted(numu, key = lambda i: i['pt'],reverse=True)
+
+        basesel= len(leptons) > 1 and len(sorted_nuel) > 0 and  len(sorted_numu) > 0 
         if not basesel : continue
         #print sorted_leptons,sorted_quarks,neutrinos
-
         DRll=dilepVars(sorted_leptons[0]['pt'],sorted_leptons[0]['eta'],sorted_leptons[0]['phi'],sorted_leptons[1]['pt'],sorted_leptons[1]['eta'],sorted_leptons[1]['phi'],'dR')
-        MET=0.0 #dilepVars(neutrinos[0]['pt'],neutrinos[0]['eta'],neutrinos[0]['phi'],neutrinos[1]['pt'],neutrinos[1]['eta'],neutrinos[1]['phi'],'pt')
+        MET=dilepVars(sorted_nuel[0]['pt'],sorted_nuel[0]['eta'],sorted_nuel[0]['phi'],sorted_numu[0]['pt'],sorted_numu[0]['eta'],sorted_numu[0]['phi'],'pt')
 
         passed+=1
         dRll[0]=DRll
@@ -125,16 +137,21 @@ def fillmllHist(fName,outdir):
         if(abs(sorted_leptons[0]['pdgId']) == 11):
                     etael[0]=sorted_leptons[0]['eta']
                     ptel[0]=sorted_leptons[0]['pt']
+                    mW1[0]= dilepVars(sorted_leptons[0]['pt'],sorted_leptons[0]['eta'],sorted_leptons[0]['phi'],sorted_nuel[0]['pt'],sorted_nuel[0]['eta'],sorted_nuel[0]['phi'],'M')
         else:
                     etamu[0]=sorted_leptons[0]['eta']
                     ptmu[0]=sorted_leptons[0]['pt']
+                    mW1[0]= dilepVars(sorted_leptons[0]['pt'],sorted_leptons[0]['eta'],sorted_leptons[0]['phi'],sorted_numu[0]['pt'],sorted_numu[0]['eta'],sorted_numu[0]['phi'],'M')
 
         if(abs(sorted_leptons[1]['pdgId']) == 11):
                     etael[0]=sorted_leptons[1]['eta']
                     ptel[0]=sorted_leptons[1]['pt']
+                    mW2[0]= dilepVars(sorted_leptons[1]['pt'],sorted_leptons[1]['eta'],sorted_leptons[1]['phi'],sorted_nuel[0]['pt'],sorted_nuel[0]['eta'],sorted_nuel[0]['phi'],'M')
         else:
                     etamu[0]=sorted_leptons[1]['eta']
                     ptmu[0]=sorted_leptons[1]['pt']
+                    mW2[0]= dilepVars(sorted_leptons[1]['pt'],sorted_leptons[1]['eta'],sorted_leptons[1]['phi'],sorted_numu[0]['pt'],sorted_numu[0]['eta'],sorted_numu[0]['phi'],'M')
+
         nleps[0]=len(sorted_leptons)
         etal1[0]=sorted_leptons[0]['eta']
         ptl1[0]=sorted_leptons[0]['pt']

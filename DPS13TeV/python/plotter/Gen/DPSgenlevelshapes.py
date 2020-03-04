@@ -70,7 +70,7 @@ def drawScans():
     ROOT.gStyle.SetOptTitle(0)
     fout = ROOT.TFile("{od}/plots.root".format(od=outdir),"RECREATE")
     FS={'WpmWpm':1}
-    PS={'tree_Friend_DPS2017HWpp_gen':['HW++',ROOT.kOrange+7,1],'tree_Friend_WWTo2L2NuDPSpy8_gen':['P8_CUET',ROOT.kRed,6],'tree_Friend_WWDPSCP5py8_gen':['P8_CP5',ROOT.kAzure+1,9], 'DPS_noShower_genlevel':['new sim without shower',ROOT.kMagenta+1,7],'DPS_withShower_genlevel':['new sim with shower',ROOT.kGreen+2,2]}
+    PS={'tree_Friend_DPS2017HWpp_gen':['HW++',ROOT.kOrange+7,1],'tree_Friend_WWTo2L2NuDPSpy8_gen':['P8_cuet',ROOT.kRed,6],'tree_Friend_WWDPSCP5py8_gen':['P8_cp5',ROOT.kAzure+1,9], 'DPS_noShower_genlevel':['new sim pre-shower',ROOT.kMagenta+1,7],'DPS_withShower_genlevel':['new sim post-shower',ROOT.kGreen+2,2]}
 
 
     hdraw={
@@ -93,7 +93,9 @@ def drawScans():
         'etal1*etal2 < 0':['#eta^{l1}#eta^{l2} < 0',2,0,2],
         'etal1+etal2 ':['#eta^{l1}+#eta^{l2}',10,-5,5],
         'pdgIdl1':['pdgIdl1',30,-15,15],
-        'pdgIdl2':['pdgIdl2',30,-15,15]
+        'pdgIdl2':['pdgIdl2',30,-15,15],
+        'mW1': ['mW1',80,40,120],
+        'mW2': ['mW2',80,40,120],
        }
 
     for ihist,ival in hdraw.iteritems():
@@ -105,16 +107,16 @@ def drawScans():
                 textforlegend.append('{FS}'.format(FS=icol[0]))
 
         canv = ROOT.TCanvas("canv{HERE}".format(HERE=ihist),"",800,600);    canv.SetTickx(1);   canv.SetTicky(1); ROOT.SetOwnership(canv,False); canv.cd();    splitpoint = 0.7;
-        leg = ROOT.TLegend(0.15,0.8,0.85,0.875);   leg.SetLineColor(0);
+        leg = ROOT.TLegend(0.125,0.8,0.865,0.875);   leg.SetLineColor(0);
         leg.SetTextFont(42);leg.SetTextSize(0.03);
-        leg.SetNColumns(3);
+        leg.SetNColumns(4);
         leg.SetFillColor(0);leg.SetFillStyle(0);leg.SetLineColor(ROOT.kWhite)
         leg.AddEntry(histograms[0],textforlegend[0],'l')
         #pad1.cd()
         ymax=max(list(i.GetMaximum() for i in histograms))
         ymin=min(list(i.GetMinimum() for i in histograms))
         #print ymax
-        histograms[0].SetMaximum(ymax*1.15)
+        histograms[0].SetMaximum(ymax*1.2)
         histograms[0].SetMinimum(ymin*0.99)
         histograms[0].Draw('ehist')
 
