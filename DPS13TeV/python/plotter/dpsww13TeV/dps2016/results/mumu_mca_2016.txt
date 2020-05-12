@@ -10,7 +10,7 @@ data: SingleMuon_2016B_reMiniAOD + SingleMuon_2016C_reMiniAOD + SingleMuon_2016D
 data: DoubleMuon_2016B_part1_reMiniAOD + DoubleMuon_2016B_part2_reMiniAOD + DoubleMuon_2016C_reMiniAOD + DoubleMuon_2016D_reMiniAOD + DoubleMuon_2016E_reMiniAOD + DoubleMuon_2016F_reMiniAOD + DoubleMuon_2016G_part1_reMiniAOD + DoubleMuon_2016G_part2_reMiniAOD + DoubleMuon_2016H_ds1_part1_reMiniAOD + DoubleMuon_2016H_ds1_part2_reMiniAOD + DoubleMuon_2016H_ds2_reMiniAOD
 
 
-
+#rares    : WWTo2L2Nu   : xsec :  1  ; FillColor=ROOT.kSpring-2 , Label="rare MC" , NormSystematic=0.50
 rares    : WpWpJJ      : 0.0539 : 1                                                   ; FillColor=ROOT.kSpring-2 , Label="rare MC" , NormSystematic=0.50
 rares    : WWW         : xsec   : 1                                                   ; FillColor=ROOT.kSpring-2 , Label="rare MC" , NormSystematic=0.50
 rares    : TTZ_LO      : xsec   : 1                                                   ; FillColor=ROOT.kSpring-2 , Label="rare MC" , NormSystematic=0.50

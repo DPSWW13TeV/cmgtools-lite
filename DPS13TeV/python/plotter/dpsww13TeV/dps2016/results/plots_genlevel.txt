@@ -22,14 +22,14 @@ nGenemutau: Sum$( (abs(GenPart_pdgId) == 15 || abs(GenPart_pdgId) == 11 || abs(G
 
 Genemutausf : GenPart_statusFlags : 15000,0,15000 ; XTitle="gen level e/mu/tau SF"
 
-pt_GendLep    : GenDressedLepton_pt     : 20,0,200; XTitle="p_{T} lep(GeV)", YMin=0,YMax=0.5
+pt_GendLep    : GenDressedLepton_pt     : 20,0,200; XTitle="p_{T} lep(GeV)"#############, YMin=0.01,YMax=0.5
 phi_GendLep    : GenDressedLepton_phi     : 60,-3.2,3.2; XTitle="phi lep"
-eta_GendLep   : GenDressedLepton_eta     : 60,-3.0,3.0; XTitle="#eta lep"
-pdgId_GendLep   : GenDressedLepton_pdgId     : 28,-14,14; XTitle="lep pdgId"
+eta_GendLep   : GenDressedLepton_eta     : 60,-3.0,3.0; XTitle="#eta lep"          ######, YMin=0.01,YMax=0.035
+pdgId_GendLep   : GenDressedLepton_pdgId     : 28,-14,14; XTitle="lep pdgId" ##########, YMin=0.01,YMax=0.45
 
-etaprod_GendLep : GenDressedLepton_eta[0]*GenDressedLepton_eta[1] : 10,-6.5,6.5; XTitle="etaprod", YMin=0,YMax=0.45
+etaprod_GendLep : GenDressedLepton_eta[0]*GenDressedLepton_eta[1] : 10,-6.5,6.5; XTitle="etaprod"  #######, YMin=0.01,YMax=0.45
 
-etasum_GendLep : GenDressedLepton_eta[0]+GenDressedLepton_eta[1] : 10,-5,5 ; XTitle="etasum", YMin=0,YMax=0.35
+etasum_GendLep : GenDressedLepton_eta[0]+GenDressedLepton_eta[1] : 10,-5,5 ; XTitle="etasum"          #####, YMin=0.045,YMax=0.3
 etapp_GendLep : GenDressedLepton_eta[0]*GenDressedLepton_eta[1] > 0 : 2,0,2 ; XTitle= "etaprod > 0" ,YMin=0.475,YMax=0.515
 etamm_GendLep : GenDressedLepton_eta[0]*GenDressedLepton_eta[1] < 0 : 2,0,2 ; XTitle="etaprod < 0" ,YMin=0.46,YMax=0.54
 nGendLep	 : nGenDressedLepton	          : [0,1,2,3,4,5]; XTile="#dressed leptons"

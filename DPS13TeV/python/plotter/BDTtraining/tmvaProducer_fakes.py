@@ -67,7 +67,6 @@ list1= (list (i for i in os.listdir(treePath) if re.match('DoubleMuon_2016'+'.*r
 #list1= (list (i for i in os.listdir(treePath) if re.match('*_2016'+'.*reMiniAOD',i) ) )
 n=len(list1)
 for d in list1:
-    #temp = treePath+d+'/treeProducerWMass/tree.root'
     temp = treePath+d
     if os.path.isfile(temp):
         bkg_tfile.Add(temp)

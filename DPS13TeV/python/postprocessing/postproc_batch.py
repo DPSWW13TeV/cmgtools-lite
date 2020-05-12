@@ -8,14 +8,15 @@ import re, pickle, math
 from CMGTools.DPS13TeV.postprocessing.framework.postprocessor import PostProcessor
 
 DEFAULT_MODULES = [
-                   ("CMGTools.DPS13TeV.postprocessing.examples.puWeightProducer", "puWeight,puWeightXsecup,puWeightXsecdown"),
-                   ("CMGTools.DPS13TeV.postprocessing.examples.lepSFProducer","lepSF,trgSF"),
+                   ##("CMGTools.DPS13TeV.postprocessing.examples.puWeightProducer", "puWeight,puWeightXsecup,puWeightXsecdown"),
+                   ##("CMGTools.DPS13TeV.postprocessing.examples.lepSFProducer","lepSF,trgSF"),
                    ##("CMGTools.DPS13TeV.postprocessing.examples.lepVarProducer","eleRelIsoEA,lepQCDAwayJet,eleCalibrated"),
                    ##("CMGTools.DPS13TeV.postprocessing.examples.jetReCleaner","jetReCleaner"),
                    ##("CMGTools.DPS13TeV.postprocessing.examples.genFriendProducer","genQEDJets"),
                    ##("CMGTools.DPS13TeV.postprocessing.examples.bdtWeigthsDPS_WZ_and_fakes","BDT_WZ_and_fakes"),
-                   ("CMGTools.DPS13TeV.postprocessing.examples.DPSCleaner","TauHadFlag"),
-                   ##("CMGTools.DPS13TeV.postprocessing.examples.somestuff","LepGoodColl")
+                   ##("CMGTools.DPS13TeV.postprocessing.examples.bdtWeigths_multiclass","BDTG_MultiClass"),
+                   ##("CMGTools.DPS13TeV.postprocessing.examples.DPSCleaner","TauHadFlag"),
+                   ("CMGTools.DPS13TeV.postprocessing.examples.fakeRateWtSaver","eventWt"),
                    ##("CMGTools.DPS13TeV.postprocessing.examples.collectionMerger","lepMerger")
                    ]
 

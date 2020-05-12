@@ -656,3 +656,31 @@ chargecon2_mumu : LepGood2_chargeConsistency : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5
 
 chargecon1_elmu : LepGood1_chargeConsistency : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5]; XTitle="chargecon_lep1"
 chargecon2_elmu : LepGood2_chargeConsistency : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5]; XTitle="chargecon_lep2"
+
+
+########new
+BDTG_Sig_mumu : BDTG_Sig: 15,0.,1.0; XTitle="BDTG_Sig (#mu^{#pm}#mu^{#pm})" ,Legend="TL"
+BDTG_Sig_elmu : BDTG_Sig: 15,0.,1.0; XTitle="BDTG_Sig (e^{#pm}#mu^{#pm})" ,Legend="TL"
+
+BDTG_Sig_mumuplusplus   : BDTG_Sig: 15,0.,1.0; XTitle="BDTG_Sig (#mu^{+}#mu^{+})"
+BDTG_Sig_mumuminusminus : BDTG_Sig: 15,0.,1.0; XTitle="BDTG_Sig (#mu^{-}#mu^{-})"
+BDTG_Sig_elmuplusplus   : BDTG_Sig: 15,0.,1.0; XTitle="BDTG_Sig (e^{+}#mu^{+})"
+BDTG_Sig_elmuminusminus : BDTG_Sig: 15,0.,1.0; XTitle="BDTG_Sig  (e^{+}#mu^{+})"
+
+
+
+BDTG_WZ_mumu : BDTG_WZ: 15,0.,1.0; XTitle="BDTG_WZ (#mu^{#pm}#mu^{#pm})" ,Legend="TL"
+BDTG_WZ_elmu : BDTG_WZ: 15,0.,1.0; XTitle="BDTG_WZ (e^{#pm}#mu^{#pm})" ,Legend="TL"
+
+BDTG_WZ_mumuplusplus   : BDTG_WZ: 15,0.,1.0; XTitle="BDTG_WZ (#mu^{+}#mu^{+})"
+BDTG_WZ_mumuminusminus : BDTG_WZ: 15,0.,1.0; XTitle="BDTG_WZ (#mu^{-}#mu^{-})"
+BDTG_WZ_elmuplusplus   : BDTG_WZ: 15,0.,1.0; XTitle="BDTG_WZ (e^{+}#mu^{+})"
+BDTG_WZ_elmuminusminus : BDTG_WZ: 15,0.,1.0; XTitle="BDTG_WZ  (e^{+}#mu^{+})"
+
+
+BDTG_TL_mumu : BDTG_TL: 15,0.,1.0; XTitle="BDTG_TL (#mu^{#pm}#mu^{#pm})" ,Legend="TL"
+BDTG_TL_elmu : BDTG_TL: 15,0.,1.0; XTitle="BDTG_TL (e^{#pm}#mu^{#pm})" ,Legend="TL"
+BDTG_TL_mumuplusplus   : BDTG_TL: 15,0.,1.0; XTitle="BDTG_TL (#mu^{+}#mu^{+})"
+BDTG_TL_mumuminusminus : BDTG_TL: 15,0.,1.0; XTitle="BDTG_TL (#mu^{-}#mu^{-})"
+BDTG_TL_elmuplusplus   : BDTG_TL: 15,0.,1.0; XTitle="BDTG_TL (e^{+}#mu^{+})"
+BDTG_TL_elmuminusminus : BDTG_TL: 15,0.,1.0; XTitle="BDTG_TL  (e^{+}#mu^{+})"
