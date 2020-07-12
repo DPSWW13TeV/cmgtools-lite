@@ -1,0 +1,20 @@
+Getting ENV from /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0
+Running in /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0/src/CMGTools/DPSWW/macros
+Will execute python prepareEventVariablesFriendTree.py -j 0 -N 20000 -t NanoAOD /eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt -F Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsvars/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules BDT_DPSWW --compression ZLIB:3 -d GluGluToContinToZZTo4mu -c 16
+JEC= Summer16_07Aug2017_V11_MC 	 JER= Summer16_25nsV1_MC
+MET branch= MET
+JEC= Fall17_17Nov2017_V32_MC 	 JER= Fall17_V3_MC
+MET branch= METFixEE2017
+JEC= Summer16_07Aug2017_V11_MC 	 JER= Summer16_25nsV1_MC
+MET branch= MET
+Loading BDT_DPSWW from CMGTools.DPSWW.tools.nanoAOD.ttH_modules 
+Will write selected trees to /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt
+Will use the nanoAOD postprocessor
+   GluGluToContinToZZTo4mu.root   MC  42 chunks (835738 events)
+
+
+I have 1 task(s) to process
+==== GluGluToContinToZZTo4mu starting (20000 entries starting from 320000, /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt/GluGluToContinToZZTo4mu_Friend.chunk16.root) ====
+nano_postproc.py  --friend  /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt  --postfix  _Friend.chunk16  -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules  BDT_DPSWW  -z  ZLIB:3  /eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/GluGluToContinToZZTo4mu.root,/eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsvars/GluGluToContinToZZTo4mu_Friend.root  --first-entry  320000  -N  20000
+=== GluGluToContinToZZTo4mu done (20000 entries starting from 320000, 16 s, 320495 e/s, /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt/GluGluToContinToZZTo4mu_Friend.chunk16.root) ====
+Done 1 tasks in 0.3 min (20000 entries, 0.3 min)

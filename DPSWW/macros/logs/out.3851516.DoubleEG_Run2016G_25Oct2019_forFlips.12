@@ -1,0 +1,25 @@
+Getting ENV from /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0
+Running in /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0/src/CMGTools/DPSWW/macros
+Will execute python prepareEventVariablesFriendTree.py -j 0 -N 20000 -t NanoAOD /eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt -F Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsvars/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules BDT_DPSWW --compression ZLIB:3 -d DoubleEG_Run2016G_25Oct2019_forFlips -c 12
+JEC= Summer16_07Aug2017_V11_MC 	 JER= Summer16_25nsV1_MC
+MET branch= MET
+JEC= Fall17_17Nov2017_V32_MC 	 JER= Fall17_V3_MC
+MET branch= METFixEE2017
+JEC= Summer16_07Aug2017_V11_MC 	 JER= Summer16_25nsV1_MC
+MET branch= MET
+Loading BDT_DPSWW from CMGTools.DPSWW.tools.nanoAOD.ttH_modules 
+Will write selected trees to /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt
+Pre-select 20000 entries out of 20000 (100.00%)
+Processed    10000/   20000 entries, 50.00% (elapsed time     4.7s, curr speed    2.123 kHz, avg speed    2.123 kHz), accepted    10001/   10001 events (100.00%)
+Processed 20000 preselected entries from /eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/DoubleEG_Run2016G_25Oct2019_forFlips.root (20000 entries). Finally selected 20000 entries
+Done /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt/DoubleEG_Run2016G_25Oct2019_forFlips_Friend.chunk12.root
+1915.70881226 Hz
+Will use the nanoAOD postprocessor
+   DoubleEG_Run2016G_25Oct2019_forFlips.root   DATA  73 chunks (1456641 events)
+
+
+I have 1 task(s) to process
+==== DoubleEG_Run2016G_25Oct2019_forFlips starting (20000 entries starting from 240000, /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt/DoubleEG_Run2016G_25Oct2019_forFlips_Friend.chunk12.root) ====
+nano_postproc.py  --friend  /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt  --postfix  _Friend.chunk12  -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules  BDT_DPSWW  -z  ZLIB:3  /eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/DoubleEG_Run2016G_25Oct2019_forFlips.root,/eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsvars/DoubleEG_Run2016G_25Oct2019_forFlips_Friend.root  --first-entry  240000  -N  20000
+=== DoubleEG_Run2016G_25Oct2019_forFlips done (20000 entries starting from 240000, 14 s, 243365 e/s, /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt/DoubleEG_Run2016G_25Oct2019_forFlips_Friend.chunk12.root) ====
+Done 1 tasks in 0.2 min (20000 entries, 0.2 min)

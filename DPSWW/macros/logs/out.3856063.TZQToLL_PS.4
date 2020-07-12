@@ -1,0 +1,25 @@
+Getting ENV from /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0
+Running in /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0/src/CMGTools/DPSWW/macros
+Will execute python prepareEventVariablesFriendTree.py -j 0 -N 20000 -t NanoAOD /eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt -F Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsvars/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules BDT_DPSWW --compression ZLIB:3 -d TZQToLL_PS -c 4
+JEC= Summer16_07Aug2017_V11_MC 	 JER= Summer16_25nsV1_MC
+MET branch= MET
+JEC= Fall17_17Nov2017_V32_MC 	 JER= Fall17_V3_MC
+MET branch= METFixEE2017
+JEC= Summer16_07Aug2017_V11_MC 	 JER= Summer16_25nsV1_MC
+MET branch= MET
+Loading BDT_DPSWW from CMGTools.DPSWW.tools.nanoAOD.ttH_modules 
+Will write selected trees to /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt
+Pre-select 12208 entries out of 12208 (100.00%)
+Processed    10000/   12208 entries, 81.91% (elapsed time     4.6s, curr speed    2.169 kHz, avg speed    2.169 kHz), accepted    10001/   10001 events (100.00%)
+Processed 12208 preselected entries from /eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/TZQToLL_PS.root (12208 entries). Finally selected 12208 entries
+Done /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt/TZQToLL_PS_Friend.chunk4.root
+2014.52145215 Hz
+Will use the nanoAOD postprocessor
+   TZQToLL_PS.root   MC  5 chunks (92208 events)
+
+
+I have 1 task(s) to process
+==== TZQToLL_PS starting (12208 entries starting from 80000, /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt/TZQToLL_PS_Friend.chunk4.root) ====
+nano_postproc.py  --friend  /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt  --postfix  _Friend.chunk4  -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules  BDT_DPSWW  -z  ZLIB:3  /eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/TZQToLL_PS.root,/eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsvars/TZQToLL_PS_Friend.root  --first-entry  80000  -N  12208
+=== TZQToLL_PS done (12208 entries starting from 80000, 9 s, 83443 e/s, /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt/TZQToLL_PS_Friend.chunk4.root) ====
+Done 1 tasks in 0.2 min (12208 entries, 0.2 min)

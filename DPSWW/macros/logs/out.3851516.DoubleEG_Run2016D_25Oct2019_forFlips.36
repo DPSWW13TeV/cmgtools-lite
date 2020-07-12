@@ -1,0 +1,5 @@
+Getting ENV from /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0
+Running in /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0/src/CMGTools/DPSWW/macros
+Will execute python prepareEventVariablesFriendTree.py -j 0 -N 20000 -t NanoAOD /eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt -F Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsvars/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules BDT_DPSWW --compression ZLIB:3 -d DoubleEG_Run2016D_25Oct2019_forFlips -c 36
+Will use the nanoAOD postprocessor
+Error. Input directory /eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/ does not exist
