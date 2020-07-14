@@ -12,31 +12,23 @@ lumis = {
 
 
 
-def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, year,nLep,extraopts = ''):
-
-    cmd  = ' --s2v -f -j 8 -l {lumi} --od {CARDSOUTDIR} --tree NanoAOD --year {YEAR} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt {fmca} {fcut} --asimov signal --amc --threshold 0.01 --neg --split-factor=-1 --unc {fsyst} -P {trees}'.format(lumi=lumis[year],td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year,fsyst=fsyst)
-    
+def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses, year,extraopts = '',invertedcuts = []):
+    varToFit= '{plotvar} {binning}'.format(plotvar=plotbin.split()[0], binning=plotbin.split()[1])
+    cmd  = ' makeShapeCardsNew.py --s2v -f -j 8 -l {lumi} --od {CARDSOUTDIR} --tree NanoAOD --year {YEAR} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt {fmca} {fcut} --asimov signal --amc --threshold 0.01 --neg --split-factor=-1 --unc {fsyst} -P {trees} {varName} '.format(lumi=lumis[year],CARDSOUTDIR=targetdir, trees=trees, fmca=fmca, fcut=fcut,YEAR=year,fsyst=fsyst,varName=varToFit)
+    #    BDT_DPS_WZ 20,0,1.0
     cmd += ''.join(' --Fs '+frnd for frnd in friends)
     cmd += ''.join(' --FMCs '+frnd for frnd in MCfriends)
     cmd += ''.join(' --FDs '+frnd for frnd in Datafriends)
 
     cmd += ''.join(' -E ^'+cut for cut in enabledcuts )
     cmd += ''.join(' -X ^'+cut for cut in disabledcuts)
-    cmd += ' --sP '+','.join(plot for plot in plotlist)
+
     cmd += ' -p '+','.join(processes)
     if invertedcuts:
         cmd += ''.join(' -I ^'+cut for cut in invertedcuts )
 
-    if(nLep == 3):
-        cmd += ' -W L1PreFiringWeight_Nom*puWeight*leptonSF_3l *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],3,year)'
-    elif(nLep == 4):
-        cmd += ' -W L1PreFiringWeight_Nom*puWeight*leptonSF_4l *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],3,year)'
-    else:
-        cmd += ' -W L1PreFiringWeight_Nom*puWeight*leptonSF_2lss *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],year)'
+    cmd += ' -W L1PreFiringWeight_Nom*puWeight*leptonSF_2lss *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],year)'
 
-    if fitdataprocess:
-        cmd+= ' --fitData '
-        cmd+= ''.join(' --flp '+proc for proc in fitdataprocess)
     if scaleprocesses:
         for proc,scale in scaleprocesses.items():
             cmd += ' --scale-process {proc} {scale} '.format(proc=proc, scale=scale)
@@ -46,18 +38,10 @@ def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
         cmd += ' '+extraopts
 
 
-    #cmd  = ' makeShapeCardsSusy.py --s2v -f -j 6 -l {lumi} --od {td} {trees} {fmca} {fcut}'.format(lumi=lumi, td=targetdir, trees=treestring, fmca=fmca, fcut=fcut)
-    #cmd += ' {plotvar} {binning}'.format(plotvar=plotbin.split()[0], binning=plotbin.split()[1])
-
-    #example command
-    #python makeShapeCardsSusy.py --s2v -P /afs/cern.ch/work/e/efascion/DPStrees/TREES_110816_2muss/ --Fs /afs/cern.ch/work/e/efascion/public/friendsForDPS_110816/ -l 12.9 dps-ww/final_mca.txt dps-ww/cutfinal.txt finalMVA_DPS 10,0.,1.0  --od dps-ww/cards -p DPSWW,WZ,ZZ,WWW,WpWpJJ,Wjets  -W 0.8874 --asimov dps-ww/syst.txt
     print '============================================================================================='
     print 'running: python', cmd
     print '============================================================================================='
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
-
-
-#python mcPlots.py --pdir OUTDIR_FOR_PLOTS  --Fs {P}/1_lepJetBTagDeepFlav_v1  --Fs {P}/2_triggerSequence_v2 --Fs {P}/3_recleaner_v1 --FMCs {P}/4_btag --FMCs {P}/4_leptonSFs_v0 --FMCs {P}/0_mcFlags_v0 -P DIR_WITH_TREES --sP plots " -f -j %d -l %s -L ttH-multilepton/functionsTTH.cc --tree NanoAOD --mcc ttH-multilepton/lepchoice-ttH-FO.txt --split-factor=-1 --WA prescaleFromSkim --year %s  --mcc ttH-multilepton/mcc-METFixEE2017.txt"%(nCores, lumis[YEAR],YEAR if YEAR!='all' else '2016,2017,2018')# --neg" --s2v 
 
 def runplots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, year,nLep,extraopts = '', invertedcuts = []):
 
@@ -67,7 +51,7 @@ def runplots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
     #cmd  = ' mcPlots.py -f -j 8 -l {lumi} --tree NanoAOD --year {YEAR} --mcc dps-ww/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/mcc-METFixEE2017.txt --pdir {td} -P {trees} --FMCs {trees}/0_jmeUnc_v1 --FDs {trees}/1_recl --FMCs {trees}/1_recl_allvars --FMCs {trees}/2_btag_SFs --FMCs {trees}/2_scalefactors_lep_fixed --Fs {trees}/3_tauCount {fmca} {fcut} {fplots} --split-factor=-1 --unc {fsyst}'.format(lumi=lumis[year],td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year,fsyst=fsyst)
 
-    cmd  = ' mcPlots.py -f -j 8 -l {lumi} --tree NanoAOD --year {YEAR} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees}'.format(lumi=lumis[year],td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year)#,fsyst=fsyst)
+    cmd  = ' mcPlots.py -f -j 10 -l {lumi} --tree NanoAOD --year {YEAR} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees}'.format(lumi=lumis[year],td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year)#,fsyst=fsyst)
 
     if fsyst:
         cmd += ' --unc {fsyst} '.format(fsyst=fsyst)
@@ -78,11 +62,11 @@ def runplots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
     cmd += ''.join(' -E ^'+cut for cut in enabledcuts )
     cmd += ''.join(' -X ^'+cut for cut in disabledcuts)
-    cmd += ' --sP '+','.join(plot for plot in plotlist)
-    cmd += ' -p '+','.join(processes)
-   
     if invertedcuts:
         cmd += ''.join(' -I ^'+cut for cut in invertedcuts )
+
+    cmd += ' --sP '+','.join(plot for plot in plotlist)
+    cmd += ' -p '+','.join(processes)
 
     if(nLep == 3):
         cmd += ' -W L1PreFiringWeight_Nom*puWeight*leptonSF_3l *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],3,year)'
@@ -109,7 +93,7 @@ def runplots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-def makeResults(year,finalState,splitCharge,runCards):
+def makeResults(year,finalState,splitCharge,doWhat):
     trees='/eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/{year}/'.format(year=year)
     friends=[trees+'3_tauCount',trees+'dpsbdt']
     MCfriends = [trees+'1_recl_allvars',trees+'2_btag_SFs',trees+'2_scalefactors_lep_fixed',trees+'0_jmeUnc_v1']
@@ -134,20 +118,25 @@ def makeResults(year,finalState,splitCharge,runCards):
 
     print 'running for %s with charge split flag %s' %(finalState,splitCharge)
 
-    processes=['DPSWW','Rares','Convs','ZZ','WZ','data_flips','data_fakes','promptsub','data']#'flips','Convs','fakes','WG_wg','data']
+    processes=['DPSWW','Rares','Convs','ZZ','WZ','data_flips','data_fakes','promptsub','data']
+    #processes=['DPSWW','Rares','Convs','ZZ','WZ','data_flips','data_fakes','promptsub','data']
     fRvars= ['_FRe_norm_Up','_FRe_norm_Dn','_FRe_pt_Up','_FRe_pt_Dn','_FRe_be_Up','_FRe_be_Dn','_FRm_norm_Up','_FRm_norm_Dn','_FRm_pt_Up','_FRm_pt_Dn','_FRm_be_Up','_FRm_be_Dn']
-    if runCards:
-        processes+=['data_fakes'+i for i in fRvars]
-    #    processes=['DPSWW','WZ','data_fakes']
+
+
+
 
     if finalState[0] in ['mumu','elel']:
         binningBDT   = ' unroll_2Dbdt_dps_mumu(BDT_DPS_fakes,BDT_DPS_WZ) 15,0.0,15.0'
+
     else:
         binningBDT   = ' unroll_2Dbdt_dps_elmu(BDT_DPS_fakes,BDT_DPS_WZ) 15,0.0,15.0'
 
-    plotvars=['conept1','conept2','pt1','pt2','eta1','eta2','phi1','phi2','MVA1','MVA2','tcharge1','tcharge2','charge1','charge2','pdgId1','pdgId2','dilep_charge','dilep_flav','met','metphi','njets','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2','nVert','BDT_wz','BDT_fakes','BDT1d']        
-        #    configs=['elmu','mumu','elel','plusplus','minusminus']
+    essentials=['tcharge1','tcharge2']#conept1','conept2','pt1','pt2','MVA1','MVA2','met','nBJetLoose25','nBJetMedium25','nBJetTight25','nBJetLoose40','nBJetMedium40','nBJetTight40','nTauTight']
 
+    allvars=['conept1','conept2','pt1','pt2','eta1','eta2','phi1','phi2','MVA1','MVA2','tcharge1','tcharge2','charge1','charge2','pdgId1','pdgId2','dilep_charge','dilep_flav','met','metphi','njets','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2','nVert','BDT_wz','BDT_fakes','BDT1d']        
+    
+    #    configs=['elmu','mumu','elel','plusplus','minusminus']
+    plotvars=essentials
 
     for FS in finalState:            
         for ch in loop:
@@ -157,13 +146,14 @@ def makeResults(year,finalState,splitCharge,runCards):
                 enable.append(ch)
             print enable #list(ch) + list (finalState)
             disable   = []
+            invert    = []
             fittodata = []
             scalethem = {}
             ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.0  1.99'
             spam    = ' --topSpamSize 1.0 --noCms '
             legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
             ubands  = ' --showMCError '
-            anything = " --s2v --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub" # --plotmode norm" #to include neagitve evt ylds from fakes 
+            anything = "  --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub" #" #to include neagitve evt ylds from fakes --plotmode norm
             extraopts = ratio + spam + legends + ubands + anything
                
 
@@ -172,18 +162,19 @@ def makeResults(year,finalState,splitCharge,runCards):
             else:
                 makeplots1  = ['{}_{}'.format(a,FS) for a in plotvars]
             
+            if 'plots' in doWhat:
+                makeplots=makeplots1 #+makeplots2
+                print makeplots1
+                runplots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, year, 2,extraopts,invert)
 
-            makeplots=makeplots1 #+makeplots2
-            print makeplots1
-            runplots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, year, 2,extraopts)
-
-#        if(runCards):
+            if 'cards' in doWhat:
             ## ==================================
             ## running datacards
             ## ==================================
- #           targetcarddir = 'Cards/cards_{date}{pf}_{FS}_era{year}'.format(FS=finalState,year=year,date=date, pf=('-'+postfix if postfix else '') )
-  #          extraoptscards = ' --binname dpsww_{year}_{FS}_{ch}'.format(year=year,FS=finalState,ch=(ch[0] if ch else ''))
-   #         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processes, scalethem, year, extraoptscards)
+                #processes+=['data_fakes'+i for i in fRvars]
+                targetcarddir = 'Cards/cards_{date}{pf}_{FS}_era{year}'.format(FS=FS,year=year,date=date, pf=('-'+postfix if postfix else '') )
+                extraoptscards = ' --binname dpsww_{year}_{FS}{ch}'.format(year=year,FS=FS,ch=(ch if ch else ''))
+                runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processes, scalethem, year,extraoptscards,invert)
 ########################################
 
 
@@ -252,8 +243,9 @@ if __name__ == '__main__':
     parser.add_option('--finalState',dest='finalState',type='string' , default=[], action="append", help='final state(s) to run on')
     parser.add_option('--splitCharge',dest='splitCharge',action='store_true', default=False , help='split by charge')
     parser.add_option('--year',   dest='year'  , type='string' , default='2016' , help='make plots for specified year')
-    parser.add_option('--results' , '--makeResults'  , dest='results', action='store_true' , default=False , help='make plots')
-    parser.add_option('--rC' , '--runCards'  , dest='runCards', action='store_true' , default=False , help='make plots')
+    parser.add_option('--results' , '--makeResults'  , dest='results', action='store_true' , default=True , help='make plots')
+    #    parser.add_option('--rC' , '--runCards'  , dest='runCards', action='store_true' , default=False , help='make plots')
+    parser.add_option('--dW' , '--doWhat'  , dest='doWhat', type='string' , default=[] , help='make plots')
 
     (opts, args) = parser.parse_args()
 
@@ -271,5 +263,5 @@ if __name__ == '__main__':
         fourlepCRPlot(opts.year)
     if opts.results:
         print 'running plots for 2lss'
-        makeResults(opts.year,opts.finalState,opts.splitCharge,opts.runCards)
+        makeResults(opts.year,opts.finalState,opts.splitCharge,opts.doWhat)
 

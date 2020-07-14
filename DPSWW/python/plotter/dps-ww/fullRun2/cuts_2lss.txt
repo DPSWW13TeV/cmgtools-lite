@@ -1,17 +1,19 @@
 alwaystrue: 1
 trigger: Trigger_2lss
 filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
-
-
 cleanup: minMllAFAS > 12
+
 dilep: nLepFO==2
 same-sign: LepGood1_charge*LepGood2_charge > 0
+
 pt2520: LepGood1_conePt>25 && LepGood2_conePt>20
 TT : LepGood1_isLepTight && LepGood2_isLepTight
-metpt        : MET_pt > 15
-01j: nJet25_Recl < 2
+
 tauveto: nTauTight == 0
 
+metpt        : MET_pt > 20
+
+01j: nJet25_Recl < 2
 bVeto: nBJetMedium25 == 0
 
 
@@ -45,7 +47,7 @@ elel: abs(LepGood1_pdgId)==11 && abs(LepGood2_pdgId)==11; Disable=True
 elmu: abs(LepGood1_pdgId) != abs(LepGood2_pdgId);         Disable=True
 mumu: abs(LepGood1_pdgId)==13 && abs(LepGood2_pdgId)==13; Disable=True
 
-
+ll  : abs(LepGood1_pdgId*LepGood2_pdgId) == 143 || abs(LepGood1_pdgId*LepGood2_pdgId) == 169 || abs(LepGood1_pdgId*LepGood2_pdgId) == 121 ; Disable=True
 
 plusplus : LepGood1_pdgId > 0 ; Disable=True
 minusminus : LepGood1_pdgId < 0 ; Disable=True

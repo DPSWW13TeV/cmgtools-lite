@@ -146,8 +146,8 @@ bool loadFRHisto(const std::string &histoName, const char *file, const char *nam
 
 float fetchFR_ii(float l1pt, float l1eta, int l1pdgId, int iFRmu, int iFRel) 
 {
-  std::cout<<"fetching el FR from \t"<<iFRel<<std::endl;
-  std::cout<<"fetching mu FR from \t"<<iFRmu<<std::endl;
+  //std::cout<<"fetching el FR from \t"<<iFRel<<std::endl;
+  //#std::cout<<"fetching mu FR from \t"<<iFRmu<<std::endl;
     TH2 *hist1 = (abs(l1pdgId) == 11 ? FRi_el[iFRel] : FRi_mu[iFRmu]);
     if (hist1 == 0) { std::cerr << "ERROR, missing FR for pdgId " << l1pdgId << ", iFR " << (abs(l1pdgId) == 11 ? iFRel : iFRmu) << std::endl; std::abort(); }
     int ptbin1  = std::max(1, std::min(hist1->GetNbinsX(), hist1->GetXaxis()->FindBin(l1pt)));
