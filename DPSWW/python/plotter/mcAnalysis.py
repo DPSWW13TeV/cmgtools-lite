@@ -218,6 +218,7 @@ class MCAnalysis:
             variations={}
             if self.variationsFile:
                 for var in self.variationsFile.uncertainty():
+                    if var.unc_type == 'altSample': continue ##am
                     if var.procmatch().match(pname) and var.binmatch().match(options.binname) and ( var.year() == None or options.year == var.year()) : 
                         #if var.name in variations:
                         #    print "Variation %s overriden for process %s, new process pattern %r, bin %r (old had %r, %r)" % (
@@ -536,6 +537,11 @@ class MCAnalysis:
         ## construct envelope variations if any
         for p,h in ret.iteritems():
             h.buildEnvelopes() 
+
+        ## add variations from alternate samples
+        if self.variationsFile:
+            buildVariationsFromAlternative(self.variationsFile, ret)
+
 
         rescales = []
         self.compilePlotScaleMap(self._options.plotscalemap,rescales)

@@ -1,10 +1,38 @@
 # vim: syntax=sh
-# * ; LegendCutoff=1e-7
+
+
+MVA_ptRatio_mumu : (LepGood_conePt/LepGood_pt)\:LepGood_mvaTTH : 20,0.5,1,20,0.2,2.0; XTitle="mva score",YTitle="conepT/pT"
+
+nLepTight_elmu: if3(nLepFO>1,LepGood1_isLepTight+LepGood2_isLepTight,-99) : [-0.5,0.5,1.5,2.5]; XTitle="Tight leptons among the first two", XNDdiv=505, Legend='TL', IncludeOverflows=False
+nLepTight_mumu: if3(nLepFO>1,LepGood1_isLepTight+LepGood2_isLepTight,-99) : [-0.5,0.5,1.5,2.5]; XTitle="Tight leptons among the first two", XNDdiv=505, Legend='TL', IncludeOverflows=False
 
 
 tot_weight: 1 : 1,0.5,1.5; XTitle = "Selected events", Legend='TR', MoreY=1.5
 
 ######################################### available only in ll mode
+mll_vR_elel :  mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass): 15,0,200; XTitle="m_{ll}((el^{#pm}el^{#pm}) (GeV)", MoreY=1.5, IncludeOverflows=False
+
+
+jetpt_elmu      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)"
+jetpt_mumu      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)"
+
+njets30_elmu  	     :  Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5] ; XTitle='njets wiht pT > 30' , MoreY=1.5
+njets30_mumu  	     :  Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5] ; XTitle='njets wiht pT > 30' , MoreY=1.5
+njets25_elmu  	     :  Sum$(JetSel_Recl_pt > 25): [0,1,2,3,4,5] ; XTitle='njets wiht pT > 25' , MoreY=1.5
+njets25_mumu  	     :  Sum$(JetSel_Recl_pt > 25): [0,1,2,3,4,5] ; XTitle='njets wiht pT > 25' , MoreY=1.5
+
+
+
+sip3d1_elel:  LepGood1_sip3d		: 40,0,8; XTitle="Leading lepton S_{IP} 3D" , MoreY=1.5, IncludeOverflows=False
+dxy1_elel:     abs(LepGood1_dxy)*10000	: 40,0.0,100.; XTitle="Leading lepton dxy [#mum]", MoreY=1.5, IncludeOverflows=False
+dz1_elel:       abs(LepGood1_dz)*10000   : 40,0.0,100.; XTitle="Leading lepton dz [#mum]", MoreY=1.5, IncludeOverflows=False
+sip3d2_elel:  LepGood2_sip3d		: 40,0,8; XTitle="Trailing lepton S_{IP} 3D" , MoreY=1.5, IncludeOverflows=False
+dxy2_elel:     abs(LepGood2_dxy)*10000	: 40,0.0,100.; XTitle="Trailing lepton dxy [#mum]", MoreY=1.5, IncludeOverflows=False
+dz2_elel:       abs(LepGood2_dz)*10000   : 40,0.0,100.; XTitle="Trailing lepton dz [#mum]", MoreY=1.5, IncludeOverflows=False
+
+
+
+#mll_vR_elel :  if3( (mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) < 50 && mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) > 100), mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass),-99  ): 15,0,200; XTitle="m_{ll}((el^{#pm}el^{#pm}) (GeV)", MoreY=1.5, IncludeOverflows=False
 
 nBJetLoose25_ll  :  nBJetLoose25 : [0,1,2,3,4,5] ; XTitle='nbjetsloose25' , MoreY=1.5
 nBJetMedium25_ll :  nBJetMedium25 : [0,1,2,3,4,5] ; XTitle='nbjetsmed25' , MoreY=1.5
@@ -52,17 +80,17 @@ conept2_ll           : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (l^
 pt1_ll               : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
 pt2_ll               : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
 
-eta1_ll              : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (l^{#pm}l^{#pm})"
-eta2_ll              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (l^{#pm}l^{#pm})"
+eta1_ll              : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (l^{#pm}l^{#pm})", MoreY=1.5
+eta2_ll              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (l^{#pm}l^{#pm})", MoreY=1.5
 
-phi1_ll              : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (l^{#pm}l^{#pm})"
-phi2_ll              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (l^{#pm}l^{#pm})"
+phi1_ll              : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (l^{#pm}l^{#pm})", MoreY=1.5
+phi2_ll              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (l^{#pm}l^{#pm})", MoreY=1.5
 
-MVA1_ll              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (l^{#pm}l^{#pm})" 
-MVA2_ll              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (l^{#pm}l^{#pm})"
+MVA1_ll              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (l^{#pm}l^{#pm})" , MoreY=1.5
+MVA2_ll              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (l^{#pm}l^{#pm})", MoreY=1.5
 
-tcharge1_ll          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge lead.  (l^{#pm}l^{#pm})", XNDdiv=505, Logy, Legend='TL'
-tcharge2_ll          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge trail.  (l^{#pm}l^{#pm})", XNDdiv=505, Logy, Legend='TL'
+tcharge1_ll          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (l^{#pm}l^{#pm})", XNDdiv=505, Legend='TL' , MoreY=1.5
+tcharge2_ll          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (l^{#pm}l^{#pm})", XNDdiv=505, Legend='TL', MoreY=1.5
 
 charge1_ll           : LepGood1_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge lead.  (l^{#pm}l^{#pm})", XNDdiv=505, MoreY=1.5
 charge2_ll           : LepGood2_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge trail. (l^{#pm}l^{#pm})", XNDdiv=505,  MoreY=1.5
@@ -77,7 +105,7 @@ dilep_flav_ll        : if3(nLepFO>1,if3(abs(LepGood1_pdgId)!=abs(LepGood2_pdgId)
 met_ll               : MET_pt          : 10,0,115; XTitle="p_{T}^{miss} (l^{#pm}l^{#pm}) (GeV)"  , MoreY=1.5 
 metphi_ll            : MET_phi         : 10,-3.2,3.2; XTitle="#phi(p_{T}^{miss} (l^{#pm}l^{#pm}) (GeV))"  , MoreY=1.5 
 
-njets_ll  	       :  nJet25_Recl: [0,1,2,3,4,5] ; XTitle='njets' , MoreY=1.5
+njets_ll  	     :  nJet25_Recl: [0,1,2,3,4,5] ; XTitle='njets' , MoreY=1.5
 
 nBJetLoose25_ll  :  nBJetLoose25 : [0,1,2,3,4,5] ; XTitle='nbjetsloose25' , MoreY=1.5
 nBJetMedium25_ll :  nBJetMedium25 : [0,1,2,3,4,5] ; XTitle='nbjetsmed25' , MoreY=1.5
@@ -97,7 +125,7 @@ etaprod_ll           :  LepGood1_eta*LepGood2_eta : 20,-6.25,6.25; XTitle="#eta_
 dphill_ll            :  abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (l^{#pm}l^{#pm}) (rad.)", MoreY=1.5
 dphil2met_ll         :  abs(deltaPhi(LepGood2_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (l^{#pm}l^{#pm}) (rad.)", MoreY=1.5
 dphilll2_ll          :  abs(deltaPhi(phi_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi),LepGood2_phi)) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (l^{#pm}l^{#pm}) (rad.)", MoreY=1.5
-nVert_ll 	       :  PV_npvs  : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
+nVert_ll 	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
 
 BDT_wz_ll	       :  BDT_DPS_WZ    : 20,0,1.0; XTitle="BDT-wz (l^{#pm}l^{#pm})" , MoreY=1.5
 BDT_fakes_ll         :  BDT_DPS_fakes : 20,0,1.0; XTitle="BDT-fakes (l^{#pm}l^{#pm})", MoreY=1.5
@@ -120,8 +148,8 @@ phi2_mumu              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (#mu
 MVA1_mumu              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (#mu^{#pm}#mu^{#pm})" 
 MVA2_mumu              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (#mu^{#pm}#mu^{#pm})"
 
-tcharge1_mumu          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge lead.  (#mu^{#pm}#mu^{#pm})", XNDdiv=505, Logy, Legend='TL'
-tcharge2_mumu          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge trail.  (#mu^{#pm}#mu^{#pm})", XNDdiv=505, Logy, Legend='TL'
+tcharge1_mumu          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (#mu^{#pm}#mu^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
+tcharge2_mumu          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (#mu^{#pm}#mu^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
 
 charge1_mumu           : LepGood1_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge lead.  (#mu^{#pm}#mu^{#pm})", XNDdiv=505, MoreY=1.5
 charge2_mumu           : LepGood2_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge trail. (#mu^{#pm}#mu^{#pm})", XNDdiv=505,  MoreY=1.5
@@ -149,7 +177,7 @@ etaprod_mumu           :  LepGood1_eta*LepGood2_eta : 20,-6.25,6.25; XTitle="#et
 dphill_mumu            :  abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (#mu^{#pm}#mu^{#pm}) (rad.)", MoreY=1.5
 dphil2met_mumu         :  abs(deltaPhi(LepGood2_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (#mu^{#pm}#mu^{#pm}) (rad.)", MoreY=1.5
 dphilll2_mumu          :  abs(deltaPhi(phi_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi),LepGood2_phi)) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (#mu^{#pm}#mu^{#pm}) (rad.)", MoreY=1.5
-nVert_mumu 	       :  PV_npvs  : 50,0,50; XTitle="n_{vertices}"
+nVert_mumu 	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}"
 
 BDT_wz_mumu	       :  BDT_DPS_WZ    : 20,0,1.0; XTitle="BDT-wz (#mu^{#pm}#mu^{#pm})" , MoreY=1.5
 BDT_fakes_mumu         :  BDT_DPS_fakes : 20,0,1.0; XTitle="BDT-fakes (#mu^{#pm}#mu^{#pm})", MoreY=1.5
@@ -174,8 +202,8 @@ phi2_mumuplusplus               : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi tr
 MVA1_mumuplusplus               : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (#mu^{#plus}#mu^{#plus})" 
 MVA2_mumuplusplus               : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (#mu^{#plus}#mu^{#plus})"
 
-tcharge1_mumuplusplus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge lead.  (#mu^{#plus}#mu^{#plus})", XNDdiv=505, Logy, Legend='TL'
-tcharge2_mumuplusplus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge trail.  (#mu^{#plus}#mu^{#plus})", XNDdiv=505, Logy, Legend='TL'
+tcharge1_mumuplusplus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (#mu^{#plus}#mu^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
+tcharge2_mumuplusplus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (#mu^{#plus}#mu^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 
 charge1_mumuplusplus            : LepGood1_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge lead.  (#mu^{#plus}#mu^{#plus})", XNDdiv=505, MoreY=1.5
 charge2_mumuplusplus            : LepGood2_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge trail. (#mu^{#plus}#mu^{#plus})", XNDdiv=505,  MoreY=1.5
@@ -203,7 +231,7 @@ etaprod_mumuplusplus            :  LepGood1_eta*LepGood2_eta : 20,-6.25,6.25; XT
 dphill_mumuplusplus             :  abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (#mu^{#plus}#mu^{#plus}) (rad.)", MoreY=1.5
 dphil2met_mumuplusplus          :  abs(deltaPhi(LepGood2_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (#mu^{#plus}#mu^{#plus}) (rad.)", MoreY=1.5
 dphilll2_mumuplusplus           :  abs(deltaPhi(phi_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi),LepGood2_phi)) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (#mu^{#plus}#mu^{#plus}) (rad.)", MoreY=1.5
-nVert_mumuplusplus  	       :  PV_npvs  : 50,0,50; XTitle="n_{vertices}"
+nVert_mumuplusplus  	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}"
 
 BDT_wz_mumu	       :  BDT_DPS_WZ    : 20,0,1.0; XTitle="BDT-wz (#mu^{#plus}#mu^{#plus})" , MoreY=1.5
 BDT_fakes_mumuplusplus          :  BDT_DPS_fakes : 20,0,1.0; XTitle="BDT-fakes (#mu^{#plus}#mu^{#plus})", MoreY=1.5
@@ -228,8 +256,8 @@ phi2_mumuminusminus               : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi 
 MVA1_mumuminusminus               : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (#mu^{#minus}#mu^{#minus})" 
 MVA2_mumuminusminus               : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (#mu^{#minus}#mu^{#minus})"
 
-tcharge1_mumuminusminus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge lead.  (#mu^{#minus}#mu^{#minus})", XNDdiv=505, Logy, Legend='TL'
-tcharge2_mumuminusminus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge trail.  (#mu^{#minus}#mu^{#minus})", XNDdiv=505, Logy, Legend='TL'
+tcharge1_mumuminusminus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (#mu^{#minus}#mu^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
+tcharge2_mumuminusminus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (#mu^{#minus}#mu^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 
 charge1_mumuminusminus            : LepGood1_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge lead.  (#mu^{#minus}#mu^{#minus})", XNDdiv=505, MoreY=1.5
 charge2_mumuminusminus            : LepGood2_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge trail. (#mu^{#minus}#mu^{#minus})", XNDdiv=505,  MoreY=1.5
@@ -257,7 +285,7 @@ etaprod_mumuminusminus            :  LepGood1_eta*LepGood2_eta : 20,-6.25,6.25; 
 dphill_mumuminusminus             :  abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (#mu^{#minus}#mu^{#minus}) (rad.)", MoreY=1.5
 dphil2met_mumuminusminus          :  abs(deltaPhi(LepGood2_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (#mu^{#minus}#mu^{#minus}) (rad.)", MoreY=1.5
 dphilll2_mumuminusminus           :  abs(deltaPhi(phi_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi),LepGood2_phi)) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (#mu^{#minus}#mu^{#minus}) (rad.)", MoreY=1.5
-nVert_mumuminusminus  	       :  PV_npvs  : 50,0,50; XTitle="n_{vertices}"
+nVert_mumuminusminus  	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}"
 
 BDT_wz_mumu	       :  BDT_DPS_WZ    : 20,0,1.0; XTitle="BDT-wz (#mu^{#minus}#mu^{#minus})" , MoreY=1.5
 BDT_fakes_mumuminusminus          :  BDT_DPS_fakes : 20,0,1.0; XTitle="BDT-fakes (#mu^{#minus}#mu^{#minus})", MoreY=1.5
@@ -281,8 +309,8 @@ phi2_elel              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (e^{
 MVA1_elel              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#pm}e^{#pm})" 
 MVA2_elel              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#pm}e^{#pm})"
 
-tcharge1_elel          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge lead.  (e^{#pm}e^{#pm})", XNDdiv=505, Logy, Legend='TL'
-tcharge2_elel          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge trail.  (e^{#pm}e^{#pm})", XNDdiv=505, Logy, Legend='TL'
+tcharge1_elel          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#pm}e^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
+tcharge2_elel          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#pm}e^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
 
 charge1_elel           : LepGood1_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge lead.  (e^{#pm}e^{#pm})", XNDdiv=505, MoreY=1.5
 charge2_elel           : LepGood2_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge trail. (e^{#pm}e^{#pm})", XNDdiv=505,  MoreY=1.5
@@ -311,7 +339,7 @@ etaprod_elel           :  LepGood1_eta*LepGood2_eta : 20,-6.25,6.25; XTitle="#et
 dphill_elel            :  abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (e^{#pm}e^{#pm}) (rad.)", MoreY=1.5
 dphil2met_elel         :  abs(deltaPhi(LepGood2_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (e^{#pm}e^{#pm}) (rad.)", MoreY=1.5
 dphilll2_elel          :  abs(deltaPhi(phi_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi),LepGood2_phi)) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (e^{#pm}e^{#pm}) (rad.)", MoreY=1.5
-nVert_elel 	       :  PV_npvs  : 50,0,50; XTitle="n_{vertices}"
+nVert_elel 	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}"
 BDT_wz_elel	       :  BDT_DPS_WZ    : 20,0.,1.0; XTitle="BDT-wz (e^{#pm}e^{#pm})"
 BDT_fakes_elel         :  BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT-fakes (e^{#pm}e^{#pm})"
 BDT1d_elel             :  unroll_2Dbdt_dps_mumu(BDT_DPS_fakes,BDT_DPS_WZ): 15,0.0,15.0 ; XTitle="Bin Number(e^{#pm}e^{#pm})"  ## FIXME later
@@ -339,8 +367,8 @@ phi2_elelplusplus               : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi tr
 MVA1_elelplusplus               : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#plus}e^{#plus})" 
 MVA2_elelplusplus               : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#plus}e^{#plus})"
 
-tcharge1_elelplusplus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge lead.  (e^{#plus}e^{#plus})", XNDdiv=505, Logy, Legend='TL'
-tcharge2_elelplusplus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge trail.  (e^{#plus}e^{#plus})", XNDdiv=505, Logy, Legend='TL'
+tcharge1_elelplusplus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#plus}e^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
+tcharge2_elelplusplus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#plus}e^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 
 charge1_elelplusplus            : LepGood1_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge lead.  (e^{#plus}e^{#plus})", XNDdiv=505, MoreY=1.5
 charge2_elelplusplus            : LepGood2_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge trail. (e^{#plus}e^{#plus})", XNDdiv=505,  MoreY=1.5
@@ -368,7 +396,7 @@ etaprod_elelplusplus            :  LepGood1_eta*LepGood2_eta : 20,-6.25,6.25; XT
 dphill_elelplusplus             :  abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (e^{#plus}e^{#plus}) (rad.)", MoreY=1.5
 dphil2met_elelplusplus          :  abs(deltaPhi(LepGood2_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (e^{#plus}e^{#plus}) (rad.)", MoreY=1.5
 dphilll2_elelplusplus           :  abs(deltaPhi(phi_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi),LepGood2_phi)) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (e^{#plus}e^{#plus}) (rad.)", MoreY=1.5
-nVert_elelplusplus  	       :  PV_npvs  : 50,0,50; XTitle="n_{vertices}"
+nVert_elelplusplus  	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}"
 
 BDT_wz_mumu	       :  BDT_DPS_WZ    : 20,0,1.0; XTitle="BDT-wz (e^{#plus}e^{#plus})" , MoreY=1.5
 BDT_fakes_elelplusplus          :  BDT_DPS_fakes : 20,0,1.0; XTitle="BDT-fakes (e^{#plus}e^{#plus})", MoreY=1.5
@@ -393,8 +421,8 @@ phi2_elelminusminus               : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi 
 MVA1_elelminusminus               : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#minus}e^{#minus})" 
 MVA2_elelminusminus               : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#minus}e^{#minus})"
 
-tcharge1_elelminusminus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge lead.  (e^{#minus}e^{#minus})", XNDdiv=505, Logy, Legend='TL'
-tcharge2_elelminusminus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge trail.  (e^{#minus}e^{#minus})", XNDdiv=505, Logy, Legend='TL'
+tcharge1_elelminusminus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#minus}e^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
+tcharge2_elelminusminus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#minus}e^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 
 charge1_elelminusminus            : LepGood1_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge lead.  (e^{#minus}e^{#minus})", XNDdiv=505, MoreY=1.5
 charge2_elelminusminus            : LepGood2_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge trail. (e^{#minus}e^{#minus})", XNDdiv=505,  MoreY=1.5
@@ -422,7 +450,7 @@ etaprod_elelminusminus            :  LepGood1_eta*LepGood2_eta : 20,-6.25,6.25; 
 dphill_elelminusminus             :  abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (e^{#minus}e^{#minus}) (rad.)", MoreY=1.5
 dphil2met_elelminusminus          :  abs(deltaPhi(LepGood2_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (e^{#minus}e^{#minus}) (rad.)", MoreY=1.5
 dphilll2_elelminusminus           :  abs(deltaPhi(phi_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi),LepGood2_phi)) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (e^{#minus}e^{#minus}) (rad.)", MoreY=1.5
-nVert_elelminusminus  	       :  PV_npvs  : 50,0,50; XTitle="n_{vertices}"
+nVert_elelminusminus  	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}"
 
 BDT_wz_mumu	       :  BDT_DPS_WZ    : 20,0,1.0; XTitle="BDT-wz (e^{#minus}e^{#minus})" , MoreY=1.5
 BDT_fakes_elelminusminus          :  BDT_DPS_fakes : 20,0,1.0; XTitle="BDT-fakes (e^{#minus}e^{#minus})", MoreY=1.5
@@ -460,8 +488,8 @@ phi2_elmu              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (e^{
 MVA1_elmu              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#pm}#mu^{#pm})" 
 MVA2_elmu              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#pm}#mu^{#pm})"
 
-tcharge1_elmu          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge lead.  (e^{#pm}#mu^{#pm})", XNDdiv=505, Logy, Legend='TL'
-tcharge2_elmu          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge trail.  (e^{#pm}#mu^{#pm})", XNDdiv=505, Logy, Legend='TL'
+tcharge1_elmu          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#pm}#mu^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
+tcharge2_elmu          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#pm}#mu^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
 
 charge1_elmu           : LepGood1_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge lead.  (e^{#pm}#mu^{#pm})", XNDdiv=505, MoreY=1.5
 charge2_elmu           : LepGood2_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge trail. (e^{#pm}#mu^{#pm})", XNDdiv=505,  MoreY=1.5
@@ -490,7 +518,7 @@ etaprod_elmu           :  LepGood1_eta*LepGood2_eta : 20,-6.25,6.25; XTitle="#et
 dphill_elmu            :  abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (e^{#pm}#mu^{#pm}) (rad.)", MoreY=1.5
 dphil2met_elmu         :  abs(deltaPhi(LepGood2_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (e^{#pm}#mu^{#pm}) (rad.)", MoreY=1.5
 dphilll2_elmu          :  abs(deltaPhi(phi_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi),LepGood2_phi)) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (e^{#pm}#mu^{#pm}) (rad.)", MoreY=1.5
-nVert_elmu 	       :  PV_npvs  : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
+nVert_elmu 	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
 BDT_wz_elmu	       :  BDT_DPS_WZ    : 20,0.,1.0; XTitle="BDT-wz (e^{#pm}#mu^{#pm})", MoreY=1.5
 BDT_fakes_elmu         :  BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT-fakes (e^{#pm}#mu^{#pm})", MoreY=1.5
 BDT1d_elmu             :  unroll_2Dbdt_dps_elmu(BDT_DPS_fakes,BDT_DPS_WZ): 15,0.0,15.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})", MoreY=1.5
@@ -532,8 +560,8 @@ phi2_elmuminusminus              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi t
 MVA1_elmuminusminus              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#minus}#mu^{#minus})" 
 MVA2_elmuminusminus              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#minus}#mu^{#minus})"
 
-tcharge1_elmuminusminus          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge lead.  (e^{#minus}#mu^{#minus})", XNDdiv=505, Logy, Legend='TL'
-tcharge2_elmuminusminus          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge trail.  (e^{#minus}#mu^{#minus})", XNDdiv=505, Logy, Legend='TL'
+tcharge1_elmuminusminus          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#minus}#mu^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
+tcharge2_elmuminusminus          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#minus}#mu^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 
 charge1_elmuminusminus           : LepGood1_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge lead.  (e^{#minus}#mu^{#minus})", XNDdiv=505, MoreY=1.5
 charge2_elmuminusminus           : LepGood2_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge trail. (e^{#minus}#mu^{#minus})", XNDdiv=505,  MoreY=1.5
@@ -562,7 +590,7 @@ etaprod_elmuminusminus           :  LepGood1_eta*LepGood2_eta : 20,-6.25,6.25; X
 dphill_elmuminusminus            :  abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (e^{#minus}#mu^{#minus}) (rad.)", MoreY=1.5
 dphil2met_elmuminusminus         :  abs(deltaPhi(LepGood2_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (e^{#minus}#mu^{#minus}) (rad.)", MoreY=1.5
 dphilll2_elmuminusminus          :  abs(deltaPhi(phi_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi),LepGood2_phi)) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (e^{#minus}#mu^{#minus}) (rad.)", MoreY=1.5
-nVert_elmuminusminus 	       :  PV_npvs  : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
+nVert_elmuminusminus 	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
 BDT_wz_elmuminusminus	       :  BDT_DPS_WZ    : 20,0.,1.0; XTitle="BDT-wz (e^{#minus}#mu^{#minus})", MoreY=1.5
 BDT_fakes_elmuminusminus         :  BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT-fakes (e^{#minus}#mu^{#minus})", MoreY=1.5
 BDT1d_elmuminusminus             :  unroll_2Dbdt_dps_elmu(BDT_DPS_fakes,BDT_DPS_WZ): 15,0.0,15.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})", MoreY=1.5
@@ -586,8 +614,8 @@ phi2_elmuplusplus              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi tra
 MVA1_elmuplusplus              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#plus}#mu^{#plus})" 
 MVA2_elmuplusplus              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#plus}#mu^{#plus})"
 
-tcharge1_elmuplusplus          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge lead.  (e^{#plus}#mu^{#plus})", XNDdiv=505, Logy, Legend='TL'
-tcharge2_elmuplusplus          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5]; XTitle="tightCharge trail.  (e^{#plus}#mu^{#plus})", XNDdiv=505, Logy, Legend='TL'
+tcharge1_elmuplusplus          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#plus}#mu^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
+tcharge2_elmuplusplus          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#plus}#mu^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 
 charge1_elmuplusplus           : LepGood1_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge lead.  (e^{#plus}#mu^{#plus})", XNDdiv=505, MoreY=1.5
 charge2_elmuplusplus           : LepGood2_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge trail. (e^{#plus}#mu^{#plus})", XNDdiv=505,  MoreY=1.5
@@ -616,7 +644,7 @@ etaprod_elmuplusplus           :  LepGood1_eta*LepGood2_eta : 20,-6.25,6.25; XTi
 dphill_elmuplusplus            :  abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (e^{#plus}#mu^{#plus}) (rad.)", MoreY=1.5
 dphil2met_elmuplusplus         :  abs(deltaPhi(LepGood2_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (e^{#plus}#mu^{#plus}) (rad.)", MoreY=1.5
 dphilll2_elmuplusplus          :  abs(deltaPhi(phi_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi),LepGood2_phi)) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (e^{#plus}#mu^{#plus}) (rad.)", MoreY=1.5
-nVert_elmuplusplus 	       :  PV_npvs  : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
+nVert_elmuplusplus 	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
 BDT_wz_elmuplusplus	       :  BDT_DPS_WZ    : 20,0.,1.0; XTitle="BDT-wz (e^{#plus}#mu^{#plus})", MoreY=1.5
 BDT_fakes_elmuplusplus         :  BDT_DPS_fakes : 20,0.,1.0; XTitle="BDT-fakes (e^{#plus}#mu^{#plus})", MoreY=1.5
 BDT1d_elmuplusplus             :  unroll_2Dbdt_dps_elmu(BDT_DPS_fakes,BDT_DPS_WZ): 15,0.0,15.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})", MoreY=1.5

@@ -15,6 +15,7 @@ class Uncertainty:
         self._binpattern = binmatch
         self._procmatch = re.compile(procmatch+'$')
         self._binmatch = re.compile(binmatch+'$')
+        self.binmatchstr = binmatch
         self.unc_type = unc_type
         self.args = list(more_args) if more_args else []
         self.extra = dict(extra) if extra else {}
@@ -72,8 +73,11 @@ class Uncertainty:
             if 'FakeRates' not in self.extra: 
                 raise RuntimeError("A set of FakeRates are needed for envelope")
             self.fakerate = [ FakeRate( fr, loadFilesNow=False, year=self._options.year) for fr in self.extra['FakeRates'] ]
-
-
+        elif self.unc_type=='altSample':
+            if len(self.args) != 2: 
+                raise RuntimeError("altSample requires exactly two arguments")
+            if self.binmatchstr != ".*":
+                raise RuntimeError("altSample affects all bins by construction")
         elif self.unc_type=='none':
             pass
         else: raise RuntimeError, 'Uncertainty type "%s" not recognised' % self.unc_type
@@ -147,9 +151,9 @@ class Uncertainty:
     def year(self):
         return self._year
     def getFR(self,sign):
-        if self.unc_type == 'envelope':
+        if self.unc_type == 'envelope' or self.unc_type == 'envelopeRMS':
             FR = self.fakerate[int('%s'%(sign.replace('var','')))]
-        else:
+        else: 
             FR = self.fakerate[0 if sign=='up' else 1]
         if FR: FR.loadFiles()
         return FR

@@ -68,6 +68,25 @@ def _isNullHistogram(h):
         return (h.GetN() == 0)
     return False
 
+    ##https://github.com/uniovi-hepex/cmgtools-lite/pull/8/files
+def buildVariationsFromAlternative( uncfile, ret):
+    for var in uncfile.uncertainty():
+        if var.unc_type != 'altSample': continue # now only adding the alternative samples
+        hasBeenApplied=False
+        toremove=[]
+        for k,p in ret.iteritems(): 
+            if not var.procmatch().match(k): continue
+            if hasBeenApplied:
+                raise RuntimeError("variation %s is being applied to at least two processes"%var.name)
+            if var.args[0] not in ret or var.args[1] not in ret:
+                raise RuntimeError("Alternative sample (%s,%s) has not been processed, available samples are %s"%(var.args[0], var.args[1], ','.join(k for k in ret)))
+            p.addVariation( var.name, 'up'  , ret[var.args[0]].raw())
+            p.addVariation( var.name, 'down', ret[var.args[1]].raw())
+            toremove.extend( [var.args[0], var.args[1]])
+            hasBeenApplied=True
+        for rem in toremove: 
+            if rem in ret: ret.pop(rem)
+
 class RooFitContext:
     def __init__(self,workspace):
         self.workspace = workspace
@@ -659,6 +678,7 @@ class HistoWithNuisances:
             del self.variations[var]
             self.addVariation( var, 'up', up)
             self.addVariation( var, 'down', down)
+
 
 
     def _dropPdfAndNorm(self):
