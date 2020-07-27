@@ -69,6 +69,27 @@ def _isNullHistogram(h):
     return False
 
     ##https://github.com/uniovi-hepex/cmgtools-lite/pull/8/files
+def buildVariationsFromAlternativeORG( uncfile, ret):
+    for var in uncfile.uncertainty():
+        if var.unc_type != 'altSample': continue # now only adding the alternative samples
+        hasBeenApplied=False
+        toremove=[]
+        for k,p in ret.iteritems(): 
+            print k,p
+            if not var.procmatch().match(k): continue
+            if hasBeenApplied:
+                raise RuntimeError("variation %s is being applied to at least two processes"%var.name)
+            if var.args[0] not in ret or var.args[1] not in ret:
+                raise RuntimeError("Alternative sample (%s,%s) has not been processed, available samples are %s"%(var.args[0], var.args[1], ','.join(k for k in ret)))
+            p.addVariation( var.name, 'up'  , ret[var.args[0]].raw())
+            p.addVariation( var.name, 'down', ret[var.args[1]].raw())
+            print p,ret[var.args[0]].raw()
+            toremove.extend( [var.args[0], var.args[1]])
+            hasBeenApplied=True
+        for rem in toremove: 
+            if rem in ret: ret.pop(rem)
+
+
 def buildVariationsFromAlternative( uncfile, ret):
     for var in uncfile.uncertainty():
         if var.unc_type != 'altSample': continue # now only adding the alternative samples
@@ -80,12 +101,34 @@ def buildVariationsFromAlternative( uncfile, ret):
                 raise RuntimeError("variation %s is being applied to at least two processes"%var.name)
             if var.args[0] not in ret or var.args[1] not in ret:
                 raise RuntimeError("Alternative sample (%s,%s) has not been processed, available samples are %s"%(var.args[0], var.args[1], ','.join(k for k in ret)))
-            p.addVariation( var.name, 'up'  , ret[var.args[0]].raw())
-            p.addVariation( var.name, 'down', ret[var.args[1]].raw())
-            toremove.extend( [var.args[0], var.args[1]])
+            
+            #print k,p,var
+
+            nominal = p.raw().Clone('nominal')
+            alternate = ret[var.args[0]].raw().Clone('alternate')
+            alternate.Scale(nominal.Integral()/alternate.Integral()) #taking it's shape-only 
+            mirror = nominal.Clone('mirror')
+            for b in xrange(1,nominal.GetNbinsX()+1):
+                y0 = nominal.GetBinContent(b)
+                yA = alternate.GetBinContent(b)
+                yM = y0
+                if (y0 > 0 and yA > 0):
+                    yM = y0*y0/yA
+                elif yA == 0:
+                    yM = 2*y0
+                mirror.SetBinContent(b, yM)
+                mirror.Scale(nominal.Integral()/mirror.Integral())
+            p.addVariation( var.name, 'up'  , alternate)
+            p.addVariation( var.name, 'down', mirror)
+            #print p,alternate,mirror
+            toremove.extend( [var.args[0]])
             hasBeenApplied=True
+            #        print type(nominal),type(alternate),type(mirror)
+
         for rem in toremove: 
             if rem in ret: ret.pop(rem)
+
+
 
 class RooFitContext:
     def __init__(self,workspace):

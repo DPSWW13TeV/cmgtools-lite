@@ -25,6 +25,9 @@ class Uncertainty:
         self.removeFR = None
         self.trivialFunc=[None,None]
         self.normUnc=[None,None]
+        self.LshapeUnc=[None] #am
+        self.PshapeUnc=[None] #am
+        #self.altShape=None #am
         self._postProcess = None
         self._nontrivialSelectionChange = False
         self._year = None
@@ -69,6 +72,25 @@ class Uncertainty:
             self.trivialFunc = ['apply_norm_up','apply_norm_dn']
             self.normUnc[0] = float(self.args[0])
             self.normUnc[1] = 1.0/self.normUnc[0]
+        elif self.unc_type=='LinearShapeOnly': ####################################from here am
+            if len(self.args) != 1:
+                raise RuntimeError("shape uncert requires one argument")
+            self.fakerate = [None,None]
+            self.trivialFunc = ['apply_shape_linear_up','apply_shape_linear_dn']
+            self.LshapeUnc[0] = float(self.args[0]) 
+        elif self.unc_type=='ParabolicShapeOnly': 
+            if len(self.args) != 1:
+                raise RuntimeError("shape uncert requires one argument")
+            self.fakerate = [None,None]
+            self.trivialFunc = ['apply_shape_parabolic_up','apply_shape_parabolic_dn']
+            self.PshapeUnc[0] = float(self.args[0]) ####################################from here am 
+##       elif self.unc_type=='alternateShapeOnly': 
+##           if len(self.args) != 1:
+##               raise RuntimeError("alternat shape-only  requires one argument")
+##           self.fakerate = [None,None]
+##           self.trivialFunc = ['apply_alt_shape_up','apply_alt_shape_dn']
+##           self.altShape = float(self.args[0])
+
         elif self.unc_type=='envelope':
             if 'FakeRates' not in self.extra: 
                 raise RuntimeError("A set of FakeRates are needed for envelope")
@@ -137,7 +159,49 @@ class Uncertainty:
         h = central.Clone('')
         h.Scale(self.normUnc[0] if sign=='up' else self.normUnc[1])
         return h
+        ####################### am 
+    def apply_shape_linear_up(self,results):
+        return self.apply_shape_linear('up',results)
+    def apply_shape_linear_dn(self,results):
+        return self.apply_shape_linear('dn',results)
+    def apply_shape_parabolic_up(self,results):
+        return self.apply_shape_parabolic('up',results)
+    def apply_shape_parabolic_dn(self,results):
+        return self.apply_shape_parabolic('dn',results)
 
+    def apply_shape_linear(self,sign,results):
+        central, up, down = results
+        h = central.Clone('')
+        effect=self.LshapeUnc[0]
+        p1var = central.Clone('')
+        nbin = h.GetNbinsX()
+        xmin = h.GetBinCenter(1)
+        xmax = h.GetBinCenter(nbin)
+        for b in xrange(1,nbin+1):
+            x = (h.GetBinCenter(b)-xmin)/(xmax-xmin)
+            c1 = 2*(x-0.5)         # straight line from (0,-1) to (1,+1)
+            p1var.SetBinContent(b, p1var.GetBinContent(b) * pow(effect,+c1 if sign=='up' else -c1))
+
+
+
+        return p1var #,p2var
+
+    def apply_shape_parabolic(self,sign,results):
+        central, up, down = results
+        h = central.Clone('')
+        effect=self.PshapeUnc[0]
+        p2var = central.Clone('')
+        nbin = h.GetNbinsX()
+        xmin = h.GetBinCenter(1)
+        xmax = h.GetBinCenter(nbin)
+        for b in xrange(1,nbin+1):
+            x = (h.GetBinCenter(b)-xmin)/(xmax-xmin)
+            c2 = 1 - 8*(x-0.5)**2  # parabola through (0,-1), (0.5,~1), (1,-1)
+            p2var.SetBinContent(b, p2var.GetBinContent(b) * pow(effect,+c2 if sign=='up' else -c2))
+
+
+        return p2var
+######################### am
     def procpattern(self):
         return self._procpattern
     def binpattern(self):
