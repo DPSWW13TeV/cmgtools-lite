@@ -189,8 +189,23 @@ float fakeRateWeight_2lss_ii(float l1pt, float l1eta, int l1pdgId, bool l1pass,
     return ret;
 }
 
+float conepT_dpsww(float l1pt,float l1mvaTTH, float l1mediumId,float  l1jetRelIso,int l1pdgId){
+  float l1conept=l1pt; 
+  bool l1pass = tightLep_dpsww(l1mvaTTH,l1mediumId,l1pdgId);
+  if(l1pass){    l1conept=l1pt;}
+  else{l1conept = 0.90 * l1pt * (1 + l1jetRelIso);}
+  return l1conept;
 
-float fakeRateWeight_2lss_i(float l1pt, float l1eta, int l1pdgId, bool l1pass,
+}
+
+bool tightLep_dpsww(float l1mvaTTH, float l1mediumId,int l1pdgId){
+
+  return (abs(l1pdgId) == 13 ? (l1mvaTTH > 0.9 && l1mediumId>0)  :  l1mvaTTH > 0.8);
+
+}
+
+
+float fakeRateWeight_2lss_i(float l1pt, float l1eta, int l1pdgId, float l1pass,
                             float l2pt, float l2eta, int l2pdgId, bool l2pass, int iFR) 
 {
     return fakeRateWeight_2lss_ii(l1pt,l1eta,l1pdgId,l1pass, 
@@ -593,5 +608,15 @@ float fakeRatePromptRateWeight_2l_23(float l1pt, float l1eta, int l1pdgId, float
     return fakeRatePromptRateWeight_2l_ij(l1pt, l1eta, l1pdgId, l1pass,
                             l2pt, l2eta, l2pdgId, l2pass, 2, 3);
 }
+
+
+
+
+
+
+
+
+//##########################
+
 
 void fakeRate() {}
