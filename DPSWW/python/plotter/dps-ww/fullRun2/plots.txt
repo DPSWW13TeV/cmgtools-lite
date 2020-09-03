@@ -1,5 +1,95 @@
 # vim: syntax=sh
 
+#run2016_mumu	: if3($DATA{1}$MC{0}==1,run,-1) : 8914,272006,280920; XTitle = "run number in 2016", MoreY=2.0, IncludeOverflows=False
+#event2016_mumu	: if3($DATA{1}$MC{0}==1,event,-1) : 2.477e+20,0,2.477e+20; XTitle = "event number in 2016", MoreY=2.0, IncludeOverflows=False
+
+run2016_mumu	: $DATA{1}$MC{0}*run : 8914,272006,280920; XTitle = "run number in 2016", MoreY=2.0, IncludeOverflows=False
+event2016_mumu	: $DATA{1}$MC{0}*event : 247700000,0,247700000; XTitle = "event number in 2016", MoreY=2.0, IncludeOverflows=False
+
+##era: hashBasedRunPeriod2017($DATA{1}$MC{0},run,luminosityBlock,event,year) : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,9.5,10.5,11.5,12.5,13.5,14.5,15.5]; XTitle = "Data taking era", Legend='TR', MoreY=2.0,  xBinLabels="2016B\,2016C\,2016D\,2016E\,2016F\,2016G\,2016H\,2017B\,2017C\,2017D\,2017E\,2017F\,2018A\,2018B\,2018C\,2018D"
+
+latest_mumu               : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
+
+minMVA_mumu: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 100,-1.0,1.0; XTitle="min MVA  ", IncludeOverflows=False
+maxMVA_mumu: max(LepGood1_mvaTTH,LepGood2_mvaTTH) : 100,-1.0,1.0; XTitle="max MVA  ", IncludeOverflows=False
+
+minMVA_elel: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 100,-1.0,1.0; XTitle="min MVA  ", IncludeOverflows=False
+maxMVA_elel: max(LepGood1_mvaTTH,LepGood2_mvaTTH) : 100,-1.0,1.0; XTitle="max MVA  ", IncludeOverflows=False
+
+fake_lepMVA1_mumu: if3((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0),LepGood1_mvaTTH,-99) : 20,-1.0,1.0; XTitle="fake lepton MVA lead. ", IncludeOverflows=False 
+fake_lepMVA2_mumu: if3((LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0),LepGood2_mvaTTH,-99) : 20,-1.0,1.0; XTitle="fake lepton MVA sublead. ", IncludeOverflows=False 
+
+fake_lepMVA1_elmu: if3((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0),LepGood1_mvaTTH,-99) : 20,-1.0,1.0; XTitle="fake lepton MVA lead. ", IncludeOverflows=False 
+fake_lepMVA2_elmu: if3((LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0),LepGood2_mvaTTH,-99) : 20,-1.0,1.0; XTitle="fake lepton MVA sublead. ", IncludeOverflows=False 
+
+GenPart_pdgId[GenPart_genPartIdxMother[LepGood_genPartIdx]]
+
+LepGood1_genPartFlav_mumu : LepGood1_genPartFlav : 16,0,16 ; XTitle="LepGood1_genPartFlav" , IncludeOverflows=False
+LepGood2_genPartFlav_mumu : LepGood2_genPartFlav : 16,0,16 ; XTitle="LepGood2_genPartFlav" , IncludeOverflows=False
+
+LepGood1_genPartFlav_all_mumu : LepGood1_genPartFlav : 16,0,16 ; XTitle="LepGood1_genPartFlav" , IncludeOverflows=False
+LepGood2_genPartFlav_all_mumu : LepGood2_genPartFlav : 16,0,16 ; XTitle="LepGood2_genPartFlav" , IncludeOverflows=False
+
+LepGood1_motherid_mumu : if3(LepGood1_genPartIdx !=-1,abs(GenPart_pdgId[GenPart_genPartIdxMother[LepGood1_genPartIdx]]),-99) : 30,-0.5,29.5; XTitle="LepGood1_motherId", IncludeOverflows=False 
+LepGood2_motherid_mumu : if3(LepGood2_genPartIdx !=-1,abs(GenPart_pdgId[GenPart_genPartIdxMother[LepGood2_genPartIdx]]),-99) : 30,-0.5,29.5; XTitle="LepGood2_motherId", IncludeOverflows=False 
+
+
+
+LepGood1_motherStat_mumu : if3( (LepGood1_genPartIdx !=-1 && abs(GenPart_pdgId[GenPart_genPartIdxMother[LepGood1_genPartIdx]]) == 22), abs(GenPart_status[GenPart_genPartIdxMother[LepGood1_genPartIdx]]),-99) : 100,-0.5,99.5;  XTitle="LepGood1_mother_ph_stat", IncludeOverflows=False 
+
+LepGood2_motherStat_mumu : if3( (LepGood2_genPartIdx !=-1 && abs(GenPart_pdgId[GenPart_genPartIdxMother[LepGood2_genPartIdx]]) == 22), abs(GenPart_status[GenPart_genPartIdxMother[LepGood2_genPartIdx]]),-99) : 100,-0.5,99.5; XTitle="LepGood2_mother_ph_stat", IncludeOverflows=False 
+
+#LepGood2_motherStat_mumu : if3(LepGood2_genPartIdx == 22,abs(GenPart_status[GenPart_genPartIdxMother[LepGood2_genPartIdx]]),-99) : 100,-0.5,99.5; XTitle="LepGood2_mother_ph_stat", IncludeOverflows=False 
+
+
+############## lepton id studies
+
+LepGood1_mediumPromptId_elmu : LepGood1_mediumPromptId : [-0.5,0.5,1.5,2.5]; XTitle="LepGood1_mediumPromptId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood1_mediumId_elmu       : LepGood1_mediumId : [-0.5,0.5,1.5,2.5]; XTitle="LepGood1_mediumId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood1_mvaFall17V2Iso_elmu : LepGood1_mvaFall17V2Iso : [-0.5,0.5,1.5,2.5]; XTitle="LepGood1_mvaFall17V2Iso", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood1_mvaFall17V2Iso_WPL_elmu : LepGood1_mvaFall17V2Iso_WPL : [-0.5,0.5,1.5,2.5]; XTitle="LepGood1_mvaFall17V2Iso_WPL", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood1_mvaId_elmu : LepGood1_mvaId : 20,-5,5; XTitle="LepGood1_mvaId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+
+LepGood2_mediumPromptId_elmu : LepGood1_mediumPromptId : [-0.5,0.5,1.5,2.5]; XTitle="LepGood2_mediumPromptId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood2_mediumId_elmu       : LepGood1_mediumId : [-0.5,0.5,1.5,2.5]; XTitle="LepGood2_mediumId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood2_mvaFall17V2Iso_elmu : LepGood1_mvaFall17V2Iso : [-0.5,0.5,1.5,2.5]; XTitle="LepGood2_mvaFall17V2Iso", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood2_mvaFall17V2Iso_WPL_elmu : LepGood1_mvaFall17V2Iso_WPL : [-0.5,0.5,1.5,2.5]; XTitle="LepGood2_mvaFall17V2Iso_WPL", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood2_mvaId_elmu : LepGood1_mvaId : 20,-5,5; XTitle="LepGood2_mvaId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+
+LepGood1_mediumPromptId_mumu : LepGood1_mediumPromptId : [-0.5,0.5,1.5,2.5]; XTitle="LepGood1_mediumPromptId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood1_mediumId_mumu       : LepGood1_mediumId : [-0.5,0.5,1.5,2.5]; XTitle="LepGood1_mediumId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood1_mvaFall17V2Iso_mumu : LepGood1_mvaFall17V2Iso : [-0.5,0.5,1.5,2.5]; XTitle="LepGood1_mvaFall17V2Iso", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood1_mvaFall17V2Iso_WPL_mumu : LepGood1_mvaFall17V2Iso_WPL : [-0.5,0.5,1.5,2.5]; XTitle="LepGood1_mvaFall17V2Iso_WPL", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood1_mvaId_mumu : LepGood1_mvaId : 20,-1,1; XTitle="LepGood1_mvaId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+
+LepGood2_mediumPromptId_mumu : LepGood1_mediumPromptId : [-0.5,0.5,1.5,2.5]; XTitle="LepGood2_mediumPromptId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood2_mediumId_mumu       : LepGood1_mediumId : [-0.5,0.5,1.5,2.5]; XTitle="LepGood2_mediumId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood2_mvaFall17V2Iso_mumu : LepGood1_mvaFall17V2Iso : [-0.5,0.5,1.5,2.5]; XTitle="LepGood2_mvaFall17V2Iso", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood2_mvaFall17V2Iso_WPL_mumu : LepGood1_mvaFall17V2Iso_WPL : [-0.5,0.5,1.5,2.5]; XTitle="LepGood2_mvaFall17V2Iso_WPL", XNDdiv=505, Legend='TL', IncludeOverflows=False
+LepGood2_mvaId_mumu : LepGood1_mvaId : 20,-1,1; XTitle="LepGood2_mvaId", XNDdiv=505, Legend='TL', IncludeOverflows=False
+
+
+
+
+
+
+Muon_mediumPromptId : Muon_mediumPromptId : 
+Muon_mvaId : Muon_mvaId :
+Muon_tightId: Muon_tightId : 
+Electron_mvaFall17V2Iso : 
+Electron_mvaFall17V2Iso_WP80
+Electron_mvaFall17V2Iso_WP90
+Electron_mvaFall17V2Iso_WPL
+Electron_mvaFall17V2noIso_WP80
+Electron_mvaFall17V2noIso_WP90
+Electron_mvaFall17V2noIso_WPL
+Muon_mediumId
+LepGood_mvaTTH
+###############
+
+
+ptRatio1_mumu : (LepGood1_conePt/LepGood1_pt) : 45,0.5,1.5; XTitle="conepT/pT lead."
+ptRatio2_mumu : (LepGood2_conePt/LepGood2_pt) : 45,0.5,1.5; XTitle="conepT/pT sub-lead."
 
 MVA_ptRatio_mumu : (LepGood_conePt/LepGood_pt)\:LepGood_mvaTTH : 20,0.5,1,20,0.2,2.0; XTitle="mva score",YTitle="conepT/pT"
 
@@ -41,16 +131,23 @@ nBJetLoose40_ll  :  nBJetLoose40 : [0,1,2,3,4,5] ; XTitle='nbjetsloose40' , More
 nBJetMedium40_ll :  nBJetMedium40 : [0,1,2,3,4,5] ; XTitle='nbjetsmed40' , MoreY=1.5
 nTauTight_ll	 : nTauTight : [0,1,2,3,4,5] ; XTitle='ntautight' , MoreY=1.5
 
+nTauTight_elel	 : nTauTight : [0,1,2,3,4,5] ; XTitle='ntautight' , MoreY=1.5
+nTauTight_elmu	 : nTauTight : [0,1,2,3,4,5] ; XTitle='ntautight' , MoreY=1.5
+nTauTight_mumu	 : nTauTight : [0,1,2,3,4,5] ; XTitle='ntautight' , MoreY=1.5
+
+nTauFO_elel	 : nTauFO : [0,1,2,3,4,5] ; XTitle='ntauFO' , MoreY=1.5
+nTauFO_elmu	 : nTauFO : [0,1,2,3,4,5] ; XTitle='ntauFO' , MoreY=1.5
+nTauFO_mumu	 : nTauFO : [0,1,2,3,4,5] ; XTitle='ntauFO' , MoreY=1.5
 
 ################################ 3lCR
 
-conept1_3l         : LepGood1_conePt : 20,20,100; XTitle="p_{T1}^{1}3l (GeV)", MoreY=1.5
-conept2_3l         : LepGood2_conePt : 20,20,100; XTitle="p_{T}^{2}(3l) (GeV)", MoreY=1.5
-conept3_3l         : LepGood3_conePt : 20,20,100; XTitle="p_{T}^{3}(3l) (GeV)", MoreY=1.5
+conept1_3l         : LepGood1_conePt : 20,00,100; XTitle="p_{T1}^{1}3l (GeV)", MoreY=1.5
+conept2_3l         : LepGood2_conePt : 20,00,100; XTitle="p_{T}^{2}(3l) (GeV)", MoreY=1.5
+conept3_3l         : LepGood3_conePt : 20,00,100; XTitle="p_{T}^{3}(3l) (GeV)", MoreY=1.5
 
-pt1_3l             : LepGood1_pt     : 20,20,100; XTitle="p_{T}^{1}(3l) (GeV)", MoreY=1.5
-pt2_3l             : LepGood2_pt     : 20,20,100; XTitle="p_{T}^{2}(3l) (GeV)", MoreY=1.5
-pt3_3l             : LepGood3_pt     : 20,20,100; XTitle="p_{T}^{3}(3l) (GeV)", MoreY=1.5
+pt1_3l             : LepGood1_pt     : 20,00,100; XTitle="p_{T}^{1}(3l) (GeV)", MoreY=1.5
+pt2_3l             : LepGood2_pt     : 20,00,100; XTitle="p_{T}^{2}(3l) (GeV)", MoreY=1.5
+pt3_3l             : LepGood3_pt     : 20,00,100; XTitle="p_{T}^{3}(3l) (GeV)", MoreY=1.5
 
 
 BDT_wz_3l	   :  BDT_DPS_WZ    : 20,0,1.0; XTitle="BDT-wz (3l)" , MoreY=1.5
@@ -58,15 +155,15 @@ BDT_fakes_3l       :  BDT_DPS_fakes : 20,0,1.0; XTitle="BDT-fakes (3l)", MoreY=1
 met_3l             :  MET_pt        : 10,15,115; XTitle="p_{T}^{miss} (3l) (GeV)", MoreY=1.5 
 ###########################
 
-conept1_4l         : LepGood1_conePt : 20,20,100; XTitle="p_{T1}^{1}4l (GeV)", MoreY=1.5
-conept2_4l         : LepGood2_conePt : 20,20,100; XTitle="p_{T}^{2}(4l) (GeV)", MoreY=1.5
-conept3_4l         : LepGood3_conePt : 20,20,100; XTitle="p_{T}^{3}(4l) (GeV)", MoreY=1.5
-conept4_4l         : LepGood4_conePt : 20,20,100; XTitle="p_{T}^{4}(4l) (GeV)", MoreY=1.5
+conept1_4l         : LepGood1_conePt : 20,00,100; XTitle="p_{T1}^{1}4l (GeV)", MoreY=1.5
+conept2_4l         : LepGood2_conePt : 20,00,100; XTitle="p_{T}^{2}(4l) (GeV)", MoreY=1.5
+conept3_4l         : LepGood3_conePt : 20,00,100; XTitle="p_{T}^{3}(4l) (GeV)", MoreY=1.5
+conept4_4l         : LepGood4_conePt : 20,00,100; XTitle="p_{T}^{4}(4l) (GeV)", MoreY=1.5
 
-pt1_4l             : LepGood1_pt     : 20,20,100; XTitle="p_{T}^{1}(4l) (GeV)", MoreY=1.5
-pt2_4l             : LepGood2_pt     : 20,20,100; XTitle="p_{T}^{2}(4l) (GeV)", MoreY=1.5
-pt3_4l             : LepGood3_pt     : 20,20,100; XTitle="p_{T}^{3}(4l) (GeV)", MoreY=1.5
-pt4_4l             : LepGood4_pt     : 20,20,100; XTitle="p_{T}^{4}(4l) (GeV)", MoreY=1.5
+pt1_4l             : LepGood1_pt     : 20,00,100; XTitle="p_{T}^{1}(4l) (GeV)", MoreY=1.5
+pt2_4l             : LepGood2_pt     : 20,00,100; XTitle="p_{T}^{2}(4l) (GeV)", MoreY=1.5
+pt3_4l             : LepGood3_pt     : 20,00,100; XTitle="p_{T}^{3}(4l) (GeV)", MoreY=1.5
+pt4_4l             : LepGood4_pt     : 20,00,100; XTitle="p_{T}^{4}(4l) (GeV)", MoreY=1.5
 
 BDT_wz_4l	   :  BDT_DPS_WZ    : 20,0,1.0; XTitle="BDT-wz (4l)" , MoreY=1.5
 BDT_fakes_4l       :  BDT_DPS_fakes : 20,0,1.0; XTitle="BDT-fakes (4l)", MoreY=1.5
@@ -74,11 +171,11 @@ BDT_fakes_4l       :  BDT_DPS_fakes : 20,0,1.0; XTitle="BDT-fakes (4l)", MoreY=1
 
 ####################### all flavor ss
 
-conept1_ll           : LepGood1_conePt     : 20,20,100; XTitle="p_{T} lead. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
-conept2_ll           : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
+conept1_ll           : LepGood1_conePt     : 20,00,100; XTitle="p_{T} lead. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
+conept2_ll           : LepGood2_conePt     : 20,00,100; XTitle="p_{T} trail. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
 
-pt1_ll               : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
-pt2_ll               : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
+pt1_ll               : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
+pt2_ll               : LepGood2_pt     : 20,00,100; XTitle="p_{T} trail. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
 
 eta1_ll              : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (l^{#pm}l^{#pm})", MoreY=1.5
 eta2_ll              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (l^{#pm}l^{#pm})", MoreY=1.5
@@ -86,8 +183,8 @@ eta2_ll              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (l^{#p
 phi1_ll              : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (l^{#pm}l^{#pm})", MoreY=1.5
 phi2_ll              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (l^{#pm}l^{#pm})", MoreY=1.5
 
-MVA1_ll              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (l^{#pm}l^{#pm})" , MoreY=1.5
-MVA2_ll              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (l^{#pm}l^{#pm})", MoreY=1.5
+MVA1_ll              : LepGood1_mvaTTH : 20,-1.0,1.0; XTitle="MVA lead. (l^{#pm}l^{#pm})" , MoreY=1.5
+MVA2_ll              : LepGood2_mvaTTH : 20,-1.0,1.0; XTitle="MVA trail. (l^{#pm}l^{#pm})", MoreY=1.5
 
 tcharge1_ll          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (l^{#pm}l^{#pm})", XNDdiv=505, Legend='TL' , MoreY=1.5
 tcharge2_ll          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (l^{#pm}l^{#pm})", XNDdiv=505, Legend='TL', MoreY=1.5
@@ -133,11 +230,11 @@ BDT1d_ll             :  unroll_2Dbdt_dps_elmu(BDT_DPS_fakes,BDT_DPS_WZ): 15,0.0,
 
 ############ Dimuon
 
-conept1_mumu           : LepGood1_conePt     : 20,20,100; XTitle="p_{T} lead. (#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
-conept2_mumu           : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
+conept1_mumu           : LepGood1_conePt     : 20,00,100; XTitle="p_{T} lead. (#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
+conept2_mumu           : LepGood2_conePt     : 20,00,100; XTitle="p_{T} trail. (#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
 
-pt1_mumu               : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
-pt2_mumu               : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
+pt1_mumu               : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
+pt2_mumu               : LepGood2_pt     : 20,00,100; XTitle="p_{T} trail. (#mu^{#pm}#mu^{#pm}) (GeV)" , MoreY=1.5
 
 eta1_mumu              : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (#mu^{#pm}#mu^{#pm})"
 eta2_mumu              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (#mu^{#pm}#mu^{#pm})"
@@ -145,8 +242,8 @@ eta2_mumu              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (#mu
 phi1_mumu              : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (#mu^{#pm}#mu^{#pm})"
 phi2_mumu              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (#mu^{#pm}#mu^{#pm})"
 
-MVA1_mumu              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (#mu^{#pm}#mu^{#pm})" 
-MVA2_mumu              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (#mu^{#pm}#mu^{#pm})"
+MVA1_mumu              : LepGood1_mvaTTH : 20,-1.0,1.0; XTitle="MVA lead. (#mu^{#pm}#mu^{#pm})" 
+MVA2_mumu              : LepGood2_mvaTTH : 20,-1.0,1.0; XTitle="MVA trail. (#mu^{#pm}#mu^{#pm})"
 
 tcharge1_mumu          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (#mu^{#pm}#mu^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
 tcharge2_mumu          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (#mu^{#pm}#mu^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
@@ -161,10 +258,10 @@ pdgId2_mumu            : 0.5*LepGood2_pdgId/abs(LepGood2_pdgId)*(abs(LepGood2_pd
 dilep_charge_mumu      : if3(nLepFO>1,LepGood1_charge,-99) : [-2,0,2]; XTitle='dilepton charge', XNDiv=205,  IncludeOverflows=False, MoreY=1.5, xBinLabels="#minus #minus\,+ +"
 dilep_flav_mumu        : if3(nLepFO>1,if3(abs(LepGood1_pdgId)!=abs(LepGood2_pdgId),1,abs(LepGood1_pdgId)-11),-99)  : [-0.5,0.5,1.5,2.5]; XTitle="dilepton flavour", XNDiv=505, MoreY=1.5, xBinLabels="ee\,e#mu\,#mu#mu"
 
-met_mumu               : MET_pt          : 10,15,115; XTitle="p_{T}^{miss} (#mu^{#pm}#mu^{#pm}) (GeV)"  , MoreY=1.5 
+met_mumu               : MET_pt          : 20,0,100; XTitle="p_{T}^{miss} (#mu^{#pm}#mu^{#pm}) (GeV)"  , MoreY=1.5 
 metphi_mumu            : MET_phi         : 10,-3.2,3.2; XTitle="#phi(p_{T}^{miss} (#mu^{#pm}#mu^{#pm}) (GeV))"  , MoreY=1.5 
 
-njets_mumu  	       :  nJet25_Recl: [0,1,2] ; XTitle='njets' , MoreY=1.5
+njets_mumu  	       :  nJet25_Recl: [-0.5,0.5,1.5,2.5,3.5,4.5] ; XTitle='njets' , MoreY=1.5
 
 
 mll_mumu               :  mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)             : 15,0,200; XTitle="m_{ll}((#mu^{#pm}#mu^{#pm}) (GeV)" , MoreY=1.5
@@ -187,11 +284,11 @@ BDT1d_mumu             :  unroll_2Dbdt_dps_mumu(BDT_DPS_fakes,BDT_DPS_WZ): 15,0.
 
 
 
-conept1_mumuplusplus            : LepGood1_conePt     : 20,20,100; XTitle="p_{T} lead. (#mu^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
-conept2_mumuplusplus            : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (#mu^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
+conept1_mumuplusplus            : LepGood1_conePt     : 20,00,100; XTitle="p_{T} lead. (#mu^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
+conept2_mumuplusplus            : LepGood2_conePt     : 20,00,100; XTitle="p_{T} trail. (#mu^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
 
-pt1_mumuplusplus                : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (#mu^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
-pt2_mumuplusplus                : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (#mu^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
+pt1_mumuplusplus                : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (#mu^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
+pt2_mumuplusplus                : LepGood2_pt     : 20,00,100; XTitle="p_{T} trail. (#mu^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
 
 eta1_mumuplusplus               : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (#mu^{#plus}#mu^{#plus})"
 eta2_mumuplusplus               : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (#mu^{#plus}#mu^{#plus})"
@@ -199,8 +296,8 @@ eta2_mumuplusplus               : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta tr
 phi1_mumuplusplus               : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (#mu^{#plus}#mu^{#plus})"
 phi2_mumuplusplus               : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (#mu^{#plus}#mu^{#plus})"
 
-MVA1_mumuplusplus               : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (#mu^{#plus}#mu^{#plus})" 
-MVA2_mumuplusplus               : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (#mu^{#plus}#mu^{#plus})"
+MVA1_mumuplusplus               : LepGood1_mvaTTH : 20,-1.0,1.0; XTitle="MVA lead. (#mu^{#plus}#mu^{#plus})" 
+MVA2_mumuplusplus               : LepGood2_mvaTTH : 20,-1.0,1.0; XTitle="MVA trail. (#mu^{#plus}#mu^{#plus})"
 
 tcharge1_mumuplusplus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (#mu^{#plus}#mu^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 tcharge2_mumuplusplus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (#mu^{#plus}#mu^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
@@ -218,7 +315,7 @@ dilep_flav_mumuplusplus         : if3(nLepFO>1,if3(abs(LepGood1_pdgId)!=abs(LepG
 met_mumuplusplus                : MET_pt          : 10,15,115; XTitle="p_{T}^{miss} (#mu^{#plus}#mu^{#plus}) (GeV)"  , MoreY=1.5 
 metphi_mumuplusplus             : MET_phi         : 10,-3.2,3.2; XTitle="#phi(p_{T}^{miss} (#mu^{#plus}#mu^{#plus}) (GeV))"  , MoreY=1.5 
 
-njets_mumuplusplus   	       :  nJet25_Recl: [0,1,2] ; XTitle='njets' , MoreY=1.5
+njets_mumuplusplus   	       :  nJet25_Recl: [-0.5,0.5,1.5,2.5,3.5,4.5] ; XTitle='njets' , MoreY=1.5
 
 
 mll_mumuplusplus                :  mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)             : 15,0,200; XTitle="m_{ll}((#mu^{#plus}#mu^{#plus}) (GeV)" , MoreY=1.5
@@ -241,11 +338,11 @@ BDT1d_mumuplusplus              :  unroll_2Dbdt_dps_mumu(BDT_DPS_fakes,BDT_DPS_W
 
 
 
-conept1_mumuminusminus            : LepGood1_conePt     : 20,20,100; XTitle="p_{T} lead. (#mu^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
-conept2_mumuminusminus            : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (#mu^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
+conept1_mumuminusminus            : LepGood1_conePt     : 20,00,100; XTitle="p_{T} lead. (#mu^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
+conept2_mumuminusminus            : LepGood2_conePt     : 20,00,100; XTitle="p_{T} trail. (#mu^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
 
-pt1_mumuminusminus                : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (#mu^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
-pt2_mumuminusminus                : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (#mu^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
+pt1_mumuminusminus                : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (#mu^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
+pt2_mumuminusminus                : LepGood2_pt     : 20,00,100; XTitle="p_{T} trail. (#mu^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
 
 eta1_mumuminusminus               : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (#mu^{#minus}#mu^{#minus})"
 eta2_mumuminusminus               : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (#mu^{#minus}#mu^{#minus})"
@@ -253,8 +350,8 @@ eta2_mumuminusminus               : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta 
 phi1_mumuminusminus               : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (#mu^{#minus}#mu^{#minus})"
 phi2_mumuminusminus               : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (#mu^{#minus}#mu^{#minus})"
 
-MVA1_mumuminusminus               : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (#mu^{#minus}#mu^{#minus})" 
-MVA2_mumuminusminus               : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (#mu^{#minus}#mu^{#minus})"
+MVA1_mumuminusminus               : LepGood1_mvaTTH : 20,-1.0,1.0; XTitle="MVA lead. (#mu^{#minus}#mu^{#minus})" 
+MVA2_mumuminusminus               : LepGood2_mvaTTH : 20,-1.0,1.0; XTitle="MVA trail. (#mu^{#minus}#mu^{#minus})"
 
 tcharge1_mumuminusminus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (#mu^{#minus}#mu^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 tcharge2_mumuminusminus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (#mu^{#minus}#mu^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
@@ -272,7 +369,7 @@ dilep_flav_mumuminusminus         : if3(nLepFO>1,if3(abs(LepGood1_pdgId)!=abs(Le
 met_mumuminusminus                : MET_pt          : 10,15,115; XTitle="p_{T}^{miss} (#mu^{#minus}#mu^{#minus}) (GeV)"  , MoreY=1.5 
 metphi_mumuminusminus             : MET_phi         : 10,-3.2,3.2; XTitle="#phi(p_{T}^{miss} (#mu^{#minus}#mu^{#minus}) (GeV))"  , MoreY=1.5 
 
-njets_mumuminusminus   	       :  nJet25_Recl: [0,1,2] ; XTitle='njets' , MoreY=1.5
+njets_mumuminusminus   	       :  nJet25_Recl: [-0.5,0.5,1.5,2.5,3.5,4.5] ; XTitle='njets' , MoreY=1.5
 
 
 mll_mumuminusminus                :  mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)             : 15,0,200; XTitle="m_{ll}((#mu^{#minus}#mu^{#minus}) (GeV)" , MoreY=1.5
@@ -294,11 +391,11 @@ BDT1d_mumuminusminus              :  unroll_2Dbdt_dps_mumu(BDT_DPS_fakes,BDT_DPS
 
 
 ########################## dielectron
-conept1_elel           : LepGood1_conePt     : 20,20,100; XTitle="p_{T} lead. (e^{#pm}e^{#pm}) (GeV)", MoreY=1.5
-conept2_elel           : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (e^{#pm}e^{#pm}) (GeV)", MoreY=1.5
+conept1_elel           : LepGood1_conePt     : 20,00,100; XTitle="p_{T} lead. (e^{#pm}e^{#pm}) (GeV)", MoreY=1.5
+conept2_elel           : LepGood2_conePt     : 20,00,100; XTitle="p_{T} trail. (e^{#pm}e^{#pm}) (GeV)", MoreY=1.5
 
-pt1_elel               : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (e^{#pm}e^{#pm}) (GeV)", MoreY=1.5
-pt2_elel               : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (e^{#pm}e^{#pm}) (GeV)", MoreY=1.5
+pt1_elel               : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (e^{#pm}e^{#pm}) (GeV)", MoreY=1.5
+pt2_elel               : LepGood2_pt     : 20,00,100; XTitle="p_{T} trail. (e^{#pm}e^{#pm}) (GeV)", MoreY=1.5
 
 eta1_elel              : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (e^{#pm}e^{#pm})"
 eta2_elel              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (e^{#pm}e^{#pm})"
@@ -306,8 +403,8 @@ eta2_elel              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (e^{
 phi1_elel              : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (e^{#pm}e^{#pm})"
 phi2_elel              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (e^{#pm}e^{#pm})"
 
-MVA1_elel              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#pm}e^{#pm})" 
-MVA2_elel              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#pm}e^{#pm})"
+MVA1_elel              : LepGood1_mvaTTH : 20,-1.0,1.0; XTitle="MVA lead. (e^{#pm}e^{#pm})" 
+MVA2_elel              : LepGood2_mvaTTH : 20,-1.0,1.0; XTitle="MVA trail. (e^{#pm}e^{#pm})"
 
 tcharge1_elel          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#pm}e^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
 tcharge2_elel          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#pm}e^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
@@ -326,7 +423,7 @@ dilep_flav_elel        : if3(nLepFO>1,if3(abs(LepGood1_pdgId)!=abs(LepGood2_pdgI
 met_elel               : MET_pt          : 10,15,115; XTitle="p_{T}^{miss} (e^{#pm}e^{#pm}) (GeV)"  , MoreY=1.5 
 metphi_elel            : MET_phi         : 10,-3.2,3.2; XTitle="#phi(p_{T}^{miss} (e^{#pm}e^{#pm}) (GeV))"  , MoreY=1.5 
 
-njets_elel  	       :  nJet25_Recl: [0,1,2] ; XTitle='njets' , MoreY=1.5
+njets_elel  	       :  nJet25_Recl: [-0.5,0.5,1.5,2.5,3.5,4.5] ; XTitle='njets' , MoreY=1.5
 
 
 mll_elel               :  mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)             : 15,0,200; XTitle="m_{ll}((e^{#pm}e^{#pm}) (GeV)" , MoreY=1.5
@@ -352,11 +449,11 @@ BDT1d_elel             :  unroll_2Dbdt_dps_mumu(BDT_DPS_fakes,BDT_DPS_WZ): 15,0.
 
 
 
-conept1_elelplusplus            : LepGood1_conePt     : 20,20,100; XTitle="p_{T} lead. (e^{#plus}e^{#plus}) (GeV)", MoreY=1.5
-conept2_elelplusplus            : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (e^{#plus}e^{#plus}) (GeV)", MoreY=1.5
+conept1_elelplusplus            : LepGood1_conePt     : 20,00,100; XTitle="p_{T} lead. (e^{#plus}e^{#plus}) (GeV)", MoreY=1.5
+conept2_elelplusplus            : LepGood2_conePt     : 20,00,100; XTitle="p_{T} trail. (e^{#plus}e^{#plus}) (GeV)", MoreY=1.5
 
-pt1_elelplusplus                : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (e^{#plus}e^{#plus}) (GeV)", MoreY=1.5
-pt2_elelplusplus                : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (e^{#plus}e^{#plus}) (GeV)", MoreY=1.5
+pt1_elelplusplus                : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (e^{#plus}e^{#plus}) (GeV)", MoreY=1.5
+pt2_elelplusplus                : LepGood2_pt     : 20,00,100; XTitle="p_{T} trail. (e^{#plus}e^{#plus}) (GeV)", MoreY=1.5
 
 eta1_elelplusplus               : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (e^{#plus}e^{#plus})"
 eta2_elelplusplus               : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (e^{#plus}e^{#plus})"
@@ -364,8 +461,8 @@ eta2_elelplusplus               : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta tr
 phi1_elelplusplus               : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (e^{#plus}e^{#plus})"
 phi2_elelplusplus               : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (e^{#plus}e^{#plus})"
 
-MVA1_elelplusplus               : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#plus}e^{#plus})" 
-MVA2_elelplusplus               : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#plus}e^{#plus})"
+MVA1_elelplusplus               : LepGood1_mvaTTH : 20,-1.0,1.0; XTitle="MVA lead. (e^{#plus}e^{#plus})" 
+MVA2_elelplusplus               : LepGood2_mvaTTH : 20,-1.0,1.0; XTitle="MVA trail. (e^{#plus}e^{#plus})"
 
 tcharge1_elelplusplus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#plus}e^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 tcharge2_elelplusplus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#plus}e^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
@@ -383,7 +480,7 @@ dilep_flav_elelplusplus         : if3(nLepFO>1,if3(abs(LepGood1_pdgId)!=abs(LepG
 met_elelplusplus                : MET_pt          : 10,15,115; XTitle="p_{T}^{miss} (e^{#plus}e^{#plus}) (GeV)"  , MoreY=1.5 
 metphi_elelplusplus             : MET_phi         : 10,-3.2,3.2; XTitle="#phi(p_{T}^{miss} (e^{#plus}e^{#plus}) (GeV))"  , MoreY=1.5 
 
-njets_elelplusplus   	       :  nJet25_Recl: [0,1,2] ; XTitle='njets' , MoreY=1.5
+njets_elelplusplus   	       :  nJet25_Recl: [-0.5,0.5,1.5,2.5,3.5,4.5] ; XTitle='njets' , MoreY=1.5
 
 
 mll_elelplusplus                :  mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)             : 15,0,200; XTitle="m_{ll}((e^{#plus}e^{#plus}) (GeV)" , MoreY=1.5
@@ -406,11 +503,11 @@ BDT1d_elelplusplus              :  unroll_2Dbdt_dps_mumu(BDT_DPS_fakes,BDT_DPS_W
 
 
 
-conept1_elelminusminus            : LepGood1_conePt     : 20,20,100; XTitle="p_{T} lead. (e^{#minus}e^{#minus}) (GeV)", MoreY=1.5
-conept2_elelminusminus            : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (e^{#minus}e^{#minus}) (GeV)", MoreY=1.5
+conept1_elelminusminus            : LepGood1_conePt     : 20,00,100; XTitle="p_{T} lead. (e^{#minus}e^{#minus}) (GeV)", MoreY=1.5
+conept2_elelminusminus            : LepGood2_conePt     : 20,00,100; XTitle="p_{T} trail. (e^{#minus}e^{#minus}) (GeV)", MoreY=1.5
 
-pt1_elelminusminus                : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (e^{#minus}e^{#minus}) (GeV)", MoreY=1.5
-pt2_elelminusminus                : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (e^{#minus}e^{#minus}) (GeV)", MoreY=1.5
+pt1_elelminusminus                : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (e^{#minus}e^{#minus}) (GeV)", MoreY=1.5
+pt2_elelminusminus                : LepGood2_pt     : 20,00,100; XTitle="p_{T} trail. (e^{#minus}e^{#minus}) (GeV)", MoreY=1.5
 
 eta1_elelminusminus               : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (e^{#minus}e^{#minus})"
 eta2_elelminusminus               : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (e^{#minus}e^{#minus})"
@@ -418,8 +515,8 @@ eta2_elelminusminus               : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta 
 phi1_elelminusminus               : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (e^{#minus}e^{#minus})"
 phi2_elelminusminus               : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (e^{#minus}e^{#minus})"
 
-MVA1_elelminusminus               : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#minus}e^{#minus})" 
-MVA2_elelminusminus               : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#minus}e^{#minus})"
+MVA1_elelminusminus               : LepGood1_mvaTTH : 20,-1.0,1.0; XTitle="MVA lead. (e^{#minus}e^{#minus})" 
+MVA2_elelminusminus               : LepGood2_mvaTTH : 20,-1.0,1.0; XTitle="MVA trail. (e^{#minus}e^{#minus})"
 
 tcharge1_elelminusminus           : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#minus}e^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 tcharge2_elelminusminus           : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#minus}e^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
@@ -437,7 +534,7 @@ dilep_flav_elelminusminus         : if3(nLepFO>1,if3(abs(LepGood1_pdgId)!=abs(Le
 met_elelminusminus                : MET_pt          : 10,15,115; XTitle="p_{T}^{miss} (e^{#minus}e^{#minus}) (GeV)"  , MoreY=1.5 
 metphi_elelminusminus             : MET_phi         : 10,-3.2,3.2; XTitle="#phi(p_{T}^{miss} (e^{#minus}e^{#minus}) (GeV))"  , MoreY=1.5 
 
-njets_elelminusminus   	       :  nJet25_Recl: [0,1,2] ; XTitle='njets' , MoreY=1.5
+njets_elelminusminus   	       :  nJet25_Recl: [-0.5,0.5,1.5,2.5,3.5,4.5] ; XTitle='njets' , MoreY=1.5
 
 
 mll_elelminusminus                :  mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)             : 15,0,200; XTitle="m_{ll}((e^{#minus}e^{#minus}) (GeV)" , MoreY=1.5
@@ -473,11 +570,11 @@ BDT1d_elelminusminus              :  unroll_2Dbdt_dps_mumu(BDT_DPS_fakes,BDT_DPS
 ######################################################################################################################### elmu 
 
 
-conept1_elmu           : LepGood1_conePt     : 20,20,100; XTitle="p_{T} lead. (e^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
-conept2_elmu           : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
+conept1_elmu           : LepGood1_conePt     : 20,00,100; XTitle="p_{T} lead. (e^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
+conept2_elmu           : LepGood2_conePt     : 20,00,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
 
-pt1_elmu               : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (e^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
-pt2_elmu               : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
+pt1_elmu               : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (e^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
+pt2_elmu               : LepGood2_pt     : 20,00,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
 
 eta1_elmu              : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (e^{#pm}#mu^{#pm})"
 eta2_elmu              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (e^{#pm}#mu^{#pm})"
@@ -485,8 +582,8 @@ eta2_elmu              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (e^{
 phi1_elmu              : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (e^{#pm}#mu^{#pm})"
 phi2_elmu              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (e^{#pm}#mu^{#pm})"
 
-MVA1_elmu              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#pm}#mu^{#pm})" 
-MVA2_elmu              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#pm}#mu^{#pm})"
+MVA1_elmu              : LepGood1_mvaTTH : 20,-1.0,1.0; XTitle="MVA lead. (e^{#pm}#mu^{#pm})" 
+MVA2_elmu              : LepGood2_mvaTTH : 20,-1.0,1.0; XTitle="MVA trail. (e^{#pm}#mu^{#pm})"
 
 tcharge1_elmu          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#pm}#mu^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
 tcharge2_elmu          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#pm}#mu^{#pm})", XNDdiv=505, MoreY=1.5, Legend='TL'
@@ -502,10 +599,10 @@ dilep_charge_elmu      : if3(nLepFO>1,LepGood1_charge,-99) : [-2,0,2]; XTitle='d
 dilep_flav_elmu        : if3(nLepFO>1,if3(abs(LepGood1_pdgId)!=abs(LepGood2_pdgId),1,abs(LepGood1_pdgId)-11),-99)  : [-0.5,0.5,1.5,2.5]; XTitle="dilepton flavour", XNDiv=505, MoreY=1.5, xBinLabels="ee\,e#mu\,#mu#mu"
 
 
-met_elmu               : MET_pt          : 10,15,115; XTitle="p_{T}^{miss} (e^{#pm}#mu^{#pm}) (GeV)"  , MoreY=1.5 
+met_elmu               : MET_pt          : 20,0,100; XTitle="p_{T}^{miss} (e^{#pm}#mu^{#pm}) (GeV)"  , MoreY=1.5 
 metphi_elmu            : MET_phi         : 10,-3.2,3.2; XTitle="#phi(p_{T}^{miss} (e^{#pm}#mu^{#pm}) (GeV))"  , MoreY=1.5 
 
-njets_elmu  	       :  nJet25_Recl: [0,1,2] ; XTitle='njets' , MoreY=1.5
+njets_elmu  	       :  nJet25_Recl: [-0.5,0.5,1.5,2.5,3.5,4.5] ; XTitle='njets' , MoreY=1.5
 
 
 mll_elmu               :  mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)             : 15,0,200; XTitle="m_{ll}((e^{#pm}#mu^{#pm}) (GeV)" , MoreY=1.5
@@ -545,11 +642,11 @@ BDT1d_elmu             :  unroll_2Dbdt_dps_elmu(BDT_DPS_fakes,BDT_DPS_WZ): 15,0.
 
 
 
-conept1_elmuminusminus           : LepGood1_conePt     : 20,20,100; XTitle="p_{T} lead. (e^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
-conept2_elmuminusminus           : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (e^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
+conept1_elmuminusminus           : LepGood1_conePt     : 20,00,100; XTitle="p_{T} lead. (e^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
+conept2_elmuminusminus           : LepGood2_conePt     : 20,00,100; XTitle="p_{T} trail. (e^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
 
-pt1_elmuminusminus               : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (e^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
-pt2_elmuminusminus               : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (e^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
+pt1_elmuminusminus               : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (e^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
+pt2_elmuminusminus               : LepGood2_pt     : 20,00,100; XTitle="p_{T} trail. (e^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
 
 eta1_elmuminusminus              : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (e^{#minus}#mu^{#minus})"
 eta2_elmuminusminus              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (e^{#minus}#mu^{#minus})"
@@ -557,8 +654,8 @@ eta2_elmuminusminus              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta t
 phi1_elmuminusminus              : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (e^{#minus}#mu^{#minus})"
 phi2_elmuminusminus              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (e^{#minus}#mu^{#minus})"
 
-MVA1_elmuminusminus              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#minus}#mu^{#minus})" 
-MVA2_elmuminusminus              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#minus}#mu^{#minus})"
+MVA1_elmuminusminus              : LepGood1_mvaTTH : 20,-1.0,1.0; XTitle="MVA lead. (e^{#minus}#mu^{#minus})" 
+MVA2_elmuminusminus              : LepGood2_mvaTTH : 20,-1.0,1.0; XTitle="MVA trail. (e^{#minus}#mu^{#minus})"
 
 tcharge1_elmuminusminus          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#minus}#mu^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 tcharge2_elmuminusminus          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#minus}#mu^{#minus})", XNDdiv=505, MoreY=1.5, Legend='TL'
@@ -574,10 +671,10 @@ dilep_charge_elmuminusminus      : if3(nLepFO>1,LepGood1_charge,-99) : [-2,0,2];
 dilep_flav_elmuminusminus        : if3(nLepFO>1,if3(abs(LepGood1_pdgId)!=abs(LepGood2_pdgId),1,abs(LepGood1_pdgId)-11),-99)  : [-0.5,0.5,1.5,2.5]; XTitle="dilepton flavour", XNDiv=505, MoreY=1.5, xBinLabels="ee\,e#mu\,#mu#mu"
 
 
-met_elmuminusminus               : MET_pt          : 10,15,115; XTitle="p_{T}^{miss} (e^{#minus}#mu^{#minus}) (GeV)"  , MoreY=1.5 
+met_elmuminusminus               : MET_pt          : 0,20,100; XTitle="p_{T}^{miss} (e^{#minus}#mu^{#minus}) (GeV)"  , MoreY=1.5 
 metphi_elmuminusminus            : MET_phi         : 10,-3.2,3.2; XTitle="#phi(p_{T}^{miss} (e^{#minus}#mu^{#minus}) (GeV))"  , MoreY=1.5 
 
-njets_elmuminusminus  	       :  nJet25_Recl: [0,1,2] ; XTitle='njets', MoreY=1.5
+njets_elmuminusminus  	       :  nJet25_Recl: [-0.5,0.5,1.5,2.5,3.5,4.5] ; XTitle='njets', MoreY=1.5
 
 
 mll_elmuminusminus               :  mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)             : 15,0,200; XTitle="m_{ll}((e^{#minus}#mu^{#minus}) (GeV)", MoreY=1.5
@@ -599,11 +696,11 @@ BDT1d_elmuminusminus             :  unroll_2Dbdt_dps_elmu(BDT_DPS_fakes,BDT_DPS_
 
 ##############
 
-conept1_elmuplusplus           : LepGood1_conePt     : 20,20,100; XTitle="p_{T} lead. (e^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
-conept2_elmuplusplus           : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (e^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
+conept1_elmuplusplus           : LepGood1_conePt     : 20,00,100; XTitle="p_{T} lead. (e^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
+conept2_elmuplusplus           : LepGood2_conePt     : 20,00,100; XTitle="p_{T} trail. (e^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
 
-pt1_elmuplusplus               : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (e^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
-pt2_elmuplusplus               : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (e^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
+pt1_elmuplusplus               : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (e^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
+pt2_elmuplusplus               : LepGood2_pt     : 20,00,100; XTitle="p_{T} trail. (e^{#plus}#mu^{#plus}) (GeV)", MoreY=1.5
 
 eta1_elmuplusplus              : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (e^{#plus}#mu^{#plus})"
 eta2_elmuplusplus              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (e^{#plus}#mu^{#plus})"
@@ -611,8 +708,8 @@ eta2_elmuplusplus              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta tra
 phi1_elmuplusplus              : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (e^{#plus}#mu^{#plus})"
 phi2_elmuplusplus              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (e^{#plus}#mu^{#plus})"
 
-MVA1_elmuplusplus              : LepGood1_mvaTTH : 20,0.5,1.0; XTitle="MVA lead. (e^{#plus}#mu^{#plus})" 
-MVA2_elmuplusplus              : LepGood2_mvaTTH : 20,0.5,1.0; XTitle="MVA trail. (e^{#plus}#mu^{#plus})"
+MVA1_elmuplusplus              : LepGood1_mvaTTH : 20,-1.0,1.0; XTitle="MVA lead. (e^{#plus}#mu^{#plus})" 
+MVA2_elmuplusplus              : LepGood2_mvaTTH : 20,-1.0,1.0; XTitle="MVA trail. (e^{#plus}#mu^{#plus})"
 
 tcharge1_elmuplusplus          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#plus}#mu^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
 tcharge2_elmuplusplus          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#plus}#mu^{#plus})", XNDdiv=505, MoreY=1.5, Legend='TL'
@@ -628,10 +725,10 @@ dilep_charge_elmuplusplus      : if3(nLepFO>1,LepGood1_charge,-99) : [-2,0,2]; X
 dilep_flav_elmuplusplus        : if3(nLepFO>1,if3(abs(LepGood1_pdgId)!=abs(LepGood2_pdgId),1,abs(LepGood1_pdgId)-11),-99)  : [-0.5,0.5,1.5,2.5]; XTitle="dilepton flavour", XNDiv=505, MoreY=1.5, xBinLabels="ee\,e#mu\,#mu#mu"
 
 
-met_elmuplusplus               : MET_pt          : 10,15,115; XTitle="p_{T}^{miss} (e^{#plus}#mu^{#plus}) (GeV)"  , MoreY=1.5 
+met_elmuplusplus               : MET_pt          : 0,20,100; XTitle="p_{T}^{miss} (e^{#plus}#mu^{#plus}) (GeV)"  , MoreY=1.5 
 metphi_elmuplusplus            : MET_phi         : 10,-3.2,3.2; XTitle="#phi(p_{T}^{miss} (e^{#plus}#mu^{#plus}) (GeV))"  , MoreY=1.5 
 
-njets_elmuplusplus  	       :  nJet25_Recl: [0,1,2] ; XTitle='njets' , MoreY=1.5
+njets_elmuplusplus  	       :  nJet25_Recl: [-0.5,0.5,1.5,2.5,3.5,4.5] ; XTitle='njets' , MoreY=1.5
 
 
 mll_elmuplusplus               :  mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)             : 15,0,200; XTitle="m_{ll}((e^{#plus}#mu^{#plus}) (GeV)" , MoreY=1.5

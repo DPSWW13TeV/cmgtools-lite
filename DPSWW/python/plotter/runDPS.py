@@ -9,6 +9,28 @@ lumis = {
 }
 
 
+def simpleMCplots(trees,MCfriends,targetdir, fmca, fcut,fplots, enabledcuts, disabledcuts, processes,plotlist,extraopts = ''):
+
+
+    cmd  = ' mcPlots.py -f -j 10 -l 35.9 --tree NanoAOD --year 2016  --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots)
+
+
+
+    cmd += ''.join(' --FMCs '+frnd for frnd in MCfriends)
+
+    cmd += ''.join(' -E ^'+cut for cut in enabledcuts )
+    cmd += ''.join(' -X ^'+cut for cut in disabledcuts)
+
+    cmd += ' --sP '+','.join(plot for plot in plotlist)
+    cmd += ' -p '+','.join(processes)
+
+
+    cmd += ' -o '+targetdir+'/'+'_AND_'.join(plot for plot in plotlist)+'.root'
+    if extraopts:
+        cmd += ' '+extraopts
+
+    print 'running: python', cmd
+    subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
 
@@ -123,7 +145,7 @@ def makeResults(year,finalState,splitCharge,doWhat):
 
     print 'running for %s with charge split flag %s' %(finalState,splitCharge)
 
-    processes = ['DPSWW','Rares','Convs','ZZ','WZ','data_flips','data','WZ_pow','data_fakes']#,,'promptsub']#
+    processes = ['DPSWW','WZ']#'Rares','Convs','ZZ','WZ','data_flips','data','WZ_pow','data_fakes']#,,'promptsub']#
 
     #processes = ['Top','data_fakes']#'Top']#,'mc_fakes']
     fRvars    = ['_FRe_norm_Up','_FRe_norm_Dn','_FRe_pt_Up','_FRe_pt_Dn','_FRe_be_Up','_FRe_be_Dn','_FRm_norm_Up','_FRm_norm_Dn','_FRm_pt_Up','_FRm_pt_Dn','_FRm_be_Up','_FRm_be_Dn']
@@ -137,7 +159,7 @@ def makeResults(year,finalState,splitCharge,doWhat):
 
     exotic = ['ptRatio1','ptRatio2']#,'conept1','conept2']#njets25']#LepGood1_motherid']#,'LepGood2_motherid']#'fake_lepMVA1','fake_lepMVA2', LepGood1_genPartFlav_all','LepGood2_genPartFlav_all']#'LepGood1_motherid','LepGood2_motherid',LepGood1_tightId','LepGood2_tightId','LepGood1_cutBased','LepGood2_cutBased','LepGood1_mediumPromptId','LepGood1_mediumId','LepGood1_mvaFall17V2Iso','LepGood1_mvaFall17V2Iso_WPL','LepGood1_mvaId','LepGood2_mediumPromptId','LepGood2_mediumId','LepGood2_mvaFall17V2Iso','LepGood2_mvaFall17V2Iso_WPL','LepGood2_mvaId','MVA1','MVA2','pt1','pt2','pdgId1','pdgId2']#'conept1','conept2','pt1','pt2','MVA1','MVA2','met','nBJetLoose25','nBJetMedium25','nBJetTight25','nTauTight','nTauFO','njets25','njets30']#MVA_ptRatio']#njets25','njets30']#'dxy1','dz1','sip3d1','dxy2','dz2','sip3d2']#,'mll']#tcharge1','tcharge2']#conept1','conept2','pt1','pt2','MVA1','MVA2','met','nBJetLoose25','nBJetMedium25','nBJetTight25','nBJetLoose40','nBJetMedium40','nBJetTight40','nTauTight']
 
-    allvars    = ['pt2']#run2016','event2016']#minMVA','MVA1','MVA2']#,'maxMVA']#'MVA1','MVA2']#'conept1','conept2','pt1','pt2','eta1','eta2','phi1','phi2','MVA1','MVA2','tcharge1','tcharge2','charge1','charge2','pdgId1','pdgId2','dilep_charge','dilep_flav','met','metphi','njets','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2']#,'nVert','BDT_wz','BDT_fakes','BDT1d']        
+    allvars    = ['minMVA','MVA1','MVA2','maxMVA']#run2016','event2016']#minMVA','MVA1','MVA2']#,'maxMVA']#'MVA1','MVA2']#'conept1','conept2','pt1','pt2','eta1','eta2','phi1','phi2','MVA1','MVA2','tcharge1','tcharge2','charge1','charge2','pdgId1','pdgId2','dilep_charge','dilep_flav','met','metphi','njets','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2']#,'nVert','BDT_wz','BDT_fakes','BDT1d']        
     
     #    configs=['elmu','mumu','elel','plusplus','minusminus']
     plotvars   = allvars #allvars #exotic #+specials
@@ -339,6 +361,34 @@ def onelepCRPlot(year,finalState):
         makeplots=['mvaTTH']#'pt','conePt','miniRelIso','mvaTTH','awayJet_pt','met','nvtx','mtW1','mtW1R']
         runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, True,year, 1,extraopts)
 
+def dpsww(finalState):
+    print '=========================================='
+    print 'running single lepton control region  plots'
+    print '=========================================='
+    trees='/eos/cms/store/cmst3/group/dpsww/Lepton_id_study/'
+    MCfriends=[trees+'coll_merged/']
+    targetdir = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_signal/'.format(date=date,pf=('-'+postfix if postfix else '') ) 
+    fplots = 'dps-ww/fullRun2/simple_plots.txt'
+    fmca = 'dps-ww/fullRun2/simple_mca.txt'
+    fsyst  = '' 
+    fcut   = 'dps-ww/fullRun2/simple_cuts.txt'
+    disable   = []
+    processes=['DPSWW']
+    #enable=[]
+    ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.0  1.99'
+    spam    = ' --topSpamSize 1.0 --noCms '
+    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
+    ubands  = ' --plotmode norm' 
+    anything =''
+    extraopts = ratio + spam + legends + ubands + anything
+    plots=['mvaTTH1','mvaTTH2','met','pt1','pt2','minMVA','maxMVA']
+    
+    for FS in finalState:
+        enable=[]
+        enable.append(FS); 
+        makeplots=[ip + '_' + FS for ip in plots]
+        simpleMCplots(trees,MCfriends,targetdir, fmca, fcut,fplots, enable, disable, processes,makeplots,extraopts)
+
 if __name__ == '__main__':
     parser = optparse.OptionParser(usage='usage: %prog [opts] ', version='%prog 1.0')
     parser.add_option('--pf', '--postfix', dest='postfix' , type='string', default='', help='postfix for running each module')
@@ -353,6 +403,7 @@ if __name__ == '__main__':
     parser.add_option('--results' , '--makeResults'  , dest='results', action='store_true' , default=False , help='make plots')
     parser.add_option('--old' , dest='old', action='store_true' , default=False , help='make plots')
     parser.add_option('--dW' , '--doWhat'  , dest='doWhat', type='string' , default=[] , help='plots or cards')
+    parser.add_option('--dpsww',dest='dpsww', action='store_true' , default=False , help='make plots for signal')
 
     (opts, args) = parser.parse_args()
 
@@ -373,5 +424,7 @@ if __name__ == '__main__':
     if opts.results:
         print 'running plots for 2lss'
         makeResults(opts.year,opts.finalState,opts.splitCharge,opts.doWhat)
+    if opts.dpsww:
+        dpsww(opts.finalState)
     if opts.old:
         makeResults_oldMaps(opts.year,opts.finalState,opts.splitCharge)

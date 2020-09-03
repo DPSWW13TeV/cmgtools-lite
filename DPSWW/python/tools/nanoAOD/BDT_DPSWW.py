@@ -1,8 +1,8 @@
 #from CMGTools.TTHAnalysis.treeReAnalyzer import *
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection as Collection 
-from CMGTools.TTHAnalysis.tools.nanoAOD.friendVariableProducerTools import writeOutput
-from CMGTools.TTHAnalysis.tools.mvaTool import *
+from CMGTools.DPSWW.tools.nanoAOD.friendVariableProducerTools import writeOutput
+from CMGTools.DPSWW.tools.mvaTool import *
             
     
 
@@ -25,10 +25,13 @@ class BDT_DPSWW(Module):
         ]
 
 
-        wts_wz    = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_wz/weights/TMVAClassification_BDTG.weights.xml'
-        wts_fakes = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_fakes/weights/TMVAClassification_BDTG.weights.xml'
-        self._MVAs['BDT_DPS_WZ']    = MVATool('BDTG_method', wts_wz   , self._vars, rarity=True)
-        self._MVAs['BDT_DPS_fakes'] = MVATool('BDTG_method', wts_fakes, self._vars, rarity=True)
+        wts_wz_amc = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_MET20_wz_amc/weights/TMVAClassification_BDTG.weights.xml'
+        wts_wz_pow = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_MET20_wz_pow/weights/TMVAClassification_BDTG.weights.xml'
+        wts_fakes  = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_MET20_fakes/weights/TMVAClassification_BDTG.weights.xml'
+
+        self._MVAs['BDT_DPS_WZ_amc']    = MVATool('BDTG_method', wts_wz_amc   , self._vars, rarity=True)
+        self._MVAs['BDT_DPS_WZ_pow']    = MVATool('BDTG_method', wts_wz_pow   , self._vars, rarity=True)
+        self._MVAs['BDT_DPS_fakes']     = MVATool('BDTG_method', wts_fakes    , self._vars, rarity=True)
     def beginJob(self):
         pass
     def endJob(self):
@@ -36,7 +39,8 @@ class BDT_DPSWW(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         #self.initReaders(inputTree) # initReaders must be called in beginFile
         self.out = wrappedOutputTree
-        self.out.branch('BDT_DPS_WZ', "F")
+        self.out.branch('BDT_DPS_WZ_amc', "F")
+        self.out.branch('BDT_DPS_WZ_pow', "F")
         self.out.branch('BDT_DPS_fakes', "F")
         pass
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
@@ -44,8 +48,9 @@ class BDT_DPSWW(Module):
     def analyze(self, event):
         
         mvadict = dict([ (name, mva(event)) for name, mva in self._MVAs.iteritems()])
-        self.out.fillBranch('BDT_DPS_WZ'   , mvadict['BDT_DPS_WZ'])
-        self.out.fillBranch('BDT_DPS_fakes', mvadict['BDT_DPS_fakes'])
+        self.out.fillBranch('BDT_DPS_WZ_amc'   , mvadict['BDT_DPS_WZ_amc'])
+        self.out.fillBranch('BDT_DPS_WZ_pow'   , mvadict['BDT_DPS_WZ_pow'])
+        self.out.fillBranch('BDT_DPS_fakes'    , mvadict['BDT_DPS_fakes'])
         return True
 
 

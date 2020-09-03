@@ -1,0 +1,41 @@
+alwaystrue: 1
+
+dilep: nLepGood == 2
+same-sign: LepGood_charge[0]*LepGood_charge[1] > 0
+
+pt2520: LepGood_pt[0]>25 && LepGood_pt[1]>20
+
+
+lep1Tight : if3(abs(LepGood_pdgId[0]) == 13, (LepGood_mvaTTH[0] > 0.5 && LepGood_mediumId[0]), LepGood_mvaTTH[0] > 0.5)
+lep2Tight : if3(abs(LepGood_pdgId[1]) == 13, (LepGood_mvaTTH[1] > 0.5 && LepGood_mediumId[1]), LepGood_mvaTTH[1] > 0.5)
+
+
+#tauveto: nTauFO == 0
+metpt: MET_pt > 20
+#01j: nJet25 < 2
+#bVeto: nBJetLoose25 == 0
+
+Zee_veto: abs(LepGood_pdgId[0])!=11 || abs(LepGood_pdgId[0]) != 11 || abs(mass_2(LepGood_pt[0],LepGood_eta[0],LepGood_phi[0],LepGood_mass[0],LepGood_pt[1],LepGood_eta[1],LepGood_phi[1],LepGood_mass[1])-91.2) > 10
+
+
+
+eleID: (abs(LepGood_pdgId[0])!=11 || (LepGood_convVeto[0] && LepGood_lostHits[0]==0 && LepGood_tightCharge[0]>=2)) && (abs(LepGood_pdgId[1])!=11 || (LepGood_convVeto[1] && LepGood_lostHits[1]==0 && LepGood_tightCharge[1]>=2))
+TightChargeMuon: (abs(LepGood_pdgId[0])!=13 || LepGood_tightCharge[0]>=1) && (abs(LepGood_pdgId[1])!=13 || LepGood_tightCharge[1]>=1)
+
+
+
+
+
+elel: abs(LepGood_pdgId[0])==11 && abs(LepGood_pdgId[1])==11; Disable=True
+
+elmu: abs(LepGood_pdgId[0])* abs(LepGood_pdgId[1]) == 143 ;           Disable=True
+
+mumu: abs(LepGood_pdgId[0])* abs(LepGood_pdgId[1]) == 169;         Disable=True
+
+ll  : abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 143 || abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 169 || abs(LepGood_pdgId[0]*LepGood_pdgId[1]) == 121 ; Disable=True
+
+plusplus: LepGood_pdgId[0] > 0 ; Disable=True
+minusminus: LepGood_pdgId[0] < 0 ; Disable=True
+
+
+

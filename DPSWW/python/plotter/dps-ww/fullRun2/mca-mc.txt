@@ -2,8 +2,8 @@ DPSWW+ : WWTo2L2Nu_DPS : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatc
 
 DPSWW_incl: WW_DPS : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed+1, years="2017\,2018" , SkipMe=True
 
-WZ      : WZTo3LNu_fxfx : 4.43 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=ROOT.kAzure+1, Label="WZ"
-WZ_pow	: WZTo3LNu_pow : 4.43 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=ROOT.kAzure+1, Label="WZ_pow"
+WZ      : WZTo3LNu_fxfx : 4.43 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kAzure+1, Label="WZ"
+WZ_pow	: WZTo3LNu_pow : 4.43 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=ROOT.kOrange, Label="WZ_pow" , SkipMe=True
 
 Rares : TTZToLLNuNu_amc : 0.281 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring+2, Label="Rares"
 Rares: WpWpJJ : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2 , Label="Rares"

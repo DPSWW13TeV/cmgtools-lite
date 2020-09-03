@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <numeric>
 #include <map>
-
+/*
 float ttH_MVAto1D_6_2lss_Marco (float kinMVA_2lss_ttbar, float kinMVA_2lss_ttV){
 
   return 2*((kinMVA_2lss_ttbar>=-0.2)+(kinMVA_2lss_ttbar>=0.3))+(kinMVA_2lss_ttV>=-0.1)+1;
@@ -490,7 +490,7 @@ int ttH_catIndex_3l_SVA_soft(int LepGood1_charge, int LepGood2_charge, int LepGo
   return -1;
 
 }
-
+*/
 TFile *_file_recoToLoose_leptonSF_mu1_lt30 = NULL;
 TFile *_file_recoToLoose_leptonSF_mu1_gt30 = NULL;
 TFile *_file_recoToLoose_leptonSF_mu2 = NULL;

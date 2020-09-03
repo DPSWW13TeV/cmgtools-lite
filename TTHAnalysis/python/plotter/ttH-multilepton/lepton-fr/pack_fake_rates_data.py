@@ -157,7 +157,7 @@ if __name__ == "__main__":
 
     parser.add_option("--fix-last-bin", dest="fixLastBin", action="store_true", default=False, help="Fudge last bin")
     parser.add_option("--norm", dest="norm", action="store_true", default=False, help="Normalize variations")
-    parser.add_option("--mva-version",  dest="mvaVersion",  default="v1.0",  type="string", help="MVA version (common)")
+    parser.add_option("--mva-version",  dest="mvaVersion",  default="v1.1",  type="string", help="MVA version (common)")
     parser.add_option("--mva-version-mc",   dest="mvaVersionMC",  default=None,  type="string", help="MC MVA version (fr-mc), defaults to common")
     parser.add_option("--mva-version-data", dest="mvaVersionData",  default=None,  type="string", help="Data MVA version (fr-meas), defaults to common")
     parser.add_option("--mva-version-comb", dest="mvaVersionComb",  default=None,  type="string", help="Comb MVA version (fr-comb), defaults to common")

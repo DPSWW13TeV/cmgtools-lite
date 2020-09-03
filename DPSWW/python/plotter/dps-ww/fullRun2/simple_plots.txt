@@ -1,0 +1,54 @@
+# vim: syntax=sh
+
+
+pt1_mumu               : LepGood_pt[0]     : 20,00,100; XTitle="p_{T} lead.  (GeV)", MoreY=1.5
+pt2_mumu               : LepGood_pt[1]     : 20,00,100; XTitle="p_{T} sub. lead.  (GeV)", MoreY=1.5
+
+mvaTTH1_mumu               : LepGood_mvaTTH[0]     : 100,-1,1; XTitle="p_{T} lead.  (GeV)", MoreY=1.5
+mvaTTH2_mumu               : LepGood_mvaTTH[1]     : 100,-1,1; XTitle="p_{T} sub. lead.  (GeV)", MoreY=1.5
+
+
+minMVA_mumu: min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) : 100,-1.0,1.0; XTitle="min MVA  ", IncludeOverflows=False
+maxMVA_mumu: max(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) : 100,-1.0,1.0; XTitle="max MVA  ", IncludeOverflows=False
+
+met_mumu               : MET_pt          : 10,0,115; XTitle="p_{T}^{miss}  (GeV)"  , MoreY=1.5 
+
+
+
+pt1_elel               : LepGood_pt[0]     : 20,00,100; XTitle="p_{T} lead.  (GeV)", MoreY=1.5
+pt2_elel               : LepGood_pt[1]     : 20,00,100; XTitle="p_{T} sub. lead.  (GeV)", MoreY=1.5
+
+mvaTTH1_elel               : LepGood_mvaTTH[0]     : 100,-1,1; XTitle="p_{T} lead.  (GeV)", MoreY=1.5
+mvaTTH2_elel               : LepGood_mvaTTH[1]     : 100,-1,1; XTitle="p_{T} sub. lead.  (GeV)", MoreY=1.5
+
+
+minMVA_elel: min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) : 100,-1.0,1.0; XTitle="min MVA  ", IncludeOverflows=False
+maxMVA_elel: max(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) : 100,-1.0,1.0; XTitle="max MVA  ", IncludeOverflows=False
+
+met_elel               : MET_pt          : 10,0,115; XTitle="p_{T}^{miss}  (GeV)"  , MoreY=1.5 
+
+
+pt1_elmu               : LepGood_pt[0]     : 20,00,100; XTitle="p_{T} lead.  (GeV)", MoreY=1.5
+pt2_elmu               : LepGood_pt[1]     : 20,00,100; XTitle="p_{T} sub. lead.  (GeV)", MoreY=1.5
+
+mvaTTH1_elmu               : LepGood_mvaTTH[0]     : 100,-1,1; XTitle="p_{T} lead.  (GeV)", MoreY=1.5
+mvaTTH2_elmu               : LepGood_mvaTTH[1]     : 100,-1,1; XTitle="p_{T} sub. lead.  (GeV)", MoreY=1.5
+
+
+minMVA_elmu: min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) : 100,-1.0,1.0; XTitle="min MVA  ", IncludeOverflows=False
+maxMVA_elmu: max(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) : 100,-1.0,1.0; XTitle="max MVA  ", IncludeOverflows=False
+
+met_elmu               : MET_pt          : 10,0,115; XTitle="p_{T}^{miss}  (GeV)"  , MoreY=1.5 
+
+
+pt1_ll               : LepGood_pt[0]     : 20,00,100; XTitle="p_{T} lead.  (GeV)", MoreY=1.5
+pt2_ll               : LepGood_pt[1]     : 20,00,100; XTitle="p_{T} sub. lead. (GeV)", MoreY=1.5
+
+mvaTTH1_ll               : LepGood_mvaTTH[0]     : 100,-1,1; XTitle="p_{T} lead.  (GeV)", MoreY=1.5
+mvaTTH2_ll               : LepGood_mvaTTH[1]     : 100,-1,1; XTitle="p_{T} sub. lead.  (GeV)", MoreY=1.5
+
+
+minMVA_ll: min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) : 100,-1.0,1.0; XTitle="min MVA  ", IncludeOverflows=False
+maxMVA_ll: max(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) : 100,-1.0,1.0; XTitle="max MVA  ", IncludeOverflows=False
+
+met_ll               : MET_pt          : 10,0,115; XTitle="p_{T}^{miss}  (GeV)"  , MoreY=1.5 

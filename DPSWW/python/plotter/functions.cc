@@ -302,7 +302,7 @@ float triggerSF_ttH(int pdgid1, float pt1, int pdgid2, float pt2, int year, int 
   }
   else return 1.;
 }
-
+/*
 float ttH_2lss_ifflav(int LepGood1_pdgId, int LepGood2_pdgId, float ret_ee, float ret_em, float ret_mm){
   if (abs(LepGood1_pdgId)==11 && abs(LepGood2_pdgId)==11) return ret_ee;
   if ((abs(LepGood1_pdgId) != abs(LepGood2_pdgId)))       return ret_em;
@@ -311,7 +311,7 @@ float ttH_2lss_ifflav(int LepGood1_pdgId, int LepGood2_pdgId, float ret_ee, floa
   assert(0);
   return 0; // avoid warning
 }
-
+*/
 int unroll_2Dbdt_dps_elmu(float BDTx,float BDTy){
   if(BDTx  > 0.1 && BDTx <=0.25 && BDTy >0.1 && BDTy <= 0.35)return 0;
   else if((BDTx > 0.1 && BDTx <=0.3 && BDTy >0.35) || (BDTx  > 0.3 && BDTx <=0.35 && BDTy >0.35 && BDTy <= 0.65))return 1;
@@ -354,6 +354,14 @@ int unroll_2Dbdt_dps_mumu(float BDTx,float BDTy){
     std::cout << "values of BDT variables are out of bounds, please check" << std::endl;
     exit(EXIT_FAILURE);}
 }
+
+float smoothBFlav(float jetpt, float ptmin, float ptmax, int year, float scale_loose=1.0) {
+    float wploose[3]  = { 0.0614, 0.0521, 0.0494 };
+    float wpmedium[3] = { 0.3093, 0.3033, 0.2770 };
+    float x = std::min(std::max(0.f, jetpt - ptmin)/(ptmax-ptmin), 1.f); 
+    return x*wploose[year-2016]*scale_loose + (1-x)*wpmedium[year-2016];
+}
+
 void functions() {}
 
 

@@ -1,3 +1,5 @@
+LepGood1_isLepTighter\b : (LepGood_mvaTTH[iLepFO_Recl[0]] > 0.9); AlsoData
+LepGood2_isLepTighter\b : (LepGood_mvaTTH[iLepFO_Recl[1]] > 0.9); AlsoData
 LepGood1_isLepTight\b : LepGood_isLepTight_Recl[iLepFO_Recl[0]]; AlsoData
 LepGood2_isLepTight\b : LepGood_isLepTight_Recl[iLepFO_Recl[1]]; AlsoData
 LepGood3_isLepTight\b : LepGood_isLepTight_Recl[iLepFO_Recl[2]]; AlsoData

@@ -20,15 +20,19 @@ ZZ_norm     : ZZ    : .*          : normSymm : 1.05
 
 
 
-Conv_shape       : Convs       : elmu                   : templateSymm; AddWeight=1.05
+Conv_shape           : Convs       : elmu                   : templateSymm; AddWeight=1.05
 
-WZ_shape         : WZ	       : .*                     : altSample : WZ_pow : WZ_pow
-Rares_shape      : Rares       : .*                     : LinearShapeOnly : 1.05
-Rares_shape1      : Rares       : .*                     : ParabolicShapeOnly : 1.05
-#WG_norm         : WG_wg       : .*              
-#WG_shape        : WG_wg       : .*                     : templateSymm; AddWeight=1.05
-ZZ_shape	 : ZZ	       : .*			: templateSymm; Normalize=False, AddWeight=1.05
-ZZ_shape1	 : ZZ	       : .*			: templateSymm;  AddWeight=1.05
+WZ_shape             : WZ	   : .*                     : altSample : WZ_pow 
+#DPSWW_shape         : DPSWW	   : .*                     : altSample : DPSWW_herwig 
+Rares_shape_lin      : Rares       : .*                     : LinearShapeOnly : 1.05
+Rares_shape_quad     : Rares       : .*                     : ParabolicShapeOnly : 1.05
+ZZ_shape_lin	     : ZZ	   : .*			    : templateSymm; Normalize=False, AddWeight=1.05
+ZZ_shape_quad	     : ZZ	   : .*			    : templateSymm;  AddWeight=1.05
+
+#WG_norm         : WG_wg           : .*              
+#WG_shape        : WG_wg           : .*                     : templateSymm; AddWeight=1.05
+
+
 
 #ttbar_ue : ttbar : .* : altSample : ue_up : ue_dn
 

@@ -33,7 +33,7 @@ def _getHistoInRangeNoDir(hist, name, bin1, bin2): # bin1 is included, bin2 is n
         proj.SetBinError  ( bx, hist.GetBinError  (bx+bin1-1))
     return proj
 
-def cropNegativeBins(histo,threshold=0.):
+def cropNegativeBins(histo,threshold=0):
             if "TH1" in histo.ClassName():
                 for b in xrange(0,histo.GetNbinsX()+2):
                     if histo.GetBinContent(b) < threshold: histo.SetBinContent(b, threshold)
@@ -99,8 +99,8 @@ def buildVariationsFromAlternative( uncfile, ret):
             if not var.procmatch().match(k): continue
             if hasBeenApplied:
                 raise RuntimeError("variation %s is being applied to at least two processes"%var.name)
-            if var.args[0] not in ret or var.args[1] not in ret:
-                raise RuntimeError("Alternative sample (%s,%s) has not been processed, available samples are %s"%(var.args[0], var.args[1], ','.join(k for k in ret)))
+            if var.args[0] not in ret :
+                raise RuntimeError("Alternative sample (%s) has not been processed, available samples are %s"%var.args[0], ','.join(k for k in ret))
             
             #print k,p,var
 

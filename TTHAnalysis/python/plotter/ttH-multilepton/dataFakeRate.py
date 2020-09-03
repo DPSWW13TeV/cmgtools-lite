@@ -396,6 +396,7 @@ if __name__ == "__main__":
                     fewk  = sum(freport_num_den["pass"][p].Integral() for p in mca.listBackgrounds() if p in freport_num_den["pass"])/(Newk if Newk else 1)
                     fqcd  = sum(freport_num_den["pass"][p].Integral() for p in mca.listSignals()     if p in freport_num_den["pass"])/(Nqcd if Nqcd else 1)
                     sf_common = 1.0
+                    print Ndata,(Nqcd+Newk),options.kappaSig
                     k0_sig = log(Ndata/(Nqcd+Newk))/options.kappaSig
                     k0_bkg = log(Ndata/(Nqcd+Newk))/options.kappaBkg
                     w.factory("expr::{xp}N_sig(\"{N}*pow({K},@0)\", {xp}theta_sig[{K0},-7,7])".format(N=Nqcd, K=options.kappaSig, K0=k0_sig, xp=xprefix))

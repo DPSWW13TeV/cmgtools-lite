@@ -188,7 +188,11 @@ float fakeRateWeight_2lss_ii(float l1pt, float l1eta, int l1pdgId, bool l1pass,
     }
     return ret;
 }
+bool tightLep_dpsww(float l1mvaTTH, float l1mediumId,int l1pdgId){
 
+  return (abs(l1pdgId) == 13 ? (l1mvaTTH > 0.9 && l1mediumId>0)  :  l1mvaTTH > 0.8);
+
+}
 float conepT_dpsww(float l1pt,float l1mvaTTH, float l1mediumId,float  l1jetRelIso,int l1pdgId){
   float l1conept=l1pt; 
   bool l1pass = tightLep_dpsww(l1mvaTTH,l1mediumId,l1pdgId);
@@ -198,11 +202,7 @@ float conepT_dpsww(float l1pt,float l1mvaTTH, float l1mediumId,float  l1jetRelIs
 
 }
 
-bool tightLep_dpsww(float l1mvaTTH, float l1mediumId,int l1pdgId){
 
-  return (abs(l1pdgId) == 13 ? (l1mvaTTH > 0.9 && l1mediumId>0)  :  l1mvaTTH > 0.8);
-
-}
 
 
 float fakeRateWeight_2lss_i(float l1pt, float l1eta, int l1pdgId, float l1pass,

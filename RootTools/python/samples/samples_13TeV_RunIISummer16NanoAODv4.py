@@ -567,38 +567,18 @@ ZZ_ext = kreator.makeMCComponent("ZZ_ext", "/ZZ_TuneCUETP8M1_13TeV-pythia8/RunII
 
 DiBosons = [
 WWTo2L2Nu,
-WWToLNuQQ,
-WWToLNuQQ_ext,
-WWTo1L1Nu2Q,
-ZZTo2L2Nu,
-ZZTo2L2Q,
-ZZTo2Q2Nu,
 ZZTo4L,
-WZJToLLLNu,
-WZTo1L3Nu,
-WZTo1L1Nu2Q,
-WZTo2L2Q,
 WZTo3LNu,
 WZTo3LNu_ext,
 WZTo3LNu_fxfx,
-VVTo2L2Nu,
-VVTo2L2Nu_ext,
 WGToLNuG,
 WGToLNuG_amcatnlo,
 WGToLNuG_amcatnlo_ext,
 WGToLNuG_amcatnlo_ext2,
-WGJets,
-ZNuNuGJets_40130,
-ZGTo2NuG,
 ZGTo2LG,
 WWDoubleTo2L,
 WpWpJJ,
 WW,
-WW_ext,
-WZ,
-WZ_ext,
-ZZ,
-ZZ_ext
 ]
 
 ### TriBosons
@@ -673,7 +653,9 @@ EWKZToNuNu2Jets,
 
 ### ----------------------------- summary ----------------------------------------
 
-mcSamples = TTs + SingleTop + VJets + DYJetsM50HT + DYJetsM5to50HT + DYNJets + WJetsToLNuHT + WJetsToLNuPT + WNJets + GJetsHT + ZJetsToNuNuHT + QCDHT + QCDPtbcToE + QCDPt + QCDPtEMEnriched + [QCD_Mu15] + QCD_Mu5 +  DiBosons + TriBosons + TTV + Higgs + Rares + EWKV2Jets
+#mcSamples = TTs + SingleTop + VJets + DYJetsM50HT + DYJetsM5to50HT + DYNJets + WJetsToLNuHT + WJetsToLNuPT + WNJets + GJetsHT + ZJetsToNuNuHT + QCDHT + QCDPtbcToE + QCDPt + QCDPtEMEnriched + [QCD_Mu15] + QCD_Mu5 +  DiBosons + TriBosons + TTV + Higgs + Rares + EWKV2Jets
+
+mcSamples = DiBosons + TTs + SingleTop + VJets + DYNJets + WNJets +  TriBosons  + TTV 
 
 samples = mcSamples
 
