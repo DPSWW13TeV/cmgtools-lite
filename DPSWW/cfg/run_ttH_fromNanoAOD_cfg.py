@@ -31,11 +31,12 @@ else:
         from CMGTools.RootTools.samples.samples_13TeV_RunIIFall17NanoAODv4 import samples as mcSamples_
         from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_25Oct2019 as allData
     elif year == 2016:
-        #from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16NanoAODv4 import samples as mcSamples_
-        from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16NanoAODv4_testDPS import samples as mcSamples_
-        #from CMGTools.RootTools.samples.samples_13TeV_DATA2016_NanoAOD import dataSamples_25Oct2019 as allData
+        from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16NanoAODv7 import samples as mcSamples_
+        from CMGTools.RootTools.samples.samples_13TeV_DATA2016_v7_NanoAOD import dataSamples_02Apr2020 as allData
 mcSamples_=[]
+#allData=[]
 autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
+#autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cmsxrootd.fnal.gov") # must be done before mergeExtensions "cms-xrd-global.cern.ch"
 mcSamples_, _ = mergeExtensions(mcSamples_)
 
 # Triggers
@@ -48,30 +49,24 @@ mcSamples_, _ = mergeExtensions(mcSamples_)
 #     from CMGTools.RootTools.samples.triggers_13TeV_DATA2016 import all_triggers as triggers
 #     triggers["FR_1mu_noiso_smpd"] = [] 
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttH_modules import triggerGroups_dict
+from CMGTools.DPSWW.tools.nanoAOD.ttH_modules import triggerGroups_dict
 
 DatasetsAndTriggers = []
 if analysis == "main":
     mcSamples = byCompName(mcSamples_, ["%s(|_PS)$"%dset for dset in [
         # single boson
-        "WJetsToLNu_LO", "DYJetsToLL_M10to50_LO", "DYJetsToLL_M50",
-        # ttbar + single top + tW
-        "TTJets_SingleLeptonFromT", "TTJets_SingleLeptonFromTbar", "TTJets_DiLepton",
-        "T_sch_lep", "T_tch", "TBar_tch", "T_tWch_noFullyHad", "TBar_tWch_noFullyHad",
+        "WJetsToLNu_ext","WJetsToLNu","WJetsToLNu_LO","WJetsToLNu_LO_ext","DYJetsToLL_M10to50","DYJetsToLL_M10to50_ext", "DYJetsToLL_M50_LO_ext","DYJetsToLL_M10to50_LO", "DYJetsToLL_M50",
+        # ttbar 
+        "TTJets","TTJets_DiLepton",
         # conversions
-        "TTGJets", "TGJets_lep", "WGToLNuG", "ZGTo2LG",
-        # ttV
-        "TTWToLNu_fxfx", "TTZToLLNuNu_amc", "TTZToLLNuNu_m1to10",
-        # ttH + tHq/tHW
-        "TTHnobb_fxfx", "THQ_ctcvcp", "THW_ctcvcp", "TTH_ctcvcp",
-        # top + V rare processes
-        "TZQToLL", "tWll", "TTTT", "TTWW",
+         "TGJets_lep", "WGToLNuG", "ZGTo2LG",
+        #rares
+        #"TTWToLNu_fxfx", "TTZToLLNuNu_amc", "TTZToLLNuNu_m1to10",
         # diboson + DPS + WWss
-        "WWTo2L2Nu", "WZTo3LNu_pow", "WZTo3LNu_fxfx", "ZZTo4L", "WW_DPS", "WWTo2L2Nu_DPS", "WpWpJJ",
+        "WWTo2L2Nu", "WZTo3LNu_pow", "WZTo3LNu_fxfx", "ZZTo4L", "WW_DPS", "WWDoubleTo2L","WGToLNuG_amcatnlo","WGToLNuG_amcatnlo_ext","WGToLNuG_amcatnlo_ext2", "WZTo3LNu","WWTo2L2Nu_DPS","WZTo3LNu_mllmin01","WZTo3LNu_mllmin01_ext1",
+         "WpWpJJ",
         # triboson
-        "WWW", "WWW_ll", "WWZ", "WZG", "WZZ", "ZZZ",
-        # other Higgs processes
-        "GGHZZ4L", "VHToNonbb", "VHToNonbb_ll", "ZHTobb_ll", "ZHToTauTau", "TTWH", "TTZH",
+        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ",
     ]])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year] + triggerGroups_dict["Trigger_1e"][year]) if year == 2018 else
@@ -117,6 +112,8 @@ if getHeppyOption('selectComponents'):
     else:
         selectedComponents = byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
 autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it")
+#autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cmsxrootd.fnal.gov") #am
+
 if year==2018:
     configureSplittingFromTime(byCompName(mcSamples,['^(?!(TTJets_Single|T_|TBar_)).*']),150 if preprocessor else 10,12)
     configureSplittingFromTime(byCompName(mcSamples,['^(TTJets_Single|T_|TBar_).*']),70 if preprocessor else 10,12)
@@ -219,7 +216,7 @@ if getHeppyOption("justSummary"):
     printSummary(selectedComponents)
     sys.exit(0)
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttH_modules import *
+from CMGTools.DPSWW.tools.nanoAOD.ttH_modules import *
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 
@@ -234,7 +231,7 @@ if analysis == "frqcd":
     modules = ttH_sequence_step1_FR
     cut = ttH_skim_cut_FR
     compression = "LZMA:9"
-    branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/TTHAnalysis/python/plotter/ttH-multilepton/qcd1l-skim-ec.txt"
+    branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/TTHAnalysis/python/plotter/ttH-multilepton/lepton-fr/qcd1l-skim-ec.txt"
 
 POSTPROCESSOR = PostProcessor(None, [], modules = modules,
         cut = cut, prefetch = True, longTermCache = False,
