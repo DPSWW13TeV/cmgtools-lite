@@ -12,16 +12,18 @@
 
 
 ########>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> step 2 (after skimming)
-#python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2016/0_jmeUnc_v1/  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules jme2016_allvariations  --de .*Run.* -N 10000 -q condor --maxruntime 150 --log $PWD/logs
+
+#python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss/2016/0_jmeUnc_v1/  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules jme2016_allvariations  --de .*Run.* -N 10000 -q condor --maxruntime 150 --log $PWD/logs
 
 # run recleaner for mc and all variations (not necessary for data)
 
-#python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss/2016/1_recl_allvars/  -I CMGTools.TTHAnalysis.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2016/0_jmeUnc_v1/{cname}_Friend.root --de .*Run.* -N 10000  -q condor --maxruntime 150 --log $PWD/logs 
+
+#python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss/2016/1_recl_allvars/  -I CMGTools.TTHAnalysis.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss/2016/0_jmeUnc_v1/{cname}_Friend.root --de .*Run.* -N 10000  -q condor --maxruntime 150 --log $PWD/logs 
 
 
 
 
-# lepton scale factors
+# lepton scale factors 
 #python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss/2016/2_scalefactors_lep -F Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss/2016/1_recl/{cname}_Friend.root -I CMGTools.TTHAnalysis.tools.nanoAOD.ttH_modules leptonSFs -N 10000 --de .*Run.*  -q condor --maxruntime 100 --log $PWD/logs 
 
 
