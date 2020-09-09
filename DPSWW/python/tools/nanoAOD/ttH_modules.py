@@ -430,8 +430,8 @@ dpsvars = lambda : DPSWW_vars()
 from CMGTools.DPSWW.tools.nanoAOD.BDT_DPSWW import BDT_DPSWW
 bdtvars = lambda : BDT_DPSWW()
 
-from CMGTools.DPSWW.tools.nanoAOD.collectionMerger_DPSWW import collectionMerger_DPSWW
-mergedvars = collectionMerger_DPSWW() #selector = dict(Muon = muonSelection, Electron = electronSelection))
+#from CMGTools.DPSWW.tools.nanoAOD.collectionMerger_DPSWW import collectionMerger_DPSWW
+#mergedvars = collectionMerger_DPSWW() #selector = dict(Muon = muonSelection, Electron = electronSelection))
 
 # 5_evtVars_v0
 from CMGTools.DPSWW.tools.nanoAOD.ttH_gen_reco import ttH_gen_reco
