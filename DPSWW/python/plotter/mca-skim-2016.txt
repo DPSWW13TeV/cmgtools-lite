@@ -20,40 +20,35 @@ WZTo3LNu : WZTo3LNu : xsec
 DYJetsToLL_M50 : DYJetsToLL_M50 : xsec
 DYJetsToLL_M10to50_LO : DYJetsToLL_M10to50_LO : xsec
 WZTo3LNu_fxfx : WZTo3LNu_fxfx : xsec
-data : DoubleEG_Run2016B_p1_02Apr2020
-data : DoubleEG_Run2016B_p2_02Apr2020
+data : DoubleEG_Run2016B_02Apr2020
 data : DoubleEG_Run2016C_02Apr2020
 data : DoubleEG_Run2016D_02Apr2020
 data : DoubleEG_Run2016E_02Apr2020
 data : DoubleEG_Run2016F_02Apr2020
 data : DoubleEG_Run2016G_02Apr2020
 data : DoubleEG_Run2016H_02Apr2020
-data : DoubleMuon_Run2016B_p1_02Apr2020
-data : DoubleMuon_Run2016B_p2_02Apr2020
+data : DoubleMuon_Run2016B_02Apr2020
 data : DoubleMuon_Run2016C_02Apr2020
 data : DoubleMuon_Run2016D_02Apr2020
 data : DoubleMuon_Run2016E_02Apr2020
 data : DoubleMuon_Run2016F_02Apr2020
 data : DoubleMuon_Run2016G_02Apr2020
 data : DoubleMuon_Run2016H_02Apr2020
-data : MuonEG_Run2016B_p1_02Apr2020
-data : MuonEG_Run2016B_p2_02Apr2020
+data : MuonEG_Run2016B_02Apr2020
 data : MuonEG_Run2016C_02Apr2020
 data : MuonEG_Run2016D_02Apr2020
 data : MuonEG_Run2016E_02Apr2020
 data : MuonEG_Run2016F_02Apr2020
 data : MuonEG_Run2016G_02Apr2020
 data : MuonEG_Run2016H_02Apr2020
-data : SingleElectron_Run2016B_p1_02Apr2020
-data : SingleElectron_Run2016B_p2_02Apr2020
+data : SingleElectron_Run2016B_02Apr2020
 data : SingleElectron_Run2016C_02Apr2020
 data : SingleElectron_Run2016D_02Apr2020
 data : SingleElectron_Run2016E_02Apr2020
 data : SingleElectron_Run2016F_02Apr2020
 data : SingleElectron_Run2016G_02Apr2020
 data : SingleElectron_Run2016H_02Apr2020
-data : SingleMuon_Run2016B_p1_02Apr2020
-data : SingleMuon_Run2016B_p2_02Apr2020
+data : SingleMuon_Run2016B_02Apr2020
 data : SingleMuon_Run2016C_02Apr2020
 data : SingleMuon_Run2016D_02Apr2020
 data : SingleMuon_Run2016E_02Apr2020

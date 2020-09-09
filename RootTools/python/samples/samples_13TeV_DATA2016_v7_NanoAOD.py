@@ -7,25 +7,16 @@ json='/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/ReR
 
 
 
-SingleElectron_Run2016B_p1_02Apr2020 = kreator.makeDataComponent("SingleElectron_Run2016B_p1_02Apr2020", "/SingleElectron/Run2016B-02Apr2020_ver1-v1/NANOAOD", "CMS", ".*root", json)
-SingleElectron_Run2016B_p2_02Apr2020 = kreator.makeDataComponent("SingleElectron_Run2016B_p2_02Apr2020", "/SingleElectron/Run2016B-02Apr2020_ver2-v1/NANOAOD", "CMS", ".*root", json)
-
-SingleMuon_Run2016B_p1_02Apr2020     = kreator.makeDataComponent("SingleMuon_Run2016B_p1_02Apr2020"    , "/SingleMuon/Run2016B-02Apr2020_ver1-v1/NANOAOD"    , "CMS", ".*root", json)
-SingleMuon_Run2016B_p2_02Apr2020     = kreator.makeDataComponent("SingleMuon_Run2016B_p2_02Apr2020"    , "/SingleMuon/Run2016B-02Apr2020_ver2-v1/NANOAOD"    , "CMS", ".*root", json)
-
-DoubleEG_Run2016B_p1_02Apr2020     = kreator.makeDataComponent("DoubleEG_Run2016B_p1_02Apr2020"    , "/DoubleEG/Run2016B-02Apr2020_ver1-v1/NANOAOD"    , "CMS", ".*root", json)
-DoubleEG_Run2016B_p2_02Apr2020     = kreator.makeDataComponent("DoubleEG_Run2016B_p2_02Apr2020"    , "/DoubleEG/Run2016B-02Apr2020_ver2-v1/NANOAOD"    , "CMS", ".*root", json)
-
-DoubleMuon_Run2016B_p1_02Apr2020     = kreator.makeDataComponent("DoubleMuon_Run2016B_p1_02Apr2020"    , "/DoubleMuon/Run2016B-02Apr2020_ver1-v1/NANOAOD"    , "CMS", ".*root", json)
-DoubleMuon_Run2016B_p2_02Apr2020     = kreator.makeDataComponent("DoubleMuon_Run2016B_p2_02Apr2020"    , "/DoubleMuon/Run2016B-02Apr2020_ver2-v1/NANOAOD"    , "CMS", ".*root", json)
-
-MuonEG_Run2016B_p1_02Apr2020     = kreator.makeDataComponent("MuonEG_Run2016B_p1_02Apr2020"    , "/MuonEG/Run2016B-02Apr2020_ver1-v1/NANOAOD"    , "CMS", ".*root", json)
-MuonEG_Run2016B_p2_02Apr2020     = kreator.makeDataComponent("MuonEG_Run2016B_p2_02Apr2020"    , "/MuonEG/Run2016B-02Apr2020_ver2-v1/NANOAOD"    , "CMS", ".*root", json)
+SingleElectron_Run2016B_02Apr2020 = kreator.makeDataComponent("SingleElectron_Run2016B_02Apr2020", "/SingleElectron/Run2016B-02Apr2020_ver2-v1/NANOAOD", "CMS", ".*root", json)
+SingleMuon_Run2016B_02Apr2020     = kreator.makeDataComponent("SingleMuon_Run2016B_02Apr2020"    , "/SingleMuon/Run2016B-02Apr2020_ver2-v1/NANOAOD"    , "CMS", ".*root", json)
+DoubleEG_Run2016B_02Apr2020     = kreator.makeDataComponent("DoubleEG_Run2016B_02Apr2020"    , "/DoubleEG/Run2016B-02Apr2020_ver2-v1/NANOAOD"    , "CMS", ".*root", json)
+DoubleMuon_Run2016B_02Apr2020     = kreator.makeDataComponent("DoubleMuon_Run2016B_02Apr2020"    , "/DoubleMuon/Run2016B-02Apr2020_ver2-v1/NANOAOD"    , "CMS", ".*root", json)
+MuonEG_Run2016B_02Apr2020     = kreator.makeDataComponent("MuonEG_Run2016B_02Apr2020"    , "/MuonEG/Run2016B-02Apr2020_ver2-v1/NANOAOD"    , "CMS", ".*root", json)
 
 
 
 
-dataSamples_Run2016B_02Apr2020 = [SingleElectron_Run2016B_p1_02Apr2020,SingleElectron_Run2016B_p2_02Apr2020,SingleMuon_Run2016B_p1_02Apr2020,SingleMuon_Run2016B_p2_02Apr2020,DoubleEG_Run2016B_p1_02Apr2020,DoubleEG_Run2016B_p2_02Apr2020,DoubleMuon_Run2016B_p1_02Apr2020,DoubleMuon_Run2016B_p2_02Apr2020,MuonEG_Run2016B_p1_02Apr2020,MuonEG_Run2016B_p2_02Apr2020]
+dataSamples_Run2016B_02Apr2020 = [SingleElectron_Run2016B_02Apr2020,SingleMuon_Run2016B_02Apr2020,DoubleEG_Run2016B_02Apr2020,DoubleMuon_Run2016B_02Apr2020,MuonEG_Run2016B_02Apr2020]
 
 
 ### ----------------------------- Run2016C 02Apr2020 ----------------------------------------
@@ -90,7 +81,7 @@ dataSamples_Run2016H_02Apr2020 = [SingleElectron_Run2016H_02Apr2020,SingleMuon_R
 
 
 
-dataSamples_02Apr2020 = dataSamples_Run2016B_02Apr2020 + dataSamples_Run2016C_02Apr2020 + dataSamples_Run2016D_02Apr2020 + dataSamples_Run2016E_02Apr2020 + dataSamples_Run2016F_02Apr2020 + dataSamples_Run2016G_02Apr2020 + dataSamples_Run2016H_02Apr2020
+dataSamples_02Apr2020 = dataSamples_Run2016B_02Apr2020 # + dataSamples_Run2016C_02Apr2020 + dataSamples_Run2016D_02Apr2020 + dataSamples_Run2016E_02Apr2020 + dataSamples_Run2016F_02Apr2020 + dataSamples_Run2016G_02Apr2020 + dataSamples_Run2016H_02Apr2020
 
 dataSamples = dataSamples_02Apr2020 
 
