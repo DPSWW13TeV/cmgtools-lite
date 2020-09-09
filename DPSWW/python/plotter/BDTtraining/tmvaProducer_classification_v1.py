@@ -74,8 +74,8 @@ def train_classification(year,bkg):
         bkgSel = TT
         dsets = [
             ('WWTo2L2Nu_DPS',"Signal",['1_recl_allvars/','dpsvars/']),  
-            ('WZTo3LNu_fxfx',"Background",['1_recl_allvars/','dpsvars/'])]
-            #('WZTo3LNu_pow',"Background",['1_recl_allvars/','dpsvars/'])]
+            #('WZTo3LNu_fxfx',"Background",['1_recl_allvars/','dpsvars/'])]
+            ('WZTo3LNu_pow',"Background",['1_recl_allvars/','dpsvars/'])]
     else :
         bkgSel = TL
         dsets = [
@@ -90,7 +90,7 @@ def train_classification(year,bkg):
         
 
     #common selection cut as used in the analysis
-    common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && MET_pt > 15 && abs(Lep1_eta) < 2.5 && abs(Lep2_eta) < 2.5'
+    common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && MET_pt > 20'
 
 
     bkgcuts = ROOT.TCut('1');

@@ -18,7 +18,7 @@ ttH_skim_cut = ("nMuon + nElectron >= 2 &&" +
 muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["muPt" ] and l.miniPFRelIso_all < conf["miniRelIso"] and l.sip3d < conf["sip3d"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"]
 electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] and l.miniPFRelIso_all < conf["miniRelIso"] and l.sip3d < conf["sip3d"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["eleId"])
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttHPrescalingLepSkimmer import ttHPrescalingLepSkimmer
+from CMGTools.DPSWW.tools.nanoAOD.ttHPrescalingLepSkimmer import ttHPrescalingLepSkimmer
 # NB: do not wrap lepSkim a lambda, as we modify the configuration in the cfg itself 
 lepSkim = ttHPrescalingLepSkimmer(5, 
                 muonSel = muonSelection, electronSel = electronSelection,
@@ -33,24 +33,24 @@ lepMerge = collectionMerger(input = ["Electron","Muon"],
                             selector = dict(Muon = muonSelection, Electron = electronSelection))
 
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttHLeptonCombMasses import ttHLeptonCombMasses
+from CMGTools.DPSWW.tools.nanoAOD.ttHLeptonCombMasses import ttHLeptonCombMasses
 lepMasses = ttHLeptonCombMasses( [ ("Muon",muonSelection), ("Electron",electronSelection) ], maxLeps = 4)
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.autoPuWeight import autoPuWeight
-from CMGTools.TTHAnalysis.tools.nanoAOD.yearTagger import yearTag
-from CMGTools.TTHAnalysis.tools.nanoAOD.xsecTagger import xsecTag
-from CMGTools.TTHAnalysis.tools.nanoAOD.lepJetBTagAdder import lepJetBTagCSV, lepJetBTagDeepCSV, lepJetBTagDeepFlav, lepJetBTagDeepFlavC
+from CMGTools.DPSWW.tools.nanoAOD.autoPuWeight import autoPuWeight
+from CMGTools.DPSWW.tools.nanoAOD.yearTagger import yearTag
+from CMGTools.DPSWW.tools.nanoAOD.xsecTagger import xsecTag
+from CMGTools.DPSWW.tools.nanoAOD.lepJetBTagAdder import lepJetBTagCSV, lepJetBTagDeepCSV, lepJetBTagDeepFlav, lepJetBTagDeepFlavC
 
 ttH_sequence_step1 = [lepSkim, lepMerge, autoPuWeight, yearTag, xsecTag, lepJetBTagCSV, lepJetBTagDeepCSV, lepJetBTagDeepFlav, lepMasses]
 
 #==== 
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttHLepQCDFakeRateAnalyzer import ttHLepQCDFakeRateAnalyzer
+from CMGTools.DPSWW.tools.nanoAOD.ttHLepQCDFakeRateAnalyzer import ttHLepQCDFakeRateAnalyzer
 centralJetSel = lambda j : j.pt > 25 and abs(j.eta) < 2.4 and j.jetId > 0
 lepFR = ttHLepQCDFakeRateAnalyzer(jetSel = centralJetSel,
                                   pairSel = lambda pair : deltaR(pair[0].eta, pair[0].phi, pair[1].eta, pair[1].phi) > 0.7,
                                   maxLeptons = 1, requirePair = True)
-from CMGTools.TTHAnalysis.tools.nanoAOD.nBJetCounter import nBJetCounter
+from CMGTools.DPSWW.tools.nanoAOD.nBJetCounter import nBJetCounter
 nBJetDeepCSV25NoRecl = lambda : nBJetCounter("DeepCSV25", "btagDeepB", centralJetSel)
 nBJetDeepFlav25NoRecl = lambda : nBJetCounter("DeepFlav25", "btagDeepFlavB", centralJetSel)
 
@@ -92,9 +92,9 @@ tightLeptonSel = lambda lep,year : clean_and_FO_selection_TTH(lep,year) and (abs
 foTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and abs(tau.dxy) < 1000 and abs(tau.dz) < 0.2 and tau.idDecayModeNewDMs and (int(tau.idDeepTau2017v2p1VSjet)>>1 & 1) # VVLoose WP
 tightTauSel = lambda tau: (int(tau.idDeepTau2017v2p1VSjet)>>2 & 1) # VLoose WP
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.jetmetGrouper import groups as jecGroups
-from CMGTools.TTHAnalysis.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning
-from CMGTools.TTHAnalysis.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
+from CMGTools.DPSWW.tools.nanoAOD.jetmetGrouper import groups as jecGroups
+from CMGTools.DPSWW.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning
+from CMGTools.DPSWW.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
 recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
                                                            looseLeptonSel = lambda lep : lep.miniPFRelIso_all < 0.4 and lep.sip3d < 8 and (abs(lep.pdgId)!=11 or lep.lostHits<=1) and (abs(lep.pdgId)!=13 or lep.looseId),
                                                            cleaningLeptonSel = clean_and_FO_selection_TTH,
@@ -142,14 +142,14 @@ recleaner_step2_data = lambda : fastCombinedObjectRecleaner(label="Recl", inlabe
 
 
 
-from CMGTools.TTHAnalysis.tools.eventVars_2lss import EventVars2LSS
+from CMGTools.DPSWW.tools.eventVars_2lss import EventVars2LSS
 eventVars = lambda : EventVars2LSS('','Recl')
 eventVars_allvariations = lambda : EventVars2LSS('','Recl',variations = [ 'jes%s'%v for v in jecGroups] + ['jer%s'%x for x in ['barrel','endcap1','endcap2highpt','endcap2lowpt' ,'forwardhighpt','forwardlowpt']  ]  + ['HEM'])
 
-from CMGTools.TTHAnalysis.tools.hjDummCalc import HjDummyCalc
+from CMGTools.DPSWW.tools.hjDummCalc import HjDummyCalc
 hjDummy = lambda : HjDummyCalc(variations  = [ 'jes%s'%v for v in jecGroups] + ['jer%s'%x for x in ['barrel','endcap1','endcap2highpt','endcap2lowpt' ,'forwardhighpt','forwardlowpt']  ]  + ['HEM'])
 
-from CMGTools.TTHAnalysis.tools.objTagger import ObjTagger
+from CMGTools.DPSWW.tools.objTagger import ObjTagger
 isMatchRightCharge = lambda : ObjTagger('isMatchRightCharge','LepGood', [lambda l,g : (l.genPartFlav==1 or l.genPartFlav == 15) and (g.pdgId*l.pdgId > 0) ], linkColl='GenPart',linkVar='genPartIdx')
 mcMatchId     = lambda : ObjTagger('mcMatchId','LepGood', [lambda l : (l.genPartFlav==1 or l.genPartFlav == 15) ])
 mcPromptGamma = lambda : ObjTagger('mcPromptGamma','LepGood', [lambda l : (l.genPartFlav==22)])
@@ -157,7 +157,7 @@ mcMatch_seq   = [ isMatchRightCharge, mcMatchId ,mcPromptGamma]
 
 countTaus = lambda : ObjTagger('Tight','TauSel_Recl', [lambda t : t.idDeepTau2017v2p1VSjet&4])
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.jetmetGrouper import jetMetCorrelate2016,jetMetCorrelate2017,jetMetCorrelate2018
+from CMGTools.DPSWW.tools.nanoAOD.jetmetGrouper import jetMetCorrelate2016,jetMetCorrelate2017,jetMetCorrelate2018
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import createJMECorrector
 
 
@@ -296,7 +296,7 @@ triggerGroups_dict=dict(
 )
 
 
-from CMGTools.TTHAnalysis.tools.evtTagger import EvtTagger
+from CMGTools.DPSWW.tools.evtTagger import EvtTagger
 
 Trigger_1e   = lambda : EvtTagger('Trigger_1e',[ lambda ev : triggerGroups['Trigger_1e'][ev.year](ev) ])
 Trigger_1m   = lambda : EvtTagger('Trigger_1m',[ lambda ev : triggerGroups['Trigger_1m'][ev.year](ev) ])
@@ -311,10 +311,10 @@ Trigger_2lss = lambda : EvtTagger('Trigger_2lss',[ lambda ev : triggerGroups['Tr
 Trigger_3l   = lambda : EvtTagger('Trigger_3l',[ lambda ev : triggerGroups['Trigger_3l'][ev.year](ev) ])
 Trigger_MET  = lambda : EvtTagger('Trigger_MET',[ lambda ev : triggerGroups['Trigger_MET'][ev.year](ev) ])
 
-triggerSequence = [Trigger_1e,Trigger_1m,Trigger_2e,Trigger_2m,Trigger_em,Trigger_3e,Trigger_3m,Trigger_mee,Trigger_mme,Trigger_2lss,Trigger_3l ,Trigger_MET]
+triggerSequence = [Trigger_1e,Trigger_1m,Trigger_2e,Trigger_2m,Trigger_em,Trigger_3e,Trigger_3m,Trigger_mee,Trigger_mme,Trigger_2lss,Trigger_3l]# ,Trigger_MET] am
 
 
-from CMGTools.TTHAnalysis.tools.BDT_eventReco_cpp import BDT_eventReco
+from CMGTools.DPSWW.tools.BDT_eventReco_cpp import BDT_eventReco
 
 BDThttTT_Hj = lambda : BDT_eventReco(os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/TMVAClassification_bloose_BDTG.weights.xml',
                                      os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/TMVAClassification_btight_BDTG.weights.xml',
@@ -374,7 +374,7 @@ btagSF2016_dj = lambda : btagSFProducer("Legacy2016",'deepjet',collName="JetSel_
 btagSF2017_dj = lambda : btagSFProducer("2017",'deepjet',collName="JetSel_Recl",storeOutput=False)
 btagSF2018_dj = lambda : btagSFProducer("2018",'deepjet',collName="JetSel_Recl",storeOutput=False)
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.BtagSFs import BtagSFs
+from CMGTools.DPSWW.tools.nanoAOD.BtagSFs import BtagSFs
 bTagSFs = lambda : BtagSFs("JetSel_Recl",
                            corrs = {"" : 1.},
                            #corrs={  "AbsoluteScale": 1., "AbsoluteStat":0., "FlavorQCD":1.,"Fragmentation":1.,"PileUpDataMC":0.5,"PileUpPtBB":0.5,"PileUpPtEC1":0.5,"PileUpPtEC2":0.5,"PileUpPtHF":0.5,"PileUpPtRef":0.5,"RelativeFSR":0.5,"RelativeJEREC1":0., "RelativeJEREC2":0., "RelativeJERHF":0.5,"RelativePtBB":0.5,"RelativePtEC1":0.,"RelativePtEC2":0.,"RelativePtHF":0.5, "RelativeBal":0.5, "RelativeStatEC":0., "RelativeStatFSR":0., "RelativeStatHF":0.,"SinglePionECAL":1., "SinglePionHCAL": 1., "TimePtEta":0., "AbsoluteMPFBias": 1.} # relative sample not there 
@@ -384,7 +384,7 @@ bTagSFs_allvars = lambda : BtagSFs("JetSel_Recl",
                                    corrs=jecGroups,
                        )
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.lepScaleFactors import lepScaleFactors
+from CMGTools.DPSWW.tools.nanoAOD.lepScaleFactors import lepScaleFactors
 leptonSFs = lambda : lepScaleFactors()
 
 scaleFactorSequence_2016 = [btagSF2016_dj,bTagSFs] 
@@ -396,13 +396,13 @@ scaleFactorSequence_allVars_2017 = [btagSF2017_dj_allVars,bTagSFs_allvars]
 scaleFactorSequence_allVars_2018 = [btagSF2018_dj_allVars,bTagSFs_allvars]
 
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.higgsDecayFinder import higgsDecayFinder
+from CMGTools.DPSWW.tools.nanoAOD.higgsDecayFinder import higgsDecayFinder
 higgsDecay = lambda : higgsDecayFinder()
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.VHsplitter import VHsplitter
+from CMGTools.DPSWW.tools.nanoAOD.VHsplitter import VHsplitter
 vhsplitter = lambda : VHsplitter()
 
-# from CMGTools.TTHAnalysis.tools.synchTools import SynchTuples
+# from CMGTools.DPSWW.tools.synchTools import SynchTuples
 # synchTuples = lambda : SynchTuples()
 
 
@@ -434,7 +434,7 @@ from CMGTools.DPSWW.tools.nanoAOD.collectionMerger_DPSWW import collectionMerger
 mergedvars = collectionMerger_DPSWW() #selector = dict(Muon = muonSelection, Electron = electronSelection))
 
 # 5_evtVars_v0
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttH_gen_reco import ttH_gen_reco
+from CMGTools.DPSWW.tools.nanoAOD.ttH_gen_reco import ttH_gen_reco
 #
-#from CMGTools.TTHAnalysis.tools.topRecoSemiLept import TopRecoSemiLept
+#from CMGTools.DPSWW.tools.topRecoSemiLept import TopRecoSemiLept
 #topRecoModule = lambda : TopRecoSemiLept(constraints=['kWHadMass','kWLepMass','kTopLepMass','kTopHadMass'])
