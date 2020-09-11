@@ -1,21 +1,23 @@
-DPSWW+ : WWTo2L2Nu_DPS : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed+1, Label "DPS W^{#pm}W^{#pm}" 
+##DPSWW+ : WWTo2L2Nu_DPS : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed+1, Label "DPS W^{#pm}W^{#pm}" 
+DPSWW+ : WWDoubleTo2L : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed+1, Label "DPS W^{#pm}W^{#pm}" , years="2016" 
 
 DPSWW_incl: WW_DPS : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed+1, years="2017\,2018" , SkipMe=True
 
 WZ      : WZTo3LNu_fxfx : 4.43 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kAzure+1, Label="WZ"
 WZ_pow	: WZTo3LNu_pow : 4.43 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=ROOT.kOrange, Label="WZ_pow" , SkipMe=True
+##Wgstar	: WZTo3LNu_mllmin01 : LepGood1_mcMatchId && LepGood2_mcMatchId && Sum$(GenPart_mass < 4. && LepGood_genPartFlav == 1) == 1   ; FillColor=ROOT.kOrange+1, Label="W\#gamma*" 
+
 
 Rares : TTZToLLNuNu_amc : 0.281 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring+2, Label="Rares"
 Rares: WpWpJJ : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2 , Label="Rares"
-Rares: WWW_ll : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2, Label="Rares"
+Rares: WWW : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2, Label="Rares"
 Rares: WWZ : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2, Label="Rares"
-Rares: WZG : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2, Label="Rares"
 Rares: WZZ : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2, Label="Rares"
 Rares: ZZZ : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2, Label="Rares"
 
-Rares    : TTJets_DiLepton : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2
-Rares    : TTJets_SingleLeptonFromT : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2
-Rares    : TTJets_SingleLeptonFromTbar : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2
+##Rares    : TTJets_DiLepton : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2
+##Rares    : TTJets_SingleLeptonFromT : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2
+##Rares    : TTJets_SingleLeptonFromTbar : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kSpring-2
 
 
 

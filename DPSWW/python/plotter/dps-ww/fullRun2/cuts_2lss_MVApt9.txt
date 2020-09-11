@@ -9,7 +9,8 @@ cleanup: minMllAFAS > 12
 dilep: nLepFO == 2
 same-sign: LepGood1_charge*LepGood2_charge > 0
 
-pt2520: LepGood1_pt>25 && LepGood2_pt>20
+conept2520 : LepGood1_conePt>25 &&  LepGood2_conePt > 20
+#pt2520: LepGood1_pt>25 && LepGood2_pt>20
 
 
 lep1Tight : if3(abs(LepGood1_pdgId) == 13, (LepGood1_mvaTTH > 0.9 && LepGood1_mediumId), LepGood1_mvaTTH > 0.6)

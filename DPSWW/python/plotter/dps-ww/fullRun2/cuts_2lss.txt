@@ -18,7 +18,8 @@ same-sign: LepGood1_charge*LepGood2_charge > 0
 #conept2: LepGood2_conePt > if3((LepGood2_conePt==LepGood2_pt),20,25)
 
 
-pt2520: LepGood1_pt>25 && LepGood2_pt>20
+conept2520: LepGood1_conePt > 25 && LepGood2_conePt > 20
+#pt2520: LepGood1_pt>25 && LepGood2_pt>20
 
 TT: LepGood1_isLepTight && LepGood2_isLepTight
 

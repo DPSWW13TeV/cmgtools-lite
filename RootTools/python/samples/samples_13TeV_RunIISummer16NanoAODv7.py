@@ -89,8 +89,8 @@ WGToLNuG_amcatnlo_ext2 = kreator.makeMCComponent("WGToLNuG_amcatnlo_ext2", "/WGT
 
 
 
-#WgStarLNuMuMu          = kreator.makeMCComponent("WgStarLNuMuMu", "/WGstarToLNuMuMu_012Jets_13TeV-madgraph/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", ".*root", 2.793)
-#WgStarLNuEE            = kreator.makeMCComponent("WgStarLNuEE", "/WGstarToLNuEE_012Jets_13TeV-madgraph/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 3.526)
+WgStarLNuMuMu          = kreator.makeMCComponent("WgStarLNuMuMu", "/WGstarToLNuMuMu_012Jets_13TeV-madgraph/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS",".*root", 2.793)
+WgStarLNuEE            = kreator.makeMCComponent("WgStarLNuEE", "/WGstarToLNuEE_012Jets_13TeV-madgraph/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 3.526)
 
 
 
@@ -114,8 +114,8 @@ WGToLNuG,
 WGToLNuG_amcatnlo,
 WGToLNuG_amcatnlo_ext,
 WGToLNuG_amcatnlo_ext2,
-#WgStarLNuMuMu,         
-#WgStarLNuEE,            
+WgStarLNuMuMu,         
+WgStarLNuEE,            
 WW_ext,                 
 WW,  
 
@@ -130,6 +130,7 @@ WWW = kreator.makeMCComponent("WWW", "/WWW_4F_TuneCUETP8M1_13TeV-amcatnlo-pythia
 WWZ = kreator.makeMCComponent("WWZ", "/WWZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root",  0.1651 , fracNegWeights=0.06)
 WZZ = kreator.makeMCComponent("WZZ", "/WZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root",  0.05565 , fracNegWeights=0.060)
 ZZZ = kreator.makeMCComponent("ZZZ", "/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root",  0.01398 , fracNegWeights=0.060)
+
 
 TriBosons = [
 WWW,

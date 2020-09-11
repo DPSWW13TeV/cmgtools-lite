@@ -1,3 +1,5 @@
+WgStarLNuEE : WgStarLNuEE : xsec
+WgStarLNuMuMu : WgStarLNuMuMu : xsec
 WWW : WWW : xsec  
 WZZ : WZZ : xsec
 WWZ : WWZ : xsec
@@ -20,6 +22,8 @@ WZTo3LNu : WZTo3LNu : xsec
 DYJetsToLL_M50 : DYJetsToLL_M50 : xsec
 DYJetsToLL_M10to50_LO : DYJetsToLL_M10to50_LO : xsec
 WZTo3LNu_fxfx : WZTo3LNu_fxfx : xsec
+TTZ_LO	      : TTZ_LO : xsec
+TTW_LO	      : TTW_LO : xsec
 data : DoubleEG_Run2016B_02Apr2020
 data : DoubleEG_Run2016C_02Apr2020
 data : DoubleEG_Run2016D_02Apr2020

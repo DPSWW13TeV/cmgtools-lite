@@ -98,7 +98,7 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
     if applyWtsnSFs :
         if(nLep == 2): 
-            cmd += ''.join(' -W L1PreFiringWeight_Nom*puWeight*leptonSF_2lss *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],year)')
+            cmd += ''.join(' -W L1PreFiringWeight_Nom*puWeight')#*leptonSF_2lss *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],year)')
         elif(nLep == 3):
             cmd += ' -W L1PreFiringWeight_Nom*puWeight*leptonSF_3l *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],3,year)'
         elif(nLep == 4):
@@ -124,17 +124,17 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-def makeResults(year,finalState,splitCharge,doWhat):
-    trees       = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/{year}/'.format(year=year)
+def makeResults(year,finalState,splitCharge,doWhat,analysis):
+    trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020_skim2lss' if analysis == 'dps' else 'NanoTrees_TTH_090120_091019_v6_skim2lss')
     friends     = [trees+'3_tauCount']#,trees+'dpsbdt']
-    MCfriends   = [trees+'1_recl_allvars',trees+'2_btag_SFs',trees+'2_scalefactors_lep_fixed',trees+'0_jmeUnc_v1']
+    MCfriends   = [trees+'1_recl_allvars',trees+'2_scalefactors_lep_fixed',trees+'0_jmeUnc_v1']#,trees+'2_btag_SFs'
     Datafriends = [trees+'1_recl']
-    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}/'.format(date=date, year=year,pf=('-'+postfix if postfix else '') ) 
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}{anal}cuts/'.format(date=date, year=year,pf=('-'+postfix if postfix else ''), anal=analysis ) 
     #targetdir   = '/afs/cern.ch/user/a/anmehta/www/{date}{pf}_era{year}_latest/'.format(date=date, year=year,pf=('-'+postfix if postfix else '') ) 
     fplots      = 'dps-ww/fullRun2/plots.txt'
-    fmca        = 'dps-ww/fullRun2/mca-dpsww.txt'
+    fmca        = 'dps-ww/fullRun2/mca-dpsww.txt' if analysis == 'dps' else 'dps-ww/fullRun2/mca-ttH.txt'
     fsyst       = '' #dps-ww/fullRun2/systsUnc.txt'
-    fcut        = 'dps-ww/fullRun2/cuts_2lss_MVApt9.txt'
+    fcut        = 'dps-ww/fullRun2/cuts_2lss_MVApt9.txt' if analysis == 'dps' else 'dps-ww/fullRun2/cuts_2lss.txt'
 
     applyWtsnSFs = True
 
@@ -145,7 +145,7 @@ def makeResults(year,finalState,splitCharge,doWhat):
 
     print 'running for %s with charge split flag %s' %(finalState,splitCharge)
 
-    processes = ['DPSWW','WZ']#'Rares','Convs','ZZ','WZ','data_flips','data','WZ_pow','data_fakes']#,,'promptsub']#
+    processes = ['DPSWW','Rares','Convs','ZZ','WZ','data','data_fakes']#,'data_flips']#,,'WZ_pow','promptsub']#'data_flips',
 
     #processes = ['Top','data_fakes']#'Top']#,'mc_fakes']
     fRvars    = ['_FRe_norm_Up','_FRe_norm_Dn','_FRe_pt_Up','_FRe_pt_Dn','_FRe_be_Up','_FRe_be_Dn','_FRm_norm_Up','_FRm_norm_Dn','_FRm_pt_Up','_FRm_pt_Dn','_FRm_be_Up','_FRm_be_Dn']
@@ -404,6 +404,7 @@ if __name__ == '__main__':
     parser.add_option('--old' , dest='old', action='store_true' , default=False , help='make plots')
     parser.add_option('--dW' , '--doWhat'  , dest='doWhat', type='string' , default=[] , help='plots or cards')
     parser.add_option('--dpsww',dest='dpsww', action='store_true' , default=False , help='make plots for signal')
+    parser.add_option('--analysis',dest='analysis', type='string',default='dps' , help='cut file to be used')
 
     (opts, args) = parser.parse_args()
 
@@ -423,7 +424,7 @@ if __name__ == '__main__':
         onelepCRPlot(opts.year,opts.finalState)
     if opts.results:
         print 'running plots for 2lss'
-        makeResults(opts.year,opts.finalState,opts.splitCharge,opts.doWhat)
+        makeResults(opts.year,opts.finalState,opts.splitCharge,opts.doWhat,opts.analysis)
     if opts.dpsww:
         dpsww(opts.finalState)
     if opts.old:

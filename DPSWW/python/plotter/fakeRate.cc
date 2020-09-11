@@ -190,7 +190,7 @@ float fakeRateWeight_2lss_ii(float l1pt, float l1eta, int l1pdgId, bool l1pass,
 }
 bool tightLep_dpsww(float l1mvaTTH, float l1mediumId,int l1pdgId){
 
-  return (abs(l1pdgId) == 13 ? (l1mvaTTH > 0.9 && l1mediumId>0)  :  l1mvaTTH > 0.8);
+  return (abs(l1pdgId) == 13 ? (l1mvaTTH > 0.9 && l1mediumId>0)  :  l1mvaTTH > 0.6);
 
 }
 float conepT_dpsww(float l1pt,float l1mvaTTH, float l1mediumId,float  l1jetRelIso,int l1pdgId){

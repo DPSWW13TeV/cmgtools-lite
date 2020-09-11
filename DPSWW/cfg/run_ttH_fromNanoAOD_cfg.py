@@ -33,8 +33,8 @@ else:
     elif year == 2016:
         from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16NanoAODv7 import samples as mcSamples_
         from CMGTools.RootTools.samples.samples_13TeV_DATA2016_v7_NanoAOD import dataSamples_02Apr2020 as allData
-mcSamples_=[]
-#allData=[]
+#mcSamples_=[]
+allData=[]
 autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
 #autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cmsxrootd.fnal.gov") # must be done before mergeExtensions "cms-xrd-global.cern.ch"
 mcSamples_, _ = mergeExtensions(mcSamples_)
@@ -55,18 +55,21 @@ DatasetsAndTriggers = []
 if analysis == "main":
     mcSamples = byCompName(mcSamples_, ["%s(|_PS)$"%dset for dset in [
         # single boson
-        "WJetsToLNu_ext","WJetsToLNu","WJetsToLNu_LO","WJetsToLNu_LO_ext","DYJetsToLL_M10to50","DYJetsToLL_M10to50_ext", "DYJetsToLL_M50_LO_ext","DYJetsToLL_M10to50_LO", "DYJetsToLL_M50",
-        # ttbar 
-        "TTJets","TTJets_DiLepton",
+        #"WgStarLNuMuMu", "WgStarLNuEE",
+        #"WJetsToLNu_ext","WJetsToLNu","WJetsToLNu_LO","WJetsToLNu_LO_ext","DYJetsToLL_M10to50","DYJetsToLL_M10to50_ext", "DYJetsToLL_M50_LO_ext","DYJetsToLL_M10to50_LO", "DYJetsToLL_M50",
+        # top  
+        #"TTJets","TTJets_DiLepton", 
+        #"TTW_LO",
+        "TTZ_LO"
         # conversions
-         "TGJets_lep", "WGToLNuG", "ZGTo2LG",
+        #"TGJets_lep", "WGToLNuG", "ZGTo2LG",
         #rares
         #"TTWToLNu_fxfx", "TTZToLLNuNu_amc", "TTZToLLNuNu_m1to10",
         # diboson + DPS + WWss
-        "WWTo2L2Nu", "WZTo3LNu_pow", "WZTo3LNu_fxfx", "ZZTo4L", "WW_DPS", "WWDoubleTo2L","WGToLNuG_amcatnlo","WGToLNuG_amcatnlo_ext","WGToLNuG_amcatnlo_ext2", "WZTo3LNu","WWTo2L2Nu_DPS","WZTo3LNu_mllmin01","WZTo3LNu_mllmin01_ext1",
-         "WpWpJJ",
+        #"WWTo2L2Nu", "WZTo3LNu_pow", "WZTo3LNu_fxfx", "ZZTo4L", "WW_DPS", "WWDoubleTo2L","WGToLNuG_amcatnlo","WGToLNuG_amcatnlo_ext","WGToLNuG_amcatnlo_ext2", "WZTo3LNu","WWTo2L2Nu_DPS","WZTo3LNu_mllmin01","WZTo3LNu_mllmin01_ext1",
+         #"WpWpJJ",
         # triboson
-        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ",
+        #        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ",
     ]])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year] + triggerGroups_dict["Trigger_1e"][year]) if year == 2018 else
