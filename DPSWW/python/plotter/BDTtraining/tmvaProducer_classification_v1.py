@@ -17,7 +17,7 @@ lumis = {
 
 _allfiles = []
 #path = '/eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/'
-path = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/'
+path = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/'
 
 
 def load_dataset(year,name, trainclass,friends=[]): 
@@ -73,24 +73,24 @@ def train_classification(year,bkg):
     if bkg == 'WZ':
         bkgSel = TT
         dsets = [
-            ('WWTo2L2Nu_DPS',"Signal",['1_recl_allvars/','dpsvars/']),  
-            #('WZTo3LNu_fxfx',"Background",['1_recl_allvars/','dpsvars/'])]
-            ('WZTo3LNu_pow',"Background",['1_recl_allvars/','dpsvars/'])]
+            ('WWDoubleTo2L',"Signal",['1_recl_allvars/','bdt_input_vars/']),  
+            ('WZTo3LNu_fxfx',"Background",['1_recl_allvars/','bdt_input_vars/'])]
+            #('WZTo3LNu_pow',"Background",['1_recl_allvars/','bdt_input_vars/'])]
     else :
         bkgSel = TL
         dsets = [
-            ('WWTo2L2Nu_DPS',"Signal",['1_recl_allvars/','dpsvars/']),
-            ('DoubleMuon_Run2016B_25Oct2019',"Background",['1_recl/','dpsvars/']),
-            ('DoubleMuon_Run2016C_25Oct2019',"Background",['1_recl/','dpsvars/']),
-            ('DoubleMuon_Run2016D_25Oct2019',"Background",['1_recl/','dpsvars/']),
-            ('DoubleMuon_Run2016E_25Oct2019',"Background",['1_recl/','dpsvars/']),
-            ('DoubleMuon_Run2016F_25Oct2019',"Background",['1_recl/','dpsvars/']),
-            ('DoubleMuon_Run2016G_25Oct2019',"Background",['1_recl/','dpsvars/']),
-            ('DoubleMuon_Run2016H_25Oct2019',"Background",['1_recl/','dpsvars/'])]
+            ('WWDoubleTo2L',"Signal",['1_recl_allvars/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016B_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016C_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016D_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016E_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016F_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016G_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016H_02Apr2020',"Background",['1_recl/','bdt_input_vars/'])]
         
 
     #common selection cut as used in the analysis
-    common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && MET_pt > 20'
+    common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && MET_pt > 15'
 
 
     bkgcuts = ROOT.TCut('1');

@@ -430,6 +430,10 @@ dpsvars = lambda : DPSWW_vars()
 from CMGTools.DPSWW.tools.nanoAOD.BDT_DPSWW import BDT_DPSWW
 bdtvars = lambda : BDT_DPSWW()
 
+from CMGTools.DPSWW.tools.nanoAOD.fakeRateWtSaver import fakeRateWtSaver
+frWt = lambda : fakeRateWtSaver(os.environ["CMSSW_BASE"]+"/src/CMGTools/DPSWW/python/plotter/plots/104X/ttH/lepMVA/v1.1/fr-comb/fr_2016_MVA_mupt90_elpt70.root")
+
+#eventWt = lambda : fakeRateWtSaver()
 #from CMGTools.DPSWW.tools.nanoAOD.collectionMerger_DPSWW import collectionMerger_DPSWW
 #mergedvars = collectionMerger_DPSWW() #selector = dict(Muon = muonSelection, Electron = electronSelection))
 
