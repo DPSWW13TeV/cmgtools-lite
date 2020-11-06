@@ -1,0 +1,41 @@
+
+DPSWW+ : WWDoubleTo2L : 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label "DPS W\^{\#pm}W\^{\#pm}" , years="2016" 
+
+WZ_amc+       : WZTo3LNu_fxfx : 4.43 : 1 ; FillColor=ROOT.kAzure+1, Label="WZ_amc"
+#WZ+       :  WgStarLNuEE : 3.526  : 1  ; FillColor=ROOT.kAzure+1, Label="WZ"
+#WZ+       : WgStarLNuMuMu : 2.793  : 1  ; FillColor=ROOT.kAzure+1, Label="WZ"
+
+WZ_mllLT4 : WZTo3LNu_mllmin01 : 58.59*0.601644 : 1 && Sum$(GenPart_mass < 4. && GenPart_status == 22 )==1 ; FillColor=ROOT.kMagenta, Label="WZ_pow_incl mll < 4"
+
+WZ_incl : WZTo3LNu_mllmin01 : 58.59*0.601644 : 1 ; FillColor=ROOT.kGreen, Label="WZ_pow_incl"
+
+WZ_pow	 : WZTo3LNu : 4.43 : 1 ;  FillColor=ROOT.kOrange, Label="WZ_pow" 
+
+
+WgStarLNuEE   :  WgStarLNuEE : 3.526  : 1  ; FillColor=ROOT.kPink+1, Label="W\#gamma*\#rightarrow ee" 
+WgStarLNuMuMu   : WgStarLNuMuMu : 2.793  : 1  ; FillColor=ROOT.kTeal+1, Label="W\#gamma*\#rightarrow \#mu\#mu" 
+
+Wgstar   :  WgStarLNuEE : 3.526  : Sum$(GenPart_mass < 4. && GenPart_mass > 0.01)==1  ; FillColor=ROOT.kRed+1, Label="W\#gamma*"
+Wgstar  : WgStarLNuMuMu : 2.793  : Sum$(GenPart_mass < 4. && GenPart_mass > 0.01)==1  ; FillColor=ROOT.kRed+1, Label="W\#gamma*"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

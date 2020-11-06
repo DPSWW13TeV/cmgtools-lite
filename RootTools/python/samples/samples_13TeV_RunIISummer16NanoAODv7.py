@@ -58,6 +58,7 @@ DYJetsToLL_M50_LO_ext,
 
 ### DiBosons
 WWDoubleTo2L           = kreator.makeMCComponent("WWDoubleTo2L", "/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+WWDoubleTo2L_herwigpp           = kreator.makeMCComponent("WWDoubleTo2L_herwigpp", "/WWTo2L2Nu_DoubleScattering_13TeV-herwigpp/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
 
 WZTo3LNu               = kreator.makeMCComponent("WZTo3LNu", "/WZTo3LNu_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 4.42965)
 WZTo3LNu_ext           = kreator.makeMCComponent("WZTo3LNu_ext", "/WZTo3LNu_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root", 4.42965)
@@ -90,6 +91,7 @@ WW                     = kreator.makeMCComponent("WW_ext", "/WW_TuneCUETP8M1_13T
 
 DiBosons = [
 WWDoubleTo2L,
+WWDoubleTo2L_herwigpp,
 WZTo3LNu,
 WZTo3LNu_ext,
 WZTo3LNu_fxfx,

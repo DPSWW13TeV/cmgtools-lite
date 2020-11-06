@@ -33,7 +33,7 @@ class MVATool:
     def __call__(self,ev): 
         for s in self.vars:  s.set(ev)
         for s in self.specs: s.set(ev)
-        return (self.reader.EvaluateMVA(self.name) if self.nClasses==1 else self.reader.EvaluateMulticlass(self.name)) if not self.rarity else self.reader.GetRarity(self.name)  
+        return (self.reader.EvaluateMVA(self.name) if self.nClasses==1 else self.reader.EvaluateMulticlass(self.name)[self.nClasses-2]) if not self.rarity else self.reader.GetRarity(self.name)  
 
 class CategorizedMVA:
     def __init__(self,catMvaPairs):

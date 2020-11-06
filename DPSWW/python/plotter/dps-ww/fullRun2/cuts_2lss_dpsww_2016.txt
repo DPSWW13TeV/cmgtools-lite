@@ -12,10 +12,10 @@ same-sign: LepGood1_charge*LepGood2_charge > 0
 conept2520 : LepGood1_conePt>25 &&  LepGood2_conePt > 20
 #pt2520: LepGood1_pt>25 && LepGood2_pt>20
 
+#lep1Tight : if3(abs(LepGood1_pdgId) == 13, (LepGood1_mvaTTH > 0.9 && LepGood1_mediumId), LepGood1_mvaTTH > 0.7)
+#lep2Tight : if3(abs(LepGood2_pdgId) == 13, (LepGood2_mvaTTH > 0.9 && LepGood2_mediumId), LepGood2_mvaTTH > 0.7)
 
-lep1Tight : if3(abs(LepGood1_pdgId) == 13, (LepGood1_mvaTTH > 0.9 && LepGood1_mediumId), LepGood1_mvaTTH > 0.6)
-lep2Tight : if3(abs(LepGood2_pdgId) == 13, (LepGood2_mvaTTH > 0.9 && LepGood2_mediumId), LepGood2_mvaTTH > 0.6)
-
+TT: LepGood1_isLepTight && LepGood2_isLepTight
 
 tauveto: nTauFO == 0
 metpt: MET_pt > 15

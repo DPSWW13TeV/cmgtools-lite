@@ -69,12 +69,10 @@ triggers_1mu_noniso = [ 'HLT_Mu45_eta2p1_v*',
 triggers_1e_iso  = [ 
         #"HLT_Ele23_WPLoose_Gsf_v*", # only up to 5E33
         #"HLT_Ele27_WPLoose_Gsf_v*", # only up to 5E33
-        "HLT_Ele25_WPTight_Gsf_v*",        # not in column 0
-        "HLT_Ele25_eta2p1_WPLoose_Gsf_v*", # not in column 0 
         "HLT_Ele25_eta2p1_WPTight_Gsf_v*", 
-        "HLT_Ele27_WPTight_Gsf_v*", 
-        "HLT_Ele27_eta2p1_WPLoose_Gsf_v*",
-        "HLT_Ele45_WPLoose_Gsf_v*" ]
+        "HLT_Ele27_eta2p1_WPLoose_Gsf_v*", 
+        "HLT_Ele27_WPTight_Gsf_v*"
+         ]
 triggers_1e = triggers_1e_iso # for backwards compatibility
 triggers_1e_noniso      = [ "HLT_Ele105_CaloIdVT_GsfTrkIdT_v*","HLT_Ele115_CaloIdVT_GsfTrkIdT_v*"]
 

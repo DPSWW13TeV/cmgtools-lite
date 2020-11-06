@@ -46,7 +46,7 @@ def load_dataset(year,name, trainclass,friends=[]):
         weight = 1.0 # since it's data so weight factor is 1
     else:
         for iev in tree_wts:
-            sum_wts+= iev.genEventSumw_
+            sum_wts+= iev.genEventSumw
         weight= lumi/sum_wts
 
     print ('Added %s dataset, category %s, with weight %f' %
@@ -73,13 +73,13 @@ def train_classification(year,bkg):
     if bkg == 'WZ':
         bkgSel = TT
         dsets = [
-            ('WWDoubleTo2L',"Signal",['1_recl_allvars/','bdt_input_vars/']),  
-            ('WZTo3LNu_fxfx',"Background",['1_recl_allvars/','bdt_input_vars/'])]
-            #('WZTo3LNu_pow',"Background",['1_recl_allvars/','bdt_input_vars/'])]
+            ('WWDoubleTo2L',"Signal",['1_recl/','bdt_input_vars/']),  
+            ('WZTo3LNu_fxfx',"Background",['1_recl/','bdt_input_vars/'])]
+            #('WZTo3LNu',"Background",['1_recl/','bdt_input_vars/'])]
     else :
         bkgSel = TL
         dsets = [
-            ('WWDoubleTo2L',"Signal",['1_recl_allvars/','bdt_input_vars/']),
+            ('WWDoubleTo2L',"Signal",['1_recl/','bdt_input_vars/']),
             ('DoubleMuon_Run2016B_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
             ('DoubleMuon_Run2016C_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
             ('DoubleMuon_Run2016D_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),

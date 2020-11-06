@@ -1,15 +1,20 @@
 alwaystrue: 1
-trilep: nLepFO>=3
-exclusive: nLepTight <= 3
-cleanup: minMllAFAS > 12
+trilep: nLepFO==3
+exclusive: nLepTight == 3
+cleanup: minMllAFAS > 12; Disable=True
 trigger: Trigger_3l
 
 filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
 
-pt251515: LepGood1_conePt>25 && LepGood2_conePt>15 && LepGood3_conePt>10
+pt251515: LepGood1_conePt>25 && LepGood2_conePt>15 && LepGood3_conePt>15; Disable=True
+pt301010: LepGood1_conePt>30 && LepGood2_conePt>10 && LepGood3_conePt>10; Disable=True
+
+jpsiveto : if3( ( (LepGood1_charge + LepGood2_charge) == 0 && (abs(LepGood1_pdgId) == abs(LepGood2_pdgId)) ),(abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-3.1 ) > 0.6), if3( ((LepGood2_charge + LepGood3_charge) == 0 && (abs(LepGood3_pdgId) == abs(LepGood2_pdgId)) ),( abs (mass_2(LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) - 3.1) > 0.6), (abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass) - 3.1) > 0.6)) ) ; Disable=True
+
+mlllt4 : if3( ( (LepGood1_charge + LepGood2_charge) == 0 && (abs(LepGood1_pdgId) == abs(LepGood2_pdgId)) ),(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) < 4), if3( ((LepGood2_charge + LepGood3_charge) == 0 && (abs(LepGood3_pdgId) == abs(LepGood2_pdgId)) ),(mass_2(LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) < 4), (mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass) < 4 ) ) ) ; Disable=True
+
 
 TTT: LepGood1_isLepTight && LepGood2_isLepTight && LepGood3_isLepTight
-
 
 
 ##same_flav: (LepGood_pdgId[iLepFO_Recl[0]]) == abs(LepGood_pdgId[iLepFO_Recl[2]])) || (abs(LepGood_pdgId[iLepFO_Recl[1]]) == abs(LepGood_pdgId[iLepFO_Recl[2]])))
@@ -18,20 +23,26 @@ TTT: LepGood1_isLepTight && LepGood2_isLepTight && LepGood3_isLepTight
 
 q1: abs(LepGood1_charge + LepGood2_charge + LepGood3_charge) == 1
 
-zselec :  if3( ( (LepGood1_charge + LepGood2_charge) == 0 && (abs(LepGood1_pdgId) == abs(LepGood2_pdgId)) ),(abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2 ) < 10), if3( ((LepGood2_charge + LepGood3_charge) == 0 && (abs(LepGood3_pdgId) == abs(LepGood2_pdgId)) ),( abs (mass_2(LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) - 91.2) < 10), (abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass) - 91.2) < 10)) )
+zsel :  if3( ( (LepGood1_charge + LepGood2_charge) == 0 && (abs(LepGood1_pdgId) == abs(LepGood2_pdgId)) ),(abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2 ) < 10), if3( ((LepGood2_charge + LepGood3_charge) == 0 && (abs(LepGood3_pdgId) == abs(LepGood2_pdgId)) ),( abs (mass_2(LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) - 91.2) < 10), (abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass) - 91.2) < 10)) ) ; Disable=True
 
-orgzselec :  if3( ( (LepGood_charge[iLepFO_Recl[0]] + LepGood_charge[iLepFO_Recl[1]]) == 0 && (abs(LepGood_pdgId[iLepFO_Recl[0]]) == abs(LepGood_pdgId[iLepFO_Recl[1]])) ),(abs(mass_2(LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],LepGood_phi[iLepFO_Recl[0]],LepGood_mass[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],LepGood_phi[iLepFO_Recl[1]],LepGood_mass[iLepFO_Recl[1]])-91.2 ) < 10), if3( ((LepGood_charge[iLepFO_Recl[1]] + LepGood_charge[iLepFO_Recl[2]]) == 0 && (abs(LepGood_pdgId[iLepFO_Recl[2]]) == abs(LepGood_pdgId[iLepFO_Recl[1]]))),( abs (mass_2(LepGood_pt[iLepFO_Recl[2]],LepGood_eta[iLepFO_Recl[2]],LepGood_phi[iLepFO_Recl[2]],LepGood_mass[iLepFO_Recl[2]],LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],LepGood_phi[iLepFO_Recl[1]],LepGood_mass[iLepFO_Recl[1]]) - 91.2) < 10), (abs(mass_2(LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],LepGood_phi[iLepFO_Recl[0]],LepGood_mass[iLepFO_Recl[0]],LepGood_pt[iLepFO_Recl[2]],LepGood_eta[iLepFO_Recl[2]],LepGood_phi[iLepFO_Recl[2]],LepGood_mass[iLepFO_Recl[2]]) - 91.2) < 10)) )
+
 
 
 
 ele conv cuts: (abs(LepGood1_pdgId)!=11 || (LepGood1_convVeto && LepGood1_lostHits==0)) && (abs(LepGood2_pdgId)!=11 || (LepGood2_convVeto && LepGood2_lostHits==0)) && (abs(LepGood3_pdgId)!=11 || (LepGood3_convVeto && LepGood3_lostHits==0))
 
 
+zsel :  if3( ( (LepGood1_charge + LepGood2_charge) == 0 && (abs(LepGood1_pdgId) == abs(LepGood2_pdgId)) ),(abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2 ) < 10), if3( ((LepGood2_charge + LepGood3_charge) == 0 && (abs(LepGood3_pdgId) == abs(LepGood2_pdgId)) ),( abs (mass_2(LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) - 91.2) < 10), (abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass) - 91.2) < 10)) ) ; Disable=True
+
+gstartomm : if3( (LepGood1_pdgId + LepGood2_pdgId == 0), (abs(LepGood1_pdgId)+abs(LepGood2_pdgId) == 26), if3( (LepGood1_pdgId + LepGood3_pdgId == 0), (abs(LepGood1_pdgId)+abs(LepGood3_pdgId) == 26), abs(LepGood3_pdgId)+abs(LepGood2_pdgId) == 26) ) ; Disable=True
+
+
 ##vetottHZZ: !(mZ2>0 && m4l<140)
 
-tauveto: nTauTight==0
+tauveto: nTauTight==0 ; Disable=True
 
-metpt        : MET_pt > 50
+met_wz        : MET_pt > 50 ; Disable=True
+met_wg        : MET_pt > 30 ; Disable=True
 01j: nJet25_Recl < 2
 bVeto: nBJetMedium25 == 0
 
@@ -40,5 +51,6 @@ bVeto: nBJetMedium25 == 0
 #chanels
 eee : (abs(LepGood1_pdgId) + abs(LepGood2_pdgId) + abs(LepGood3_pdgId)) == 33 ; Disable=True
 eem :(abs(LepGood1_pdgId) + abs(LepGood2_pdgId) + abs(LepGood3_pdgId)) == 35 ; Disable=True
+emm : (abs(LepGood1_pdgId) + abs(LepGood2_pdgId) + abs(LepGood3_pdgId)) == 37 ; Disable=True
 emm : (abs(LepGood1_pdgId) + abs(LepGood2_pdgId) + abs(LepGood3_pdgId)) == 37 ; Disable=True
 mmm : (abs(LepGood1_pdgId) + abs(LepGood2_pdgId) + abs(LepGood3_pdgId)) == 39; Disable=True

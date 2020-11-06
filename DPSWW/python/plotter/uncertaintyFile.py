@@ -72,7 +72,7 @@ class Uncertainty:
             self.trivialFunc = ['apply_norm_up','apply_norm_dn']
             self.normUnc[0] = float(self.args[0])
             self.normUnc[1] = 1.0/self.normUnc[0]
-        elif self.unc_type=='LinearShapeOnly': ####################################from here am
+        elif self.unc_type=='LinearShapeOnly': #################################### am
             if len(self.args) != 1:
                 raise RuntimeError("shape uncert requires one argument")
             self.fakerate = [None,None]
@@ -83,7 +83,7 @@ class Uncertainty:
                 raise RuntimeError("shape uncert requires one argument")
             self.fakerate = [None,None]
             self.trivialFunc = ['apply_shape_parabolic_up','apply_shape_parabolic_dn']
-            self.PshapeUnc[0] = float(self.args[0]) ####################################from here am 
+            self.PshapeUnc[0] = float(self.args[0]) 
 ##       elif self.unc_type=='alternateShapeOnly': 
 ##           if len(self.args) != 1:
 ##               raise RuntimeError("alternat shape-only  requires one argument")

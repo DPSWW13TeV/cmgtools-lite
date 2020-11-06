@@ -81,7 +81,7 @@ dataSamples_Run2016H_02Apr2020 = [SingleElectron_Run2016H_02Apr2020,SingleMuon_R
 
 
 
-dataSamples_02Apr2020 = dataSamples_Run2016B_02Apr2020 # + dataSamples_Run2016C_02Apr2020 + dataSamples_Run2016D_02Apr2020 + dataSamples_Run2016E_02Apr2020 + dataSamples_Run2016F_02Apr2020 + dataSamples_Run2016G_02Apr2020 + dataSamples_Run2016H_02Apr2020
+dataSamples_02Apr2020 = dataSamples_Run2016B_02Apr2020  + dataSamples_Run2016C_02Apr2020 + dataSamples_Run2016D_02Apr2020 + dataSamples_Run2016E_02Apr2020 + dataSamples_Run2016F_02Apr2020 + dataSamples_Run2016G_02Apr2020 + dataSamples_Run2016H_02Apr2020
 
 dataSamples = dataSamples_02Apr2020 
 
