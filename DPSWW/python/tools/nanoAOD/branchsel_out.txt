@@ -4,3 +4,4 @@ keep Tag*
 keep Probe*
 keep pu*
 keep xsec*
+keep gen*

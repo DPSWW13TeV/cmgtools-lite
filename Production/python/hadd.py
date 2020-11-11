@@ -152,7 +152,7 @@ def haddNano(odir, idirs, firstTime=True):
         print 
         raise
 
-def haddChunks(idir, removeDestDir=False, cleanUp=False, ignoreDirs=None, maxSize=None, nanoAOD=True):
+def haddChunks(idir, removeDestDir=False, cleanUp=True, ignoreDirs=None, maxSize=None, nanoAOD=True):
 
     chunks = {}
     compsToSpare = set()
@@ -185,6 +185,7 @@ def haddChunks(idir, removeDestDir=False, cleanUp=False, ignoreDirs=None, maxSiz
         os.mkdir(chunkDir)
     for comp, cchunks in chunks.iteritems():
         odir = '/'.join( [idir, comp] )
+        print odir
         tasks = [ (odir,cchunks) ]
         if maxSize:
             threshold = maxSize*(1024.**3)
