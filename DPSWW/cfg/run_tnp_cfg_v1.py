@@ -36,18 +36,16 @@ else:
 
 #mcSamples_=[]
 #allData=[]
-autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
-
-
+#autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
 mcSamples_, _ = mergeExtensions(mcSamples_)
 
 
 from CMGTools.DPSWW.tools.nanoAOD.ttH_modules import triggerGroups_dict
-flavor = getHeppyOption("flavor","Electron")
+flavor = getHeppyOption("flavor","Muon")
 DatasetsAndTriggers = []
 mcSamples = byCompName(mcSamples_, ["%s(|_ext)$"%dset for dset in [
-    
-    "DYJetsToLL_M50_LO",    "DYJetsToLL_M50",
+
+    "DYJetsToLL_M50_LO" ,   "DYJetsToLL_M50",
 ]])
 if flavor == "Muon":
     DatasetsAndTriggers.append( ("SingleMuon", triggerGroups_dict["Trigger_1m"][year]) )
@@ -91,7 +89,7 @@ if getHeppyOption('selectComponents'):
     else:
         selectedComponents = byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
 autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it")
-#autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cmsxrootd.fnal.gov") #am
+
 
 if year==2018:
     configureSplittingFromTime(byCompName(mcSamples,['^(?!(TTJets_Single|T_|TBar_)).*']),150 if preprocessor else 10,12)

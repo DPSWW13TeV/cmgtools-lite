@@ -1,22 +1,23 @@
 # vim: syntax=sh
-
-incl_mc    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt"
 data_flips : + ; IncludeMca="dps-ww/fullRun2/mca-data-forFlips_v7.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="charge-misid.", FillColor=ROOT.kCyan-7, PostFix = "_flips"
+incl_mc    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt"
 Convs	   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-convs.txt"
-data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data_v7.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata_MVApt9.txt", Label="non-prompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes"
+data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data_v7.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="non-prompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes"
+
+
 #data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data_v7.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata_MVApt9.txt", Label="non-prompt", FillColor=ROOT.kBlue-10, PostFix = "_fakes"
 
 data       : + ; IncludeMca="dps-ww/fullRun2/mca-data_v7.txt"
 
-#promptsub  : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata_MVApt9.txt", PostFix='_promptsub' , AddWeight="-1"
-#mc_fakes   : + ; IncludeMca="dps-ww/fullRun2/mca-mcfakes.txt" 
-
+promptsub  : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata_MVApt9.txt", PostFix='_promptsub' , AddWeight="-1"
+mc_fakes   : + ; IncludeMca="dps-ww/fullRun2/mca-mcfakes.txt" 
+mc_flips   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-mcflips.txt"
 
 #incl_mc_jec_Up : + ; IncludeMca="mca-mc.txt", AddWeight="btagSF_shape_up_jes/btagSF_shape", FakeRate="uncert_vars/fr-jecUp.txt", SkipMe=True, PostFix="_jec_Up"
 #incl_mc_jec_Dn : + ; IncludeMca="mca-mc.txt", AddWeight="btagSF_shape_down_jes/btagSF_shape", FakeRate="uncert_vars/fr-jecDn.txt", SkipMe=True, PostFix="_jec_Dn"
 
-#incl_mc_elLooseUnc_Up : + ; IncludeMca="mca-mc.txt", AddWeight="elLooseUnc_2lss_up", SkipMe=True, PostFix="_elLooseUnc_Up"
-#incl_mc_elLooseUnc_Dn : + ; IncludeMca="mca-mc.txt", AddWeight="elLooseUnc_2lss_dn", SkipMe=True, PostFix="_elLooseUnc_Dn"
+incl_mc_elLooseUnc_Up : + ; IncludeMca="mca-mc.txt", AddWeight="elLooseUnc_2lss_up", SkipMe=True, PostFix="_elLooseUnc_Up"
+incl_mc_elLooseUnc_Dn : + ; IncludeMca="mca-mc.txt", AddWeight="elLooseUnc_2lss_dn", SkipMe=True, PostFix="_elLooseUnc_Dn"
 
 
 data_fakes_FRe_norm_Up : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt", SkipMe=True, PostFix='_fakes_FRe_norm_Up'

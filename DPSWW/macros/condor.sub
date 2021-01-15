@@ -1,80 +1,98 @@
 ##### BEGIN condor submit file
 Executable = lxbatch_runner.sh
 Universe   = vanilla
-Error      = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0/src/CMGTools/DPSWW/macros/logs/err.$(cluster).$(Dataset).$(Step)
-Output     = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0/src/CMGTools/DPSWW/macros/logs/out.$(cluster).$(Dataset).$(Step)
-Log        = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0/src/CMGTools/DPSWW/macros/logs/log.$(cluster).$(Dataset).$(Step)
+Error      = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros/logs/err.$(cluster).$(Dataset).$(Step)
+Output     = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros/logs/out.$(cluster).$(Dataset).$(Step)
+Log        = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros/logs/log.$(cluster).$(Dataset).$(Step)
 
 use_x509userproxy = True
 getenv = True
 request_memory = 2000
-+MaxRuntime = 9000
++MaxRuntime = 6000
 
 
-Arguments = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0/src/CMGTools/DPSWW/macros /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_4_0 python prepareEventVariablesFriendTree.py -j 0 -N 20000  -t NanoAOD /eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsbdt  -F  Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/2016/dpsvars/{cname}_Friend.root   -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules BDT_DPSWW  --compression ZLIB:3  -d $(Dataset) -c $(Step)
+Arguments = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL python prepareEventVariablesFriendTree.py -j 0 -N 10000  -t NanoAOD /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2016/bdt_input_vars  -F  Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2016/2_recl/{cname}_Friend.root   -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules DPSWW_vars  --compression ZLIB:3  -d $(Dataset) -c $(Step)
 
-Queue 1 Dataset in DYJetsToLL_M10to50_LO
-Queue 1 Dataset in DYJetsToLL_M50
-Queue 5 Dataset in GGHZZ4L
-Queue 12 Dataset in GGHZZ4L_new
-Queue 49 Dataset in GluGluToContinToZZTo2e2mu
-Queue 3 Dataset in GluGluToContinToZZTo2e2tau
-Queue 4 Dataset in GluGluToContinToZZTo2mu2tau
-Queue 25 Dataset in GluGluToContinToZZTo4e
-Queue 42 Dataset in GluGluToContinToZZTo4mu
-Queue 1 Dataset in GluGluToContinToZZTo4tau
-Queue 1 Dataset in GluGluToHHTo4Tau
-Queue 1 Dataset in TBar_tWch_noFullyHad
-Queue 1 Dataset in TBar_tch
-Queue 1 Dataset in TBar_tch_PS
-Queue 1 Dataset in TGJets_lep
-Queue 1 Dataset in THQ_ctcvcp
-Queue 3 Dataset in THQ_ctcvcp_new
-Queue 1 Dataset in THW_ctcvcp
-Queue 4 Dataset in THW_ctcvcp_new
-Queue 2 Dataset in TTGJets
-Queue 7 Dataset in TTH_ctcvcp
-Queue 7 Dataset in TTH_ctcvcp_new
-Queue 15 Dataset in TTHnobb_fxfx
-Queue 6 Dataset in TTHnobb_pow_new
-Queue 4 Dataset in TTJets_DiLepton
-Queue 2 Dataset in TTJets_SingleLeptonFromT
-Queue 2 Dataset in TTJets_SingleLeptonFromTbar
-Queue 11 Dataset in TTLep_pow
-Queue 4 Dataset in TTLep_pow_0
-Queue 4 Dataset in TTLep_pow_1
-Queue 4 Dataset in TTSemi_pow
-Queue 1 Dataset in TTTT
-Queue 1 Dataset in TTWJetsToLNu_EWK_5f_NLO
-Queue 19 Dataset in TTWToLNu_fxfx
-Queue 1 Dataset in TTWW
-Queue 1 Dataset in TTZH
-Queue 38 Dataset in TTZToLLNuNu_amc
-Queue 1 Dataset in TTZToLLNuNu_m1to10
-Queue 3 Dataset in TZQToLL
-Queue 5 Dataset in TZQToLL_PS
-Queue 1 Dataset in T_sch_lep
-Queue 1 Dataset in T_sch_lep_PS
-Queue 1 Dataset in T_tWch_noFullyHad
-Queue 1 Dataset in T_tch
-Queue 1 Dataset in VHToNonbb
-Queue 1 Dataset in WGToLNuG
-Queue 2 Dataset in WGToLNuG_01J
-Queue 1 Dataset in WJetsToLNu_LO
-Queue 1 Dataset in WWTo2L2Nu
-Queue 2 Dataset in WWTo2L2Nu_DPS
-Queue 1 Dataset in WWW
-Queue 1 Dataset in WWW_ll
-Queue 1 Dataset in WWZ
-Queue 1 Dataset in WZG
-Queue 56 Dataset in WZTo3LNu_fxfx
-Queue 18 Dataset in WZTo3LNu_pow
-Queue 1 Dataset in WZZ
-Queue 2 Dataset in WpWpJJ
-Queue 2 Dataset in ZGTo2LG
-Queue 1 Dataset in ZHToTauTau
-Queue 1 Dataset in ZHTobb_ll
-Queue 4 Dataset in ZZTo4L
-Queue 1 Dataset in ZZZ
-Queue 7 Dataset in qqHZZ4L
-Queue 1 Dataset in tWll
+Queue 488 Dataset in DY1JetsToLL_M50_LO
+Queue 268 Dataset in DY2JetsToLL_M50_LO
+Queue 119 Dataset in DY3JetsToLL_M50_LO
+Queue 119 Dataset in DY4JetsToLL_M50_LO
+Queue 68 Dataset in DYJetsToLL_M10to50
+Queue 32 Dataset in DYJetsToLL_M10to50_LO
+Queue 194 Dataset in DYJetsToLL_M50
+Queue 95 Dataset in DYJetsToLL_M50_LO
+Queue 109 Dataset in DoubleEG_Run2016B_02Apr2020
+Queue 47 Dataset in DoubleEG_Run2016C_02Apr2020
+Queue 78 Dataset in DoubleEG_Run2016D_02Apr2020
+Queue 71 Dataset in DoubleEG_Run2016E_02Apr2020
+Queue 56 Dataset in DoubleEG_Run2016F_02Apr2020
+Queue 146 Dataset in DoubleEG_Run2016G_02Apr2020
+Queue 156 Dataset in DoubleEG_Run2016H_02Apr2020
+Queue 193 Dataset in DoubleMuon_Run2016B_02Apr2020
+Queue 87 Dataset in DoubleMuon_Run2016C_02Apr2020
+Queue 146 Dataset in DoubleMuon_Run2016D_02Apr2020
+Queue 143 Dataset in DoubleMuon_Run2016E_02Apr2020
+Queue 117 Dataset in DoubleMuon_Run2016F_02Apr2020
+Queue 297 Dataset in DoubleMuon_Run2016G_02Apr2020
+Queue 320 Dataset in DoubleMuon_Run2016H_02Apr2020
+Queue 38 Dataset in MuonEG_Run2016B_02Apr2020
+Queue 18 Dataset in MuonEG_Run2016C_02Apr2020
+Queue 30 Dataset in MuonEG_Run2016D_02Apr2020
+Queue 28 Dataset in MuonEG_Run2016E_02Apr2020
+Queue 23 Dataset in MuonEG_Run2016F_02Apr2020
+Queue 55 Dataset in MuonEG_Run2016G_02Apr2020
+Queue 53 Dataset in MuonEG_Run2016H_02Apr2020
+Queue 41 Dataset in SingleElectron_Run2016B_02Apr2020
+Queue 19 Dataset in SingleElectron_Run2016C_02Apr2020
+Queue 31 Dataset in SingleElectron_Run2016D_02Apr2020
+Queue 29 Dataset in SingleElectron_Run2016E_02Apr2020
+Queue 20 Dataset in SingleElectron_Run2016F_02Apr2020
+Queue 47 Dataset in SingleElectron_Run2016G_02Apr2020
+Queue 47 Dataset in SingleElectron_Run2016H_02Apr2020
+Queue 47 Dataset in SingleMuon_Run2016B_02Apr2020
+Queue 22 Dataset in SingleMuon_Run2016C_02Apr2020
+Queue 35 Dataset in SingleMuon_Run2016D_02Apr2020
+Queue 34 Dataset in SingleMuon_Run2016E_02Apr2020
+Queue 26 Dataset in SingleMuon_Run2016F_02Apr2020
+Queue 61 Dataset in SingleMuon_Run2016G_02Apr2020
+Queue 78 Dataset in SingleMuon_Run2016H_02Apr2020
+Queue 20 Dataset in TBar_tWch
+Queue 20 Dataset in TBar_tWch_noFullyHad
+Queue 8 Dataset in TBar_tch
+Queue 31 Dataset in TGJets_lep
+Queue 243 Dataset in TTJets
+Queue 224 Dataset in TTJets_DiLepton
+Queue 175 Dataset in TTJets_SingleLeptonFromT
+Queue 172 Dataset in TTJets_SingleLeptonFromTbar
+Queue 81 Dataset in TTW_LO
+Queue 126 Dataset in TTZ_LO
+Queue 2 Dataset in T_sch_lep
+Queue 18 Dataset in T_tWch
+Queue 26 Dataset in T_tWch_noFullyHad
+Queue 19 Dataset in T_tch
+Queue 5 Dataset in W1JetsToLNu_LO
+Queue 12 Dataset in W2JetsToLNu_LO
+Queue 19 Dataset in W3JetsToLNu_LO
+Queue 16 Dataset in W4JetsToLNu_LO
+Queue 8 Dataset in WGToLNuG
+Queue 136 Dataset in WGToLNuG_01J_amcatnlo
+Queue 32 Dataset in WGToLNuG_amcatnlo
+Queue 27 Dataset in WJetsToLNu
+Queue 7 Dataset in WJetsToLNu_LO
+Queue 14 Dataset in WWDoubleTo2L
+Queue 4 Dataset in WWDoubleTo2L_herwigpp
+Queue 29 Dataset in WWTo2L2Nu
+Queue 3 Dataset in WWW
+Queue 3 Dataset in WWZ
+Queue 66 Dataset in WZTo3LNu
+Queue 316 Dataset in WZTo3LNu_fxfx
+Queue 287 Dataset in WZTo3LNu_mllmin01
+Queue 3 Dataset in WZZ
+Queue 26 Dataset in WgStarLNuEE
+Queue 55 Dataset in WgStarLNuMuMu
+Queue 6 Dataset in WpWpJJ
+Queue 204 Dataset in ZGTo2LG
+Queue 444 Dataset in ZGToLLG_01J_amcatnlo
+Queue 159 Dataset in ZGToLLG_01J_lowmll_amcatnlo
+Queue 65 Dataset in ZZTo4L
+Queue 4 Dataset in ZZZ

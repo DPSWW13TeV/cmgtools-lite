@@ -1,47 +1,63 @@
 #!/bin/bash
-Trees='NanoTrees_v7_dpsww_04092020'
-skimmedTrees='NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_latest'
+Trees='NanoTrees_v7_dpsww_04092020' #input trees (unskimmed)
+skimmedTrees='NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_2021'  #slimmed trees #NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_latest'
 year='2016'
-Friends_recl='2_recl' #
-steps=("recl") #"bdtiv" "jme" "lepSFs" "taucount") # "bdtDisc")
+Friends_recl='2_recl' 
+Friends_recl_unskimmed='2_recl'
+steps=("bdtiv")  #"taucount" "recl_allvars") #jme" "lepSFs" "taucount") #unskimmedlepSFs") #"bdtiv" "jme" "lepSFs" "taucount") # "bdtDisc")
+
 ## steps: 1_recl -> bdtiv -> skimming -> links to flips
-## post-skimming jme, lepSFs, taucount, and bdtDisc can run in parallel; recl_allvars needs jme frnds...
+## post-skimming jme, lepSFs, taucount, and bdtDisc can run in parallel; recl_allvars uses jme frnds...
+
+
 
 for stepToRun in "${steps[@]}"
 do
     echo 'did you clean the logs ?'
     if [[ "${stepToRun}" == "recl" ]];
 	then
-	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence  --de .*Run.* -N 10000 -q condor --maxruntime 180 --log $PWD/logs
-	python prepareEventVariablesFriendTree.py -t NanoAOD  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_data,triggerSequence --dm .*Run.* -N 10000 -q condor  --maxruntime 180 --log $PWD/logs
+	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence  --de .*Run.* -N 10000 -q condor --maxruntime 180 --log $PWD/logs
+	python prepareEventVariablesFriendTree.py -t NanoAOD  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_data,triggerSequence  --dm .*Run.*  -N 10000 -q condor  --maxruntime 180 --log $PWD/logs 
     fi
     if [[ "${stepToRun}" == "bdtiv" ]];
     then
-	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/bdt_input_vars -F Friends /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules DPSWW_vars -N 10000  -q condor --maxruntime 100 --log $PWD/logs
+	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/bdt_input_vars -F Friends /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules DPSWW_vars -N 10000 -q condor --maxruntime 100 --log $PWD/logs
     fi
+    if [[ "${stepToRun}" == "unskimmedlepSFs" ]]; then
+	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/3_scalefactors_lep_fixed_EOY -F Friends /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules leptonSFs -N 10000  --de .*Run.*  -q condor --maxruntime 150 --log $PWD/logs 
+
+    fi
+
+
 ############ everything onwards is post-skimming
+
     if [[ "${stepToRun}" == "jme" ]];
     then
-	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/0_jmeUnc_v1/  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules jme${year}_allvariations  --de .*Run.* -N 10000 -q condor --maxruntime 150 --log $PWD/logs
+	echo "running on jme"
+	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/0_jmeUnc_v1/  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules jme${year}_allvariations  --de .*Run.* -N 10000 -q condor --maxruntime 150 --log $PWD/logs #--de .*Run.*
+
     fi
   if [[ "${stepToRun}" == "recl_allvars" ]]; then
       echo 'i assume you have already got jme frnds'
       #
       python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/${Friends_recl}_allvars/  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/0_jmeUnc_v1/{cname}_Friend.root --de .*Run.*  -N 10000  -q condor --maxruntime 150 --log $PWD/logs  
+      
   fi
   
    if [[ "${stepToRun}" == "lepSFs" ]]; then
-       python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/2_scalefactors_lep_fixed -F Friends /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/${Friends_recl}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules leptonSFs -N 10000 --de .*Run.*  -q condor --maxruntime 100 --log $PWD/logs 
+       python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/3_scalefactors_EOY -F Friends /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/${Friends_recl}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules leptonSFs --de .*Run.*  -q condor --maxruntime 100 --log $PWD/logs 
    fi
    if [[ "${stepToRun}" == "taucount" ]]; then
-       #python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/3_tauCount/  -F Friends  /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/${Friends_recl}/{cname}_Friend.root  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules countTaus  -N 10000 -q condor --maxruntime 100 --log $PWD/logs 
-       python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/3_tauCount/  -F Friends  /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/${Friends_recl}/{cname}_Friend.root  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules countTaus  -N 10000 -d WGToLNuG #-q condor --maxruntime 100 --log $PWD/logs 
+      python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/3_tauCount/  -F Friends  /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/${Friends_recl}/{cname}_Friend.root  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules countTaus  -N 10000 -q condor --maxruntime 100 --log $PWD/logs 
+      
    fi
    if [[ "${stepToRun}" == "bdtDisc" ]]; then
        python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/dpsbdt -F Friends /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/bdt_input_vars/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules BDT_DPSWW -N 10000  -q condor --maxruntime 120 --log $PWD/logs
    fi
 
 done
+
+
 #test commands (misc)
 
 

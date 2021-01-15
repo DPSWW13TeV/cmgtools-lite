@@ -6,8 +6,8 @@ same-sign: LepGood_charge[0]*LepGood_charge[1] > 0
 pt2520: LepGood_pt[0]>25 && LepGood_pt[1]>20
 
 
-lep1Tight : if3(abs(LepGood_pdgId[0]) == 13, (LepGood_mvaTTH[0] > 0.5 && LepGood_mediumId[0]), LepGood_mvaTTH[0] > 0.5)
-lep2Tight : if3(abs(LepGood_pdgId[1]) == 13, (LepGood_mvaTTH[1] > 0.5 && LepGood_mediumId[1]), LepGood_mvaTTH[1] > 0.5)
+lep1Tight : if3(abs(LepGood_pdgId[0]) == 13, (LepGood_mvaTTH[0] > 0.9 && LepGood_mediumId[0]), LepGood_mvaTTH[0] > 0.7)
+lep2Tight : if3(abs(LepGood_pdgId[1]) == 13, (LepGood_mvaTTH[1] > 0.9 && LepGood_mediumId[1]), LepGood_mvaTTH[1] > 0.7)
 
 
 #tauveto: nTauFO == 0

@@ -24,7 +24,7 @@ if __name__ == "__main__":
     parser.add_option("--pretend",    dest="pretend", default=False, action="store_true",  help="Pretend to skim, don't actually do it") 
     parser.add_option("--new","--skip-existing", dest="skipExisting", default=False, action="store_true",  help="Don't skim samples that already exist in the output directory") 
     parser.add_option("--justcount",  dest="justcount", default=False, action="store_true",  help="Pretend to skim, up to the point of counting passing events") 
-    parser.add_option("--skim-friends",  dest="skimFriends", default=False, action="store_true",  help="Also run skimFTrees") 
+    parser.add_option("--skim-friends",  dest="skimFriends", default=True, action="store_true",  help="Also run skimFTrees") 
     parser.add_option("-z", "--compression",  dest="compression", type="string", default=("ZLIB:3"), help="Compression: none, or (algo):(level) ")
     parser.add_option("--elist", dest="elist", type="string", default="skimTrees_elist", help="Name of the skim elist (default: skimTrees_elist)")
     parser.add_option("--bo", "--branch-selection-output",  dest="branchsel_out", type="string", default=None, help="Branch selection output")

@@ -9,21 +9,23 @@ lumis = {
 }
 
 
-def simpleMCplots(trees,MCfriends,targetdir, fmca, fcut,fplots, enabledcuts, disabledcuts, processes,plotlist,extraopts = ''):
+def simpleMCplots(trees,MCfriends,Datafriends,targetdir, fmca, fcut,fplots, enabledcuts, disabledcuts, processes,plotlist,extraopts = '',bareNano=False):
 
+    if bareNano:
+        cmd  = ' mcPlots.py -j 10 -l 35.9 --tree NanoAOD --year 2016  --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots)
 
-    cmd  = ' mcPlots.py -f -j 10 -l 35.9 --tree NanoAOD --year 2016  --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots)
-
-
+    else:
+        cmd  = ' mcPlots.py -f -j 10 -l 35.9 --tree NanoAOD --year 2016  --pdir {td} {fmca} {fcut} {fplots} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots)
+        #        cmd += ''.join(' -W L1PreFiringWeight_Nom*puWeight')
 
     cmd += ''.join(' --FMCs '+frnd for frnd in MCfriends)
-
+    cmd += ''.join(' --FDs '+frnd for frnd in Datafriends)
     cmd += ''.join(' -E ^'+cut for cut in enabledcuts )
     cmd += ''.join(' -X ^'+cut for cut in disabledcuts)
 
     cmd += ' --sP '+','.join(plot for plot in plotlist)
     cmd += ' -p '+','.join(processes)
-
+    
 
     cmd += ' -o '+targetdir+'/'+'_AND_'.join(plot for plot in plotlist)+'.root'
     if extraopts:
@@ -51,7 +53,7 @@ def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     if invertedcuts:
         cmd += ''.join(' -I ^'+cut for cut in invertedcuts )
     if applyWtsnSFs:
-        cmd += ''.join(' -W L1PreFiringWeight_Nom*puWeight*leptonSF_2lss *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],year)')
+        cmd += ''.join(' -W L1PreFiringWeight_Nom*puWeight*leptonSF_2lss* triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],year)')
 
     if scaleprocesses:
         for proc,scale in scaleprocesses.items():
@@ -67,17 +69,20 @@ def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     print '============================================================================================='
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
-def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, applyWtsnSFs, year,nLep,extraopts = '', invertedcuts = []):
+def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, applyWtsnSFs, year,nLep,extraopts = '', invertedcuts = [],cutflow=False):
 
 
     #if not type(trees)==list: trees = [trees]
     #treestring = ' '.join(' -P '+ t for t in list(trees))
 
     if(nLep == 1):
-        cmd  = ' mcPlots.py -f -j 10 -l {lumi} --tree NanoAOD --year {YEAR} --pdir {td} {fmca} {fcut} {fplots} -P {trees} --mcc fakeRates/mcc-eleIdEmu2.txt -L fakeRates/lepton-fr/frPuReweight.cc '.format(lumi=lumis[year],td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year)
+        cmd  = ' mcPlots.py -f -j 10 -l {lumi} --tree NanoAOD --year {YEAR} --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1 -P {trees} --mcc fakeRates/mcc-eleIdEmu2.txt -L fakeRates/lepton-fr/frPuReweight.cc '.format(lumi=lumis[year],td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year)
     else:
-        #cmd  = " mcPlots.py -f -j 10 -l {lumi} --tree NanoAOD --year {YEAR} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees}   --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub.* ".format(lumi=lumis[year],td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year)
-        cmd  = ' mcPlots.py -f -j 10 -l {lumi} --tree NanoAOD --year {YEAR} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(lumi=lumis[year],td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year)
+        #cmd  = " mcPlots.py -f -j 10 -l {lumi} --tree NanoAOD --year {YEAR} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt --pdir {td} {fmca} {fcut} {fplots}   -P {trees}   --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub.* ".format(lumi=lumis[year],td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year)
+        if (cutflow):
+            cmd  = ' mcPlots.py -j 10 -l {lumi} --tree NanoAOD --year {YEAR} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(lumi=lumis[year],td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year)
+        else:
+            cmd  = ' mcPlots.py -f -j 10 -l {lumi} --tree NanoAOD --year {YEAR} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees}  '.format(lumi=lumis[year],td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year)
 
 
     if len(fsyst) > 0:
@@ -97,16 +102,18 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
     if applyWtsnSFs :
         if(nLep == 2): 
-            #*leptonSF_2lss
-            cmd += ''.join(' -W L1PreFiringWeight_Nom*puWeight *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],year)')
+            cmd += ''.join(' -W L1PreFiringWeight_Nom*puWeight*leptonSF_2lss *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],2,year)')
         elif(nLep == 3):
-            #*leptonSF_3l
-            cmd += ' -W L1PreFiringWeight_Nom*puWeight *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],3,year)'
+            cmd += ' -W L1PreFiringWeight_Nom*puWeight*leptonSF_3l *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],3,year)'
         elif(nLep == 4):
-            #*leptonSF_4l
-            cmd += ' -W L1PreFiringWeight_Nom*puWeight *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],3,year)'
+            cmd += ' -W L1PreFiringWeight_Nom*puWeight*leptonSF_4l *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],3,year)'
         else:
-            print ' you need to have nleps >1 for SFs '
+            if(nLep == 2): 
+                cmd += ''.join(' -W L1PreFiringWeight_Nom*puWeight')
+            elif(nLep == 3):
+                cmd += ' -W L1PreFiringWeight_Nom*puWeight'
+            elif(nLep == 4):
+                cmd += ' -W L1PreFiringWeight_Nom*puWeight'
 
     cmd += ' -o '+targetdir+'/'+'_AND_'.join(plot for plot in plotlist)+'.root'
     if fitdataprocess:
@@ -127,19 +134,20 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
 
 def makeResults(year,finalState,splitCharge,doWhat,analysis):
-    #trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70' if analysis == 'dps' and year == '2016' else 'NanoTrees_TTH_090120_091019_v6_skim2lss')
-    trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_latest' if analysis == 'dps' and year == '2016' else 'NanoTrees_TTH_090120_091019_v6_skim2lss')
+    #trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020' if analysis == 'dps' and year == '2016' else 'NanoTrees_TTH_090120_091019_v6_skim2lss')
+    trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_2021' if analysis == 'dps' and year == '2016' else 'NanoTrees_TTH_090120_091019_v6_skim2lss')
+
     friends     = [trees+'3_tauCount']#, trees+'dpsbdt']
-    MCfriends   = [trees+'2_recl_allvars',trees+'0_jmeUnc_v1',trees+'2_scalefactors_lep_fixed'] #,trees+'2_btag_SFs
+    MCfriends   = [trees+'2_recl_allvars',trees+'3_scalefactors_EOY',trees+'0_jmeUnc_v1']#,trees+'2_scalefactors_lep_fixed']#
     Datafriends = [trees+'2_recl']
-    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}{anal}cuts/'.format(date=date, year=year,pf=('-'+postfix if postfix else ''), anal=analysis ) 
     fplots      = 'dps-ww/fullRun2/plots.txt'
     fmca        = 'dps-ww/fullRun2/mca-dpsww.txt' if analysis == 'dps' and year == '2016' else 'dps-ww/fullRun2/mca-ttH.txt'
     fsyst       = 'dps-ww/fullRun2/systsUnc.txt'
-    fcut        = 'dps-ww/fullRun2/cuts_2lss_dpsww_2016.txt' if analysis == 'dps' and year == '2016' else 'dps-ww/fullRun2/cuts_2lss.txt'
+    fcut        = 'dps-ww/fullRun2/cuts_2lss.txt' 
 
     applyWtsnSFs = True
-
+    cutflow=False
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}{anal}cuts_{here}SFs/'.format(date=date, year=year,pf=('-'+postfix if postfix else '') ,here='with' if applyWtsnSFs else 'without', anal=analysis ) 
     if splitCharge: 
         loop = [ 'minusminus', 'plusplus']
     else:
@@ -147,27 +155,25 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
 
     print 'running for %s with charge split flag %s' %(finalState,splitCharge)
 
-    processes = ['DPSWW','Rares','WZ_amc','DPSWW_hg','WZ_mllLT4','WZ_pow','data','data_fakes','ZZ','Convs','data_flips']
-    #'WZ_incl''WZ_mllLT4'
-    #'WZ_mllLT4','_FRe_norm_Up','_FRe_norm_Dn','_FRe_pt_Up','_FRe_pt_Dn','_FRe_be_Up','_FRe_be_Dn','_FRm_norm_Up','_FRm_norm_Dn','_FRm_pt_Up','_FRm_pt_Dn','_FRm_be_Up','_FRm_be_Dn']#,'promptsub'],'Wgstar','WZ_incl','WZ_mllLT4','WZ']#,'WZ_mllLT4''data_flips',
 
-    #processes = ['WZ_pow','WZ_amc','WZ_incl','WZ_mllLT4']
+    processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs01J','WZ_mllLT4','data_flips','data','data_fakes','DPSWW_hg','WZ_pow']#,'dy','Flips','Convs','Wgstar','WZ_incl','promptsub']
 
     fRvars    = ['data_fakes_FRe_norm_Up','data_fakes_FRe_norm_Dn','data_fakes_FRe_pt_Up','data_fakes_FRe_pt_Dn','data_fakes_FRe_be_Up','data_fakes_FRe_be_Dn','data_fakes_FRm_norm_Up','data_fakes_FRm_norm_Dn','data_fakes_FRm_pt_Up','data_fakes_FRm_pt_Dn','data_fakes_FRm_be_Up','data_fakes_FRm_be_Dn']
     processes+=fRvars
 
     if finalState[0] in ['mumu','elel']:
         binningBDT   = ' unroll_2Dbdt_dps_mumu(BDT_DPS_fakes,BDT_DPS_WZ_amc) 15,0.0,15.0'
-
     else:
         binningBDT   = ' unroll_2Dbdt_dps_elmu(BDT_DPS_fakes,BDT_DPS_WZ_amc) 15,0.0,15.0'
 
     exotic = ['ptRatio1','ptRatio2']#,'MVA_ptRatio','dxy1','dz1','sip3d1','dxy2','dz2','sip3d2','minMVA','maxMVA','LepGood1_motherid','LepGood2_motherid','fake_lepMVA1','fake_lepMVA2', LepGood1_genPartFlav_all','LepGood2_genPartFlav_all',LepGood1_tightId','LepGood2_tightId','LepGood1_cutBased','LepGood2_cutBased','LepGood1_mediumPromptId','LepGood1_mediumId','LepGood1_mvaFall17V2Iso','LepGood1_mvaFall17V2Iso_WPL','LepGood1_mvaId','LepGood2_mediumPromptId','LepGood2_mediumId','LepGood2_mvaFall17V2Iso','LepGood2_mvaFall17V2Iso_WPL','njets25','njets30','nBJetLoose25','nBJetMedium25','nBJetTight25','nBJetLoose40','nBJetMedium40','nBJetTight40','nTauTight','nTauFO'] 
 
-    allvars    = ['conept1']#'BDT_wz_amc','BDT_fakes','BDT_wz_pow','BDT_DPS_multiC','BDT_WZ_multiC','BDT_TL_multiC']#,'pt1','pt2','eta1','eta2','phi1','phi2','MVA1','MVA2','tcharge1','tcharge2','charge1','charge2','pdgId1','pdgId2','dilep_charge','dilep_flav','met','metphi','njets','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2','nVert']        
+    allvars    = ['conept1','conept2','pt1','pt2','eta1','eta2','phi1','phi2','MVA1','MVA2','met','metphi']#,'dilep_flav','tcharge1','tcharge2','njets25','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2','nVert','ptll'] #'BDT_wz_amc','BDT_fakes','BDT_wz_pow','BDT_DPS_multiC','BDT_WZ_multiC','BDT_TL_multiC']'dilep_charge','puppimetphi','puppimet'
     #'conept1_WZ_sep1','conept2_WZ_sep1'
+
     #    configs=['elmu','mumu','elel','plusplus','minusminus']
-    plotvars   = allvars #allvars #exotic #+specials
+
+    plotvars   = allvars #allvars #exotic 
 
     for FS in finalState:            
         for ch in loop:
@@ -180,13 +186,12 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
             invert    = []
             fittodata = []
             scalethem = {}
-            ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.0  1.99'
+            ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.45  1.69' # --ratioDen DPSWW --ratioNums DPSWW_hg --ratioYLabel=hw/py8'
             spam    = ' --topSpamSize 1.0 --noCms '
             legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
-            ubands  = ' --showMCError '
-            anything = ' ' #--fitData --flp WZ_mllLT4'# --plotmode norm' # --plotmode nostack' # rm --neg ' #--plotmode norm ' #"  --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub.* " #-- uf" #" #to include neagitve evt ylds from fakes
+            ubands  = '  --showMCError '
+            anything = '--binname {finalState} '.format(finalState=FS) # --fitData --flp data_fakes'# --plotmode norm' # --plotmode nostack' # rm --neg ' #--plotmode norm ' #"  --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub.* " #-- uf" #" #to include neagitve evt ylds from fakes --showIndivSigs --noStackSig
             extraopts = ratio + spam + legends + ubands + anything
-               
 
             if splitCharge:
                 makeplots1  = ['{}_{}{}'.format(a,FS,ch)  for a in plotvars]
@@ -196,29 +201,28 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
             if 'plots' in doWhat:
                 makeplots=makeplots1 #+makeplots2
                 print makeplots1
-                runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, applyWtsnSFs, year, 2,extraopts,invert)
+                runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, applyWtsnSFs, year, 2,extraopts,invert,cutflow)
 
             if 'cards' in doWhat:
             ## ==================================
             ## running datacards
             ## ==================================
-                #processes.append('WZ_pow')
-                processes+=['data_fakes'+i for i in fRvars]
                 #print processes
                 targetcarddir = 'Cards/cards_{date}{pf}_{FS}_era{year}'.format(FS=FS,year=year,date=date, pf=('-'+postfix if postfix else '') )
-                extraoptscards = ' --binname dpsww_{year}_{FS}{ch}'.format(year=year,FS=FS,ch=(ch if ch else ''))
+                extraoptscards = ' ' #--binname {FS}{ch}'.format(year=year,FS=FS,ch=(ch if ch else ''))
                 runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processes, scalethem,applyWtsnSFs, year,extraoptscards,invert)
 ########################################
 
 def makeResultsGen(year,finalState,splitCharge):
-    trees       = '/eos/cms/store/cmst3/group/dpsww/WZs/'
+    trees       = '/eos/cms/store/cmst3/group/dpsww/signal_summer16_nanoV7/'
     MCfriends   = ''
-    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}_genDressed/'.format(date=date, year=year,pf=('-'+postfix if postfix else ''))
+    #targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/GeneratorLevel/{date}{pf}_era{year}_dressedleptons/'.format(date=date, year=year,pf=('-'+postfix if postfix else ''))
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/bareNano/{date}{pf}_era{year}/'.format(date=date, year=year,pf=('-'+postfix if postfix else ''))
     fplots      = 'dps-ww/fullRun2/plots.txt'
     fmca        = 'dps-ww/fullRun2/mca-dpsww-gen.txt' 
     fsyst       = ''
-    fcut        = 'dps-ww/fullRun2/cuts_2lss_dpsww_dressed.txt'
-
+    fcut        = 'dps-ww/fullRun2/cuts_2lss_dpsww_basic.txt' #dps-ww/fullRun2/cuts_2lss_dpsww_dressed.txt'
+    bareNano    = True
 
     if splitCharge: 
         loop = [ 'minusminus', 'plusplus']
@@ -226,9 +230,8 @@ def makeResultsGen(year,finalState,splitCharge):
         loop = [ '' ]
 
     print 'running for %s with charge split flag %s' %(finalState,splitCharge)
-
-    processes = ['WZ_pow','WZ_incl','Wgstar','WZ_amc','WZ_mllLT4']#,'WZ_mllLT4']'WgStarLNuEE','WgStarLNuMuMu'
-    allvars=['pt1_dressedLep','pt2_dressedLep','ndressedLep','dilep_flav_dressedLep']#]#''mll_dressedLep']#
+    processes = ['DPSpy8','DPSv5','DPShwpp']#,WZ_pow','WZ_incl','Wgstar','WZ_amc','WZ_mllLT4']#,'WZ_mllLT4']'WgStarLNuEE','WgStarLNuMuMu'
+    allvars=['Electron_mvaTTH','Muon_mvaTTH']#pt_dressedLep','eta_dressedLep','pdgId_dressedLep']#'pdgIdprod_dressedLep','GenMET_pt','eta1_dressedLep','eta2_dressedLep','pt1_dressedLep','pt2_dressedLep','ndressedLep','dilep_flav_dressedLep','mll_v1_dressedLep','mll_dressedLep','mll_zoomed_dressedLep']#
     
  
     plotvars   = allvars 
@@ -241,10 +244,10 @@ def makeResultsGen(year,finalState,splitCharge):
                 enable.append(ch)
             print enable #list(ch) + list (finalState)
             disable   = []
-            ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.0  1.99'
+            ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  1.39'
             spam    = ' --topSpamSize 1.0 --noCms '
             legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2 '
-            anything = ' --plotmode norm ' # --plotmode norm' # --plotmode nostack' # rm --neg ' #--plotmode norm ' 
+            anything = ' --plotmode norm --showRatio --ratioDen DPSpy8 --ratioNums DPSv5,DPShwpp --ratioYLabel=v5/py8' # --plotmode norm' # --plotmode nostack' # rm --neg ' #--plotmode norm ' 
             extraopts = ratio + spam + legends +  anything
                
             
@@ -256,7 +259,7 @@ def makeResultsGen(year,finalState,splitCharge):
 
             makeplots=makeplots1 
             print makeplots1
-            simpleMCplots(trees,MCfriends,targetdir, fmca, fcut,fplots, enable, disable, processes,makeplots,extraopts)
+            simpleMCplots(trees,MCfriends,'',targetdir, fmca, fcut,fplots, enable, disable, processes,makeplots,extraopts,bareNano)
 
 
 #%%%%%%%%%
@@ -409,11 +412,11 @@ def onelepCRPlot(year,finalState):
             enable=['conepTmu','muCR','2016_trigMu' if year == '2016' else 'trigMu']
             anything= " --xf 'SingleEl.*,DoubleEG.*,EGamma.*'"
             #anything+= " -W coneptwMuX_OR_2016(LepGood_pt,LepGood_mvaTTH,LepGood_mediumId,LepGood_jetRelIso,PV_npvsGood) '"
-            targetdir = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}_1muCR/'.format(date=date,year=year,pf=('-'+postfix if postfix else '') ) 
+            targetdir = '/eos/user/a/anmehta/www/DPSWW_v2/Fakes/{date}{pf}_era{year}_1muCR/'.format(date=date,year=year,pf=('-'+postfix if postfix else '') ) 
         if FS == 'el':
             processes=['WJets','DYJets','Top','data','QCDEl_red']
             enable=['trigEl','conepTel','elCR']
-            targetdir = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}_1elCR/'.format(date=date,year=year,pf=('-'+postfix if postfix else '') ) 
+            targetdir = '/eos/user/a/anmehta/www/DPSWW_v2/Fakes/{date}{pf}_era{year}_1elCR/'.format(date=date,year=year,pf=('-'+postfix if postfix else '') ) 
             anything= " --xf 'DoubleMu.*,SingleMu.*' "
             anything+= " -W coneptwEleX_OR_2016(LepGood_pt,LepGood_mvaTTH,LepGood_jetRelIso,PV_npvsGood)"
     
@@ -426,20 +429,28 @@ def dpsww(finalState):
     print '=========================================='
     print 'running single lepton control region  plots'
     print '=========================================='
-    trees='/eos/cms/store/cmst3/group/dpsww/Lepton_id_study/'
-    MCfriends=[trees+'coll_merged/']
-    targetdir = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_signal/'.format(date=date,pf=('-'+postfix if postfix else '') ) 
-    fplots = 'dps-ww/fullRun2/simple_plots.txt'
-    fmca = 'dps-ww/fullRun2/simple_mca.txt'
-    fsyst  = '' 
-    fcut   = 'dps-ww/fullRun2/simple_cuts.txt'
+    trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year='2016',samples = 'NanoTrees_v7_dpsww_04092020')
+    MCfriends   = [trees+'2_recl'] 
+    Datafriends = [trees+'2_recl']
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}unskimmed/'.format(date=date, year='2016',pf=('-'+postfix if postfix else ''))
+    fplots      = 'dps-ww/fullRun2/plots.txt'
+    fmca        = 'dps-ww/fullRun2/mca-dpsww.txt'
+    fcut        = 'dps-ww/fullRun2/cuts_2lss_dpsww_2016.txt'
     disable   = []
-    processes=['DPSWW']
+##am    trees='/eos/cms/store/cmst3/group/dpsww/Lepton_id_study/'
+##am    MCfriends=[trees+'coll_merged/']
+##am    targetdir = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}/'.format(date=date,pf=('-'+postfix if postfix else '') ) 
+##am    fplots = 'dps-ww/fullRun2/simple_plots.txt'
+##am    fmca = 'dps-ww/fullRun2/mca-dpsww.txt' #simple_mca.txt'
+##am    fsyst  = '' 
+##am    fcut   = 'dps-ww/fullRun2/simple_cuts.txt'
+##am    processes=['DPSWW']
+    processes = ['DPSWW','DYLO','Diboson','data','TTdilep','SingleTop','WJets']#,'TTsemilep']#,'data_fakes']
     #enable=[]
     ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.0  1.99'
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
-    ubands  = ' --plotmode norm' 
+    ubands  = ' '# --plotmode norm' 
     anything =''
     extraopts = ratio + spam + legends + ubands + anything
     plots=['mvaTTH1','mvaTTH2','met','pt1','pt2','minMVA','maxMVA']
@@ -448,7 +459,41 @@ def dpsww(finalState):
         enable=[]
         enable.append(FS); 
         makeplots=[ip + '_' + FS for ip in plots]
-        simpleMCplots(trees,MCfriends,targetdir, fmca, fcut,fplots, enable, disable, processes,makeplots,extraopts)
+        simpleMCplots(trees,MCfriends,Datafriends,targetdir, fmca, fcut,fplots, enable, disable, processes,makeplots,extraopts)
+
+
+
+def dyCRPlot(year,finalState):
+    print '=========================================='
+    print 'running dy control region  plots' 
+    print '=========================================='
+    trees       = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/{year}/'.format(year=year)
+    friends     = [trees+'2_recl']#, trees+'dpsbdt']
+    MCfriends   = [trees+'3_scalefactors_lep_fixed_EOY']#3_scalefactors_lep_fixed']#',trees+'0_jmeUnc_v1',trees+'2_scalefactors_lep_fixed'] #,trees+'2_btag_SFs
+    Datafriends =  ''
+    applySFs=False
+    targetdir = '/eos/user/a/anmehta/www/DPSWW_v2/DY/{date}{pf}_era{year}_{here}SFs/'.format(date=date,year=year,pf=('-'+postfix if postfix else ''),here='with' if applySFs else 'without' )
+    cutflow=False
+    fplots = 'dps-ww/fullRun2/plots.txt'
+    fmca =   'dps-ww/fullRun2/mca-dpsww.txt'
+    fsyst  = '' #dps-ww/fullRun2/systsUnc.txt'
+    fcut   = 'dps-ww/fullRun2/cuts_dy.txt'
+    processes = ['DYLO','Diboson','data','TTdilep','data_fakes']#,'TTsemilep']#,]'TTsemilep','SingleTop','WJets',
+    disable   = []
+    fittodata = []
+    scalethem = {}
+    ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.8  1.29'
+    spam    = ' --topSpamSize 1.0 --noCms '
+    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
+    ubands  = '' # --showMCError '
+    anything = " " #--fitData --flp WZ --sP tot_weight  " #scaleBkgToData--preFitData tot_weight --flp WZ --sP tot_weight --sp WZ " # --fitData  --flp WZ  "# --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub" # --preFitData tot_weight --plotmode norm" #to include neagitve evt ylds from fakes 
+    extraopts = ratio + spam + legends + ubands + anything
+    plots    = ['MVA1','MVA2']#'ptRatio1','ptRatio2','MVA_ptRatio']#MVA1','MVA2','minMVA','maxMVA','mll','pt1','pt2','eta1','eta2','nVert','njets','met','conept1','conept2']#'ptll','minMtW','maxMtW',minMtW']#'mtww','ptll','mll','pt1','pt2','eta1','eta2','MVA1','MVA2','nVert','njets','met']#,'phi1','phi2','MVA1','MVA2','tcharge1','tcharge2','charge1','charge2','pdgId1','pdgId2','dilep_charge','dilep_flav','met','metphi','njets','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2','nVert'] #'BDT_wz_amc','BDT_fakes','BDT_wz_pow','BDT_DPS_multiC','BDT_WZ_multiC','BDT_TL_multiC']
+    for FS in finalState:
+        enable=[]
+        enable.append(FS); 
+        makeplots=[ip + '_' + FS for ip in plots]
+        runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True,applySFs,year, 2,extraopts,[],cutflow)
 
 if __name__ == '__main__':
     parser = optparse.OptionParser(usage='usage: %prog [opts] ', version='%prog 1.0')
@@ -456,6 +501,7 @@ if __name__ == '__main__':
     parser.add_option('-d', '--date', dest='date' , type='string', default='', help='run with specified date instead of today')
     #    parser.add_option('-l', '--lumi', dest='lumi' , type='float'  , default=1.    , help='change lumi by hand')
     parser.add_option('--onelepCR',dest='onelepCR', action='store_true', default=False , help='make plots in single lep CR')
+    parser.add_option('--dyCR',dest='dyCR', action='store_true', default=False , help='make plots in dy CR')
     parser.add_option('--threelepCR',dest='threelepCR', action='store_true', default=False , help='make plots in 3lep CR')
     parser.add_option('--fourlepCR',dest='fourlepCR', action='store_true' , default=False , help='make plots in 4lep CR')
     parser.add_option('--finalState',dest='finalState',type='string' , default=[], action="append", help='final state(s) to run on')
@@ -477,7 +523,8 @@ if __name__ == '__main__':
 
     if opts.date:
         date = opts.date
-
+    if opts.dyCR:
+        dyCRPlot(opts.year,opts.finalState)
     if opts.threelepCR:
         threelepCRPlot(opts.year,opts.threesome)
     if opts.fourlepCR:

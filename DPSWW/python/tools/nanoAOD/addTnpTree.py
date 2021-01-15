@@ -27,7 +27,7 @@ class addTnpTree(Module):
             if year == 2018:
                 self.tagSel = lambda x : x.pt > 34 and x.cutBased > 3 and abs(x.eta) < 2.5
             self.kMaxMass = 140
-            self.kMinMass = 50 ##am 
+            self.kMinMass = 50 
 
         if self.flavor == "Muon":
             self.probeSel = lambda x : x.pt > 5 and x.looseId and abs(x.eta) < 2.4

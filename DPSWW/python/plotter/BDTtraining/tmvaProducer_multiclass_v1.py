@@ -61,31 +61,32 @@ def train_multiclass(year,fOutName):
     TT        = 'Lep1_isLepTight &&  Lep2_isLepTight'
     TL        = 'Lep1_isLepTight + Lep2_isLepTight == 1'
 
-
+    common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && MET_pt > 15'
     #setting cuts for different samples
     wzcuts = ROOT.TCut('1')
     wzcuts += afss
     wzcuts += muon
     wzcuts += eleID
     wzcuts += TT
+    #wzcuts += common_cuts
 
     dpscuts = ROOT.TCut('1')
     dpscuts += afac
     dpscuts += muon
     dpscuts += eleID
     dpscuts += TT
-
+    #dpscuts +=common_cuts
     TLcuts = ROOT.TCut('1')
     TLcuts += afss
     TLcuts += muon
     TLcuts += eleID
     TLcuts += TL
-
+    #TLcuts +=common_cuts
 
 
     allcuts = ROOT.TCut('1')
     #common selection cut as used in the analysis
-    common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && MET_pt > 15'
+
     allcuts += common_cuts
 
     dsets = [
@@ -98,7 +99,7 @@ def train_multiclass(year,fOutName):
         ('DoubleMuon_Run2016F_02Apr2020',"bgTL",TLcuts,['1_recl/','bdt_input_vars/','fakeRateWt/'],"fakeRateWt"),
         ('DoubleMuon_Run2016G_02Apr2020',"bgTL",TLcuts,['1_recl/','bdt_input_vars/','fakeRateWt/'],"fakeRateWt"),
         ('DoubleMuon_Run2016H_02Apr2020',"bgTL",TLcuts,['1_recl/','bdt_input_vars/','fakeRateWt/'],"fakeRateWt")]
-    #('DoubleMuon_2016B_part1_reMiniAOD', "bgTL",TLcuts,['friends_FORtraining_22042020/'],"fakeRateWt"),
+
 
 
     

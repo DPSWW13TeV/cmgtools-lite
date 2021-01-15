@@ -1,5 +1,11 @@
+# vim: syntax=sh
 
-DPSWW+ : WWDoubleTo2L : 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label "DPS W\^{\#pm}W\^{\#pm}" , years="2016" 
+DPSpy8+ : WWTo2L2Nu_DPS_pythia8 : 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
+DPSv5 : signal_v5 : 0.1729 : 1 ; FillColor=ROOT.kGreen+1, Label="DPSWW-py8-nanoV5" 
+
+#DPSpy8+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8 : 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
+
+DPShwpp : WWTo2L2Nu_DoubleScattering_13TeV-herwigpp : 0.1729 : 1 ; FillColor=ROOT.kBlue+1, Label="DPSWW-hw++" 
 
 WZ_amc+       : WZTo3LNu_fxfx : 4.43 : 1 ; FillColor=ROOT.kAzure+1, Label="WZ_amc"
 #WZ+       :  WgStarLNuEE : 3.526  : 1  ; FillColor=ROOT.kAzure+1, Label="WZ"

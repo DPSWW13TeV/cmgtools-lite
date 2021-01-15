@@ -1,11 +1,12 @@
 alwaystrue: 1
-2l           : nGenDressedLepton ==2
+2l           : nGenDressedLepton == 2
 SameSign     : GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1] > 0
-#25/20       : GenDressedLepton_pt[0] > 25 && GenDressedLepton_pt[1] > 20
+25/20       : GenDressedLepton_pt[0] > 25 && GenDressedLepton_pt[1] > 20
 
 elmu  : (abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 143); Disable=True
 
 mumu  : (abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 169) ; Disable=True
+#ll : 1 ; Disable=True
 ll  : (abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 143 || abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 169 || abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 121) ; Disable=True
 ns_ll  : (abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 143 || abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 169 || abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 121) ; Disable=True
 

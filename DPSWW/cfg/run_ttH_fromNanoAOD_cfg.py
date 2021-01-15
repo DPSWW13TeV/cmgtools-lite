@@ -33,9 +33,10 @@ else:
     elif year == 2016:
         from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16NanoAODv7 import samples as mcSamples_
         from CMGTools.RootTools.samples.samples_13TeV_DATA2016_NanoAODv7 import dataSamples_02Apr2020 as allData
+        #        from CMGTools.RootTools.samples.triggers_13TeV_DATA2016 import all_triggers as triggers ## for FRqcd
 
-mcSamples_=[]
-#allData=[]
+#mcSamples_=[]
+allData=[]
 autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
 #autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cmsxrootd.fnal.gov") # must be done before mergeExtensions "cms-xrd-global.cern.ch"
 
@@ -55,37 +56,45 @@ from CMGTools.DPSWW.tools.nanoAOD.ttH_modules import triggerGroups_dict
 
 DatasetsAndTriggers = []
 if analysis == "main":
-    mcSamples = byCompName(mcSamples_, ["%s(|_ext)$"%dset for dset in [
+    mcSamples = byCompName(mcSamples_, ["%s(|_ext*)"%dset for dset in [
         # single boson
         #"WJetsToLNu","WJetsToLNu","WJetsToLNu_LO","WJetsToLNu_LO","DYJetsToLL_M10to50","DYJetsToLL_M10to50", "DYJetsToLL_M50_LO","DYJetsToLL_M10to50_LO", "DYJetsToLL_M50",
         # ttbar
         #"TTJets","TTJets_DiLepton", 
         # conversions
-        #"WGToLNuG", "WGToLNuG_amcatnlo","WGToLNuG_amcatnlo_ext1","ZGTo2LG",   
+        #"WGToLNuG.*.", ,"ZGTo2LG.*."
+        #"DYJetsToLL_M50_LO","DYJetsToLL_M10to50_LO"
+        ##        "TTJets_SingleLeptonFromTbar","TTJets_SingleLeptonFromT","T_tWch_noFullyHad","TBar_tWch_noFullyHad"
+        #"T_sch_lep","T_tch","TBar_tch","T_tWch","TBar_tWch",
         #rares
         #"TTW_LO","TTZ_LO","WWW",  "WWZ", "WZG", "WZZ", "ZZZ", "WWW_ll"
         # diboson
         #"WWTo2L2Nu","WZTo3LNu_pow","WZTo3LNu_fxfx", "ZZTo4L","WWDoubleTo2L","WWDoubleTo2L_hw",WWDouble_cp5","WZTo3LNu","WZTo3LNu_mllmin01", "WgStarLNuMuMu", "WgStarLNuEE","WpWpJJ",
-        "WWDoubleTo2L_herwigpp"
+        #"WWDoubleTo2L_herwigpp",
+        #"WGToLNuG_01J_amcatnlo", "ZGToLLG_01J_.*."
+        #"DY.*.JetsToLL_M50_LO","W.*.JetsToLNu_LO"
+        "DY1JetsToLL_M50_LO"
     ]])
-    #DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]) )
+    DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year] + triggerGroups_dict["Trigger_1e"][year]) if year == 2018 else
-                                ("DoubleEG_Run2016B",   triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year]) )
-    #DatasetsAndTriggers.append( ("MuonEG",     triggerGroups_dict["Trigger_em"][year] + triggerGroups_dict["Trigger_mee"][year] + triggerGroups_dict["Trigger_mme"][year]) )
-    #DatasetsAndTriggers.append( ("SingleMuon", triggerGroups_dict["Trigger_1m"][year]) )
-    #DatasetsAndTriggers.append( ("SingleElectron", triggerGroups_dict["Trigger_1e"][year]) if year != 2018 else (None,None) )
+                                ("DoubleEG",   triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year]) )
+    DatasetsAndTriggers.append( ("MuonEG",     triggerGroups_dict["Trigger_em"][year] + triggerGroups_dict["Trigger_mee"][year] + triggerGroups_dict["Trigger_mme"][year]) )
+    DatasetsAndTriggers.append( ("SingleMuon", triggerGroups_dict["Trigger_1m"][year]) )
+    DatasetsAndTriggers.append( ("SingleElectron", triggerGroups_dict["Trigger_1e"][year]) if year != 2018 else (None,None) )
 elif analysis == "frqcd":
     mcSamples = byCompName(mcSamples_, [
-        "QCD_Mu15", "QCD_Pt(20|30|50|80|120|170)to.*_Mu5", 
-        "QCD_Pt(20|30|50|80|120|170)to.*_EMEn.*", 
-      (r"QCD_Pt(20|30|50|80|120|170)to\d+$"       if year == 2018 else  
-        "QCD_Pt(20|30|50|80|120|170)to.*_bcToE.*" ),        
-        "WJetsToLNu_LO", "DYJetsToLL_M50_LO", "DYJetsToLL_M10to50_LO", "TT(Lep|Semi)_pow"
-    ])
+
+        "QCD_Mu15"])#, "QCD_Pt(20|30|50|80|120|170)to.*_Mu5", 
+##am        "QCD_Pt(20|30|50|80|120|170)to.*_EMEn.*", 
+##am      (r"QCD_Pt(20|30|50|80|120|170)to\d+$"       if year == 2018 else  
+##am        "QCD_Pt(20|30|50|80|120|170)to.*_bcToE.*" ),        
+##am        "WJetsToLNu_LO", "DYJetsToLL_M50_LO", "DYJetsToLL_M10to50_LO", "TT(Lep|Semi)_pow"
+##am    ])
     egfrpd = {2016:"DoubleEG", 2017:"SingleElectron", 2018:"EGamma"}[year]
     DatasetsAndTriggers.append( ("DoubleMuon", triggers["FR_1mu_noiso"] + triggers["FR_1mu_iso"]) )
     DatasetsAndTriggers.append( (egfrpd,       triggers["FR_1e_noiso"] + triggers["FR_1e_iso"]) )
-    DatasetsAndTriggers.append( ("SingleMuon", triggers["FR_1mu_noiso_smpd"]) )
+    ##    DatasetsAndTriggers.append( ("SingleMuon", triggers["FR_1mu_noiso_smpd"]) )
+print DatasetsAndTriggers
 
 # make MC
 mcTriggers = sum((trigs for (pd,trigs) in DatasetsAndTriggers if trigs), [])
@@ -123,7 +132,7 @@ else: # rerunning deepFlavor can take up to twice the time, some samples take up
     configureSplittingFromTime(byCompName(mcSamples,['^(TTJets_Single|T_|TBar_).*']),150 if preprocessor else 10,12)
     configureSplittingFromTime(dataSamples,100 if preprocessor else 5,12)
     configureSplittingFromTime(byCompName(dataSamples,['Single']),50 if preprocessor else 5,12)
-selectedComponents, _ = mergeExtensions(selectedComponents)
+selectedComponents, _ = mergeExtensions(selectedComponents) ### this works :-)
 
 # create and set preprocessor if requested
 if preprocessor:

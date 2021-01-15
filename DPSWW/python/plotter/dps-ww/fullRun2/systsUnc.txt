@@ -40,6 +40,7 @@ Wgstar_shape_quad	     : WZ_mllLT4	   : .*			    : ParabolicShapeOnly : 1.05
 
 # Charge flip uncertainty
 charge_misid     : data_flips  : .* : normSymm : 1.3
+#fakes_norm     : data_fakes  : .* : normSymm : 1.3
 
 # lumi from https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#LumiComb
 lumi_13TeV_2016		: $PromptFromMC : .* : normSymm : 1.022; year="2016"
@@ -76,15 +77,15 @@ pileup : $PromptFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,
 # lepton & trigger efficiencies
 
 mloose : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss']
-#mtight : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss']
+mtight : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss']
 
 eloose : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss']   
-#etight : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss']
+etight : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss']
 mloose : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss']
-#mtight : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss']
+mtight : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss']
 
 eloose : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss']   
-#etight : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss']
+etight : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss']
 
 
 
@@ -143,8 +144,8 @@ FRm_norm : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/unce
 FRm_pt : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt"],       RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
 FRm_be : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
 FRe_be : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-FRe_norm : $FRData  : .*elmu* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-FRe_pt : $FRData  : .*elmu* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+FRe_norm : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+FRe_pt : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
 
 FRe_norm : $FRData  : .*elel* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
 FRe_pt : $FRData  : .*elel* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True

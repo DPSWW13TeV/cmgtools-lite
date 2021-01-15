@@ -146,8 +146,7 @@ bool loadFRHisto(const std::string &histoName, const char *file, const char *nam
 
 float fetchFR_ii(float l1pt, float l1eta, int l1pdgId, int iFRmu, int iFRel) 
 {
-  //std::cout<<"fetching el FR from \t"<<iFRel<<std::endl;
-  //#std::cout<<"fetching mu FR from \t"<<iFRmu<<std::endl;
+
     TH2 *hist1 = (abs(l1pdgId) == 11 ? FRi_el[iFRel] : FRi_mu[iFRmu]);
     if (hist1 == 0) { std::cerr << "ERROR, missing FR for pdgId " << l1pdgId << ", iFR " << (abs(l1pdgId) == 11 ? iFRel : iFRmu) << std::endl; std::abort(); }
     int ptbin1  = std::max(1, std::min(hist1->GetNbinsX(), hist1->GetXaxis()->FindBin(l1pt)));
@@ -188,21 +187,6 @@ float fakeRateWeight_2lss_ii(float l1pt, float l1eta, int l1pdgId, bool l1pass,
     }
     return ret;
 }
-bool tightLep_dpsww(float l1mvaTTH, float l1mediumId,int l1pdgId){
-
-  return (abs(l1pdgId) == 13 ? (l1mvaTTH > 0.9 && l1mediumId>0)  :  l1mvaTTH > 0.6);
-
-}
-float conepT_dpsww(float l1pt,float l1mvaTTH, float l1mediumId,float  l1jetRelIso,int l1pdgId){
-  float l1conept=l1pt; 
-  bool l1pass = tightLep_dpsww(l1mvaTTH,l1mediumId,l1pdgId);
-  if(l1pass){    l1conept=l1pt;}
-  else{l1conept = 0.90 * l1pt * (1 + l1jetRelIso);}
-  return l1conept;
-
-}
-
-
 
 
 float fakeRateWeight_2lss_i(float l1pt, float l1eta, int l1pdgId, float l1pass,

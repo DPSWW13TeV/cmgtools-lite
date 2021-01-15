@@ -73,20 +73,20 @@ def train_classification(year,bkg):
     if bkg == 'WZ':
         bkgSel = TT
         dsets = [
-            ('WWDoubleTo2L',"Signal",['1_recl/','bdt_input_vars/']),  
-            ('WZTo3LNu_fxfx',"Background",['1_recl/','bdt_input_vars/'])]
-            #('WZTo3LNu',"Background",['1_recl/','bdt_input_vars/'])]
+            ('WWDoubleTo2L',"Signal",['2_recl/','bdt_input_vars/']),  
+            #('WZTo3LNu_fxfx',"Background",['2_recl/','bdt_input_vars/'])]
+            ('WZTo3LNu',"Background",['2_recl/','bdt_input_vars/'])]
     else :
         bkgSel = TL
         dsets = [
-            ('WWDoubleTo2L',"Signal",['1_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016B_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016C_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016D_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016E_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016F_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016G_02Apr2020',"Background",['1_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016H_02Apr2020',"Background",['1_recl/','bdt_input_vars/'])]
+            ('WWDoubleTo2L',"Signal",['2_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016B_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016C_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016D_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016E_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016F_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016G_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2016H_02Apr2020',"Background",['2_recl/','bdt_input_vars/'])]
         
 
     #common selection cut as used in the analysis
@@ -121,6 +121,8 @@ def train_classification(year,bkg):
 
     factory = ROOT.TMVA.Factory('TMVAClassification', fOut, "!V:!Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" )
     DL = ROOT.TMVA.DataLoader("dataset");
+    #DL = ROOT.TMVA.DataLoader(fOutName+"dataset");
+
     # adding list of vars to train on
     DL.AddVariable('pt1 := Lep1_conept','p_{T1}', 'F')
     DL.AddVariable('pt2 := Lep2_conept','p_{T2}', 'F') 
@@ -142,15 +144,17 @@ def train_classification(year,bkg):
             DL.AddBackgroundTree(tree,glbwt)
 
     #evtwt_sig = "puw * (min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) > 0.9)"
-    #evtwt  = "run == 1 ? (puWeight * xsec * genWeight * {TTsel} ) : 1.0 ".format(TTsel=TT)    #run number is set to 1 for MC samples 
+    evtwt  = "run == 1 ? (puWeight * xsec * genWeight * {TTsel} ) : 1.0 ".format(TTsel=TT)    #run number is set to 1 for MC samples 
+    DL.SetWeightExpression(evtwt)
+    
 
-    DL.SetSignalWeightExpression("puWeight * xsec * genWeight")
-    #DL.SetWeightExpression(evtwt)
+    ##amDL.SetSignalWeightExpression("puWeight * xsec * genWeight")
+    ##amif bkg == 'WZ':
+    ##am    DL.SetBackgroundWeightExpression("puWeight * xsec * genWeight")
+    ##amelse :
+    ##am    DL.SetBackgroundWeightExpression("1.0");
 
-    if bkg == 'WZ':
-        DL.SetBackgroundWeightExpression("puWeight * xsec * genWeight")
-    else :
-        DL.SetBackgroundWeightExpression("1.0");
+    #evtwt  = "!isData ? (puw * (min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) > 0.9)) : (fakeRateWt * {TLsel})".format(TLsel=TL)
 
 
 

@@ -15,7 +15,7 @@ class lepScaleFactors(Module):
             for chan in ['2lss','3l']:
                 for year in '2016,2017,2018'.split(','):
                     fl2 = 'ele' if fl=='e' else 'muon'
-                    self.looseToTight['%s,%s,%s'%(year,fl,chan)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/looseToTight_%s_%s_%s.root'%(year,fl,chan), "EGamma_SF2D")
+                    self.looseToTight['%s,%s,%s'%(year,fl,chan)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/DPSWW/data/leptonSF/looseToTight_%s_%s_%s.root'%(year,fl,chan), "EGamma_SF2D")
 
                     self.looseToTightUncertainties_eta['%s,%s'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/uncertainty/SFttbar_%s_%s_eta.root'%(year,fl2), "histo_eff_data")
                     self.looseToTightUncertainties_pt['%s,%s'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/uncertainty/SFttbar_%s_%s_pt.root'%(year,fl2), "histo_eff_data")
@@ -61,19 +61,26 @@ class lepScaleFactors(Module):
 
     def getLooseToTight(self,lep,var_str,year,nlep):
         hist = self.looseToTight['%d,%s,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm', '2lss' if nlep == 2 else '3l')]
-        etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(abs(lep.eta))));
         ptbin  = max(1, min(hist.GetNbinsY(), hist.GetYaxis().FindBin(lep.pt)));
+        #print ptbin,lep.pt
+        if (year == 2016 and nlep == 2):
+            etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(lep.eta)));
+        else:
+            etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(abs(lep.eta))));
+
         out = hist.GetBinContent(etabin,ptbin)
 
-
-        hist_ptunc  = self.looseToTightUncertainties_pt['%d,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm')]
-        ptbin = max(1, min(hist_ptunc.GetNbinsX(), hist_ptunc.FindBin( lep. pt)))
-        err_pt = hist_ptunc.GetBinContent(ptbin) 
-        hist_etaunc = self.looseToTightUncertainties_eta['%d,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm')]
-        etabin = max(1, min(hist_etaunc.GetNbinsX(), hist_etaunc.FindBin( lep. pt)))
-        err_eta = hist_ptunc.GetBinContent(etabin) 
-
-        error = max(abs(err_pt-1), abs(err_eta-1))
+        if(year == 2016 and nlep == 2):
+            error= hist.GetBinError(etabin,ptbin)             
+        else:
+            hist_ptunc  = self.looseToTightUncertainties_pt['%d,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm')]
+            ptbin = max(1, min(hist_ptunc.GetNbinsX(), hist_ptunc.FindBin( lep. pt)))
+            err_pt = hist_ptunc.GetBinContent(ptbin) 
+            hist_etaunc = self.looseToTightUncertainties_eta['%d,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm')]
+            etabin = max(1, min(hist_etaunc.GetNbinsX(), hist_etaunc.FindBin( lep. pt)))
+            err_eta = hist_ptunc.GetBinContent(etabin) 
+            error = max(abs(err_pt-1), abs(err_eta-1))
+ 
         if abs(lep.pdgId) == 13: 
             var = +1 if var_str == '_mu_loosetotight_up' else -1 if var_str == '_mu_loosetotight_dn' else 0
             out = out +var*error
