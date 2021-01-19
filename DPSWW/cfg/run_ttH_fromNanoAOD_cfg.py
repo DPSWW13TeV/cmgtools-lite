@@ -8,7 +8,7 @@ kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = int(getHeppyOption("year", "2016"))
+year = int(getHeppyOption("year", "2018"))
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 
@@ -25,18 +25,18 @@ if preprocessor:
         from CMGTools.RootTools.samples.samples_13TeV_DATA2016 import dataSamples_17Jul2018 as allData
 else:
     if year == 2018:
-        from CMGTools.RootTools.samples.samples_13TeV_RunIIAutumn18NanoAODv4 import samples as mcSamples_
-        from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples_25Oct2019 as allData
+        from CMGTools.RootTools.samples.samples_13TeV_RunIIAutumn18NanoAODv7 import samples as mcSamples_
+        from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAODv7 import dataSamples_02Apr2020 as allData
     elif year == 2017:
         from CMGTools.RootTools.samples.samples_13TeV_RunIIFall17NanoAODv7 import samples as mcSamples_
-        from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAODv7 import dataSamples_25Oct2019 as allData
+        from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAODv7 import dataSamples_02Apr2020 as allData
     elif year == 2016:
         from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16NanoAODv7 import samples as mcSamples_
         from CMGTools.RootTools.samples.samples_13TeV_DATA2016_NanoAODv7 import dataSamples_02Apr2020 as allData
         #        from CMGTools.RootTools.samples.triggers_13TeV_DATA2016 import all_triggers as triggers ## for FRqcd
 
 #mcSamples_=[]
-allData=[]
+#allData=[]
 autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
 #autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cmsxrootd.fnal.gov") # must be done before mergeExtensions "cms-xrd-global.cern.ch"
 
@@ -58,22 +58,17 @@ DatasetsAndTriggers = []
 if analysis == "main":
     mcSamples = byCompName(mcSamples_, ["%s(|_ext*)"%dset for dset in [
         # single boson
-        #"WJetsToLNu","WJetsToLNu","WJetsToLNu_LO","WJetsToLNu_LO","DYJetsToLL_M10to50","DYJetsToLL_M10to50", "DYJetsToLL_M50_LO","DYJetsToLL_M10to50_LO", "DYJetsToLL_M50",
+        "W.*JetsToLNu.*","DYJets.*",
         # ttbar
-        #"TTJets","TTJets_DiLepton", 
+        "TTJets","TTJets_DiLepton", 
         # conversions
-        #"WGToLNuG.*.", ,"ZGTo2LG.*."
-        #"DYJetsToLL_M50_LO","DYJetsToLL_M10to50_LO"
-        ##        "TTJets_SingleLeptonFromTbar","TTJets_SingleLeptonFromT","T_tWch_noFullyHad","TBar_tWch_noFullyHad"
-        #"T_sch_lep","T_tch","TBar_tch","T_tWch","TBar_tWch",
+        "WGToLNuG.*","ZGToLLG.*"
+        #fingle top
+        "T_sch_lep","T_tch","TBar_tch","T_tWch","TBar_tWch",
         #rares
-        #"TTW_LO","TTZ_LO","WWW",  "WWZ", "WZG", "WZZ", "ZZZ", "WWW_ll"
+        "TTW_LO","TTZ_LO","WWW",  "WWZ", "WZG", "WZZ", "ZZZ", "WWW_ll", "WWG",
         # diboson
-        #"WWTo2L2Nu","WZTo3LNu_pow","WZTo3LNu_fxfx", "ZZTo4L","WWDoubleTo2L","WWDoubleTo2L_hw",WWDouble_cp5","WZTo3LNu","WZTo3LNu_mllmin01", "WgStarLNuMuMu", "WgStarLNuEE","WpWpJJ",
-        #"WWDoubleTo2L_herwigpp",
-        #"WGToLNuG_01J_amcatnlo", "ZGToLLG_01J_.*."
-        #"DY.*.JetsToLL_M50_LO","W.*.JetsToLNu_LO"
-        "DY1JetsToLL_M50_LO"
+        "ZZTo4L","WW.*","WZ.*","WpWpJJ"
     ]])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year] + triggerGroups_dict["Trigger_1e"][year]) if year == 2018 else

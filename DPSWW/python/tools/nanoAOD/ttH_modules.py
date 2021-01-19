@@ -9,6 +9,9 @@ conf = dict(
         dz = 0.1, 
         eleId = "mvaFall17V2noIso_WPL",
 )
+elMVA_WP=0.80
+muMVA_WP=0.85
+
 
 ttH_skim_cut = ("nMuon + nElectron >= 2 &&" + 
        "Sum$(Muon_pt > {muPt} && Muon_miniPFRelIso_all < {miniRelIso} && Muon_sip3d < {sip3d}) +"
@@ -71,7 +74,7 @@ def ttH_idEmu_cuts_E3(lep):
 
 def conept_TTH(lep):
     if (abs(lep.pdgId)!=11 and abs(lep.pdgId)!=13): return lep.pt
-    if (abs(lep.pdgId)==13 and lep.mediumId>0 and lep.mvaTTH > 0.90) or (abs(lep.pdgId) == 11 and lep.mvaTTH > 0.70): return lep.pt
+    if (abs(lep.pdgId)==13 and lep.mediumId>0 and lep.mvaTTH > muMVA_WP) or (abs(lep.pdgId) == 11 and lep.mvaTTH > elMVA_WP): return lep.pt ##here
     else: return 0.90 * lep.pt * (1 + lep.jetRelIso)
 
 def smoothBFlav(jetpt,ptmin,ptmax,year,scale_loose=1.0):
@@ -83,11 +86,11 @@ def smoothBFlav(jetpt,ptmin,ptmax,year,scale_loose=1.0):
 def clean_and_FO_selection_TTH(lep,year):
     bTagCut = 0.3093 if year==2016 else 0.3033 if year==2017 else 0.2770
     return lep.conept>10 and lep.jetBTagDeepFlav<bTagCut and (abs(lep.pdgId)!=11 or (ttH_idEmu_cuts_E3(lep) and lep.convVeto and lep.lostHits == 0)) \
-        and (lep.mvaTTH>(0.90 if abs(lep.pdgId)==13 else 0.70) or \
+        and (lep.mvaTTH>(muMVA_WP if abs(lep.pdgId)==13 else elMVA_WP) or \
              (abs(lep.pdgId)==13 and lep.jetBTagDeepFlav< smoothBFlav(0.9*lep.pt*(1+lep.jetRelIso), 20, 45, year) and lep.jetRelIso < 0.50) or \
              (abs(lep.pdgId)==11 and lep.mvaFall17V2noIso_WP80 and lep.jetRelIso < 0.70))
 
-tightLeptonSel = lambda lep,year : clean_and_FO_selection_TTH(lep,year) and (abs(lep.pdgId)!=13 or lep.mediumId>0) and lep.mvaTTH > (0.90 if abs(lep.pdgId)==13 else 0.70)
+tightLeptonSel = lambda lep,year : clean_and_FO_selection_TTH(lep,year) and (abs(lep.pdgId)!=13 or lep.mediumId>0) and lep.mvaTTH > (muMVA_WP if abs(lep.pdgId)==13 else elMVA_WP)
 
 foTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and abs(tau.dxy) < 1000 and abs(tau.dz) < 0.2 and tau.idDecayModeNewDMs and (int(tau.idDeepTau2017v2p1VSjet)>>1 & 1) # VVLoose WP
 tightTauSel = lambda tau: (int(tau.idDeepTau2017v2p1VSjet)>>2 & 1) # VLoose WP
@@ -433,9 +436,9 @@ bdtvars = lambda : BDT_DPSWW()
 from CMGTools.DPSWW.tools.nanoAOD.fakeRateWtSaverdpsww import fakeRateWtSaverdpsww
 frWt = lambda : fakeRateWtSaverdpsww(os.environ["CMSSW_BASE"]+"/src/CMGTools/DPSWW/python/plotter/plots/104X/ttH/lepMVA/v1.1/fr-comb/fr_2016_MVA_mupt90_elpt70.root")
 
-from CMGTools.DPSWW.tools.nanoAOD.addTnpTree import addTnpTree
-tnpvars = lambda : addTnpTree()
-tnpTrees = [autoPuWeight, tnpvars]
+#from CMGTools.DPSWW.tools.nanoAOD.addTnpTree import addTnpTree
+#tnpvars = lambda : addTnpTree()
+#tnpTrees = [autoPuWeight, tnpvars]
 #from CMGTools.DPSWW.tools.nanoAOD.collectionMerger_DPSWW import collectionMerger_DPSWW
 #mergedvars = collectionMerger_DPSWW() #selector = dict(Muon = muonSelection, Electron = electronSelection))
 

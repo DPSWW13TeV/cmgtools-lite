@@ -180,8 +180,8 @@ WgStarLNuEE            = kreator.makeMCComponent("WgStarLNuEE", "/WGstarToLNuEE_
 WGToLNuG_01J_amcatnlo                 = kreator.makeMCComponent("WGToLNuG_01J_amcatnlo", "/WGToLNuG_01J_5f_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 178.4,fracNegWeights=0.203)
 WGToLNuG_01J_amcatnlo_ext                 = kreator.makeMCComponent("WGToLNuG_01J_amcatnlo_ext", "/WGToLNuG_01J_5f_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root", 178.4,fracNegWeights=0.203)
 
-ZGToLLG_01J_amcatnlo                 = kreator.makeMCComponent("ZGToLLG_01J_amcatnlo", "/ZGToLLG_01J_5f_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 47.29,fracNegWeights=0.2)
-ZGToLLG_01J_amcatnlo_ext                 = kreator.makeMCComponent("ZGToLLG_01J_amcatnlo_ext", "/ZGToLLG_01J_5f_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root", 47.29,fracNegWeights=0.202)
+ZGToLLG_01J_amcatnlo                 = kreator.makeMCComponent("ZGToLLG_01J_amcatnlo", "/ZGToLLG_01J_5f_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 58.83,fracNegWeights=0.2)
+ZGToLLG_01J_amcatnlo_ext                 = kreator.makeMCComponent("ZGToLLG_01J_amcatnlo_ext", "/ZGToLLG_01J_5f_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root", 58.83,fracNegWeights=0.202)
 
 ZGToLLG_01J_lowmll_amcatnlo                 = kreator.makeMCComponent("ZGToLLG_01J_lowmll_amcatnlo", "/ZGToLLG_01J_5f_lowMLL_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 97.21,fracNegWeights=0.18)
 

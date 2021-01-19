@@ -28,13 +28,13 @@ class BDT_DPSWW(Module):
         wts_wz_amc = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_wz_amc/weights/TMVAClassification_BDTG.weights.xml'
         wts_wz_pow = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_wz_pow/weights/TMVAClassification_BDTG.weights.xml'
         wts_fakes  = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_fakes/weights/TMVAClassification_BDTG.weights.xml'
-        wts_multiC  = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_multiclass/weights/TMVAMutliClass_BDTG.weights.xml'
+        #        wts_multiC  = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_multiclass/weights/TMVAMutliClass_BDTG.weights.xml'
         self._MVAs['BDT_DPS_WZ_amc']    = MVATool('BDTG_method', wts_wz_amc   , self._vars, rarity=True)
         self._MVAs['BDT_DPS_WZ_pow']    = MVATool('BDTG_method', wts_wz_pow   , self._vars, rarity=True)
         self._MVAs['BDT_DPS_fakes']     = MVATool('BDTG_method', wts_fakes    , self._vars, rarity=True)
-        self._MVAs['BDT_DPS_multiC']    = MVATool('BDTG_method', wts_multiC   , self._vars, rarity=False,nClasses=2)
-        self._MVAs['BDT_WZ_multiC']     = MVATool('BDTG_method', wts_multiC   , self._vars, rarity=False,nClasses=3)
-        self._MVAs['BDT_TL_multiC']     = MVATool('BDTG_method', wts_multiC   , self._vars, rarity=False,nClasses=4)
+##        self._MVAs['BDT_DPS_multiC']    = MVATool('BDTG_method', wts_multiC   , self._vars, rarity=False,nClasses=2)
+##        self._MVAs['BDT_WZ_multiC']     = MVATool('BDTG_method', wts_multiC   , self._vars, rarity=False,nClasses=3)
+##        self._MVAs['BDT_TL_multiC']     = MVATool('BDTG_method', wts_multiC   , self._vars, rarity=False,nClasses=4)
     def beginJob(self):
         pass
     def endJob(self):
@@ -45,9 +45,9 @@ class BDT_DPSWW(Module):
         self.out.branch('BDT_DPS_WZ_amc', "F")
         self.out.branch('BDT_DPS_WZ_pow', "F")
         self.out.branch('BDT_DPS_fakes', "F")
-        self.out.branch('BDT_DPS_multiC', "F")
-        self.out.branch('BDT_WZ_multiC', "F")
-        self.out.branch('BDT_TL_multiC', "F")
+##        self.out.branch('BDT_DPS_multiC', "F")
+##        self.out.branch('BDT_WZ_multiC', "F")
+##        self.out.branch('BDT_TL_multiC', "F")
         pass
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -57,9 +57,9 @@ class BDT_DPSWW(Module):
         self.out.fillBranch('BDT_DPS_WZ_amc'   , mvadict['BDT_DPS_WZ_amc'])
         self.out.fillBranch('BDT_DPS_WZ_pow'   , mvadict['BDT_DPS_WZ_pow'])
         self.out.fillBranch('BDT_DPS_fakes'    , mvadict['BDT_DPS_fakes'])
-        self.out.fillBranch('BDT_DPS_multiC'   , mvadict['BDT_DPS_multiC'])
-        self.out.fillBranch('BDT_WZ_multiC'    , mvadict['BDT_WZ_multiC'])
-        self.out.fillBranch('BDT_TL_multiC'    , mvadict['BDT_TL_multiC'])
+##        self.out.fillBranch('BDT_DPS_multiC'   , mvadict['BDT_DPS_multiC'])
+##        self.out.fillBranch('BDT_WZ_multiC'    , mvadict['BDT_WZ_multiC'])
+##        self.out.fillBranch('BDT_TL_multiC'    , mvadict['BDT_TL_multiC'])
         return True
 
 

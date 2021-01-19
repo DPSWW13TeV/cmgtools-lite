@@ -4,12 +4,12 @@ DPSWW_hg : WWDoubleTo2L_herwigpp : 0.1729 : LepGood1_isMatchRightCharge && LepGo
 Rares: TTZ_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"
 Rares: TTW_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , Label="Rares"
 Rares: TTJets_DiLepton : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"
-Rares: TTJets_SingleLeptonFromT : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"
-Rares: TTJets_SingleLeptonFromTbar : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"
-Rares : T_sch_lep : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6
-Rares : T_tch                  : 136.02+80.95 :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 
-Rares : T_tWch_noFullyHad      : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6    
-Rares : TBar_tWch_noFullyHad      : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6    
+Rares: TTJets_SingleLeptonFromT : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares", years="2016"
+Rares: TTJets_SingleLeptonFromTbar : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares", years="2016"
+Rares : T_sch_lep : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, years="2016"
+Rares : T_tch                  : 136.02+80.95 :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , years="2016"
+Rares : T_tWch_noFullyHad      : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6    , years="2016"
+Rares : TBar_tWch_noFullyHad      : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6    , years="2016"
 
 Rares: WpWpJJ : xsec*0.05454/0.03711 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , Label="Rares"
 Rares: WWW : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"
@@ -28,8 +28,8 @@ WZ_amc : WZTo3LNu_fxfx : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchR
 
 
 WZ_incl : WZTo3LNu_mllmin01 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kAzure+1, Label="WZ/\#gamma*"
-WGstar_excl   :  WgStarLNuEE : xsec  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge  ; FillColor=ROOT.kViolet+7, Label="W\#gamma*_excl"
-WGstar_excl   : WgStarLNuMuMu : xsec  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge  ; FillColor=ROOT.kViolet+7, Label="W\#gamma*_excl" 
+WGstar_excl   :  WgStarLNuEE : xsec  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge  ; FillColor=ROOT.kViolet+7, Label="W\#gamma*_excl" , years="2016"
+WGstar_excl   : WgStarLNuMuMu : xsec  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge  ; FillColor=ROOT.kViolet+7, Label="W\#gamma*_excl" , years="2016"
 
 dyincl    : DYJetsToLL_M50_LO : xsec :((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==0) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==0)); FillColor=5
 dyincl    : DYJetsToLL_M10to50_LO : xsec :((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==0) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==0)) ; FillColor=5

@@ -1,9 +1,9 @@
-Convs  : WGToLNuG : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma"
-Convs 	: ZGTo2LG : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
+Convs  : WGToLNuG : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kBlue-3, Label="W/Z\#gamma"
+Convs 	: ZGTo2LG : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kBlue-3, Label="W/Z\#gamma" 
 
-Convs01J  : WGToLNuG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma"
-#Convs01J  : ZGToLLG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
-Convs01J  : ZGToLLG_01J_lowmll_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
+Convs01J  : WGToLNuG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma_01J"
+#Convs01J  : ZGToLLG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma_01J" 
+Convs01J  : ZGToLLG_01J_lowmll_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma_01J" 
 
 #Convs  : WGToLNuG_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma"
 

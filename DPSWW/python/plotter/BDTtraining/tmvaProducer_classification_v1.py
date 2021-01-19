@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#usage python tmvaProducer_classification_v1.py --b <bkg name WZ/fakes>
+#usage python tmvaProducer_classification_v1.py -b <bkg name wz_amc/wz_pow/fakes>
 
 import sys, os, optparse, subprocess
 import ROOT, re
@@ -63,20 +63,24 @@ def train_classification(year,bkg):
     mmss      = '(Lep1_pdgId*Lep2_pdgId) == 169'
     afac      = '(abs(Lep1_pdgId*Lep2_pdgId) == 169 || abs(Lep1_pdgId*Lep2_pdgId) == 121 ||  abs(Lep1_pdgId*Lep2_pdgId) == 143)'
     afss      = '(Lep1_pdgId*Lep2_pdgId == 169 || Lep1_pdgId*Lep2_pdgId == 121 || Lep1_pdgId*Lep2_pdgId == 143)'
-    TT        = 'Lep1_isLepTight &&  Lep2_isLepTight'
-    TL        = 'Lep1_isLepTight + Lep2_isLepTight == 1'
+    TT        = '(Lep1_isLepTight &&  Lep2_isLepTight)'
+    TL        = '((Lep1_isLepTight &&  !Lep2_isLepTight) || (!Lep1_isLepTight &&  Lep2_isLepTight))'
 
     #    bkgSel         = '(run != 1 && LepGood_isLepTight_Recl[iLepFO_Recl[0]] + LepGood_isLepTight_Recl[iLepFO_Recl[1]] == 1 ) || (run ==1 && LepGood_isLepTight_Recl[iLepFO_Recl[0]] &&  LepGood_isLepTight_Recl[iLepFO_Recl[1]]) '
 
 
 
-    if bkg == 'WZ':
+    if bkg == 'wz_pow':
         bkgSel = TT
         dsets = [
             ('WWDoubleTo2L',"Signal",['2_recl/','bdt_input_vars/']),  
-            #('WZTo3LNu_fxfx',"Background",['2_recl/','bdt_input_vars/'])]
             ('WZTo3LNu',"Background",['2_recl/','bdt_input_vars/'])]
-    else :
+    elif (bkg == 'wz_amc'):
+        bkgSel = TT
+        dsets = [
+            ('WWDoubleTo2L',"Signal",['2_recl/','bdt_input_vars/']),  
+            ('WZTo3LNu_fxfx',"Background",['2_recl/','bdt_input_vars/'])]
+    else:
         bkgSel = TL
         dsets = [
             ('WWDoubleTo2L',"Signal",['2_recl/','bdt_input_vars/']),
@@ -118,10 +122,8 @@ def train_classification(year,bkg):
     fOut = ROOT.TFile("TMVA_classification_dpsvs"+bkg+".root","recreate") #creating the output file 
     fOut.cd()
     # configuring tmva
-
     factory = ROOT.TMVA.Factory('TMVAClassification', fOut, "!V:!Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" )
-    DL = ROOT.TMVA.DataLoader("dataset");
-    #DL = ROOT.TMVA.DataLoader(fOutName+"dataset");
+    DL = ROOT.TMVA.DataLoader("dataset_"+bkg);
 
     # adding list of vars to train on
     DL.AddVariable('pt1 := Lep1_conept','p_{T1}', 'F')
@@ -144,15 +146,16 @@ def train_classification(year,bkg):
             DL.AddBackgroundTree(tree,glbwt)
 
     #evtwt_sig = "puw * (min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) > 0.9)"
-    evtwt  = "run == 1 ? (puWeight * xsec * genWeight * {TTsel} ) : 1.0 ".format(TTsel=TT)    #run number is set to 1 for MC samples 
-    DL.SetWeightExpression(evtwt)
+    #evtwt  = "(run == 1) ? (puWeight * xsec * genWeight * {TTsel} ) : (1.0 * {TLsel})".format(TTsel=TT,TLsel=TL)    #run number is set to 1 for MC samples 
+    #DL.SetWeightExpression(evtwt)
     
 
-    ##amDL.SetSignalWeightExpression("puWeight * xsec * genWeight")
-    ##amif bkg == 'WZ':
-    ##am    DL.SetBackgroundWeightExpression("puWeight * xsec * genWeight")
-    ##amelse :
-    ##am    DL.SetBackgroundWeightExpression("1.0");
+
+    if 'wz' in bkg:
+        DL.SetWeightExpression("puWeight * xsec * genWeight")
+    else :
+        DL.SetSignalWeightExpression("puWeight * xsec * genWeight")        
+        DL.SetBackgroundWeightExpression("1.0");
 
     #evtwt  = "!isData ? (puw * (min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) > 0.9)) : (fakeRateWt * {TLsel})".format(TLsel=TL)
 

@@ -4,7 +4,7 @@ skimmedTrees='NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_2021'  #s
 year='2016'
 Friends_recl='2_recl' 
 Friends_recl_unskimmed='2_recl'
-steps=("bdtiv")  #"taucount" "recl_allvars") #jme" "lepSFs" "taucount") #unskimmedlepSFs") #"bdtiv" "jme" "lepSFs" "taucount") # "bdtDisc")
+steps=("unskimmedbdtDisc") #bdtiv")  #"taucount" "recl_allvars") #jme" "lepSFs" "taucount") #unskimmedlepSFs") #"bdtiv" "jme" "lepSFs" "taucount") # "bdtDisc")
 
 ## steps: 1_recl -> bdtiv -> skimming -> links to flips
 ## post-skimming jme, lepSFs, taucount, and bdtDisc can run in parallel; recl_allvars uses jme frnds...
@@ -27,7 +27,9 @@ do
 	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/3_scalefactors_lep_fixed_EOY -F Friends /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules leptonSFs -N 10000  --de .*Run.*  -q condor --maxruntime 150 --log $PWD/logs 
 
     fi
-
+   if [[ "${stepToRun}" == "unskimmedbdtDisc" ]]; then
+       python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/dpsbdt -F Friends /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/bdt_input_vars/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules BDT_DPSWW -N 10000  -d DY1JetsToLL_M50_LO -c 471 -c 472 -c 483  #-q condor --maxruntime 100 --log $PWD/logs
+   fi
 
 ############ everything onwards is post-skimming
 

@@ -114,7 +114,7 @@ def train_multiclass(year,fOutName):
     # configuring tmva
 
     factory = ROOT.TMVA.Factory('TMVAMutliClass', fOut, "!V:!Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass" )
-    DL = ROOT.TMVA.DataLoader("dataset");
+    DL = ROOT.TMVA.DataLoader("dataset_multiclass");
     # adding list of vars to train on
     DL.AddVariable('pt1 := Lep1_conept','p_{T1}', 'F')
     DL.AddVariable('pt2 := Lep2_conept','p_{T2}', 'F') 

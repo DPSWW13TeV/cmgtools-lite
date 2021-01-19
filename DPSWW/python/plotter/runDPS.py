@@ -142,7 +142,7 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
     Datafriends = [trees+'2_recl']
     fplots      = 'dps-ww/fullRun2/plots.txt'
     fmca        = 'dps-ww/fullRun2/mca-dpsww.txt' if analysis == 'dps' and year == '2016' else 'dps-ww/fullRun2/mca-ttH.txt'
-    fsyst       = 'dps-ww/fullRun2/systsUnc.txt'
+    fsyst       = '' #dps-ww/fullRun2/systsUnc.txt'
     fcut        = 'dps-ww/fullRun2/cuts_2lss.txt' 
 
     applyWtsnSFs = True
@@ -156,10 +156,10 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
     print 'running for %s with charge split flag %s' %(finalState,splitCharge)
 
 
-    processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs01J','WZ_mllLT4','data_flips','data','data_fakes','DPSWW_hg','WZ_pow']#,'dy','Flips','Convs','Wgstar','WZ_incl','promptsub']
-
+    #processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs','WZ_mllLT4','data_flips','data','data_fakes','DPSWW_hg','WZ_pow']#,'dy','Flips','Convs','Wgstar','WZ_incl','promptsub']
+    processes =['data_fakes','Convs','Convs01J']
     fRvars    = ['data_fakes_FRe_norm_Up','data_fakes_FRe_norm_Dn','data_fakes_FRe_pt_Up','data_fakes_FRe_pt_Dn','data_fakes_FRe_be_Up','data_fakes_FRe_be_Dn','data_fakes_FRm_norm_Up','data_fakes_FRm_norm_Dn','data_fakes_FRm_pt_Up','data_fakes_FRm_pt_Dn','data_fakes_FRm_be_Up','data_fakes_FRm_be_Dn']
-    processes+=fRvars
+    #processes+=fRvars
 
     if finalState[0] in ['mumu','elel']:
         binningBDT   = ' unroll_2Dbdt_dps_mumu(BDT_DPS_fakes,BDT_DPS_WZ_amc) 15,0.0,15.0'
@@ -190,7 +190,7 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
             spam    = ' --topSpamSize 1.0 --noCms '
             legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
             ubands  = '  --showMCError '
-            anything = '--binname {finalState} '.format(finalState=FS) # --fitData --flp data_fakes'# --plotmode norm' # --plotmode nostack' # rm --neg ' #--plotmode norm ' #"  --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub.* " #-- uf" #" #to include neagitve evt ylds from fakes --showIndivSigs --noStackSig
+            anything = '--binname {finalState} --plotmode nostack'.format(finalState=FS) # --fitData --flp data_fakes'# --plotmode norm' # --plotmode nostack' # rm --neg ' #--plotmode norm ' #"  --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub.* " #-- uf" #" #to include neagitve evt ylds from fakes --showIndivSigs --noStackSig
             extraopts = ratio + spam + legends + ubands + anything
 
             if splitCharge:
@@ -201,7 +201,7 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
             if 'plots' in doWhat:
                 makeplots=makeplots1 #+makeplots2
                 print makeplots1
-                runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, applyWtsnSFs, year, 2,extraopts,invert,cutflow)
+                runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,False, applyWtsnSFs, year, 2,extraopts,invert,cutflow)
 
             if 'cards' in doWhat:
             ## ==================================
@@ -425,6 +425,39 @@ def onelepCRPlot(year,finalState):
         makeplots=['mvaTTH']#'pt','conePt','miniRelIso','mvaTTH','awayJet_pt','met','nvtx','mtW1','mtW1R']
         runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, True,year, 1,extraopts)
 
+def fakesClosure(year,finalState):
+    print '=========================================='
+    print 'running closure test on fakes' 
+    print '=========================================='
+    trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_2021')
+
+    friends     = [trees+'3_tauCount']#, trees+'dpsbdt']
+    MCfriends   = [trees+'2_recl_allvars',trees+'3_scalefactors_EOY',trees+'0_jmeUnc_v1']#,trees+'2_scalefactors_lep_fixed']#
+    Datafriends = [trees+'2_recl']
+    applySFs=False
+    targetdir = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}_fakesClosure/'.format(date=date,year=year,pf=('-'+postfix if postfix else '') )
+    cutflow=False
+    fplots = 'dps-ww/fullRun2/plots.txt'
+    fmca =   'dps-ww/fullRun2/mca-fakes-closure.txt'
+    fsyst  = '' #dps-ww/fullRun2/systsUnc.txt'
+    fcut   = 'dps-ww/fullRun2/cuts_2lss.txt'
+    processes = ['wj','wj_tl','wjinc','wjinc_tl']
+    disable   = []
+    fittodata = []
+    scalethem = {}
+    ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.0  2.5'
+    spam    = ' --topSpamSize 1.0 --noCms '
+    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
+    ubands  = '' # --showMCError '
+    anything = " --plotmode nostack --showRatio --ratioDen wj --ratioNums wj_tl --ratioYLabel=wj_tl/wj" 
+    extraopts = ratio + spam + legends + ubands + anything
+    plots    = ['njets25']#MVA1','MVA2','pt1','pt2','eta1','eta2','met','conept1','conept2']#'BDT_wz_amc','BDT_fakes','BDT_wz_pow','BDT_DPS_multiC','BDT_WZ_multiC','BDT_TL_multiC']
+    for FS in finalState:
+        enable=['noConvs']
+        enable.append(FS); 
+        makeplots=[ip + '_' + FS for ip in plots]
+        runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True,applySFs,year, 2,extraopts,[],cutflow)
+
 def dpsww(finalState):
     print '=========================================='
     print 'running single lepton control region  plots'
@@ -514,6 +547,7 @@ if __name__ == '__main__':
     parser.add_option('--dpsww',dest='dpsww', action='store_true' , default=False , help='make plots for signal')
     parser.add_option('--analysis',dest='analysis', type='string',default='dps' , help='cut file to be used')
     parser.add_option('--genDressed', dest='genDressed', action='store_true' , default=False , help='make plots using dressed leptons')
+    parser.add_option('--fC', dest='fakesClosure', action='store_true' , default=False , help='FR closure test')
     (opts, args) = parser.parse_args()
 
     global date, postfix, date
@@ -540,6 +574,8 @@ if __name__ == '__main__':
         makeResults_oldMaps(opts.year,opts.finalState,opts.splitCharge)
     if opts.genDressed:
         makeResultsGen(opts.year,opts.finalState,opts.splitCharge)
+    if opts.fakesClosure:
+        fakesClosure(opts.year,opts.finalState)
 
 # python runDPS.py --results --dW plots --year 2016 --finalState elmu --finalState mumu
 # python runDPS.py --year 2016 --finalState ll --genDressed
