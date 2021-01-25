@@ -541,9 +541,9 @@ def chkUnskimmedTrees(year,finalState):
     cutflow=False
     targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}_unskimmed/'.format(date=date, year=year,pf=('-'+postfix if postfix else '') ) 
 
-    processes = ['DPSWW','WZ_amc','ZZ']#,'data']
-    
-    allvars    = ['MVA1','MVA2']
+    #processes = ['DPSWW','WZ_amc','ZZ','data','Rares','data_fakes','data_flips','Convs']
+    processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs','WZ_mllLT4','data','data_fakes','DPSWW_hg','WZ_pow']#,'dy','Flips','Convs','Wgstar','WZ_incl','promptsub']    'data_flips',
+    allvars    = ['MVA1','MVA2','conept1','conept2','minMVA','maxMVA']
 
     loop=['']
     plotvars   = allvars 

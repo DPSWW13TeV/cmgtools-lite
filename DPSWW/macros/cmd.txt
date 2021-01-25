@@ -1,4 +1,0 @@
-python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_latest/2016/ test_lep_fixed -F Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_latest/2016/2_recl/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules leptonSFs -N 10000 -d WWW  -c 1
-
-
-#python prepareEventVariablesFriendTree.py -t NanoAOD /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/cfg  test  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules tnpvars -N 10000 -d 6A87359A-EB02-4648-BB46-8A34DDD95E6B -c 1

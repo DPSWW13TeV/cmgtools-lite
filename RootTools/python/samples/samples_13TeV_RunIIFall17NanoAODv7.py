@@ -114,6 +114,7 @@ WGToLNuG_01J_amcatnlo    = kreator.makeMCComponent("WGToLNuG_01J_amcatnlo", "/WG
 
 DiBosons = [
 WWDoubleTo2L,
+WWDoubleTo2L_herwig,
 WZTo3LNu,
 WZTo3LNu_fxfx,
 WZTo3LNu_mllmin01,

@@ -4,7 +4,7 @@ skimmedTrees='NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_2021'
 year='2018'
 Friends_recl='2_recl' 
 Friends_recl_unskimmed='2_recl'
-steps=("recl") #unskimmedbdtDisc") #bdtiv")  #"taucount" "recl_allvars") #jme" "lepSFs" "taucount") #unskimmedlepSFs") #"bdtiv" "jme" "lepSFs" "taucount") # "bdtDisc")
+steps=("recl") #"bdtiv" "jme" "lepSFs" "taucount") # "bdtDisc" "unskimmedbdtDisc" "recl_allvars" "unskimmedlepSFs" "postFSR")
 
 ## steps: recl -> bdtiv -> skimming -> links to flips
 ## post-skimming jme, lepSFs, taucount, and bdtDisc can run in parallel; recl_allvars uses jme frnds
@@ -17,8 +17,8 @@ do
     fi
     if [[ "${stepToRun}" == "recl" ]];
 	then
-	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence  -d W4JetsToLNu_LO -N 10000 #-q condor  --maxruntime 180 --log $PWD/logs  ##--de .*Run.* -N 10000 -q condor --maxruntime 180 --log $PWD/logs 
-	#python prepareEventVariablesFriendTree.py -t NanoAOD  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_data,triggerSequence  --dm .*Run.*  -N 10000 -q condor  --maxruntime 180 --log $PWD/logs 
+	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence  -d TTW_LO -N 10000 -q condor  --maxruntime 180 --log $PWD/logs  ##--de .*Run.* -N 10000 -q condor --maxruntime 180 --log $PWD/logs 
+	#	python prepareEventVariablesFriendTree.py -t NanoAOD  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_data,triggerSequence --dm .*Run.*  -N 10000 -q condor  --maxruntime 180 --log $PWD/logs 
     fi
     if [[ "${stepToRun}" == "bdtiv" ]];
     then
@@ -41,14 +41,12 @@ do
     if [[ "${stepToRun}" == "jme" ]];
     then
 	echo "jme frnds"
-	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/0_jmeUnc_v1/  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules jme${year}_allvariations  --de .*Run.* -N 10000 -q condor --maxruntime 150 --log $PWD/logs #--de .*Run.*
+	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/0_jmeUnc_v1/  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules jme${year}_allvariations  --de .*Run.* -N 10000 -q condor --maxruntime 150 --log $PWD/logs 
 
     fi
   if [[ "${stepToRun}" == "recl_allvars" ]]; then
       echo 'i assume you have already got jme frnds'
-      #
-      python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/${Friends_recl}_allvars/  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/0_jmeUnc_v1/{cname}_Friend.root --de .*Run.*  -N 10000  -q condor --maxruntime 150 --log $PWD/logs  
-      
+      python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/${Friends_recl}_allvars/  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/0_jmeUnc_v1/{cname}_Friend.root --de .*Run.*  -N 10000  -q condor --maxruntime 150 --log $PWD/logs        
   fi
   
    if [[ "${stepToRun}" == "lepSFs" ]]; then
@@ -81,3 +79,4 @@ done
 
 ########### NOTES: ttjets_dilep for 2017 with 50k per chunk
 ##ttjets for 2018 too with 50k
+##DoubleMuon_Run2018D_02Apr2020 -d -N 100000 
