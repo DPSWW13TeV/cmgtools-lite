@@ -1,5 +1,64 @@
 # vim: syntax=sh
 
+Genemutau_sel		: nGenPart_sel : [0,1,2,3,4,5]; XTitle="gen level e/mu/tau"
+Genemutaupt_sel    	:  GenPart_sel_pt       :  20,0,100; XTitle="gen level e/mu/tau pT"
+Genemutaueta_sel    	: GenPart_sel_eta       :  30,-5,5; XTitle="gen level e/mu/tau eta"
+Genemutauphi_sel    	: GenPart_sel_phi       :  32,-4,4; XTitle="gen level e/mu/tau phi"
+Genemutausf_sel 	: GenPart_sel_statusFlags : 15000,0,15000 ; XTitle="gen level e/mu/tau SF"
+
+Genemutaupt    		:  GenPart_pt       :  20,0,100; XTitle="gen level e/mu/tau pT"
+Genemutaueta    	: GenPart_eta       :  30,-5,5; XTitle="gen level e/mu/tau eta"
+Genemutauphi    	: GenPart_phi       :  32,-4,4; XTitle="gen level e/mu/tau phi"
+Genemutausf 		: GenPart_statusFlags : 15000,0,15000 ; XTitle="gen level e/mu/tau SF"
+
+pt1_GenLep_ll    : GenPart_sel_pt[0]     : 20,0,100; XTitle="p_{T} lead.  (GeV)"
+pt2_GenLep_ll    : GenPart_sel_pt[1]     : 20,0,100; XTitle="p_{T} trail.  (GeV)"
+eta1_GenLep_ll   : GenPart_sel_eta[0]     : 60,-5,5; XTitle="#eta lead.  (GeV)"
+eta2_GenLep_ll   : GenPart_sel_eta[1]     : 60,-5,5; XTitle="#eta trail.  (GeV)"
+nGenlep_ll       : nGenPart_sel           : [0,1,2,3,4,5]; XTile="No. of  gen e/mu/tau"
+pdgIdprod_GenLep_ll     : GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]: 400,-200,200; XTitle="pdgId1 X pdgId2"
+
+pt1_GenLep_llplusplus    : GenPart_sel_pt[0]     : 20,0,100; XTitle="p_{T} lead.  (GeV)"
+pt2_GenLep_llplusplus    : GenPart_sel_pt[1]     : 20,0,100; XTitle="p_{T} trail.  (GeV)"
+eta1_GenLep_llplusplus   : GenPart_sel_eta[0]     : 60,-5,5; XTitle="#eta lead.  (GeV)"
+eta2_GenLep_llplusplus   : GenPart_sel_eta[1]     : 60,-5,5; XTitle="#eta trail.  (GeV)"
+nGenlep_llplusplus       : nGenPart_sel           : [0,1,2,3,4,5]; XTile="No. of e/mu/tau"
+pdgIdprod_GenLep_llplusplus     : GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]: 400,-200,200; XTitle="pdgId1 X pdgId2"
+
+pt1_GenLep_llminusminus    : GenPart_sel_pt[0]     : 20,0,100; XTitle="p_{T} lead.  (GeV)"
+pt2_GenLep_llminusminus    : GenPart_sel_pt[1]     : 20,0,100; XTitle="p_{T} trail.  (GeV)"
+eta1_GenLep_llminusminus   : GenPart_sel_eta[0]     : 60,-5,5; XTitle="#eta lead.  (GeV)"
+eta2_GenLep_llminusminus   : GenPart_sel_eta[1]     : 60,-5,5; XTitle="#eta trail.  (GeV)"
+nGenlep_llminusminus     : nGenPart_sel           : [0,1,2,3,4,5]; XTile="No. of  gen leptons"
+pdgIdprod_GenLep_llminusminus   : GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]: 400,-200,200; XTitle="pdgId1 X pdgId2"
+
+
+mll_GenLep_ll	     : mass_2(GenPart_sel_pt[0],GenPart_sel_eta[0],GenPart_sel_phi[0],GenPart_sel_mass[0],GenPart_sel_pt[1],GenPart_sel_eta[1],GenPart_sel_phi[1],GenPart_sel_mass[1]):30,0,300; XTitle="m_{ll} (GeV)", MoreY=1.5, IncludeOverflows=False
+
+mll_zoomed_GenLep_ll	     : mass_2(GenPart_sel_pt[0],GenPart_sel_eta[0],GenPart_sel_phi[0],GenPart_sel_mass[0],GenPart_sel_pt[1],GenPart_sel_eta[1],GenPart_sel_phi[1],GenPart_sel_mass[1]):20,70,90; XTitle="m_{ll} (GeV)", MoreY=1.5, IncludeOverflows=False
+
+mll_GenLep_llplusplus	     : mass_2(GenPart_sel_pt[0],GenPart_sel_eta[0],GenPart_sel_phi[0],GenPart_sel_mass[0],GenPart_sel_pt[1],GenPart_sel_eta[1],GenPart_sel_phi[1],GenPart_sel_mass[1]):30,0,300; XTitle="m_{ll} (GeV)", MoreY=1.5, IncludeOverflows=False
+
+mll_zoomed_GenLep_llplusplus	     : mass_2(GenPart_sel_pt[0],GenPart_sel_eta[0],GenPart_sel_phi[0],GenPart_sel_mass[0],GenPart_sel_pt[1],GenPart_sel_eta[1],GenPart_sel_phi[1],GenPart_sel_mass[1]):20,70,90; XTitle="m_{ll} (GeV)", MoreY=1.5, IncludeOverflows=False
+
+
+mll_GenLep_llminusminus	     : mass_2(GenPart_sel_pt[0],GenPart_sel_eta[0],GenPart_sel_phi[0],GenPart_sel_mass[0],GenPart_sel_pt[1],GenPart_sel_eta[1],GenPart_sel_phi[1],GenPart_sel_mass[1]):30,0,300; XTitle="m_{ll} (GeV)", MoreY=1.5, IncludeOverflows=False
+
+mll_zoomed_GenLep_llminusminus	     : mass_2(GenPart_sel_pt[0],GenPart_sel_eta[0],GenPart_sel_phi[0],GenPart_sel_mass[0],GenPart_sel_pt[1],GenPart_sel_eta[1],GenPart_sel_phi[1],GenPart_sel_mass[1]):20,70,90; XTitle="m_{ll} (GeV)", MoreY=1.5, IncludeOverflows=False
+
+
+
+
+met_ll  : GenMET_pt               : 20,0,100; XTitle="MET (GeV)"
+
+
+
+
+
+
+
+
+
 GenMET_pt_ll	: GenMET_pt	 : 20,0,200; XTitle="ptmiss (GeV)" , MoreY=1.5, IncludeOverflows=False	
 pt_dressedLep_ll    : GenDressedLepton_pt     : 20,0,200; XTitle="p_{T} dressed lep (GeV)" , MoreY=1.5, IncludeOverflows=False
 eta_dressedLep_ll   : GenDressedLepton_eta     : 60,-2.6,2.6; XTitle="#eta dressed lep", MoreY=1.5, IncludeOverflows=False

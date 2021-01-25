@@ -8,7 +8,7 @@ kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = int(getHeppyOption("year", "2018"))
+year = int(getHeppyOption("year", "2017"))
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 
@@ -36,7 +36,7 @@ else:
         #        from CMGTools.RootTools.samples.triggers_13TeV_DATA2016 import all_triggers as triggers ## for FRqcd
 
 #mcSamples_=[]
-#allData=[]
+allData=[]
 autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
 #autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cmsxrootd.fnal.gov") # must be done before mergeExtensions "cms-xrd-global.cern.ch"
 
@@ -58,17 +58,23 @@ DatasetsAndTriggers = []
 if analysis == "main":
     mcSamples = byCompName(mcSamples_, ["%s(|_ext*)"%dset for dset in [
         # single boson
-        "W.*JetsToLNu.*","DYJets.*",
-        # ttbar
-        "TTJets","TTJets_DiLepton", 
+        #        "W.*JetsToLNu.*","DYJets.*",
+        # top
+        #"TT.*",
+        #"TTJets_DiLepton", "W4JetsToLNu_LO"
         # conversions
-        "WGToLNuG.*","ZGToLLG.*"
+        #"WGToLNuG.*", 
+        ##"ZG.*" 
+        #"WZTo3LNu","WWDoubleTo2L_herwig",
+        #"T_sch_lep"
         #fingle top
-        "T_sch_lep","T_tch","TBar_tch","T_tWch","TBar_tWch",
+        #"T_sch_lep","T_tch","TBar_tch","T_tWch","TBar_tWch",
         #rares
-        "TTW_LO","TTZ_LO","WWW",  "WWZ", "WZG", "WZZ", "ZZZ", "WWW_ll", "WWG",
+        #"TTW_LO","TTZ_LO","WWW",  "WWZ", "WZG", "WZZ", "ZZZ", "WWW_ll", "WWG",
         # diboson
-        "ZZTo4L","WW.*","WZ.*","WpWpJJ"
+        "ZZTo4L"
+        #,"WW.*","WZ.*","WpWpJJ"
+        #"WWDouble.*","WZ.*"
     ]])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year] + triggerGroups_dict["Trigger_1e"][year]) if year == 2018 else

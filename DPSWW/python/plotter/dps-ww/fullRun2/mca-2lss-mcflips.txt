@@ -1,6 +1,11 @@
 Flips : TTJets_DiLepton : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7
-Flips : DYJetsToLL_M10to50_LO : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7
-Flips : DYJetsToLL_M50_LO : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7
-Flips : T_tWch_noFullyHad : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7
-Flips : TBar_tWch_noFullyHad : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7
+Flips : DYJetsToLL_M10to50_LO : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7, , years="2016\,2018"
+Flips : DYJetsToLL_M10to50 : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7 , years="2017"
+
+Flips : DYJetsToLL_M50_LO : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7 
+Flips : T_tWch_noFullyHad : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7, years="2016\,2018"
+Flips : TBar_tWch_noFullyHad : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7, years="2016\,2018"
+Flips : T_tWch : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7, years="2017"
+Flips : TBar_tWch : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7, years="2017"
+
 Flips : WWTo2L2Nu : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; Label="Flips", FillColor=ROOT.kCyan-7

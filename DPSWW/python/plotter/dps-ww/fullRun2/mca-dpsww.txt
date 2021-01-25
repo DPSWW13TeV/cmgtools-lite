@@ -1,15 +1,12 @@
 # vim: syntax=sh
-data_flips : + ; IncludeMca="dps-ww/fullRun2/mca-data-forFlips_v7.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="charge-misid.", FillColor=ROOT.kCyan-7, PostFix = "_flips"
+data_flips : + ; IncludeMca="dps-ww/fullRun2/mca-data-forFlips.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="charge-misid.", FillColor=ROOT.kCyan-7, PostFix = "_flips"
 incl_mc    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt"
 Convs	   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-convs.txt"
-data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data_v7.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="non-prompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes"
-data_fakesConvs : + ; IncludeMca="dps-ww/fullRun2/mca-data_v7.txt", FakeRate="dps-ww/fullRun2/test.txt", Label="non-prompt with conv.", FillColor=ROOT.kMagenta-9, FillStyle=3005, PostFix = "_fakesConvs"
+data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="non-prompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes"
+data_fakesConvs : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/test.txt", Label="non-prompt with conv.", FillColor=ROOT.kMagenta-9, FillStyle=3005, PostFix = "_fakesConvs"
+data       : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt"
 
-#data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data_v7.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata_MVApt9.txt", Label="non-prompt", FillColor=ROOT.kBlue-10, PostFix = "_fakes"
-
-data       : + ; IncludeMca="dps-ww/fullRun2/mca-data_v7.txt"
-
-promptsub  : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata_MVApt9.txt", PostFix='_promptsub' , AddWeight="-1"
+promptsub  : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", PostFix='_promptsub' , AddWeight="-1"
 mc_fakes   : + ; IncludeMca="dps-ww/fullRun2/mca-mcfakes.txt" 
 mc_flips   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-mcflips.txt"
 
@@ -20,12 +17,12 @@ incl_mc_elLooseUnc_Up : + ; IncludeMca="mca-mc.txt", AddWeight="elLooseUnc_2lss_
 incl_mc_elLooseUnc_Dn : + ; IncludeMca="mca-mc.txt", AddWeight="elLooseUnc_2lss_dn", SkipMe=True, PostFix="_elLooseUnc_Dn"
 
 
-data_fakes_FRe_norm_Up : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt", SkipMe=True, PostFix='_fakes_FRe_norm_Up'
-data_fakes_FRe_norm_Dn : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt", SkipMe=True, PostFix='_fakes_FRe_norm_Dn'
-data_fakes_FRe_pt_Up : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt", SkipMe=True, PostFix='_fakes_FRe_pt_Up'
-data_fakes_FRe_pt_Dn : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt", SkipMe=True, PostFix='_fakes_FRe_pt_Dn'
-data_fakes_FRe_be_Up : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt", SkipMe=True, PostFix='_fakes_FRe_be_Up'
-data_fakes_FRe_be_Dn : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt", SkipMe=True, PostFix='_fakes_FRe_be_Dn'
+data_fakes_FRe_norm_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt", SkipMe=True, PostFix='_fakes_FRe_norm_Up'
+data_fakes_FRe_norm_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt", SkipMe=True, PostFix='_fakes_FRe_norm_Dn'
+data_fakes_FRe_pt_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt", SkipMe=True, PostFix='_fakes_FRe_pt_Up'
+data_fakes_FRe_pt_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt", SkipMe=True, PostFix='_fakes_FRe_pt_Dn'
+data_fakes_FRe_be_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt", SkipMe=True, PostFix='_fakes_FRe_be_Up'
+data_fakes_FRe_be_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt", SkipMe=True, PostFix='_fakes_FRe_be_Dn'
 
 promptsub_FRe_norm_Up : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt", SkipMe=True, PostFix='_promptsub_FRe_norm_Up', AddWeight="-1"
 promptsub_FRe_norm_Dn : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt", SkipMe=True, PostFix='_promptsub_FRe_norm_Dn', AddWeight="-1"
@@ -34,12 +31,12 @@ promptsub_FRe_pt_Dn : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/unc
 promptsub_FRe_be_Up : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt", SkipMe=True, PostFix='_promptsub_FRe_be_Up', AddWeight="-1"
 promptsub_FRe_be_Dn : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt", SkipMe=True, PostFix='_promptsub_FRe_be_Dn', AddWeight="-1"
 
-data_fakes_FRm_norm_Up : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-up.txt", SkipMe=True, PostFix='_fakes_FRm_norm_Up'
-data_fakes_FRm_norm_Dn : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-down.txt", SkipMe=True, PostFix='_fakes_FRm_norm_Dn'
-data_fakes_FRm_pt_Up : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt", SkipMe=True, PostFix='_fakes_FRm_pt_Up'
-data_fakes_FRm_pt_Dn : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt", SkipMe=True, PostFix='_fakes_FRm_pt_Dn'
-data_fakes_FRm_be_Up : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt", SkipMe=True, PostFix='_fakes_FRm_be_Up'
-data_fakes_FRm_be_Dn : + ; IncludeMca="mca-data_v7.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt", SkipMe=True, PostFix='_fakes_FRm_be_Dn'
+data_fakes_FRm_norm_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-up.txt", SkipMe=True, PostFix='_fakes_FRm_norm_Up'
+data_fakes_FRm_norm_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-down.txt", SkipMe=True, PostFix='_fakes_FRm_norm_Dn'
+data_fakes_FRm_pt_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt", SkipMe=True, PostFix='_fakes_FRm_pt_Up'
+data_fakes_FRm_pt_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt", SkipMe=True, PostFix='_fakes_FRm_pt_Dn'
+data_fakes_FRm_be_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt", SkipMe=True, PostFix='_fakes_FRm_be_Up'
+data_fakes_FRm_be_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt", SkipMe=True, PostFix='_fakes_FRm_be_Dn'
 promptsub_FRm_norm_Up : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-up.txt", SkipMe=True, PostFix='_promptsub_FRm_norm_Up', AddWeight="-1"
 promptsub_FRm_norm_Dn : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-down.txt", SkipMe=True, PostFix='_promptsub_FRm_norm_Dn', AddWeight="-1"
 promptsub_FRm_pt_Up : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt", SkipMe=True, PostFix='_promptsub_FRm_pt_Up', AddWeight="-1"

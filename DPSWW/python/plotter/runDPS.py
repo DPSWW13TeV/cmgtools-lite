@@ -212,16 +212,15 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
                 extraoptscards = ' ' #--binname {FS}{ch}'.format(year=year,FS=FS,ch=(ch if ch else ''))
                 runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processes, scalethem,applyWtsnSFs, year,extraoptscards,invert)
 ########################################
-
-def makeResultsGen(year,finalState,splitCharge):
+def makeResultsGen(year,finalState,splitCharge,postFSR):
     trees       = '/eos/cms/store/cmst3/group/dpsww/signal_summer16_nanoV7/'
-    MCfriends   = ''
-    #targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/GeneratorLevel/{date}{pf}_era{year}_dressedleptons/'.format(date=date, year=year,pf=('-'+postfix if postfix else ''))
-    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/bareNano/{date}{pf}_era{year}/'.format(date=date, year=year,pf=('-'+postfix if postfix else ''))
+    MCfriends   = [trees+'postFSRinfo/']
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/GeneratorLevel/{date}{pf}_era{year}_{here}lep/'.format(date=date, here= 'gen' if postFSR else 'dressed', year=year,pf=('-'+postfix if postfix else ''))
+    #targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/bareNano/{date}{pf}_era{year}/'.format(date=date, year=year,pf=('-'+postfix if postfix else ''))
     fplots      = 'dps-ww/fullRun2/plots.txt'
     fmca        = 'dps-ww/fullRun2/mca-dpsww-gen.txt' 
     fsyst       = ''
-    fcut        = 'dps-ww/fullRun2/cuts_2lss_dpsww_basic.txt' #dps-ww/fullRun2/cuts_2lss_dpsww_dressed.txt'
+    fcut        = 'dps-ww/fullRun2/cuts_2lss_dpsww_gen.txt' #dps-ww/fullRun2/cuts_2lss_dpsww_basic.txt' #dps-ww/fullRun2/cuts_2lss_dpsww_dressed.txt'
     bareNano    = True
 
     if splitCharge: 
@@ -230,11 +229,11 @@ def makeResultsGen(year,finalState,splitCharge):
         loop = [ '' ]
 
     print 'running for %s with charge split flag %s' %(finalState,splitCharge)
-    processes = ['DPSpy8','DPSv5','DPShwpp']#,WZ_pow','WZ_incl','Wgstar','WZ_amc','WZ_mllLT4']#,'WZ_mllLT4']'WgStarLNuEE','WgStarLNuMuMu'
+    processes = ['DPSpy8','DPShwpp']#,WZ_pow','WZ_incl','Wgstar','WZ_amc','WZ_mllLT4']#,'WZ_mllLT4']'WgStarLNuEE','WgStarLNuMuMu'
     allvars=['Electron_mvaTTH','Muon_mvaTTH']#pt_dressedLep','eta_dressedLep','pdgId_dressedLep']#'pdgIdprod_dressedLep','GenMET_pt','eta1_dressedLep','eta2_dressedLep','pt1_dressedLep','pt2_dressedLep','ndressedLep','dilep_flav_dressedLep','mll_v1_dressedLep','mll_dressedLep','mll_zoomed_dressedLep']#
-    
+    genvars=['pt1_GenLep','pt2_GenLep','eta1_GenLep','eta2_GenLep','mll_zoomed_GenLep','mll_GenLep','nGenlep','pdgIdprod_GenLep'] 
  
-    plotvars   = allvars 
+    plotvars   =  genvars #+allvars 
 
     for FS in finalState:            
         for ch in loop:
@@ -247,7 +246,7 @@ def makeResultsGen(year,finalState,splitCharge):
             ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  1.39'
             spam    = ' --topSpamSize 1.0 --noCms '
             legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2 '
-            anything = ' --plotmode norm --showRatio --ratioDen DPSpy8 --ratioNums DPSv5,DPShwpp --ratioYLabel=v5/py8' # --plotmode norm' # --plotmode nostack' # rm --neg ' #--plotmode norm ' 
+            anything = ' --plotmode norm --showRatio --ratioDen DPSpy8 --ratioNums DPShwpp --ratioYLabel=hwpp/py8' # --plotmode norm' # --plotmode nostack' # rm --neg ' #--plotmode norm ' 
             extraopts = ratio + spam + legends +  anything
                
             
@@ -528,6 +527,47 @@ def dyCRPlot(year,finalState):
         makeplots=[ip + '_' + FS for ip in plots]
         runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True,applySFs,year, 2,extraopts,[],cutflow)
 
+def chkUnskimmedTrees(year,finalState):
+    trees       = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/{year}/'.format(year=year)
+    friends     = [trees+'2_recl']#, trees+'dpsbdt']
+    MCfriends   = ''
+    Datafriends = ''
+    fplots      = 'dps-ww/fullRun2/plots.txt'
+    fmca        = 'dps-ww/fullRun2/mca-dpsww.txt' 
+    fsyst       = ''
+    fcut        = 'dps-ww/fullRun2/cuts_2lss.txt' 
+
+    applyWtsnSFs = False
+    cutflow=False
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}_unskimmed/'.format(date=date, year=year,pf=('-'+postfix if postfix else '') ) 
+
+    processes = ['DPSWW','WZ_amc','ZZ']#,'data']
+    
+    allvars    = ['MVA1','MVA2']
+
+    loop=['']
+    plotvars   = allvars 
+
+    for FS in finalState:            
+        enable=[]
+        enable.append(FS); 
+        print enable #list(ch) + list (finalState)
+        disable   = []
+        invert    = []
+        fittodata = []
+        scalethem = {}
+        ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.45  1.69' 
+        spam    = ' --topSpamSize 1.0 --noCms '
+        legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
+        ubands  = '  --showMCError '
+        anything = '--binname {finalState}'.format(finalState=FS) 
+        extraopts = ratio + spam + legends + ubands + anything
+
+        makeplots  = ['{}_{}'.format(a,FS) for a in plotvars]
+            
+        runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,False, applyWtsnSFs, year, 2,extraopts,invert,cutflow)
+
+
 if __name__ == '__main__':
     parser = optparse.OptionParser(usage='usage: %prog [opts] ', version='%prog 1.0')
     parser.add_option('--pf', '--postfix', dest='postfix' , type='string', default='', help='postfix for running each module')
@@ -546,8 +586,10 @@ if __name__ == '__main__':
     parser.add_option('--dW' , '--doWhat'  , dest='doWhat', type='string' , default=[] , help='plots or cards')
     parser.add_option('--dpsww',dest='dpsww', action='store_true' , default=False , help='make plots for signal')
     parser.add_option('--analysis',dest='analysis', type='string',default='dps' , help='cut file to be used')
-    parser.add_option('--genDressed', dest='genDressed', action='store_true' , default=False , help='make plots using dressed leptons')
+    parser.add_option('--genInfo', dest='genInfo', action='store_true' , default=False , help='make plots using gen level leptons')
+    parser.add_option('--postFSR',dest='postFSR',action='store_true', default=True , help='use postFSR')
     parser.add_option('--fC', dest='fakesClosure', action='store_true' , default=False , help='FR closure test')
+    parser.add_option('--unskimmed', dest='unskimmed', action='store_true' , default=False , help='chk ntuples before 2lss skimming')
     (opts, args) = parser.parse_args()
 
     global date, postfix, date
@@ -572,10 +614,11 @@ if __name__ == '__main__':
         dpsww(opts.finalState)
     if opts.old:
         makeResults_oldMaps(opts.year,opts.finalState,opts.splitCharge)
-    if opts.genDressed:
-        makeResultsGen(opts.year,opts.finalState,opts.splitCharge)
+    if opts.genInfo:
+        makeResultsGen(opts.year,opts.finalState,opts.splitCharge,opts.postFSR)
     if opts.fakesClosure:
         fakesClosure(opts.year,opts.finalState)
-
+    if opts.unskimmed:
+        chkUnskimmedTrees(opts.year,opts.finalState)
 # python runDPS.py --results --dW plots --year 2016 --finalState elmu --finalState mumu
 # python runDPS.py --year 2016 --finalState ll --genDressed

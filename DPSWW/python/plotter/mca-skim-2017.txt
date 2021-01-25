@@ -1,0 +1,62 @@
+WWW : WWW : xsec  
+WWW_ll : WWW_ll : xsec  
+WZZ : WZZ : xsec
+WWZ : WWZ : xsec
+ZZZ : ZZZ : xsec
+WWG : WWG : xsec
+WWDoubleTo2L : WWDoubleTo2L : xsec
+######FIXME WWDoubleTo2L_herwig : WWDoubleTo2L_herwig : xsec
+ZGToLLG_01J_lowmll_amcatnlo : ZGToLLG_01J_lowmll_amcatnlo : xsec
+ZGToLLG_01J_amcatnlo : ZGToLLG_01J_amcatnlo : xsec
+WGToLNuG : WGToLNuG : xsec
+WGToLNuG_01J_amcatnlo : WGToLNuG_01J_amcatnlo : xsec
+#######FIXME WZTo3LNu : WZTo3LNu : xsec
+WZTo3LNu_fxfx : WZTo3LNu_fxfx : xsec
+WZTo3LNu_mllmin01 : WZTo3LNu_mllmin01 : xsec
+ZZTo4L : ZZTo4L : xsec
+WWTo2L2Nu : WWTo2L2Nu : xsec
+WpWpJJ : WpWpJJ : xsec
+DYJetsToLL_M10to50 : DYJetsToLL_M10to50 : xsec
+DYJetsToLL_M50 : DYJetsToLL_M50 : xsec
+DYJetsToLL_M50_LO : DYJetsToLL_M50_LO : xsec
+WJetsToLNu_LO : WJetsToLNu_LO : xsec
+W0JetsToLNu : W0JetsToLNu : xsec
+W1JetsToLNu : W1JetsToLNu : xsec
+W2JetsToLNu : W2JetsToLNu : xsec
+TTZ_LO	      : TTZ_LO : xsec
+TTW_LO	      : TTW_LO : xsec
+#######FIXME T_sch_lep : T_sch_lep : xsec
+T_tch : T_tch : xsec
+TBar_tch : TBar_tch : xsec
+TBar_tWch : TBar_tWch : xsec
+T_tWch : T_tWch : xsec
+TTJets_DiLepton : TTJets_DiLepton : xsec
+TTJets : TTJets : xsec
+data : SingleMuon_Run2017B_02Apr2020
+data : SingleMuon_Run2017C_02Apr2020
+data : SingleMuon_Run2017D_02Apr2020
+data : SingleMuon_Run2017E_02Apr2020
+data : SingleMuon_Run2017F_02Apr2020
+data : SingleElectron_Run2017B_02Apr2020
+data : SingleElectron_Run2017C_02Apr2020
+data : SingleElectron_Run2017D_02Apr2020
+data : SingleElectron_Run2017E_02Apr2020
+data : SingleElectron_Run2017F_02Apr2020
+data : DoubleMuon_Run2017B_02Apr2020
+data : DoubleMuon_Run2017D_02Apr2020
+data : DoubleMuon_Run2017C_02Apr2020
+data : DoubleMuon_Run2017E_02Apr2020
+data : DoubleMuon_Run2017F_02Apr2020
+data : MuonEG_Run2017B_02Apr2020
+data : MuonEG_Run2017C_02Apr2020
+data : MuonEG_Run2017D_02Apr2020
+data : MuonEG_Run2017E_02Apr2020
+data : MuonEG_Run2017F_02Apr2020
+data : DoubleEG_Run2017B_02Apr2020
+data : DoubleEG_Run2017C_02Apr2020
+data : DoubleEG_Run2017D_02Apr2020
+data : DoubleEG_Run2017E_02Apr2020
+data : DoubleEG_Run2017F_02Apr2020
+
+
+

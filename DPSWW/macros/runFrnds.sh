@@ -1,23 +1,24 @@
 #!/bin/bash
 Trees='NanoTrees_v7_dpsww_04092020' #input trees (unskimmed)
-skimmedTrees='NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_2021'  #slimmed trees #NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_latest'
-year='2016'
+skimmedTrees='NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_2021' 
+year='2018'
 Friends_recl='2_recl' 
 Friends_recl_unskimmed='2_recl'
-steps=("unskimmedbdtDisc") #bdtiv")  #"taucount" "recl_allvars") #jme" "lepSFs" "taucount") #unskimmedlepSFs") #"bdtiv" "jme" "lepSFs" "taucount") # "bdtDisc")
+steps=("recl") #unskimmedbdtDisc") #bdtiv")  #"taucount" "recl_allvars") #jme" "lepSFs" "taucount") #unskimmedlepSFs") #"bdtiv" "jme" "lepSFs" "taucount") # "bdtDisc")
 
-## steps: 1_recl -> bdtiv -> skimming -> links to flips
-## post-skimming jme, lepSFs, taucount, and bdtDisc can run in parallel; recl_allvars uses jme frnds...
-
+## steps: recl -> bdtiv -> skimming -> links to flips
+## post-skimming jme, lepSFs, taucount, and bdtDisc can run in parallel; recl_allvars uses jme frnds
 
 
 for stepToRun in "${steps[@]}"
 do
-    echo 'did you clean the logs ?'
+    if [ "$(ls -A logs/)" ]; then
+	echo "clean the logs before the next condor submission" 
+    fi
     if [[ "${stepToRun}" == "recl" ]];
 	then
-	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence  --de .*Run.* -N 10000 -q condor --maxruntime 180 --log $PWD/logs
-	python prepareEventVariablesFriendTree.py -t NanoAOD  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_data,triggerSequence  --dm .*Run.*  -N 10000 -q condor  --maxruntime 180 --log $PWD/logs 
+	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence  -d W4JetsToLNu_LO -N 10000 #-q condor  --maxruntime 180 --log $PWD/logs  ##--de .*Run.* -N 10000 -q condor --maxruntime 180 --log $PWD/logs 
+	#python prepareEventVariablesFriendTree.py -t NanoAOD  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_data,triggerSequence  --dm .*Run.*  -N 10000 -q condor  --maxruntime 180 --log $PWD/logs 
     fi
     if [[ "${stepToRun}" == "bdtiv" ]];
     then
@@ -30,12 +31,16 @@ do
    if [[ "${stepToRun}" == "unskimmedbdtDisc" ]]; then
        python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/dpsbdt -F Friends /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/bdt_input_vars/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules BDT_DPSWW -N 10000  -d DY1JetsToLL_M50_LO -c 471 -c 472 -c 483  #-q condor --maxruntime 100 --log $PWD/logs
    fi
+   if [[ "${stepToRun}" == "postFSR" ]]; then
+       python prepareEventVariablesFriendTree.py -t NanoAOD  /eos/cms/store/cmst3/group/dpsww/signal_summer16_nanoV7/ /eos/cms/store/cmst3/group/dpsww/signal_summer16_nanoV7/postFSRinfo/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules genInfo_py8 -N 10000 -d WWTo2L2Nu_DoubleScattering_13TeV-pythia8 -c 9 #-q condor --maxruntime 100 --log $PWD/logs
+       python prepareEventVariablesFriendTree.py -t NanoAOD  /eos/cms/store/cmst3/group/dpsww/signal_summer16_nanoV7/ /eos/cms/store/cmst3/group/dpsww/signal_summer16_nanoV7/postFSRinfo/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules genInfo_hw -N 10000 -d WWTo2L2Nu_DoubleScattering_13TeV-herwigpp -q condor --maxruntime 100 --log $PWD/logs
+   fi
 
 ############ everything onwards is post-skimming
 
     if [[ "${stepToRun}" == "jme" ]];
     then
-	echo "running on jme"
+	echo "jme frnds"
 	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${skimmedTrees}/${year}/0_jmeUnc_v1/  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules jme${year}_allvariations  --de .*Run.* -N 10000 -q condor --maxruntime 150 --log $PWD/logs #--de .*Run.*
 
     fi
@@ -60,7 +65,7 @@ do
 done
 
 
-#test commands (misc)
+#test commands 
 
 
 #python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/${year}/ test_dps -F Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_TTH_090120_091019_v6_skim2lss/${year}/bdt_input_vars/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules BDT_DPSWW -N 1000 -d WWTo2L2Nu_DPS  -c 0
@@ -70,28 +75,9 @@ done
 
 
 #python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2016/fakeRateWt -F Friends /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2016/${Friends_recl}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules frWt -N 10000 -d DoubleMuon_Run2016B_02Apr2020 -c 0
-#>>>>>>>>test command 
-
-#python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl}/  -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence -d ZGTo2LG  -N 10000 -q condor --maxruntime 150 --log $PWD/logs
-
-####################### for BDT training 
- 
-#>>>>>>>>>>>>>>> frnds with BDT input vars, used for BDT training and evaluation. Input should be before skimming here 
 
 
 
-# >>>>>>>. store fr weights for Double Muon dataset for BDT_multiclass
 
-#python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/fakeRateWt -F Friends /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules frWt -N 10000 -q condor  --dm DoubleMuon.* --maxruntime 150 --log $PWD/logs
-##amif $missing; then
-##am    for chunk in "${missingchunks[@]}"
-##am    do
-##am	echo 'running for' ${missingDS} 'chunk' ${chunk}
-##am	#python prepareEventVariablesFriendTree.py -t NanoAOD  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_data,triggerSequence -N 10000 -d ${missingDS} -c ${chunk}
-##am	##python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence -N 10000 -d ${missingDS} -c ${chunk}
-##am
-
-
-##ammissing=false
-##ammissingDS="SingleElectron_Run2016G_02Apr2020"
-##ammissingchunks=(32)
+########### NOTES: ttjets_dilep for 2017 with 50k per chunk
+##ttjets for 2018 too with 50k

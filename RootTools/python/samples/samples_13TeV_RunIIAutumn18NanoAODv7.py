@@ -80,10 +80,13 @@ TBar_tWch_noFullyHad = kreator.makeMCComponent("TBar_tWch_noFullyHad", "/ST_tW_a
 
 
 
-Top = [ TTJets, TTJets_DiLepton, TTW_LO,TTZ_LO,
-    T_sch_lep,
-    T_tch, TBar_tch,
-    T_tWch_noFullyHad, TBar_tWch_noFullyHad
+Top = [ TTJets, 
+        TTJets_DiLepton, 
+        TTW_LO,
+        TTZ_LO,
+        T_sch_lep,
+        T_tch, TBar_tch,
+        T_tWch_noFullyHad, TBar_tWch_noFullyHad
 ]
 
 # ====== SINGLE TOP ======

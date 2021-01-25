@@ -1,5 +1,5 @@
 Convs  : WGToLNuG : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kBlue-3, Label="W/Z\#gamma"
-Convs 	: ZGTo2LG : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kBlue-3, Label="W/Z\#gamma" 
+Convs 	: ZGTo2LG : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kBlue-3, Label="W/Z\#gamma",years="2016" 
 
 Convs01J  : WGToLNuG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma_01J"
 #Convs01J  : ZGToLLG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma_01J" 
@@ -8,19 +8,18 @@ Convs01J  : ZGToLLG_01J_lowmll_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepG
 #Convs  : WGToLNuG_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma"
 
 
-#Convs  : TTGJets : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kOrange, Label="Conv. "
-#Convs  : TGJets_lep : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="Conv. "
-#ZGTo2LG_ext
 
-#Convs : DYJetsToLL_M50_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="Convs_dy" 
-#Convs : DYJetsToLL_M10to50_LO :xsec:((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="Convs_dy" 
-#Convs : WJetsToLNu : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kYellow, Label="Convs_wj" 
+Convs_dy : DYJetsToLL_M50_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="Convs_dy" 
+Convs_dy : DYJetsToLL_M10to50_LO :xsec:((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="Convs_dy", years="2016\,2018" 
+Convs_dy : DYJetsToLL_M10to50 :xsec:((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, years="2017" 
+Convs_wj : WJetsToLNu : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kYellow, years="2016\,2018 
+Convs_wj : WJetsToLNu_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kYellow, years="2017" 
 
-Convs_frmewk : W1JetsToLNu_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3
-Convs_frmewk : W2JetsToLNu_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3
-Convs_frmewk : W3JetsToLNu_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3
-Convs_frmewk : W4JetsToLNu_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3
-Convs_frmewk : DY1JetsToLL_M50_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3
-Convs_frmewk : DY2JetsToLL_M50_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3
-Convs_frmewk : DY3JetsToLL_M50_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3
-Convs_frmewk : DY4JetsToLL_M50_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3
+Convs_frmewk : W1JetsToLNu_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, years="2016\,2018 
+Convs_frmewk : W2JetsToLNu_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, years="2016\,2018 
+Convs_frmewk : W3JetsToLNu_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, years="2016\,2018 
+Convs_frmewk : W4JetsToLNu_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, years="2016\,2018 
+Convs_frmewk : DY1JetsToLL_M50_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, years="2016"
+Convs_frmewk : DY2JetsToLL_M50_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, years="2016"
+Convs_frmewk : DY3JetsToLL_M50_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, years="2016"
+Convs_frmewk : DY4JetsToLL_M50_LO : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, years="2016"

@@ -436,6 +436,14 @@ bdtvars = lambda : BDT_DPSWW()
 from CMGTools.DPSWW.tools.nanoAOD.fakeRateWtSaverdpsww import fakeRateWtSaverdpsww
 frWt = lambda : fakeRateWtSaverdpsww(os.environ["CMSSW_BASE"]+"/src/CMGTools/DPSWW/python/plotter/plots/104X/ttH/lepMVA/v1.1/fr-comb/fr_2016_MVA_mupt90_elpt70.root")
 
+
+from CMGTools.DPSWW.tools.nanoAOD.genInfo_py8 import genInfo_py8
+postfsrInfoPy = lambda : genInfo_py8()
+
+from CMGTools.DPSWW.tools.nanoAOD.genInfo_hw import genInfo_hw
+postfsrInfoHw = lambda : genInfo_hw()
+
+
 #from CMGTools.DPSWW.tools.nanoAOD.addTnpTree import addTnpTree
 #tnpvars = lambda : addTnpTree()
 #tnpTrees = [autoPuWeight, tnpvars]

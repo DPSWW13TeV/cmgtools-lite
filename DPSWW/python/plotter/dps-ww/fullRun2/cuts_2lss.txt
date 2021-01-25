@@ -11,7 +11,7 @@ conept2520 : LepGood1_conePt>25 &&  LepGood2_conePt > 20
 
 TT: LepGood1_isLepTight && LepGood2_isLepTight
 
-tauveto: nTauTight == 0
+#tauveto: nTauTight == 0
 metpt: MET_pt > 15
 
 01j: nJet25 < 2
