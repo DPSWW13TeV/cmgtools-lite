@@ -433,8 +433,8 @@ dpsvars = lambda : DPSWW_vars()
 from CMGTools.DPSWW.tools.nanoAOD.BDT_DPSWW import BDT_DPSWW
 bdtvars = lambda : BDT_DPSWW()
 
-from CMGTools.DPSWW.tools.nanoAOD.fakeRateWtSaverdpsww import fakeRateWtSaverdpsww
-frWt = lambda : fakeRateWtSaverdpsww(os.environ["CMSSW_BASE"]+"/src/CMGTools/DPSWW/python/plotter/plots/104X/ttH/lepMVA/v1.1/fr-comb/fr_2016_MVA_mupt90_elpt70.root")
+#from CMGTools.DPSWW.tools.nanoAOD.fakeRateWtSaverdpsww import fakeRateWtSaverdpsww
+##frWt = lambda : fakeRateWtSaverdpsww(os.environ["CMSSW_BASE"]+"/src/CMGTools/DPSWW/python/plotter/plots/104X/ttH/lepMVA/v1.1/fr-comb/fr_2016_MVA_mupt90_elpt70.root")
 
 
 from CMGTools.DPSWW.tools.nanoAOD.genInfo_py8 import genInfo_py8

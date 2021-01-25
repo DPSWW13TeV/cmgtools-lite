@@ -4,7 +4,7 @@ skimmedTrees='NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_2021'
 year='2018'
 Friends_recl='2_recl' 
 Friends_recl_unskimmed='2_recl'
-steps=("recl") #"bdtiv" "jme" "lepSFs" "taucount") # "bdtDisc" "unskimmedbdtDisc" "recl_allvars" "unskimmedlepSFs" "postFSR")
+steps=("jme" "lepSFs" "taucount") #"bdtiv" "jme" "lepSFs" "taucount") # "bdtDisc" "unskimmedbdtDisc" "recl_allvars" "unskimmedlepSFs" "postFSR")
 
 ## steps: recl -> bdtiv -> skimming -> links to flips
 ## post-skimming jme, lepSFs, taucount, and bdtDisc can run in parallel; recl_allvars uses jme frnds
@@ -18,7 +18,7 @@ do
     if [[ "${stepToRun}" == "recl" ]];
 	then
 	python prepareEventVariablesFriendTree.py -t NanoAOD /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/ /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence  -d TTW_LO -N 10000 -q condor  --maxruntime 180 --log $PWD/logs  ##--de .*Run.* -N 10000 -q condor --maxruntime 180 --log $PWD/logs 
-	#	python prepareEventVariablesFriendTree.py -t NanoAOD  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_data,triggerSequence --dm .*Run.*  -N 10000 -q condor  --maxruntime 180 --log $PWD/logs 
+	python prepareEventVariablesFriendTree.py -t NanoAOD  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/  /eos/cms/store/cmst3/group/dpsww/${Trees}/${year}/${Friends_recl_unskimmed}/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_data,triggerSequence --dm .*Run.*  -N 10000 -q condor  --maxruntime 180 --log $PWD/logs 
     fi
     if [[ "${stepToRun}" == "bdtiv" ]];
     then
