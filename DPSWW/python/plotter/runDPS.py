@@ -135,13 +135,13 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
 def makeResults(year,finalState,splitCharge,doWhat,analysis):
     #trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020' if analysis == 'dps' and year == '2016' else 'NanoTrees_TTH_090120_091019_v6_skim2lss')
-    trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_2021' if analysis == 'dps' and year == '2016' else 'NanoTrees_TTH_090120_091019_v6_skim2lss')
+    trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_2021' if analysis == 'dps'  else 'NanoTrees_TTH_090120_091019_v6_skim2lss')
 
     friends     = [trees+'3_tauCount']#, trees+'dpsbdt']
     MCfriends   = [trees+'2_recl_allvars',trees+'3_scalefactors_EOY',trees+'0_jmeUnc_v1']#,trees+'2_scalefactors_lep_fixed']#
     Datafriends = [trees+'2_recl']
     fplots      = 'dps-ww/fullRun2/plots.txt'
-    fmca        = 'dps-ww/fullRun2/mca-dpsww.txt' if analysis == 'dps' and year == '2016' else 'dps-ww/fullRun2/mca-ttH.txt'
+    fmca        = 'dps-ww/fullRun2/mca-dpsww.txt'
     fsyst       = '' #dps-ww/fullRun2/systsUnc.txt'
     fcut        = 'dps-ww/fullRun2/cuts_2lss.txt' 
 
@@ -156,9 +156,9 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
     print 'running for %s with charge split flag %s' %(finalState,splitCharge)
 
 
-    #processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs','WZ_mllLT4','data_flips','data','data_fakes','DPSWW_hg','WZ_pow']#,'dy','Flips','Convs','Wgstar','WZ_incl','promptsub']
-    processes =['data_fakes','Convs','Convs01J']
-    fRvars    = ['data_fakes_FRe_norm_Up','data_fakes_FRe_norm_Dn','data_fakes_FRe_pt_Up','data_fakes_FRe_pt_Dn','data_fakes_FRe_be_Up','data_fakes_FRe_be_Dn','data_fakes_FRm_norm_Up','data_fakes_FRm_norm_Dn','data_fakes_FRm_pt_Up','data_fakes_FRm_pt_Dn','data_fakes_FRm_be_Up','data_fakes_FRm_be_Dn']
+    processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs01J','WZ_mllLT4','data_flips','data','data_fakes']#,'DPSWW_hg','WZ_pow']#,'dy','Flips','Convs','Wgstar','WZ_incl','promptsub']
+    #processes =['data_fakes','Convs','Convs01J']
+    #fRvars    = ['data_fakes_FRe_norm_Up','data_fakes_FRe_norm_Dn','data_fakes_FRe_pt_Up','data_fakes_FRe_pt_Dn','data_fakes_FRe_be_Up','data_fakes_FRe_be_Dn','data_fakes_FRm_norm_Up','data_fakes_FRm_norm_Dn','data_fakes_FRm_pt_Up','data_fakes_FRm_pt_Dn','data_fakes_FRm_be_Up','data_fakes_FRm_be_Dn']
     #processes+=fRvars
 
     if finalState[0] in ['mumu','elel']:
@@ -168,7 +168,7 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
 
     exotic = ['ptRatio1','ptRatio2']#,'MVA_ptRatio','dxy1','dz1','sip3d1','dxy2','dz2','sip3d2','minMVA','maxMVA','LepGood1_motherid','LepGood2_motherid','fake_lepMVA1','fake_lepMVA2', LepGood1_genPartFlav_all','LepGood2_genPartFlav_all',LepGood1_tightId','LepGood2_tightId','LepGood1_cutBased','LepGood2_cutBased','LepGood1_mediumPromptId','LepGood1_mediumId','LepGood1_mvaFall17V2Iso','LepGood1_mvaFall17V2Iso_WPL','LepGood1_mvaId','LepGood2_mediumPromptId','LepGood2_mediumId','LepGood2_mvaFall17V2Iso','LepGood2_mvaFall17V2Iso_WPL','njets25','njets30','nBJetLoose25','nBJetMedium25','nBJetTight25','nBJetLoose40','nBJetMedium40','nBJetTight40','nTauTight','nTauFO'] 
 
-    allvars    = ['conept1','conept2','pt1','pt2','eta1','eta2','phi1','phi2','MVA1','MVA2','met','metphi']#,'dilep_flav','tcharge1','tcharge2','njets25','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2','nVert','ptll'] #'BDT_wz_amc','BDT_fakes','BDT_wz_pow','BDT_DPS_multiC','BDT_WZ_multiC','BDT_TL_multiC']'dilep_charge','puppimetphi','puppimet'
+    allvars    = ['conept1','conept2','MVA1','MVA2']#'pt1','pt2','eta1','eta2','phi1','phi2','MVA1','MVA2','met','metphi']#,'dilep_flav','tcharge1','tcharge2','njets25','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2','nVert','ptll'] #'BDT_wz_amc','BDT_fakes','BDT_wz_pow','BDT_DPS_multiC','BDT_WZ_multiC','BDT_TL_multiC']'dilep_charge','puppimetphi','puppimet'
     #'conept1_WZ_sep1','conept2_WZ_sep1'
 
     #    configs=['elmu','mumu','elel','plusplus','minusminus']
@@ -190,7 +190,7 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
             spam    = ' --topSpamSize 1.0 --noCms '
             legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
             ubands  = '  --showMCError '
-            anything = '--binname {finalState} --plotmode nostack'.format(finalState=FS) # --fitData --flp data_fakes'# --plotmode norm' # --plotmode nostack' # rm --neg ' #--plotmode norm ' #"  --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub.* " #-- uf" #" #to include neagitve evt ylds from fakes --showIndivSigs --noStackSig
+            anything = '--binname {finalState}'.format(finalState=FS) # --fitData --flp data_fakes'# --plotmode norm' # --plotmode nostack' # rm --neg ' #--plotmode norm ' #"  --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub.* " #-- uf" #" #to include neagitve evt ylds from fakes --showIndivSigs --noStackSig --plotmode nostack
             extraopts = ratio + spam + legends + ubands + anything
 
             if splitCharge:
@@ -201,7 +201,7 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis):
             if 'plots' in doWhat:
                 makeplots=makeplots1 #+makeplots2
                 print makeplots1
-                runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,False, applyWtsnSFs, year, 2,extraopts,invert,cutflow)
+                runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,True, applyWtsnSFs, year, 2,extraopts,invert,cutflow)
 
             if 'cards' in doWhat:
             ## ==================================
