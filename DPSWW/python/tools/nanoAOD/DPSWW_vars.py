@@ -7,7 +7,9 @@ import array, numpy
 from ROOT import TLorentzVector
 
 class DPSWW_vars(Module):
-    def __init__(self):
+    def __init__(self,year):
+        self.year=year
+        print 'running for',year
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
@@ -92,8 +94,8 @@ class DPSWW_vars(Module):
         nFO = getattr(event,"nLepFO_Recl")
         chosen = getattr(event,"iLepFO_Recl")
         leps = [all_leps[chosen[i]] for i in xrange(nFO)]
-        MET_pt= getattr(event,"MET_pt")
-        MET_phi= getattr(event,"MET_phi")
+        MET_pt= getattr(event,"METFixEE2017_pt" if self.year == 2017 else "MET_pt")
+        MET_phi= getattr(event,"METFixEE2017_phi" if self.year == 2017 else "MET_phi")
         mt2       = self.calcmt2(leps[0],leps[1],MET_pt,MET_phi) if len(leps) > 1 else -99;
         mtll      = self.mt(leps[0].conePt,leps[0].phi,leps[1].conePt,leps[1].phi) if len(leps) > 1 else -99;
         mtl1met   = self.mt(leps[0].conePt,leps[0].phi,MET_pt,MET_phi) if len(leps) > 1 else -99;

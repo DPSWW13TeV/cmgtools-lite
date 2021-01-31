@@ -1,7 +1,5 @@
 alwaystrue: 1
 SameSign     : GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1] > 0
-#emulep1 :     abs(GenPart_sel_pdgId[0]) == 11 ||  abs(GenPart_sel_pdgId[0]) == 13
-#emulep2 :     abs(GenPart_sel_pdgId[1]) == 11 ||  abs(GenPart_sel_pdgId[1]) == 13
 2l           : nGenPart_sel == 2
 
 pt2520	      : GenPart_sel_pt[0] > 25 && GenPart_sel_pt[1] > 20
@@ -27,6 +25,6 @@ minusminus   : GenPart_sel_pdgId[0] < 0                          ; Disable=True
 elmu   : GenPart_sel_pdgId[0] > 0 and abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 143  ; Disable=True
 mumu   : GenPart_sel_pdgId[0] > 0 and abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 169   ; Disable=True
 
-ll  : abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 143 || abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 169 ; Disable=True
+ll  : abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 143 || abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 169 || abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 121 ; Disable=True
 
 

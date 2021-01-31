@@ -7,8 +7,9 @@ from CMGTools.DPSWW.tools.mvaTool import *
     
 
 class BDT_DPSWW(Module):
-    def __init__(self):
+    def __init__(self,year):
         self._MVAs = {}
+        self.year=year
         self._vars = [
 
             MVAVar("Lep1_conept",       func = lambda ev : ev.Lep1_conept ),
@@ -23,12 +24,19 @@ class BDT_DPSWW(Module):
             MVAVar("Lep1_eta*Lep2_eta",   func = lambda ev : ev.Lep1_eta*ev.Lep2_eta),
             MVAVar("abs(Lep1_eta+Lep2_eta)",    func = lambda ev : abs(ev.Lep1_eta+ev.Lep2_eta))
         ]
+        baseDir='/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/'
+        if self.year == 2016:
+            
+            wts_wz_amc = baseDir+'dataset_wz_amc/weights/TMVAClassification_BDTG.weights.xml'
+            wts_wz_pow = baseDir+'dataset_wz_pow/weights/TMVAClassification_BDTG.weights.xml'
+            wts_fakes  = baseDir+'dataset_fakes/weights/TMVAClassification_BDTG.weights.xml'
+            #        wts_multiC  = baseDir+'BDTtraining/dataset_multiclass/weights/TMVAMutliClass_BDTG.weights.xml'
+        else:
+            wts_wz_amc = baseDir+'dataset_2017_wz_amc/weights/TMVAClassification_BDTG.weights.xml'
+            wts_wz_pow = baseDir+'dataset_2017_wz_pow/weights/TMVAClassification_BDTG.weights.xml'
+            wts_fakes  = baseDir+'dataset_2017_fakes/weights/TMVAClassification_BDTG.weights.xml'
+            #        wts_multiC  = baseDir+'BDTtraining/dataset_multiclass/weights/TMVAMutliClass_BDTG.weights.xml'
 
-
-        wts_wz_amc = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_wz_amc/weights/TMVAClassification_BDTG.weights.xml'
-        wts_wz_pow = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_wz_pow/weights/TMVAClassification_BDTG.weights.xml'
-        wts_fakes  = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_fakes/weights/TMVAClassification_BDTG.weights.xml'
-        #        wts_multiC  = '/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/dataset_multiclass/weights/TMVAMutliClass_BDTG.weights.xml'
         self._MVAs['BDT_DPS_WZ_amc']    = MVATool('BDTG_method', wts_wz_amc   , self._vars, rarity=True)
         self._MVAs['BDT_DPS_WZ_pow']    = MVATool('BDTG_method', wts_wz_pow   , self._vars, rarity=True)
         self._MVAs['BDT_DPS_fakes']     = MVATool('BDTG_method', wts_fakes    , self._vars, rarity=True)

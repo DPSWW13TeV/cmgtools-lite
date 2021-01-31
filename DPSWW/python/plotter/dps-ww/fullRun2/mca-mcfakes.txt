@@ -4,7 +4,7 @@ W0J_amc	: W0JetsToLNu	: xsec : 1 ; FillColor=ROOT.kGreen+2, Label="wj", years="2
 W1J_amc	: W1JetsToLNu	: xsec : 1 ; FillColor=ROOT.kGreen+2, Label="wj", years="2018\,2017"
 W2J_amc	: W2JetsToLNu	: xsec : 1 ; FillColor=ROOT.kGreen+2, Label="wj", years="2018\,2017"
 
-DY      : DYJetsToLL_M50 + DYJetsToLL_M10to50_LO: xsec : ((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0)) ; FillColor=ROOT.kCyan, Label="DY"
+DY      : DYJetsToLL_M50 + DYJetsToLL_M10to50: xsec : ((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0)) ; FillColor=ROOT.kCyan, Label="DY"
 
 dy	 : DY1JetsToLL_M50_LO :  xsec :((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==0) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==0)); FillColor=5, years="2016"
 dy	 : DY2JetsToLL_M50_LO :  xsec :((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==0) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==0)); FillColor=5, years="2016"

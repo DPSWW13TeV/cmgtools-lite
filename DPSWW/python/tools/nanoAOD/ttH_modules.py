@@ -9,7 +9,7 @@ conf = dict(
         dz = 0.1, 
         eleId = "mvaFall17V2noIso_WPL",
 )
-elMVA_WP=0.80
+elMVA_WP=0.70
 muMVA_WP=0.85
 
 
@@ -428,11 +428,12 @@ vhsplitter = lambda : VHsplitter()
 # scaleFactorSequence_2018
 
 from CMGTools.DPSWW.tools.nanoAOD.DPSWW_vars import DPSWW_vars
-dpsvars = lambda : DPSWW_vars()
+dpsvars2016 = lambda : DPSWW_vars(2016)
+dpsvars2017 = lambda : DPSWW_vars(2017)
 
 from CMGTools.DPSWW.tools.nanoAOD.BDT_DPSWW import BDT_DPSWW
-bdtvars = lambda : BDT_DPSWW()
-
+bdtvars2016 = lambda : BDT_DPSWW(2016)
+bdtvars2017 = lambda : BDT_DPSWW(2017)
 #from CMGTools.DPSWW.tools.nanoAOD.fakeRateWtSaverdpsww import fakeRateWtSaverdpsww
 ##frWt = lambda : fakeRateWtSaverdpsww(os.environ["CMSSW_BASE"]+"/src/CMGTools/DPSWW/python/plotter/plots/104X/ttH/lepMVA/v1.1/fr-comb/fr_2016_MVA_mupt90_elpt70.root")
 
@@ -444,8 +445,8 @@ from CMGTools.DPSWW.tools.nanoAOD.genInfo_hw import genInfo_hw
 postfsrInfoHw = lambda : genInfo_hw()
 
 
-#from CMGTools.DPSWW.tools.nanoAOD.addTnpTree import addTnpTree
-#tnpvars = lambda : addTnpTree()
+from CMGTools.DPSWW.tools.nanoAOD.addTnpTree import addTnpTree
+tnpvars = lambda : addTnpTree()
 #tnpTrees = [autoPuWeight, tnpvars]
 #from CMGTools.DPSWW.tools.nanoAOD.collectionMerger_DPSWW import collectionMerger_DPSWW
 #mergedvars = collectionMerger_DPSWW() #selector = dict(Muon = muonSelection, Electron = electronSelection))

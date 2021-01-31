@@ -63,16 +63,11 @@ class lepScaleFactors(Module):
         hist = self.looseToTight['%d,%s,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm', '2lss' if nlep == 2 else '3l')]
         ptbin  = max(1, min(hist.GetNbinsY(), hist.GetYaxis().FindBin(lep.pt)));
         #print ptbin,lep.pt
-        if (year == 2016 and nlep == 2):
+        if (nlep == 2 and ( (abs(lep.pdgId) == 11) or ( abs(lep.pdgId) == 13 and year !=2016 ) ) ): #2016 is all dpsWPs, 2017 and 2018 dpsWP for el 
             etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(lep.eta)));
-        else:
-            etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(abs(lep.eta))));
-
-        out = hist.GetBinContent(etabin,ptbin)
-
-        if(year == 2016 and nlep == 2):
             error= hist.GetBinError(etabin,ptbin)             
         else:
+            etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(abs(lep.eta))));
             hist_ptunc  = self.looseToTightUncertainties_pt['%d,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm')]
             ptbin = max(1, min(hist_ptunc.GetNbinsX(), hist_ptunc.FindBin( lep. pt)))
             err_pt = hist_ptunc.GetBinContent(ptbin) 
@@ -80,7 +75,8 @@ class lepScaleFactors(Module):
             etabin = max(1, min(hist_etaunc.GetNbinsX(), hist_etaunc.FindBin( lep. pt)))
             err_eta = hist_ptunc.GetBinContent(etabin) 
             error = max(abs(err_pt-1), abs(err_eta-1))
- 
+
+        out = hist.GetBinContent(etabin,ptbin) 
         if abs(lep.pdgId) == 13: 
             var = +1 if var_str == '_mu_loosetotight_up' else -1 if var_str == '_mu_loosetotight_dn' else 0
             out = out +var*error

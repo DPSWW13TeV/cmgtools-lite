@@ -84,18 +84,21 @@ def train_classification(year,bkg):
         bkgSel = TL
         dsets = [
             ('WWDoubleTo2L',"Signal",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016B_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016C_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016D_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016E_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016F_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016G_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2016H_02Apr2020',"Background",['2_recl/','bdt_input_vars/'])]
+            ('DoubleMuon_Run2017B_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2017C_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2017D_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2017E_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            ('DoubleMuon_Run2017F_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            #('DoubleMuon_Run2016G_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
+            #('DoubleMuon_Run2016H_02Apr2020',"Background",['2_recl/','bdt_input_vars/'])
+        ]
         
-
-    #common selection cut as used in the analysis
-    common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && MET_pt > 15'
-
+    if year == 2016:
+        #common selection cut as used in the analysis
+        common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && MET_pt > 15'
+    else:
+        common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && METFixEE2017_pt > 15'
+             
 
     bkgcuts = ROOT.TCut('1');
     bkgcuts += mmss
@@ -119,16 +122,16 @@ def train_classification(year,bkg):
         #print tree, weight
         datasets.append((name, trainclass, tree, glbwt))
 
-    fOut = ROOT.TFile("TMVA_classification_dpsvs"+bkg+".root","recreate") #creating the output file 
+    fOut = ROOT.TFile("TMVA_classification_dpsvs"+year+"_"+bkg+".root","recreate") #creating the output file 
     fOut.cd()
     # configuring tmva
     factory = ROOT.TMVA.Factory('TMVAClassification', fOut, "!V:!Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" )
-    DL = ROOT.TMVA.DataLoader("dataset_"+bkg);
+    DL = ROOT.TMVA.DataLoader("dataset_"+year+"_"+bkg);
 
     # adding list of vars to train on
     DL.AddVariable('pt1 := Lep1_conept','p_{T1}', 'F')
     DL.AddVariable('pt2 := Lep2_conept','p_{T2}', 'F') 
-    DL.AddVariable('met := MET_pt', 'F')
+    DL.AddVariable('met :=  METFixEE2017_pt', 'F')
     DL.AddVariable('mt2 := mt2','F')
     DL.AddVariable('mtll:= mtll', 'F') 
     DL.AddVariable('mtl1met := mtl1met', 'F') 
@@ -230,8 +233,8 @@ def train_classification(year,bkg):
 if __name__ == '__main__':
 
     parser = optparse.OptionParser(usage='usage: %prog [opts] ', version='%prog 1.0')
-    parser.add_option("-b","--bkg", dest="bkg",type="string", default='WZ')
-    parser.add_option("-Y","--year", dest="year",type="string", default='2016')
+    parser.add_option("-b","--bkg", dest="bkg",type="string", default='wz_amc')
+    parser.add_option("-y","--year", dest="year",type="string", default='2016')
     #parser.add_option("-P","--treepath", dest="treepath",type="string", default=None)
     #parser.add_option("-F","--friend", dest="friends",type="string", default=[], action="append")
     (opts, args) = parser.parse_args()

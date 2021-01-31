@@ -68,7 +68,7 @@ class genInfo_py8(Module):
 
         for iGen in genparticles:
             ##            if ( ( ( (abs(iGen.pdgId) in [11,13] and iGen.status == 1) or  (abs(iGen.pdgId) ==15 and iGen.status ==  2) ) and promptLep(iGen.statusFlags,-1) and promptLep(iGen.statusFlags,6)  ) or ( abs(iGen.pdgId) in [12,14,16] and iGen.status == 1)       ):
-            if ( ( ( (abs(iGen.pdgId) in [11,13] and iGen.status == 1) or  (abs(iGen.pdgId) ==15 and iGen.status ==  2) ) and promptLep(iGen.statusFlags,-1) and promptLep(iGen.statusFlags,6)  )        ):    
+            if ( ( ( (abs(iGen.pdgId) in [11,13] and iGen.status == 1) ) and promptLep(iGen.statusFlags,-1) and promptLep(iGen.statusFlags,6)  )        ):    
                     leptons.append(iGen)
             else:
                 continue

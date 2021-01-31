@@ -1,4 +1,3 @@
-# NanoAOD version
 LepGood_idEmu3: LepGood_hoe < 0.10 && LepGood_eInvMinusPInv > -0.04 && LepGood_sieie < (0.011+0.019*(abs(LepGood_eta+LepGood_deltaEtaSC)>1.479)) ; AlsoData
 LepGood(\d)_idEmu3: LepGood\1_hoe < 0.10 && LepGood\1_eInvMinusPInv > -0.04 && LepGood\1_sieie < (0.011+0.019*(abs(LepGood\1_eta+LepGood\1_deltaEtaSC)>1.479)) ; AlsoData
 # CMGTools version

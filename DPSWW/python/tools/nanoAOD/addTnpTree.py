@@ -5,18 +5,16 @@ from ROOT import TLorentzVector
 import os
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
-from CMGTools.DPSWW.tools.nanoAOD.ttH_modules import conept_TTH
+#from CMGTools.DPSWW.tools.nanoAOD.ttH_modules import conept_TTH
 _rootLeafType2rootBranchType = { 'UChar_t':'b', 'Char_t':'B', 'UInt_t':'i', 'Int_t':'I', 'Float_t':'F', 'Double_t':'D', 'ULong64_t':'l', 'Long64_t':'L', 'Bool_t':'O' }
 
-##amdef conept_TTH(lep):
-##am    if (abs(lep.pdgId)!=11 and abs(lep.pdgId)!=13): 
-##am        return lep.pt
-##am    if (abs(lep.pdgId)!=13 or lep.mediumId>0) and lep.mvaTTH > 0.90: 
-##am        return lep.pt
-##am    else: return 0.90 * lep.pt * (1+lep.jetRelIso)
+def conept_TTH(lep):
+    if (abs(lep.pdgId)!=11 and abs(lep.pdgId)!=13): return lep.pt
+    if (abs(lep.pdgId)==13 and lep.mediumId>0 and lep.mvaTTH > 0.90) or (abs(lep.pdgId) == 11 and lep.mvaTTH > 0.70): return lep.pt ##here
+    else: return 0.90 * lep.pt * (1 + lep.jetRelIso)
 
 class addTnpTree(Module):
-    def __init__(self, year=2016, flavor="Electron"):
+    def __init__(self, year=2017, flavor="Electron"):
         self.flavor = flavor
         if self.flavor == "Electron":
             self.probeSel = lambda x : x.pt > 7 and abs(x.eta) < 2.5 and x.mvaFall17V2noIso_WPL

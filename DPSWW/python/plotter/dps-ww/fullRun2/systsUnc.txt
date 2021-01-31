@@ -21,7 +21,7 @@ Wgstar_norm         : WZ_mllLT4    : .*              	    : normSymm : 1.3
 
 # shapes
 
-Conv_shape           : Convs       : elmu                   : templateSymm; AddWeight=1.05
+Conv_shape           : Convs       : .*el.*                   : templateSymm; AddWeight=1.05
 WZ_shape             : WZ_amc	   : .*                     : altSample : WZ_pow 
 DPSWW_shape          : DPSWW	   : .*                     : altSample : DPSWW_hg 
 Rares_shape_lin      : Rares       : .*                     : LinearShapeOnly : 1.05

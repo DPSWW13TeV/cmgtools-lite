@@ -8,7 +8,7 @@ kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = int(getHeppyOption("year", "2016"))
+year = int(getHeppyOption("year", "2018"))
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 
@@ -25,11 +25,11 @@ if preprocessor:
         from CMGTools.RootTools.samples.samples_13TeV_DATA2016 import dataSamples_17Jul2018 as allData
 else:
     if year == 2018:
-        from CMGTools.RootTools.samples.samples_13TeV_RunIIAutumn18NanoAODv4 import samples as mcSamples_
-        from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples_25Oct2019 as allData
+        from CMGTools.RootTools.samples.samples_13TeV_RunIIAutumn18NanoAODv7 import samples as mcSamples_
+        from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAODv7 import dataSamples_02Apr2020 as allData
     elif year == 2017:
         from CMGTools.RootTools.samples.samples_13TeV_RunIIFall17NanoAODv7 import samples as mcSamples_
-        from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAODv7 import dataSamples_25Oct2019 as allData
+        from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAODv7 import dataSamples_02Apr2020 as allData
     elif year == 2016:
         from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16NanoAODv7 import samples as mcSamples_
         from CMGTools.RootTools.samples.samples_13TeV_DATA2016_NanoAODv7 import dataSamples_02Apr2020 as allData
@@ -50,7 +50,9 @@ mcSamples = byCompName(mcSamples_, ["%s(|_ext)$"%dset for dset in [
 if flavor == "Muon":
     DatasetsAndTriggers.append( ("SingleMuon", triggerGroups_dict["Trigger_1m"][year]) )
 elif flavor == "Electron":
-    DatasetsAndTriggers.append( ("SingleElectron", triggerGroups_dict["Trigger_1e"][year]) if year != 2018 else (None,None) )
+    #DatasetsAndTriggers.append( ("SingleElectron", triggerGroups_dict["Trigger_1e"][year]) if year != 2018 else (None,None) )
+    DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_1e"][year]) if year == 2018 else
+                                ("SingleElectron",   triggerGroups_dict["Trigger_1e"][year] ) )
 elif analysis == "frqcd":
     mcSamples = byCompName(mcSamples_, [
         "QCD_Mu15", "QCD_Pt(20|30|50|80|120|170)to.*_Mu5", 

@@ -9,7 +9,7 @@ cleanup: minMllAFAS > 12
 dilep: nLepFO == 2
 excltight: nLepTight <=2
 
-opp-sign: LepGood1_charge*LepGood2_charge > 0
+opp-sign: LepGood1_charge*LepGood2_charge < 0
 
 TT: LepGood1_isLepTight && LepGood2_isLepTight
 #dy: ptll(LepGood1_conePt, LepGood1_eta, LepGood1_phi, LepGood1_mass, LepGood2_conePt, LepGood2_eta, LepGood2_phi, LepGood2_mass) > 50

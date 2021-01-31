@@ -378,7 +378,6 @@ if options.queue == "condor":
             chunk = "Chunk).$(Step"
     subfile.write("""##### BEGIN condor submit file
 Executable = {runner}
-Universe   = vanilla
 Error      = {logdir}/err.$(cluster).$(Dataset).$({chunk})
 Output     = {logdir}/out.$(cluster).$(Dataset).$({chunk})
 Log        = {logdir}/log.$(cluster).$(Dataset).$({chunk})

@@ -189,9 +189,9 @@ if __name__ == "__main__":
     Xnices = [ "MC QCD", "Data, comb." ]
 
 #    mva_el = "080"
-#    mva_mu = "085"
+    mva_mu = "085"
     mva_el = "070"
-    mva_mu = "090"
+#    mva_mu = "090"
     for year in years:
         outname = PlotOut + "/fr_%s_MVA_mupt%s_elpt%s.root" % (year,mva_mu,mva_el)
         outfile = ROOT.TFile.Open(outname,"RECREATE")
@@ -212,8 +212,11 @@ if __name__ == "__main__":
             fixLastBin(-1, h2d_mu[1], h2d_mu[0])
 
         #### TT MC-truth
-        MCPlots = "%s/%s/fr-mc/%s/fakerates-mtW1R/" % ( options.outdir, options.mvaVersionMC, year)
-        ID="iRun2v1.0";
+        #MCPlots = "%s/%s/fr-mc/%s/fakerates-mtW1R/" % ( options.outdir, options.mvaVersionMC, year) #for 2016 ??
+        MCPlots = "%s/%s/fr-mc/%s/" % ( options.outdir, options.mvaVersionMC, year)
+        ID="iRun2v1.0"; #for 2016
+        #ID="iv01f60E3" #for 2017
+
         XVarBins_mu = "ptJI90_mvaPt"+mva_mu+"_coarsecomb_%s"
         XVarBins_el = "ptJI90_mvaPt"+mva_el+"_coarseelcomb_%s"
         NumXVarBins_mu = "mvaPt_"+mva_mu+"i_"+XVarBins_mu

@@ -30,7 +30,7 @@ susy)
 esac;
 
 
-BCORE=" --s2v --tree ${TREE} fakeRates/lepton-fr/lepton-mca-frstudies.txt fakeRates/lepton-perlep.txt"
+BCORE=" --s2v --year $YEAR --tree ${TREE} fakeRates/lepton-fr/lepton-mca-frstudies.txt fakeRates/lepton-perlep.txt"
 BCORE="${BCORE} -L fakeRates/functionsTTH.cc"
 if [[ "$TREE" == "treeProducerSusyMultilepton" ]]; then
     BCORE="${BCORE} --mcc fakeRates/validation/mcc-cmg_as_nanoaod.txt"
@@ -51,9 +51,11 @@ if [[ "$2" == "--recoil" ]]; then
     RECOIL_VALUE="$4"
 fi;
 
-if [[ "$*" == "" ]]; then WPs="090iv01f60E3"; else WPs="$1"; fi;
+#if [[ "$*" == "" ]]; then WPs="090iv01f60E3"; else WPs="$1"; fi;
 #if [[ "$*" == "" ]]; then WPs="085iRun2v1.0E290"; else WPs="$1"; fi;
-#if [[ "$*" == "" ]]; then WPs="085iRun2v1.0"; else WPs="$1"; fi; ## xcheck
+if [[ "$*" == "" ]]; then WPs="085iRun2v1.0"; else WPs="$1"; fi; ## xcheck
+#if [[ "$*" == "" ]]; then WPs="090iRun2v1.0"; else WPs="$1"; fi; ## 
+#if [[ "$*" == "" ]]; then WPs="070iRun2v1.0"; else WPs="$1"; fi; ## 
 #if [[ "$*" == "" ]]; then WPs="065iRun2v1.0"; else WPs="$1"; fi;
 for WP in $WPs; do
         MuIdDen=0; EleRecoPt=7; MuRecoPt=5; AwayJetPt=30; EleTC=0; IDEMu=1

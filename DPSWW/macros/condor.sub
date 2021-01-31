@@ -1,6 +1,5 @@
 ##### BEGIN condor submit file
 Executable = lxbatch_runner.sh
-Universe   = vanilla
 Error      = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros/logs/err.$(cluster).$(Dataset).$(Step)
 Output     = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros/logs/out.$(cluster).$(Dataset).$(Step)
 Log        = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros/logs/log.$(cluster).$(Dataset).$(Step)
@@ -8,9 +7,67 @@ Log        = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src
 use_x509userproxy = True
 getenv = True
 request_memory = 2000
-+MaxRuntime = 10800
++MaxRuntime = 3000
 
 
-Arguments = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL python prepareEventVariablesFriendTree.py -j 0 -N 10000  -t NanoAOD /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2018/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2018/2_recl/  -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence  --compression ZLIB:3  -d $(Dataset) -c $(Step)
+Arguments = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL python prepareEventVariablesFriendTree.py -j 0 -N 50000  -t NanoAOD /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_04092020/2017/ /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_04092020/2017/bdt_input_vars  -F  Friends /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_04092020/2017/2_recl/{cname}_Friend.root   -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules dpsvars2017  --compression ZLIB:3  -d $(Dataset) -c $(Step)
 
-Queue 161 Dataset in TTW_LO
+Queue 6 Dataset in DYJetsToLL_M10to50
+Queue 50 Dataset in DYJetsToLL_M50
+Queue 33 Dataset in DYJetsToLL_M50_LO
+Queue 18 Dataset in DoubleEG_Run2017B_02Apr2020
+Queue 41 Dataset in DoubleEG_Run2017C_02Apr2020
+Queue 18 Dataset in DoubleEG_Run2017D_02Apr2020
+Queue 39 Dataset in DoubleEG_Run2017E_02Apr2020
+Queue 49 Dataset in DoubleEG_Run2017F_02Apr2020
+Queue 31 Dataset in DoubleMuon_Run2017B_02Apr2020
+Queue 69 Dataset in DoubleMuon_Run2017C_02Apr2020
+Queue 31 Dataset in DoubleMuon_Run2017D_02Apr2020
+Queue 73 Dataset in DoubleMuon_Run2017E_02Apr2020
+Queue 109 Dataset in DoubleMuon_Run2017F_02Apr2020
+Queue 5 Dataset in MuonEG_Run2017B_02Apr2020
+Queue 12 Dataset in MuonEG_Run2017C_02Apr2020
+Queue 5 Dataset in MuonEG_Run2017D_02Apr2020
+Queue 11 Dataset in MuonEG_Run2017E_02Apr2020
+Queue 15 Dataset in MuonEG_Run2017F_02Apr2020
+Queue 4 Dataset in SingleElectron_Run2017B_02Apr2020
+Queue 8 Dataset in SingleElectron_Run2017C_02Apr2020
+Queue 4 Dataset in SingleElectron_Run2017D_02Apr2020
+Queue 10 Dataset in SingleElectron_Run2017E_02Apr2020
+Queue 14 Dataset in SingleElectron_Run2017F_02Apr2020
+Queue 11 Dataset in SingleMuon_Run2017B_02Apr2020
+Queue 18 Dataset in SingleMuon_Run2017C_02Apr2020
+Queue 8 Dataset in SingleMuon_Run2017D_02Apr2020
+Queue 18 Dataset in SingleMuon_Run2017E_02Apr2020
+Queue 34 Dataset in SingleMuon_Run2017F_02Apr2020
+Queue 4 Dataset in TBar_tWch
+Queue 1 Dataset in TBar_tch
+Queue 174 Dataset in TTJets
+Queue 212 Dataset in TTJets_DiLepton
+Queue 16 Dataset in TTW_LO
+Queue 25 Dataset in TTZ_LO
+Queue 2 Dataset in T_sch_lep
+Queue 3 Dataset in T_tWch
+Queue 1 Dataset in T_tch
+Queue 2 Dataset in W0JetsToLNu
+Queue 9 Dataset in W1JetsToLNu
+Queue 12 Dataset in W2JetsToLNu
+Queue 2 Dataset in WGToLNuG
+Queue 8 Dataset in WGToLNuG_01J_amcatnlo
+Queue 2 Dataset in WJetsToLNu_LO
+Queue 1 Dataset in WWDoubleTo2L
+Queue 1 Dataset in WWDoubleTo2L_herwig
+Queue 1 Dataset in WWG
+Queue 6 Dataset in WWTo2L2Nu
+Queue 1 Dataset in WWW
+Queue 2 Dataset in WWW_ll
+Queue 1 Dataset in WWZ
+Queue 5 Dataset in WZTo3LNu
+Queue 60 Dataset in WZTo3LNu_fxfx
+Queue 57 Dataset in WZTo3LNu_mllmin01
+Queue 1 Dataset in WZZ
+Queue 1 Dataset in WpWpJJ
+Queue 92 Dataset in ZGToLLG_01J_amcatnlo
+Queue 32 Dataset in ZGToLLG_01J_lowmll_amcatnlo
+Queue 7 Dataset in ZZTo4L
+Queue 1 Dataset in ZZZ
