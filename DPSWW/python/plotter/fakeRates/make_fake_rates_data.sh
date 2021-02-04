@@ -21,7 +21,7 @@ ttH)
 susy*) echo "NOT UP TO DATE"; exit 1;;
 *) echo "You did not specify the analysis"; exit 1;;
 esac;
-BCORE=" --s2v --tree NanoAOD fakeRates/lepton-fr/mca-qcd1l-${YEAR}.txt ${CUTFILE} -P $T -l $L --AP "
+BCORE=" --s2v --year ${YEAR} --tree NanoAOD fakeRates/lepton-fr/mca-qcd1l-${YEAR}.txt ${CUTFILE} -P $T -l $L --AP "
 BCORE="${BCORE} -L fakeRates/functionsTTH.cc   "; 
 BCORE="${BCORE} --Fs {P}/1_frFriends_v1"
 BCORE="${BCORE} --mcc fakeRates/mcc-eleIdEmu2.txt  "; 
@@ -36,9 +36,9 @@ BG=" -j 8 "; if [[ "$1" == "-b" ]]; then BG=" & "; shift; fi
 lepton=$1; if [[ "$1" == "" ]]; then exit 1; fi
 lepdir=${lepton};
 case $lepton in
-mu) BCORE="${BCORE} -E ^${lepton} --xf 'SingleEl.*,DoubleEG.*,EGamma.*'  "; MVAWP=85; NUM="mvaPt_0${MVAWP}i"; QCD=QCDMu; 
+mu) BCORE="${BCORE} -E ^${lepton} --xf 'SingleEl.*,DoubleEG.*,EGamma.*'  "; MVAWP=90; NUM="mvaPt_0${MVAWP}i"; QCD=QCDMu; 
     conept="LepGood_pt*if3(LepGood_mvaTTH>0.${MVAWP}&&LepGood_mediumId>0, 1.0, 0.9*(1+LepGood_jetRelIso))"; ;;
-el) BCORE="${BCORE} -E ^${lepton} --xf 'DoubleMu.*,SingleMu.*' "; MVAWP=70; NUM="mvaPt_0${MVAWP}i"; QCD=QCDEl; 
+el) BCORE="${BCORE} -E ^${lepton} --xf 'DoubleMu.*,SingleMu.*' "; MVAWP=60; NUM="mvaPt_0${MVAWP}i"; QCD=QCDEl; 
     conept="LepGood_pt*if3(LepGood_mvaTTH>0.${MVAWP}, 1.0, 0.9*(1+LepGood_jetRelIso))"; ;;
 esac;
 

@@ -1,10 +1,11 @@
 #!/bin/bash
 baseDir='/eos/cms/store/cmst3/group/dpsww/'
 Trees='NanoTrees_v7_dpsww_04092020' # trees (unskimmed)
-skimmedTrees='NanoTrees_v7_dpsww_skim2lss'
-Friends_recl_unskimmed='2_recl'
+skimmedTrees='2017elWP60'
+#skimmedTrees='NanoTrees_v7_dpsww_skim2lss'
+Friends_recl_unskimmed='2_recl_elWP60'
 
-years=("2018") # "2017" "2018")
+years=("2017") # "2017" "2018")
 for yr in "${years[@]}"
 do
     echo "running skimming for $yr"

@@ -53,9 +53,10 @@ fi;
 
 #if [[ "$*" == "" ]]; then WPs="090iv01f60E3"; else WPs="$1"; fi;
 #if [[ "$*" == "" ]]; then WPs="085iRun2v1.0E290"; else WPs="$1"; fi;
-if [[ "$*" == "" ]]; then WPs="085iRun2v1.0"; else WPs="$1"; fi; ## xcheck
+#if [[ "$*" == "" ]]; then WPs="085iRun2v1.0"; else WPs="$1"; fi; ## xcheck
 #if [[ "$*" == "" ]]; then WPs="090iRun2v1.0"; else WPs="$1"; fi; ## 
-#if [[ "$*" == "" ]]; then WPs="070iRun2v1.0"; else WPs="$1"; fi; ## 
+#if [[ "$*" == "" ]]; then WPs="065iRun2v1.0"; else WPs="$1"; fi; ## 
+if [[ "$*" == "" ]]; then WPs="060iRun2v1.0"; else WPs="$1"; fi; ## 
 #if [[ "$*" == "" ]]; then WPs="065iRun2v1.0"; else WPs="$1"; fi;
 for WP in $WPs; do
         MuIdDen=0; EleRecoPt=7; MuRecoPt=5; AwayJetPt=30; EleTC=0; IDEMu=1

@@ -8,9 +8,11 @@ kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = int(getHeppyOption("year", "2016"))
+year = int(getHeppyOption("year", "2017"))
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
+test = getHeppyOption("test","privateSigProd")
+
 
 # Samples
 if preprocessor:
@@ -36,7 +38,9 @@ else:
         #        from CMGTools.RootTools.samples.triggers_13TeV_DATA2016 import all_triggers as triggers ## for FRqcd
 
 mcSamples_=[]
-#allData=[]
+allData=[]
+
+#autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cms-xrd-global.cern.ch/") # must be done before mergeExtensions
 autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
 #autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cmsxrootd.fnal.gov") # must be done before mergeExtensions "cms-xrd-global.cern.ch"
 
@@ -57,16 +61,18 @@ from CMGTools.DPSWW.tools.nanoAOD.ttH_modules import triggerGroups_dict
 DatasetsAndTriggers = []
 if analysis == "main":
     mcSamples = byCompName(mcSamples_, ["%s(|_ext*)"%dset for dset in [
-        # single boson
-        "W.*JetsToLNu.*","DYJets.*",
-        # top
-        "TTJets.*","T_sch_lep","T_tch","TBar_tch","T_tWch","TBar_tWch",
-        # conversions
-        "WGToLNuG.*", "ZG.*", 
-        #rares
-        "TTW_LO","TTZ_LO","WWW",  "WWZ", "WZG", "WZZ", "ZZZ", "WWW_ll", "WWG",
-        # diboson
-        "WWDouble.*","ZZTo4L","WWTo2L2Nu","WZTo3LNu.*","WpWpJJ"
+        # private signal samples
+        #"sigPy8Private","sigHWPrivate"
+        ## single boson
+        #"W.*JetsToLNu.*","DYJets.*",
+        ## top
+        #"TTJets.*","T_sch_lep","T_tch","TBar_tch","T_tWch","TBar_tWch",
+        ## conversions
+        #"WGToLNuG.*", "ZG.*", 
+        ##rares
+        #"TTW_LO","TTZ_LO","WWW",  "WWZ", "WZG", "WZZ", "ZZZ", "WWW_ll", "WWG",
+        ##a diboson
+        #"WWDouble.*","ZZTo4L","WWTo2L2Nu","WZTo3LNu.*","WpWpJJ"
 
     ]])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]) )
@@ -114,7 +120,9 @@ if getHeppyOption('selectComponents'):
         selectedComponents = dataSamples
     else:
         selectedComponents = byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
-autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it")
+
+
+autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") #use this mainly
 #autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cmsxrootd.fnal.gov") #am
 
 if year==2018:
@@ -240,15 +248,17 @@ POSTPROCESSOR = PostProcessor(None, [], modules = modules,
         cut = cut, prefetch = True, longTermCache = False,
         branchsel = branchsel_in, outputbranchsel = branchsel_out, compression = compression)
 
-test = getHeppyOption("test")
-if test == "94X-MC":
-    TTLep_pow = kreator.makeMCComponent("TTLep_pow", "/TTTo2L2Nu_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v1/MINIAODSIM", "CMS", ".*root", 831.76*((3*0.108)**2) )
-    TTLep_pow.files = ["/afs/cern.ch/user/g/gpetrucc/cmg/NanoAOD_94X_TTLep.root"]
-    lepSkim.requireSameSignPair = False
-    lepSkim.minJets = 0
-    lepSkim.minMET = 0
-    lepSkim.prescaleFactor = 0
-    selectedComponents = [TTLep_pow]
+#test = getHeppyOption("test")
+if test == "privateSigProd":
+    sigPy8Private = kreator.makeMCComponent("WWDoubleTo2L", "/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+    sigHWPrivate           = kreator.makeMCComponent("WWDoubleTo2L_herwig", "/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+    sigPy8Private.files = ["/afs/cern.ch/user/a/anmehta/public/temp/FSQ-RunIIFall17NanoAODv7-00003.root"]
+    sigHWPrivate.files = ["/afs/cern.ch/user/a/anmehta/public/temp/SMP-RunIIFall17NanoAODv7-00212.root"]
+    #lepSkim.requireSameSignPair = False
+    #lepSkim.minJets = 0
+    #lepSkim.minMET = 0
+    #lepSkim.prescaleFactor = 0
+    selectedComponents = [sigPy8Private,sigHWPrivate]
 elif test == "94X-MC-miniAOD":
     TTLep_pow = kreator.makeMCComponent("TTLep_pow", "/TTTo2L2Nu_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v1/MINIAODSIM", "CMS", ".*root", 831.76*((3*0.108)**2) )
     TTLep_pow.files = [ 'root://cms-xrd-global.cern.ch//store/mc/RunIIFall17MiniAOD/TTTo2L2Nu_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/70000/3CC234EB-44E0-E711-904F-FA163E0DF774.root' ]

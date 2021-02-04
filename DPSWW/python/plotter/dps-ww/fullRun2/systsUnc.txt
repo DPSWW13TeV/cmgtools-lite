@@ -2,7 +2,7 @@
 
 
 ### Alias definitions. Careful to avoid trailing '.*' to avoid matching _promptsub
-$alias : PromptFromMC : DPSWW|Rares|Convs|WZ_amc|ZZ|WZ_mllLT4
+$alias : PromptFromMC : DPSWW|Rares|Convs01J|WZ_amc|ZZ|WZ_mllLT4
 $alias : FRData : data_fakes|.*_promptsub
 $alias : FRAll  : data_fakes|.*_promptsub
 
@@ -12,16 +12,16 @@ $alias : FRAll  : data_fakes|.*_promptsub
 
 
 #  normalization uncert
-DPSWW_norm  : DPSWW  : .*          : normSymm : 1.16 
+#DPSWW_norm  : DPSWW  : .*          : normSymm : 1.16 
 Rares_norm  : Rares  : .*          : normSymm : 1.5
-Convs_norm  : Convs  : .*el.*      : normSymm : 1.3
+Convs_norm  : Convs01J  : .*el.*      : normSymm : 1.3
 WZ_norm     : WZ_amc : .*          : normSymm : 1.16 
 ZZ_norm     : ZZ     : .*          : normSymm : 1.05 
 Wgstar_norm         : WZ_mllLT4    : .*              	    : normSymm : 1.3
 
 # shapes
 
-Conv_shape           : Convs       : .*el.*                   : templateSymm; AddWeight=1.05
+Conv_shape           : Convs01J       : .*el.*                   : templateSymm; AddWeight=1.05
 WZ_shape             : WZ_amc	   : .*                     : altSample : WZ_pow 
 DPSWW_shape          : DPSWW	   : .*                     : altSample : DPSWW_hg 
 Rares_shape_lin      : Rares       : .*                     : LinearShapeOnly : 1.05
@@ -40,7 +40,7 @@ Wgstar_shape_quad	     : WZ_mllLT4	   : .*			    : ParabolicShapeOnly : 1.05
 
 # Charge flip uncertainty
 charge_misid     : data_flips  : .* : normSymm : 1.3
-#fakes_norm     : data_fakes  : .* : normSymm : 1.3
+
 
 # lumi from https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#LumiComb
 lumi_13TeV_2016		: $PromptFromMC : .* : normSymm : 1.022; year="2016"

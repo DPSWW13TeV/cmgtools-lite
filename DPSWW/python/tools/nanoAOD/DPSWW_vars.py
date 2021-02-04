@@ -15,6 +15,7 @@ class DPSWW_vars(Module):
         self.out = wrappedOutputTree
         self.out.branch('mt2',"F")
         self.out.branch('mtll',"F")
+        self.out.branch('met',"F")
         self.out.branch('mtl1met',"F")
         self.out.branch('dphill',"F")
         self.out.branch('dphil2met',"F")
@@ -106,6 +107,7 @@ class DPSWW_vars(Module):
         
         self.out.fillBranch('mt2', mt2)     
         self.out.fillBranch('mtll',mtll)     
+        self.out.fillBranch('met',MET_pt)  
         self.out.fillBranch('mtl1met',mtl1met)  
         self.out.fillBranch('dphill',dphill)   
         self.out.fillBranch('dphil2met',dphil2met) 

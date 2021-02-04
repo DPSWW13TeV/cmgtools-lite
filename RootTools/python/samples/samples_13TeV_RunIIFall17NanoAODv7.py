@@ -1,6 +1,12 @@
 from CMGTools.RootTools.samples.ComponentCreator import ComponentCreator
 kreator = ComponentCreator()
 
+#sigPy8Private = kreator.makeMCComponent("WWDoubleTo2L", "/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+
+
+#sigHWPrivate           = kreator.makeMCComponent("WWDoubleTo2L_herwig", "/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+
+#privateProd =[sigPy8Private,sigHWPrivate]
 
 TTJets = kreator.makeMCComponent("TTJets", "/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_new_pmx_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 831.76, fracNegWeights=0.319)
 TTJets_DiLepton = kreator.makeMCComponent("TTJets_DiLepton", "/TTJets_DiLept_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 831.76*((3*0.108)**2) )
@@ -162,7 +168,7 @@ WWG
 
 ### ----------------------------- summary ----------------------------------------
 
-mcSamples = Top + EWK + DiBosons + TriBosons
+mcSamples = Top + EWK + DiBosons + TriBosons #+ privateProd
 
 samples = mcSamples
 

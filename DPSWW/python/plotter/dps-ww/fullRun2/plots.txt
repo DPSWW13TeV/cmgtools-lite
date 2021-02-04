@@ -120,7 +120,7 @@ latest_mumu               : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (#m
 minMVA_mumu: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.8,1.0; XTitle="min MVA  ", IncludeOverflows=False
 maxMVA_mumu: max(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.8,1.0; XTitle="max MVA  ", IncludeOverflows=False
 
-minMVA_elmu: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.7,1.0; XTitle="min MVA  ", IncludeOverflows=False
+minMVA_elmu: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.6,1.0; XTitle="min MVA  ", IncludeOverflows=False
 maxMVA_elmu: max(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.7,1.0; XTitle="max MVA  ", IncludeOverflows=False
 
 minMVA_elel: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.7,1.0; XTitle="min MVA  ", IncludeOverflows=False

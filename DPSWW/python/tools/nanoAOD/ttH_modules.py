@@ -9,8 +9,8 @@ conf = dict(
         dz = 0.1, 
         eleId = "mvaFall17V2noIso_WPL",
 )
-elMVA_WP=0.70
-muMVA_WP=0.85
+elMVA_WP=0.60
+muMVA_WP=0.90
 
 
 ttH_skim_cut = ("nMuon + nElectron >= 2 &&" + 

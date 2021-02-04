@@ -10,7 +10,7 @@ request_memory = 2000
 +MaxRuntime = 3000
 
 
-Arguments = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL python prepareEventVariablesFriendTree.py -j 0 -N 50000  -t NanoAOD /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_04092020/2017/ /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_04092020/2017/bdt_input_vars  -F  Friends /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_04092020/2017/2_recl/{cname}_Friend.root   -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules dpsvars2017  --compression ZLIB:3  -d $(Dataset) -c $(Step)
+Arguments = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL python prepareEventVariablesFriendTree.py -j 0 -N 50000  -t NanoAOD /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_04092020/2017/ /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_04092020/2017/bdt_input_vars_muWP90_elWP60  -F  Friends /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_04092020/2017/2_recl_muWP90_elWP60/{cname}_Friend.root   -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules dpsvars2017  --compression ZLIB:3  -d $(Dataset) -c $(Step)
 
 Queue 6 Dataset in DYJetsToLL_M10to50
 Queue 50 Dataset in DYJetsToLL_M50

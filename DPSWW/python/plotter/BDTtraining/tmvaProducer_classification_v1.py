@@ -18,8 +18,8 @@ lumis = {
 _allfiles = []
 #path = '/eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/'
 path = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/'
-
-
+friends=['2_recl_muWP90_elWP60/','bdt_input_vars/']
+pf='muWP90_elWP60_'
 def load_dataset(year,name, trainclass,friends=[]): 
     lumi= lumis[year]
     mc = 0 if name.startswith('Double') else 1 
@@ -73,31 +73,27 @@ def train_classification(year,bkg):
     if bkg == 'wz_pow':
         bkgSel = TT
         dsets = [
-            ('WWDoubleTo2L',"Signal",['2_recl/','bdt_input_vars/']),  
-            ('WZTo3LNu',"Background",['2_recl/','bdt_input_vars/'])]
+            ('WWDoubleTo2L',"Signal",friends),  
+            ('WZTo3LNu',"Background",friends)]
     elif (bkg == 'wz_amc'):
         bkgSel = TT
         dsets = [
-            ('WWDoubleTo2L',"Signal",['2_recl/','bdt_input_vars/']),  
-            ('WZTo3LNu_fxfx',"Background",['2_recl/','bdt_input_vars/'])]
+            ('WWDoubleTo2L',"Signal",friends),  
+            ('WZTo3LNu_fxfx',"Background",friends)]
     else:
         bkgSel = TL
         dsets = [
-            ('WWDoubleTo2L',"Signal",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2017B_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2017C_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2017D_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2017E_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            ('DoubleMuon_Run2017F_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            #('DoubleMuon_Run2016G_02Apr2020',"Background",['2_recl/','bdt_input_vars/']),
-            #('DoubleMuon_Run2016H_02Apr2020',"Background",['2_recl/','bdt_input_vars/'])
+            ('WWDoubleTo2L',"Signal",friends),
+            ('DoubleMuon_Run2017B_02Apr2020',"Background",friends),
+            ('DoubleMuon_Run2017C_02Apr2020',"Background",friends),
+            ('DoubleMuon_Run2017D_02Apr2020',"Background",friends),
+            ('DoubleMuon_Run2017E_02Apr2020',"Background",friends),
+            ('DoubleMuon_Run2017F_02Apr2020',"Background",friends),
+            #('DoubleMuon_Run2016G_02Apr2020',"Background",friends),
+            #('DoubleMuon_Run2016H_02Apr2020',"Background",friends)
         ]
         
-    if year == 2016:
-        #common selection cut as used in the analysis
-        common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && MET_pt > 15'
-    else:
-        common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && METFixEE2017_pt > 15'
+    common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && met > 15'
              
 
     bkgcuts = ROOT.TCut('1');
@@ -122,16 +118,16 @@ def train_classification(year,bkg):
         #print tree, weight
         datasets.append((name, trainclass, tree, glbwt))
 
-    fOut = ROOT.TFile("TMVA_classification_dpsvs"+year+"_"+bkg+".root","recreate") #creating the output file 
+    fOut = ROOT.TFile("TMVA_classification_dpsvs"+pf+year+"_"+bkg+".root","recreate") #creating the output file 
     fOut.cd()
     # configuring tmva
     factory = ROOT.TMVA.Factory('TMVAClassification', fOut, "!V:!Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" )
-    DL = ROOT.TMVA.DataLoader("dataset_"+year+"_"+bkg);
+    DL = ROOT.TMVA.DataLoader("dataset_"+pf+year+"_"+bkg);
 
     # adding list of vars to train on
     DL.AddVariable('pt1 := Lep1_conept','p_{T1}', 'F')
     DL.AddVariable('pt2 := Lep2_conept','p_{T2}', 'F') 
-    DL.AddVariable('met :=  METFixEE2017_pt', 'F')
+    DL.AddVariable('met :=  met', 'F')
     DL.AddVariable('mt2 := mt2','F')
     DL.AddVariable('mtll:= mtll', 'F') 
     DL.AddVariable('mtl1met := mtl1met', 'F') 

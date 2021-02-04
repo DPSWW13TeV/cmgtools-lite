@@ -189,9 +189,9 @@ if __name__ == "__main__":
     Xnices = [ "MC QCD", "Data, comb." ]
 
 #    mva_el = "080"
-    mva_mu = "085"
-    mva_el = "070"
-#    mva_mu = "090"
+    #mva_mu = "085"
+    mva_el = "060"
+    mva_mu = "090"
     for year in years:
         outname = PlotOut + "/fr_%s_MVA_mupt%s_elpt%s.root" % (year,mva_mu,mva_el)
         outfile = ROOT.TFile.Open(outname,"RECREATE")
