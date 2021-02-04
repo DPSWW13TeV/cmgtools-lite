@@ -117,14 +117,14 @@ event2016_mumu	: $DATA{1}$MC{0}*event : 247700000,0,247700000; XTitle = "event n
 
 latest_mumu               : LepGood1_pt     : 20,00,100; XTitle="p_{T} lead. (#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=1.5
 
-minMVA_mumu: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.8,1.0; XTitle="min MVA  ", IncludeOverflows=False
-maxMVA_mumu: max(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.8,1.0; XTitle="max MVA  ", IncludeOverflows=False
+minMVA_mumu: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 30,-1.0,1.0; XTitle="min MVA  ", IncludeOverflows=False
+maxMVA_mumu: max(LepGood1_mvaTTH,LepGood2_mvaTTH) : 30,-1.0,1.0; XTitle="max MVA  ", IncludeOverflows=False
 
-minMVA_elmu: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.6,1.0; XTitle="min MVA  ", IncludeOverflows=False
-maxMVA_elmu: max(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.7,1.0; XTitle="max MVA  ", IncludeOverflows=False
+minMVA_elmu: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 30,-1.0,1.0; XTitle="min MVA  ", IncludeOverflows=False
+maxMVA_elmu: max(LepGood1_mvaTTH,LepGood2_mvaTTH) : 30,-1.0,1.0; XTitle="max MVA  ", IncludeOverflows=False
 
-minMVA_elel: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.7,1.0; XTitle="min MVA  ", IncludeOverflows=False
-maxMVA_elel: max(LepGood1_mvaTTH,LepGood2_mvaTTH) : 10,0.7,1.0; XTitle="max MVA  ", IncludeOverflows=False
+minMVA_elel: min(LepGood1_mvaTTH,LepGood2_mvaTTH) : 30,-1.0,1.0; XTitle="min MVA  ", IncludeOverflows=False
+maxMVA_elel: max(LepGood1_mvaTTH,LepGood2_mvaTTH) : 30,-1.0,1.0; XTitle="max MVA  ", IncludeOverflows=False
 
 fake_lepMVA1_mumu: if3((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0),LepGood1_mvaTTH,-99) : 20,-1.0,1.0; XTitle="fake lepton MVA lead. ", IncludeOverflows=False 
 fake_lepMVA2_mumu: if3((LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0),LepGood2_mvaTTH,-99) : 20,-1.0,1.0; XTitle="fake lepton MVA sublead. ", IncludeOverflows=False 

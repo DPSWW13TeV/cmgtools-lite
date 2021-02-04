@@ -16,10 +16,11 @@ lumis = {
 
 
 _allfiles = []
-#path = '/eos/user/s/sesanche/nanoAOD/NanoTrees_TTH_090120_091019_v6_skim2lss/'
 path = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/'
-friends=['2_recl_muWP90_elWP60/','bdt_input_vars/']
-pf='muWP90_elWP60_'
+frnds=['2_recl','bdt_input_vars']
+pf='_muWP90_elWP60'
+friends=[name+pf for name in frnds]
+
 def load_dataset(year,name, trainclass,friends=[]): 
     lumi= lumis[year]
     mc = 0 if name.startswith('Double') else 1 
@@ -118,11 +119,11 @@ def train_classification(year,bkg):
         #print tree, weight
         datasets.append((name, trainclass, tree, glbwt))
 
-    fOut = ROOT.TFile("TMVA_classification_dpsvs"+pf+year+"_"+bkg+".root","recreate") #creating the output file 
+    fOut = ROOT.TFile("TMVA_classification_dpsvs"+pf+ "_"+ year+"_"+bkg+".root","recreate") #creating the output file 
     fOut.cd()
     # configuring tmva
     factory = ROOT.TMVA.Factory('TMVAClassification', fOut, "!V:!Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" )
-    DL = ROOT.TMVA.DataLoader("dataset_"+pf+year+"_"+bkg);
+    DL = ROOT.TMVA.DataLoader("dataset"+pf+"_"+year+"_"+bkg);
 
     # adding list of vars to train on
     DL.AddVariable('pt1 := Lep1_conept','p_{T1}', 'F')

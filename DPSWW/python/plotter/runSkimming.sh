@@ -1,9 +1,9 @@
 #!/bin/bash
 baseDir='/eos/cms/store/cmst3/group/dpsww/'
 Trees='NanoTrees_v7_dpsww_04092020' # trees (unskimmed)
-skimmedTrees='2017elWP60'
+skimmedTrees='NanoTrees_v7_dpsww_skim2lss_muWP90_elWP60'
 #skimmedTrees='NanoTrees_v7_dpsww_skim2lss'
-Friends_recl_unskimmed='2_recl_elWP60'
+Friends_recl_unskimmed='2_recl_muWP90_elWP60'
 
 years=("2017") # "2017" "2018")
 for yr in "${years[@]}"

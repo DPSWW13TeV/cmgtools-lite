@@ -6,13 +6,13 @@
 
 ######## fixed inputs no matter what
 baseDir='/eos/cms/store/cmst3/group/dpsww/'
-Trees='NanoTrees_v7_dpsww_04092020' # trees (unskimmed)
+Trees='NanoTrees_v7_dpsww_04092020' 
 
 
 ######## MVA WPs, year ans steps to run on 
 pf='_muWP90_elWP60'
 year='2017'
-steps=("bdtiv")  #options "recl" "bdtiv" "jme" "lepSFs" "taucount" "bdtDisc" "unskimmedbdtDisc" "recl_allvars" "unskimmedlepSFs" "postFSR")
+steps=("unskimmedbdtDisc")  #options "recl" "bdtiv" "jme" "lepSFs" "taucount" "bdtDisc" "unskimmedbdtDisc" "recl_allvars" "unskimmedlepSFs" "postFSR")
 #pre-skimming options recl bdtiv unskimmedlepSFs unskimmedbdtDisc postFSR 
 #post-skimming options : jme lepSFs taucount recl_allvars; first three can run in parallel; recl_allvars step uses jme frnds
 
@@ -21,7 +21,7 @@ steps=("bdtiv")  #options "recl" "bdtiv" "jme" "lepSFs" "taucount" "bdtDisc" "un
 
 ################### following should not be changed
 skimmedTrees='NanoTrees_v7_dpsww_skim2lss'${pf}
-Friends_recl='2_recl' #skimmed recleaner frnds
+Friends_recl='2_recl'
 Friends_recl_unskimmed='2_recl'${pf}
 Friends_bdtiv_unskimmed='bdt_input_vars'${pf}
 Friends_lepSFs_unskimmed='3_scalefactors'${pf}
@@ -45,15 +45,15 @@ do
     if [[ "${stepToRun}" == "bdtiv" ]];
     then
 	
-	python prepareEventVariablesFriendTree.py -t NanoAOD ${baseDir}/${Trees}/${year}/ ${baseDir}/${Trees}/${year}/${Friends_bdtiv_unskimmed} -F Friends ${baseDir}/${Trees}/${year}/${Friends_recl_unskimmed}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules dpsvars2017 -N 50000 -q condor --maxruntime 50 --log $PWD/logs #year needs to be changed for 2016 
-	
+	python prepareEventVariablesFriendTree.py -t NanoAOD ${baseDir}/${Trees}/${year}/ ${baseDir}/${Trees}/${year}/${Friends_bdtiv_unskimmed} -F Friends ${baseDir}/${Trees}/${year}/${Friends_recl_unskimmed}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules dpsvars2017 -N 50000 -q condor --maxruntime 30 --log $PWD/logs #year needs to be changed for 2016 
+
     fi
     if [[ "${stepToRun}" == "unskimmedlepSFs" ]]; then
-	python prepareEventVariablesFriendTree.py -t NanoAOD ${baseDir}/${Trees}/${year}/ ${baseDir}/${Trees}/${year}/${Friends_lepSFs_unskimmed} -F Friends ${baseDir}/${Trees}/${year}/${Friends_recl_unskimmed}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules leptonSFs -N 50000  --de .*Run.*  -q condor --maxruntime 50 --log $PWD/logs 
+	python prepareEventVariablesFriendTree.py -t NanoAOD ${baseDir}/${Trees}/${year}/ ${baseDir}/${Trees}/${year}/${Friends_lepSFs_unskimmed} -F Friends ${baseDir}/${Trees}/${year}/${Friends_recl_unskimmed}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules leptonSFs -N 50000  --de .*Run.*  -q condor --maxruntime 30 --log $PWD/logs 
 
     fi
    if [[ "${stepToRun}" == "unskimmedbdtDisc" ]]; then
-       python prepareEventVariablesFriendTree.py -t NanoAOD ${baseDir}/${Trees}/${year}/ ${baseDir}/${Trees}/${year}/${Friends_bdtDisc_unskimmed} -F Friends ${baseDir}/${Trees}/${year}/bdt_input_vars/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules bdtvars2017 -N 50000 -q condor --maxruntime 50 --log $PWD/logs #year needs to be changed for 2016 bdtvars2017
+       python prepareEventVariablesFriendTree.py -t NanoAOD ${baseDir}/${Trees}/${year}/ ${baseDir}/${Trees}/${year}/${Friends_bdtDisc_unskimmed} -F Friends ${baseDir}/${Trees}/${year}/${Friends_bdtiv_unskimmed}/{cname}_Friend.root -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules bdtvars2017 -N 50000 -q condor --maxruntime 30 --log $PWD/logs #year needs to be changed for 2016 bdtvars2017
    fi
    if [[ "${stepToRun}" == "postFSR" ]]; then
        python prepareEventVariablesFriendTree.py -t NanoAOD  ${baseDir}/signal_summer16_nanoV7/ ${baseDir}/signal_summer16_nanoV7/postFSRinfoV1/ -I CMGTools.DPSWW.tools.nanoAOD.ttH_modules genInfo_py8 -N 50000 -d WWTo2L2Nu_DoubleScattering_13TeV-pythia8 -q condor --maxruntime 100 --log $PWD/logs

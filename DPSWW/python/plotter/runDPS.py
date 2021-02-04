@@ -524,7 +524,7 @@ def dyCRPlot(year,finalState,applySFs):
 
 def chkUnskimmedTrees(year,finalState):
     trees       = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/{year}/'.format(year=year)
-    friends     = [trees+'2_recl_elWP65']#, trees+'dpsbdt']
+    friends     = [trees+'2_recl_muWP90_elWP60']#, trees+'dpsbdt']
     MCfriends   = '' #[trees+'3_scalefactors_muttH_eldps']
     Datafriends = ''
     fplots      = 'dps-ww/fullRun2/plots.txt'
@@ -534,12 +534,12 @@ def chkUnskimmedTrees(year,finalState):
 
     applyWtsnSFs = False #True
     cutflow=False
-    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}_unskimmedElwp65/'.format(date=date, year=year,pf=('-'+postfix if postfix else '') ) 
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}_unskimmed_muWP90_elWP60/'.format(date=date, year=year,pf=('-'+postfix if postfix else '') ) 
 
     #processes = ['DPSWW','WZ_amc','ZZ','data','Rares','data_fakes','data_flips','Convs']
     processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs01J','WZ_mllLT4','data','data_fakes']
     #processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs','WZ_mllLT4','data','data_fakes']#,'DPSWW_hg','WZ_pow']#,'dy','Flips','Convs','Wgstar','WZ_incl','promptsub']    'data_flips',
-    allvars    = ['MVA1']#,'MVA2']#,'conept1','conept2','minMVA','maxMVA','eta1','eta2','met']
+    allvars    = ['MVA1','MVA2','minMVA']#,'conept1','conept2','minMVA','maxMVA','eta1','eta2','met']
 
     loop=['']
     plotvars   = allvars 
