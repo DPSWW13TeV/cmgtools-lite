@@ -190,8 +190,8 @@ if __name__ == "__main__":
 
 #    mva_el = "080"
     #mva_mu = "085"
-    mva_el = "060"
-    mva_mu = "090"
+    mva_el = "065"
+    mva_mu = "080"
     for year in years:
         outname = PlotOut + "/fr_%s_MVA_mupt%s_elpt%s.root" % (year,mva_mu,mva_el)
         outfile = ROOT.TFile.Open(outname,"RECREATE")

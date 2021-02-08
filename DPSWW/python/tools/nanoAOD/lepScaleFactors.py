@@ -63,7 +63,7 @@ class lepScaleFactors(Module):
         hist = self.looseToTight['%d,%s,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm', '2lss' if nlep == 2 else '3l')]
         ptbin  = max(1, min(hist.GetNbinsY(), hist.GetYaxis().FindBin(lep.pt)));
         #print ptbin,lep.pt
-        if (nlep == 2 and ( (abs(lep.pdgId) == 11) or ( abs(lep.pdgId) == 13 and year !=2016 ) ) ): #2016 is all dpsWPs, 2017 and 2018 dpsWP for el 
+        if (nlep == 2 and year == 2017) : #( (abs(lep.pdgId) == 11) or ( abs(lep.pdgId) == 13 and year != 2017 ) ) ): #2016 is all dpsWPs, 2017 for el 70 and mu 90 and nothing final for 2018 so we don't care much
             etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(lep.eta)));
             error= hist.GetBinError(etabin,ptbin)             
         else:

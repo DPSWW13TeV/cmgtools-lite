@@ -14,7 +14,7 @@ class BDT_DPSWW(Module):
         self._vars = [
             MVAVar("Lep1_conept",       func = lambda ev : ev.Lep1_conept ),
             MVAVar("Lep2_conept",       func = lambda ev : ev.Lep2_conept ),
-            MVAVar("met",               func = lambda ev : ev.met),
+            MVAVar("met" if year !=2016 else "MET_pt",               func = lambda ev : ev.met if year !=2016 else ev.MET_pt),
             MVAVar("mt2",       func = lambda ev : ev.mt2),
             MVAVar("mtll",      func = lambda ev : ev.mtll), 
             MVAVar("mtl1met",   func = lambda ev : ev.mtl1met), 
@@ -32,10 +32,10 @@ class BDT_DPSWW(Module):
             wts_fakes  = baseDir+'dataset_fakes/weights/TMVAClassification_BDTG.weights.xml'
             #        wts_multiC  = baseDir+'BDTtraining/dataset_multiclass/weights/TMVAMutliClass_BDTG.weights.xml'
         else:
-            print 'using training wts for 2017/2018'
-            wts_wz_amc = baseDir+'dataset_muWP90_elWP60_2017_wz_amc/weights/TMVAClassification_BDTG.weights.xml'
-            wts_wz_pow = baseDir+'dataset_muWP90_elWP60_2017_wz_pow/weights/TMVAClassification_BDTG.weights.xml'
-            wts_fakes  = baseDir+'dataset_muWP90_elWP60_2017_fakes/weights/TMVAClassification_BDTG.weights.xml'
+            print 'using training wts for 2017/2018' 
+            wts_wz_amc = baseDir+'dataset_muWP90_elWP70_2017_wz_amc/weights/TMVAClassification_BDTG.weights.xml'
+            wts_wz_pow = baseDir+'dataset_muWP90_elWP70_2017_wz_pow/weights/TMVAClassification_BDTG.weights.xml'
+            wts_fakes  = baseDir+'dataset_muWP90_elWP70_2017_fakes/weights/TMVAClassification_BDTG.weights.xml'
             #        wts_multiC  = baseDir+'BDTtraining/dataset_multiclass/weights/TMVAMutliClass_BDTG.weights.xml'
             
         self._MVAs['BDT_DPS_WZ_amc']    = MVATool('BDTG_method', wts_wz_amc   , self._vars, rarity=True)

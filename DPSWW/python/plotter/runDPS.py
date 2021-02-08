@@ -9,13 +9,13 @@ lumis = {
 }
 
 
-def simpleMCplots(trees,MCfriends,Datafriends,targetdir, fmca, fcut,fplots, enabledcuts, disabledcuts, processes,plotlist,extraopts = '',bareNano=False):
+def simpleMCplots(trees,MCfriends,Datafriends,targetdir, fmca, fcut,fplots, enabledcuts, disabledcuts, processes,plotlist,year,extraopts = '',bareNano=False):
 
     if bareNano:
-        cmd  = ' mcPlots.py -j 10 -l 35.9 --tree NanoAOD --year 2016  --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots)
+        cmd  = ' mcPlots.py -j 10 -l {lumi}  --tree NanoAOD  --year {YEAR} --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,lumi=lumis[year],YEAR=year)
 
     else:
-        cmd  = ' mcPlots.py -f -j 10 -l 35.9 --tree NanoAOD --year 2016  --pdir {td} {fmca} {fcut} {fplots} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots)
+        cmd  = ' mcPlots.py -f -j 10 -l {lumi} --tree NanoAOD  --year {YEAR} --pdir {td} {fmca} {fcut} {fplots} --mcc dps-ww/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc dps-ww/fullRun2/mcc-METFixEE2017.txt --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,lumi=lumis[year],YEAR=year)
         #        cmd += ''.join(' -W L1PreFiringWeight_Nom*puWeight')
 
     cmd += ''.join(' --FMCs '+frnd for frnd in MCfriends)
@@ -133,12 +133,12 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-def makeResults(year,finalState,splitCharge,doWhat,analysis,applylepSFs):
+def makeResults(year,finalState,splitCharge,doWhat,applylepSFs):
     #trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020' if analysis == 'dps' and year == '2016' else 'NanoTrees_TTH_090120_091019_v6_skim2lss')
-    trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_skim2lss' if analysis == 'dps'  else 'NanoTrees_TTH_090120_091019_v6_skim2lss')
+    trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_skim2lss' if year == 2016  else 'NanoTrees_v7_dpsww_skim2lss_muWP90_elWP60')
 
     friends     = [trees+'3_tauCount', trees+'dpsbdt']
-    MCfriends   = [trees+'2_recl_allvars',trees+'3_scalefactors_modEOY',trees+'0_jmeUnc_v1']#,trees+'2_scalefactors_lep_fixed']#
+    MCfriends   = [trees+'2_recl_allvars',trees+'3_scalefactors',trees+'0_jmeUnc_v1']
     Datafriends = [trees+'2_recl']
     fplots      = 'dps-ww/fullRun2/plots.txt'
     fmca        = 'dps-ww/fullRun2/mca-dpsww.txt'
@@ -147,7 +147,7 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis,applylepSFs):
 
     
     cutflow=False
-    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}{anal}cuts_{here}SFs/'.format(date=date, year=year,pf=('-'+postfix if postfix else '') ,here='with' if applylepSFs else 'without', anal=analysis ) 
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{year}/{date}{pf}{here}/'.format(date=date, year=year,pf=('-'+postfix if postfix else '') ,here='_withoutSFs' if not applylepSFs else '') 
     if splitCharge: 
         loop = [ 'minusminus', 'plusplus']
     else:
@@ -158,7 +158,7 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis,applylepSFs):
 
     processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs01J','WZ_mllLT4','data_flips','data','data_fakes','DPSWW_hg','WZ_pow']#,'dy','Flips','Convs','Wgstar','WZ_incl','promptsub']
     #processes =['data_fakes','Convs','Convs01J']
-    fRvars    = ['data_fakes_FRe_pt_Up','data_fakes_FRe_pt_Dn','data_fakes_FRe_be_Up','data_fakes_FRe_be_Dn','data_fakes_FRm_pt_Up','data_fakes_FRm_pt_Dn','data_fakes_FRm_be_Up','data_fakes_FRm_be_Dn'] #'data_fakes_FRe_norm_Up','data_fakes_FRe_norm_Dn','data_fakes_FRm_norm_Up','data_fakes_FRm_norm_Dn',
+    fRvars    = ['data_fakes_FRe_pt_Up','data_fakes_FRe_pt_Dn','data_fakes_FRe_be_Up','data_fakes_FRe_be_Dn','data_fakes_FRm_pt_Up','data_fakes_FRm_pt_Dn','data_fakes_FRm_be_Up','data_fakes_FRm_be_Dn','data_fakes_FRe_norm_Up','data_fakes_FRe_norm_Dn','data_fakes_FRm_norm_Up','data_fakes_FRm_norm_Dn']
     processes+=fRvars
 
     if finalState[0] in ['mumu','elel']:
@@ -168,7 +168,7 @@ def makeResults(year,finalState,splitCharge,doWhat,analysis,applylepSFs):
 
     exotic = ['ptRatio1','ptRatio2']#,'MVA_ptRatio','dxy1','dz1','sip3d1','dxy2','dz2','sip3d2','minMVA','maxMVA','LepGood1_motherid','LepGood2_motherid','fake_lepMVA1','fake_lepMVA2', LepGood1_genPartFlav_all','LepGood2_genPartFlav_all',LepGood1_tightId','LepGood2_tightId','LepGood1_cutBased','LepGood2_cutBased','LepGood1_mediumPromptId','LepGood1_mediumId','LepGood1_mvaFall17V2Iso','LepGood1_mvaFall17V2Iso_WPL','LepGood1_mvaId','LepGood2_mediumPromptId','LepGood2_mediumId','LepGood2_mvaFall17V2Iso','LepGood2_mvaFall17V2Iso_WPL','njets25','njets30','nBJetLoose25','nBJetMedium25','nBJetTight25','nBJetLoose40','nBJetMedium40','nBJetTight40','nTauTight','nTauFO'] 
 
-    allvars    = ['conept1','conept2']#,'MVA1','MVA2']#,'pt1','pt2','eta1','eta2','phi1','phi2','MVA1','MVA2','met','metphi','dilep_flav','njets25','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2','nVert','ptll'] #dilep_charge','puppimetphi','puppimet''tcharge1','tcharge2',
+    allvars    = ['conept1','conept2','MVA1','MVA2','minMVA']#,'pt1','pt2','eta1','eta2','phi1','phi2','MVA1','MVA2','met','metphi','dilep_flav','njets25','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2','nVert','ptll'] #dilep_charge','puppimetphi','puppimet''tcharge1','tcharge2',
     #'conept1_WZ_sep1','conept2_WZ_sep1'
     bdts=['BDT_wz_amc','BDT_fakes','BDT_wz_pow','BDT1d_amc','BDT1d_pow'] #'BDT_DPS_multiC','BDT_WZ_multiC','BDT_TL_multiC']
     #    configs=['elmu','mumu','elel','plusplus','minusminus']
@@ -255,7 +255,7 @@ def makeResultsGen(year,finalState,splitCharge,postFSR):
 
             makeplots=makeplots1 
             print makeplots1
-            simpleMCplots(trees,MCfriends,'',targetdir, fmca, fcut,fplots, enable, disable, processes,makeplots,extraopts,bareNano)
+            simpleMCplots(trees,MCfriends,'',targetdir, fmca, fcut,fplots, enable, disable, processes,makeplots,year,extraopts,bareNano)
 
 
 #%%%%%%%%%
@@ -428,7 +428,7 @@ def fakesClosure(year,finalState):
     trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020_skim2lss_mvawp_mupt90_elpt70_2021')
 
     friends     = [trees+'3_tauCount']#, trees+'dpsbdt']
-    MCfriends   = [trees+'2_recl_allvars',trees+'3_scalefactors_EOY',trees+'0_jmeUnc_v1']#,trees+'2_scalefactors_lep_fixed']#
+    MCfriends   = [trees+'2_recl_allvars',trees+'3_scalefactors',trees+'0_jmeUnc_v1']#,trees+'2_scalefactors_lep_fixed']#
     Datafriends = [trees+'2_recl']
     applySFs=False
     targetdir = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}_fakesClosure/'.format(date=date,year=year,pf=('-'+postfix if postfix else '') )
@@ -458,10 +458,10 @@ def dpsww(finalState,year):
     print '=========================================='
     print 'running single lepton control region  plots'
     print '=========================================='
-    trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year='2016',samples = 'NanoTrees_v7_dpsww_04092020')
+    trees       = '/eos/cms/store/cmst3/group/dpsww/{samples}/{year}/'.format(year=year,samples = 'NanoTrees_v7_dpsww_04092020')
     MCfriends   = '' #[trees+'2_recl'] 
     Datafriends = '' #[trees+'2_recl']
-    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}signalOnly/'.format(date=date, year='2016',pf=('-'+postfix if postfix else ''))
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{year}/{date}{pf}_signalOnly/'.format(date=date, year=year,pf=('-'+postfix if postfix else ''))
     fplots      = 'dps-ww/fullRun2/simple_plots.txt'
     fmca        = 'dps-ww/fullRun2/mca-dpsww.txt'
     fcut        = 'dps-ww/fullRun2/simple_cuts.txt' 
@@ -474,21 +474,21 @@ def dpsww(finalState,year):
 ##am    fsyst  = '' 
 ##am    fcut   = 'dps-ww/fullRun2/simple_cuts.txt'
 ##am    processes=['DPSWW']
-    processes = ['DPSWW_PY8','DPSWW_HG']#,'DYLO','Diboson','data','TTdilep','SingleTop','WJets']#,'TTsemilep']#,'data_fakes']
+    processes = ['DPSWW_PY8','DPSWW_HG']#,'DPSWW_CP5']#,'DYLO','Diboson','data','TTdilep','SingleTop','WJets']#,'TTsemilep']#,'data_fakes']
     #enable=[]
     ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.0  1.99'
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
     ubands  = ' --plotmode norm' 
-    anything =' --showRatio  --ratioDen DPSWW_PY8 --ratioNums DPSWW_HG --ratioYLabel=hw/py8'
+    anything =' --showRatio  --ratioDen DPSWW_PY8 --ratioNums DPSWW_HG --ratioYLabel=hw,cp5/cuet' #--ratioNums DPSWW_HG,DPSWW_CP5
     extraopts = ratio + spam + legends + ubands + anything
-    plots=['minMVA','maxMVA','mvaTTH2','mvaTTH1'] #'met','pt1','pt2',
+    plots=['minMVA','maxMVA','mvaTTH2','mvaTTH1','met','pt1','pt2']
     
     for FS in finalState:
         enable=[]
         enable.append(FS); 
         makeplots=[ip + '_' + FS for ip in plots]
-        simpleMCplots(trees,MCfriends,Datafriends,targetdir, fmca, fcut,fplots, enable, disable, processes,makeplots,extraopts,True)
+        simpleMCplots(trees,MCfriends,Datafriends,targetdir, fmca, fcut,fplots, enable, disable, processes,makeplots,year,extraopts,True)
 
 
 def dyCRPlot(year,finalState,applySFs):
@@ -524,31 +524,34 @@ def dyCRPlot(year,finalState,applySFs):
 
 def chkUnskimmedTrees(year,finalState):
     trees       = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/{year}/'.format(year=year)
-    friends     = [trees+'2_recl_muWP90_elWP60']#, trees+'dpsbdt']
-    MCfriends   = '' #[trees+'3_scalefactors_muttH_eldps']
+    WP='_muWP90_elWP70'
+    #friends     = [trees+'2_recl{here}'.format(here=WP)] #_muWP90_elWP60']#, trees+'dpsbdt']
+    friends     = [trees+'2_recl{here}'.format(here=WP),trees+'3_tauCount{here}'.format(here=WP), trees+'dpsbdt{here}'.format(here=WP)]
+    MCfriends   = [trees+'3_scalefactors{here}'.format(here=WP)] #_muttH_eldps']
     Datafriends = ''
     fplots      = 'dps-ww/fullRun2/plots.txt'
     fmca        = 'dps-ww/fullRun2/mca-dpsww.txt' 
     fsyst       = ''
     fcut        = 'dps-ww/fullRun2/cuts_2lss.txt' 
 
-    applyWtsnSFs = False #True
+    applyWtsnSFs = True
     cutflow=False
-    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{date}{pf}_era{year}_unskimmed_muWP90_elWP60/'.format(date=date, year=year,pf=('-'+postfix if postfix else '') ) 
+    
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/unskimmed/{year}/{date}{pf}_{here}/'.format(here=WP,date=date, year=year,pf=('-'+postfix if postfix else '') ) 
 
     #processes = ['DPSWW','WZ_amc','ZZ','data','Rares','data_fakes','data_flips','Convs']
-    processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs01J','WZ_mllLT4','data','data_fakes']
-    #processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs','WZ_mllLT4','data','data_fakes']#,'DPSWW_hg','WZ_pow']#,'dy','Flips','Convs','Wgstar','WZ_incl','promptsub']    'data_flips',
-    allvars    = ['MVA1','MVA2','minMVA']#,'conept1','conept2','minMVA','maxMVA','eta1','eta2','met']
-
+    processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs01J','WZ_mllLT4','data','data_fakes','data_flipsv1']
+    #processes = ['DPSWW','Rares','WZ_amc','ZZ','Convs01J','WZ_mllLT4','data','data_fakes']#,'DPSWW_hg','WZ_pow']#,'dy','Flips','Convs','Wgstar','WZ_incl','promptsub']    'data_flips',
+    allvars    = ['MVA1','MVA2','minMVA','conept1','conept2','eta1','eta2','met']
+    bdts=['BDT_wz_amc','BDT_fakes','BDT_wz_pow','BDT1d_amc','BDT1d_pow']
     loop=['']
-    plotvars   = allvars 
+    plotvars   = allvars + bdts
 
     for FS in finalState:            
         enable=[]
         enable.append(FS); 
         print enable #list(ch) + list (finalState)
-        disable   = ['tauveto']#,'TT']
+        disable   = [] #'tauveto']#,'TT']
         invert    = []
         fittodata = []
         scalethem = {}
@@ -581,7 +584,7 @@ if __name__ == '__main__':
     parser.add_option('--old' , dest='old', action='store_true' , default=False , help='make plots')
     parser.add_option('--dW' , '--doWhat'  , dest='doWhat', type='string' , default=[] , help='plots or cards')
     parser.add_option('--dpsww',dest='dpsww', action='store_true' , default=False , help='make plots for signal')
-    parser.add_option('--analysis',dest='analysis', type='string',default='dps' , help='cut file to be used')
+    ##    parser.add_option('--analysis',dest='analysis', type='string',default='dps' , help='cut file to be used')
     parser.add_option('--genInfo', dest='genInfo', action='store_true' , default=False , help='make plots using gen level leptons')
     parser.add_option('--postFSR',dest='postFSR',action='store_true', default=True , help='use postFSR')
     parser.add_option('--fC', dest='fakesClosure', action='store_true' , default=False , help='FR closure test')
@@ -606,7 +609,7 @@ if __name__ == '__main__':
         onelepCRPlot(opts.year,opts.finalState)
     if opts.results:
         print 'running {here} for 2lss' .format(here=opts.doWhat)
-        makeResults(opts.year,opts.finalState,opts.splitCharge,opts.doWhat,opts.analysis,opts.applylepSFs)
+        makeResults(opts.year,opts.finalState,opts.splitCharge,opts.doWhat,opts.applylepSFs)
     if opts.dpsww:
         dpsww(opts.finalState,opts.year)
     if opts.old:
@@ -621,3 +624,4 @@ if __name__ == '__main__':
 # python runDPS.py --year 2016 --finalState ll --genDressed
 # python runDPS.py --dyCR --year 2017 --finalState mumu --finalState elmu --finalState elel --applylepSFs
 # python runDPS.py --results --dW cards --year 2017 --finalState elmu --finalState mumu --applylepSFs --splitCharge
+# python runDPS.py --unskimmed --year 2017 --finalState elmu --finalState mumu

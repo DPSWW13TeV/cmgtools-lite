@@ -1,4 +1,5 @@
 alwaystrue: 1
+
 trigger : Trigger_2lss
 filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
 
@@ -14,7 +15,7 @@ TT: LepGood1_isLepTight && LepGood2_isLepTight
 tauveto: nTauFO == 0
 metpt: MET_pt > 15
 
-01j: nJet25 < 2
+01jets : nJet25 < 2
 #01jets       : Sum$(JetSel_Recl_pt > 30) < 2
 #bVeto: nBJetMedium25 == 0
 bVeto: nBJetLoose25  == 0
@@ -25,8 +26,6 @@ Z_veto: abs(mZ1-91.2)>10
 
 eleID: (abs(LepGood1_pdgId)!=11 || (LepGood1_convVeto && LepGood1_lostHits==0 && LepGood1_tightCharge>=2)) && (abs(LepGood2_pdgId)!=11 || (LepGood2_convVeto && LepGood2_lostHits==0 && LepGood2_tightCharge>=2))
 
-elid1:   ( abs(LepGood1_pdgId)!=11 || (LepGood1_hoe < 0.10 && LepGood1_eInvMinusPInv > -0.04 && LepGood1_sieie < (0.011+0.019*(abs(LepGood1_eta+LepGood1_deltaEtaSC)>1.479))))
-elid2:   ( abs(LepGood2_pdgId)!=11 || (LepGood2_hoe < 0.10 && LepGood2_eInvMinusPInv > -0.04 && LepGood2_sieie < (0.011+0.019*(abs(LepGood2_eta+LepGood2_deltaEtaSC)>1.479))))
 
 TightChargeMuon: (abs(LepGood1_pdgId)!=13 || LepGood1_tightCharge>=1) && (abs(LepGood2_pdgId)!=13 || LepGood2_tightCharge>=1)
 

@@ -18,7 +18,7 @@ lumis = {
 _allfiles = []
 path = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/'
 frnds=['2_recl','bdt_input_vars']
-pf='_muWP90_elWP60'
+pf='_muWP90_elWP70'
 friends=[name+pf for name in frnds]
 
 def load_dataset(year,name, trainclass,friends=[]): 
