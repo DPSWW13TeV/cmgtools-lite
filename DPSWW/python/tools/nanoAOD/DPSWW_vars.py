@@ -7,9 +7,10 @@ import array, numpy
 from ROOT import TLorentzVector
 
 class DPSWW_vars(Module):
-    def __init__(self,year):
+    def __init__(self,FRFile,year):
         self.year=year
-        print 'running for',year
+        self.FRFile = FRFile
+        print 'saving bdt input variables for',year,FRFile
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
@@ -40,7 +41,29 @@ class DPSWW_vars(Module):
         self.out.branch('Lep2_tightCharge'   ,'I')
         self.out.branch('Lep2_lostHits'   ,'I')
         self.out.branch('Lep2_isLepTight'   ,'I') 
+        self.out.branch("fakeRateWt","F")
 
+    def fakeRateWeight_2lss(self,lep1,lep2):
+        nfail = (lep1.isLepTight_Recl + lep2.isLepTight_Recl)
+        if (nfail == 1):
+            wt = self.fakeRatefromHist(lep1) if not lep1.isLepTight_Recl else self.fakeRatefromHist(lep2)
+            evtwt=wt/(1-wt)
+        elif(nfail == 2):
+            wt1 = self.fakeRatefromHist(lep1)
+            wt2 = self.fakeRatefromHist(lep2)
+            evtwt=-wt1*wt2/((1-wt1)*(1-wt2));
+        else: evtwt=0
+        return evtwt
+
+    def fakeRatefromHist(self,lep):
+        fName = ROOT.TFile.Open(self.FRFile)
+        if not fName: raise RuntimeError("No such file %s"%self.FRFile)
+        hist =  fName.Get('FR_mva070_el_data_comb_NC' if abs(lep.pdgId) == 11 else 'FR_mva090_mu_data_comb') 
+        ptbin  = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(lep.conePt)))
+        etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(abs(lep.eta))))
+        fr     = hist.GetBinContent(ptbin,etabin)
+        fName.Close()
+        return fr; 
     def phill(self,l1,l2):
         
         lepton1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
@@ -104,7 +127,9 @@ class DPSWW_vars(Module):
         dphil2met = abs(self.dphi(leps[1].phi,MET_phi)) if len(leps) > 1 else -999;
         dphilll2  = abs(self.dphi(self.phill(leps[0],leps[1]),leps[1].phi)) if len(leps) > 1 else -999;
         #print mt2,dphill
-        
+        frweight=  self.fakeRateWeight_2lss(leps[0],leps[1]) if nFO > 1 else 0.0;
+
+        self.out.fillBranch('fakeRateWt',frweight)
         self.out.fillBranch('mt2', mt2)     
         self.out.fillBranch('mtll',mtll)     
         self.out.fillBranch('met',MET_pt)  

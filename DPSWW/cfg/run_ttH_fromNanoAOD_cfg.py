@@ -11,7 +11,7 @@ def byCompName(components, regexps):
 year = int(getHeppyOption("year", "2017"))
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
-test = getHeppyOption("test","privateSigProd")
+test = getHeppyOption("test")#,"privateSigProd")
 
 
 # Samples
@@ -37,7 +37,7 @@ else:
         from CMGTools.RootTools.samples.samples_13TeV_DATA2016_NanoAODv7 import dataSamples_02Apr2020 as allData
         #        from CMGTools.RootTools.samples.triggers_13TeV_DATA2016 import all_triggers as triggers ## for FRqcd
 
-mcSamples_=[]
+#mcSamples_=[]
 allData=[]
 
 #autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cms-xrd-global.cern.ch/") # must be done before mergeExtensions
@@ -71,9 +71,10 @@ if analysis == "main":
         #"WGToLNuG.*", "ZG.*", 
         ##rares
         #"TTW_LO","TTZ_LO","WWW",  "WWZ", "WZG", "WZZ", "ZZZ", "WWW_ll", "WWG",
-        ##a diboson
+        ## diboson
         #"WWDouble.*","ZZTo4L","WWTo2L2Nu","WZTo3LNu.*","WpWpJJ"
-
+        ## QCD
+        "QCD.*"
     ]])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year] + triggerGroups_dict["Trigger_1e"][year]) if year == 2018 else

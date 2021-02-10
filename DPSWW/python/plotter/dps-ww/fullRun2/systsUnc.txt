@@ -21,17 +21,21 @@ Wgstar_norm         : WZ_mllLT4    : .*              	    : normSymm : 1.3
 
 # shapes
 
-Conv_shape           : Convs01J       : .*el.*                   : templateSymm; AddWeight=1.05
+
+
 WZ_shape             : WZ_amc	   : .*                     : altSample : WZ_pow 
 DPSWW_shape          : DPSWW	   : .*                     : altSample : DPSWW_hg 
-Rares_shape_lin      : Rares       : .*                     : LinearShapeOnly : 1.05
-Rares_shape_quad     : Rares       : .*                     : ParabolicShapeOnly : 1.05
+Rares_shape1      : Rares       : .*                     : LinearShapeOnly : 1.05
+Rares_shape2d     : Rares       : .*                     : ParabolicShapeOnly : 1.05
 
-ZZ_shape_lin	     : ZZ	   : .*			    : LinearShapeOnly : 1.05
-ZZ_shape_quad	     : ZZ	   : .*			    : ParabolicShapeOnly : 1.05
+ZZ_shape1	     : ZZ	   : .*			    : LinearShapeOnly : 1.05
+ZZ_shape2	     : ZZ	   : .*			    : ParabolicShapeOnly : 1.05
 
-Wgstar_shape_lin	     : WZ_mllLT4	   : .*			    : LinearShapeOnly : 1.05
-Wgstar_shape_quad	     : WZ_mllLT4	   : .*			    : ParabolicShapeOnly : 1.05
+Wgstar_shape1	     : WZ_mllLT4	   : .*			    : LinearShapeOnly : 1.05
+Wgstar_shape2	     : WZ_mllLT4	   : .*			    : ParabolicShapeOnly : 1.05
+Conv_shape1	     : Convs01J	   : .*			    : LinearShapeOnly : 1.05
+Conv_shape2	     : Convs01J	   : .*			    : ParabolicShapeOnly : 1.05
+
 
 
 
@@ -76,16 +80,44 @@ pileup : $PromptFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,
 
 # lepton & trigger efficiencies
 
-mloose : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss']
-mtight : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss']
+##ammloose : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss']
+##ammtight : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss']
+##ameloose : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss']   
+##ametight : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss']
+##ammloose : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss']
+##ammtight : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss']
+##ameloose : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss']   
+##ametight : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss']
 
-eloose : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss']   
-etight : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss']
-mloose : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss']
-mtight : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss']
 
-eloose : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss']   
-etight : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss']
+mloose_2017 : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss'], year="2017"
+mtight_2017 : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss'], year="2017"
+eloose_2017 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss'], year="2017"
+etight_2017 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss'], year="2017"
+mloose_2017 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss'], year="2017"
+mtight_2017 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss'], year="2017"
+eloose_2017 : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss'], year="2017"   
+etight_2017 : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss'], year="2017"
+
+mloose_2018 : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss'], year="2018"
+mtight_2018 : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss'], year="2018"
+eloose_2018 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss'], year="2018"
+etight_2018 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss'], year="2018"
+mloose_2018 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss'], year="2018"
+mtight_2018 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss'], year="2018"
+eloose_2018 : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss'], year="2018"   
+etight_2018 : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss'], year="2018"
+
+
+
+mloose_2016 : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss'], year="2016"
+mtight_2016 : $PromptFromMC : .*mumu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss'], year="2016"
+eloose_2016 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss'], year="2016"
+etight_2016 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss'], year="2016"
+mloose_2016 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss'], year="2016"
+mtight_2016 : $PromptFromMC : .*elmu.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_mu_loosetotight_dn/leptonSF_2lss'], year="2016"
+eloose_2016 : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_up/leptonSF_2lss'\,'leptonSF_2lss_el_dn/leptonSF_2lss'], year="2016"   
+etight_2016 : $PromptFromMC : .*elel.* : templateAsymm ; AddWeights=['leptonSF_2lss_el_loosetotight_up/leptonSF_2lss'\,'leptonSF_2lss_el_loosetotight_dn/leptonSF_2lss'], year="2016"
 
 
 
@@ -134,25 +166,61 @@ L1PreFiring_2017 : $PromptFromMC : .* : templateAsymm; AddWeights=['L1PreFiringW
 
 
 
+##amFRm_norm : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+##amFRm_pt : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt"],       RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+##amFRm_be : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+##amFRm_norm : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+##amFRm_pt : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt"],       RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+##amFRm_be : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+##amFRe_be : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+##amFRe_norm : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+##amFRe_pt : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+##amFRe_norm : $FRData  : .*elel* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+##amFRe_pt : $FRData  : .*elel* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+##amFRe_be : $FRData  : .*elel.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+
+
+
+#FR_mumu_norm: $FRData  : .*mumu.* :  normSymm : 1.25
+#FR_elmu_norm: $FRData  : .*elmu.* :  normSymm : 1.40
+
+
 FRm_norm : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-FRm_pt : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt"],       RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-FRm_be : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-
-
-
 FRm_norm : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-FRm_pt : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt"],       RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-FRm_be : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-FRe_be : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-FRe_norm : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-FRe_pt : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-
 FRe_norm : $FRData  : .*elel* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-FRe_pt : $FRData  : .*elel* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
-FRe_be : $FRData  : .*elel.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+FRe_norm : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True
+
+
+FRm_pt_2016 : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt"],       RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2016"
+FRm_be_2016 : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2016"
+FRm_pt_2016 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt"],       RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2016"
+FRm_be_2016 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2016"
+FRe_be_2016 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2016"
+FRe_pt_2016 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2016"
+FRe_pt_2016 : $FRData  : .*elel* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2016"
+FRe_be_2016 : $FRData  : .*elel.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2016"
 
 
 
+FRm_pt_2017 : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt"],       RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2017"
+FRm_be_2017 : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2017"
+FRm_pt_2017 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt"],       RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2017"
+FRm_be_2017 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2017"
+FRe_be_2017 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2017"
+FRe_pt_2017 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2017"
+FRe_pt_2017 : $FRData  : .*elel* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2017"
+FRe_be_2017 : $FRData  : .*elel.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2017"
+
+
+
+FRm_pt_2018 : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt"],       RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2018"
+FRm_be_2018 : $FRData  : .*mumu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2018"
+FRm_pt_2018 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt"],       RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2018"
+FRm_be_2018 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2018"
+FRe_be_2018 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2018"
+FRe_pt_2018 : $FRData  : .*elmu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2018"
+FRe_pt_2018 : $FRData  : .*elel* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2018"
+FRe_be_2018 : $FRData  : .*elel.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True, year="2018"
 
 
 

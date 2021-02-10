@@ -176,6 +176,7 @@ float fakeRateWeight_short_2lss_ii(float l1fr, int l1pass, float l2fr, int l2pas
 float fakeRateWeight_2lss_ii(float l1pt, float l1eta, int l1pdgId, bool l1pass,
                              float l2pt, float l2eta, int l2pdgId, bool l2pass, int iFRmu, int iFRel) {
     if (l1pass && l2pass) return 0;
+    //if (!l1pass && !l2pass) return 0;
     float ret = -1.0;
     if (!l1pass) { 
         float l1fr = fetchFR_ii(l1pt,l1eta,l1pdgId,iFRmu,iFRel);

@@ -963,3 +963,21 @@ BDT_DPS_multiC_elmuplusplus    : BDT_DPS_multiC  : 20,0,1.0; XTitle="BDT-signal-
 BDT_WZ_multiC_elmuplusplus     : BDT_WZ_multiC  : 20,0,1.0; XTitle="BDT-WZ-mC (e^{#plus}#mu^{#plus})" , MoreY=1.5
 BDT_TL_multiC_elmuplusplus     : BDT_TL_multiC  : 20,0,1.0; XTitle="BDT-TL-mC (e^{#plus}#mu^{#plus})" , MoreY=1.5
 
+
+
+BDTfakes_BDTwz_amc_mumu   : BDT_DPS_WZ_amc\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#pm}#mu^{#pm})", YTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
+BDTfakes_BDTwz_pow_mumu   : BDT_DPS_WZ_pow\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#pm}#mu^{#pm})", YTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
+
+BDTfakes_BDTwz_amc_mumuplusplus   : BDT_DPS_WZ_amc\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#plus}#mu^{#plus})", YTitle="BDT_WZ(#mu^{#plus}#mu^{#plus})"
+BDTfakes_BDTwz_pow_mumuplusplus   : BDT_DPS_WZ_pow\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#plus}#mu^{#plus})", YTitle="BDT_WZ(#mu^{#plus}#mu^{#plus})"
+BDTfakes_BDTwz_amc_elmuplusplus   : BDT_DPS_WZ_amc\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#plus}#mu^{#plus})", YTitle="BDT_WZ(el^{#plus}#mu^{#plus})"
+BDTfakes_BDTwz_pow_elmuplusplus   : BDT_DPS_WZ_pow\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#plus}#mu^{#plus})", YTitle="BDT_WZ(el^{#plus}#mu^{#plus})"
+
+BDTfakes_BDTwz_amc_elmu   : BDT_DPS_WZ_amc\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#pm}#mu^{#pm})", YTitle="BDT_WZ(el^{#pm}#mu^{#pm})"
+BDTfakes_BDTwz_pow_elmu   : BDT_DPS_WZ_pow\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#pm}#mu^{#pm})", YTitle="BDT_WZ(el^{#pm}#mu^{#pm})"
+
+
+BDTfakes_BDTwz_amc_mumuminusminus   : BDT_DPS_WZ_amc\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#minus}#mu^{#minus})", YTitle="BDT_WZ(#mu^{#minus}#mu^{#minus})"
+BDTfakes_BDTwz_pow_mumuminusminus   : BDT_DPS_WZ_pow\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#minus}#mu^{#minus})", YTitle="BDT_WZ(#mu^{#minus}#mu^{#minus})"
+BDTfakes_BDTwz_amc_elmuminusminus   : BDT_DPS_WZ_amc\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#minus}#mu^{#minus})", YTitle="BDT_WZ(el^{#minus}#mu^{#minus})"
+BDTfakes_BDTwz_pow_elmuminusminus   : BDT_DPS_WZ_pow\:BDT_DPS_fakes  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#minus}#mu^{#minus})", YTitle="BDT_WZ(el^{#minus}#mu^{#minus})"

@@ -5,5 +5,5 @@ load-histo: FR_mu_i20 : $DATA/fakerate/fr_2016_MVA_mupt90_elpt70.root : FR_mva09
 load-histo: FR_mu_i21 : $DATA/fakerate/fr_2017_MVA_mupt90_elpt70.root : FR_mva090_mu_data_comb_down: 2017
 load-histo: FR_mu_i22 : $DATA/fakerate/fr_2018.root : FR_mva085_mu_data_comb_down: 2018
 load-histo: FR_el_i00 : $DATA/fakerate/fr_2016_MVA_mupt90_elpt70.root : FR_mva070_el_data_comb_NC: 2016
-load-histo: FR_el_i01 : $DATA/fakerate/fr_2017_MVA_mupt90_elpt70.root : FR_mva070_el_data_comb_NC_NC: 2017
+load-histo: FR_el_i01 : $DATA/fakerate/fr_2017_MVA_mupt90_elpt70.root : FR_mva070_el_data_comb_NC: 2017
 load-histo: FR_el_i02 : $DATA/fakerate/fr_2018_MVA_mupt85_elpt70.root : FR_mva070_el_data_comb_NC: 2018

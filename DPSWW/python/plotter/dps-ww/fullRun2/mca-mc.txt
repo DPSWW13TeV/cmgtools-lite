@@ -15,8 +15,8 @@ DPSWW_CP5 : WWDouble_cp5 : 0.1729 : 1 ; FillColor=ROOT.kGreen, Label="DPSWW_cp5"
 Rares: TTZ_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"
 Rares: TTW_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , Label="Rares"
 Rares: TTJets_DiLepton : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"
-Rares: TTJets_SingleLeptonFromT : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares", years="2016"
-Rares: TTJets_SingleLeptonFromTbar : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares", years="2016"
+#Rares: TTJets_SingleLeptonFromT : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares", years="2016"
+#Rares: TTJets_SingleLeptonFromTbar : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares", years="2016"
 Rares : T_sch_lep : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, years="2016"
 Rares : T_tch                  : 136.02+80.95 :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , years="2016"
 Rares : T_tWch_noFullyHad      : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6    , years="2016\,2018"
@@ -48,7 +48,20 @@ WGstar_excl   : WgStarLNuMuMu : xsec  : LepGood1_isMatchRightCharge && LepGood2_
 
 dyincl    : DYJetsToLL_M50_LO : xsec :((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==0) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==0)); FillColor=5
 dyincl    : DYJetsToLL_M10to50_LO : xsec :((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==0) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==0)) ; FillColor=5, years="2016"
-wjincl   : WJetsToLNu  : xsec  ; FillColor=ROOT.kCyan+2, Label="WJ"
+wjincl   : WJetsToLNu  : xsec  ; FillColor=ROOT.kCyan+2, Label="WJ"  , years="2016\,2018"
+
+
+WJ    : WJetsToLNu    : xsec : 1 ; FillColor=ROOT.kCyan+2, Label="WJ"  , years="2016\,2018"
+WJ_LO : WJetsToLNu_LO : xsec : 1 ; FillColor=ROOT.kMagenta+2, Label="WJ_LO" 
+
+Wnjet : W0JetsToLNu : xsec : 1 ; FillColor=ROOT.kBlue+2, Label="WnJ" , years="2017\,2018"
+Wnjet : W1JetsToLNu : xsec : 1 ; FillColor=ROOT.kBlue+2, Label="WnJ" , years="2017\,2018"
+Wnjet : W2JetsToLNu : xsec : 1 ; FillColor=ROOT.kBlue+2, Label="WnJ" , years="2017\,2018"
+
+Wnjet_LO : W1JetsToLNu_LO : xsec: 1 ; FillColor=ROOT.kOrange+2, Label="WnJ_LO" , years="2016\,2018"
+Wnjet_LO : W2JetsToLNu_LO : xsec: 1 ; FillColor=ROOT.kOrange+2, Label="WnJ_LO" , years="2016\,2018"
+Wnjet_LO : W3JetsToLNu_LO : xsec: 1 ; FillColor=ROOT.kOrange+2, Label="WnJ_LO" , years="2016\,2018"
+Wnjet_LO : W4JetsToLNu_LO : xsec: 1 ; FillColor=ROOT.kOrange+2, Label="WnJ_LO" , years="2016\,2018"
 
 
 ################### 

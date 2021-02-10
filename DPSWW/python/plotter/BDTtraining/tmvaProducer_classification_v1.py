@@ -13,8 +13,6 @@ lumis = {
     '2017': 41.4,
     '2018': 59.7,
 }
-
-
 _allfiles = []
 path = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/'
 frnds=['2_recl','bdt_input_vars']
@@ -55,7 +53,7 @@ def load_dataset(year,name, trainclass,friends=[]):
 
     return tree, weight
 
-def train_classification(year,bkg):
+def train_classification(year,bkg,useconept):
 
 
    
@@ -93,12 +91,16 @@ def train_classification(year,bkg):
             #('DoubleMuon_Run2016G_02Apr2020',"Background",friends),
             #('DoubleMuon_Run2016H_02Apr2020',"Background",friends)
         ]
-        
-    common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && met > 15'
-             
+    if useconept:
+        print 'training using conept'
+        pff='_withcpt'
+        common_cuts = 'nLepFO_Recl == 2 && Lep1_conept > 25 && Lep2_conept > 20 && met > 15'
+    else:
+        pff='_withpt'
+        common_cuts = 'nLepFO_Recl == 2 && Lep1_pt > 25 && Lep2_pt > 20 && met > 15'
 
     bkgcuts = ROOT.TCut('1');
-    bkgcuts += mmss
+    bkgcuts += afss
     bkgcuts += muon
     bkgcuts += eleID
     bkgcuts += common_cuts
@@ -119,15 +121,20 @@ def train_classification(year,bkg):
         #print tree, weight
         datasets.append((name, trainclass, tree, glbwt))
 
-    fOut = ROOT.TFile("TMVA_classification_dpsvs"+pf+ "_"+ year+"_"+bkg+".root","recreate") #creating the output file 
+    fOut = ROOT.TFile("files/TMVA_classification_dpsvs"+"_"+bkg+"_"+year+pf+pff+".root","recreate") #creating the output file 
     fOut.cd()
     # configuring tmva
     factory = ROOT.TMVA.Factory('TMVAClassification', fOut, "!V:!Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" )
-    DL = ROOT.TMVA.DataLoader("dataset"+pf+"_"+year+"_"+bkg);
+    DL = ROOT.TMVA.DataLoader("files/dataset"+pf+"_"+year+"_"+bkg+pff);
 
     # adding list of vars to train on
-    DL.AddVariable('pt1 := Lep1_conept','p_{T1}', 'F')
-    DL.AddVariable('pt2 := Lep2_conept','p_{T2}', 'F') 
+    if useconept:
+        DL.AddVariable('pt1 := Lep1_conept','p_{T1}', 'F')
+        DL.AddVariable('pt2 := Lep2_conept','p_{T2}', 'F') 
+    else:
+        DL.AddVariable('pt1 := Lep1_pt','p_{T1}', 'F')
+        DL.AddVariable('pt2 := Lep2_pt','p_{T2}', 'F') 
+
     DL.AddVariable('met :=  met', 'F')
     DL.AddVariable('mt2 := mt2','F')
     DL.AddVariable('mtll:= mtll', 'F') 
@@ -232,11 +239,12 @@ if __name__ == '__main__':
     parser = optparse.OptionParser(usage='usage: %prog [opts] ', version='%prog 1.0')
     parser.add_option("-b","--bkg", dest="bkg",type="string", default='wz_amc')
     parser.add_option("-y","--year", dest="year",type="string", default='2016')
+    parser.add_option("--cpt", dest="useconept", default=False, action='store_true')
     #parser.add_option("-P","--treepath", dest="treepath",type="string", default=None)
     #parser.add_option("-F","--friend", dest="friends",type="string", default=[], action="append")
     (opts, args) = parser.parse_args()
 
-    train_classification(opts.year,opts.bkg)
+    train_classification(opts.year,opts.bkg,opts.useconept)
 
 
 

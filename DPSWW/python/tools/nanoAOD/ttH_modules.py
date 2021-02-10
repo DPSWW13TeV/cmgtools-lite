@@ -428,14 +428,14 @@ vhsplitter = lambda : VHsplitter()
 # scaleFactorSequence_2018
 
 from CMGTools.DPSWW.tools.nanoAOD.DPSWW_vars import DPSWW_vars
-dpsvars2016 = lambda : DPSWW_vars(2016)
-dpsvars2017 = lambda : DPSWW_vars(2017)
+
+dpsvars2016 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2016_MVA_mupt90_elpt70.root',2016)
+dpsvars2017 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2017_MVA_mupt90_elpt70.root',2017)
+dpsvars2018 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2018_MVA_mupt90_elpt70.root',2018)
 
 from CMGTools.DPSWW.tools.nanoAOD.BDT_DPSWW import BDT_DPSWW
 bdtvars2016 = lambda : BDT_DPSWW(2016)
 bdtvars2017 = lambda : BDT_DPSWW(2017)
-#from CMGTools.DPSWW.tools.nanoAOD.fakeRateWtSaverdpsww import fakeRateWtSaverdpsww
-##frWt = lambda : fakeRateWtSaverdpsww(os.environ["CMSSW_BASE"]+"/src/CMGTools/DPSWW/python/plotter/plots/104X/ttH/lepMVA/v1.1/fr-comb/fr_2016_MVA_mupt90_elpt70.root")
 
 
 from CMGTools.DPSWW.tools.nanoAOD.genInfo_py8 import genInfo_py8
