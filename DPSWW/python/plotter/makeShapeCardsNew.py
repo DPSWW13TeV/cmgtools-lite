@@ -194,6 +194,9 @@ for binname, report in allreports.iteritems():
 
   datacard = open(outdir+binname+".txt", "w"); 
   datacard.write("## Datacard for cut file %s\n"%args[1])
+  datacard.write("## Event selection: \n")
+  for cutline in str(cuts).split("\n"):  datacard.write("##   %s\n" % cutline)
+
   datacard.write("shapes *        * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % binname)
   datacard.write('##----------------------------------\n')
   datacard.write('bin         %s\n' % binname)

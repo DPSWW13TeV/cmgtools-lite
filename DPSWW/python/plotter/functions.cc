@@ -318,7 +318,7 @@ float triggerSF_ttH(int pdgid1, float pt1, int pdgid2, float pt2, int year, int 
   }
   else return 1.;
 }
-
+/*
 float ttH_2lss_ifflav(int LepGood1_pdgId, int LepGood2_pdgId, float ret_ee, float ret_em, float ret_mm){
   if (abs(LepGood1_pdgId)==11 && abs(LepGood2_pdgId)==11) return ret_ee;
   if ((abs(LepGood1_pdgId) != abs(LepGood2_pdgId)))       return ret_em;
@@ -327,7 +327,7 @@ float ttH_2lss_ifflav(int LepGood1_pdgId, int LepGood2_pdgId, float ret_ee, floa
   assert(0);
   return 0; // avoid warning
 }
-
+*/
 int unroll_2Dbdt_dps_elmu(float BDTx,float BDTy){
   if(BDTx  > 0.1 && BDTx <=0.25 && BDTy >0.1 && BDTy <= 0.35)return 0;
   else if((BDTx > 0.1 && BDTx <=0.3 && BDTy >0.35) || (BDTx  > 0.3 && BDTx <=0.35 && BDTy >0.35 && BDTy <= 0.65))return 1;
@@ -371,12 +371,108 @@ int unroll_2Dbdt_dps_mumu(float BDTx,float BDTy){
     exit(EXIT_FAILURE);}
 }
 
+
 float smoothBFlav(float jetpt, float ptmin, float ptmax, int year, float scale_loose=1.0) {
     float wploose[3]  = { 0.0614, 0.0521, 0.0494 };
     float wpmedium[3] = { 0.3093, 0.3033, 0.2770 };
     float x = std::min(std::max(0.f, jetpt - ptmin)/(ptmax-ptmin), 1.f); 
     return x*wploose[year-2016]*scale_loose + (1-x)*wpmedium[year-2016];
 }
+
+
+int unroll_2Dbdt_dps_mumu_new(float BDTx,float BDTy){
+  // new v1
+  if(BDTx  <= 0.1 )return 0;
+  else if(BDTx  > 0.1 && BDTx <= 0.35 && BDTy < 0.3  )return 1;
+
+  else if(BDTx  > 0.1 &&  BDTx  <= 0.35 && BDTy >= 0.3)return 2;
+
+  else if(BDTx  > 0.35 && BDTx <= 0.5 && BDTy <= 0.35 )return 3;
+  else if(BDTx  > 0.5 && BDTy <= 0.35)return 4;
+  else if(BDTx  > 0.35 && BDTy > 0.35 && BDTy <= 0.45)return 5;
+  else if(BDTx  > 0.35 && BDTy > 0.45 && BDTy <= 0.55)return 6;
+  else if(BDTx  > 0.35 && BDTx  < 0.9 && BDTy > 0.55 && BDTy <= 0.65)return 7;
+  else if(BDTx  > 0.35 && BDTx  < 0.9 && BDTy > 0.65 && BDTy <= 0.80)return 8;
+  else if(BDTx  > 0.35 && BDTx  < 0.95 && BDTy > 0.8 && BDTy <= 0.9)return 9;
+  else if(BDTx  > 0.35 && BDTx < 0.95 && BDTy  > 0.9 && BDTy < 0.95)return 10; //
+  else if(BDTx  >= 0.9 && BDTy >= 0.55 && BDTy <= 0.7)return 11;
+  else if(BDTx  >= 0.9 && BDTy > 0.7 && BDTy <= 0.8)return 12;
+  else if(BDTx  >= 0.95 && BDTy > 0.8 && BDTy < 0.95)return 13;
+ 
+ else if(BDTx  >= 0.35 && BDTy >= 0.95)return 14;
+
+ 
+
+
+
+
+  else{
+    std::cout << "values of BDT variables are out of bounds, please check" << BDTx <<"\t"<< BDTy << std::endl;
+    exit(EXIT_FAILURE);}
+}
+
+
+int unroll_2Dbdt_dps_mumuV1(float BDTx,float BDTy){
+  // new v2
+  if(BDTx  <= 0.1 )return 0;
+  else if(BDTx  > 0.1 && BDTx <= 0.35 && BDTy < 0.3  )return 1;
+
+  else if(BDTx  > 0.1 &&  BDTx  <= 0.35 && BDTy >= 0.3)return 2;
+
+  else if(BDTx  > 0.35 && BDTx <= 0.5 && BDTy <= 0.35 )return 3;
+  else if(BDTx  > 0.5 && BDTy <= 0.35)return 4;
+  else if(BDTx  > 0.35 && BDTy > 0.35 && BDTy <= 0.45)return 5;
+  else if(BDTx  > 0.35 && BDTy > 0.45 && BDTy <= 0.55)return 6;
+  else if(BDTx  > 0.35 && BDTx  < 0.9 && BDTy > 0.55 && BDTy <= 0.65)return 7;
+  else if(BDTx  > 0.35 && BDTx  < 0.9 && BDTy > 0.65 && BDTy <= 0.80)return 8;
+
+  else if(BDTx  > 0.35 && BDTx  < 0.95 && BDTy > 0.8 && BDTy <= 0.9)return 9;
+
+  else if(BDTx  >= 0.9 && BDTy >= 0.55 && BDTy <= 0.7)return 10;
+
+  else if(BDTx  >= 0.9 && BDTy > 0.7 && BDTy <= 0.8)return 11;
+
+
+
+  else if(BDTx  > 0.35 && BDTx < 0.85 && BDTy  > 0.9 )return 12;
+
+  else if(BDTx  >= 0.95 && BDTy >= 0.95)return 13;
+  else if(BDTx  >= 0.95 && BDTy > 0.8 && BDTy < 0.95)return 14;
+
+
+ 
+
+
+
+
+  else{
+    std::cout << "values of BDT variables are out of bounds, please check" << BDTx <<"\t"<< BDTy << std::endl;
+    exit(EXIT_FAILURE);}
+}
+
+
+
+
+int unroll_2Dbdt_dps_elmu_new(float BDTx,float BDTy){
+  if(BDTx  <= 0.2 )return 0;
+  else  if(BDTx  > 0.2 && BDTx <= 0.4)return 1;
+  else if(BDTx  > 0.4 && BDTx <= 0.5)return 2;
+  else  if(BDTx  > 0.5 && BDTx <= 0.6)return 3;
+  else  if(BDTx  > 0.6 && BDTx <= 0.7)return 4;
+  else  if(BDTx  > 0.7 && BDTy <= 0.5)return 5;
+  else  if(BDTx  > 0.7 && BDTy >  0.5 && BDTy <= 0.65)return 6;
+  else  if(BDTx  > 0.7 && BDTy >  0.65 && BDTy <= 0.75)return 7;
+  else  if(BDTx  > 0.7 && BDTy >  0.75 && BDTy <=0.85)return 8;
+  else  if(BDTx  > 0.7 && BDTx  <= 0.85 &&  BDTy >0.85)return 9;
+  else  if(BDTx  > 0.85 && BDTx <= 0.9 &&  BDTy >0.85)return 10;
+  else  if(BDTx  > 0.9 &&  BDTy >0.85)return 11;
+  
+ else{
+   std::cout << "values of BDT variables are out of bounds, please check" << std::endl;
+    exit(EXIT_FAILURE);}
+
+}
+
 
 void functions() {}
 

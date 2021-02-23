@@ -12,6 +12,10 @@ DPSWW_HG : WWDoubleTo2L_herwigpp : 0.1729 : 1 ; FillColor=ROOT.kBlue, Label="DPS
 DPSWW_HG : WWDoubleTo2L_herwig : 0.1729 : 1 ; FillColor=ROOT.kBlue, Label="DPSWW_herwig" , years="2017\,2018" 
 DPSWW_CP5 : WWDouble_cp5 : 0.1729 : 1 ; FillColor=ROOT.kGreen, Label="DPSWW_cp5" , years="2018" 
 
+DPSWW_UL+ : UL2017 : 0.1729 : 1 ; FillColor=ROOT.kGreen, Label="cp5_UL" 
+DPSWW_n7 : WWDPSTo2Ln7 : 0.1729 : 1 ; FillColor=ROOT.kRed, Label="n7" 
+DPSWW_cp5_n7 : WWDPScp5n7 : 0.1729 : 1 ; FillColor=ROOT.kBlue, Label="cp5_n7_incl" 
+
 Rares: TTZ_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"
 Rares: TTW_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , Label="Rares"
 Rares: TTJets_DiLepton : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"
@@ -36,8 +40,8 @@ Rares: WWG : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;
 ZZ   : ZZTo4L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=ROOT.kOrange-3 , Label="ZZ" 
 
 WZ_mllLT4 : WZTo3LNu_mllmin01 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(GenPart_mass < 4. && LepGood_genPartFlav == 1) == 1 ; FillColor=ROOT.kViolet+7, Label="W\#gamma*"
-WZ_pow	 : WZTo3LNu : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=ROOT.kYellow, Label="WZ_pow" #, SkipMe=True
-WZ_amc : WZTo3LNu_fxfx : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kAzure+1, Label="WZ"
+WZ_alt	 : WZTo3LNu : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=ROOT.kYellow, Label="WZ_pow" 
+WZ : WZTo3LNu_fxfx : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kAzure+1, Label="WZ" #, SkipMe=True
 
 
 
@@ -74,10 +78,11 @@ Diboson : WWTo2L2Nu : xsec: LepGood1_isMatchRightCharge && LepGood2_isMatchRight
 Diboson : WZTo3LNu_mllmin01 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , Label="VV"
 Diboson : ZZTo4L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , Label="VV"
 DY+    : DYJetsToLL_M50 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=8
-#DY+    : DYJetsToLL_M10to50 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=8 , years="2016"
-#DYLO+    : DYJetsToLL_M50_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge; FillColor=8
-#DYLO+   : DYJetsToLL_M10to50_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=8, years="2016"
-WJets   : WJetsToLNu  : xsec  ; FillColor=ROOT.kCyan+2, Label="WJ"
+DY+    : DYJetsToLL_M10to50 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=8 , years="2016\,2017"
+DYLO+    : DYJetsToLL_M50_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge; FillColor=8
+DYLO+   : DYJetsToLL_M10to50_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=8, years="2016"
+WJets   : WJetsToLNu  : xsec  ; FillColor=ROOT.kCyan+2, Label="WJ" , years="2016"
+WJets   : WJetsToLNu_LO  : xsec  ; FillColor=ROOT.kCyan+2, Label="WJ" , years="2017"
 SingleTop: T_tch: xsec  ; FillColor=ROOT.kGray+2, Label="Single T"
 SingleTop: TBar_tch: xsec  ; FillColor=ROOT.kGray+2, Label="Single T"
 SingleTop: T_sch_lep: xsec  ; FillColor=ROOT.kGray+2, Label="Single T"

@@ -1,14 +1,44 @@
 # vim: syntax=sh
 
-wj+ : W1JetsToLNu_LO : xsec :  LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0; FillColor=ROOT.kGreen-3
-wj+ : W2JetsToLNu_LO : xsec :  LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0; FillColor=ROOT.kGreen-3
-wj+ : W3JetsToLNu_LO : xsec :  LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0; FillColor=ROOT.kGreen-3
-wj+ : W4JetsToLNu_LO : xsec :  LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0; FillColor=ROOT.kGreen-3
+wj_noM+ : W1JetsToLNu_LO : xsec :  1; FillColor=ROOT.kGreen-3 , years="2016"
+wj_noM+ : W2JetsToLNu_LO : xsec :  1; FillColor=ROOT.kGreen-3 , years="2016"
+wj_noM+ : W3JetsToLNu_LO : xsec :  1; FillColor=ROOT.kGreen-3 , years="2016"
+wj_noM+ : W4JetsToLNu_LO : xsec :  1; FillColor=ROOT.kGreen-3 , years="2016"
 
-wj_tl : W1JetsToLNu_LO : xsec ; AddWeight="(LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0)" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue
-wj_tl : W2JetsToLNu_LO : xsec ; AddWeight="(LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0)" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue
-wj_tl : W3JetsToLNu_LO : xsec ; AddWeight="(LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0)" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue
-wj_tl : W4JetsToLNu_LO : xsec ; AddWeight="(LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0)" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue
 
-wjinc   : WJetsToLNu_LO  : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0  ; FillColor=ROOT.kCyan, Label="wjinc"
-wjinc_tl : WJetsToLNu_LO : xsec ; AddWeight="(LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0)", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kRed, Label="wjinc_tl"
+wj+ : W1JetsToLNu_LO : xsec :  if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0); FillColor=ROOT.kMagenta-3 , years="2016"
+wj+ : W2JetsToLNu_LO : xsec :  if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0); FillColor=ROOT.kMagenta-3 , years="2016"
+wj+ : W3JetsToLNu_LO : xsec :  if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0); FillColor=ROOT.kMagenta-3 , years="2016"
+wj+ : W4JetsToLNu_LO : xsec :  if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0); FillColor=ROOT.kMagenta-3 , years="2016"
+
+
+wj_tl+ : W1JetsToLNu_LO : xsec ; AddWeight="((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0))" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016" 
+wj_tl+ : W2JetsToLNu_LO : xsec ; AddWeight="((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0))" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016"
+wj_tl+ : W3JetsToLNu_LO : xsec ; AddWeight="((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0))" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016"
+wj_tl+ : W4JetsToLNu_LO : xsec ; AddWeight="((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0))" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016"
+
+wj_LO : WJetsToLNu_LO  : xsec : (LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0)  ; FillColor=ROOT.kCyan, Label="wjinc", years="2017"
+wj_LO_tl : WJetsToLNu_LO : xsec ; AddWeight="((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0))", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kRed, Label="wjinc_tl" , years="2017"
+
+
+wj+ : W0JetsToLNu : xsec :  (LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0) ; FillColor=ROOT.kGreen-3 , years="2017", SkipMe=True
+
+wj_tl : W0JetsToLNu : xsec ; AddWeight="((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0))" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2017" , SkipMe=True
+
+
+
+
+wj+ : W1JetsToLNu : xsec : if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0)   ; FillColor=ROOT.kGreen-3 , years="2017"
+wj+ : W2JetsToLNu : xsec : if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0)   ; FillColor=ROOT.kGreen-3 , years="2017"
+
+wj_tl : W1JetsToLNu : xsec ; AddWeight="(if3(abs(LepGood1_pdgId)==13\,LepGood1_isMatchRightCharge==0\,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13\,LepGood2_isMatchRightCharge==0\,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0)  )" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2017"
+wj_tl : W2JetsToLNu : xsec ; AddWeight="(if3(abs(LepGood1_pdgId)==13\,LepGood1_isMatchRightCharge==0\,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13\,LepGood2_isMatchRightCharge==0\,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0) )" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2017"
+
+
+wj_noM+ : W1JetsToLNu : xsec : 1   ; FillColor=ROOT.kMagenta-3 , years="2017"
+wj_noM+ : W2JetsToLNu : xsec : 1   ; FillColor=ROOT.kMagenta-3 , years="2017"
+
+
+
+
+##if3(abs(LepGood1_pdgId)==13\,LepGood1_isMatchRightCharge==0\,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13\,LepGood2_isMatchRightCharge==0\,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0)

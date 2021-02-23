@@ -97,8 +97,8 @@ WWDoubleTo2L_herwig           = kreator.makeMCComponent("WWDoubleTo2L_herwig", "
 WWDouble_cp5 = kreator.makeMCComponent("WWDouble_cp5", "/WW_DoubleScattering_13TeV-pythia8_TuneCP5/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
 
 WZTo3LNu               = kreator.makeMCComponent("WZTo3LNu", "/WZTo3LNu_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root", 4.42965)
-WZTo3LNu_fxfx          = kreator.makeMCComponent("WZTo3LNu_fxfx", "/WZTo3LNu_mllmin01_NNPDF31_TuneCP5_13TeV_powheg_pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 4.666, fracNegWeights=0.19)
-WZTo3LNu_fxfx_ext          = kreator.makeMCComponent("WZTo3LNu_fxfx_ext", "/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root", 4.666, fracNegWeights=0.19)
+
+WZTo3LNu_fxfx          = kreator.makeMCComponent("WZTo3LNu_fxfx_ext", "/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root", 4.666, fracNegWeights=0.19)
 WZTo3LNu_mllmin01      = kreator.makeMCComponent("WZTo3LNu_mllmin01", "/WZTo3LNu_mllmin01_NNPDF31_TuneCP5_13TeV_powheg_pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 58.59*0.601644)
 
 WWTo2L2Nu              = kreator.makeMCComponent("WWTo2L2Nu", "/WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM","CMS", ".*root", 10.481)
@@ -119,7 +119,6 @@ WWDoubleTo2L_herwig,
 WWDouble_cp5,
 WZTo3LNu,
 WZTo3LNu_fxfx,
-WZTo3LNu_fxfx_ext,
 WZTo3LNu_mllmin01,
 WWTo2L2Nu,              
 ZZTo4L, ZZTo4L_ext,                

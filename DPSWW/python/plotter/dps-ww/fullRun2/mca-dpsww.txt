@@ -4,10 +4,13 @@ incl_mc    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt"
 Convs	   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-convs.txt"
 data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="non-prompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes"
 
+data_fakes_mu90el65 : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="non-prompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes_mu90el65"
+
+
 data       : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt"
 data_flips_unskimmed : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="charge-misid.", FillColor=ROOT.kCyan-7, PostFix = "_flipsv1"
 
-promptsub  : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", PostFix='_promptsub' , AddWeight="-1"
+promptsub  : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", PostFix='_promptsub', AddWeight="-1"
 mc_fakes   : + ; IncludeMca="dps-ww/fullRun2/mca-mcfakes.txt" 
 mc_flips   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-mcflips.txt"
 
@@ -46,4 +49,8 @@ promptsub_FRm_be_Up : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/unc
 promptsub_FRm_be_Dn : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt", SkipMe=True, PostFix='_promptsub_FRm_be_Dn', AddWeight="-1"
 
 
+
+fakes_data_pT :  DoubleMuon_Run2017B_02Apr2020_withpT + DoubleMuon_Run2017C_02Apr2020_withpT + DoubleMuon_Run2017D_02Apr2020_withpT  + DoubleMuon_Run2017E_02Apr2020_withpT + DoubleMuon_Run2017F_02Apr2020_withpT  : 1 ; FillColor=ROOT.kBlue, FakeRate='dps-ww/fullRun2/fakeRate-2lss-frdata.txt', Label="non-prompt-pT"
+
+fakes_data :  DoubleMuon_Run2017B_02Apr2020 + DoubleMuon_Run2017C_02Apr2020 + DoubleMuon_Run2017D_02Apr2020  + DoubleMuon_Run2017E_02Apr2020 + DoubleMuon_Run2017F_02Apr2020  : 1 ; FillColor=ROOT.kRed, FakeRate='dps-ww/fullRun2/fakeRate-2lss-frdata.txt', Label="non-prompt"
 

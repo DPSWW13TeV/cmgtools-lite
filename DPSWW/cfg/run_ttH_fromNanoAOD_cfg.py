@@ -8,7 +8,7 @@ kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = int(getHeppyOption("year", "2017"))
+year = int(getHeppyOption("year", "2018"))
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 test = getHeppyOption("test")#,"privateSigProd")
@@ -74,7 +74,8 @@ if analysis == "main":
         ## diboson
         #"WWDouble.*","ZZTo4L","WWTo2L2Nu","WZTo3LNu.*","WpWpJJ"
         ## QCD
-        "QCD.*"
+        ##        "QCD.*"
+        "WZTo3LNu_fxfx"
     ]])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year] + triggerGroups_dict["Trigger_1e"][year]) if year == 2018 else

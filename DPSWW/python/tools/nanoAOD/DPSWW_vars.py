@@ -7,9 +7,11 @@ import array, numpy
 from ROOT import TLorentzVector
 
 class DPSWW_vars(Module):
-    def __init__(self,FRFile,year):
+    def __init__(self,FRFile,histMu,histEl,year):
         self.year=year
         self.FRFile = FRFile
+        self.histEl = histEl
+        self.histMu = histMu
         print 'saving bdt input variables for',year,FRFile
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
@@ -58,7 +60,7 @@ class DPSWW_vars(Module):
     def fakeRatefromHist(self,lep):
         fName = ROOT.TFile.Open(self.FRFile)
         if not fName: raise RuntimeError("No such file %s"%self.FRFile)
-        hist =  fName.Get('FR_mva070_el_data_comb_NC' if abs(lep.pdgId) == 11 else 'FR_mva090_mu_data_comb') 
+        hist =  fName.Get(self.histEl if abs(lep.pdgId) == 11 else self.histMu)
         ptbin  = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(lep.conePt)))
         etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(abs(lep.eta))))
         fr     = hist.GetBinContent(ptbin,etabin)

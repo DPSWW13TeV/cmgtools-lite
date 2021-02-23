@@ -429,14 +429,18 @@ vhsplitter = lambda : VHsplitter()
 
 from CMGTools.DPSWW.tools.nanoAOD.DPSWW_vars import DPSWW_vars
 
-dpsvars2016 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2016_MVA_mupt90_elpt70.root',2016)
-dpsvars2017 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2017_MVA_mupt90_elpt70.root',2017)
-dpsvars2018 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2018_MVA_mupt90_elpt70.root',2018)
+dpsvars2016 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2016_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2016)
+dpsvars2017_muWP90_elWP70 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2017_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2017)
+dpsvars2017_muWP90_elWP65 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2017_MVA_mupt90_elpt65.root','FR_mva090_mu_data_comb','FR_mva065_el_data_comb_NC',2017)
+dpsvars2018 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2018_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2018)
 
 from CMGTools.DPSWW.tools.nanoAOD.BDT_DPSWW import BDT_DPSWW
-bdtvars2016 = lambda : BDT_DPSWW(2016)
-bdtvars2017 = lambda : BDT_DPSWW(2017)
-
+bdtvars_withcpt_2016 = lambda : BDT_DPSWW(2016,True)
+bdtvars_withcpt_2017 = lambda : BDT_DPSWW(2017,True)
+bdtvars_withcpt_2018 = lambda : BDT_DPSWW(2018,True)
+bdtvars_withpt_2016 = lambda : BDT_DPSWW(2016,False)
+bdtvars_withpt_2017 = lambda : BDT_DPSWW(2017,False)
+bdtvars_withpt_2018 = lambda : BDT_DPSWW(2018,False)
 
 from CMGTools.DPSWW.tools.nanoAOD.genInfo_py8 import genInfo_py8
 postfsrInfoPy = lambda : genInfo_py8()

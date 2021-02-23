@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#usage python tmvaProducer_classification_v1.py -b <bkg name wz_amc/wz_pow/fakes>
+#usage python tmvaProducer_classification_v1.py -b <bkg name wz_amc/wz_pow/fakes> -y <year>
 
 import sys, os, optparse, subprocess
 import ROOT, re
@@ -15,9 +15,12 @@ lumis = {
 }
 _allfiles = []
 path = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/'
-frnds=['2_recl','bdt_input_vars'] #_muWP90_elWP70_v1']
-pf='' #_muWP90_elWP70'
-friends=[name+pf for name in frnds]
+
+
+#friends=['2_recl_muWP90_elWP70','bdt_input_vars_muWP90_elWP70_v1']
+
+
+
 
 def load_dataset(year,name, trainclass,friends=[]): 
     lumi= lumis[year]
@@ -55,12 +58,14 @@ def load_dataset(year,name, trainclass,friends=[]):
     return tree, weight
 
 def train_classification(year,bkg,useconept,usefr):
-
-
-   
-    eleID     = '(abs(Lep1_pdgId)!=11 || (Lep1_convVeto && Lep1_lostHits==0 && Lep1_tightCharge>=2)) && (abs(Lep2_pdgId)!=11 || (Lep2_convVeto && Lep2_lostHits==0 && Lep2_tightCharge>=2))'
+    pf='_muWP90_elWP70' if year == '2017' else ''
+    frnds=['2_recl','bdt_input_vars']
+    friends=[name+pf for name in frnds]
+    ##eleID     = '(abs(Lep1_pdgId)!=11 || (Lep1_convVeto && Lep1_lostHits==0 && Lep1_tightCharge>=2)) && (abs(Lep2_pdgId)!=11 || (Lep2_convVeto && Lep2_lostHits==0 && Lep2_tightCharge>=2))'
+    eleID     = '(abs(Lep1_pdgId)!=11 || ( Lep1_tightCharge>=2)) && (abs(Lep2_pdgId)!=11 || (Lep2_tightCharge>=2))'
     muon      = '(abs(Lep1_pdgId)!=13 || Lep1_tightCharge>=1) && (abs(Lep2_pdgId)!=13 || Lep2_tightCharge>=1)'
     mmss      = '(Lep1_pdgId*Lep2_pdgId) == 169'
+    mm        = 'abs(Lep1_pdgId*Lep2_pdgId) == 169'
     afac      = '(abs(Lep1_pdgId*Lep2_pdgId) == 169 || abs(Lep1_pdgId*Lep2_pdgId) == 121 ||  abs(Lep1_pdgId*Lep2_pdgId) == 143)'
     afss      = '(Lep1_pdgId*Lep2_pdgId == 169 || Lep1_pdgId*Lep2_pdgId == 121 || Lep1_pdgId*Lep2_pdgId == 143)'
     TT        = '(Lep1_isLepTight &&  Lep2_isLepTight)'
@@ -84,42 +89,27 @@ def train_classification(year,bkg,useconept,usefr):
         bkgSel = fakes
         dsets = [
             ('WWDoubleTo2L',"Signal",friends),
-            ('DoubleMuon_Run2016B_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016C_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016D_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016E_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016F_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016B_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016C_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016D_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016E_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016F_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016G_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016H_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016G_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016H_02Apr2020',"Background",friends)
-
+            ('DoubleMuon_Run{here}B_02Apr2020'.format(here=year),"Background",friends),
+            ('DoubleMuon_Run{here}C_02Apr2020'.format(here=year),"Background",friends),
+            ('DoubleMuon_Run{here}D_02Apr2020'.format(here=year),"Background",friends),
+            ('DoubleMuon_Run{here}E_02Apr2020'.format(here=year),"Background",friends),
+            ('DoubleMuon_Run{here}F_02Apr2020'.format(here=year),"Background",friends),
         ]
     else: 
         bkgSel = TL
         dsets = [
             ('WWDoubleTo2L',"Signal",friends),
-            ('DoubleMuon_Run2016B_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016C_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016D_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016E_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016F_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016B_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016C_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016D_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016E_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016F_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016G_02Apr2020',"Background",friends),
-            ('DoubleMuon_Run2016H_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016G_02Apr2020',"Background",friends),
-            ('DoubleEG_Run2016H_02Apr2020',"Background",friends)
-
+            ('DoubleMuon_Run{here}B_02Apr2020'.format(here=year),"Background",friends),
+            ('DoubleMuon_Run{here}C_02Apr2020'.format(here=year),"Background",friends),
+            ('DoubleMuon_Run{here}D_02Apr2020'.format(here=year),"Background",friends),
+            ('DoubleMuon_Run{here}E_02Apr2020'.format(here=year),"Background",friends),
+            ('DoubleMuon_Run{here}F_02Apr2020'.format(here=year),"Background",friends),
         ]
+        if (year == '2016' and 'wz' not in bkg):
+            dsets.append(('DoubleMuon_Run{here}G_02Apr2020'.format(here=year),"Background",friends))
+            dsets.append(('DoubleMuon_Run{here}H_02Apr2020'.format(here=year),"Background",friends))
+            
+
     if useconept:
         print 'training using conept'
         pff='_withcpt'
@@ -129,16 +119,16 @@ def train_classification(year,bkg,useconept,usefr):
         common_cuts = 'nLepFO_Recl == 2 && Lep1_pt > 25 && Lep2_pt > 20 && met > 15'
 
     bkgcuts = ROOT.TCut('1');
-    bkgcuts += afss
-    bkgcuts += muon
-    bkgcuts += eleID
+    bkgcuts += mmss
+    #bkgcuts += muon
+    #bkgcuts += eleID
     bkgcuts += common_cuts
     bkgcuts += bkgSel
 
     
     dpscuts = ROOT.TCut('1')
     dpscuts += afac
-    dpscuts += muon
+    #dpscuts += muon
     dpscuts += eleID
     dpscuts +=TT
     dpscuts +=common_cuts
@@ -151,11 +141,12 @@ def train_classification(year,bkg,useconept,usefr):
         datasets.append((name, trainclass, tree, glbwt))
     pff1='_usingFRs' if usefr else ''
     fOut = ROOT.TFile("files/TMVA_classification_dpsvs"+"_"+bkg+"_"+year+pf+pff1+pff+".root","recreate") #creating the output file 
+    #fOut = ROOT.TFile("TMVA_classification_dpsvs"+"_"+bkg+"_"+year+pf+pff1+pff+".root","recreate") #creating the output file 
     fOut.cd()
     # configuring tmva
     factory = ROOT.TMVA.Factory('TMVAClassification', fOut, "!V:!Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" )
     DL = ROOT.TMVA.DataLoader("files/dataset"+pf+"_"+year+"_"+bkg+pff1+pff);
-
+    #DL = ROOT.TMVA.DataLoader("dataset"+pf+"_"+year+"_"+bkg+pff1+pff);
     # adding list of vars to train on
     if useconept:
         DL.AddVariable('pt1 := Lep1_conept','p_{T1}', 'F')
@@ -177,9 +168,9 @@ def train_classification(year,bkg,useconept,usefr):
 
     for name,trainclass,tree,glbwt in datasets:
         if trainclass == "Signal":
-            DL.AddSignalTree(tree,glbwt)
+            DL.AddSignalTree(tree,1.0)#glbwt)
         else:
-            DL.AddBackgroundTree(tree,glbwt)
+            DL.AddBackgroundTree(tree,1.0)#glbwt)
 
     #evtwt_sig = "puw * (min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) > 0.9)"
     #evtwt  = "(run == 1) ? (puWeight * xsec * genWeight * {TTsel} ) : (1.0 * {TLsel})".format(TTsel=TT,TLsel=TL)    #run number is set to 1 for MC samples 
@@ -188,14 +179,14 @@ def train_classification(year,bkg,useconept,usefr):
 
 
     if 'wz' in bkg:
-        DL.SetWeightExpression("puWeight * xsec * genWeight * prescaleFromSkim")
+        DL.SetWeightExpression("prescaleFromSkim *abs(genWeight)/genWeight")
     else :
-        DL.SetSignalWeightExpression("puWeight * xsec * genWeight * prescaleFromSkim")        
+        DL.SetSignalWeightExpression("prescaleFromSkim")        
         if(usefr):
-            DL.SetBackgroundWeightExpression("fakeRateWt * prescaleFromSkim");
+            DL.SetBackgroundWeightExpression("fakeRateWt *prescaleFromSkim");
         else:
             DL.SetBackgroundWeightExpression("prescaleFromSkim");
-    #evtwt  = "!isData ? (puw * (min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) > 0.9)) : (fakeRateWt * {TLsel})".format(TLsel=TL)
+    
 
 
 
@@ -205,7 +196,7 @@ def train_classification(year,bkg,useconept,usefr):
                        ':'.join([
                            '!H',
                            '!V',
-                           'NTrees=1000',
+                           'NTrees=500',
                            'BoostType=Grad',
                            'Shrinkage=0.10',
                            'UseBaggedBoost',
@@ -216,20 +207,22 @@ def train_classification(year,bkg,useconept,usefr):
                            'NegWeightTreatment=IgnoreNegWeightsInTraining'
                        ]))
 
-##  factory.BookMethod(DL,ROOT.TMVA.Types.kBDT, 'BDT',
-##                     ':'.join([
-##                         '!H',
-##                         '!V',
-##                         'NTrees=1000',
-##                         'MinNodeSize=2.5%',
-##                         'MaxDepth=3',
-##                         'BoostType=AdaBoost',
-##                         'AdaBoostBeta=0.5'
-##                         'UseBaggedBoost',
-##                         'BaggedSampleFraction=0.50',
-##                         'nCuts=20',
-##                         'NegWeightTreatment=IgnoreNegWeightsInTraining'
-##                     ]))
+    factory.BookMethod(DL,ROOT.TMVA.Types.kBDT, 'BDT',
+                       ':'.join([
+                           '!H',
+                           '!V',
+                           'NTrees=450',
+                           'MinNodeSize=2.5%',
+                           'MaxDepth=2',
+                           'BoostType=AdaBoost',
+                           'AdaBoostBeta=0.5'
+                           'UseBaggedBoost',
+                           'BaggedSampleFraction=0.50',
+                           'nCuts=20',
+                           'CreateMVAPdfs',
+                           'SeparationType=GiniIndex',
+                           'NegWeightTreatment=IgnoreNegWeightsInTraining'
+                       ]))
 ##
 ##  factory.BookMethod(DL,ROOT.TMVA.Types.kBDT, 'BDTB',
 ##                     ':'.join([

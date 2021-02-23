@@ -28,3 +28,5 @@ done
 
 
 
+#python skimFTreesNew.py /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_skim2lss/2016/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2016/dpsbdt_ultimate
+#python skimFTreesNew.py /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_skim2lss_muWP90_elWP70/2017/ /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_04092020/2017/dpsbdt_ultimate_muWP90_elWP70/
