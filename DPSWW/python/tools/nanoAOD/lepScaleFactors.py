@@ -63,18 +63,18 @@ class lepScaleFactors(Module):
         hist = self.looseToTight['%d,%s,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm', '2lss' if nlep == 2 else '3l')]
         ptbin  = max(1, min(hist.GetNbinsY(), hist.GetYaxis().FindBin(lep.pt)));
         #print ptbin,lep.pt
-        if (nlep == 2 and year != 2018 ) : #( (abs(lep.pdgId) == 11) or ( abs(lep.pdgId) == 13 and year != 2017 ) ) ): #2016 is all dpsWPs, 2017 for el 70 and mu 90 and nothing final for 2018 so we don't care much
-            etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(lep.eta)));
-            error= hist.GetBinError(etabin,ptbin)             
-        else:
-            etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(abs(lep.eta))));
-            hist_ptunc  = self.looseToTightUncertainties_pt['%d,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm')]
-            ptbin = max(1, min(hist_ptunc.GetNbinsX(), hist_ptunc.FindBin( lep. pt)))
-            err_pt = hist_ptunc.GetBinContent(ptbin) 
-            hist_etaunc = self.looseToTightUncertainties_eta['%d,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm')]
-            etabin = max(1, min(hist_etaunc.GetNbinsX(), hist_etaunc.FindBin( lep. pt)))
-            err_eta = hist_ptunc.GetBinContent(etabin) 
-            error = max(abs(err_pt-1), abs(err_eta-1))
+        #        if ( ) : #( (abs(lep.pdgId) == 11) or ( abs(lep.pdgId) == 13 and year != 2017 ) ) ): #2016 is all dpsWPs, 2017 for el 70 and mu 90 and nothing final for 2018 so we don't care much
+        etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(lep.eta)));
+        error= hist.GetBinError(etabin,ptbin)             
+        ##amelse:
+        ##am    etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(abs(lep.eta))));
+        ##am    hist_ptunc  = self.looseToTightUncertainties_pt['%d,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm')]
+        ##am    ptbin = max(1, min(hist_ptunc.GetNbinsX(), hist_ptunc.FindBin( lep. pt)))
+        ##am    err_pt = hist_ptunc.GetBinContent(ptbin) 
+        ##am    hist_etaunc = self.looseToTightUncertainties_eta['%d,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm')]
+        ##am    etabin = max(1, min(hist_etaunc.GetNbinsX(), hist_etaunc.FindBin( lep. pt)))
+        ##am    err_eta = hist_ptunc.GetBinContent(etabin) 
+        ##am    error = max(abs(err_pt-1), abs(err_eta-1))
 
         out = hist.GetBinContent(etabin,ptbin) 
         if abs(lep.pdgId) == 13: 

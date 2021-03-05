@@ -1,11 +1,11 @@
 alwaystrue: 1
-#pt2520 : LepGood1_conePt > 25 &&  LepGood2_conePt > 20
-pt2520 : LepGood1_pt > 25 &&  LepGood2_pt > 20
+pt2520 : LepGood1_conePt > 25 &&  LepGood2_conePt > 20
+
 trigger: Trigger_2lss
 
 filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
 
-cleanup: minMllAFAS > 12
+cleanup: minMllAFAS > 20
 
 dilep: nLepFO == 2
 excltight: nLepTight <=2
@@ -13,18 +13,20 @@ excltight: nLepTight <=2
 opp-sign: LepGood1_charge*LepGood2_charge < 0
 
 TT: LepGood1_isLepTight && LepGood2_isLepTight
-#dy: ptll(LepGood1_conePt, LepGood1_eta, LepGood1_phi, LepGood1_mass, LepGood2_conePt, LepGood2_eta, LepGood2_phi, LepGood2_mass) > 50
+#dy: ptll(LepGood1_conePt, LepGood1_eta, LepGood1_phi, LepGood1_mass, LepGood2_conePt, LepGood2_eta, LepGood2_phi, LepGood2_mass) > 30 
 
+#etael1      : (abs(LepGood1_pdgId) == 13 || (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556))
+#etael1      : (abs(LepGood2_pdgId) == 13 || (abs(LepGood2_eta) < 1.442 || abs(LepGood2_eta) > 1.556))
 
+##tauveto: nTauFO == 0
 
-#tauveto: nTauFO == 0
-
-metpt: MET_pt > 15 
+metpt: MET_pt > 20
 
 #zerojet: nJet25 ==0
 bVeto: nBJetLoose25 ==0
 
-Zsel: abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2) < 10
+##Zsel: abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2) < 10
+Zsel : abs(mZ1 - 91.2) < 10
 
 eleID: (abs(LepGood1_pdgId)!=11 || (LepGood1_convVeto && LepGood1_lostHits==0 && LepGood1_tightCharge>=2)) && (abs(LepGood2_pdgId)!=11 || (LepGood2_convVeto && LepGood2_lostHits==0 && LepGood2_tightCharge>=2))
 

@@ -1,0 +1,38 @@
+data   : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt"
+Rares : TTZ_LO : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares"
+Rares : TTW_LO : xsec : 1 ; FillColor=ROOT.kPink+6 , Label="Rares"
+Rares : TTJets_DiLepton : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares"
+Rares : T_sch_lep : xsec :   1 ; FillColor=ROOT.kPink+6
+Rares : T_tch     : xsec :   1 ; FillColor=ROOT.kPink+6 
+Rares : TBar_tch  : xsec :   1 ; FillColor=ROOT.kPink+6 
+
+Rares : T_tWch_noFullyHad      : xsec :   1       ; FillColor=ROOT.kPink+6    , years="2016\,2018"
+Rares : TBar_tWch_noFullyHad   : xsec :   1       ; FillColor=ROOT.kPink+6    , years="2016\,2018"
+Rares : T_tWch                 : xsec :   1       ; FillColor=ROOT.kPink+6    , years="2017"
+Rares : TBar_tWch              : xsec :   1       ; FillColor=ROOT.kPink+6    , years="2017"
+Rares : GGHZZ4L    	       : xsec :   1       ; FillColor=ROOT.kPink+6    
+Rares : GGZZ4L    	       : 0.014352 :   1       ; FillColor=ROOT.kPink+6    
+
+Rares : WpWpJJ : xsec*0.05454/0.03711 : 1 ; FillColor=ROOT.kPink+6 , Label="Rares"
+Rares : WWW    : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares" , years="2016\,2018"
+Rares : WWW_ll : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares", years="2017"
+Rares : WWZ    : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares"
+Rares : WZZ    : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares"
+Rares : ZZZ    : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares"
+Rares : WWG    : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares" , years="2017\,2018"
+
+ZZ+        : ZZTo4L : xsec : 1 ;  FillColor=ROOT.kOrange-3 , Label="ZZ" 
+WZ_mllLT4  : WZTo3LNu_mllmin01 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(GenPart_mass < 4. && LepGood_genPartFlav == 1) == 1 ; FillColor=ROOT.kViolet+7, Label="W\#gamma*"
+WZ_alt	   : WZTo3LNu : xsec : 1 ;  FillColor=ROOT.kYellow, Label="WZ_alt" 
+WZ         : WZTo3LNu_fxfx : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="WZ" #, SkipMe=True
+WZ_incl    : WZTo3LNu_mllmin01 : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="WZ/\#gamma*"
+
+TTdilep    : TTJets_DiLepton : xsec : 1 ; FillColor=ROOT.kViolet, Label="ttbar_dilep"
+ttjets     : TTJets : xsec : 1 ; FillColor=ROOT.kViolet, Label="ttbar"
+DY         : DYJetsToLL_M50 : xsec     :1 ; FillColor=8
+DY         : DYJetsToLL_M10to50 : xsec :1 ; FillColor=8 , years="2016\,2017"
+DYLO+      : DYJetsToLL_M50_LO : xsec : 1; FillColor=8
+DYLO+      : DYJetsToLL_M10to50_LO : xsec : 1 ; FillColor=8, years="2016"
+
+
+#LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && LepGood3_isMatchRightCharge

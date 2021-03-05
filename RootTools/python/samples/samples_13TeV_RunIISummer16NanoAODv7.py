@@ -19,6 +19,13 @@ TTLep_pow = kreator.makeMCComponent("TTLep_pow", "/TTTo2L2Nu_TuneCUETP8M2_ttHtra
 TTSemi_pow = kreator.makeMCComponent("TTSemi_pow", "/TTToSemilepton_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 2*831.76*(3*0.108)*(1-3*0.108) )
 
 
+
+
+
+TTGJets     = kreator.makeMCComponent("TTGJets",    "/TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 3.76, fracNegWeights=0.34)
+TTGJets_ext = kreator.makeMCComponent("TTGJets_ext","/TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root", 3.76, fracNegWeights=0.34)
+
+
 Top = [
 TTJets,
 TTJets_ext,
@@ -30,7 +37,9 @@ TTJets_SingleLeptonFromTbar_ext,
 TTJets_SingleLeptonFromT,
 TTJets_SingleLeptonFromT_ext,
 TTLep_pow,
-TTSemi_pow
+TTSemi_pow,
+TTGJets,
+TTGJets_ext
 ]
 
 
@@ -327,16 +336,31 @@ QCD_Pt_250toInf_bcToE
 ]
 
 
+### gg fusion
+GGHZZ4L = kreator.makeMCComponent("GGHZZ4L", "/GluGluHToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.01212) #43.92*2.76E-04)
+GGZZ4t = kreator.makeMCComponent("GGZZ4t","/GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root",0.001586)
+GGZZ4m = kreator.makeMCComponent("GGZZ4m","/GluGluToContinToZZTo4mu_13TeV_MCFM701_pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root",0.001586)
+GGZZ4e = kreator.makeMCComponent("GGZZ4e","/GluGluToContinToZZTo4e_13TeV_MCFM701_pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root",0.001586)
+GGZZ2m2t = kreator.makeMCComponent("GGZZ2m2t","/GluGluToContinToZZTo2mu2tau_13TeV_MCFM701_pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root",0.003194)
+GGZZ2e2t = kreator.makeMCComponent("GGZZ2e2t","/GluGluToContinToZZTo2e2tau_13TeV_MCFM701_pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root",0.003194)
+GGZZ2e2m = kreator.makeMCComponent("GGZZ2e2m","/GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root",0.003194)
+GGZZ4L = kreator.makeMCComponent("GGZZ4L","/GluGluToContinToZZTo4L_13TeV_TuneCUEP8M1_madgraphMLM_pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM","CMS", ".*root",0.014352)
 
-
-
-
+GGFusion= [
+    GGZZ4L,
+    GGHZZ4L,
+    GGZZ4t,
+    GGZZ4m,
+    GGZZ4e,
+    GGZZ2m2t,
+    GGZZ2e2t,
+    GGZZ2e2m]
 
 ### ----------------------------- summary ----------------------------------------
 
 #mcSamples = TTs + SingleTop + VJets + DYJetsM50HT + DYJetsM5to50HT + DYNJets + WJetsToLNuHT + WJetsToLNuPT + WNJets + GJetsHT + ZJetsToNuNuHT + QCDHT + QCDPtbcToE + QCDPt + QCDPtEMEnriched + [QCD_Mu15] + QCD_Mu5 +  DiBosons + TriBosons + TTV + Higgs + Rares + EWKV2Jets
 
-mcSamples = Top + SingleTop + VJets + DiBosons + TriBosons  + Rares + QCDPtbcToE  + QCDPtEMEnriched + QCD_Mu5 + WNJets + DYNJets
+mcSamples = Top + SingleTop + VJets + DiBosons + TriBosons  + Rares + QCDPtbcToE  + QCDPtEMEnriched + QCD_Mu5 + WNJets + DYNJets + GGFusion
 
 samples = mcSamples
 

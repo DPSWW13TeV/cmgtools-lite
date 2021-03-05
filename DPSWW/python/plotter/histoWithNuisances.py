@@ -100,7 +100,7 @@ def buildVariationsFromAlternative( uncfile, ret):
             if hasBeenApplied:
                 raise RuntimeError("variation %s is being applied to at least two processes"%var.name)
             if var.args[0] not in ret :
-                raise RuntimeError("Alternative sample (%s) has not been processed, available samples are %s"%var.args[0], ','.join(k for k in ret))
+                raise RuntimeError("Alternative sample %s has not been processed"%var.args[0])
             
             #print k,p,var
 

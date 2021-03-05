@@ -1,3 +1,13 @@
+GGZZ4m  : GGZZ4m  : xsec
+GGHZZ4L : GGHZZ4L : xsec
+GGZZ4e  : GGZZ4e  : xsec
+GGZZ2e2m: GGZZ2e2m: xsec
+GGZZ2e2t: GGZZ2e2t: xsec
+GGZZ4t  : GGZZ4t  : xsec
+GGZZ2m2t: GGZZ2m2t: xsec
+TTGJets: TTGJets: xsec
+GGZZ4L : GGZZ4L: xsec
+TGJets_lep : TGJets_lep : xsec
 WWW : WWW : xsec  
 WWW_ll : WWW_ll : xsec  
 WZZ : WZZ : xsec

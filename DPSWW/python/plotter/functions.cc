@@ -131,6 +131,14 @@ float mass_3(float pt1, float eta1, float phi1, float m1, float pt2, float eta2,
     return (p41+p42+p43).M();
 }
 
+float mass_3lep(float pt1, float eta1, float phi1, float pt2, float eta2, float phi2, float pt3, float eta3, float phi3) {
+    typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+    PtEtaPhiMVector p41(pt1,eta1,phi1,0);
+    PtEtaPhiMVector p42(pt2,eta2,phi2,0);
+    PtEtaPhiMVector p43(pt3,eta3,phi3,0);
+    return (p41+p42+p43).M();
+}
+
 
 float pt_4(float pt1, float phi1, float pt2, float phi2, float pt3, float phi3, float pt4, float phi4) {
     phi2 -= phi1;
@@ -318,7 +326,7 @@ float triggerSF_ttH(int pdgid1, float pt1, int pdgid2, float pt2, int year, int 
   }
   else return 1.;
 }
-/*
+
 float ttH_2lss_ifflav(int LepGood1_pdgId, int LepGood2_pdgId, float ret_ee, float ret_em, float ret_mm){
   if (abs(LepGood1_pdgId)==11 && abs(LepGood2_pdgId)==11) return ret_ee;
   if ((abs(LepGood1_pdgId) != abs(LepGood2_pdgId)))       return ret_em;
@@ -327,7 +335,7 @@ float ttH_2lss_ifflav(int LepGood1_pdgId, int LepGood2_pdgId, float ret_ee, floa
   assert(0);
   return 0; // avoid warning
 }
-*/
+
 int unroll_2Dbdt_dps_elmu(float BDTx,float BDTy){
   if(BDTx  > 0.1 && BDTx <=0.25 && BDTy >0.1 && BDTy <= 0.35)return 0;
   else if((BDTx > 0.1 && BDTx <=0.3 && BDTy >0.35) || (BDTx  > 0.3 && BDTx <=0.35 && BDTy >0.35 && BDTy <= 0.65))return 1;

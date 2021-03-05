@@ -20,6 +20,12 @@ TBar_tWch = kreator.makeMCComponent("TBar_tWch", "/ST_tW_antitop_5f_inclusiveDec
 TTW_LO = kreator.makeMCComponent("TTW_LO", "/ttWJets_TuneCP5_13TeV_madgraphMLM_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root",  0.6105 )
 TTZ_LO = kreator.makeMCComponent("TTZ_LO", "/ttZJets_TuneCP5_13TeV_madgraphMLM_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root",  0.5297/0.692)
 
+TGJets_lep = kreator.makeMCComponent("TGJets_lep", "/TGJets_TuneCP5_13TeV_amcatnlo_madspin_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 1.018, fracNegWeights=0.4)
+
+TTGJets     = kreator.makeMCComponent("TTGJets",    "/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 3.76, fracNegWeights=0.34)
+TTGJets_ext     = kreator.makeMCComponent("TTGJets_ext",    "/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root", 3.76, fracNegWeights=0.34)
+
+
 
 
 Top = [
@@ -32,7 +38,9 @@ T_tWch,
 TBar_tWch,
 TTW_LO,
 TTZ_LO,
-
+TGJets_lep,
+TTGJets,
+TTGJets_ext
 ]
 
 
@@ -226,12 +234,57 @@ QCD_bcToE = [
     QCD_Pt250toInf_bcToE,
 ]
 
+### gg fusion
+GGHZZ4L      = kreator.makeMCComponent("GGHZZ4L", "/GluGluHToZZTo4L_M125_13TeV_powheg2_JHUGenV7011_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root", 0.01212) 
+GGZZ4L       = kreator.makeMCComponent("GGZZ4L", "/GluGluToContinToZZTo4L_13TeV_TuneCP5_madgraphMLM_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.014352)
+GGZZ4t       = kreator.makeMCComponent("GGZZ4t","/GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root",0.001586)
+GGZZ4t_cp5   = kreator.makeMCComponent("GGZZ4t_cp5","/GluGluToContinToZZTo4tau_13TeV_TuneCP5_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root",0.001586)
+GGZZ4m       = kreator.makeMCComponent("GGZZ4m","/GluGluToContinToZZTo4mu_13TeV_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8_ext2-v1/NANOAODSIM", "CMS", ".*root",0.001586)
+GGZZ4m_ext   = kreator.makeMCComponent("GGZZ4m_ext","/GluGluToContinToZZTo4mu_13TeV_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root",0.001586)
+GGZZ4m_cp5   = kreator.makeMCComponent("GGZZ4m_cp5","/GluGluToContinToZZTo4mu_13TeV_TuneCP5_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root",0.001586)
+
+GGZZ4e       = kreator.makeMCComponent("GGZZ4e","/GluGluToContinToZZTo4e_13TeV_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM","CMS", ".*root",0.001586)
+GGZZ4e_cp5   = kreator.makeMCComponent("GGZZ4e_cp5","/GluGluToContinToZZTo4e_13TeV_TuneCP5_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM","CMS", ".*root",0.001586)
+
+GGZZ2m2t     = kreator.makeMCComponent("GGZZ2m2t","/GluGluToContinToZZTo2mu2tau_13TeV_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root",0.003194)
+GGZZ2m2t_ext = kreator.makeMCComponent("GGZZ2m2t_ext","/GluGluToContinToZZTo2mu2tau_13TeV_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root",0.003194)
+GGZZ2m2t_cp5 = kreator.makeMCComponent("GGZZ2m2t_cp5","/GluGluToContinToZZTo2mu2tau_13TeV_TuneCP5_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root",0.003194)
+
+GGZZ2e2t     = kreator.makeMCComponent("GGZZ2e2t","/GluGluToContinToZZTo2e2tau_13TeV_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root",0.003194)
+GGZZ2e2t_cp5 = kreator.makeMCComponent("GGZZ2e2t_cp5","/GluGluToContinToZZTo2e2tau_13TeV_TuneCP5_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root",0.003194)
+GGZZ2e2m     = kreator.makeMCComponent("GGZZ2e2m","/GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root",0.003194)
+GGZZ2e2m_ext = kreator.makeMCComponent("GGZZ2e2m_ext","/GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8_ext1-v1/NANOAODSIM", "CMS", ".*root",0.003194)
+GGZZ2e2m_cp5 = kreator.makeMCComponent("GGZZ2e2m_cp5","/GluGluToContinToZZTo2e2mu_13TeV_TuneCP5_MCFM701_pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root",0.003194)
+
+
+
+
+
+GGFusion= [
+    GGHZZ4L,
+    GGZZ4L,
+    GGZZ4t,
+    GGZZ4t_cp5,
+    GGZZ4m,
+    GGZZ4m_ext,
+    GGZZ4m_cp5,
+    GGZZ4e,
+    GGZZ4e_cp5,
+    GGZZ2m2t,
+    GGZZ2m2t_ext,
+    GGZZ2m2t_cp5,
+    GGZZ2e2t,
+    GGZZ2e2t_cp5,
+    GGZZ2e2m,
+    GGZZ2e2m_ext,
+    GGZZ2e2m_cp5
+]
 
 
 
 ### ----------------------------- summary ----------------------------------------
 
-mcSamples = Top + EWK + DiBosons + TriBosons + QCD_MuEnriched + QCD_EMs + QCD_bcToE #+ privateProd
+mcSamples = Top + EWK + DiBosons + TriBosons + QCD_MuEnriched + QCD_EMs + QCD_bcToE + GGFusion #+ privateProd
 
 samples = mcSamples
 

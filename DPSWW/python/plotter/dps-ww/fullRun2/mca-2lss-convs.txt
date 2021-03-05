@@ -5,7 +5,15 @@ Convs01J  : WGToLNuG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_m
 ##Convs01J  : ZGToLLG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
 Convs01J  : ZGToLLG_01J_lowmll_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
 
-#Convs  : WGToLNuG_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma"
+ConvsT  : TTGJets : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="Conv."
+ConvsT  : TGJets_lep : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="Conv."
+
+WG  : WGToLNuG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kOrange-3, Label="WG"
+
+ZG_lowmll  : ZGToLLG_01J_lowmll_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="ZG-lowmll" 
+
+
+ZG  : ZGToLLG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kCyan-3, Label="ZG"
 
 
 

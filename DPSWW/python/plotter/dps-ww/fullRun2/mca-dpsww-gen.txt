@@ -1,30 +1,29 @@
 # vim: syntax=sh
-
 #DPSpy8+ : WWTo2L2Nu_DPS_pythia8 : 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
 DPSpy8+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8 : 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
 
 DPSv5 : signal_v5 : 0.1729 : 1 ; FillColor=ROOT.kGreen+1, Label="DPSWW-py8-nanoV5" 
 
-
-
 DPShwpp : WWTo2L2Nu_DoubleScattering_13TeV-herwigpp : 0.1729 : 1 ; FillColor=ROOT.kBlue+1, Label="DPSWW-hw++" 
 
-WZ_amc+       : WZTo3LNu_fxfx : 4.43 : 1 ; FillColor=ROOT.kAzure+1, Label="WZ_amc"
-#WZ+       :  WgStarLNuEE : 3.526  : 1  ; FillColor=ROOT.kAzure+1, Label="WZ"
-#WZ+       : WgStarLNuMuMu : 2.793  : 1  ; FillColor=ROOT.kAzure+1, Label="WZ"
+WZ_amc+       : WZTo3LNu_amc  : 4.666 : 1 ; FillColor=ROOT.kAzure+1, FillStyle=3005, Label="WZ_amc"
+WZ_pow	      : WZTo3LNu_pow  : 4.42965 : 1 ; FillColor=ROOT.kRed+1,  Label="WZ_pow" #, LineStyle=2,
+WZ_incl       : WZTo3LNu_pow_incl : 58.59*0.601644 : 1 ; FillColor=ROOT.kViolet+2, Label="WZ_pow_mll > 0.1"
 
-WZ_mllLT4 : WZTo3LNu_mllmin01 : 58.59*0.601644 : 1 && Sum$(GenPart_mass < 4. && GenPart_status == 22 )==1 ; FillColor=ROOT.kMagenta, Label="WZ_pow_incl mll < 4"
+Wgstar        : WGstarToLNuEE_012J_madgraph : 3.526    : 1  ; FillColor=ROOT.kRed+1, Label="W\#gamma*", years="2016"
+Wgstar        : WGstarToLNuMuMu_012Jets_madgraph : 2.793  : 1  ; FillColor=ROOT.kRed+1, Label="W\#gamma*",	years="2016"
+WZ_mllLT4     : WZTo3LNu_pow_incl : 58.59*0.601644 : Sum$(GenPart_mass < 4 && GenPart_mass > 0 && GenPart_status == 22)==1 ; FillColor=ROOT.kGreen-3 ,Label="WZ_pow mll < 4"
 
-WZ_incl : WZTo3LNu_mllmin01 : 58.59*0.601644 : 1 ; FillColor=ROOT.kGreen, Label="WZ_pow_incl"
+WG	      : WGToLNuG_01J_amc.root : 178.4 : 1 ; FillColor=ROOT.kGreen-3, Label="W\#gamma"
 
-WZ_pow	 : WZTo3LNu : 4.43 : 1 ;  FillColor=ROOT.kOrange, Label="WZ_pow" 
+ZG  	      : ZGToLLG_01J_amc  : 58.83 : 1 ; FillColor=ROOT.kViolet+2, Label="Z\#gamma" 
+ZG_lowmll     : ZGToLLG_01J_lowMLL_amc : 97.21 : 1 ; FillColor=ROOT.kViolet+2, LineStyle=2, Label="Z\#gamma_lowmll" 
+
 
 
 WgStarLNuEE   :  WgStarLNuEE : 3.526  : 1  ; FillColor=ROOT.kPink+1, Label="W\#gamma*\#rightarrow ee" 
 WgStarLNuMuMu   : WgStarLNuMuMu : 2.793  : 1  ; FillColor=ROOT.kTeal+1, Label="W\#gamma*\#rightarrow \#mu\#mu" 
 
-Wgstar   :  WgStarLNuEE : 3.526  : Sum$(GenPart_mass < 4. && GenPart_mass > 0.01)==1  ; FillColor=ROOT.kRed+1, Label="W\#gamma*"
-Wgstar  : WgStarLNuMuMu : 2.793  : Sum$(GenPart_mass < 4. && GenPart_mass > 0.01)==1  ; FillColor=ROOT.kRed+1, Label="W\#gamma*"
 
 
 
