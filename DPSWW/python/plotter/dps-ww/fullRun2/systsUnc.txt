@@ -26,12 +26,10 @@ Wgstar_norm  : WZ_mllLT4 : .*          : normSymm : 1.5
 
 WZ_shape             : WZ	   : .*                     : altSample          : WZ_alt
 DPSWW_shape          : DPSWW	   : .*                     : altSample          : DPSWW_hg 
-##DPSWW_shape        : DPSWW	   : .*                     : altSample          : DPSWW_hg #; year="2017"
 Rares_shape1         : Rares       : .*                     : LinearShapeOnly    : 1.05
 Rares_shape2         : Rares       : .*                     : ParabolicShapeOnly : 1.05
 ZZ_shape1	     : ZZ	   : .*			    : LinearShapeOnly    : 1.05
 ZZ_shape2	     : ZZ	   : .*			    : ParabolicShapeOnly : 1.05
-
 Wgstar_shape1	     : WZ_mllLT4   : .*			    : LinearShapeOnly    : 1.05
 Wgstar_shape2	     : WZ_mllLT4   : .*			    : ParabolicShapeOnly : 1.05
 Conv_shape1	     : Convs01J	   : .*			    : LinearShapeOnly    : 1.05
@@ -153,8 +151,8 @@ L1PreFiring : $PromptFromMC : .* : templateAsymm; AddWeights=['L1PreFiringWeight
 # fakes
 
 
-FR_mumu_norm: $FRData  : .*mumu.* :  normSymm : 1.25
-FR_elmu_norm: $FRData  : .*elmu.* :  normSymm : 1.30
+FR_mumu_closure: $FRData  : .*mumu.* :  normSymm : 1.25
+FR_elmu_closure: $FRData  : .*elmu.* :  normSymm : 1.30
 
 
 FRm_norm : $FRData  : .*mu.* : templateAsymm; FakeRates=["dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-up.txt"\,"dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-down.txt"],         RemoveFakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", DoesNotChangeEventSelection=True

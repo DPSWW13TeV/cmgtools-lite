@@ -176,9 +176,9 @@ def makeResults(year,finalState,splitCharge,doWhat,applylepSFs):
     allvars    = ['met']#'nLepFO','nLepTight','njets25','nBJetLoose25','nBJetMedium25','njets30','conept1','conept2','pt1','pt2','eta1','eta2','met','metphi','njets25','nBJetLoose25','nBJetMedium25','njets30','mll','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2','nVert','ptll','cptll','MVA1','MVA2'] #dilep_charge','puppimetphi','puppimet''tcharge1','tcharge2','MVA1','MVA2','minMVA','dilep_flav','phi1','phi2','MVA1','MVA2',
     bdtM=['BDTG_fakes','BDTG_wzamc','BDTG1d_fakes_amc']
     bdts2d=['BDT_fakes_wzpow','BDT_fakes_wzamc','BDTG_fakes_wzpow','BDTG_fakes_wzamc']
-    bdts=['BDT_fakes','BDT_wzpow','BDT_wzamc','BDT1d_fakes_pow','BDT1d_fakes_amc','BDTG_fakes','BDTG_wzpow','BDTG_wzamc','BDTG1d_fakes_pow','BDTG1d_fakes_amc']
+    bdts=['BDTG1d_fakes_amc']#BDT_fakes','BDT_wzpow','BDT_wzamc','BDT1d_fakes_pow','BDT1d_fakes_amc','BDTG_fakes','BDTG_wzpow','BDTG_wzamc','BDTG1d_fakes_pow','BDTG1d_fakes_amc']
     allbdts=bdts+[i+'_withcpt' for i in bdts]
-    plotvars   = allvars #+bdtM #+allbdts #+allvars #allvars #exotic 
+    plotvars   = bdts #allvars #+bdtM #+allbdts #+allvars #allvars #exotic 
 
     for FS in finalState:            
         for ch in loop:
@@ -193,11 +193,10 @@ def makeResults(year,finalState,splitCharge,doWhat,applylepSFs):
             invert    = []
             fittodata = []
             scalethem = {}
-            ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.65  1.25 --ratioDen WZ_alt --ratioNums WZ --ratioYLabel=amc/pow'
+            ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  2.05' 
             spam    = ' --topSpamSize 1.0 --noCms '
             legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
             ubands  = '--showMCError '
-
             #dopromptsub=    return x + ' '.join(["--plotgroup data_fakes%s+='.*_promptsub%s'"%(x,x) for x in procs])+" --neglist '.*_promptsub.*' "
             anything = "    --neglist '.*_promptsub.* -plotgroup data_fakes+=.*_promptsub.* ' --binname {finalState}   ".format(finalState=FS) # --plotmode norm '.format(finalState=FS) # --fitData --flp data_fakes'# --plotmode norm' # --plotmode nostack' # ' #"  --neglist '.*_promptsub.*' --plotgroup data_fakes+=.*_promptsub.* " #-- uf" #" #to include neagitve evt ylds from fakes --showIndivSigs --noStackSig --plotmode norm  
             extraopts = ratio + spam + legends + ubands + anything
@@ -405,11 +404,11 @@ def fakesClosure(year,finalState):
     fittodata = []
     invert    = []
     scalethem = {}
-    ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.0  2.5'
+    ratio   = ' --fixRatioRange  --maxRatioRange 0.0  3.5'
     spam    = ' --topSpamSize 1.0 --noCms '
-    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
-    ubands  = ' --showMCError '
-    anything = ' --plotmode norm --ratioDen wj --ratioNums wj_tl --ratioYLabel= obs./pred. ' 
+    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2 '
+    ubands  = ' '
+    anything = ' --plotmode nostack --ratioDen wj_tl --ratioNums wj --ratioYLabel= obs./pred. ' 
     extraopts = ratio + spam + legends + ubands + anything
     plots    = ['BDTG1d_fakes_amc','pt1','pt2','eta1','eta2','met','conept1','conept2']#'BDT_wz_amc','BDT_fakes','BDT_wz_pow','BDT_DPS_multiC','BDT_WZ_multiC','BDT_TL_multiC']
     for FS in finalState:
@@ -721,3 +720,4 @@ if __name__ == '__main__':
 # python runDPS.py --dyCR --year 2017 --finalState mumu --finalState elmu --finalState elel --applylepSFs
 # python runDPS.py --results --dW cards --year 2017 --finalState elmu --finalState mumu --applylepSFs --splitCharge
 # python runDPS.py --unskimmed --year 2017 --finalState elmu --finalState mumu
+# python runDPS.py --fC --year 2016 --finalState elmu --finalState mumu 
