@@ -34,5 +34,9 @@ DY         : DYJetsToLL_M10to50 : xsec :1 ; FillColor=8 , years="2016\,2017"
 DYLO+      : DYJetsToLL_M50_LO : xsec : 1; FillColor=8
 DYLO+      : DYJetsToLL_M10to50_LO : xsec : 1 ; FillColor=8, years="2016"
 
+Convs01J    : WGToLNuG_01J_amcatnlo : xsec : 1 ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma"
+##Convs01J  : ZGToLLG_01J_amcatnlo : xsec :  1 ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
+Convs01J  : ZGToLLG_01J_lowmll_amcatnlo : xsec :1 ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
+
 
 #LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && LepGood3_isMatchRightCharge

@@ -114,8 +114,10 @@ def buildVariationsFromAlternative( uncfile, ret):
                 yM = y0
                 if (y0 > 0 and yA > 0):
                     yM = y0*y0/yA
-                elif yA == 0:
+                elif yA <= 0:
                     yM = 2*y0
+                #elif y0 <= 0 :
+                #    yM = 0
                 mirror.SetBinContent(b, yM)
                 mirror.Scale(nominal.Integral()/mirror.Integral())
             p.addVariation( var.name, 'up'  , alternate)

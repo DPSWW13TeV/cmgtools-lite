@@ -27,7 +27,7 @@ q1: abs(LepGood1_charge + LepGood2_charge + LepGood3_charge) == 1
 
 zsel :  if3( ( (LepGood1_charge + LepGood2_charge) == 0 && (abs(LepGood1_pdgId) == abs(LepGood2_pdgId)) ),(abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2 ) < 10), if3( ((LepGood2_charge + LepGood3_charge) == 0 && (abs(LepGood3_pdgId) == abs(LepGood2_pdgId)) ),( abs (mass_2(LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) - 91.2) < 10), (abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass) - 91.2) < 10)) ) ; Disable=True
 
-
+cptll	    : if3((abs(LepGood1_pdgId) == 11 || abs(LepGood2_pdgId) == 11),ptll(LepGood1_conePt, LepGood1_eta, LepGood1_phi, LepGood1_mass, LepGood2_conePt, LepGood2_eta, LepGood2_phi, LepGood2_mass) < 30,1) 
 
 
 
@@ -45,9 +45,9 @@ gstartomm : if3( (LepGood1_pdgId + LepGood2_pdgId == 0), (abs(LepGood1_pdgId)+ab
 tauveto: nTauTight==0 ; Disable=True
 
 met_wz        : MET_pt > 50 ; Disable=True
-met_wg        : MET_pt > 30 ; Disable=True
-01j: nJet25_Recl < 2
-bVeto: nBJetMedium25 == 0
+met_zg        : MET_pt <= 30 ; Disable=True
+01j: nJet25_Recl < 2 ; Disable=True
+bVeto: nBJetMedium25 == 0 ; Disable=True
 
 
 

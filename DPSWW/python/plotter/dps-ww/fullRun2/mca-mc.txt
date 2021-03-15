@@ -49,7 +49,7 @@ WGstar_excl   : WgStarLNuMuMu : xsec  : LepGood1_isMatchRightCharge && LepGood2_
 
 
 WJ    	      : WJetsToLNu    : xsec : 1 ; FillColor=ROOT.kCyan+2, Label="WJ"  , years="2016\,2018"
-WJ_LO 	      : WJetsToLNu_LO : xsec : 1 ; FillColor=ROOT.kMagenta+2, Label="WJ_LO" 
+WJ_LO 	      : WJetsToLNu_LO : xsec : 1 ; FillColor=ROOT.kMagenta+2, Label="WJ" 
 
 Wnjet 	      : W0JetsToLNu : xsec : 1 ; FillColor=ROOT.kBlue+2, Label="WnJ" , years="2017\,2018"
 Wnjet 	      : W1JetsToLNu : xsec : 1 ; FillColor=ROOT.kBlue+2, Label="WnJ" , years="2017\,2018"

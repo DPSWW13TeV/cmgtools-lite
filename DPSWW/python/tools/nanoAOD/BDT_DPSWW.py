@@ -39,8 +39,8 @@ class BDT_DPSWW(Module):
             wts_wz_powG   = baseDir+'dataset_2016_wz_pow{here}/weights/TMVAClassification_BDTG.weights.xml'.format(here=self.pff)
             wts_TLCRG     = baseDir+'dataset_2016_TL{here}/weights/TMVAClassification_BDTG.weights.xml'    .format(here=self.pff)
 
-        else:
-            #print 'using training wts for 2017/2018' 
+        elif self.year == 2017:
+            #print 'using training wts for 2017' 
             wts_wz_amc    = baseDir+'dataset_muWP90_elWP70_2017_wz_amc{here}/weights/TMVAClassification_BDT.weights.xml'.format(here=self.pff)
             wts_wz_pow    = baseDir+'dataset_muWP90_elWP70_2017_wz_pow{here}/weights/TMVAClassification_BDT.weights.xml'.format(here=self.pff)
             wts_TLCR      = baseDir+'dataset_muWP90_elWP70_2017_TL{here}/weights/TMVAClassification_BDT.weights.xml'    .format(here=self.pff)
@@ -48,7 +48,13 @@ class BDT_DPSWW(Module):
             wts_wz_amcG   = baseDir+'dataset_muWP90_elWP70_2017_wz_amc{here}/weights/TMVAClassification_BDTG.weights.xml'.format(here=self.pff)
             wts_wz_powG   = baseDir+'dataset_muWP90_elWP70_2017_wz_pow{here}/weights/TMVAClassification_BDTG.weights.xml'.format(here=self.pff)
             wts_TLCRG     = baseDir+'dataset_muWP90_elWP70_2017_TL{here}/weights/TMVAClassification_BDTG.weights.xml'    .format(here=self.pff)
-
+        else:
+            wts_wz_amc    = baseDir+'dataset_2018_wz_amc{here}/weights/TMVAClassification_BDT.weights.xml'.format(here=self.pff)
+            wts_wz_pow    = baseDir+'dataset_2018_wz_pow{here}/weights/TMVAClassification_BDT.weights.xml'.format(here=self.pff)
+            wts_TLCR      = baseDir+'dataset_2018_TL{here}/weights/TMVAClassification_BDT.weights.xml'    .format(here=self.pff)
+            wts_wz_amcG   = baseDir+'dataset_2018_wz_amc{here}/weights/TMVAClassification_BDTG.weights.xml'.format(here=self.pff)
+            wts_wz_powG   = baseDir+'dataset_2018_wz_pow{here}/weights/TMVAClassification_BDTG.weights.xml'.format(here=self.pff)
+            wts_TLCRG     = baseDir+'dataset_2018_TL{here}/weights/TMVAClassification_BDTG.weights.xml'    .format(here=self.pff)
             #        wts_multiC  = baseDir+'BDTtraining/dataset_multiclass/weights/TMVAMutliClass_BDTG.weights.xml'
             #wts_fakes    = baseDir+'dataset_muWP90_elWP70_2017_fakes_usingFRs{here}/weights/TMVAClassification_BDTG.weights.xml'.format(here=self.pff)
             #wts_TL       = baseDir+'dataset_muWP90_elWP70_2017_TL_usingFRs{here}/weights/TMVAClassification_BDTG.weights.xml'.format(here=self.pff)

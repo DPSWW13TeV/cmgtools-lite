@@ -16,7 +16,7 @@ $alias : FRAll  : data_fakes|.*_promptsub
 Rares_norm   : Rares     : .*          : normSymm : 1.5
 Conv_norm    : Convs01J  : .*el.*      : normSymm : 1.3
 WZ_norm      : WZ        : .*          : normSymm : 1.10 
-WZ_norm      : WZ_incl   : .*          : normSymm : 1.10 
+WZincl_norm  : WZ_incl   : .*          : normSymm : 1.10 
 ZZ_norm      : ZZ     	 : .*          : normSymm : 1.15 
 Wgstar_norm  : WZ_mllLT4 : .*          : normSymm : 1.5
 

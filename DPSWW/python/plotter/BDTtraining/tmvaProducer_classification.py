@@ -102,13 +102,17 @@ def train_classification(year,bkg,useconept,usefr):
             ('DoubleMuon_Run{here}B_02Apr2020'.format(here=year),"Background",friends),
             ('DoubleMuon_Run{here}C_02Apr2020'.format(here=year),"Background",friends),
             ('DoubleMuon_Run{here}D_02Apr2020'.format(here=year),"Background",friends),
-            ('DoubleMuon_Run{here}E_02Apr2020'.format(here=year),"Background",friends),
-            ('DoubleMuon_Run{here}F_02Apr2020'.format(here=year),"Background",friends),
         ]
         if (year == '2016' and 'wz' not in bkg):
+            dsets.append(('DoubleMuon_Run{here}E_02Apr2020'.format(here=year),"Background",friends))
+            dsets.append(('DoubleMuon_Run{here}F_02Apr2020'.format(here=year),"Background",friends))
             dsets.append(('DoubleMuon_Run{here}G_02Apr2020'.format(here=year),"Background",friends))
             dsets.append(('DoubleMuon_Run{here}H_02Apr2020'.format(here=year),"Background",friends))
-            
+        elif (year == '2017' and 'wz' not in bkg):    
+            dsets.append(('DoubleMuon_Run{here}E_02Apr2020'.format(here=year),"Background",friends))
+            dsets.append(('DoubleMuon_Run{here}F_02Apr2020'.format(here=year),"Background",friends))
+        elif (year == '2018' and 'wz' not in bkg):        
+            dsets.append(('DoubleMuon_Run{here}A_02Apr2020'.format(here=year),"Background",friends))
 
     if useconept:
         print 'training using conept'
@@ -140,12 +144,12 @@ def train_classification(year,bkg,useconept,usefr):
         #print tree, weight
         datasets.append((name, trainclass, tree, glbwt))
     pff1='_usingFRs' if usefr else ''
-    fOut = ROOT.TFile("files/TMVA_classification_dpsvs"+"_"+bkg+"_"+year+pf+pff1+pff+".root","recreate") #creating the output file 
+    fOut = ROOT.TFile("TMVA_classification_dpsvs"+"_"+bkg+"_"+year+pf+pff1+pff+".root","recreate") #creating the output file files/
     #fOut = ROOT.TFile("TMVA_classification_dpsvs"+"_"+bkg+"_"+year+pf+pff1+pff+".root","recreate") #creating the output file 
     fOut.cd()
     # configuring tmva
     factory = ROOT.TMVA.Factory('TMVAClassification', fOut, "!V:!Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" )
-    DL = ROOT.TMVA.DataLoader("files/dataset"+pf+"_"+year+"_"+bkg+pff1+pff);
+    DL = ROOT.TMVA.DataLoader("dataset"+pf+"_"+year+"_"+bkg+pff1+pff);
     #DL = ROOT.TMVA.DataLoader("dataset"+pf+"_"+year+"_"+bkg+pff1+pff);
     # adding list of vars to train on
     if useconept:
