@@ -2,6 +2,54 @@
 
 ######### 
 
+BDT_fakes_raw_mumu          : BDT_DPS_TLCR_withpt                 : 10,-1.0,1.0		      ; XTitle="BDT_fakes (#mu^{#pm}#mu^{#pm})"
+BDTG_fakes_raw_mumu         : BDTG_DPS_TLCR_withpt                : 10,-1.0,1.0	      	      ; XTitle="BDTG_fakes (#mu^{#pm}#mu^{#pm})"
+BDTG_fakes_raw_mumu         : BDTG_DPS_TLCR_withpt 		  : 10,-1.0,1.0 	      ; XTitle="BDTG_fakes (#mu^{#pm}#mu^{#pm})"
+BDTG_wzamc_mumu		    : BDTG_DPS_WZ_amc_withpt		  : 10,-1.0,1.0	              ; XTitle="BDTG_WZ(#mu^{#pm}#mu^{#pm})"
+
+
+BDT_fakes_raw_mumuplusplus          : BDT_DPS_TLCR_withpt                 : 10,-1.0,1.0		      ; XTitle="BDT_fakes (#mu^{#plus}#mu^{#plus})"
+BDTG_fakes_raw_mumuplusplus         : BDTG_DPS_TLCR_withpt                : 10,-1.0,1.0	      	      ; XTitle="BDTG_fakes (#mu^{#plus}#mu^{#plus})"
+BDTG_fakes_raw_mumuplusplus         : BDTG_DPS_TLCR_withpt 		  : 10,-1.0,1.0 	      ; XTitle="BDTG_fakes (#mu^{#plus}#mu^{#plus})"
+BDTG_wzamc_mumuplusplus		    : BDTG_DPS_WZ_amc_withpt		  : 10,-1.0,1.0	              ; XTitle="BDTG_WZ(#mu^{#plus}#mu^{#plus})"
+
+BDT_fakes_raw_mumuminusminus          : BDT_DPS_TLCR_withpt                 : 10,-1.0,1.0		      ; XTitle="BDT_fakes (#mu^{#minus}#mu^{#minus})"
+BDTG_fakes_raw_mumuminusminus         : BDTG_DPS_TLCR_withpt                : 10,-1.0,1.0	      	      ; XTitle="BDTG_fakes (#mu^{#minus}#mu^{#minus})"
+BDTG_fakes_raw_mumuminusminus         : BDTG_DPS_TLCR_withpt 		    : 10,-1.0,1.0 	              ; XTitle="BDTG_fakes (#mu^{#minus}#mu^{#minus})"
+BDTG_wzamc_mumuminusminus	      : BDTG_DPS_WZ_amc_withpt	            : 10,-1.0,1.0	              ; XTitle="BDTG_WZ(#mu^{#minus}#mu^{#minus})"
+
+BDT_fakes_raw_elmu          : BDT_DPS_TLCR_withpt                 : 10,-1.0,1.0		      ; XTitle="BDT_fakes (e^{#pm}#mu^{#pm})"
+BDTG_fakes_raw_elmu         : BDTG_DPS_TLCR_withpt                : 10,-1.0,1.0	      	      ; XTitle="BDTG_fakes (e^{#pm}#mu^{#pm})"
+BDTG_fakes_raw_elmu         : BDTG_DPS_TLCR_withpt 		  : 10,-1.0,1.0 	      ; XTitle="BDTG_fakes (e^{#pm}#mu^{#pm})"
+BDTG_wzamc_elmu		    : BDTG_DPS_WZ_amc_withpt		  : 10,-1.0,1.0	              ; XTitle="BDTG_WZ(e^{#pm}#mu^{#pm})"
+
+
+
+
+BDT_fakes_raw_elmuplusplus          : BDT_DPS_TLCR_withpt                 : 10,-1.0,1.0		      ; XTitle="BDT_fakes (e^{#plus}#mu^{#plus})"
+BDTG_fakes_raw_elmuplusplus         : BDTG_DPS_TLCR_withpt                : 10,-1.0,1.0	      	      ; XTitle="BDTG_fakes (e^{#plus}#mu^{#plus})"
+BDTG_fakes_raw_elmuplusplus         : BDTG_DPS_TLCR_withpt 		  : 10,-1.0,1.0 	      ; XTitle="BDTG_fakes (e^{#plus}#mu^{#plus})"
+BDTG_wzamc_elmuplusplus		    : BDTG_DPS_WZ_amc_withpt		  : 10,-1.0,1.0	              ; XTitle="BDTG_WZ(e^{#plus}#mu^{#plus})"
+
+BDT_fakes_raw_elmuminusminus          : BDT_DPS_TLCR_withpt                 : 10,-1.0,1.0		      ; XTitle="BDT_fakes (e^{#minus}#mu^{#minus})"
+BDTG_fakes_raw_elmuminusminus         : BDTG_DPS_TLCR_withpt                : 10,-1.0,1.0	      	      ; XTitle="BDTG_fakes (e^{#minus}#mu^{#minus})"
+BDTG_fakes_raw_elmuminusminus         : BDTG_DPS_TLCR_withpt 		    : 10,-1.0,1.0 	              ; XTitle="BDTG_fakes (e^{#minus}#mu^{#minus})"
+BDTG_wzamc_elmuminusminus	      : BDTG_DPS_WZ_amc_withpt	            : 10,-1.0,1.0	              ; XTitle="BDTG_WZ(e^{#minus}#mu^{#minus})"
+
+
+BDT_fakes_raw_ll_noee          : BDT_DPS_TLCR_withpt              : 10,-1.0,1.0		      ; XTitle="BDT_fakes (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+BDTG_fakes_raw_ll_noee         : BDTG_DPS_TLCR_withpt             : 10,-1.0,1.0	      	      ; XTitle="BDTG_fakes (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+BDTG_fakes_raw_ll_noee         : BDTG_DPS_TLCR_withpt 		  : 10,-1.0,1.0 	      ; XTitle="BDTG_fakes (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+BDTG_wzamc_ll_noee	       : BDTG_DPS_WZ_amc_withpt		  : 10,-1.0,1.0	              ; XTitle="BDTG_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+
+
+
+
+
+
+
+
+
 BDT_fakes_mumu          : BDT_DPS_TLCR_withpt                    : 20,0,1.0	      ; XTitle="BDT_fakes (#mu^{#pm}#mu^{#pm})"
 BDT_wzpow_mumu		: BDT_DPS_WZ_pow_withpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
 BDT_wzamc_mumu		: BDT_DPS_WZ_amc_withpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
@@ -61,16 +109,16 @@ BDT_wzpow_elmu		: BDT_DPS_WZ_pow_withpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(e^{
 BDT_wzamc_elmu		: BDT_DPS_WZ_amc_withpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(e^{#pm}#mu^{#pm})"
 BDT_fakes_wzpow_elmu    : BDT_DPS_WZ_pow_withpt\:BDT_DPS_TLCR_withpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm})"
 BDT_fakes_wzamc_elmu    : BDT_DPS_WZ_amc_withpt\:BDT_DPS_TLCR_withpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm})"
-BDT1d_fakes_pow_elmu    : unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"  
-BDT1d_fakes_amc_elmu    : unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"  
+BDT1d_fakes_pow_elmu    : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"  
+BDT1d_fakes_amc_elmu    : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"  
 
 BDTG_fakes_elmu         : BDTG_DPS_TLCR_withpt 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (e^{#pm}#mu^{#pm})"
 BDTG_wzpow_elmu		: BDTG_DPS_WZ_pow_withpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#pm}#mu^{#pm})"
 BDTG_wzamc_elmu		: BDTG_DPS_WZ_amc_withpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#pm}#mu^{#pm})"
 BDTG_fakes_wzpow_elmu   : BDTG_DPS_WZ_pow_withpt\:BDTG_DPS_TLCR_withpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#pm}#mu^{#pm})", YTitle="BDTG_WZ(e^{#pm}#mu^{#pm})"
 BDTG_fakes_wzamc_elmu   : BDTG_DPS_WZ_amc_withpt\:BDTG_DPS_TLCR_withpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#pm}#mu^{#pm})", YTitle="BDTG_WZ(e^{#pm}#mu^{#pm})"
-BDTG1d_fakes_pow_elmu          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"
-BDTG1d_fakes_amc_elmu          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"
+BDTG1d_fakes_pow_elmu          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"
+BDTG1d_fakes_amc_elmu          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"
 
 
 
@@ -80,16 +128,16 @@ BDT_wzpow_elmuplusplus		: BDT_DPS_WZ_pow_withpt		  : 20,0,1.0	      ; XTitle="BD
 BDT_wzamc_elmuplusplus		: BDT_DPS_WZ_amc_withpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(e^{#plus}#mu^{#plus})"
 BDT_fakes_wzpow_elmuplusplus    : BDT_DPS_WZ_pow_withpt\:BDT_DPS_TLCR_withpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#plus}#mu^{#plus})" , YTitle="BDT_WZ(e^{#plus}#mu^{#plus})"
 BDT_fakes_wzamc_elmuplusplus    : BDT_DPS_WZ_amc_withpt\:BDT_DPS_TLCR_withpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#plus}#mu^{#plus})" , YTitle="BDT_WZ(e^{#plus}#mu^{#plus})"
-BDT1d_fakes_pow_elmuplusplus           :  unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"  
-BDT1d_fakes_amc_elmuplusplus           :  unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"  
+BDT1d_fakes_pow_elmuplusplus           :  unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"  
+BDT1d_fakes_amc_elmuplusplus           :  unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"  
 
 BDTG_fakes_elmuplusplus         : BDTG_DPS_TLCR_withpt 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (e^{#plus}#mu^{#plus})"
 BDTG_wzpow_elmuplusplus		: BDTG_DPS_WZ_pow_withpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#plus}#mu^{#plus})"
 BDTG_wzamc_elmuplusplus		: BDTG_DPS_WZ_amc_withpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#plus}#mu^{#plus})"
 BDTG_fakes_wzpow_elmuplusplus   : BDTG_DPS_WZ_pow_withpt\:BDTG_DPS_TLCR_withpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#plus}#mu^{#plus})", YTitle="BDTG_WZ(e^{#plus}#mu^{#plus})"
 BDTG_fakes_wzamc_elmuplusplus   : BDTG_DPS_WZ_amc_withpt\:BDTG_DPS_TLCR_withpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#plus}#mu^{#plus})", YTitle="BDTG_WZ(e^{#plus}#mu^{#plus})"
-BDTG1d_fakes_pow_elmuplusplus          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"
-BDTG1d_fakes_amc_elmuplusplus          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"
+BDTG1d_fakes_pow_elmuplusplus          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"
+BDTG1d_fakes_amc_elmuplusplus          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"
 
 
 
@@ -98,16 +146,21 @@ BDT_wzpow_elmuminusminus		: BDT_DPS_WZ_pow_withpt		  : 20,0,1.0	      ; XTitle="
 BDT_wzamc_elmuminusminus		: BDT_DPS_WZ_amc_withpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(e^{#minus}#mu^{#minus})"
 BDT_fakes_wzpow_elmuminusminus    : BDT_DPS_WZ_pow_withpt\:BDT_DPS_TLCR_withpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#minus}#mu^{#minus})" , YTitle="BDT_WZ(e^{#minus}#mu^{#minus})"
 BDT_fakes_wzamc_elmuminusminus    : BDT_DPS_WZ_amc_withpt\:BDT_DPS_TLCR_withpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#minus}#mu^{#minus})" , YTitle="BDT_WZ(e^{#minus}#mu^{#minus})"
-BDT1d_fakes_pow_elmuminusminus           :  unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"  
-BDT1d_fakes_amc_elmuminusminus           :  unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"  
+BDT1d_fakes_pow_elmuminusminus           :  unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"  
+BDT1d_fakes_amc_elmuminusminus           :  unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"  
 
 BDTG_fakes_elmuminusminus         : BDTG_DPS_TLCR_withpt 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (e^{#minus}#mu^{#minus})"
 BDTG_wzpow_elmuminusminus		: BDTG_DPS_WZ_pow_withpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#minus}#mu^{#minus})"
 BDTG_wzamc_elmuminusminus		: BDTG_DPS_WZ_amc_withpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#minus}#mu^{#minus})"
 BDTG_fakes_wzpow_elmuminusminus   : BDTG_DPS_WZ_pow_withpt\:BDTG_DPS_TLCR_withpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#minus}#mu^{#minus})", YTitle="BDTG_WZ(e^{#minus}#mu^{#minus})"
 BDTG_fakes_wzamc_elmuminusminus   : BDTG_DPS_WZ_amc_withpt\:BDTG_DPS_TLCR_withpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#minus}#mu^{#minus})", YTitle="BDTG_WZ(e^{#minus}#mu^{#minus})"
-BDTG1d_fakes_pow_elmuminusminus          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"
-BDTG1d_fakes_amc_elmuminusminus          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"
+BDTG1d_fakes_pow_elmuminusminus          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"
+BDTG1d_fakes_amc_elmuminusminus          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"
+
+
+
+
+
 
 
 
@@ -171,16 +224,16 @@ BDT_wzpow_withcpt_elmu		: BDT_DPS_WZ_pow_withcpt		  : 20,0,1.0	      ; XTitle="B
 BDT_wzamc_withcpt_elmu		: BDT_DPS_WZ_amc_withcpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(e^{#pm}#mu^{#pm})"
 BDT_fakes_wzpow_withcpt_elmu    : BDT_DPS_WZ_pow_withcpt\:BDT_DPS_TLCR_withcpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm})"
 BDT_fakes_wzamc_withcpt_elmu    : BDT_DPS_WZ_amc_withcpt\:BDT_DPS_TLCR_withcpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm})"
-BDT1d_fakes_withcpt_pow_elmu           :  unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"  
-BDT1d_fakes_withcpt_amc_elmu           :  unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"  
+BDT1d_fakes_withcpt_pow_elmu           :  unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"  
+BDT1d_fakes_withcpt_amc_elmu           :  unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"  
 
 BDTG_fakes_withcpt_elmu         : BDTG_DPS_TLCR_withcpt 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (e^{#pm}#mu^{#pm})"
 BDTG_wzpow_withcpt_elmu		: BDTG_DPS_WZ_pow_withcpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#pm}#mu^{#pm})"
 BDTG_wzamc_withcpt_elmu		: BDTG_DPS_WZ_amc_withcpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#pm}#mu^{#pm})"
 BDTG_fakes_withcpt_wzpow_withcpt_elmu   : BDTG_DPS_WZ_pow_withcpt\:BDTG_DPS_TLCR_withcpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#pm}#mu^{#pm})", YTitle="BDTG_WZ(e^{#pm}#mu^{#pm})"
 BDTG_fakes_withcpt_wzamc_withcpt_elmu   : BDTG_DPS_WZ_amc_withcpt\:BDTG_DPS_TLCR_withcpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#pm}#mu^{#pm})", YTitle="BDTG_WZ(e^{#pm}#mu^{#pm})"
-BDTG1d_fakes_withcpt_pow_elmu          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"
-BDTG1d_fakes_withcpt_amc_elmu          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"
+BDTG1d_fakes_withcpt_pow_elmu          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"
+BDTG1d_fakes_withcpt_amc_elmu          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"
 
 
 
@@ -190,16 +243,16 @@ BDT_wzpow_withcpt_elmuplusplus		: BDT_DPS_WZ_pow_withcpt		  : 20,0,1.0	      ; X
 BDT_wzamc_withcpt_elmuplusplus		: BDT_DPS_WZ_amc_withcpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(e^{#plus}#mu^{#plus})"
 BDT_fakes_wzpow_withcpt_elmuplusplus    : BDT_DPS_WZ_pow_withcpt\:BDT_DPS_TLCR_withcpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#plus}#mu^{#plus})" , YTitle="BDT_WZ(e^{#plus}#mu^{#plus})"
 BDT_fakes_wzamc_withcpt_elmuplusplus    : BDT_DPS_WZ_amc_withcpt\:BDT_DPS_TLCR_withcpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#plus}#mu^{#plus})" , YTitle="BDT_WZ(e^{#plus}#mu^{#plus})"
-BDT1d_fakes_withcpt_pow_elmuplusplus           :  unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"  
-BDT1d_fakes_withcpt_amc_elmuplusplus           :  unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"  
+BDT1d_fakes_withcpt_pow_elmuplusplus           :  unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"  
+BDT1d_fakes_withcpt_amc_elmuplusplus           :  unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"  
 
 BDTG_fakes_withcpt_elmuplusplus         : BDTG_DPS_TLCR_withcpt 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (e^{#plus}#mu^{#plus})"
 BDTG_wzpow_withcpt_elmuplusplus		: BDTG_DPS_WZ_pow_withcpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#plus}#mu^{#plus})"
 BDTG_wzamc_withcpt_elmuplusplus		: BDTG_DPS_WZ_amc_withcpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#plus}#mu^{#plus})"
 BDTG_fakes_withcpt_wzpow_withcpt_elmuplusplus   : BDTG_DPS_WZ_pow_withcpt\:BDTG_DPS_TLCR_withcpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#plus}#mu^{#plus})", YTitle="BDTG_WZ(e^{#plus}#mu^{#plus})"
 BDTG_fakes_withcpt_wzamc_withcpt_elmuplusplus   : BDTG_DPS_WZ_amc_withcpt\:BDTG_DPS_TLCR_withcpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#plus}#mu^{#plus})", YTitle="BDTG_WZ(e^{#plus}#mu^{#plus})"
-BDTG1d_fakes_withcpt_pow_elmuplusplus          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"
-BDTG1d_fakes_withcpt_amc_elmuplusplus          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"
+BDTG1d_fakes_withcpt_pow_elmuplusplus          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"
+BDTG1d_fakes_withcpt_amc_elmuplusplus          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus})"
 
 
 
@@ -208,16 +261,16 @@ BDT_wzpow_withcpt_elmuminusminus		: BDT_DPS_WZ_pow_withcpt		  : 20,0,1.0	      ;
 BDT_wzamc_withcpt_elmuminusminus		: BDT_DPS_WZ_amc_withcpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(e^{#minus}#mu^{#minus})"
 BDT_fakes_wzpow_withcpt_elmuminusminus    : BDT_DPS_WZ_pow_withcpt\:BDT_DPS_TLCR_withcpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#minus}#mu^{#minus})" , YTitle="BDT_WZ(e^{#minus}#mu^{#minus})"
 BDT_fakes_wzamc_withcpt_elmuminusminus    : BDT_DPS_WZ_amc_withcpt\:BDT_DPS_TLCR_withcpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#minus}#mu^{#minus})" , YTitle="BDT_WZ(e^{#minus}#mu^{#minus})"
-BDT1d_fakes_withcpt_pow_elmuminusminus           :  unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"  
-BDT1d_fakes_withcpt_amc_elmuminusminus           :  unroll_2Dbdt_dps_elmuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"  
+BDT1d_fakes_withcpt_pow_elmuminusminus           :  unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"  
+BDT1d_fakes_withcpt_amc_elmuminusminus           :  unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"  
 
 BDTG_fakes_withcpt_elmuminusminus         : BDTG_DPS_TLCR_withcpt 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (e^{#minus}#mu^{#minus})"
 BDTG_wzpow_withcpt_elmuminusminus		: BDTG_DPS_WZ_pow_withcpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#minus}#mu^{#minus})"
 BDTG_wzamc_withcpt_elmuminusminus		: BDTG_DPS_WZ_amc_withcpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#minus}#mu^{#minus})"
 BDTG_fakes_withcpt_wzpow_withcpt_elmuminusminus   : BDTG_DPS_WZ_pow_withcpt\:BDTG_DPS_TLCR_withcpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#minus}#mu^{#minus})", YTitle="BDTG_WZ(e^{#minus}#mu^{#minus})"
 BDTG_fakes_withcpt_wzamc_withcpt_elmuminusminus   : BDTG_DPS_WZ_amc_withcpt\:BDTG_DPS_TLCR_withcpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#minus}#mu^{#minus})", YTitle="BDTG_WZ(e^{#minus}#mu^{#minus})"
-BDTG1d_fakes_withcpt_pow_elmuminusminus          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"
-BDTG1d_fakes_withcpt_amc_elmuminusminus          :  unroll_2Dbdt_dps_elmuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"
+BDTG1d_fakes_withcpt_pow_elmuminusminus          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"
+BDTG1d_fakes_withcpt_amc_elmuminusminus          :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus})"
 
 
 mll_dressedLep_os_ll	     : mass_2(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenDressedLepton_mass[0],GenDressedLepton_pt[1],GenDressedLepton_eta[1],GenDressedLepton_phi[1],GenDressedLepton_mass[1]): 100,0,100; XTitle="m_{l^{#pm}l^{#mp}} (GeV)", IncludeOverflows=False, , MoreY=10, Logy
@@ -464,7 +517,7 @@ njets30_mumu  	     :  Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5] ; XTitle='njets 
 njets30_elel  	     :  Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5] ; XTitle='njets wiht pT > 30' , MoreY=1.5
 
 njets30_ll  	     :  Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5] ; XTitle='njets wiht pT > 30' , MoreY=1.5
-
+njets30_ll_noee      :  Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5] ; XTitle='njets wiht pT > 30' , MoreY=1.5
 
 
 
@@ -613,6 +666,100 @@ BDTG_fakes_wzamc_ll   : BDTG_DPS_WZ_amc_withpt\:BDTG_DPS_TLCR_withpt  : 20,0,1.0
 BDTG1d_fakes_pow_ll   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(l^{#pm}l^{#pm})"
 BDTG1d_fakes_amc_ll   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(l^{#pm}l^{#pm})"
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+conept1_ll_noee           : LepGood1_conePt     : 20,20,100; XTitle="p_{T} lead. (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=2.5
+conept2_ll_noee           : LepGood2_conePt     : 20,20,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=2.5
+
+pt1_ll_noee               : LepGood1_pt     : 20,20,100; XTitle="p_{T} lead. (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=2.25
+pt2_ll_noee               : LepGood2_pt     : 20,20,100; XTitle="p_{T} trail. (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=2.25
+
+eta1_ll_noee              : LepGood1_eta    : 10,-2.5,2.5; XTitle="#eta lead.  (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", MoreY=2.5
+eta2_ll_noee              : LepGood2_eta    : 10,-2.5,2.5; XTitle="#eta trail. (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", MoreY=2.5
+
+phi1_ll_noee              : LepGood1_phi    : 10,-3.2,3.2; XTitle="#phi lead.  (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", MoreY=2.5
+phi2_ll_noee              : LepGood2_phi    : 10,-3.2,3.2; XTitle="#phi trail. (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", MoreY=2.5
+
+MVA1_ll_noee              : LepGood1_mvaTTH : 50,0.5,1.0; XTitle="MVA lead. (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=2.5
+MVA2_ll_noee              : LepGood2_mvaTTH : 50,0.5,1.0; XTitle="MVA trail. (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", MoreY=2.5
+
+tcharge1_ll_noee          : LepGood1_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge lead.  (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", XNDdiv=505, Legend='TL' , MoreY=1.5
+tcharge2_ll_noee          : LepGood2_tightCharge	: [-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="tightCharge trail.  (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", XNDdiv=505, Legend='TL', MoreY=1.5
+
+charge1_ll_noee           : LepGood1_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge lead.  (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", XNDdiv=505, MoreY=1.5
+charge2_ll_noee           : LepGood2_charge : [-1.5,-1.0,-0.5,0,0.5,1.0,1.5]; XTitle="charge trail. (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", XNDdiv=505,  MoreY=1.5
+
+pdgId1_ll_noee            : 0.5*LepGood1_pdgId/abs(LepGood1_pdgId)*(abs(LepGood1_pdgId)-10) : [-2,-1,0,1,2]; XTitle="Leading lepton PDG ID (#mu^{-}/e^{-}/e^{+}/#mu^{+})", XNDdiv=505
+pdgId2_ll_noee            : 0.5*LepGood2_pdgId/abs(LepGood2_pdgId)*(abs(LepGood2_pdgId)-10) : [-2,-1,0,1,2]; XTitle="Leading lepton PDG ID (#mu^{-}/e^{-}/e^{+}/#mu^{+})", XNDdiv=505
+
+
+dilep_charge_ll_noee      : if3(nLepFO>1,LepGood1_charge,-99) : [-2,0,2]; XTitle='dilepton charge', XNDiv=205,  IncludeOverflows=False, MoreY=1.5, xBinLabels="#minus #minus\,+ +"
+dilep_flav_ll_noee        : if3(nLepFO>1,if3(abs(LepGood1_pdgId)!=abs(LepGood2_pdgId),1,abs(LepGood1_pdgId)-11),-99)  : [-0.5,0.5,1.5,2.5]; XTitle="dilepton flavour", XNDiv=505, MoreY=1.5, xBinLabels="ee\,e#mu\,#mu#mu"
+
+met_ll_noee               : MET_pt          : 10,10,115; XTitle="p_{T}^{miss} (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (GeV)"  , MoreY=2.5 
+metphi_ll_noee            : MET_phi         : 10,-3.2,3.2; XTitle="#phi(p_{T}^{miss} (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (GeV))"  , MoreY=2.5 
+
+njets25_ll_noee  	     :  nJet25_Recl: [0,1,2,3,4,5] ; XTitle='njets' , MoreY=2.5
+
+nBJetLoose25_ll_noee  :  nBJetLoose25 : [0,1,2,3,4,5] ; XTitle='nbjetsloose25' , MoreY=2.5
+nBJetMedium25_ll_noee :  nBJetMedium25 : [0,1,2,3,4,5] ; XTitle='nbjetsmed25' , MoreY=2.5
+nBJetTight25_ll_noee  :  nBJetTight25 : [0,1,2,3,4,5] ; XTitle='nbjetstight25' , MoreY=2.5
+nBJetLoose40_ll_noee  :  nBJetLoose40 : [0,1,2,3,4,5] ; XTitle='nbjetsloose40' , MoreY=2.5
+nBJetMedium40_ll_noee :  nBJetMedium40 : [0,1,2,3,4,5] ; XTitle='nbjetsmed40' , MoreY=2.5
+nBJetTight40_ll_noee  :  nBJetTight40 : [0,1,2,3,4,5] ; XTitle='nbjetstight40' , MoreY=2.5
+nTauTight_ll_noee	 : nTauTight : [0,1,2,3,4,5] ; XTitle='ntautight' , MoreY=2.5
+
+mll_ll_noee               :  mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)             : 15,0,200; XTitle="m_{ll}(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=2.5
+mt2ll_ll_noee             :  mt2davis(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood2_conePt,LepGood2_eta,LepGood2_phi,MET_pt,MET_phi) : 20,0,120 ; XTitle="M_{T2}^{ll} (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=2.5
+mt1_ll_noee               :  mt_2(LepGood1_conePt,LepGood1_phi,MET_pt,MET_phi) : 20,0,250; XTitle="m_{T} lepton 1 (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (GeV)" , MoreY=2.5
+mtll_ll_noee              :  mt_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi) : 20,0,250; XTitle="m_{T} ll (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (GeV)", MoreY=2.5
+
+etasum_ll_noee            :  abs(LepGood1_eta + LepGood2_eta)  : 20,0,5; XTitle="abs(#eta_{1}+#eta_{2}) (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=2.5
+etaprod_ll_noee           :  LepGood1_eta*LepGood2_eta : 20,-6.25,6.25; XTitle="#eta_{1}*#eta_{2} (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})",  MoreY=2.5
+dphill_ll_noee            :  abs(deltaPhi(LepGood1_phi,LepGood2_phi)) : 20,0,3.15; XTitle="#Delta#phi_{ll} (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (rad.)", MoreY=2.5
+dphil2met_ll_noee         :  abs(deltaPhi(LepGood2_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l2 MET} (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (rad.)", MoreY=2.5
+dphilll2_ll_noee          :  abs(deltaPhi(phi_2(LepGood1_conePt,LepGood1_phi,LepGood2_conePt,LepGood2_phi),LepGood2_phi)) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm}) (rad.)", MoreY=2.5
+nVert_ll_noee 	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}", MoreY=2.0
+
+BDT_fakes_ll_noee          : BDT_DPS_TLCR_withpt                  : 20,0,1.0	      ; XTitle="BDT_fakes (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=1.5
+BDT_wzpow_ll_noee	   : BDT_DPS_WZ_pow_withpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=1.5
+BDT_wzamc_ll_noee	   : BDT_DPS_WZ_amc_withpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=1.5
+BDT_fakes_wzpow_ll_noee    : BDT_DPS_WZ_pow_withpt\:BDT_DPS_TLCR_withpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=1.5
+BDT_fakes_wzamc_ll_noee    : BDT_DPS_WZ_amc_withpt\:BDT_DPS_TLCR_withpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=1.5
+BDT1d_fakes_pow_ll_noee    : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"  , MoreY=1.5
+BDT1d_fakes_amc_ll_noee    : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withpt,BDT_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"  , MoreY=1.5
+
+BDTG_fakes_ll_noee         : BDTG_DPS_TLCR_withpt 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=1.5
+BDTG_wzpow_ll_noee	   : BDTG_DPS_WZ_pow_withpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", MoreY=1.5
+BDTG_wzamc_ll_noee	   : BDTG_DPS_WZ_amc_withpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=1.5
+BDTG_fakes_wzpow_ll_noee   : BDTG_DPS_WZ_pow_withpt\:BDTG_DPS_TLCR_withpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", YTitle="BDTG_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=1.5
+BDTG_fakes_wzamc_ll_noee   : BDTG_DPS_WZ_amc_withpt\:BDTG_DPS_TLCR_withpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})", YTitle="BDTG_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=1.5
+BDTG1d_fakes_pow_ll_noee   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_pow_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=1.5
+BDTG1d_fakes_amc_ll_noee   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , MoreY=1.5
+
+BDTG1d_fakes_amc_ll_noeeplusplus   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#plus}#mu^{#plus}+#mu^{#plus}#mu^{#plus})" , MoreY=1.5
+BDTG1d_fakes_amc_ll_noeeminusminus   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#minus}#mu^{#minus}+#mu^{#minus}#mu^{#minus})" , MoreY=1.5
+
+
+
+
+BDT_fakes_withcpt_ll_noee              : BDT_DPS_TLCR_withcpt                    : 20,0,1.0	      ; XTitle="BDT_fakes (#mu^{#pm}#mu^{#pm})"
+BDT_wzpow_withcpt_ll_noee		: BDT_DPS_WZ_pow_withcpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
+BDT_wzamc_withcpt_ll_noee		: BDT_DPS_WZ_amc_withcpt		  : 20,0,1.0	      ; XTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
+BDT_fakes_wzpow_withcpt_ll_noee        : BDT_DPS_WZ_pow_withcpt\:BDT_DPS_TLCR_withcpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
+BDT_fakes_wzamc_withcpt_ll_noee        : BDT_DPS_WZ_amc_withcpt\:BDT_DPS_TLCR_withcpt    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
+BDT1d_fakes_withcpt_pow_ll_noee        : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"  
+BDT1d_fakes_withcpt_amc_ll_noee        : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withcpt,BDT_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"  
+
+BDTG_fakes_withcpt_ll_noee             : BDTG_DPS_TLCR_withcpt 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (#mu^{#pm}#mu^{#pm})"
+BDTG_wzpow_withcpt_ll_noee		: BDTG_DPS_WZ_pow_withcpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(#mu^{#pm}#mu^{#pm})"
+BDTG_wzamc_withcpt_ll_noee		: BDTG_DPS_WZ_amc_withcpt		  : 20,0,1.0	      ; XTitle="BDTG_WZ(#mu^{#pm}#mu^{#pm})"
+BDTG_fakes_withcpt_wzpow_withcpt_ll_noee   : BDTG_DPS_WZ_pow_withcpt\:BDTG_DPS_TLCR_withcpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(#mu^{#pm}#mu^{#pm})", YTitle="BDTG_WZ(#mu^{#pm}#mu^{#pm})"
+BDTG_fakes_withcpt_wzamc_withcpt_ll_noee   : BDTG_DPS_WZ_amc_withcpt\:BDTG_DPS_TLCR_withcpt  : 20,0,1.0,20,0.,1. ; XTitle="BDTG_fakes(#mu^{#pm}#mu^{#pm})", YTitle="BDTG_WZ(#mu^{#pm}#mu^{#pm})"
+BDTG1d_fakes_withcpt_pow_ll_noee           :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_pow_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"
+BDTG1d_fakes_withcpt_amc_ll_noee           :  unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withcpt,BDTG_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mZ1_mumu             : mZ1 : 40,0,120; XTitle="m_{Z1} (GeV)"
 mZ2_mumu             : mZ2 : 40,0,140; XTitle="m_{Z2} (GeV)"
 
@@ -1150,3 +1297,58 @@ nVert_elmuplusplus 	       :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}", Mor
 
 
 
+
+
+################### redundant/TBD
+
+BDT_fakesv1_mumu          : BDT_DPS_TLCR_withpt_super                    : 20,0,1.0	      ; XTitle="BDT_fakes (#mu^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_mumu    : BDT_DPS_WZ_amc_withpt\:BDT_DPS_TLCR_withpt_super    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
+BDT1d_fakesv1_amc_mumu    : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withpt_super,BDT_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"  
+
+BDTG_fakesv1_mumu         : BDTG_DPS_TLCR_withpt_super 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (#mu^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_mumu    : BDT_DPS_WZ_amc_withpt\:BDT_DPS_TLCR_withpt_super    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
+BDTG1d_fakesv1_amc_mumu   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt_super,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"
+
+
+BDT_fakesv1_withcpt_mumu          : BDT_DPS_TLCR_withcpt_super                    : 20,0,1.0	      ; XTitle="BDT_fakes (#mu^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_withcpt_mumu    : BDT_DPS_WZ_amc_withcpt\:BDT_DPS_TLCR_withcpt_super    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
+BDT1d_fakesv1_amc_withcpt_mumu    : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withcpt_super,BDT_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"  
+BDTG_fakesv1_withcpt_mumu         : BDTG_DPS_TLCR_withcpt_super 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (#mu^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_withcpt_mumu    : BDT_DPS_WZ_amc_withcpt\:BDT_DPS_TLCR_withcpt_super    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(#mu^{#pm}#mu^{#pm})"
+BDTG1d_fakesv1_amc_withcpt_mumu   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withcpt_super,BDTG_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})"
+
+
+
+
+BDT_fakesv1_elmu          : BDT_DPS_TLCR_withpt_super                    : 20,0,1.0	      ; XTitle="BDT_fakes (e^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_elmu    : BDT_DPS_WZ_amc_withpt\:BDT_DPS_TLCR_withpt_super    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm})"
+BDT1d_fakesv1_amc_elmu    : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withpt_super,BDT_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"  
+BDTG_fakesv1_elmu         : BDTG_DPS_TLCR_withpt_super 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (e^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_elmu    : BDT_DPS_WZ_amc_withpt\:BDT_DPS_TLCR_withpt_super    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm})"
+BDTG1d_fakesv1_amc_elmu   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt_super,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"
+
+
+BDT_fakesv1_withcpt_elmu          : BDT_DPS_TLCR_withcpt_super                    : 20,0,1.0	      ; XTitle="BDT_fakes (e^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_withcpt_elmu    : BDT_DPS_WZ_amc_withcpt\:BDT_DPS_TLCR_withcpt_super    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm})"
+BDT1d_fakesv1_amc_withcpt_elmu    : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withcpt_super,BDT_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"  
+BDTG_fakesv1_withcpt_elmu         : BDTG_DPS_TLCR_withcpt_super 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (e^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_withcpt_elmu    : BDT_DPS_WZ_amc_withcpt\:BDT_DPS_TLCR_withcpt_super    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm})"
+BDTG1d_fakesv1_amc_withcpt_elmu   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withcpt_super,BDTG_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})"
+
+
+
+
+BDT_fakesv1_ll_noee          : BDT_DPS_TLCR_withpt_super                    : 20,0,1.0	      ; XTitle="BDT_fakes (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_ll_noee    : BDT_DPS_WZ_amc_withpt\:BDT_DPS_TLCR_withpt_super    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+BDT1d_fakesv1_amc_ll_noee    : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withpt_super,BDT_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"  
+BDTG_fakesv1_ll_noee         : BDTG_DPS_TLCR_withpt_super 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_ll_noee    : BDT_DPS_WZ_amc_withpt\:BDT_DPS_TLCR_withpt_super    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+BDTG1d_fakesv1_amc_ll_noee   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withpt_super,BDTG_DPS_WZ_amc_withpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+
+
+BDT_fakesv1_withcpt_ll_noee          : BDT_DPS_TLCR_withcpt_super                    : 20,0,1.0	      ; XTitle="BDT_fakes (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_withcpt_ll_noee    : BDT_DPS_WZ_amc_withcpt\:BDT_DPS_TLCR_withcpt_super  : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+BDT1d_fakesv1_amc_withcpt_ll_noee    : unroll_2Dbdt_dps_mumuN(BDT_DPS_TLCR_withcpt_super,BDT_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"  
+BDTG_fakesv1_withcpt_ll_noee         : BDTG_DPS_TLCR_withcpt_super 		  : 20,0,1.0 	      ; XTitle="BDTG_fakes (e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+BDT_fakesv1_wzamc_withcpt_ll_noee    : BDT_DPS_WZ_amc_withcpt\:BDT_DPS_TLCR_withcpt_super    : 20,0,1.0,20,0.,1. ; XTitle="BDT_fakes(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})" , YTitle="BDT_WZ(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"
+BDTG1d_fakesv1_amc_withcpt_ll_noee   : unroll_2Dbdt_dps_mumuN(BDTG_DPS_TLCR_withcpt_super,BDTG_DPS_WZ_amc_withcpt): 13,0.0,13.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm}+#mu^{#pm}#mu^{#pm})"

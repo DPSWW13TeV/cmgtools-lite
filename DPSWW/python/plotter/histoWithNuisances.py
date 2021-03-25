@@ -90,8 +90,9 @@ def buildVariationsFromAlternativeORG( uncfile, ret):
             if rem in ret: ret.pop(rem)
 
 
-def buildVariationsFromAlternative( uncfile, ret):
+def buildVariationsFromAlternative( uncfile, ret,exclude):
     for var in uncfile.uncertainty():
+        if var in exclude : continue
         if var.unc_type != 'altSample': continue # now only adding the alternative samples
         hasBeenApplied=False
         toremove=[]
@@ -116,8 +117,8 @@ def buildVariationsFromAlternative( uncfile, ret):
                     yM = y0*y0/yA
                 elif yA <= 0:
                     yM = 2*y0
-                #elif y0 <= 0 :
-                #    yM = 0
+                elif y0 <= 0 :
+                    yM = 0
                 mirror.SetBinContent(b, yM)
                 mirror.Scale(nominal.Integral()/mirror.Integral())
             p.addVariation( var.name, 'up'  , alternate)

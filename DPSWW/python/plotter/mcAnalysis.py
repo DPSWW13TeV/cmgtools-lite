@@ -540,7 +540,7 @@ class MCAnalysis:
 
         ## add variations from alternate samples
         if self.variationsFile:
-            buildVariationsFromAlternative(self.variationsFile, ret)
+            buildVariationsFromAlternative(self.variationsFile, ret,self._options.uncertaintiesToExclude)
 
 
         rescales = []

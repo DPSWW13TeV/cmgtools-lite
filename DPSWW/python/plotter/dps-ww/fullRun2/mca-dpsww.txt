@@ -9,6 +9,16 @@ data_fakes_mu90el65 : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="d
 
 data       : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt"
 data_flips_unskimmed : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="charge-misid.", FillColor=ROOT.kCyan-7, PostFix = "_flipsv1"
+data_fakes_dblMu : DoubleMuon_Run2016B_02Apr2020 + DoubleMuon_Run2016C_02Apr2020 + DoubleMuon_Run2016D_02Apr2020 + DoubleMuon_Run2016E_02Apr2020 + DoubleMuon_Run2016F_02Apr2020 + DoubleMuon_Run2016G_02Apr2020 + DoubleMuon_Run2016H_02Apr2020;      FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_dblMu", FillColor=ROOT.kCyan-7
+data_fakes_dblEg : DoubleEG_Run2016B_02Apr2020 + DoubleEG_Run2016C_02Apr2020 + DoubleEG_Run2016D_02Apr2020 + DoubleEG_Run2016E_02Apr2020 + DoubleEG_Run2016F_02Apr2020 + DoubleEG_Run2016G_02Apr2020 + DoubleEG_Run2016H_02Apr2020;        FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_dblEg", FillColor=ROOT.kGreen-4
+data_fakes_Mu    : SingleMuon_Run2016B_02Apr2020 + SingleMuon_Run2016C_02Apr2020 + SingleMuon_Run2016D_02Apr2020 + SingleMuon_Run2016E_02Apr2020 + SingleMuon_Run2016F_02Apr2020 + SingleMuon_Run2016G_02Apr2020 + SingleMuon_Run2016H_02Apr2020;      FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_Mu",    FillColor=ROOT.kCyan-7, LineStyle=2
+data_fakes_MuEg  : MuonEG_Run2016B_02Apr2020 + MuonEG_Run2016C_02Apr2020 + MuonEG_Run2016D_02Apr2020 + MuonEG_Run2016E_02Apr2020 + MuonEG_Run2016F_02Apr2020 + MuonEG_Run2016G_02Apr2020 + MuonEG_Run2016H_02Apr2020;          FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_MuEg",  FillColor=ROOT.kBlue
+data_fakes_El    : SingleElectron_Run2016B_02Apr2020 + SingleElectron_Run2016C_02Apr2020 + SingleElectron_Run2016D_02Apr2020 + SingleElectron_Run2016E_02Apr2020 + SingleElectron_Run2016F_02Apr2020 + SingleElectron_Run2016G_02Apr2020 + SingleElectron_Run2016H_02Apr2020;  FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_El",    FillColor=ROOT.kGreen-4, LineStyle=2
+
+##data_tl  : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", AddWeight="((LepGood1_isLepTight && !LepGood2_isLepTight) || (!LepGood1_isLepTight && LepGood2_isLepTight))", FillColor=ROOT.kCyan-7, PostFix="_tl"
+
+data_tl+  : + : (LepGood1_isLepTight && !LepGood2_isLepTight) || (!LepGood1_isLepTight && LepGood2_isLepTight) ; IncludeMca="dps-ww/fullRun2/mca-data.txt",  FillColor=ROOT.kCyan-7, PostFix="_tl"
+
 
 promptsub  : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", PostFix='_promptsub', AddWeight="-1"
 mc_fakes   : + ; IncludeMca="dps-ww/fullRun2/mca-mcfakes.txt" 

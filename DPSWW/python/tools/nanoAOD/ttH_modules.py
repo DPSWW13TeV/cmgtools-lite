@@ -438,9 +438,9 @@ from CMGTools.DPSWW.tools.nanoAOD.BDT_DPSWW import BDT_DPSWW
 bdtvars_withcpt_2016 = lambda : BDT_DPSWW(2016,True)
 bdtvars_withcpt_2017 = lambda : BDT_DPSWW(2017,True)
 bdtvars_withcpt_2018 = lambda : BDT_DPSWW(2018,True)
-bdtvars_withpt_2016 = lambda : BDT_DPSWW(2016,False)
-bdtvars_withpt_2017 = lambda : BDT_DPSWW(2017,False)
-bdtvars_withpt_2018 = lambda : BDT_DPSWW(2018,False)
+bdtvars_withpt_2016  = lambda : BDT_DPSWW(2016,False)
+bdtvars_withpt_2017  = lambda : BDT_DPSWW(2017,False)
+bdtvars_withpt_2018  = lambda : BDT_DPSWW(2018,False)
 
 from CMGTools.DPSWW.tools.nanoAOD.genInfo_py8 import genInfo_py8
 postfsrInfoPy = lambda : genInfo_py8()

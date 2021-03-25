@@ -21,6 +21,8 @@ class DPSWW_vars(Module):
         self.out.branch('met',"F")
         self.out.branch('mtl1met',"F")
         self.out.branch('dphill',"F")
+        self.out.branch('cptll',"F")
+        self.out.branch('mll',"F")
         self.out.branch('dphil2met',"F")
         self.out.branch('dphilll2', "F")
         self.out.branch('Lep1_conept'   ,'F')
@@ -66,14 +68,23 @@ class DPSWW_vars(Module):
         fr     = hist.GetBinContent(ptbin,etabin)
         fName.Close()
         return fr; 
-    def phill(self,l1,l2):
+
+    def if3(self,cond, iftrue, iffalse):
+        return iftrue if cond else iffalse
+
+    def phill(self,l1,l2,opt):
         
         lepton1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         lepton2=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         
         lepton1.SetPtEtaPhiM(l1.conePt,l1.eta,l1.phi,l1.mass); 
         lepton2.SetPtEtaPhiM(l2.conePt,l2.eta,l2.phi,l2.mass);
-        return (lepton1+lepton2).Phi();
+        if opt == 'phi':
+            toreturn = (lepton1+lepton2).Phi() 
+        else:
+            toreturn =  self.if3((opt == 'mll'), (lepton1+lepton2).M(), (lepton1+lepton2).Pt())
+        return toreturn
+
 
     def dphi(self,phi1,phi2):
 
@@ -116,21 +127,22 @@ class DPSWW_vars(Module):
     def analyze(self, event):
 
         # leptons
-        all_leps = [l for l in Collection(event,"LepGood")]
-        nFO = getattr(event,"nLepFO_Recl")
-        chosen = getattr(event,"iLepFO_Recl")
-        leps = [all_leps[chosen[i]] for i in xrange(nFO)]
-        MET_pt= getattr(event,"METFixEE2017_pt" if self.year == 2017 else "MET_pt")
-        MET_phi= getattr(event,"METFixEE2017_phi" if self.year == 2017 else "MET_phi")
+        all_leps  = [l for l in Collection(event,"LepGood")]
+        nFO       = getattr(event,"nLepFO_Recl")
+        chosen    = getattr(event,"iLepFO_Recl")
+        leps      = [all_leps[chosen[i]] for i in xrange(nFO)]
+        MET_pt    = getattr(event,"METFixEE2017_pt" if self.year == 2017 else "MET_pt")
+        MET_phi   = getattr(event,"METFixEE2017_phi" if self.year == 2017 else "MET_phi")
         mt2       = self.calcmt2(leps[0],leps[1],MET_pt,MET_phi) if len(leps) > 1 else -99;
         mtll      = self.mt(leps[0].conePt,leps[0].phi,leps[1].conePt,leps[1].phi) if len(leps) > 1 else -99;
         mtl1met   = self.mt(leps[0].conePt,leps[0].phi,MET_pt,MET_phi) if len(leps) > 1 else -99;
         dphill    = abs(self.dphi(leps[0].phi,leps[1].phi)) if len(leps) > 1 else -999;
         dphil2met = abs(self.dphi(leps[1].phi,MET_phi)) if len(leps) > 1 else -999;
-        dphilll2  = abs(self.dphi(self.phill(leps[0],leps[1]),leps[1].phi)) if len(leps) > 1 else -999;
-        #print mt2,dphill
-        frweight=  self.fakeRateWeight_2lss(leps[0],leps[1]) if nFO > 1 else 0.0;
-
+        dphilll2  = abs(self.dphi(self.phill(leps[0],leps[1],'phi'),leps[1].phi)) if len(leps) > 1 else -999;
+        frweight  = self.fakeRateWeight_2lss(leps[0],leps[1]) if nFO > 1 else 0.0;
+        cptll     = self.phill(leps[0],leps[1],'pt')  if len(leps) > 1 else -999;
+        mll       = self.phill(leps[0],leps[1],'mll') if len(leps) > 1 else -999;
+        #print cptll,mll
         self.out.fillBranch('fakeRateWt',frweight)
         self.out.fillBranch('mt2', mt2)     
         self.out.fillBranch('mtll',mtll)     
@@ -139,27 +151,29 @@ class DPSWW_vars(Module):
         self.out.fillBranch('dphill',dphill)   
         self.out.fillBranch('dphil2met',dphil2met) 
         self.out.fillBranch('dphilll2', dphilll2)
+        self.out.fillBranch('cptll', cptll)
+        self.out.fillBranch('mll', mll)
         self.out.fillBranch('Lep1_conept'   ,leps[0].conePt if len(leps) > 1 else -99)
-        self.out.fillBranch('Lep1_pt'   ,leps[0].pt if len(leps) > 1 else -99)
-        self.out.fillBranch('Lep1_eta'  ,leps[0].eta if len(leps) > 1 else -99)
-        self.out.fillBranch('Lep1_phi'  ,leps[0].phi if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep1_pt'       ,leps[0].pt     if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep1_eta'      ,leps[0].eta    if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep1_phi'      ,leps[0].phi    if len(leps) > 1 else -99)
         self.out.fillBranch('Lep2_conept'   ,leps[1].conePt if len(leps) > 1 else -99)
-        self.out.fillBranch('Lep2_pt'   ,leps[1].pt if len(leps) > 1 else -99)
-        self.out.fillBranch('Lep2_eta'  ,leps[1].eta if len(leps) > 1 else -99)
-        self.out.fillBranch('Lep2_phi'  ,leps[1].phi if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep2_pt'       ,leps[1].pt     if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep2_eta'      ,leps[1].eta    if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep2_phi'      ,leps[1].phi    if len(leps) > 1 else -99)
 
-        self.out.fillBranch('Lep1_pdgId'      ,leps[0].pdgId if len(leps) > 1 else 0)
-        self.out.fillBranch('Lep1_charge'     ,leps[0].charge if len(leps) > 1 else 0)
-        self.out.fillBranch('Lep1_convVeto'   ,leps[0].convVeto if len(leps) > 1 else -99)
-        self.out.fillBranch('Lep1_tightCharge',leps[0].tightCharge if len(leps) > 1 else -99)
-        self.out.fillBranch('Lep1_lostHits'   ,leps[0].lostHits if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep1_pdgId'      ,leps[0].pdgId           if len(leps) > 1 else 0)
+        self.out.fillBranch('Lep1_charge'     ,leps[0].charge          if len(leps) > 1 else 0)
+        self.out.fillBranch('Lep1_convVeto'   ,leps[0].convVeto        if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep1_tightCharge',leps[0].tightCharge     if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep1_lostHits'   ,leps[0].lostHits        if len(leps) > 1 else -99)
         self.out.fillBranch('Lep1_isLepTight' ,leps[0].isLepTight_Recl if len(leps) > 1 else -99)
 
-        self.out.fillBranch('Lep2_pdgId'       ,leps[1].pdgId if len(leps) > 1 else 0)
-        self.out.fillBranch('Lep2_charge'      ,leps[1].charge if len(leps) > 1 else -99)
-        self.out.fillBranch('Lep2_convVeto'    ,leps[1].convVeto if len(leps) > 1 else -99)
-        self.out.fillBranch('Lep2_tightCharge' ,leps[1].tightCharge if len(leps) > 1 else -99)
-        self.out.fillBranch('Lep2_lostHits'    ,leps[1].lostHits if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep2_pdgId'       ,leps[1].pdgId           if len(leps) > 1 else 0)
+        self.out.fillBranch('Lep2_charge'      ,leps[1].charge          if len(leps) > 1 else 0)
+        self.out.fillBranch('Lep2_convVeto'    ,leps[1].convVeto        if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep2_tightCharge' ,leps[1].tightCharge     if len(leps) > 1 else -99)
+        self.out.fillBranch('Lep2_lostHits'    ,leps[1].lostHits        if len(leps) > 1 else -99)
         self.out.fillBranch('Lep2_isLepTight'  ,leps[1].isLepTight_Recl if len(leps) > 1 else -99)
  
         return True
