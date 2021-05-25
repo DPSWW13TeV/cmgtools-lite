@@ -1,4 +1,6 @@
-DPSWW+ : WWDoubleTo2L : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed, Label="DPSWW" 
+DPSWW+ : WWDoubleTo2L : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed, Label="DPSWW"
+
+
 
 DPSWW_cp5+ : WWDouble_cp5 : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, Label="DPSWW_cp5" , years="2018" 
 
@@ -21,6 +23,8 @@ Rares : T_tWch                 : xsec :   LepGood1_isMatchRightCharge && LepGood
 Rares : TBar_tWch              : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6    , years="2017"
 
 Rares: WpWpJJ : xsec*0.05454/0.03711 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , Label="Rares"
+WpWpJJ: WpWpJJ : xsec*0.05454/0.03711 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , Label="SPS"
+
 Rares: WWW    : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares" 
 Rares: WWZ    : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"
 Rares: WZZ    : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"

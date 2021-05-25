@@ -1,6 +1,24 @@
 # vim: syntax=sh
 data_flips : + ; IncludeMca="dps-ww/fullRun2/mca-data-forFlips.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="charge-misid.", FillColor=ROOT.kCyan-7, PostFix = "_flips"
 incl_mc    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt"
+
+
+
+WZ_scaleV1 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[0] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kMagenta
+WZ_scaleV2 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[1] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed
+WZ_scaleV3 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[2] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kCyan
+WZ_scaleV4 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[3] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kYellow
+WZ_scaleV5 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[4] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue
+WZ_scaleV6 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[5] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen
+
+DPSpy8+ : WWDoubleTo2L : 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
+WZfxfx 	: WZTo3LNu_fxfx : xsec ; FillColor=ROOT.kAzure+1, Label="WZ"
+#incl_mc_unclUp    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/fr-unclUp.txt', SkipMe=True, PostFix = "_unclUp"
+#incl_mc_unclDn    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/fr-unclDn.txt', SkipMe=True, PostFix = "_unclDn"
+
+#incl_mc_jecUp    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/frs-jecs/fr-jesTotalUp.txt', SkipMe=True, PostFix = "_jecUp"
+#incl_mc_jecDn    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/frs-jecs/fr-jesTotalDown.txt',  SkipMe=True, PostFix = "_jecDn"
+
 Convs	   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-convs.txt"
 data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="non-prompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes"
 
@@ -8,7 +26,9 @@ data_fakes_mu90el65 : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="d
 
 
 data       : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt"
-data_flips_unskimmed : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="charge-misid.", FillColor=ROOT.kCyan-7, PostFix = "_flipsv1"
+##flips_MC : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt", Label="charge-misid.", FillColor=ROOT.kViolet
+
+
 data_fakes_dblMu : DoubleMuon_Run2016B_02Apr2020 + DoubleMuon_Run2016C_02Apr2020 + DoubleMuon_Run2016D_02Apr2020 + DoubleMuon_Run2016E_02Apr2020 + DoubleMuon_Run2016F_02Apr2020 + DoubleMuon_Run2016G_02Apr2020 + DoubleMuon_Run2016H_02Apr2020;      FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_dblMu", FillColor=ROOT.kCyan-7
 data_fakes_dblEg : DoubleEG_Run2016B_02Apr2020 + DoubleEG_Run2016C_02Apr2020 + DoubleEG_Run2016D_02Apr2020 + DoubleEG_Run2016E_02Apr2020 + DoubleEG_Run2016F_02Apr2020 + DoubleEG_Run2016G_02Apr2020 + DoubleEG_Run2016H_02Apr2020;        FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_dblEg", FillColor=ROOT.kGreen-4
 data_fakes_Mu    : SingleMuon_Run2016B_02Apr2020 + SingleMuon_Run2016C_02Apr2020 + SingleMuon_Run2016D_02Apr2020 + SingleMuon_Run2016E_02Apr2020 + SingleMuon_Run2016F_02Apr2020 + SingleMuon_Run2016G_02Apr2020 + SingleMuon_Run2016H_02Apr2020;      FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_Mu",    FillColor=ROOT.kCyan-7, LineStyle=2

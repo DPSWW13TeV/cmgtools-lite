@@ -1,2 +1,13 @@
 alwaystrue: 1
-dilep : (nMuon + nElectron) > 1
+
+elmu : (nMuon >0 &&  nElectron > 0) ; Disable=True
+mumu : nMuon > 1 ; Disable=True
+#ll : (nMuon+nElectron > 1); Disable=True
+#ll : nLepGood > 0 ; Disable=True
+pt10 : LepGood_pt > 10 ; Disable=True
+
+Looselep : nLepGood > 1; Disable=True
+nVertL : PV_npvsGood < 15 ; Disable =True
+nVertM : PV_npvsGood >= 15  && PV_npvsGood < 20; Disable =True
+nVertH : PV_npvsGood >=20  && PV_npvsGood < 25 ; Disable =True
+nVertU : PV_npvsGood >= 25  ; Disable =True

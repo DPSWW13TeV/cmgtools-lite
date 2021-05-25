@@ -21,6 +21,9 @@ ttH_skim_cut = ("nMuon + nElectron >= 2 &&" +
 muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["muPt" ] and l.miniPFRelIso_all < conf["miniRelIso"] and l.sip3d < conf["sip3d"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"]
 electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] and l.miniPFRelIso_all < conf["miniRelIso"] and l.sip3d < conf["sip3d"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["eleId"])
 
+muonSelectionV1     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["muPt" ] 
+electronSelectionV1 = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] 
+
 from CMGTools.DPSWW.tools.nanoAOD.ttHPrescalingLepSkimmer import ttHPrescalingLepSkimmer
 # NB: do not wrap lepSkim a lambda, as we modify the configuration in the cfg itself 
 lepSkim = ttHPrescalingLepSkimmer(5, 
@@ -34,6 +37,9 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger im
 lepMerge = collectionMerger(input = ["Electron","Muon"], 
                             output = "LepGood", 
                             selector = dict(Muon = muonSelection, Electron = electronSelection))
+lepMergeOnly = collectionMerger(input = ["Electron","Muon"], 
+                                output = "LepGood", 
+                                selector = dict(Muon = muonSelectionV1, Electron = electronSelectionV1))
 
 
 from CMGTools.DPSWW.tools.nanoAOD.ttHLeptonCombMasses import ttHLeptonCombMasses
@@ -46,6 +52,9 @@ from CMGTools.DPSWW.tools.nanoAOD.lepJetBTagAdder import lepJetBTagCSV, lepJetBT
 
 ttH_sequence_step1 = [lepSkim, lepMerge, autoPuWeight, yearTag, xsecTag, lepJetBTagCSV, lepJetBTagDeepCSV, lepJetBTagDeepFlav, lepMasses]
 
+simple_sequence_step1 = [lepMergeOnly, autoPuWeight, yearTag, xsecTag]
+simple_skim_cut=("")
+loose_sequence_step1 = [lepMerge, autoPuWeight, yearTag, xsecTag]
 #==== 
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR
 from CMGTools.DPSWW.tools.nanoAOD.ttHLepQCDFakeRateAnalyzer import ttHLepQCDFakeRateAnalyzer
@@ -171,6 +180,16 @@ jetmetUncertainties2018All = createJMECorrector(dataYear=2016, jesUncert="All")
 jme2016_allvariations = [jetmetUncertainties2016All,jetMetCorrelate2016] 
 jme2017_allvariations = [jetmetUncertainties2017All,jetMetCorrelate2017]
 jme2018_allvariations = [jetmetUncertainties2018All,jetMetCorrelate2018]
+
+jetmetUncertainties2016 = createJMECorrector(dataYear=2016, jesUncert="Total")
+jetmetUncertainties2017 = createJMECorrector(dataYear=2017, jesUncert="Total", metBranchName="METFixEE2017")
+jetmetUncertainties2018 = createJMECorrector(dataYear=2016, jesUncert="Total")
+
+jme2016 = [jetmetUncertainties2016,jetMetCorrelate2016] 
+jme2017 = [jetmetUncertainties2017,jetMetCorrelate2017]
+jme2018 = [jetmetUncertainties2018,jetMetCorrelate2018]
+
+
 
 def _fires(ev, path):
     if "/hasfiredtriggers_cc.so" not in ROOT.gSystem.GetLibraries():
@@ -429,10 +448,13 @@ vhsplitter = lambda : VHsplitter()
 
 from CMGTools.DPSWW.tools.nanoAOD.DPSWW_vars import DPSWW_vars
 
-dpsvars2016 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2016_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2016)
-dpsvars2017_muWP90_elWP70 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2017_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2017)
-dpsvars2017_muWP90_elWP65 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2017_MVA_mupt90_elpt65.root','FR_mva090_mu_data_comb','FR_mva065_el_data_comb_NC',2017)
-dpsvars2018 = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2018_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2018)
+dpsvars2016MC = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2016_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2016,True)
+dpsvars2017MC = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2017_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2017,True)
+dpsvars2018MC = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2018_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2018,True)
+
+dpsvars2016data = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2016_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2016,False)
+dpsvars2017data = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2017_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2017,False)
+dpsvars2018data = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2018_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2018,False)
 
 from CMGTools.DPSWW.tools.nanoAOD.BDT_DPSWW import BDT_DPSWW
 bdtvars_withcpt_2016 = lambda : BDT_DPSWW(2016,True)
@@ -441,6 +463,46 @@ bdtvars_withcpt_2018 = lambda : BDT_DPSWW(2018,True)
 bdtvars_withpt_2016  = lambda : BDT_DPSWW(2016,False)
 bdtvars_withpt_2017  = lambda : BDT_DPSWW(2017,False)
 bdtvars_withpt_2018  = lambda : BDT_DPSWW(2018,False)
+
+bdtvars_withcpt_2016Up = lambda : BDT_DPSWW(2016,True,'Up')
+bdtvars_withcpt_2017Up = lambda : BDT_DPSWW(2017,True,'Up')
+bdtvars_withcpt_2018Up = lambda : BDT_DPSWW(2018,True,'Up')
+bdtvars_withpt_2016Up  = lambda : BDT_DPSWW(2016,False,'Up')
+bdtvars_withpt_2017Up  = lambda : BDT_DPSWW(2017,False,'Up')
+bdtvars_withpt_2018Up  = lambda : BDT_DPSWW(2018,False,'Up')
+
+
+bdtvars_withcpt_2016Down = lambda : BDT_DPSWW(2016,True,'Down')
+bdtvars_withcpt_2017Down = lambda : BDT_DPSWW(2017,True,'Down')
+bdtvars_withcpt_2018Down = lambda : BDT_DPSWW(2018,True,'Down')
+bdtvars_withpt_2016Down  = lambda : BDT_DPSWW(2016,False,'Down')
+bdtvars_withpt_2017Down  = lambda : BDT_DPSWW(2017,False,'Down')
+bdtvars_withpt_2018Down  = lambda : BDT_DPSWW(2018,False,'Down')
+
+
+from CMGTools.DPSWW.tools.nanoAOD.BDT_DPSWW_v1 import BDT_DPSWW_v1
+Bdtvars_withcpt_2016 = lambda : BDT_DPSWW_v1(2016,True)
+Bdtvars_withcpt_2017 = lambda : BDT_DPSWW_v1(2017,True)
+Bdtvars_withcpt_2018 = lambda : BDT_DPSWW_v1(2018,True)
+Bdtvars_withpt_2016  = lambda : BDT_DPSWW_v1(2016,False)
+Bdtvars_withpt_2017  = lambda : BDT_DPSWW_v1(2017,False)
+Bdtvars_withpt_2018  = lambda : BDT_DPSWW_v1(2018,False)
+
+Bdtvars_withcpt_2016Up = lambda : BDT_DPSWW_v1(2016,True,'Up')
+Bdtvars_withcpt_2017Up = lambda : BDT_DPSWW_v1(2017,True,'Up')
+Bdtvars_withcpt_2018Up = lambda : BDT_DPSWW_v1(2018,True,'Up')
+Bdtvars_withpt_2016Up  = lambda : BDT_DPSWW_v1(2016,False,'Up')
+Bdtvars_withpt_2017Up  = lambda : BDT_DPSWW_v1(2017,False,'Up')
+Bdtvars_withpt_2018Up  = lambda : BDT_DPSWW_v1(2018,False,'Up')
+
+
+Bdtvars_withcpt_2016Down = lambda : BDT_DPSWW_v1(2016,True,'Down')
+Bdtvars_withcpt_2017Down = lambda : BDT_DPSWW_v1(2017,True,'Down')
+Bdtvars_withcpt_2018Down = lambda : BDT_DPSWW_v1(2018,True,'Down')
+Bdtvars_withpt_2016Down  = lambda : BDT_DPSWW_v1(2016,False,'Down')
+Bdtvars_withpt_2017Down  = lambda : BDT_DPSWW_v1(2017,False,'Down')
+Bdtvars_withpt_2018Down  = lambda : BDT_DPSWW_v1(2018,False,'Down')
+
 
 from CMGTools.DPSWW.tools.nanoAOD.genInfo_py8 import genInfo_py8
 postfsrInfoPy = lambda : genInfo_py8()

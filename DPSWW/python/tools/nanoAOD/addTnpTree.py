@@ -6,7 +6,7 @@ import os
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 #from CMGTools.DPSWW.tools.nanoAOD.ttH_modules import conept_TTH
-_rootLeafType2rootBranchType = { 'UChar_t':'b', 'Char_t':'B', 'UInt_t':'i', 'Int_t':'I', 'Float_t':'F', 'Double_t':'D', 'ULong64_t':'l', 'Long64_t':'L', 'Bool_t':'O' }
+_rootLeafType2rootBranchType = { 'UChar_t':'b', 'Char_t':'B', 'UInt_t':'i', 'Int_t':'I', 'Float_t':'F', 'Double_t':'D', 'ULong64_t':'l', 'Long64_t':'L', 'Bool_t':'O'}
 
 def conept_TTH(lep):
     if (abs(lep.pdgId)!=11 and abs(lep.pdgId)!=13): return lep.pt
@@ -53,8 +53,8 @@ class addTnpTree(Module):
                 self.lepBranches.append( (brname.replace("%s_"%self.flavor,""), brtype) )
 
         for branch in self.lepBranches:
-            self.out.branch('Tag_%s'%branch[0], _rootLeafType2rootBranchType[branch[1]])
-            self.out.branch('Probe_%s'%branch[0], _rootLeafType2rootBranchType[branch[1]])
+            self.out.branch('%s'%branch[0], _rootLeafType2rootBranchType[branch[1]])
+
 
         ## Additional variables  added by hand 
         self.out.branch("Tag_isGenMatched", "I")

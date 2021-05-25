@@ -11,7 +11,7 @@ def byCompName(components, regexps):
 year = int(getHeppyOption("year", "2016"))
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
-test = getHeppyOption("test")#,"privateSigProd")
+test = getHeppyOption("test","privateSigProd")
 
 
 # Samples
@@ -37,8 +37,8 @@ else:
         from CMGTools.RootTools.samples.samples_13TeV_DATA2016_NanoAODv7 import dataSamples_02Apr2020 as allData
         #        from CMGTools.RootTools.samples.triggers_13TeV_DATA2016 import all_triggers as triggers ## for FRqcd
 
-#mcSamples_=[]
-allData=[]
+mcSamples_=[]
+#allData=[]
 
 #autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cms-xrd-global.cern.ch/") # must be done before mergeExtensions
 autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
@@ -72,19 +72,21 @@ if analysis == "main":
         ##rares
         #"TTW_LO","TTZ_LO","WWW",  "WWZ", "WZG", "WZZ", "ZZZ", "WWW_ll", "WWG",
         ## diboson
-        #"WWDouble.*","ZZTo4L","WWTo2L2Nu","WZTo3LNu.*","WpWpJJ"
+        "WWDouble.*",
+        "WZTo3LNu_fxfx*"
+        #,"ZZTo4L","WWTo2L2Nu","WZTo3LNu.*","WpWpJJ"
         ## QCD
         ##        "QCD.*"
         #        "WZTo3LNu.*"
-        "GGZZ4e"
+        ##"GGZZ4e"
         #"GG.*","TTG.*","TG.*"
     ]])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]) )
-    DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year] + triggerGroups_dict["Trigger_1e"][year]) if year == 2018 else
-                                ("DoubleEG",   triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year]) )
-    DatasetsAndTriggers.append( ("MuonEG",     triggerGroups_dict["Trigger_em"][year] + triggerGroups_dict["Trigger_mee"][year] + triggerGroups_dict["Trigger_mme"][year]) )
+    #    DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year] + triggerGroups_dict["Trigger_1e"][year]) if year == 2018 else
+    #                             ("DoubleEG",   triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year]) )
+    #DatasetsAndTriggers.append( ("MuonEG",     triggerGroups_dict["Trigger_em"][year] + triggerGroups_dict["Trigger_mee"][year] + triggerGroups_dict["Trigger_mme"][year]) )
     DatasetsAndTriggers.append( ("SingleMuon", triggerGroups_dict["Trigger_1m"][year]) )
-    DatasetsAndTriggers.append( ("SingleElectron", triggerGroups_dict["Trigger_1e"][year]) if year != 2018 else (None,None) )
+    #DatasetsAndTriggers.append( ("SingleElectron", triggerGroups_dict["Trigger_1e"][year]) if year != 2018 else (None,None) )
 elif analysis == "frqcd":
     mcSamples = byCompName(mcSamples_, [
 
@@ -236,11 +238,11 @@ from CMGTools.DPSWW.tools.nanoAOD.ttH_modules import *
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 
 # in the cut string, keep only the main cuts to have it simpler
-modules = ttH_sequence_step1
-cut = ttH_skim_cut
+modules = ttH_sequence_step1 #loose_sequence_step1 
+cut = ttH_skim_cut #simple_skim_cut 
 compression = "ZLIB:3" #"LZ4:4" #"LZMA:9"
 branchsel_in = os.environ['CMSSW_BASE']+"/src/CMGTools/TTHAnalysis/python/tools/nanoAOD/branchsel_in.txt"
-branchsel_out = None
+branchsel_out = None #"/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/cfg/branselOut.txt"  #None
 
 if analysis == "frqcd":
     modules = ttH_sequence_step1_FR
@@ -254,15 +256,18 @@ POSTPROCESSOR = PostProcessor(None, [], modules = modules,
 
 #test = getHeppyOption("test")
 if test == "privateSigProd":
-    sigPy8Private = kreator.makeMCComponent("WWDoubleTo2L", "/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
-    sigHWPrivate           = kreator.makeMCComponent("WWDoubleTo2L_herwig", "/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
-    sigPy8Private.files = ["/afs/cern.ch/user/a/anmehta/public/temp/FSQ-RunIIFall17NanoAODv7-00003.root"]
-    sigHWPrivate.files = ["/afs/cern.ch/user/a/anmehta/public/temp/SMP-RunIIFall17NanoAODv7-00212.root"]
+    #sigPy8Private = kreator.makeMCComponent("WWDoubleTo2L", "/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+    sigHWPrivate           = kreator.makeMCComponent("WWDoubleTo2L_herwig", "/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+    #sigPy8Private.files = ["/afs/cern.ch/user/a/anmehta/public/temp/FSQ-RunIIFall17NanoAODv7-00003.root"]
+    sigHWPrivate.files = ["/eos/cms/store/cmst3/group/dpsww/Signal_2018/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7_RunIIAutumn18NanoAODv7.root"]
+    modules = ttH_sequence_step1 #loose_sequence_step1 
+    cut = ttH_skim_cut #simple_skim_cut 
+    compression = "ZLIB:3" #"LZ4:4" #"LZMA:9"
     #lepSkim.requireSameSignPair = False
     #lepSkim.minJets = 0
     #lepSkim.minMET = 0
     #lepSkim.prescaleFactor = 0
-    selectedComponents = [sigPy8Private,sigHWPrivate]
+    selectedComponents = [sigHWPrivate]#sigPy8Private,
 elif test == "94X-MC-miniAOD":
     TTLep_pow = kreator.makeMCComponent("TTLep_pow", "/TTTo2L2Nu_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v1/MINIAODSIM", "CMS", ".*root", 831.76*((3*0.108)**2) )
     TTLep_pow.files = [ 'root://cms-xrd-global.cern.ch//store/mc/RunIIFall17MiniAOD/TTTo2L2Nu_mtop166p5_TuneCP5_PSweights_13TeV-powheg-pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/70000/3CC234EB-44E0-E711-904F-FA163E0DF774.root' ]

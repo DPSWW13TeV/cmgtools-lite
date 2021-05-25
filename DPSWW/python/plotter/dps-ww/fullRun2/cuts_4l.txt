@@ -20,7 +20,7 @@ q1: (LepGood1_charge + LepGood2_charge + LepGood3_charge + LepGood4_charge) == 0
 
 vetottHZZ: !(mZ2>0 && m4l<140)
 met : MET_pt < 20 ; Disable=True
-tauveto: nTauTight==0
+tauveto: nTauFO==0
 m3l: mass_3lep(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood3_conePt,LepGood3_eta,LepGood3_phi) > 100
 #jetveto: nJet25_Recl == 0
 #bVeto: nBJetMedium25 == 0

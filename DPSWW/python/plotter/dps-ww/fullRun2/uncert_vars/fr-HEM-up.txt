@@ -1,8 +1,14 @@
 change: MET_pt\b: MET_pt_HEMUp
 change: METFixEE2017_pt\b: METFixEE2017_pt_HEMUp
+change: BDTG_DPS_TLCR_raw_withpt\b: BDTG_DPS_TLCR_raw_withpt_HEMUp
+change: BDTG_DPS_TLCR_raw_withcpt\b: BDTG_DPS_TLCR_raw_withcpt_HEMUp
+change: BDTG_DPS_WZ_amc_raw_withpt\b: BDTG_DPS_WZ_amc_raw_withpt_HEMUp
+change: BDTG_DPS_WZ_amc_raw_withcpt\b: BDTG_DPS_WZ_amc_raw_withcpt_HEMUp
 change: nJet25_Recl\b: nJet25_HEMUp_Recl
 change: htJet25j_Recl\b: htJet25j_HEMUp_Recl
 change: mhtJet25_Recl\b: mhtJet25_HEMUp_Recl
+change: Jet_pt_Recl\b: Jet_pt_HEMUp_Recl
+change: Jet_eta_Recl\b: Jet_eta_HEMUp_Recl
 change: nJet40_Recl\b: nJet40_HEMUp_Recl
 change: htJet40j_Recl\b: htJet40j_HEMUp_Recl
 change: mhtJet40_Recl\b: mhtJet40_HEMUp_Recl

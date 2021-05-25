@@ -30,10 +30,10 @@ change: MT_met_lep3\b: MT_met_lep3_jesAbsoluteDown
 change: mbb_loose\b: mbb_loose_jesAbsoluteDown
 change: mbb_medium\b: mbb_medium_jesAbsoluteDown
 change: min_Deta_leadfwdJet_jet\b: min_Deta_leadfwdJet_jet_jesAbsoluteDown
-change: BDThttTT_eventReco_mvaValue\b: BDThttTT_eventReco_mvaValue_jesAbsoluteDown
-change: BDThttTT_eventReco_HadTop_pt\b: BDThttTT_eventReco_HadTop_pt_jesAbsoluteDown
-change: BDThttTT_eventReco_Hj_score\b: BDThttTT_eventReco_Hj_score_jesAbsoluteDown
-change: DNN_3l_predictions_ttH\b: DNN_3l_jesAbsoluteDown_predictions_ttH
-change: DNN_3l_predictions_rest\b: DNN_3l_jesAbsoluteDown_predictions_rest
+change: BDTG_DPS_WZ_amc_raw_withpt\b: BDTG_DPS_WZ_amc_raw_withpt_jesAbsoluteDown
+change: BDTG_DPS_WZ_amc_raw_withcpt\b: BDTG_DPS_WZ_amc_raw_withcpt_jesAbsoluteDown
+change: BDTG_DPS_TLCR_raw_withpt\b: BDTG_DPS_TLCR_raw_withpt_jesAbsoluteDown
+change: BDTG_DPS_TLCR_raw_withcpt\b: DNN_3l_jesAbsoluteDown_predictions_ttH
+#change: \b: DNN_3l_jesAbsoluteDown_predictions_rest
 change: DNN_3l_predictions_tH\b: DNN_3l_jesAbsoluteDown_predictions_tH
 weight:1

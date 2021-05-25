@@ -1,0 +1,33 @@
+# vim: syntax=sh
+
+mc_flips : TTJets_DiLepton       : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge))  ; FillColor=ROOT.kOrange-3, Label="flips_mcT"
+mc_flips : DYJetsToLL_M50_LO     : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge))  ; FillColor=ROOT.kOrange-3, Label="flips_mcT"
+mc_flips : WWTo2L2Nu             : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; FillColor=ROOT.kOrange-3, Label="flips_mcT"
+mc_flips : T_tWch_noFullyHad     : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !LepGood1_isMatchRightCharge  && !LepGood2_isMatchRightCharge) ; FillColor=ROOT.kOrange-3, years="2016\,2018", Label="flips_mcT"
+mc_flips : TBar_tWch_noFullyHad  : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; FillColor=ROOT.kOrange-3, years="2016\,2018", Label="flips_mcT"
+mc_flips : T_tWch                : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; FillColor=ROOT.kOrange-3, years="2017", Label="flips_mcT"
+mc_flips : TBar_tWch             : xsec : (LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 && !(LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge)) ; FillColor=ROOT.kOrange-3, years="2017", Label="flips_mcT"
+
+data_flips : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="charge-misid.", FillColor=ROOT.kCyan-7, PostFix = "_flips"
+
+
+Rares : TTJets_DiLepton       : xsec : 1   ; FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt" , FillColor=ROOT.kViolet-3, Label="mc-flips"
+Rares : DYJetsToLL_M10to50_LO : xsec : 1   ; FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt" , FillColor=ROOT.kViolet-3, years="2016\,2018" , Label="mc-flips"
+Rares : DYJetsToLL_M10to50    : xsec : 1   ; FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt" , FillColor=ROOT.kViolet-3, years="2017" , Label="mc-flips"
+
+Rares : DYJetsToLL_M50_LO     : xsec : 1   ; FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt" , FillColor=ROOT.kViolet-3, Label="mc-flips"
+Rares : WWTo2L2Nu             : xsec : 1   ; FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt" , FillColor=ROOT.kViolet-3, Label="mc-flips"
+Rares : T_tWch_noFullyHad     : xsec : 1   ; FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt" , FillColor=ROOT.kViolet-3, years="2016\,2018", Label="mc-flips" 
+Rares : TBar_tWch_noFullyHad  : xsec : 1   ; FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt" , FillColor=ROOT.kViolet-3, years="2016\,2018", Label="mc-flips" 
+Rares : T_tWch                : xsec : 1   ; FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt" , FillColor=ROOT.kViolet-3, years="2017", Label="mc-flips" 
+Rares : TBar_tWch             : xsec : 1   ; FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt" , FillColor=ROOT.kViolet-3, years="2017", Label="mc-flips" 
+
+
+
+
+
+
+
+
+
+

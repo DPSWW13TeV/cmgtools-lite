@@ -9,15 +9,12 @@ exclusive: nLepTight<=2
 same-sign: LepGood1_charge*LepGood2_charge > 0
 conept2520 : LepGood1_conePt>25 &&  LepGood2_conePt > 20
 pt2520: LepGood1_pt>25 && LepGood2_pt>20 ; Disable =True
-
-TT: LepGood1_isLepTight && LepGood2_isLepTight 
+TT : LepGood1_isLepTight && LepGood2_isLepTight
+TL: (LepGood1_isLepTight && !LepGood2_isLepTight) || (!LepGood1_isLepTight && LepGood2_isLepTight); Disable=True
 
 tauveto: nTauFO == 0
 metpt: MET_pt > 15
-nVertL : PV_npvsGood < 15 ; Disable =True
-nVertM : PV_npvsGood >= 15  && PV_npvsGood < 20; Disable =True
-nVertH : PV_npvsGood >=20  && PV_npvsGood < 25 ; Disable =True
-nVertU : PV_npvsGood >= 25  ; Disable =True
+
 
 jets25 : nJet25 < 2 ; Disable =True
 01jets : Sum$(JetSel_Recl_pt > 30) < 2

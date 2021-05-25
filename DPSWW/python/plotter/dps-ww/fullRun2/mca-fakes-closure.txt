@@ -10,27 +10,33 @@ wjTT : W1JetsToLNu_LO : xsec :  (LepGood1_isLepTight && LepGood2_isLepTight); Fi
 wjTT : W2JetsToLNu_LO : xsec :  (LepGood1_isLepTight && LepGood2_isLepTight); FillColor=ROOT.kOrange-3 , years="2016\,2018"  , Label="WJTT"
 wjTT : W3JetsToLNu_LO : xsec :  (LepGood1_isLepTight && LepGood2_isLepTight); FillColor=ROOT.kOrange-3 , years="2016\,2018"  , Label="WJTT"
 wjTT : W4JetsToLNu_LO : xsec :  (LepGood1_isLepTight && LepGood2_isLepTight); FillColor=ROOT.kOrange-3 , years="2016\,2018"  , Label="WJTT"
+data_tl+  : + : (LepGood1_isLepTight && !LepGood2_isLepTight) || (!LepGood1_isLepTight && LepGood2_isLepTight) ; IncludeMca="dps-ww/fullRun2/mca-data.txt",  FillColor=ROOT.kCyan-7, PostFix="_tl"
 
 
 
 
 wjLO+ : WJetsToLNu_LO : xsec :  if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0); FillColor=ROOT.kMagenta-3 , years="2018"  , Label="WJ(mc-truth)"  
+
 wjLO_tl : WJetsToLNu_LO : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2018"  , Label="WJ(QCD FRs)" 
 
-wj+ : W1JetsToLNu_LO : xsec :  if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0); FillColor=ROOT.kMagenta-3 , years="2016\,2018"  , Label="WJ(mc-truth)"  
-wj+ : W2JetsToLNu_LO : xsec :  if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0); FillColor=ROOT.kMagenta-3 , years="2016\,2018"  , Label="WJ(mc-truth)"
-wj+ : W3JetsToLNu_LO : xsec :  if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0); FillColor=ROOT.kMagenta-3 , years="2016\,2018"  , Label="WJ(mc-truth)"
-wj+ : W4JetsToLNu_LO : xsec :  if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0); FillColor=ROOT.kMagenta-3 , years="2016\,2018"  , Label="WJ(mc-truth)"
-wj+ : W1JetsToLNu    : xsec : if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0)   ; FillColor=ROOT.kGreen-3 , years="2017" , Label="WJ(mc-truth)"
-wj+ : W2JetsToLNu    : xsec : if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0)   ; FillColor=ROOT.kGreen-3 , years="2017"  , Label="WJ(mc-truth)"
+#fakes = if3(abs(LepGood1_pdgId)==13,LepGood1_isMatchRightCharge==0,LepGood1_isMatchRightCharge==0 &&  LepGood1_mcPromptGamma==0) || if3(abs(LepGood2_pdgId)==13,LepGood2_isMatchRightCharge==0,LepGood2_isMatchRightCharge==0 &&  LepGood2_mcPromptGamma==0)
+
+#TL = (LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==0 && LepGood2_mcMatchId!=0 && LepGood2_mcPromptGamma==0) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==0 && LepGood1_mcMatchId!=0 && LepGood1_mcPromptGamma==0)
+
+wj+ : W1JetsToLNu_LO : xsec :  LepGood1_mcPromptGamma==0 && LepGood2_mcPromptGamma==0 && ((LepGood1_mcMatchId==0 &&  LepGood2_mcMatchId!=0) || (LepGood2_mcMatchId==0  && LepGood1_mcMatchId!=0)); FillColor=ROOT.kMagenta-3 , years="2016"  , Label="WJ(mc-truth)"  
+wj+ : W2JetsToLNu_LO : xsec :LepGood1_mcPromptGamma==0 && LepGood2_mcPromptGamma==0 && ((LepGood1_mcMatchId==0 &&  LepGood2_mcMatchId!=0) || (LepGood2_mcMatchId==0  && LepGood1_mcMatchId!=0))  ; FillColor=ROOT.kMagenta-3 , years="2016"  , Label="WJ(mc-truth)"
+wj+ : W3JetsToLNu_LO : xsec :LepGood1_mcPromptGamma==0 && LepGood2_mcPromptGamma==0 && ((LepGood1_mcMatchId==0 &&  LepGood2_mcMatchId!=0) || (LepGood2_mcMatchId==0  && LepGood1_mcMatchId!=0))  ; FillColor=ROOT.kMagenta-3 , years="2016"  , Label="WJ(mc-truth)"
+wj+ : W4JetsToLNu_LO : xsec :LepGood1_mcPromptGamma==0 && LepGood2_mcPromptGamma==0 && ((LepGood1_mcMatchId==0 &&  LepGood2_mcMatchId!=0) || (LepGood2_mcMatchId==0  && LepGood1_mcMatchId!=0))  ; FillColor=ROOT.kMagenta-3 , years="2016"  , Label="WJ(mc-truth)"
+wj+ : W1JetsToLNu    : xsec : LepGood1_mcPromptGamma==0 && LepGood2_mcPromptGamma==0 && ((LepGood1_mcMatchId==0 &&  LepGood2_mcMatchId!=0) || (LepGood2_mcMatchId==0  && LepGood1_mcMatchId!=0))   ; FillColor=ROOT.kMagenta-3 , years="2017\,2018" , Label="WJ(mc-truth)"
+wj+ : W2JetsToLNu    : xsec : LepGood1_mcPromptGamma==0 && LepGood2_mcPromptGamma==0 && ((LepGood1_mcMatchId==0 &&  LepGood2_mcMatchId!=0) || (LepGood2_mcMatchId==0  && LepGood1_mcMatchId!=0))   ; FillColor=ROOT.kMagenta-3 , years="2017\,2018"  , Label="WJ(mc-truth)"
 
 
-wj_tl : W1JetsToLNu_LO : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016\,2018"  , Label="WJ(QCD FRs)" 
-wj_tl : W2JetsToLNu_LO : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016\,2018"  , Label="WJ(QCD FRs)"
-wj_tl : W3JetsToLNu_LO : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016\,2018"  , Label="WJ(QCD FRs)"
-wj_tl : W4JetsToLNu_LO : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016\,2018"  , Label="WJ(QCD FRs)"
-wj_tl : W1JetsToLNu : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2017"  , Label="WJ(QCD FRs)"
-wj_tl : W2JetsToLNu : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2017" , Label="WJ(QCD FRs)"
+wj_tl : W1JetsToLNu_LO : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016"  , Label="WJ(QCD FRs)" 
+wj_tl : W2JetsToLNu_LO : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016"  , Label="WJ(QCD FRs)"
+wj_tl : W3JetsToLNu_LO : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016"  , Label="WJ(QCD FRs)"
+wj_tl : W4JetsToLNu_LO : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2016"  , Label="WJ(QCD FRs)"
+wj_tl : W1JetsToLNu : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2017\,2018" , Label="WJ(QCD FRs)"
+wj_tl : W2JetsToLNu : xsec ; 1 , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2017\,2018" , Label="WJ(QCD FRs)"
 
 
 
@@ -39,9 +45,9 @@ wj_LO : WJetsToLNu_LO  : xsec : (LepGood1_isMatchRightCharge==0 && LepGood1_mcPr
 wj_LO_tl : WJetsToLNu_LO : xsec ; AddWeight="((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0))", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kRed, Label="wjinc_tl" , years="2017"
 
 
-wj+ : W0JetsToLNu : xsec :  (LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0) ; FillColor=ROOT.kGreen-3 , years="2017", SkipMe=True
+##wj+ : W0JetsToLNu : xsec :  (LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0) ; FillColor=ROOT.kGreen-3 , years="2017", SkipMe=True
 
-wj_tl : W0JetsToLNu : xsec ; AddWeight="((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0))" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2017" , SkipMe=True
+##wj_tl : W0JetsToLNu : xsec ; AddWeight="((LepGood1_isMatchRightCharge==0 && LepGood1_mcPromptGamma==0) || (LepGood2_isMatchRightCharge==0 && LepGood2_mcPromptGamma==0))" , FakeRate="dps-ww/fullRun2/fakeRate-2lss-frmc-qcd.txt", FillColor=ROOT.kBlue , years="2017" , SkipMe=True
 
 
 
