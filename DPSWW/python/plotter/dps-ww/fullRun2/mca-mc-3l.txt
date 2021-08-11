@@ -27,15 +27,13 @@ WZ_alt	   : WZTo3LNu : xsec : 1 ;  FillColor=ROOT.kYellow, Label="WZ_alt"
 WZ         : WZTo3LNu_fxfx : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="WZ" #, SkipMe=True
 WZ_incl    : WZTo3LNu_mllmin01 : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="WZ/\#gamma*"
 
-TTdilep    : TTJets_DiLepton : xsec : 1 ; FillColor=ROOT.kViolet, Label="ttbar_dilep"
+Rares    : TTJets_DiLepton : xsec : 1 ; FillColor=ROOT.kViolet, Label="ttbar_dilep"
 ttjets     : TTJets : xsec : 1 ; FillColor=ROOT.kViolet, Label="ttbar"
 DY         : DYJetsToLL_M50 : xsec     :1 ; FillColor=8
 DY         : DYJetsToLL_M10to50 : xsec :1 ; FillColor=8 , years="2016\,2017"
 DYLO+      : DYJetsToLL_M50_LO : xsec : 1; FillColor=8
 DYLO+      : DYJetsToLL_M10to50_LO : xsec : 1 ; FillColor=8, years="2016"
 
-Convs01J    : WGToLNuG_01J_amcatnlo : xsec : 1 ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma"
-##Convs01J  : ZGToLLG_01J_amcatnlo : xsec :  1 ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
 Convs01J  : ZGToLLG_01J_lowmll_amcatnlo : xsec :1 ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
 
 

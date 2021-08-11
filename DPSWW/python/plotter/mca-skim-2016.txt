@@ -1,4 +1,5 @@
-GGZZ4e  : GGZZ4e  : xsec
+WWDoubleTo2L_newsim : WWDoubleTo2L_newsim : xsec
+##GGZZ4e  : GGZZ4e  : xsec
 ##amGGZZ4m  : GGZZ4m  : xsec
 ##amGGHZZ4L : GGHZZ4L : xsec
 ##amGGZZ2e2m: GGZZ2e2m: xsec

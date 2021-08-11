@@ -1,3 +1,4 @@
+import os
 # COMPONENT CREATOR
 from CMGTools.RootTools.samples.ComponentCreator import ComponentCreator
 kreator = ComponentCreator()
@@ -97,6 +98,9 @@ Top = [ TTJets,
 # ====== SINGLE TOP ======
 
 # ===  DI-BOSONS
+basepath_newsim = "/eos/cms/store/cmst3/group/dpsww/baptiseJoSamples/production_june2021_2018/"
+WWDoubleTo2L_newsim        = kreator.makeMCComponent("WWDoubleTo2L_newsim","/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+WWDoubleTo2L_newsim.files   = [basepath_newsim+x for x in os.listdir(basepath_newsim)]
 WWDoubleTo2L           = kreator.makeMCComponent("WWDoubleTo2L", "/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
 WWDoubleTo2L_herwig           = kreator.makeMCComponent("WWDoubleTo2L_herwig", "/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
 WWDouble_cp5 = kreator.makeMCComponent("WWDouble_cp5", "/WW_DoubleScattering_13TeV-pythia8_TuneCP5/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
@@ -118,6 +122,7 @@ ZGToLLG_01J_lowmll_amcatnlo                 = kreator.makeMCComponent("ZGToLLG_0
 
 
 DiBosons = [
+WWDoubleTo2L_newsim,
 WWDoubleTo2L,
 WWDoubleTo2L_herwig,
 WWDouble_cp5,

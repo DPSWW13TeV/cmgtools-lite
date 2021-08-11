@@ -25,6 +25,7 @@ data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/ful
 data_fakes_mu90el65 : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="non-prompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes_mu90el65"
 
 
+#data       : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", AddWeight="(BDTG_DPS_TLCR_raw_withpt<0.4 && BDTG_DPS_WZ_amc_raw_withpt < 0.4)"
 data       : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt"
 ##flips_MC : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt", Label="charge-misid.", FillColor=ROOT.kViolet
 

@@ -2,9 +2,9 @@ alwaystrue: 1
 trilep: nLepFO==3
 exclusive: nLepTight == 3
 cleanup: minMllAFAS > 12; Disable=True
-trigger: Trigger_3l
+trigger: Trigger_2lss
 
-#oneMu: abs(LepGood1_pdgId) == 13  || abs(LepGood2_pdgId) == 13 || abs(LepGood3_pdgId) == 13
+oneMu: abs(LepGood1_pdgId) == 13  || abs(LepGood2_pdgId) == 13 || abs(LepGood3_pdgId) == 13 ; Disable=True
 filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
 
 pt251515: LepGood1_conePt>25 && LepGood2_conePt>15 && LepGood3_conePt>15; Disable=True

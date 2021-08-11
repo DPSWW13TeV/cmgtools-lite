@@ -1,13 +1,14 @@
-GGZZ4m  : GGZZ4m  : xsec
-GGHZZ4L : GGHZZ4L : xsec
-GGZZ4e  : GGZZ4e  : xsec
-GGZZ2e2m: GGZZ2e2m: xsec
-GGZZ2e2t: GGZZ2e2t: xsec
-GGZZ4t  : GGZZ4t  : xsec
-GGZZ2m2t: GGZZ2m2t: xsec
-TTGJets: TTGJets: xsec
-GGZZ4L : GGZZ4L: xsec
-TGJets_lep : TGJets_lep : xsec
+WWDoubleTo2L_newsim : WWDoubleTo2L_newsim : xsec
+##amGGZZ4m  : GGZZ4m  : xsec
+##amGGHZZ4L : GGHZZ4L : xsec
+##amGGZZ4e  : GGZZ4e  : xsec
+##amGGZZ2e2m: GGZZ2e2m: xsec
+##amGGZZ2e2t: GGZZ2e2t: xsec
+##amGGZZ4t  : GGZZ4t  : xsec
+##amGGZZ2m2t: GGZZ2m2t: xsec
+##amTTGJets: TTGJets: xsec
+##amGGZZ4L : GGZZ4L: xsec
+##amTGJets_lep : TGJets_lep : xsec
 ##amWWW : WWW : xsec  
 ##amWWW_ll : WWW_ll : xsec  
 ##amWZZ : WZZ : xsec

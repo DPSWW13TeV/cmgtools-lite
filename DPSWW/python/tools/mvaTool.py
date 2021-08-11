@@ -1,6 +1,6 @@
 import os, ROOT
 from array import array
-
+ROOT.TMVA.PyMethodBase.PyInitialize()
 class MVAVar:
     def __init__(self,name,type='f',func=None):
         self.name = name
@@ -18,14 +18,16 @@ class MVAVar:
         self.var[0] = self.func(ev)
 
 class MVATool:
-    def __init__(self,name,xml,vars,rarity=False,specs=[],nClasses=1):
+    def __init__(self,name,xml,vars,specs=[],nClasses=1,rarity=False):
         self.name = name
+        #        TMVA.PyMethodBase.PyInitialize()
         self.reader = ROOT.TMVA.Reader("Silent")
         self.vars  = vars
         self.specs = specs
         self.nClasses = nClasses
-        for s in specs: self.reader.AddSpectator(s.name,s.var)
+
         for v in vars:  self.reader.AddVariable(v.name,v.var)
+        for s in specs: self.reader.AddSpectator(s.name,s.var)
         #print "Would like to load %s from %s! " % (name,xml)
         self.reader.BookMVA(name,xml)
         self.rarity = rarity
@@ -34,6 +36,7 @@ class MVATool:
         for s in self.vars:  s.set(ev)
         for s in self.specs: s.set(ev)
         return (self.reader.EvaluateMVA(self.name) if self.nClasses==1 else self.reader.EvaluateMulticlass(self.name)[self.nClasses-2]) if not self.rarity else self.reader.GetRarity(self.name)  
+        #return (self.reader.EvaluateMVA(self.name))
 
 class CategorizedMVA:
     def __init__(self,catMvaPairs):

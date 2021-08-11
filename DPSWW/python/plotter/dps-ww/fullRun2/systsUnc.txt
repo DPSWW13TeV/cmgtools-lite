@@ -2,7 +2,7 @@
 
 
 ### Alias definitions. Careful to avoid trailing '.*' to avoid matching _promptsub
-$alias : PromptFromMC : DPSWW|Rares|Convs01J|WZ|ZZ|WZ_mllLT4|WZ_incl|DY|TTdilep
+$alias : PromptFromMC : DPSWW|Rares|Convs01J|WZ|ZZ|WZ_mllLT4|WZ_incl|DY|TTdilep|DPSWW_newsim
 $alias : FRData : data_fakes|.*_promptsub
 $alias : FRAll  : data_fakes|.*_promptsub
 
@@ -12,12 +12,17 @@ $alias : FRAll  : data_fakes|.*_promptsub
 
 
 #  normalization uncert
-#DPSWW_norm  : DPSWW	 : .*          : normSymm : 1.16 
 Rares_norm   : Rares     : .*          : normSymm : 1.5
 Conv_norm    : Convs01J  : .*el.*      : normSymm : 1.3
-WZ_norm      : WZ        : .*          : normSymm : 1.10 
-WZincl_norm  : WZ_incl   : .*          : normSymm : 1.10 
-ZZ_norm      : ZZ     	 : .*          : normSymm : 1.15 
+WZ_norm      : WZ        : .*          : normSymm : 1.15 
+##amWZ_norm      : WZ        : .*          : normSymm : 1.12 ; year="2016" 
+##amWZ_norm      : WZ        : .*          : normSymm : 1.10 ; year="2017"
+##amWZ_norm      : WZ        : .*          : normSymm : 1.10 ; year="2018"
+
+ZZ_norm      : ZZ        : .*          : normSymm : 1.23 ; year="2016" 
+ZZ_norm      : ZZ        : .*          : normSymm : 1.17 ; year="2017"
+ZZ_norm      : ZZ        : .*          : normSymm : 1.17 ; year="2018"
+WZincl_norm  : WZ_incl   : .*          : normSymm : 1.10
 Wgstar_norm  : WZ_mllLT4 : .*          : normSymm : 1.5
 
 # shapes
@@ -26,6 +31,7 @@ Wgstar_norm  : WZ_mllLT4 : .*          : normSymm : 1.5
 
 WZ_shape             : WZ	   : .*                     : altSample          : WZ_alt
 DPSWW_shape          : DPSWW	   : .*                     : altSample          : DPSWW_hg 
+DPSWW_NS             : DPSWW_newsim	: .*                     : altSample          : DPSWW_hg 
 Rares_shape1         : Rares       : .*                     : LinearShapeOnly    : 1.05
 Rares_shape2         : Rares       : .*                     : ParabolicShapeOnly : 1.05
 ZZ_shape1	     : ZZ	   : .*			    : LinearShapeOnly    : 1.05

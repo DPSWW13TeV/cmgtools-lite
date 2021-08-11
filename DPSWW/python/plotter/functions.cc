@@ -440,7 +440,6 @@ float smoothBFlav(float jetpt, float ptmin, float ptmax, int year, float scale_l
 
 
 int unroll_2Dbdt_dps_simple(float BDTx,float BDTy){
-  //v13 arranged acc to signal strength(final)
   if(BDTx  <= 0.35 )return 1;
   else if(BDTx  > 0.35 && BDTx <= 0.45)return 1;
   else if(BDTx  > 0.45 && BDTx <= 0.5)return 2;
@@ -554,6 +553,7 @@ int unroll_2Dbdt_dps_SoBord_sqV3(float BDTx,float BDTy){
 } 
  
 int unroll_2Dbdt_dps_SoBord_diag(float BDTx,float BDTy){
+
   float x1[]={-0.8,-0.4,-0.2,0,0.2,0.4,0.6,0.8,1,1};//,1};
   float y1[]={-1,-1,-0.8,-0.6,-0.4,-0.2,0,0.2,0.4,0.6};//,0.8};
   float x2[]={-1,-1,-0.8,-0.6,-0.4,-0.2,0,0.2,0.4,0.6};//,0.8};
@@ -605,6 +605,107 @@ int unroll_2Dbdt_dps_SoBord_diag(float BDTx,float BDTy){
   
 }
 
+int unroll_2Dbdt_dps_SoBord_diag_pc(float BDTx,float BDTy){
+  //pchang's suggestion
+  float x1[]={-0.4,-0.2,0,0.2,0.4,0.6,0.8,1,1};//,1};
+  float y1[]={-1,-0.8,-0.6,-0.4,-0.2,0,0.2,0.4,0.6};//,0.8};
+  float x2[]={-1,-0.8,-0.6,-0.4,-0.2,0,0.2,0.4,0.6};//,0.8};
+  float y2[]={-0.4,-0.2,0,0.2,0.4,0.6,0.8,1,1};//,1};
+  float bigx1[]={-0.4,-1};
+  float bigy1[]={-1.0,-0.4};
+  float bigx2[]={1,0.4};
+  float bigy2[]={0.4,1};
+//am  float bigx1[]={-0.4,-1};
+//am  float bigy1[]={-1.0,-0.4};
+//am  float bigx2[]={1,0.4};
+//am  float bigy2[]={0.4,1};
+
+
+  int bin;  int nbins=9;
+  float m0 = (y2[0]-y1[0])/(x2[0]-x1[0]);
+  float f0 = y1[0] - m0*x1[0];
+  float mtop = (y2[8]-y1[8])/(x2[8]-x1[8]);
+  float ftop = y1[8] - mtop*x1[8];
+  float mbig1 = (bigy2[0]-bigy1[0])/(bigx2[0]-bigx1[0]);
+  float mbig2 = (bigy2[1]-bigy1[1])/(bigx2[1]-bigx1[1]);
+  float fbig1 = bigy1[0] - mbig1*bigx1[0];
+  float fbig2 = bigy1[1] - mbig2*bigx1[1];
+  if( (BDTx-m0*BDTy - f0) <0 ) bin=0;
+  else if( (BDTx-mtop*BDTy - ftop) >=0 ) bin=9;
+  else if( (BDTx-mbig1*BDTy - fbig1) <0 ) bin=10;
+  else if( (BDTx-mbig2*BDTy - fbig2) >=0 ) bin=10;
+  else {
+    //    std::cout<<"in here"<<std::endl;
+    for (int i = 1; i < nbins; i++){ 
+      float slope1=(y2[i-1]-y1[i-1])/(x2[i-1]-x1[i-1]);
+      float line1 = y1[i-1] - slope1*x1[i-1]; 
+      float slope2=(y2[i]-y1[i])/(x2[i]-x1[i]);
+      float line2 = y1[i] - slope2*x1[i];
+      float fprime1 = BDTy - slope1*BDTx;
+      float fprime2 = BDTy - slope2*BDTx;
+      float lowerBound = fprime1-line1;
+      float upperBound = fprime2-line2;
+      if( lowerBound >=0 && upperBound < 0){
+	bin=i;
+      }
+      else{	continue;}
+    }
+
+  }
+  //std::cout<<"for  BDTx = \t"<<BDTx<<"\t and BDTy = \t"<<BDTy<<"\t i get bin number \t"<<bin<<std::endl;}
+
+  return bin;
+  
+}
+
+
+int unroll_2Ddnn_dps_SoBord_diag(float DNNx,float DNNy){
+  float x1[]={0.1,0.2,0.3,0.42,0.5,0.6,0.68,0.78,0.88,1.0};
+  float y1[]={0,0,0,0.1,0.22,0.32,0.41,0.51,0.62,0.75};
+  float x2[]={0,0,0,0.1,0.22,0.32,0.4,0.5,0.62,0.75};
+  float y2[]={0.1,0.2,0.3,0.4,0.5,0.58,0.68,0.76,0.87,1};
+  //points are like (x1[0],y1[0]) and so on 
+  float bigx1[]={0.3,0}; 
+  float bigy1[]={0,0.3};
+  float bigx2[]={1,0.75};
+  float bigy2[]={0.75,1};
+
+  int bin;  int nbins=10;
+  float m0 = (y2[0]-y1[0])/(x2[0]-x1[0]);
+  float f0 = y1[0] - m0*x1[0];
+  float mtop = (y2[9]-y1[9])/(x2[9]-x1[9]);
+  float ftop = y1[9] - mtop*x1[9];
+  float mbig1 = (bigy2[0]-bigy1[0])/(bigx2[0]-bigx1[0]);
+  float mbig2 = (bigy2[1]-bigy1[1])/(bigx2[1]-bigx1[1]);
+  float fbig1 = bigy1[0] - mbig1*bigx1[0];
+  float fbig2 = bigy1[1] - mbig2*bigx1[1];
+  if( (DNNx-m0*DNNy - f0) <0 ) bin=0;
+  else if( (DNNx-mtop*DNNy - ftop) >=0 ) bin=10;
+  else if( (DNNx-mbig1*DNNy - fbig1) <0 ) bin=11;
+  else if( (DNNx-mbig2*DNNy - fbig2) >=0 ) bin=12;
+  else {
+    //    std::cout<<"in here"<<std::endl;
+    for (int i = 1; i < nbins; i++){ 
+      float slope1=(y2[i-1]-y1[i-1])/(x2[i-1]-x1[i-1]);
+      float line1 = y1[i-1] - slope1*x1[i-1]; 
+      float slope2=(y2[i]-y1[i])/(x2[i]-x1[i]);
+      float line2 = y1[i] - slope2*x1[i];
+      float fprime1 = DNNy - slope1*DNNx;
+      float fprime2 = DNNy - slope2*DNNx;
+      float lowerBound = fprime1-line1;
+      float upperBound = fprime2-line2;
+      if( lowerBound >=0 && upperBound < 0){
+	bin=i;
+      }
+      else{	continue;}
+    }
+
+  }
+  //std::cout<<"for  DNNx = \t"<<DNNx<<"\t and DNNy = \t"<<DNNy<<"\t i get bin number \t"<<bin<<std::endl;}
+
+  return bin;
+  
+}
 
 
 

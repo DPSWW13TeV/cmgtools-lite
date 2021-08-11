@@ -2,6 +2,9 @@ drop *
 keep LepGood_pt
 keep LepGood_eta
 keep LepGood_phi
+keep LepGood_pdgId
+keep MET_pt
+keep MET_phi
 keep PV_npvsGood
 keep PV_npvs
 keep genWeight

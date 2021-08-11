@@ -7,7 +7,7 @@ from CMGTools.DPSWW.tools.mvaTool import *
     
 
 class BDT_DPSWW(Module):
-    def __init__(self,year,usecpt,shift=''):
+    def __init__(self,year,usecpt,svars=[''],shift=''):
         self._MVAs = {}
         self.year=year
         self.usecpt=usecpt
@@ -15,21 +15,24 @@ class BDT_DPSWW(Module):
         print year
         self.shift=shift
         self.allvars=['jesBBEC1_year','jesFlavorQCD','jesEC2','jesAbsolute_year','jesHF','jesJECTotal','jesHF_year','jesRelativeSample_year','jesRelativeBal','jesBBEC1','jesEC2_year','jesAbsolute','unclustEn','jerbarrel','jerendcap1','jerendcap2highpt','jerendcap2lowpt','jerforwardhighpt','jerforwardlowpt','HEM'] if len(shift) > 0 else ['']
-        self.svars=['HEM'] if len(shift) > 0 else ['']
-        #self.svars=['jesJECTotal'] if len(shift) > 0 else ['']
-        #self.var=variation
-        #print variation
-        baseDir='/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/files/'
-        #pff='_withcpt' if usecpt else '_withpt'
+        #self.svars=['HEM'] if len(shift) > 0 else [''], ['unclustEn'],['jesJECTotal']
+        self.svars=svars if len(shift) > 0 else ['']
+        #baseDir='/afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/python/plotter/BDTtraining/' #files/'
+        baseDir='/afs/cern.ch/user/a/anmehta/public/dnn/'
+        pff='_withcpt' if usecpt else '_withpt'
 
         
-        wts_wz_amcG  = baseDir+'dataset_ultramax_{mvaWP}{yr}_wz_amc{here}/weights/TMVAClassification_BDTG.weights.xml' .format(here=self.pff,yr=self.year,mvaWP='muWP90_elWP70_' if self.year == 2017 else '')
-        wts_TLCRG    = baseDir+'dataset_ultramax_{mvaWP}{yr}_TL{here}/weights/TMVAClassification_BDTG.weights.xml'     .format(here=self.pff,yr=self.year,mvaWP='muWP90_elWP70_' if self.year == 2017 else '')
+        
+        #wts_wz_amcG  = baseDir+'dataset_dnn_nospec_dpsvs_wz_amc_%s%s/weights/TMVAClassification_BDTG.weights.xml'%(self.year,self.pff)
+        #wts_TLCRG    = baseDir+'dataset_dnn_nospec_dpsvs_TL_%s%s/weights/TMVAClassification_BDTG.weights.xml'%(self.year,self.pff)
+        wts_wz_amcG  = baseDir+'dataset_testAll_wz_amc_2018_withpt/weights/TMVAClassification_BDTG.weights.xml'
+        wts_TLCRG    = baseDir+'dataset_testAll_TL_2018_withpt/weights/TMVAClassification_BDTG.weights.xml'
 
+        
 
         for src in self.svars:
             name='_'+src+self.shift if len(src) > 0 else ''         
-            inputvarsUp = [
+            inputvars = [
                 MVAVar("Lep1_conept" if usecpt else "Lep1_pt", func = lambda ev : ev.Lep1_conept if usecpt else ev.Lep1_pt),
                 MVAVar("Lep2_conept" if usecpt else "Lep2_pt", func = lambda ev : ev.Lep2_conept if usecpt else ev.Lep2_pt),
                 MVAVar("met",                                  func = lambda ev : getattr(ev,'met%s'%name)),
@@ -43,10 +46,25 @@ class BDT_DPSWW(Module):
                 MVAVar("abs(Lep1_eta+Lep2_eta)",    func = lambda ev : abs(ev.Lep1_eta+ev.Lep2_eta))
             ]
 
-            self._MVAs['BDTG_DPS_WZ_amc%s%s'%(self.pff,name)] = MVATool('BDTG_method', wts_wz_amcG,  inputvarsUp, rarity=True)
-            self._MVAs['BDTG_DPS_TLCR%s%s'%(self.pff,name)]   = MVATool('BDTG_method', wts_TLCRG ,   inputvarsUp, rarity=True)
-            self._MVAs['BDTG_DPS_WZ_amc_raw%s%s'%(self.pff,name)]= MVATool('BDTG_method',wts_wz_amcG,inputvarsUp, rarity=False)
-            self._MVAs['BDTG_DPS_TLCR_raw%s%s'%(self.pff,name)]   = MVATool('BDTG_method', wts_TLCRG,inputvarsUp, rarity=False)
+##am            specvars = [
+##am                MVAVar("cptll",      func = lambda ev : ev.cptll),
+##am                MVAVar("lep1_id",    func = lambda ev : ev.Lep1_isLepTight),
+##am                MVAVar("lep2_id",    func = lambda ev : ev.Lep2_isLepTight),
+##am                MVAVar("dilep_flav", func = lambda ev : (ev.Lep1_pdgId*ev.Lep2_pdgId)),
+##am                MVAVar("lep1_pdgId", func = lambda ev : ev.Lep1_pdgId),
+##am                MVAVar("lep2_pdgId", func = lambda ev : ev.Lep2_pdgId),
+##am                MVAVar("nLepFO",     func = lambda ev : ev.nLepFO_Recl), 
+##am                MVAVar("mll",        func = lambda ev : ev.mll),
+##am                MVAVar("lep1_tc",    func = lambda ev : ev.Lep1_tightCharge),
+##am                MVAVar("lep2_tc",    func = lambda ev : ev.Lep2_tightCharge),
+##am                MVAVar("run",        func = lambda ev : ev.run)
+##am
+##am            ]
+
+            self._MVAs['BDTG_DPS_WZ_amc%s%s'%(self.pff,name)] = MVATool('BDTG_method', wts_wz_amcG,  inputvars,rarity=True)
+            self._MVAs['BDTG_DPS_TLCR%s%s'%(self.pff,name)]   = MVATool('BDTG_method', wts_TLCRG ,   inputvars,rarity=True)
+            self._MVAs['BDTG_DPS_WZ_amc_raw%s%s'%(self.pff,name)]= MVATool('BDTG_method',wts_wz_amcG,inputvars)
+            self._MVAs['BDTG_DPS_TLCR_raw%s%s'%(self.pff,name)]   = MVATool('BDTG_method', wts_TLCRG,inputvars)
 
 ##        self._MVAs['BDT_DPS_multiC']    = MVATool('BDTG_method', wts_multiC   , self._vars, rarity=False,nClasses=2)
 ##        self._MVAs['BDT_WZ_multiC']     = MVATool('BDTG_method', wts_multiC   , self._vars, rarity=False,nClasses=3)
