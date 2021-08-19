@@ -7,42 +7,11 @@ Log        = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src
 use_x509userproxy = True
 getenv = True
 request_memory = 2000
-+MaxRuntime = 1800
++MaxRuntime = 6000
 
 
-Arguments = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL python prepareEventVariablesFriendTree.py -j 0 -N 70000  -t NanoAOD /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_skim2lss_muWP90_elWP65/2017/ /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_skim2lss_muWP90_elWP65/2017/3_scalefactors_xchk  -F  Friends /eos/cms/store/cmst3/group/dpsww//NanoTrees_v7_dpsww_skim2lss_muWP90_elWP65/2017/2_recl/{cname}_Friend.root   -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules leptonSFs  --compression ZLIB:3  -d $(Dataset) -c $(Step)
+Arguments = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL python prepareEventVariablesFriendTree.py -j 0 -N 500000  -t NanoAOD /eos/cms/store/cmst3/group/dpsww/Aut18nanoaodV7/ /eos/cms/store/cmst3/group/dpsww/Aut18nanoaodV7//postFSRinfo/  -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules genInfo_py8_fur_taus  --compression ZLIB:3  -d $(Dataset) -c $(Step)
 
-Queue 1 Dataset in DYJetsToLL_M10to50
-Queue 1 Dataset in DYJetsToLL_M50
-Queue 1 Dataset in DYJetsToLL_M50_LO
-Queue 1 Dataset in TBar_tWch
-Queue 1 Dataset in TBar_tch
-Queue 1 Dataset in TTJets
-Queue 1 Dataset in TTJets_DiLepton
-Queue 3 Dataset in TTW_LO
-Queue 3 Dataset in TTZ_LO
-Queue 1 Dataset in T_sch_lep
-Queue 1 Dataset in T_tWch
-Queue 1 Dataset in T_tch
-Queue 1 Dataset in W0JetsToLNu
-Queue 1 Dataset in W1JetsToLNu
-Queue 1 Dataset in W2JetsToLNu
-Queue 1 Dataset in WGToLNuG
-Queue 1 Dataset in WGToLNuG_01J_amcatnlo
-Queue 1 Dataset in WJetsToLNu_LO
-Queue 1 Dataset in WWDoubleTo2L
-Queue 1 Dataset in WWDoubleTo2L_herwig
-Queue 1 Dataset in WWG
-Queue 1 Dataset in WWTo2L2Nu
-Queue 1 Dataset in WWW
-Queue 1 Dataset in WWW_ll
-Queue 1 Dataset in WWZ
-Queue 2 Dataset in WZTo3LNu
-Queue 16 Dataset in WZTo3LNu_fxfx
-Queue 7 Dataset in WZTo3LNu_mllmin01
-Queue 1 Dataset in WZZ
-Queue 1 Dataset in WpWpJJ
-Queue 2 Dataset in ZGToLLG_01J_amcatnlo
-Queue 1 Dataset in ZGToLLG_01J_lowmll_amcatnlo
-Queue 2 Dataset in ZZTo4L
-Queue 1 Dataset in ZZZ
+Queue 2 Dataset in WWDoubleTo2L_newsim
+Queue 2 Dataset in WWTo2L2Nu_DoubleScattering_13TeV-pythia8
+Queue 2 Dataset in WW_DoubleScattering_13TeV-pythia8_TuneCP5
