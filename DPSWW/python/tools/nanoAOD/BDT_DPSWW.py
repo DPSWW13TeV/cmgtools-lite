@@ -23,10 +23,10 @@ class BDT_DPSWW(Module):
 
         
         
-        #wts_wz_amcG  = baseDir+'dataset_dnn_nospec_dpsvs_wz_amc_%s%s/weights/TMVAClassification_BDTG.weights.xml'%(self.year,self.pff)
-        #wts_TLCRG    = baseDir+'dataset_dnn_nospec_dpsvs_TL_%s%s/weights/TMVAClassification_BDTG.weights.xml'%(self.year,self.pff)
-        wts_wz_amcG  = baseDir+'dataset_testAll_wz_amc_2018_withpt/weights/TMVAClassification_BDTG.weights.xml'
-        wts_TLCRG    = baseDir+'dataset_testAll_TL_2018_withpt/weights/TMVAClassification_BDTG.weights.xml'
+        wts_wz_amcG  = baseDir+'dataset_dnn_nospec_dpsvs_wz_amc_%s%s/weights/TMVAClassification_BDTG.weights.xml'%(self.year,self.pff)
+        wts_TLCRG    = baseDir+'dataset_dnn_nospec_dpsvs_TL_%s%s/weights/TMVAClassification_BDTG.weights.xml'%(self.year,self.pff)
+        #wts_wz_amcG  = baseDir+'dataset_testAll_wz_amc_2018_withpt/weights/TMVAClassification_BDTG.weights.xml'
+        #wts_TLCRG    = baseDir+'dataset_testAll_TL_2018_withpt/weights/TMVAClassification_BDTG.weights.xml'
 
         
 

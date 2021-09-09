@@ -161,12 +161,12 @@ W4JetsToLNu_LO_ext1,
 
 
 ### DiBosons
-basepath_newsim = "/eos/cms/store/cmst3/group/dpsww/baptiseJoSamples/production_june2021_2016/"
+##ambasepath_newsim = "/eos/cms/store/cmst3/group/dpsww/baptiseJoSamples/production_june2021_2016/"
+##amWWDoubleTo2L_newsim        = kreator.makeMCComponent("WWDoubleTo2L_newsim","/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+##amWWDoubleTo2L_newsim.files   = [basepath_newsim+x for x in os.listdir(basepath_newsim)]
+basepath_newsim = "/eos/cms/store/cmst3/group/dpsww/baptiseJoSamples/production_june2021_2016_am1/" #production_june2021_2016/"
 WWDoubleTo2L_newsim        = kreator.makeMCComponent("WWDoubleTo2L_newsim","/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
 WWDoubleTo2L_newsim.files   = [basepath_newsim+x for x in os.listdir(basepath_newsim)]
-basepath_newsim_am = "/eos/cms/store/cmst3/group/dpsww/baptiseJoSamples/production_june2021_2016_am/" #production_june2021_2016/"
-WWDoubleTo2L_newsim_am        = kreator.makeMCComponent("WWDoubleTo2L_newsim_am","/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
-WWDoubleTo2L_newsim_am.files   = [basepath_newsim_am+x for x in os.listdir(basepath_newsim_am)]
 
 WWDoubleTo2L           = kreator.makeMCComponent("WWDoubleTo2L", "/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
 WWDoubleTo2L_herwigpp           = kreator.makeMCComponent("WWDoubleTo2L_herwigpp", "/WWTo2L2Nu_DoubleScattering_13TeV-herwigpp/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
@@ -211,7 +211,7 @@ WW                     = kreator.makeMCComponent("WW_ext", "/WW_TuneCUETP8M1_13T
 
 
 DiBosons = [
-WWDoubleTo2L_newsim_am,
+##WWDoubleTo2L_newsim_am,
 WWDoubleTo2L_newsim,
 WWDoubleTo2L,
 WWDoubleTo2L_herwigpp,

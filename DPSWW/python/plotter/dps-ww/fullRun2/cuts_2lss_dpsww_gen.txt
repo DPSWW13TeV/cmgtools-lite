@@ -1,30 +1,44 @@
 alwaystrue: 1
-SameSign     : GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1] > 0
-2l           : nGenPart_sel == 2
 
-pt2520	      : GenPart_sel_pt[0] > 25 && GenPart_sel_pt[1] > 20
-#01jets       : Sum$(GenJet_pt > 30 && abs(GenJet_eta) < 2.5) < 2
-l1etacut     : abs(GenPart_sel_eta[0]) < if3(abs(GenPart_sel_pdgId[0])==13,2.4,2.5)
-l2etacut     : abs(GenPart_sel_eta[1]) < if3(abs(GenPart_sel_pdgId[1])==13,2.4,2.5)
+noTaus : Sum$(abs(Genleps_sel_pdgId) == 15) == 0; Disable=True 
+plusplus : (Genleps_sel_pdgId[0]) > 0; Disable=True
+minusminus : (Genleps_sel_pdgId[0]) <  0; Disable=True
+ssWW : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1]) > 0 ; Disable=True
+osWW : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1]) < 0 ; Disable=True
+2l : nGenleps_sel == 2
+pt2520 : Genleps_sel_pt[0] > 25 && Genleps_sel_pt[1] > 20
+1etacut     : abs(Genleps_sel_eta[0]) < if3(abs(Genleps_sel_pdgId[0])==13,2.4,2.5)
+2etacut     : abs(Genleps_sel_eta[1]) < if3(abs(Genleps_sel_pdgId[1])==13,2.4,2.5)
+etael1      : (abs(Genleps_sel_pdgId[0]) == 13 || (abs(Genleps_sel_eta[0]) < 1.442 || abs(Genleps_sel_eta[0]) > 1.556 && abs(Genleps_sel_pdgId[0])==11))
+etael2      : (abs(Genleps_sel_pdgId[1]) == 13 || (abs(Genleps_sel_eta[1]) < 1.442 || abs(Genleps_sel_eta[1]) > 1.556 && abs(Genleps_sel_pdgId[1])==11))
 
-#etael1      : (abs(GenPart_sel_pdgId[0]) == 13 || (abs(GenPart_sel_eta[0]) < 1.442 || abs(GenPart_sel_eta[0]) > 1.556 && abs(GenPart_sel_pdgId[0])==11))
-#etael2      : (abs(GenPart_sel_pdgId[1]) == 13 || (abs(GenPart_sel_eta[1]) < 1.442 || abs(GenPart_sel_eta[1]) > 1.556 && abs(GenPart_sel_pdgId[1])==11))
-
-
-#isPrompt1 : GenPartStatusFlags(GenPart_sel_statusFlags[0],0) 
-#isPrompt2 : GenPartStatusFlags(GenPart_sel_statusFlags[1],0) 
-
+ 
 #isW : abs(GenPart_sel_pdgId) == 24 && (GenPart_sel_statusFlags == 10497 ||  GenPart_sel_statusFlags == 12289)
 
-#ismu: GenPartStatusFlags(GenPart_sel_statusFlags[0],0)
-#deltaR(float eta1, float phi1, float eta2, float phi2)
 
-plusplus     : GenPart_sel_pdgId[0] > 0                          ; Disable=True
-minusminus   : GenPart_sel_pdgId[0] < 0                          ; Disable=True
+##emu : Sum$(GenPart_status == 2 && (GenPart_statusFlags & 1) && (GenPart_statusFlags & 256) && abs(GenPart_pdgId) == 15) == 0 
+##amnoTaus_lepgenflav : LepGood1_genPartFlav == 1 && LepGood2_genPartFlav == 1 ; Disable=True	
+##onlySS : !(Sum$(GenPart_pdgId == -24 && abs(GenPart_status) == 62) == 1 && Sum$(GenPart_pdgId == 24 && abs(GenPart_status) == 62) == 1) ;  Disable=True
+##amnoTaus: Sum$(GenPart_status ==2 && abs(GenPart_pdgId) == 15) == 0 ; Disable=True
+##amnoTaus_sel : nGentaus_sel == 0 ; Disable=True
+##noTaudoters : abs(Wdaughters_sel_pdgId) != 15 ; Disable=True
+##onlySS : Wdaughters_sel_pdgId[0]*Wdaughters_sel_pdgId[1] > 0  ; Disable=True
 
-elmu   : GenPart_sel_pdgId[0] > 0 and abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 143  ; Disable=True
-mumu   : GenPart_sel_pdgId[0] > 0 and abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 169   ; Disable=True
+##amSameSign     : GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1] > 0
+##am2l           : nGenPart_sel == 2
+##am#01jets       : Sum$(GenJet_pt > 30 && abs(GenJet_eta) < 2.5) < 2
 
-ll  : abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 143 || abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 169 || abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 121 ; Disable=True
+##am#isPrompt1 : GenPartStatusFlags(GenPart_sel_statusFlags[0],0) 
+##am#isPrompt2 : GenPartStatusFlags(GenPart_sel_statusFlags[1],0) 
+##am#isW : abs(GenPart_sel_pdgId) == 24 && (GenPart_sel_statusFlags == 10497 ||  GenPart_sel_statusFlags == 12289)
+##am#ismu: GenPartStatusFlags(GenPart_sel_statusFlags[0],0)
+##am#deltaR(float eta1, float phi1, float eta2, float phi2)
+
+##amplusplus     : GenPart_sel_pdgId[0] > 0                          ; Disable=True
+##amminusminus   : GenPart_sel_pdgId[0] < 0                          ; Disable=True
+##amelmu   : GenPart_sel_pdgId[0] > 0 and abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 143  ; Disable=True
+##ammumu   : GenPart_sel_pdgId[0] > 0 and abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 169   ; Disable=True
+
+##amll  : abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 143 || abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 169 || abs(GenPart_sel_pdgId[0]*GenPart_sel_pdgId[1]) == 121 ; Disable=True
 
 

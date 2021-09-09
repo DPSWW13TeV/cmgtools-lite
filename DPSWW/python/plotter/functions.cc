@@ -15,6 +15,28 @@
 TString CMSSW_BASE = gSystem->ExpandPathName("${CMSSW_BASE}");
 
 //// UTILITY FUNCTIONS NOT IN TFORMULA ALREADY
+bool GenPartStatusFlags(int status, int statusbit){
+  /* status bit                                                                                                                  
+    "0 : isPrompt, "                                                                                                             
+    "1 : isDecayedLeptonHadron, "                                                                                                
+    "2 : isTauDecayProduct, "                                                                                                    
+    "3 : isPromptTauDecayProduct, "                                                                                              
+    "4 : isDirectTauDecayProduct, "                                                                                              
+    "5 : isDirectPromptTauDecayProduct, "                                                                                        
+    "6 : isDirectHadronDecayProduct, "                                                                                           
+    "7 : isHardProcess, "                                                                                                        
+    "8 : fromHardProcess, "                                                                                                      
+    "9 : isHardProcessTauDecayProduct, "                                                                                         
+    "10 : isDirectHardProcessTauDecayProduct, "                                                                                  
+    "11 : fromHardProcessBeforeFSR, "                                                                                            
+    "12 : isFirstCopy, "                                                                                                         
+    "13 : isLastCopy, "                                                                                                 
+    "14 : isLastCopyBeforeFSR, "                                             
+    Events->Scan("GenPart_statusFlags","(GenPart_statusFlags & 1 << 0) |  (GenPart_statusFlags & 1 << 9) | (GenPart_statusFlags & 1 << 14) ")*/
+return (status & 1 << statusbit);
+
+}
+
 
 float myratio(float num, float denom) {
   if(denom==0) return 0;

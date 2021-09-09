@@ -11,7 +11,7 @@ class genInfo_py8_fur_taus(Module):
     def __init__(self):
         self.label = "_sel" # "" if (label in ["",None]) else ("_"+label)
         self.vars = ("pt","eta","phi","mass","pdgId","status","genPartIdxMother","statusFlags")
-        self.jetvars= ("pt","eta","phi","mass","partonFlavour","hadronFlavour")
+
         pass
     def beginJob(self):
         pass
@@ -21,14 +21,10 @@ class genInfo_py8_fur_taus(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
         self.out.branch("nGenleps"+self.label,"I")
-        self.out.branch("nGenJet"+self.label,"I")
-        self.out.branch("nGentaus"+self.label,"I")
-        self.out.branch("nGentaus_orp"+self.label,"I")
+        self.out.branch("nGenleps_unmatched"+self.label,"I")
         for V in self.vars:
             self.out.branch("Genleps"+self.label+"_"+V, "F", lenVar="nGenleps"+self.label)
-            #self.out.branch("Gentaus"+self.label+"_"+V, "F", lenVar="nGentaus"+self.label)
-        for JV in self.jetvars:
-            self.out.branch("GenJet"+self.label+"_"+JV, "F", lenVar="nGenJet"+self.label)
+            self.out.branch("Genleps_unmatched"+self.label+"_"+V, "F", lenVar="nGenleps_unmatched"+self.label)
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -39,15 +35,46 @@ class genInfo_py8_fur_taus(Module):
         """process event, return True (go to next module) or False (fail, go to next event)"""
  
         genparticles=Collection(event,"GenPart")
-        #genjets=Collection(event,"GenJet")
-        
-        #jetindex=[]
-        #retJ={}
-        leptons=[]; taus=[]
-        ret={}; taus_orp=[];
+        leptons=[]; leptons_unmatched=[];        ret={};        ret_unm={};
 
-        #for JV in self.jetvars:
-        #    retJ["GenJet"+self.label+"_"+JV] = [getattr(jj,JV) for jj in genjets]
+        for iGen in genparticles:
+            if ( ( abs(iGen.pdgId) in [11,13] and (iGen.statusFlags&(1<<0))==1 and iGen.status == 1 and (iGen.statusFlags&(1<<8))==256 ) or ( abs(iGen.pdgId) == 15 and iGen.status == 2 and (iGen.statusFlags&(1<<0))==1 and (iGen.statusFlags&(1<<8))==256)):
+                #      gp_m = gp[((abs(gp.pdgId)==13)&(gp.status==1)&((iGen.statusFlags&(1<<0))==1)&(iGen.statusFlags&(1<<8)==256))]
+##am                if iGen.genPartIdxMother > -1 :
+##am                    for m,iMa in enumerate(genparticles):
+##am                        if m == iGen.genPartIdxMother and (abs(iMa.pdgId) in [24]): #,abs(iGen.pdgId)]):
+                leptons.append(iGen)
+                #else: 
+                #    leptons_unmatched.append(iGen)
+            else: continue
+
+
+        leptons.sort(key=lambda x: x.pt, reverse=True)
+        leptons_unmatched.sort(key=lambda x: x.pt, reverse=True)
+
+
+
+        self.out.fillBranch('nGenleps'+self.label,len(leptons))
+        self.out.fillBranch('nGenleps_unmatched'+self.label,len(leptons_unmatched))
+
+        for V in self.vars:
+            ret["Genleps"+self.label+"_"+V] = [getattr(j,V) for j in leptons]
+
+        for V in self.vars:
+            self.out.fillBranch("Genleps"+self.label+"_"+V, [ ret["Genleps"+self.label+"_"+V][j] for j in range (len(leptons))])
+
+        for V in self.vars:
+            ret_unm["Genleps_unmatched"+self.label+"_"+V] = [getattr(j,V) for j in leptons_unmatched]
+
+        for V in self.vars:
+            self.out.fillBranch("Genleps_unmatched"+self.label+"_"+V, [ ret_unm["Genleps_unmatched"+self.label+"_"+V][j] for j in range (len(leptons_unmatched))])
+
+
+
+
+        return True
+#genleptons = lambda : genInfo_py8_fur_taus()
+
 
         #isPrompt = bits[-1] == '1'
         #isDecayedLeptonHadron = bits[-2] == '1'
@@ -57,7 +84,7 @@ class genInfo_py8_fur_taus(Module):
         #isDirectPromptTauDecayProduct=bits[-6] == '1'
         #isDirectHadronDecayProduct=bits[-7] == '1'
         #isHardProcess=bits[7] == '1'
-        #fromHardProcess=bits[6] == '1'
+        #fromHardProcess=bits[8] == '1'
         #isHardProcessTauDecayProduct=bits[5] == '1'
         #isDirectHardProcessTauDecayProduct=bits[4] == '1'
         #fromHardProcessBeforeFSR=bits[3] == '1'
@@ -67,40 +94,6 @@ class genInfo_py8_fur_taus(Module):
         #fromHardProcessFinalState = (1 << 0) | (1 << 8) | (1 << 9) | (1 << 5)
         #fromHardProcessDecayed = (1 << 14)
         #lastBeforeFSR = (1 << 14)
+#Events->Draw("Sum$(GenPart_status == 2 && (GenPart_statusFlags & 1) && (GenPart_statusFlags & 256) && abs(GenPart_pdgId) == 15) + Sum$(GenPart_status == 1 && (GenPart_statusFlags & 1) && (GenPart_statusFlags & 256) && abs(GenPart_pdgId) == 13) + Sum$(GenPart_status == 1 && (GenPart_statusFlags & 1) && (GenPart_statusFlags & 256) && abs(GenPart_pdgId) == 11)")
 
-        for iGen in genparticles:
-            ##            if ( ( ( (abs(iGen.pdgId) in [11,13] and iGen.status == 1) or  (abs(iGen.pdgId) ==15 and iGen.status ==  2) ) and promptLep(iGen.statusFlags,-1) and promptLep(iGen.statusFlags,6)  ) or ( abs(iGen.pdgId) in [12,14,16] and iGen.status == 1)       ):
-            if ( abs(iGen.pdgId) in  [11,13] and iGen.status == 1  and promptLep(iGen.statusFlags,-1) and promptLep(iGen.statusFlags,6) ):
-                #print iGen.statusFlags 
-                leptons.append(iGen)
-            elif ( abs(iGen.pdgId) in [15] and iGen.status == 2 and promptLep(iGen.statusFlags,-1)    ):
-                if iGen.genPartIdxMother > -1 :
-                    for m,iMa in enumerate(genparticles):
-                        if m == iGen.genPartIdxMother and abs(iMa.pdgId) == 24:
-                            taus.append(iGen)
-                        else: continue
-                else: taus_orp.append(iGen)
-            else:
-                continue
-
-        leptons.sort(key=lambda x: x.pt, reverse=True)
-        taus.sort(key=lambda x: x.pt, reverse=True)
-        taus_orp.sort(key=lambda x: x.pt, reverse=True)
-        self.out.fillBranch('nGenleps'+self.label,len(leptons))
-        self.out.fillBranch('nGentaus'+self.label,len(taus))
-        self.out.fillBranch('nGentaus_orp'+self.label,len(taus_orp))
-
-        #if(len(taus)) > 2: print 'taus',len(taus)
-        #if(len(leptons)) > 2: print 'leps',len(leptons)
-        for V in self.vars:
-            ret["Genleps"+self.label+"_"+V] = [getattr(j,V) for j in leptons]
-
-        for V in self.vars:
-            self.out.fillBranch("Genleps"+self.label+"_"+V, [ ret["Genleps"+self.label+"_"+V][j] for j in range (len(leptons))])
-
-        #for JV in self.jetvars:
-        #    self.out.fillBranch("GenJet"+self.label+"_"+JV, [ retJ["GenJet"+self.label+"_"+JV][j] for j in range(len(genjets))])
-
-        return True
-#genleptons = lambda : genInfo_py8_fur_taus()
 

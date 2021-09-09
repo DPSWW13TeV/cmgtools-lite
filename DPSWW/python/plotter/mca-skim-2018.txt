@@ -1,5 +1,6 @@
-WWDoubleTo2L_newsim : WWDoubleTo2L_newsim : xsec
-WWDoubleTo2L_herwig_pvt : WWDoubleTo2L_herwig_pvt : xsec
+WWDoubleTo2L_nojets : WWDoubleTo2L_nojets : xsec
+##amWWDoubleTo2L_newsim : WWDoubleTo2L_newsim : xsec
+##amWWDoubleTo2L_herwig_pvt : WWDoubleTo2L_herwig_pvt : xsec
 ##amGGZZ4m  : GGZZ4m  : xsec
 ##amGGHZZ4L : GGHZZ4L : xsec
 ##amGGZZ4e  : GGZZ4e  : xsec

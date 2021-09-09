@@ -480,6 +480,9 @@ bdtvars_withpt_2018Down  = lambda : BDT_DPSWW(2018,False,['unclustEn'],'Down')
 
 
 
+from CMGTools.DPSWW.tools.nanoAOD.genInfo_py8_fur_taus import genInfo_py8_fur_taus
+postfsrInfoPy_taus = lambda : genInfo_py8_fur_taus()
+
 
 from CMGTools.DPSWW.tools.nanoAOD.genInfo_py8 import genInfo_py8
 postfsrInfoPy = lambda : genInfo_py8()

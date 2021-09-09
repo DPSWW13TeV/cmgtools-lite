@@ -11,7 +11,7 @@ WZ_scaleV4 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[3] : LepGood1_isMatchRightCharg
 WZ_scaleV5 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[4] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue
 WZ_scaleV6 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[5] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen
 
-DPSpy8+ : WWDoubleTo2L : 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
+DPSpy8+ : WWDoubleTo2L : 0.1729  ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
 WZfxfx 	: WZTo3LNu_fxfx : xsec ; FillColor=ROOT.kAzure+1, Label="WZ"
 #incl_mc_unclUp    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/fr-unclUp.txt', SkipMe=True, PostFix = "_unclUp"
 #incl_mc_unclDn    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/fr-unclDn.txt', SkipMe=True, PostFix = "_unclDn"

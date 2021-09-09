@@ -1,6 +1,7 @@
 # vim: syntax=sh
 
 
+nWdaughters_sel_ll_noee	 : nWdaughters_sel :  [0,1,2,3,4,5]; XTitle=" W daughters"
 BDTG1d_fakes_amc_raw_SoB_diag_pc_mumu            : unroll_2Dbdt_dps_SoBord_diag_pc(BDTG_DPS_TLCR_raw_withpt,BDTG_DPS_WZ_amc_raw_withpt) : 11,0.0,11.0 ; XTitle="Bin Number(#mu^{#pm}#mu^{#pm})", MoreY=1.5
 BDTG1d_fakes_amc_raw_SoB_diag_pc_elmu            : unroll_2Dbdt_dps_SoBord_diag_pc(BDTG_DPS_TLCR_raw_withpt,BDTG_DPS_WZ_amc_raw_withpt) : 11,0.0,11.0 ; XTitle="Bin Number(e^{#pm}#mu^{#pm})", MoreY=1.5
 BDTG1d_fakes_amc_raw_SoB_diag_pc_mumuplusplus    : unroll_2Dbdt_dps_SoBord_diag_pc(BDTG_DPS_TLCR_raw_withpt,BDTG_DPS_WZ_amc_raw_withpt) : 11,0.0,11.0 ; XTitle="Bin Number(#mu^{#plus}#mu^{#plus})" , MoreY=1.5
@@ -33,7 +34,52 @@ bnVert_ll_noee	 : PV_npvsGood  : [0,20,50]; XTitle="n_{vertices}", MoreY=1.15
 bnVert_ll 	 : PV_npvsGood  : [0,20,50]; XTitle="n_{vertices}", MoreY=1.15
 bnMu_ll	 : nMuon : [0,1,2,3,4,5]; XTitle="nMuons", MoreY=1.5, IncludeOverflows=False
 bnEl_ll	 : nElectron : [0,1,2,3,4,5]; XTitle="nElectrons", MoreY=1.5, IncludeOverflows=False
+u\,#mu#mu"
+#dilep_flav_genlep_ll       : if3(nGenleps_sel>1,if3(abs(Genleps_sel_pdgId[0])!=abs(Genleps_sel_pdgId[1]),1,abs(Genleps_sel_pdgId[0])-11),-99)  : [-0.5,0.5,1.5,2.5,3.5,4.5,5.5]; XTitle="dilepton flavour", XNDiv=505, MoreY=1.5, xBinLabels="ee\,e#mu\,#mu#mu"
 
+dilep_flav_genlep_ll       :  if3(nGenleps_sel>1,if3(abs(Genleps_sel_pdgId[0])==abs(Genleps_sel_pdgId[1]),abs(Genleps_sel_pdgId[0])-11,(abs(Genleps_sel_pdgId[0])+abs(Genleps_sel_pdgId[1])-25)),-99) : [-1.5,-0.5,0.5,1.5,2.5,3.5,4.5]; XTitle="dilepton flavour", XNDiv=505, MoreY=1.5, xBinLabels="e#mu\,ee\,e#tau\,#mu#mu\,#tau#mu\,#tau#tau"
+
+#dilep_charge_genlep_ll      : if3(nGenleps_sel>1,if3((Genleps_sel_pdgId[0] == Genleps_sel_pdgId[1]),if3((Genleps_sel_pdgId[0] > 0),1,-1),if3( (Genleps_sel_pdgId[0]*Genleps_sel_pdgId[1] < 0),0,(Genleps_sel_pdgId[0]/abs(Genleps_sel_pdgId[0]))) ),-99) : [-1.5,-0.5,0.5,1.5]; XTitle='dilepton charge', XNDiv=205,  IncludeOverflows=False, MoreY=1.5, xBinLabels="#plus #plus\,#minus #plus\,#minus #minus"
+#-1.5,-0.5,0.5,1.5
+
+#dilep_charge_genlep_ll      : if3(nGenleps_sel>1,if3((Genleps_sel_pdgId[0] == Genleps_sel_pdgId[1]),if3((Genleps_sel_pdgId[0] > 0),1,-1),if3( (Genleps_sel_pdgId[0]*Genleps_sel_pdgId[1] < 0),0,(Genleps_sel_pdgId[0]/abs(Genleps_sel_pdgId[0]))) ),-99) : [-1.5,-0.5,0.5,1.5]; XTitle='dilepton charge', XNDiv=205,  IncludeOverflows=False, MoreY=1.5, xBinLabels="#plus #plus\,#minus #plus\,#minus #minus"
+#-1.5,-0.5,0.5,1.5
+
+dilep_charge_genlep_ll      : if3(nGenleps_sel>1,(Genleps_sel_pdgId[0]/abs(Genleps_sel_pdgId[0])+Genleps_sel_pdgId[1]/abs(Genleps_sel_pdgId[1]))/2,-99) :  [-1.5,-0.5,0.5,1.5]; XTitle='dilepton charge', XNDiv=205,  IncludeOverflows=False, MoreY=1.5, xBinLabels="#plus #plus\,#minus #plus\,#minus #minus"
+
+#if3((Genleps_sel_pdgId[0] == Genleps_sel_pdgId[1]),if3((Genleps_sel_pdgId[0] > 0),-1,1),if3( (Genleps_sel_pdgId[0]*Genleps_sel_pdgId[1] < 0),2,(Genleps_sel_pdgId[0]/abs(Genleps_sel_pdgId[0]))) )
+
+
+etaprod_phs_genlep_ll		   : if3(nGenleps_sel>1,Genleps_sel_eta[0]*Genleps_sel_eta[1]>0,-99) : [-0.5,0.5,1.5];  XTitle="#eta^{l1}#eta^{l2} > 0", MoreY=1.5, IncludeOverflows=False, xBinLabels="False\,True"
+etaprod_nhs_genlep_ll		   : if3(nGenleps_sel>1,Genleps_sel_eta[0]*Genleps_sel_eta[1]<0,-99) : [-0.5,0.5,1.5];  XTitle="#eta^{l1}#eta^{l2} < 0", MoreY=1.5, IncludeOverflows=False, xBinLabels="False\,True"
+
+
+#if3(nGenDressedLepton>1,if3(abs(GenDressedLepton_pdgId[0])!=abs(GenDressedLepton_pdgId[1]),1,abs(GenDressedLepton_pdgId[0])-11),-99)  : [-0.5,0.5,1.5,2.5]; XTitle="dilepton flavour", XNDiv=505, MoreY=1.5, xBinLabels="ee\,e#mu\,#mu#mu"
+
+
+#if3(nGenleps_sel>1,if3(abs(Genleps_sel_pdgId[0])==abs(Genleps_sel_pdgId[1]),abs(Genleps_sel_pdgId[0])-11,(abs(Genleps_sel_pdgId[0])+abs(Genleps_sel_pdgId[1])-25)),-99)
+##############
+
+
+
+
+
+pt1_genleps_ll           : Genleps_sel_pt[0]     : 20,0,100; XTitle="p_{T} lead. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
+pt2_genleps_ll           : Genleps_sel_pt[1]     : 20,0,100; XTitle="p_{T} trail. (l^{#pm}l^{#pm}) (GeV)", MoreY=1.5
+eta1_genleps_ll              : Genleps_sel_eta[0]    : 10,-2.5,2.5; XTitle="#eta lead.  (l^{#pm}l^{#pm})"
+eta2_genleps_ll              : Genleps_sel_eta[1]    : 10,-2.5,2.5; XTitle="#eta trail. (l^{#pm}l^{#pm})"
+phi1_genleps_ll              : Genleps_sel_phi[0]    : 10,-3.2,3.2; XTitle="#phi lead.  (l^{#pm}l^{#pm})"
+phi2_genleps_ll              : Genleps_sel_phi[1]    : 10,-3.2,3.2; XTitle="#phi trail. (l^{#pm}l^{#pm})"
+mll_genleps_ll               :  mass_2(Genleps_sel_pt[0],Genleps_sel_eta[0],Genleps_sel_phi[0],0.0,Genleps_sel_pt[1],Genleps_sel_eta[1],Genleps_sel_phi[1],0.0) : 40,60,120; XTitle="m_{ll}(l^{#pm}l^{#pm}) (GeV)" , MoreY=1.5
+etasum_genleps_ll            :  abs(Genleps_sel_eta[0] + Genleps_sel_eta[1])  : 20,0,5; XTitle="abs(#eta_{1}+#eta_{2}) (l^{#pm}l^{#pm})" , MoreY=1.5
+etaprod_genleps_ll           :  Genleps_sel_eta[0]*Genleps_sel_eta[1] : 20,-6.25,6.25; XTitle="#eta_{1}*#eta_{2} (l^{#pm}l^{#pm})",  MoreY=1.5
+dphill_genleps_ll            :  abs(deltaPhi(Genleps_sel_phi[0],Genleps_sel_phi[1])) : 20,0,3.15; XTitle="#Delta#phi_{ll} (l^{#pm}l^{#pm}) (rad.)", MoreY=1.5
+
+dphilll2_genleps_ll          :  abs(deltaPhi(phi_2(Genleps_sel_pt[0],Genleps_sel_phi[0],Genleps_sel_pt[1],Genleps_sel_phi[1]),Genleps_sel_phi[1])) :  20,0.,3.2; XTitle="#Delta #phi(l1l2 l2) (l^{#pm}l^{#pm}) (rad.)", MoreY=1.5
+
+
+
+ 
 #########  BDT garden
 
 BDTG_fakes_raw_mumu                 : BDTG_DPS_TLCR_raw_withpt                :  20,-1.0,1.0 	      	      ; XTitle="BDTG_fakes (#mu^{#pm}#mu^{#pm})"
@@ -558,6 +604,17 @@ met             : MET_pt        : 10,0,115; XTitle="p_{T}^{miss} (GeV)", MoreY=1
 mll_3l		   :  if3( (LepGood1_pdgId + LepGood2_pdgId == 0), mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass), if3( (LepGood2_pdgId + LepGood3_pdgId == 0),mass_2(LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass),mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass)) ) :  [-0.05,0,0.05,0.075,0.1,0.15,0.20,0.25,0.3,0.35,0.4,0.45,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,10,20,30,50,70,75,80,82,84,86,88,90,92,94,96,98,100,110]; XTitle="mll(l^{+}l^{-}) (GeV)", MoreY=3.5    
 cptll : ptll(LepGood1_conePt, LepGood1_eta, LepGood1_phi, LepGood1_mass, LepGood2_conePt, LepGood2_eta, LepGood2_phi, LepGood2_mass) :  20,0,100; XTitle="p_{T}ll  (GeV)" , MoreY=1.5
 ptll  : ptll(LepGood1_pt, LepGood1_eta, LepGood1_phi, LepGood1_mass, LepGood2_pt, LepGood2_eta, LepGood2_phi, LepGood2_mass) :  20,0,100; XTitle="p_{T}ll  (GeV)" , MoreY=1.5
+
+etaprod_phs_ll		   : if3(nLepGood>1,LepGood2_eta*LepGood1_eta>0,-99) : [-0.5,0.5,1.5] ;  XTitle="#eta^{l1}#eta^{l2} > 0", MoreY=1.5, IncludeOverflows=False, xBinLabels="False\,True"
+etaprod_nhs_ll		   : if3(nLepGood>1,LepGood2_eta*LepGood1_eta<0,-99) : [-0.5,0.5,1.5] ;  XTitle="#eta^{l1}#eta^{l2} < 0", MoreY=1.5, IncludeOverflows=False, xBinLabels="False\,True"
+
+etaprod_phs_ll_noee		   : if3(nLepGood>1,LepGood2_eta*LepGood1_eta>0,-99) : [-0.5,0.5,1.5] ;  XTitle="#eta^{l1}#eta^{l2} > 0", MoreY=1.5, IncludeOverflows=False, xBinLabels="False\,True"
+etaprod_nhs_ll_noee		   : if3(nLepGood>1,LepGood2_eta*LepGood1_eta<0,-99) : [-0.5,0.5,1.5] ;  XTitle="#eta^{l1}#eta^{l2} < 0", MoreY=1.5, IncludeOverflows=False, xBinLabels="False\,True"
+etaprod_phs_elmu		   : if3(nLepGood>1,LepGood2_eta*LepGood1_eta>0,-99) : [-0.5,0.5,1.5] ;  XTitle="#eta^{l1}#eta^{l2} > 0", MoreY=1.5, IncludeOverflows=False, xBinLabels="False\,True"
+etaprod_nhs_elmu		   : if3(nLepGood>1,LepGood2_eta*LepGood1_eta<0,-99) : [-0.5,0.5,1.5] ;  XTitle="#eta^{l1}#eta^{l2} < 0", MoreY=1.5, IncludeOverflows=False, xBinLabels="False\,True"
+etaprod_phs_mumu		   : if3(nLepGood>1,LepGood2_eta*LepGood1_eta>0,-99) : [-0.5,0.5,1.5] ;  XTitle="#eta^{l1}#eta^{l2} > 0", MoreY=1.5, IncludeOverflows=False, xBinLabels="False\,True"
+etaprod_nhs_mumu		   : if3(nLepGood>1,LepGood2_eta*LepGood1_eta<0,-99) : [-0.5,0.5,1.5] ;  XTitle="#eta^{l1}#eta^{l2} < 0", MoreY=1.5, IncludeOverflows=False, xBinLabels="False\,True"
+
 
 conept1         : LepGood1_conePt : 20,0,120; XTitle="p_{T1}^{1} (GeV)", MoreY=1.5
 conept2         : LepGood2_conePt : 20,0,120; XTitle="p_{T}^{2} (GeV)", MoreY=1.5

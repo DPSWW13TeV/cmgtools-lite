@@ -1,5 +1,17 @@
 # vim: syntax=sh
 
+#py8_cp5_bareNano+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8 : 0.1729 : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1] > 0)  ; FillColor=ROOT.kAzure+1, Label="cp5", LineStyle=9
+#newsim_bareNano : WWDoubleTo2L_newsim : 0.1729  ; FillColor=ROOT.kGreen+2, Label="newsim", LineStyle=9
+#py8_cuet_bareNano+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8_summer16_nanoV7 : 0.1729 : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1] > 0) ; FillColor=ROOT.kRed+1, Label="cuet",  LineStyle=9
+
+py8_cp5_bareNano+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8 : 0.1729   ; FillColor=ROOT.kAzure+1, Label="cp5", LineStyle=9
+py8_cuet_bareNano+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8_summer16_nanoV7 : 0.1729  ; FillColor=ROOT.kRed+1, Label="cuet",  LineStyle=9
+
+py8_cp5_osWW_bareNano+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8 : 0.1729 : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1] < 0) ; FillColor=ROOT.kAzure+1, Label="cp5_osWW", LineStyle=8
+py8_cuet_osWW_bareNano+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8_summer16_nanoV7 : 0.1729 : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1] < 0) ; FillColor=ROOT.kRed+1, Label="cuet_osWW", LineStyle=8
+
+
+
 DPSWW_cp5+ : WWDouble_cp5 : 0.1729 : 1 ; FillColor=ROOT.kMagenta, Label="DPSWW_cp5" , years="2018" 
 DPSpy8+ : WWDoubleTo2L : 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
 DPShwpp : WWDoubleTo2L_herwig : 0.1729 : 1 ; FillColor=ROOT.kBlue+1, Label="DPSWW-hw++" 

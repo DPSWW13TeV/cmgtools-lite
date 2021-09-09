@@ -7,10 +7,10 @@ exclusive: nLepTight<=2
 same-sign: LepGood1_charge*LepGood2_charge > 0
 conept2520 : LepGood1_conePt>25 &&  LepGood2_conePt > 20
 TT: LepGood1_isLepTight && LepGood2_isLepTight 
-#noTaus: Sum$(GenPart_status ==2 && abs(GenPart_pdgId) == 15) == 0 ; Disable=True
-noTaus : LepGood1_genPartFlav == 1 && LepGood2_genPartFlav == 1 ; Disable=True	
-onlySS : !(Sum$(GenPart_pdgId == -24 && abs(GenPart_status) == 62) == 1 && Sum$(GenPart_pdgId == 24 && abs(GenPart_status) == 62) == 1) ;  Disable=True
-onlyOS : (Sum$(GenPart_pdgId == -24 && abs(GenPart_status) == 62) == 1 && Sum$(GenPart_pdgId == 24 && abs(GenPart_status) == 62) == 1) ;  Disable=True
+noTaus : Sum$(abs(Genleps_sel_pdgId) == 15) == 0; Disable=True 
+ssWW : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1]) > 0 ; Disable=True
+
+
 
 tauveto: nTauFO == 0
 metpt  : MET_pt > 15
