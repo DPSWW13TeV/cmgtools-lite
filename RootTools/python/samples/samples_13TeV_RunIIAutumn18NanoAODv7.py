@@ -98,17 +98,26 @@ Top = [ TTJets,
 # ====== SINGLE TOP ======
 
 # ===  DI-BOSONS
+
+basepath_py8WW2L2Nu_notaus = "/eos/cms/store/cmst3/group/dpsww/py8_DPS_WW2L2Nu_notaus/NANO/"
+WWDoubleTo2L_notaus        = kreator.makeMCComponent("WWDoubleTo2L_notaus","/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+WWDoubleTo2L_notaus.files   = [basepath_py8WW2L2Nu_notaus +x for x in os.listdir(basepath_py8WW2L2Nu_notaus)]
+
+
 basepath_newsim = "/eos/cms/store/cmst3/group/dpsww/baptiseJoSamples/production_june2021_2018/"
 WWDoubleTo2L_newsim        = kreator.makeMCComponent("WWDoubleTo2L_newsim","/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
 WWDoubleTo2L_newsim.files   = [basepath_newsim+x for x in os.listdir(basepath_newsim)]
 
-basepath_nojets = "/eos/cms/store/cmst3/group/dpsww/py8_DPS_WW2L2Nu_noJets/NANO/"
-WWDoubleTo2L_nojets        = kreator.makeMCComponent("WWDoubleTo2L_nojets","/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
-WWDoubleTo2L_nojets.files   = [basepath_nojets+x for x in os.listdir(basepath_nojets)]
+##ambasepath_nojets = "/eos/cms/store/cmst3/group/dpsww/py8_DPS_WW2L2Nu_noJets/NANO/"
+##amWWDoubleTo2L_nojets        = kreator.makeMCComponent("WWDoubleTo2L_nojets","/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+##amWWDoubleTo2L_nojets.files   = [basepath_nojets+x for x in os.listdir(basepath_nojets)]
 
 WWDoubleTo2L           = kreator.makeMCComponent("WWDoubleTo2L", "/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
 WWDoubleTo2L_herwig           = kreator.makeMCComponent("WWDoubleTo2L_herwig", "/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
 WWDouble_cp5 = kreator.makeMCComponent("WWDouble_cp5", "/WW_DoubleScattering_13TeV-pythia8_TuneCP5/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+
+
+WZTo3LNu_ewk               = kreator.makeMCComponent("WZTo3LNu_ewk", "/WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root",0.01631)
 
 WZTo3LNu               = kreator.makeMCComponent("WZTo3LNu", "/WZTo3LNu_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root", 4.42965)
 WZTo3LNu_fxfx          = kreator.makeMCComponent("WZTo3LNu_fxfx", "/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root", 4.666, fracNegWeights=0.19)
@@ -127,7 +136,9 @@ ZGToLLG_01J_lowmll_amcatnlo                 = kreator.makeMCComponent("ZGToLLG_0
 
 
 DiBosons = [
-WWDoubleTo2L_nojets,
+WWDoubleTo2L_notaus,
+WZTo3LNu_ewk,
+#WWDoubleTo2L_nojets,
 WWDoubleTo2L_newsim,
 WWDoubleTo2L,
 WWDoubleTo2L_herwig,

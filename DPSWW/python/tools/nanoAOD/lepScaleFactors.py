@@ -12,17 +12,14 @@ class lepScaleFactors(Module):
         self.looseToTightUncertainties_pt  = {} 
 
         for fl in ['e','m']:
-            for chan in ['2lss','3l']:
-                for year in '2016,2017,2018'.split(','):
-                    fl2 = 'ele' if fl=='e' else 'muon'
-                    self.looseToTight['%s,%s,%s'%(year,fl,chan)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/DPSWW/data/leptonSF/looseToTight_%s_%s_%s.root'%(year,fl,chan), "EGamma_SF2D")
-
-                    self.looseToTightUncertainties_eta['%s,%s'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/uncertainty/SFttbar_%s_%s_eta.root'%(year,fl2), "histo_eff_data")
-                    self.looseToTightUncertainties_pt['%s,%s'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/uncertainty/SFttbar_%s_%s_pt.root'%(year,fl2), "histo_eff_data")
-                    self.recoToLoose['%s,%s'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/TnP_loose_%s_%s.root'%(fl2, year), "EGamma_SF2D")
-                    if fl == 'm': continue
-                    #self.recoToLoose['%s,%s,extra'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/TnP_loose_%s_%s.root'%(fl2,year), "EGamma_SF2D")
-                    self.recoToLoose['%s,%s,extra'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/TnP_loosettH_%s_%s.root'%(fl2,year), "EGamma_SF2D")
+            #for chan in ['2lss','3l']:
+            for year in '2016,2017,2018'.split(','):
+                fl2 = 'ele' if fl=='e' else 'muon'
+                self.looseToTight['%s,%s'%(year,fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/DPSWW/data/leptonSF_v1/looseToTight_%s_%s_2lss.root'%(year,fl), "EGamma_SF2D")
+                self.recoToLoose['%s,%s'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/TnP_loose_%s_%s.root'%(fl2, year), "EGamma_SF2D")
+                if fl == 'm': continue
+                #self.recoToLoose['%s,%s,extra'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/TnP_loose_%s_%s.root'%(fl2,year), "EGamma_SF2D")
+                self.recoToLoose['%s,%s,extra'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/TnP_loosettH_%s_%s.root'%(fl2,year), "EGamma_SF2D")
         self.electronReco    = {
             2016 : [self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/EGM2D_BtoH_GT20GeV_RecoSF_Legacy2016.root', "EGamma_SF2D"),
                       self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/EGM2D_BtoH_low_RecoSF_Legacy2016.root', "EGamma_SF2D")], # first Et > 20, second Et < 20
@@ -60,12 +57,13 @@ class lepScaleFactors(Module):
             self.out.branch('triggerSF_3l%s'%var,'F')
 
     def getLooseToTight(self,lep,var_str,year,nlep):
-        hist = self.looseToTight['%d,%s,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm', '2lss' if nlep == 2 else '3l')]
+        hist = self.looseToTight['%d,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm')]
         ptbin  = max(1, min(hist.GetNbinsY(), hist.GetYaxis().FindBin(lep.pt)));
         #print ptbin,lep.pt
         #        if ( ) : #( (abs(lep.pdgId) == 11) or ( abs(lep.pdgId) == 13 and year != 2017 ) ) ): #2016 is all dpsWPs, 2017 for el 70 and mu 90 and nothing final for 2018 so we don't care much
         etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(lep.eta)));
         error= hist.GetBinError(etabin,ptbin)             
+        print 'hoot hoot'
         ##amelse:
         ##am    etabin = max(1, min(hist.GetNbinsX(), hist.GetXaxis().FindBin(abs(lep.eta))));
         ##am    hist_ptunc  = self.looseToTightUncertainties_pt['%d,%s'%(year, 'e' if abs(lep.pdgId) == 11 else 'm')]

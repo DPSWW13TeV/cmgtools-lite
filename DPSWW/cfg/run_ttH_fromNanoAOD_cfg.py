@@ -2,16 +2,17 @@ import re, os, sys
 from CMGTools.RootTools.samples.configTools import printSummary, mergeExtensions, doTestN, configureSplittingFromTime, cropToLumi
 from CMGTools.RootTools.samples.autoAAAconfig import autoAAA
 from PhysicsTools.HeppyCore.framework.heppy_loop import getHeppyOption
-
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 from CMGTools.RootTools.samples.ComponentCreator import ComponentCreator
 kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = int(getHeppyOption("year", "2016"))
+year = int(getHeppyOption("year", "2018"))
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
-test = getHeppyOption("test","")#privateSigProd")
+test = getHeppyOption("test","") #"privateSigProd")
 
 
 # Samples
@@ -37,11 +38,11 @@ else:
         from CMGTools.RootTools.samples.samples_13TeV_DATA2016_NanoAODv7 import dataSamples_02Apr2020 as allData
         #        from CMGTools.RootTools.samples.triggers_13TeV_DATA2016 import all_triggers as triggers ## for FRqcd
 
-#mcSamples_=[]
-allData=[]
+mcSamples_=[]
+#allData=[]
 
-#autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cms-xrd-global.cern.ch/") # must be done before mergeExtensions
-autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
+autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cms-xrd-global.cern.ch/") # must be done before mergeExtensions
+#autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it",site="T2_CH_CERN") #CSCS") # must be done before mergeExtensions
 
 
 mcSamples_, _ = mergeExtensions(mcSamples_)
@@ -62,7 +63,6 @@ DatasetsAndTriggers = []
 if analysis == "main":
     mcSamples = byCompName(mcSamples_, ["%s(|_ext*)"%dset for dset in [
         # private signal samples
-        #"sigPy8Private","sigHWPrivate"
         ## single boson
         #"W.*JetsToLNu.*","DYJets.*",
         ## top
@@ -73,15 +73,17 @@ if analysis == "main":
         #"TTW_LO","TTZ_LO","WWW",  "WWZ", "WZG", "WZZ", "ZZZ", "WWW_ll", "WWG",
         ## diboson
         #"WWDouble",
-        "WWDoubleTo2L_newsim",
+        #"WWDoubleTo2L_newsim",
         #"WWDoubleTo2L_nojets",
         #"WZTo3LNu_fxfx*"
-        #,"ZZTo4L","WWTo2L2Nu","WZTo3LNu.*","WpWpJJ"        "WWDouble.*",
+        #"ZZTo4L","WWTo2L2Nu","WZTo3LNu.*","WpWpJJ","WWDouble.*",
         ## QCD
         ##        "QCD.*"
-        #        "WZTo3LNu.*"
+        #"WZTo3LNu.*"
         ##"GGZZ4e"
         #"GG.*","TTG.*","TG.*"
+        ##        "WZTo3LNu_ewk"
+        "WWDoubleTo2L_notaus"
     ]])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year] + triggerGroups_dict["Trigger_1e"][year]) if year == 2018 else

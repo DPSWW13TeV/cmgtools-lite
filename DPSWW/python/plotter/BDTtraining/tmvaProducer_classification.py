@@ -58,8 +58,11 @@ def load_dataset(year,name, trainclass,friends=[]):
     return tree, weight
 
 def train_classification(year,bkg,useconept,usefr,moretxt):
-    pf='_muWP90_elWP70' if year == '2017' else ''
-    frnds=['2_recl','bdt_input_vars_ultramax']
+    #    pf='_muWP90_elWP70' if year == '2017' else ''
+    #   frnds=['2_recl','bdt_input_vars_ultramax']
+    pf='' #_muWP90_elWP70' if year == '2017' else ''
+    frnds=['2_recl','bdt_input_vars_toInfnBeynd']
+
     friends=[name+pf for name in frnds]
     ##eleID     = '(abs(Lep1_pdgId)!=11 || (Lep1_convVeto && Lep1_lostHits==0 && Lep1_tightCharge>=2)) && (abs(Lep2_pdgId)!=11 || (Lep2_convVeto && Lep2_lostHits==0 && Lep2_tightCharge>=2))'
     eleID     = '(abs(Lep1_pdgId)!=11 || ( Lep1_tightCharge>=2)) && (abs(Lep2_pdgId)!=11 || (Lep2_tightCharge>=2))'
@@ -72,6 +75,7 @@ def train_classification(year,bkg,useconept,usefr,moretxt):
     fakes     = '(!(Lep1_isLepTight &&  Lep2_isLepTight))'
     atleast1Mu = '(abs(Lep1_pdgId) == 13 || abs(Lep2_pdgId) == 13)'
     cptllCut   = '{here} || cptll > 20'.format(here=mmss)
+    cptllCutS   = '{here} || cptll > 20'.format(here=atleast1Mu)
     #cptllCut   = '{here} || cptll > 20'.format(here=atleast1Mu)
     #    bkgSel         = '(run != 1 && LepGood_isLepTight_Recl[iLepFO_Recl[0]] + LepGood_isLepTight_Recl[iLepFO_Recl[1]] == 1 ) || (run ==1 && LepGood_isLepTight_Recl[iLepFO_Recl[0]] &&  LepGood_isLepTight_Recl[iLepFO_Recl[1]]) '
 
@@ -83,7 +87,7 @@ def train_classification(year,bkg,useconept,usefr,moretxt):
             ('WWDoubleTo2L',"Signal",friends),  
             ('WZTo3LNu',"Background",friends)]
     elif (bkg == 'wz_amc'):
-        bkgSel = TT + '&&'+ mmss
+        bkgSel = TT + '&&'+ cptllCut + '&&'+ afss
         dsets = [
             ('WWDoubleTo2L',"Signal",friends),  
             ('WZTo3LNu_fxfx',"Background",friends)]
@@ -182,7 +186,7 @@ def train_classification(year,bkg,useconept,usefr,moretxt):
     dpscuts += eleID
     dpscuts +=TT
     dpscuts +=common_cuts
-
+    dpscuts +=cptllCutS
     
     datasets = []
     for name, trainclass, frnds in dsets:

@@ -457,12 +457,21 @@ dpsvars2017data = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DP
 dpsvars2018data = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2018_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2018,False)
 
 from CMGTools.DPSWW.tools.nanoAOD.BDT_DPSWW import BDT_DPSWW
+
 ##ambdtvars_withcpt_2016 = lambda : BDT_DPSWW(2016,True)
 ##ambdtvars_withcpt_2017 = lambda : BDT_DPSWW(2017,True)
 ##ambdtvars_withcpt_2018 = lambda : BDT_DPSWW(2018,True)
 bdtvars_withpt_2016  = lambda : BDT_DPSWW(2016,False)
 bdtvars_withpt_2017  = lambda : BDT_DPSWW(2017,False)
 bdtvars_withpt_2018  = lambda : BDT_DPSWW(2018,False)
+
+bdtvars_withpt_2016VarU  = lambda : BDT_DPSWW(2016,False,['all'],['Up'])
+bdtvars_withpt_2017VarU  = lambda : BDT_DPSWW(2017,False,['all'],['Up'])
+bdtvars_withpt_2018VarU  = lambda : BDT_DPSWW(2018,False,['all'],['Up'])
+bdtvars_withpt_2016VarD  = lambda : BDT_DPSWW(2016,False,['all'],['Down'])
+bdtvars_withpt_2017VarD  = lambda : BDT_DPSWW(2017,False,['all'],['Down'])
+bdtvars_withpt_2018VarD  = lambda : BDT_DPSWW(2018,False,['all'],['Down'])
+
 
 bdtvars_withpt_2016Up  = lambda : BDT_DPSWW(2016,False,['unclustEn'],'Up')
 bdtvars_withpt_2017Up  = lambda : BDT_DPSWW(2017,False,['unclustEn'],'Up')
@@ -483,6 +492,8 @@ bdtvars_withpt_2018Down  = lambda : BDT_DPSWW(2018,False,['unclustEn'],'Down')
 from CMGTools.DPSWW.tools.nanoAOD.genInfo_py8_fur_taus import genInfo_py8_fur_taus
 postfsrInfoPy_taus = lambda : genInfo_py8_fur_taus()
 
+from CMGTools.DPSWW.tools.nanoAOD.genInfo_hw_fur_taus import genInfo_hw_fur_taus
+postfsrInfohw_taus = lambda : genInfo_hw_fur_taus()
 
 from CMGTools.DPSWW.tools.nanoAOD.genInfo_py8 import genInfo_py8
 postfsrInfoPy = lambda : genInfo_py8()

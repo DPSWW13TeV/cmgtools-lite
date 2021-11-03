@@ -49,6 +49,14 @@ class DPSWW_vars(Module):
         self.out.branch('Lep2_lostHits'   ,'I')
         self.out.branch('Lep2_isLepTight'   ,'I') 
         self.out.branch("fakeRateWt","F")
+        self.out.branch('Lep1_dz'  ,'F')
+        self.out.branch('Lep2_dz'  ,'F')
+        self.out.branch('Lep1_dxy'  ,'F')
+        self.out.branch('Lep2_dxy'  ,'F')
+        self.out.branch('deltadz'  ,'F')
+        self.out.branch('deltadxy'  ,'F')
+        self.out.branch('dRll'  ,'F')
+
         for src in self.svars:
             for shift in ['Up','Down']:
                 self.out.branch('met_%s%s'%(src,shift),"F")
@@ -94,6 +102,8 @@ class DPSWW_vars(Module):
         lepton2.SetPtEtaPhiM(l2.conePt,l2.eta,l2.phi,l2.mass);
         if opt == 'phi':
             toreturn = (lepton1+lepton2).Phi() 
+        elif opt == 'dR':
+            toreturn = lepton1.DeltaR(lepton2)
         else:
             toreturn =  self.if3((opt == 'mll'), (lepton1+lepton2).M(), (lepton1+lepton2).Pt())
         return toreturn
@@ -156,7 +166,7 @@ class DPSWW_vars(Module):
             frweight  = self.fakeRateWeight_2lss(leps[0],leps[1]) 
             cptll     = self.phill(leps[0],leps[1],'pt')  
             mll       = self.phill(leps[0],leps[1],'mll') 
-            
+            dRll      = self.phill(leps[0],leps[1],'dR')
             for src in self.svars:
                 for shift in ['Up','Down']:
                     if self.isMC:
@@ -206,6 +216,13 @@ class DPSWW_vars(Module):
             self.out.fillBranch('Lep2_lostHits'    ,leps[1].lostHits        )
             self.out.fillBranch('Lep2_isLepTight'  ,leps[1].isLepTight_Recl )
             
+            self.out.fillBranch('Lep1_dz'  ,leps[0].dz)
+            self.out.fillBranch('Lep2_dz'  ,leps[1].dz)
+            self.out.fillBranch('Lep1_dxy'  ,leps[0].dxy)
+            self.out.fillBranch('Lep2_dxy'  ,leps[1].dxy)
+            self.out.fillBranch('deltadz'  ,abs(leps[0].dz-leps[1].dz))
+            self.out.fillBranch('deltadxy'  ,abs(leps[0].dxy-leps[1].dxy))
+            self.out.fillBranch('dRll'  ,dRll)
 
 
 

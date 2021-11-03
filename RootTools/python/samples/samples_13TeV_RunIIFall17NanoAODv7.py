@@ -102,6 +102,7 @@ WWDoubleTo2L_herwig           = kreator.makeMCComponent("WWDoubleTo2L_herwig", "
 WWDouble_cp5           = kreator.makeMCComponent("WWDouble_cp5", "/WW_DoubleScattering_13TeV-pythia8_TuneCP5/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
 
 
+WZTo3LNu_ewk               = kreator.makeMCComponent("WZTo3LNu_ewk", "/WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root",0.01631)
 
 WZTo3LNu               = kreator.makeMCComponent("WZTo3LNu", "/WZTo3LNu_13TeV-powheg-pythia8/RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_realistic_v8-v1/NANOAODSIM", "CMS", ".*root", 4.42965)
 
@@ -129,6 +130,7 @@ WGToLNuG_01J_amcatnlo    = kreator.makeMCComponent("WGToLNuG_01J_amcatnlo", "/WG
 
 
 DiBosons = [
+WZTo3LNu_ewk,
 WWDoubleTo2L_newsim,
 WWDoubleTo2L,
 WWDoubleTo2L_herwig,

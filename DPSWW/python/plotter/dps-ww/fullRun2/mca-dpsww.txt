@@ -1,15 +1,26 @@
+
 # vim: syntax=sh
 data_flips : + ; IncludeMca="dps-ww/fullRun2/mca-data-forFlips.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="charge-misid.", FillColor=ROOT.kCyan-7, PostFix = "_flips"
 incl_mc    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt"
 
 
+WZ_scaleV0 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[0] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=2
+WZ_scaleV1 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[1] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=3
+WZ_scaleV3 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[3] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=9
+WZ_scaleV4 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[4] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=5
+WZ_scaleV5 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[5] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=6
+WZ_scaleV7 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[7] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=7
+WZ_scaleV8 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[8] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=8
 
-WZ_scaleV1 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[0] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kMagenta
-WZ_scaleV2 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[1] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed
-WZ_scaleV3 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[2] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kCyan
-WZ_scaleV4 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[3] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kYellow
-WZ_scaleV5 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[4] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue
-WZ_scaleV6 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[5] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen
+
+ZZ_scaleV0 : ZZTo4L : xsec*LHEScaleWeight[0] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=2
+ZZ_scaleV1 : ZZTo4L : xsec*LHEScaleWeight[1] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=3
+ZZ_scaleV3 : ZZTo4L : xsec*LHEScaleWeight[3] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=9
+ZZ_scaleV4 : ZZTo4L : xsec*LHEScaleWeight[4] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=5
+ZZ_scaleV5 : ZZTo4L : xsec*LHEScaleWeight[5] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=6
+ZZ_scaleV7 : ZZTo4L : xsec*LHEScaleWeight[7] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=7
+ZZ_scaleV8 : ZZTo4L : xsec*LHEScaleWeight[8] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=8
+
 
 DPSpy8+ : WWDoubleTo2L : 0.1729  ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
 WZfxfx 	: WZTo3LNu_fxfx : xsec ; FillColor=ROOT.kAzure+1, Label="WZ"
@@ -20,12 +31,12 @@ WZfxfx 	: WZTo3LNu_fxfx : xsec ; FillColor=ROOT.kAzure+1, Label="WZ"
 #incl_mc_jecDn    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/frs-jecs/fr-jesTotalDown.txt',  SkipMe=True, PostFix = "_jecDn"
 
 Convs	   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-convs.txt"
-data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="non-prompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes"
+data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="nonprompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes"
 
-data_fakes_mu90el65 : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="non-prompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes_mu90el65"
+data_fakes_mu90el65 : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="nonprompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes_mu90el65"
 
 
-#data       : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", AddWeight="(BDTG_DPS_TLCR_raw_withpt<0.4 && BDTG_DPS_WZ_amc_raw_withpt < 0.4)"
+##data       : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", AddWeight="(BDTG_DPS_TLCR_raw_withpt<0.4 && BDTG_DPS_WZ_amc_raw_withpt < 0.4)"
 data       : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt"
 ##flips_MC : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt", Label="charge-misid.", FillColor=ROOT.kViolet
 

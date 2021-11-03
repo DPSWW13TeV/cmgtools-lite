@@ -39,7 +39,9 @@ class LocalityChecker:
         sys.stderr.write("Querying Phedex for node %s, datasets %s; this may take some time...\n" % (self.node, self.datasets))
         start = time.time()
         urlquery = 'https://cmsweb.cern.ch/phedex/datasvc/json/prod/subscriptions?node='+self.node+'&create_since=0'
+        print urlquery
         if self.datasets: urlquery += "&dataset=%s" % self.datasets.replace("/","%2F")
+        print 'and now',  self.datasets, urlquery
         text = urllib2.urlopen(urlquery).read()
         if not text: 
             raise RuntimeError, "Error executing phedex query: "+urlquery
