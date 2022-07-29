@@ -44,6 +44,7 @@ class ttHPrescalingLepSkimmer( Module ):
             electrons = filter(self.electronSel, Collection(event, 'Electron'))
             leps = muons + electrons
             if len(leps) < self.minLeptonsNoPrescale:
+                #print 'oopps less than 1 lepton'
                 return False
             if len(leps) >= self.minLeptons:
                 if self.requireSameSignPair:

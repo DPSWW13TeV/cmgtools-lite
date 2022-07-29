@@ -2,37 +2,23 @@ data   : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt"
 
 Rares : TTZ_LO : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares"
 Rares : TTW_LO : xsec : 1 ; FillColor=ROOT.kPink+6 , Label="Rares"
-Rares : TTJets_DiLepton : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares"
-Rares : T_sch_lep : xsec :   1 ; FillColor=ROOT.kPink+6
-Rares : T_tch     : xsec :   1 ; FillColor=ROOT.kPink+6 
-Rares : TBar_tch  : xsec :   1 ; FillColor=ROOT.kPink+6 
-
-Rares : T_tWch_noFullyHad      : xsec :   1       ; FillColor=ROOT.kPink+6    , years="2016\,2018"
-Rares : TBar_tWch_noFullyHad   : xsec :   1       ; FillColor=ROOT.kPink+6    , years="2016\,2018"
-Rares : T_tWch                 : xsec :   1       ; FillColor=ROOT.kPink+6    , years="2017"
-Rares : TBar_tWch              : xsec :   1       ; FillColor=ROOT.kPink+6    , years="2017"
-Rares : GGHZZ4L    	       : xsec :   1       ; FillColor=ROOT.kPink+6    
-Rares : GGZZ4L    	       : 0.014352 :   1       ; FillColor=ROOT.kPink+6    
-
 Rares : WpWpJJ : xsec*0.05454/0.03711 : 1 ; FillColor=ROOT.kPink+6 , Label="Rares"
-Rares : WWW    : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares" , years="2016\,2018"
-Rares : WWW_ll : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares", years="2017"
-Rares : WWZ    : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares"
-Rares : WZZ    : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares"
-Rares : ZZZ    : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares"
-Rares : WWG    : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares" , years="2017\,2018"
-WZ_ewk : WZTo3LNu_ewk  : xsec*0.1 :  1 ; FillColor=ROOT.kPink+6, Label="WZ_ewk"
+VVV : WWW    : xsec : 1 ; FillColor=ROOT.kViolet-6, Label="VVV"
+VVV : WWZ    : xsec : 1 ; FillColor=ROOT.kViolet-6, Label="VVV"
+WZ_ewk : WZTo3LNu_ewk  : xsec*0.1 :  1 ; FillColor=ROOT.kViolet-6, Label="WZ_ewk"
 
 ZZ        : ZZTo4L : xsec : 1 ;  FillColor=ROOT.kOrange-3 , Label="ZZ" 
-WZ_mllLT4  : WZTo3LNu_mllmin01 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(GenPart_mass < 4. && LepGood_genPartFlav == 1) == 1 ; FillColor=ROOT.kViolet+7, Label="W\#gamma*"
+Wgstar     : WZTo3LNu_mllmin01 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(GenPart_mass < 4. && LepGood_genPartFlav == 1) == 1 ; FillColor=ROOT.kViolet+7, Label="W\#gamma*"
 WZ_alt	   : WZTo3LNu : xsec : 1 ;  FillColor=ROOT.kAzure+1, Label="WZ_alt" 
 WZ         : WZTo3LNu_fxfx : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="WZ" #, SkipMe=True
 WZ_incl    : WZTo3LNu_mllmin01 : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="WZ/\#gamma*"
 
 
-Convs01J  : ZGToLLG_01J_lowmll_amcatnlo : xsec :1 ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
-ZGToLLG  : ZGToLLG_01J_lowmll_amcatnlo : xsec :1 ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
-WG  : WGToLNuG_01J_amcatnlo : xsec : 1 ; FillColor=ROOT.kGreen, Label="W\#gamma"
+#ZG  : ZGToLLG_01J_lowmll_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kCyan-3, Label="ZG"
+
+#WG  : WGToLNuG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W\#gamma"
+
+
 
 
 

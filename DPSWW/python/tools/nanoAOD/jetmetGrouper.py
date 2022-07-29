@@ -134,7 +134,7 @@ groups = {'HF'                 : ['PileUpPtHF', 'RelativeJERHF', 'RelativePtHF']
           'BBEC1'              : ['PileUpPtBB', 'PileUpPtEC1', 'RelativePtBB'], 
           'EC2_year'           : ['RelativeJEREC2', 'RelativePtEC2'], 
           'Absolute'           : ['AbsoluteMPFBias', 'AbsoluteScale', 'Fragmentation', 'PileUpDataMC', 'PileUpPtRef', 'RelativeFSR', 'SinglePionECAL', 'SinglePionHCAL'],
-          'JECTotal'           : ['PileUpPtHF', 'RelativeJERHF', 'RelativePtHF','RelativeJEREC1', 'RelativePtEC1', 'RelativeStatEC','FlavorQCD','RelativeSample','FlavorQCD','RelativeSample','PileUpPtEC2','RelativeStatHF','RelativeBal','AbsoluteStat', 'RelativeStatFSR','TimePtEta','PileUpPtBB','PileUpPtEC1','RelativePtBB','RelativeJEREC2', 'RelativePtEC2','AbsoluteMPFBias', 'AbsoluteScale','Fragmentation', 'PileUpDataMC','PileUpPtRef','RelativeFSR', 'SinglePionECAL', 'SinglePionHCAL'],
+          ##am'JECTotal'           : ['PileUpPtHF', 'RelativeJERHF', 'RelativePtHF','RelativeJEREC1', 'RelativePtEC1', 'RelativeStatEC','FlavorQCD','RelativeSample','FlavorQCD','RelativeSample','PileUpPtEC2','RelativeStatHF','RelativeBal','AbsoluteStat', 'RelativeStatFSR','TimePtEta','PileUpPtBB','PileUpPtEC1','RelativePtBB','RelativeJEREC2', 'RelativePtEC2','AbsoluteMPFBias', 'AbsoluteScale','Fragmentation', 'PileUpDataMC','PileUpPtRef','RelativeFSR', 'SinglePionECAL', 'SinglePionHCAL'],
 }
 
 jetMetCorrelate2016 = lambda  : jetmetGrouper( groups, "Jet", "MET", dumpMore=moreVars)

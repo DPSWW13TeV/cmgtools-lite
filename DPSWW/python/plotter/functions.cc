@@ -153,6 +153,7 @@ float mass_3(float pt1, float eta1, float phi1, float m1, float pt2, float eta2,
     return (p41+p42+p43).M();
 }
 
+
 float mass_3lep(float pt1, float eta1, float phi1, float pt2, float eta2, float phi2, float pt3, float eta3, float phi3) {
     typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
     PtEtaPhiMVector p41(pt1,eta1,phi1,0);
@@ -506,7 +507,7 @@ int unroll_2Dbdt_dps_SoBord_sq(float BDTx,float BDTy){
 
 
 
-int unroll_2Dbdt_dps_SoBord_sqV1(float BDTx,float BDTy){
+int unroll_2Dbdt_dps_SoBord_sqV1_old(float BDTx,float BDTy){
  
   if(BDTx  > 0.8 && BDTy > 0.8 )return 0;
   //else if( (BDTx >   0.8 && BDTx <= 0.9 && BDTy >  0.8) || (BDTx > 0.9 && BDTy >  0.8 && BDTy <= 0.9)) return 1;
@@ -553,6 +554,31 @@ int unroll_2Dbdt_dps_SoBord_sqV2(float BDTx,float BDTy){
 
 int unroll_2Dbdt_dps_SoBord_sqV3(float BDTx,float BDTy){
  
+  if(BDTx  > 0.8 && BDTy > 0.8 )return 12;
+  else if( (BDTx >   0.6 && BDTx <= 0.8 && BDTy >  0.6) || (BDTx > 0.8 && BDTy >  0.6 && BDTy <= 0.8)) return 11;
+  else if( (BDTx >   0.4 && BDTx <= 0.6 && BDTy >  0.4) || (BDTx > 0.6 && BDTy >  0.4 && BDTy <= 0.6)) return 10;
+  else if( (BDTx >   0.2 && BDTx <= 0.4 && BDTy >  0.2) || (BDTx > 0.4 && BDTy >  0.2 && BDTy <= 0.4)) return 9;
+  else if( (BDTx >   0.0 && BDTx <= 0.2 && BDTy >  0.0) || (BDTx > 0.2 && BDTy >  0.0 && BDTy <= 0.2)) return 8;
+  else if( (BDTx >  -0.2 && BDTx <= 0.0 && BDTy > -0.2) || (BDTx > 0.0 && BDTy > -0.2 && BDTy <= 0.0)) return 7;	 
+  else if( (BDTx >  -0.4 && BDTx <=-0.2 && BDTy > -0.4) || (BDTx >-0.2 && BDTy > -0.4 && BDTy <=-0.2)) return 6;
+  else if( (BDTx >  -0.6 && BDTx <=-0.4 && BDTy > -0.6) || (BDTx >-0.4 && BDTy > -0.6 && BDTy <=-0.4)) return 5;
+
+  else if( BDTx  >  -0.8 && BDTx <=-0.6 && BDTy > -0.6) return 4;
+  else if( BDTx  >  -0.8 && BDTy > -0.8 && BDTy <=-0.6) return 3;
+
+  else if( BDTx  >= -1.0 && BDTx <=-0.8 && BDTy <= -0.8)return 2;
+  else if( BDTx  >= -1.0 && BDTx <=-0.8 && BDTy > -0.8) return 1;
+  else if( BDTx  >  -0.8 && BDTy <=-0.8) return 0;
+
+  else{
+    std::cout << "values of BDT variables are out of bounds, please check\t" <<BDTx<<"\t"<<BDTy<<std::endl;
+    exit(EXIT_FAILURE);}
+} 
+
+
+int unroll_2Dbdt_dps_SoBord_sqV3_feb04(float BDTx,float BDTy){
+  // used for everything. the untagged version, trying to order by signal yield
+ 
   if(BDTx  > 0.8 && BDTy > 0.8 )return 0;
   else if( (BDTx >   0.6 && BDTx <= 0.8 && BDTy >  0.6) || (BDTx > 0.8 && BDTy >  0.6 && BDTy <= 0.8)) return 1;
   else if( (BDTx >   0.4 && BDTx <= 0.6 && BDTy >  0.4) || (BDTx > 0.6 && BDTy >  0.4 && BDTy <= 0.6)) return 2;
@@ -573,7 +599,65 @@ int unroll_2Dbdt_dps_SoBord_sqV3(float BDTx,float BDTy){
     std::cout << "values of BDT variables are out of bounds, please check\t" <<BDTx<<"\t"<<BDTy<<std::endl;
     exit(EXIT_FAILURE);}
 } 
+
+
+
+int unroll_2Dbdt_dps_SoBord_sqV1(float BDTx,float BDTy){
  
+  if(BDTx  > 0.8 && BDTy > 0.8 )return 0;
+  else if( (BDTx >   0.6 && BDTx <= 0.8 && BDTy >  0.6) || (BDTx > 0.8 && BDTy >  0.6 && BDTy <= 0.8)) return 1;
+  else if( (BDTx >   0.4 && BDTx <= 0.6 && BDTy >  0.4) || (BDTx > 0.6 && BDTy >  0.4 && BDTy <= 0.6)) return 2;
+  else if( (BDTx >   0.2 && BDTx <= 0.4 && BDTy >  0.2) || (BDTx > 0.4 && BDTy >  0.2 && BDTy <= 0.4)) return 3;
+  else if( (BDTx >   0.0 && BDTx <= 0.2 && BDTy >  0.0) || (BDTx > 0.2 && BDTy >  0.0 && BDTy <= 0.2)) return 4;
+  else if( (BDTx >  -0.2 && BDTx <= 0.0 && BDTy > -0.2) || (BDTx > 0.0 && BDTy > -0.2 && BDTy <= 0.0)) return 5;	 
+  else if( (BDTx >  -0.4 && BDTx <=-0.2 && BDTy > -0.4) || (BDTx >-0.2 && BDTy > -0.4 && BDTy <=-0.2)) return 6;
+  else if( (BDTx >  -0.6 && BDTx <=-0.4 && BDTy > -0.6) || (BDTx >-0.4 && BDTy > -0.6 && BDTy <=-0.4)) return 7;
+
+  else if( BDTx  >  -0.8 && BDTx <=-0.6 && BDTy > -0.6) return 8;
+  else if( BDTx  >  -0.8 && BDTy > -0.8 && BDTy <=-0.6) return 9;
+
+  else if( BDTx  >= -1.0 && BDTy <= -0.8)return 10;
+  else if( BDTx  >= -1.0 && BDTx <=-0.8 && BDTy > -0.8) return 11;
+
+  else{
+    std::cout << "values of BDT variables are out of bounds, please check\t" <<BDTx<<"\t"<<BDTy<<std::endl;
+    exit(EXIT_FAILURE);}
+} 
+
+
+
+int unroll_2Dbdt_dps(float BDTx,float BDTy){
+ 
+  if(BDTx  > 0.8 && BDTy > 0.8 )return 0;
+  else if( (BDTx >   0.6 && BDTx <= 0.8 && BDTy >  0.6) || (BDTx > 0.8 && BDTy >  0.6 && BDTy <= 0.8)) return 0;
+  else if( (BDTx >   0.4 && BDTx <= 0.6 && BDTy >  0.4) || (BDTx > 0.6 && BDTy >  0.4 && BDTy <= 0.6)) return 0;
+  else if( (BDTx >   0.2 && BDTx <= 0.4 && BDTy >  0.2) || (BDTx > 0.4 && BDTy >  0.2 && BDTy <= 0.4)) return 1;
+  else if( (BDTx >   0.0 && BDTx <= 0.2 && BDTy >  0.0) || (BDTx > 0.2 && BDTy >  0.0 && BDTy <= 0.2)) return 2;
+  else if( (BDTx >  -0.2 && BDTx <= 0.0 && BDTy > -0.2) || (BDTx > 0.0 && BDTy > -0.2 && BDTy <= 0.0)) return 3;	 
+  else if( (BDTx >  -0.4 && BDTx <=-0.2 && BDTy > -0.4) || (BDTx >-0.2 && BDTy > -0.4 && BDTy <=-0.2)) return 4;
+  else if( (BDTx >  -0.6 && BDTx <=-0.4 && BDTy > -0.6) || (BDTx >-0.4 && BDTy > -0.6 && BDTy <=-0.4)) return 5;
+
+  else if( BDTx  >  -0.8 && BDTx <=-0.6 && BDTy > -0.6) return 6;
+  else if( BDTx  >  -0.8 && BDTy > -0.8 && BDTy <=-0.6) return 7;
+
+  else if( BDTx  >= -1.0 && BDTy <= -0.8)return 8;
+  else if( BDTx  >= -1.0 && BDTx <=-0.8 && BDTy > -0.8) return 9;
+
+  else{
+    std::cout << "values of BDT variables are out of bounds, please check\t" <<BDTx<<"\t"<<BDTy<<std::endl;
+    exit(EXIT_FAILURE);}
+} 
+ 
+
+
+
+
+
+
+
+ 
+
+
 int unroll_2Dbdt_dps_SoBord_diag(float BDTx,float BDTy){
 
   float x1[]={-0.8,-0.4,-0.2,0,0.2,0.4,0.6,0.8,1,1};//,1};
@@ -656,6 +740,55 @@ int unroll_2Dbdt_dps_SoBord_diag_pc(float BDTx,float BDTy){
   else if( (BDTx-mtop*BDTy - ftop) >=0 ) bin=9;
   else if( (BDTx-mbig1*BDTy - fbig1) <0 ) bin=10;
   else if( (BDTx-mbig2*BDTy - fbig2) >=0 ) bin=10;
+  else {
+    //    std::cout<<"in here"<<std::endl;
+    for (int i = 1; i < nbins; i++){ 
+      float slope1=(y2[i-1]-y1[i-1])/(x2[i-1]-x1[i-1]);
+      float line1 = y1[i-1] - slope1*x1[i-1]; 
+      float slope2=(y2[i]-y1[i])/(x2[i]-x1[i]);
+      float line2 = y1[i] - slope2*x1[i];
+      float fprime1 = BDTy - slope1*BDTx;
+      float fprime2 = BDTy - slope2*BDTx;
+      float lowerBound = fprime1-line1;
+      float upperBound = fprime2-line2;
+      if( lowerBound >=0 && upperBound < 0){
+	bin=i;
+      }
+      else{	continue;}
+    }
+
+  }
+  //std::cout<<"for  BDTx = \t"<<BDTx<<"\t and BDTy = \t"<<BDTy<<"\t i get bin number \t"<<bin<<std::endl;}
+
+  return bin;
+  
+}
+
+
+
+int unroll_2Dbdt_dps_SoBord_diag_pcN(float BDTx,float BDTy){
+  //pchang's suggestion
+  float x1[]={-0.4,-0.2,0,0.2,0.4,0.6,0.8,1,1};//,1};
+  float y1[]={-1,-0.8,-0.6,-0.4,-0.2,0,0.2,0.4,0.6};//,0.8};
+  float x2[]={-1,-0.8,-0.6,-0.4,-0.2,0,0.2,0.4,0.6};//,0.8};
+  float y2[]={-0.4,-0.2,0,0.2,0.4,0.6,0.8,1,1};//,1};
+  float bigx1[]={-0.4,-1};
+  float bigy1[]={-1.0,-0.4};
+  float bigx2[]={1,0.4};
+  float bigy2[]={0.4,1};
+  int bin;  int nbins=9;
+  float m0 = (y2[0]-y1[0])/(x2[0]-x1[0]);
+  float f0 = y1[0] - m0*x1[0];
+  float mtop = (y2[8]-y1[8])/(x2[8]-x1[8]);
+  float ftop = y1[8] - mtop*x1[8];
+  float mbig1 = (bigy2[0]-bigy1[0])/(bigx2[0]-bigx1[0]);
+  float mbig2 = (bigy2[1]-bigy1[1])/(bigx2[1]-bigx1[1]);
+  float fbig1 = bigy1[0] - mbig1*bigx1[0];
+  float fbig2 = bigy1[1] - mbig2*bigx1[1];
+  if( (BDTx-m0*BDTy - f0) <0 ) bin=0;
+  else if( (BDTx-mtop*BDTy - ftop) >=0 ) bin=8; //this changed
+  else if( (BDTx-mbig1*BDTy - fbig1) <0 ) bin=9;//
+  else if( (BDTx-mbig2*BDTy - fbig2) >=0 ) bin=9;//
   else {
     //    std::cout<<"in here"<<std::endl;
     for (int i = 1; i < nbins; i++){ 

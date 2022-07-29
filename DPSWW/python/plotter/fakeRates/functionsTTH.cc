@@ -740,7 +740,7 @@ float leptonSF_ttH_var(int pdgid, float pt, float eta, int nlep, float var_e, fl
 //
 //}
 
-
+/*
 float ttH_2lss_ifflav(int LepGood1_pdgId, int LepGood2_pdgId, float ret_ee, float ret_em, float ret_mm){
   if (abs(LepGood1_pdgId)==11 && abs(LepGood2_pdgId)==11) return ret_ee;
   if ((abs(LepGood1_pdgId) != abs(LepGood2_pdgId)))       return ret_em;
@@ -749,6 +749,7 @@ float ttH_2lss_ifflav(int LepGood1_pdgId, int LepGood2_pdgId, float ret_ee, floa
   assert(0);
   return 0; // avoid warning
 }
+*/
 float ttH_2lss_ifflavnb(int LepGood1_pdgId, int LepGood2_pdgId, int nBJetMedium25, float ret_ee, float ret_em_bl, float ret_em_bt, float ret_mm_bl, float ret_mm_bt){
   if (abs(LepGood1_pdgId)==11 && abs(LepGood2_pdgId)==11) return ret_ee;
   if ((abs(LepGood1_pdgId) != abs(LepGood2_pdgId)) && nBJetMedium25 < 2) return ret_em_bl;

@@ -12,8 +12,25 @@ conf = dict(
 elMVA_WP=0.70
 muMVA_WP=0.90
 
+#FR_selection_cut = ("nGenDressedLepton == 2 && GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1] > 0 &&"+ 
+#                    "GenDressedLepton_pt[0] > 25 && GenDressedLepton_pt[1] > 20 && "+
+#                    "(abs(GenDressedLepton_eta[0]) < (abs(GenDressedLepton_pdgId[0])==13 ? 2.4 : 2.5)) && " + 
+#                    "(abs(GenDressedLepton_eta[1]) < (abs(GenDressedLepton_pdgId[1])==13 ? 2.4 : 2.5)) && " + 
+#                    "(abs(GenDressedLepton_pdgId[0]) == 13 || (abs(GenDressedLepton_eta[0]) < 1.442 || abs(GenDressedLepton_eta[0]) > 1.556 && abs(GenDressedLepton_pdgId[0])==11)) && "+
+#                    "(abs(GenDressedLepton_pdgId[1]) == 13 || (abs(GenDressedLepton_eta[1]) < 1.442 || abs(GenDressedLepton_eta[1]) > 1.556 && abs(GenDressedLepton_pdgId[1])==11)) && "+
+#                    "(abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 143 || abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 169) && "+
+#                    "(GenDressedLepton_hasTauAnc[0] == 0 && GenDressedLepton_hasTauAnc[1] == 0) && "+
+#
+#                    cptll	    : if3((abs(GenDressedLepton_pdgId[0]) == 11 || abs(GenDressedLepton_pdgId[1]) == 11),ptll(GenDressedLepton_pt[0], GenDressedLepton_eta[0], GenDressedLepton_phi[0], GenDressedLepton_mass[0], GenDressedLepton_pt[1], GenDressedLepton_eta[1], GenDressedLepton_phi[1], GenDressedLepton_mass[1]) > 20,1)
+#                    mll         : mass_2(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenDressedLepton_mass[0],GenDressedLepton_pt[1],GenDressedLepton_eta[1],GenDressedLepton_phi[1],GenDressedLepton_mass[1]) > 12
+#                )
+
 
 ttH_skim_cut = ("nMuon + nElectron >= 2 &&" + 
+       "Sum$(Muon_pt > {muPt} && Muon_miniPFRelIso_all < {miniRelIso} && Muon_sip3d < {sip3d}) +"
+       "Sum$(Electron_pt > {muPt} && Electron_miniPFRelIso_all < {miniRelIso} && Electron_sip3d < {sip3d} && Electron_{eleId}) >= 2").format(**conf)
+
+loose_skim_cut = ("nMuon + nElectron >= 1 &&" + 
        "Sum$(Muon_pt > {muPt} && Muon_miniPFRelIso_all < {miniRelIso} && Muon_sip3d < {sip3d}) +"
        "Sum$(Electron_pt > {muPt} && Electron_miniPFRelIso_all < {miniRelIso} && Electron_sip3d < {sip3d} && Electron_{eleId}) >= 2").format(**conf)
 
@@ -24,6 +41,9 @@ electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] and l.m
 muonSelectionV1     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["muPt" ] 
 electronSelectionV1 = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] 
 
+
+from CMGTools.DPSWW.tools.nanoAOD.dpswwfidevtskimmer import dpswwfidevtskimmer
+frskim = dpswwfidevtskimmer(ndleps=2, ssWW = True, noTaus = True)
 from CMGTools.DPSWW.tools.nanoAOD.ttHPrescalingLepSkimmer import ttHPrescalingLepSkimmer
 # NB: do not wrap lepSkim a lambda, as we modify the configuration in the cfg itself 
 lepSkim = ttHPrescalingLepSkimmer(5, 
@@ -52,9 +72,10 @@ from CMGTools.DPSWW.tools.nanoAOD.lepJetBTagAdder import lepJetBTagCSV, lepJetBT
 
 ttH_sequence_step1 = [lepSkim, lepMerge, autoPuWeight, yearTag, xsecTag, lepJetBTagCSV, lepJetBTagDeepCSV, lepJetBTagDeepFlav, lepMasses]
 
-simple_sequence_step1 = [lepMergeOnly, autoPuWeight, yearTag, xsecTag]
-simple_skim_cut=("")
-loose_sequence_step1 = [lepMerge, autoPuWeight, yearTag, xsecTag]
+dps_fidR_sequence_step1 = [frskim, lepSkim, lepMerge, autoPuWeight, yearTag, xsecTag, lepJetBTagCSV, lepJetBTagDeepCSV, lepJetBTagDeepFlav, lepMasses]
+simple_sequence_step1 = dps_fidR_sequence_step1  #[yearTag, xsecTag, frskim] 
+simple_skim_cut=("1")
+loose_sequence_step1 = [lepMerge, autoPuWeight, yearTag, xsecTag,lepJetBTagCSV, lepJetBTagDeepCSV, lepJetBTagDeepFlav]
 #==== 
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR
 from CMGTools.DPSWW.tools.nanoAOD.ttHLepQCDFakeRateAnalyzer import ttHLepQCDFakeRateAnalyzer
@@ -409,6 +430,10 @@ bTagSFs_allvars = lambda : BtagSFs("JetSel_Recl",
 from CMGTools.DPSWW.tools.nanoAOD.lepScaleFactors import lepScaleFactors
 leptonSFs = lambda : lepScaleFactors()
 
+from CMGTools.DPSWW.tools.nanoAOD.puwtProducer import puwtProducer
+newpuwts = lambda : puwtProducer()
+
+
 scaleFactorSequence_2016 = [btagSF2016_dj,bTagSFs] 
 scaleFactorSequence_2017 = [btagSF2017_dj,bTagSFs] 
 scaleFactorSequence_2018 = [btagSF2018_dj,bTagSFs]
@@ -446,6 +471,10 @@ vhsplitter = lambda : VHsplitter()
 # scaleFactorSequence_2017
 # scaleFactorSequence_2018
 
+from CMGTools.DPSWW.tools.nanoAOD.W_vars import W_vars
+wvars2016MC = lambda : W_vars(2016,True)
+wvars2017MC = lambda : W_vars(2017,True)
+wvars2018MC = lambda : W_vars(2018,True)
 from CMGTools.DPSWW.tools.nanoAOD.DPSWW_vars import DPSWW_vars
 
 dpsvars2016MC = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2016_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2016,True)
@@ -455,6 +484,14 @@ dpsvars2018MC = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSW
 dpsvars2016data = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2016_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2016,False)
 dpsvars2017data = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2017_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2017,False)
 dpsvars2018data = lambda : DPSWW_vars(os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/fakerate/fr_2018_MVA_mupt90_elpt70.root','FR_mva090_mu_data_comb','FR_mva070_el_data_comb_NC',2018,False)
+
+from CMGTools.DPSWW.tools.nanoAOD.muon_prefiring_sfs import muon_prefiring_sfs
+sfs_2016=lambda : muon_prefiring_sfs("2016",os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/L1MuonPrefiring_wts_2016.root')
+sfs_2017=lambda : muon_prefiring_sfs("2017",os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/L1MuonPrefiring_wts_2016.root')
+sfs_2018=lambda : muon_prefiring_sfs("2018",os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/L1MuonPrefiring_wts_2016.root')
+
+from CMGTools.DPSWW.tools.nanoAOD.muon_prefiring_maps import muon_prefiring_maps
+prefiringwt_2016=lambda : muon_prefiring_maps("2016",os.environ["CMSSW_BASE"]+'/src/CMGTools/DPSWW/data/L1MuonPrefiring_wts_2016.root')
 
 from CMGTools.DPSWW.tools.nanoAOD.BDT_DPSWW import BDT_DPSWW
 
@@ -473,12 +510,12 @@ bdtvars_withpt_2017VarD  = lambda : BDT_DPSWW(2017,False,['all'],['Down'])
 bdtvars_withpt_2018VarD  = lambda : BDT_DPSWW(2018,False,['all'],['Down'])
 
 
-bdtvars_withpt_2016Up  = lambda : BDT_DPSWW(2016,False,['unclustEn'],'Up')
-bdtvars_withpt_2017Up  = lambda : BDT_DPSWW(2017,False,['unclustEn'],'Up')
-bdtvars_withpt_2018Up  = lambda : BDT_DPSWW(2018,False,['unclustEn'],'Up')
-bdtvars_withpt_2016Down  = lambda : BDT_DPSWW(2016,False,['unclustEn'],'Down')
-bdtvars_withpt_2017Down  = lambda : BDT_DPSWW(2017,False,['unclustEn'],'Down')
-bdtvars_withpt_2018Down  = lambda : BDT_DPSWW(2018,False,['unclustEn'],'Down')
+bdtvars_withpt_2016Up  = lambda : BDT_DPSWW(2016,False,['unclustEn'],['Up'])
+bdtvars_withpt_2017Up  = lambda : BDT_DPSWW(2017,False,['unclustEn'],['Up'])
+bdtvars_withpt_2018Up  = lambda : BDT_DPSWW(2018,False,['unclustEn'],['Up'])
+bdtvars_withpt_2016Down  = lambda : BDT_DPSWW(2016,False,['unclustEn'],['Down'])
+bdtvars_withpt_2017Down  = lambda : BDT_DPSWW(2017,False,['unclustEn'],['Down'])
+bdtvars_withpt_2018Down  = lambda : BDT_DPSWW(2018,False,['unclustEn'],['Down'])
 
 ##ambdtvars_withcpt_2016Down = lambda : BDT_DPSWW(2016,True,'Down')
 ##ambdtvars_withcpt_2017Down = lambda : BDT_DPSWW(2017,True,'Down')
@@ -491,6 +528,10 @@ bdtvars_withpt_2018Down  = lambda : BDT_DPSWW(2018,False,['unclustEn'],'Down')
 
 from CMGTools.DPSWW.tools.nanoAOD.genInfo_py8_fur_taus import genInfo_py8_fur_taus
 postfsrInfoPy_taus = lambda : genInfo_py8_fur_taus()
+
+from CMGTools.DPSWW.tools.nanoAOD.npdf_rms import npdf_rms
+rms_val = lambda : npdf_rms()
+
 
 from CMGTools.DPSWW.tools.nanoAOD.genInfo_hw_fur_taus import genInfo_hw_fur_taus
 postfsrInfohw_taus = lambda : genInfo_hw_fur_taus()

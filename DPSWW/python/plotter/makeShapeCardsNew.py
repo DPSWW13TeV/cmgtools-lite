@@ -122,7 +122,10 @@ for binname, report in allreports.iteritems():
   for i,s in enumerate(mca.listSignals()):
     if s not in allyields: continue
     if allyields[s] <= options.threshold: continue
-    procs.append(s); iproc[s] = i-len(mca.listSignals())+1
+    procs.append(s); #iproc[s] = i-len(mca.listSignals())+1
+    if 'DPSWWp' in s:
+        iproc[s]=i-len(mca.listSignals())  #-1*len(s.split('_')[-1])
+    else: iproc[s] = i-len(mca.listSignals())+1 
   for i,b in enumerate(mca.listBackgrounds()):
     if b not in allyields: continue
     if allyields[b] <= options.threshold: continue
@@ -157,15 +160,21 @@ for binname, report in allreports.iteritems():
                 for d in range(2):
                     if variants[d].GetBinContent( bin ) == 0: 
                         shift = variants[1-d].GetBinContent(bin); shift = max(5e-6, shift)
+                        #print 'setting content',h.raw().GetBinContent( bin )**2/shift
                         variants[d].SetBinContent( bin, h.raw().GetBinContent( bin )**2/shift)
+                        variants[d].SetBinError( bin, h.raw().GetBinContent( bin )**2/shift)
                     if variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin) > 10: 
                         #print variants[d].GetBinContent( bin ),h.raw().GetBinContent(bin)
                         print " Warning: big shift in template for %s %s %s %s in bin %d: variation = %g"%( binname, p, name, d, bin, variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin))
-                        variants[d].SetBinContent( bin, 10*h.raw().GetBinContent(bin) )
+                        print h.raw().GetBinContent(bin),h.raw().GetBinError(bin),variants[d].GetBinContent( bin ),variants[d].GetBinError( bin )
+                        variants[d].SetBinContent( bin,10*h.raw().GetBinContent(bin) )
+                        variants[d].SetBinError( bin,10*h.raw().GetBinContent(bin) )
                     if variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin) < 0.1: 
                         print variants[d].GetBinContent( bin )," raw content", h.raw().GetBinContent(bin) 
-                        print "Warning: big shift in template for %s %s %s %s in bin %d: variation = %g"%( binname, p, name, d, bin, variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin))
+                        print "Warning: big (small) shift in template for %s %s %s %s in bin %d: variation = %g"%( binname, p, name, d, bin, variants[d].GetBinContent( bin )/h.raw().GetBinContent(bin))
                         variants[d].SetBinContent( bin, 0.1*h.raw().GetBinContent(bin) )
+                        variants[d].SetBinError( bin, 0.1*h.raw().GetBinContent(bin) )
+                        print h.raw().GetBinContent(bin),h.raw().GetBinError(bin),variants[d].GetBinContent( bin ),variants[d].GetBinError( bin )
 
             effshape[p] = variants 
     if isShape:

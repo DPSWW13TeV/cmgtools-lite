@@ -13,7 +13,7 @@ class DPSWW_vars(Module):
         self.histEl = histEl
         self.histMu = histMu
         self.isMC = isMC
-        self.svars   = ['jesBBEC1_year','jesFlavorQCD','jesEC2','jesAbsolute_year','jesHF','jesJECTotal','jesHF_year','jesRelativeSample_year','jesRelativeBal','jesBBEC1','jesEC2_year','jesAbsolute','unclustEn','jerbarrel','jerendcap1','jerendcap2highpt','jerendcap2lowpt','jerforwardhighpt','jerforwardlowpt','HEM']
+        self.svars   = ['jesBBEC1_year','jesFlavorQCD','jesEC2','jesAbsolute_year','jesHF','jesHF_year','jesRelativeSample_year','jesRelativeBal','jesBBEC1','jesEC2_year','jesAbsolute','unclustEn','jerbarrel','jerendcap1','jerendcap2highpt','jerendcap2lowpt','jerforwardhighpt','jerforwardlowpt','HEM']#'jesJECTotal',
 
         print 'saving bdt input variables for',year,FRFile
         pass

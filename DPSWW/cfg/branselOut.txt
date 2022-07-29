@@ -1,12 +1,8 @@
 drop *
-keep LepGood_pt
-keep LepGood_eta
-keep LepGood_phi
-keep LepGood_pdgId
+keep Gen*
 keep MET_pt
 keep MET_phi
-keep PV_npvsGood
-keep PV_npvs
+keep PV*
 keep genWeight
 keep luminosityBlock
 keep run
@@ -15,28 +11,5 @@ keep xsec
 keep year
 keep puW*
 keep prescaleFromSkim
-keep HLT_Ele27_WPTight_Gsf*
-keep HLT_Ele25_eta2p1_WPTight_Gsf*
-keep HLT_Ele27_eta2p1_WPLoose_Gsf*
-keep HLT_Ele32_WPTight_Gsf*
-keep HLT_Ele35_WPTight_Gsf*
-keep HLT_Ele32_WPTight_Gsf*
-keep HLT_IsoMu24*
-keep HLT_IsoTkMu24*
-keep HLT_IsoMu22_eta2p1*
-keep HLT_IsoTkMu22_eta2p1*
-keep HLT_IsoMu27*
-keep HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL*
-keep HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL*
-keep HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL*
-keep HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL*
-keep HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL*
-keep HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL*
-keep HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ*
-keep HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ*
-keep HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL*
-keep HLT_TripleMu_12_10_5*
-keep HLT_Mu8_DiEle12_CaloIdL_TrackIdL*
-keep HLT_DiMu9_Ele9_CaloIdL_TrackIdL*
 
  

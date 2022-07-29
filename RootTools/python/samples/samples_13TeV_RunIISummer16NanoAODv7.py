@@ -161,12 +161,10 @@ W4JetsToLNu_LO_ext1,
 
 
 ### DiBosons
-##ambasepath_newsim = "/eos/cms/store/cmst3/group/dpsww/baptiseJoSamples/production_june2021_2016/"
-##amWWDoubleTo2L_newsim        = kreator.makeMCComponent("WWDoubleTo2L_newsim","/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
-##amWWDoubleTo2L_newsim.files   = [basepath_newsim+x for x in os.listdir(basepath_newsim)]
-basepath_newsim = "/eos/cms/store/cmst3/group/dpsww/baptiseJoSamples/production_june2021_2016" #production_june2021_2016/"
-WWDoubleTo2L_newsim        = kreator.makeMCComponent("WWDoubleTo2L_newsim","/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
-WWDoubleTo2L_newsim.files   = [basepath_newsim+x for x in os.listdir(basepath_newsim)]
+
+bp_newsim            = "/eos/cms/store/cmst3/group/dpsww/baptiseJoSamples/production_june2021_2016/" 
+WWDoubleTo2L_newsim= kreator.makeMCComponent("WWDoubleTo2L_newsim","/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+WWDoubleTo2L_newsim.files  = [bp_newsim+x for x in os.listdir(bp_newsim)]
 
 WWDoubleTo2L           = kreator.makeMCComponent("WWDoubleTo2L", "/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
 WWDoubleTo2L_herwigpp           = kreator.makeMCComponent("WWDoubleTo2L_herwigpp", "/WWTo2L2Nu_DoubleScattering_13TeV-herwigpp/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
@@ -211,9 +209,7 @@ WW_ext                 = kreator.makeMCComponent("WW", "/WW_TuneCUETP8M1_13TeV-p
 WW                     = kreator.makeMCComponent("WW_ext", "/WW_TuneCUETP8M1_13TeV-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM", "CMS", ".*root", 63.21 * 1.82)
 
 
-
 DiBosons = [
-##WWDoubleTo2L_newsim_am,
 WZTo3LNu_ewk,
 WWDoubleTo2L_newsim,
 WWDoubleTo2L,

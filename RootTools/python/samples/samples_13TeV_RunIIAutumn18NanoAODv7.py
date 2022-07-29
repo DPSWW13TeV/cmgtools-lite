@@ -105,8 +105,16 @@ WWDoubleTo2L_notaus.files   = [basepath_py8WW2L2Nu_notaus +x for x in os.listdir
 
 
 basepath_newsim = "/eos/cms/store/cmst3/group/dpsww/baptiseJoSamples/production_june2021_2018/"
+
 WWDoubleTo2L_newsim        = kreator.makeMCComponent("WWDoubleTo2L_newsim","/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+
 WWDoubleTo2L_newsim.files   = [basepath_newsim+x for x in os.listdir(basepath_newsim)]
+bp_hwg_pvt = "/eos/cms/store/cmst3/group/dpsww/herwig_nanoV7_2018/all_files/"
+WWDoubleTo2L_herwig_pvt     = kreator.makeMCComponent("WWDoubleTo2L_herwig_pvt","/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
+
+WWDoubleTo2L_herwig_pvt.files = [bp_hwg_pvt+x for x in os.listdir(bp_hwg_pvt)]
+
+
 
 ##ambasepath_nojets = "/eos/cms/store/cmst3/group/dpsww/py8_DPS_WW2L2Nu_noJets/NANO/"
 ##amWWDoubleTo2L_nojets        = kreator.makeMCComponent("WWDoubleTo2L_nojets","/WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.1729)
@@ -142,6 +150,7 @@ WZTo3LNu_ewk,
 WWDoubleTo2L_newsim,
 WWDoubleTo2L,
 WWDoubleTo2L_herwig,
+WWDoubleTo2L_herwig_pvt,
 WWDouble_cp5,
 WZTo3LNu,
 WZTo3LNu_fxfx,
@@ -160,6 +169,7 @@ ZGToLLG_01J_lowmll_amcatnlo
 # xsec from GenXSecAnalyzer
 WWW    = kreator.makeMCComponent("WWW",    "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root", 0.2086, fracNegWeights=0.063)
 WWW_ll = kreator.makeMCComponent("WWW_ll", "/WWW_4F_DiLeptonFilter_TuneCP5_13TeV-amcatnlo-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM", "CMS", ".*root", 0.007201, fracNegWeights=0.063) # xs from genXSecAna
+
 WWZ    = kreator.makeMCComponent("WWZ",    "/WWZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root",  0.1651, fracNegWeights=0.06 ) 
 WWG    = kreator.makeMCComponent("WWG",    "/WWG_TuneCP5_13TeV-amcatnlo-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root", 0.2147, fracNegWeights=0.088)
 WZZ    = kreator.makeMCComponent("WZZ",    "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext1-v1/NANOAODSIM", "CMS", ".*root", 0.05565, fracNegWeights=0.060)

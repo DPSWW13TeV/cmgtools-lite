@@ -392,7 +392,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
             total.GetXaxis().SetTitleOffset(999) ## in outer space
             total.GetYaxis().SetTitleSize(0.058)
             total.GetYaxis().SetTitleOffset(0.75 if doWide else 1.48)
-            total.GetYaxis().SetLabelSize(0.05)
+            total.GetYaxis().SetLabelSize(0.04) ##am
             total.GetYaxis().SetLabelOffset(0.007)
             # then we can overwrite total with background
             numkey = 'signal'
@@ -488,7 +488,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     total.GetXaxis().SetTitleOffset(999) ## in outer space
     total.GetYaxis().SetTitleSize(0.058)
     total.GetYaxis().SetTitleOffset(0.75 if doWide else 1.48)
-    total.GetYaxis().SetLabelSize(0.05)
+    total.GetYaxis().SetLabelSize(0.04) ##am
     total.GetYaxis().SetLabelOffset(0.007)
     binlabels = pspec.getOption("xBinLabels","")
     if binlabels != "" and len(binlabels.split(",")) == unity.GetNbinsX():
@@ -517,14 +517,16 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     leg0.SetTextSize(textSize*0.7/0.3)
     leg0.AddEntry(unityErr0, "stat. unc.", "F")
     if showStatTotLegend: leg0.Draw()
-    leg1 = ROOT.TLegend(0.25 if doWide else 0.45, 0.84, 0.38 if doWide else 0.7, 0.9)
+    ##amleg1 = ROOT.TLegend(0.25 if doWide else 0.45, 0.84, 0.38 if doWide else 0.7, 0.9)
+    leg1 = ROOT.TLegend(0.25 if doWide else 0.45, 0.8, 0.38 if doWide else 0.65, 0.85)
     leg1.SetFillColor(0)
     leg1.SetShadowColor(0)
     leg1.SetLineColor(0)
     leg1.SetTextFont(42)
     leg1.SetTextSize(textSize*0.7/0.3)
-    leg1.AddEntry(unityErr, "total unc.", "F")
-    if showStatTotLegend: leg1.Draw()
+    leg1.AddEntry(unityErr, "Total unc.", "F")
+    ##amif showStatTotLegend: leg1.Draw()
+    leg1.Draw()
     global legendratio0_, legendratio1_
     legendratio0_ = leg0
     legendratio1_ = leg1
@@ -854,7 +856,7 @@ class PlotMaker:
                     blist = binlabels.split(",")
                     for i in range(1,total.GetNbinsX()+1): 
                         total.GetXaxis().SetBinLabel(i,blist[i-1]) 
-                        total.GetYaxis().SetLabelSize(0.05)
+                        total.GetYaxis().SetLabelSize(0.04) ##am
 
                 if not self._options.emptyStack and stack.GetNhists() == 0:
                     print "ERROR: for %s, all histograms are empty\n " % pspec.name
@@ -872,13 +874,13 @@ class PlotMaker:
                 total.GetXaxis().SetTitleSize(0.045)
                 total.GetXaxis().SetTitleOffset(1.1)
                 total.GetXaxis().SetLabelFont(42)
-                total.GetXaxis().SetLabelSize(0.05)
+                total.GetXaxis().SetLabelSize(0.04) ##am
                 total.GetXaxis().SetLabelOffset(0.007)
                 total.GetYaxis().SetTitleFont(42)
                 total.GetYaxis().SetTitleSize(0.045)
                 total.GetYaxis().SetTitleOffset(0.9 if doWide else 2.0)
                 total.GetYaxis().SetLabelFont(42)
-                total.GetYaxis().SetLabelSize(0.05)
+                total.GetYaxis().SetLabelSize(0.04)##am
                 total.GetYaxis().SetLabelOffset(0.007)
                 total.GetYaxis().SetTitle(pspec.getOption('YTitle',ytitle))
                 total.GetXaxis().SetTitle(pspec.getOption('XTitle',outputName))
@@ -1107,13 +1109,15 @@ class PlotMaker:
                                     if "TGraph" in plot.ClassName(): continue
                                     c1.SetRightMargin(0.20)
                                     plot.SetContour(100)
+                                    ##amROOT.gStyle.SetPalette(ROOT.kBird);
                                     ROOT.gStyle.SetPaintTextFormat(pspec.getOption("PaintTextFormat","g"))
                                     plot.SetMarkerSize(pspec.getOption("MarkerSize",1))
                                     if pspec.hasOption('ZMin') and pspec.hasOption('ZMax'):
                                         plot.GetZaxis().SetRangeUser(pspec.getOption('ZMin',1.0), pspec.getOption('ZMax',1.0))
                                     plot.SetMarkerStyle(mca.getProcessOption(p,'MarkerStyle',1,noThrow=True))
                                     plot.SetMarkerColor(mca.getProcessOption(p,'FillColor',ROOT.kBlack,noThrow=True))
-                                    plot.Draw(pspec.getOption("PlotMode","COLZ TEXT45"))
+                                    ##plot.Draw(pspec.getOption("PlotMode","LEGO2Z"))#CONT4Z"))
+                                    plot.Draw(pspec.getOption("PlotMode","COLZ")) #TEXT45"))
                                     c1.Print("%s/%s_%s.%s" % (fdir, outputName, p, ext))
                                 if "data" in pmap and "TGraph" in pmap["data"].ClassName():
                                     pmap["data"].SetMarkerStyle(mca.getProcessOption('data','MarkerStyle',1))
@@ -1122,8 +1126,10 @@ class PlotMaker:
                                         if p not in pmap: continue
                                         plot = pmap[p]
                                         c1.SetRightMargin(0.20)
-                                        plot.SetContour(100)
-                                        plot.Draw(pspec.getOption("PlotMode","COLZ TEXT45"))
+                                        plot.SetContour(100)##am100
+                                        ROOT.gStyle.SetPalette(ROOT.kBird);
+                                        ##amplot.Draw(pspec.getOption("PlotMode","COLZ1")) 
+                                        plot.Draw(pspec.getOption("PlotMode","COLZ TEXT45")) ##am
                                         pmap["data"].Draw("P SAME")
                                         c1.Print("%s/%s_data_%s.%s" % (fdir, outputName, p, ext))
                             else:
@@ -1142,7 +1148,8 @@ def addPlotMakerOptions(parser, addAlsoMCAnalysis=True):
     if addAlsoMCAnalysis: addMCAnalysisOptions(parser)
     parser.add_option("--ss",  "--scale-signal", dest="signalPlotScale", default=1.0, type="float", help="scale the signal in the plots by this amount");
     #parser.add_option("--lspam", dest="lspam",   type="string", default="CMS Simulation", help="Spam text on the right hand side");
-    parser.add_option("--lspam", dest="lspam",   type="string", default="#bf{CMS} #it{Preliminary}", help="Spam text on the right hand side");
+    #parser.add_option("--lspam", dest="lspam",   type="string", default="#bf{CMS} #it{Preliminary}", help="Spam text on the right hand side");
+    parser.add_option("--lspam", dest="lspam",   type="string", default="#bf{CMS} #it{Supplementary}", help="Spam text on the right hand side");
     parser.add_option("--rspam", dest="rspam",   type="string", default="%(lumi) (13 TeV)", help="Spam text on the right hand side");
     parser.add_option("--addspam", dest="addspam", type = "string", default=None, help="Additional spam text on the top left side, in the frame");
     parser.add_option("--topSpamSize", dest="topSpamSize",   type="float", default=1.2, help="Zoom factor for the top spam");
@@ -1161,7 +1168,7 @@ def addPlotMakerOptions(parser, addAlsoMCAnalysis=True):
     parser.add_option("--ratioYLabel", dest="ratioYLabel", type="string", default="Data/pred.", help="Y axis label of the ratio histogram.")
     parser.add_option("--ratioYNDiv", dest="ratioYNDiv", type="int", default=505, help="Y axis divisions in the ratio histogram.")
     parser.add_option("--noErrorBandOnRatio", dest="errorBandOnRatio", action="store_false", default=True, help="Do not show the error band on the reference in the ratio plots")
-    parser.add_option("--noStatTotLegendOnRatio", dest="showStatTotLegend", action="store_false", default=True, help="Do not show the legend in the ratio plots")
+    parser.add_option("--noStatTotLegendOnRatio", dest="showStatTotLegend", action="store_false", default=False, help="Do not show the legend in the ratio plots")
     parser.add_option("--attachRatioPanel", dest="attachRatioPanel", action="store_true", default=False, help="Attach the ratio panel to the main plot, without a white spacer in between")
     parser.add_option("--fitRatio", dest="fitRatio", type="int", default=None, help="Fit the ratio with a polynomial of the specified order")
     parser.add_option("--scaleSigToData", dest="scaleSignalToData", action="store_true", default=False, help="Scale all signal processes so that the overall event yield matches the observed one")

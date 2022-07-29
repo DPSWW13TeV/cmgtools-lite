@@ -3,6 +3,7 @@ fourlep: nLepFO==4
 exclusive: nLepTight == 4
 cleanup: minMllAFAS > 12
 trigger: Trigger_2lss
+#trigger: Trigger_3l
 
 #trigger: Trigger_3l #Trigger_3m || Trigger_mme  || Trigger_mee || Trigger_3e  
 filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}

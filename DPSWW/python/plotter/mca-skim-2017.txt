@@ -1,5 +1,9 @@
-##amWZTo3LNu_ewk : WZTo3LNu_ewk : xsec
+WWDoubleTo2L : WWDoubleTo2L : xsec
+WWDoubleTo2L_herwig : WWDoubleTo2L_herwig : xsec
 WWDoubleTo2L_newsim : WWDoubleTo2L_newsim : xsec
+
+##amWZTo3LNu_fxfx : WZTo3LNu_fxfx : xsec
+##amWZTo3LNu_ewk : WZTo3LNu_ewk : xsec
 ##amGGZZ4m  : GGZZ4m  : xsec
 ##amGGHZZ4L : GGHZZ4L : xsec
 ##amGGZZ4e  : GGZZ4e  : xsec
@@ -16,14 +20,11 @@ WWDoubleTo2L_newsim : WWDoubleTo2L_newsim : xsec
 ##amWWZ : WWZ : xsec
 ##amZZZ : ZZZ : xsec
 ##amWWG : WWG : xsec
-##amWWDoubleTo2L : WWDoubleTo2L : xsec
-##amWWDoubleTo2L_herwig : WWDoubleTo2L_herwig : xsec
 ##amZGToLLG_01J_lowmll_amcatnlo : ZGToLLG_01J_lowmll_amcatnlo : xsec
 ##amZGToLLG_01J_amcatnlo : ZGToLLG_01J_amcatnlo : xsec
 ##amWGToLNuG : WGToLNuG : xsec
 ##amWGToLNuG_01J_amcatnlo : WGToLNuG_01J_amcatnlo : xsec
 ##amWZTo3LNu : WZTo3LNu : xsec
-##amWZTo3LNu_fxfx : WZTo3LNu_fxfx : xsec
 ##amWZTo3LNu_mllmin01 : WZTo3LNu_mllmin01 : xsec
 ##amZZTo4L : ZZTo4L : xsec
 ##amWWTo2L2Nu : WWTo2L2Nu : xsec
@@ -43,7 +44,7 @@ WWDoubleTo2L_newsim : WWDoubleTo2L_newsim : xsec
 ##amTBar_tWch : TBar_tWch : xsec
 ##amT_tWch : T_tWch : xsec
 ##amTTJets_DiLepton : TTJets_DiLepton : xsec
-##amTTJets : TTJets : xsec
+
 ##amdata : SingleMuon_Run2017B_02Apr2020
 ##amdata : SingleMuon_Run2017C_02Apr2020
 ##amdata : SingleMuon_Run2017D_02Apr2020

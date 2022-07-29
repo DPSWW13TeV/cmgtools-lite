@@ -1,7 +1,13 @@
-
 # vim: syntax=sh
-data_flips : + ; IncludeMca="dps-ww/fullRun2/mca-data-forFlips.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="charge-misid.", FillColor=ROOT.kCyan-7, PostFix = "_flips"
+
+
+data_fakes_withConv : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata_withCon.txt", Label="nonprompt+conv", FillColor=ROOT.kPink, LineStyle=2, PostFix = "_fakesConv"
+
 incl_mc    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt"
+
+
+
+
 
 
 WZ_scaleV0 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[0] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=2
@@ -24,14 +30,20 @@ ZZ_scaleV8 : ZZTo4L : xsec*LHEScaleWeight[8] : LepGood1_isMatchRightCharge && Le
 
 DPSpy8+ : WWDoubleTo2L : 0.1729  ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
 WZfxfx 	: WZTo3LNu_fxfx : xsec ; FillColor=ROOT.kAzure+1, Label="WZ"
+
 #incl_mc_unclUp    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/fr-unclUp.txt', SkipMe=True, PostFix = "_unclUp"
 #incl_mc_unclDn    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/fr-unclDn.txt', SkipMe=True, PostFix = "_unclDn"
 
 #incl_mc_jecUp    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/frs-jecs/fr-jesTotalUp.txt', SkipMe=True, PostFix = "_jecUp"
 #incl_mc_jecDn    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/frs-jecs/fr-jesTotalDown.txt',  SkipMe=True, PostFix = "_jecDn"
 
-Convs	   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-convs.txt"
-data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="nonprompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes"
+
+#data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt",  FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="Nonprompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes"
+data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt",  FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="Nonprompt", FillColor=ROOT.kGreen-2, FillStyle=3005, PostFix = "_fakes"
+data_flips : + ; IncludeMca="dps-ww/fullRun2/mca-data-forFlips.txt",  FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="Charge misid.", FillColor=ROOT.kCyan-7, PostFix = "_flips"
+
+data_fakesS : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", AddWeight="0.70", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="Nonprompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakesS"
+data_flipsS : + ; IncludeMca="dps-ww/fullRun2/mca-data-forFlips.txt", AddWeight="1.08", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="Charge misid.", FillColor=ROOT.kCyan-7, PostFix = "_flipsS"
 
 data_fakes_mu90el65 : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="nonprompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes_mu90el65"
 
@@ -53,6 +65,7 @@ data_tl+  : + : (LepGood1_isLepTight && !LepGood2_isLepTight) || (!LepGood1_isLe
 
 
 promptsub  : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", PostFix='_promptsub', AddWeight="-1"
+
 mc_fakes   : + ; IncludeMca="dps-ww/fullRun2/mca-mcfakes.txt" 
 mc_flips   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-mcflips.txt"
 

@@ -15,7 +15,7 @@ class lepScaleFactors(Module):
             #for chan in ['2lss','3l']:
             for year in '2016,2017,2018'.split(','):
                 fl2 = 'ele' if fl=='e' else 'muon'
-                self.looseToTight['%s,%s'%(year,fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/DPSWW/data/leptonSF_v1/looseToTight_%s_%s_2lss.root'%(year,fl), "EGamma_SF2D")
+                self.looseToTight['%s,%s'%(year,fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/DPSWW/data/leptonSF/looseToTight_%s_%s_2lss.root'%(year,fl), "EGamma_SF2D")
                 self.recoToLoose['%s,%s'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/TnP_loose_%s_%s.root'%(fl2, year), "EGamma_SF2D")
                 if fl == 'm': continue
                 #self.recoToLoose['%s,%s,extra'%(year, fl)] = self.loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/TTHAnalysis/data/leptonSF/TnP_loose_%s_%s.root'%(fl2,year), "EGamma_SF2D")
