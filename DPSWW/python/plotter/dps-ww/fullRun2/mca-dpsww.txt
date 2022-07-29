@@ -1,0 +1,111 @@
+# vim: syntax=sh
+
+
+data_fakes_withConv : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata_withCon.txt", Label="nonprompt+conv", FillColor=ROOT.kPink, LineStyle=2, PostFix = "_fakesConv"
+
+incl_mc    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt"
+
+
+
+
+
+
+WZ_scaleV0 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[0] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=2
+WZ_scaleV1 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[1] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=3
+WZ_scaleV3 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[3] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=9
+WZ_scaleV4 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[4] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=5
+WZ_scaleV5 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[5] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=6
+WZ_scaleV7 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[7] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=7
+WZ_scaleV8 : WZTo3LNu_fxfx : xsec*LHEScaleWeight[8] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=8
+
+
+ZZ_scaleV0 : ZZTo4L : xsec*LHEScaleWeight[0] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=2
+ZZ_scaleV1 : ZZTo4L : xsec*LHEScaleWeight[1] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=3
+ZZ_scaleV3 : ZZTo4L : xsec*LHEScaleWeight[3] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=9
+ZZ_scaleV4 : ZZTo4L : xsec*LHEScaleWeight[4] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=5
+ZZ_scaleV5 : ZZTo4L : xsec*LHEScaleWeight[5] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=6
+ZZ_scaleV7 : ZZTo4L : xsec*LHEScaleWeight[7] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=7
+ZZ_scaleV8 : ZZTo4L : xsec*LHEScaleWeight[8] : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, LineStyle=8
+
+
+DPSpy8+ : WWDoubleTo2L : 0.1729  ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
+WZfxfx 	: WZTo3LNu_fxfx : xsec ; FillColor=ROOT.kAzure+1, Label="WZ"
+
+#incl_mc_unclUp    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/fr-unclUp.txt', SkipMe=True, PostFix = "_unclUp"
+#incl_mc_unclDn    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/fr-unclDn.txt', SkipMe=True, PostFix = "_unclDn"
+
+#incl_mc_jecUp    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/frs-jecs/fr-jesTotalUp.txt', SkipMe=True, PostFix = "_jecUp"
+#incl_mc_jecDn    : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRates='dps-ww/fullRun2/uncert_vars/frs-jecs/fr-jesTotalDown.txt',  SkipMe=True, PostFix = "_jecDn"
+
+
+#data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt",  FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="Nonprompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes"
+data_fakes : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt",  FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="Nonprompt", FillColor=ROOT.kGreen-2, FillStyle=3005, PostFix = "_fakes"
+data_flips : + ; IncludeMca="dps-ww/fullRun2/mca-data-forFlips.txt",  FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="Charge misid.", FillColor=ROOT.kCyan-7, PostFix = "_flips"
+
+data_fakesS : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", AddWeight="0.70", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="Nonprompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakesS"
+data_flipsS : + ; IncludeMca="dps-ww/fullRun2/mca-data-forFlips.txt", AddWeight="1.08", FakeRate="dps-ww/fullRun2/flipRate-2lss-frdata.txt", Label="Charge misid.", FillColor=ROOT.kCyan-7, PostFix = "_flipsS"
+
+data_fakes_mu90el65 : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="nonprompt", FillColor=ROOT.kGray, FillStyle=3005, PostFix = "_fakes_mu90el65"
+
+
+##data       : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", AddWeight="(BDTG_DPS_TLCR_raw_withpt<0.4 && BDTG_DPS_WZ_amc_raw_withpt < 0.4)"
+data       : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt"
+##flips_MC : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", FakeRate="dps-ww/fullRun2/flipRate-2lss-frMC.txt", Label="charge-misid.", FillColor=ROOT.kViolet
+
+
+data_fakes_dblMu : DoubleMuon_Run2016B_02Apr2020 + DoubleMuon_Run2016C_02Apr2020 + DoubleMuon_Run2016D_02Apr2020 + DoubleMuon_Run2016E_02Apr2020 + DoubleMuon_Run2016F_02Apr2020 + DoubleMuon_Run2016G_02Apr2020 + DoubleMuon_Run2016H_02Apr2020;      FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_dblMu", FillColor=ROOT.kCyan-7
+data_fakes_dblEg : DoubleEG_Run2016B_02Apr2020 + DoubleEG_Run2016C_02Apr2020 + DoubleEG_Run2016D_02Apr2020 + DoubleEG_Run2016E_02Apr2020 + DoubleEG_Run2016F_02Apr2020 + DoubleEG_Run2016G_02Apr2020 + DoubleEG_Run2016H_02Apr2020;        FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_dblEg", FillColor=ROOT.kGreen-4
+data_fakes_Mu    : SingleMuon_Run2016B_02Apr2020 + SingleMuon_Run2016C_02Apr2020 + SingleMuon_Run2016D_02Apr2020 + SingleMuon_Run2016E_02Apr2020 + SingleMuon_Run2016F_02Apr2020 + SingleMuon_Run2016G_02Apr2020 + SingleMuon_Run2016H_02Apr2020;      FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_Mu",    FillColor=ROOT.kCyan-7, LineStyle=2
+data_fakes_MuEg  : MuonEG_Run2016B_02Apr2020 + MuonEG_Run2016C_02Apr2020 + MuonEG_Run2016D_02Apr2020 + MuonEG_Run2016E_02Apr2020 + MuonEG_Run2016F_02Apr2020 + MuonEG_Run2016G_02Apr2020 + MuonEG_Run2016H_02Apr2020;          FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_MuEg",  FillColor=ROOT.kBlue
+data_fakes_El    : SingleElectron_Run2016B_02Apr2020 + SingleElectron_Run2016C_02Apr2020 + SingleElectron_Run2016D_02Apr2020 + SingleElectron_Run2016E_02Apr2020 + SingleElectron_Run2016F_02Apr2020 + SingleElectron_Run2016G_02Apr2020 + SingleElectron_Run2016H_02Apr2020;  FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", Label="fakes_El",    FillColor=ROOT.kGreen-4, LineStyle=2
+
+##data_tl  : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt", AddWeight="((LepGood1_isLepTight && !LepGood2_isLepTight) || (!LepGood1_isLepTight && LepGood2_isLepTight))", FillColor=ROOT.kCyan-7, PostFix="_tl"
+
+data_tl+  : + : (LepGood1_isLepTight && !LepGood2_isLepTight) || (!LepGood1_isLepTight && LepGood2_isLepTight) ; IncludeMca="dps-ww/fullRun2/mca-data.txt",  FillColor=ROOT.kCyan-7, PostFix="_tl"
+
+
+promptsub  : + ; IncludeMca="dps-ww/fullRun2/mca-mc.txt", FakeRate="dps-ww/fullRun2/fakeRate-2lss-frdata.txt", PostFix='_promptsub', AddWeight="-1"
+
+mc_fakes   : + ; IncludeMca="dps-ww/fullRun2/mca-mcfakes.txt" 
+mc_flips   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-mcflips.txt"
+
+#incl_mc_jec_Up : + ; IncludeMca="mca-mc.txt", AddWeight="btagSF_shape_up_jes/btagSF_shape", FakeRate="uncert_vars/fr-jecUp.txt", SkipMe=True, PostFix="_jec_Up"
+#incl_mc_jec_Dn : + ; IncludeMca="mca-mc.txt", AddWeight="btagSF_shape_down_jes/btagSF_shape", FakeRate="uncert_vars/fr-jecDn.txt", SkipMe=True, PostFix="_jec_Dn"
+
+incl_mc_elLooseUnc_Up : + ; IncludeMca="mca-mc.txt", AddWeight="elLooseUnc_2lss_up", SkipMe=True, PostFix="_elLooseUnc_Up"
+incl_mc_elLooseUnc_Dn : + ; IncludeMca="mca-mc.txt", AddWeight="elLooseUnc_2lss_dn", SkipMe=True, PostFix="_elLooseUnc_Dn"
+
+
+data_fakes_FRe_norm_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt", SkipMe=True, PostFix='_fakes_FRe_norm_Up'
+data_fakes_FRe_norm_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt", SkipMe=True, PostFix='_fakes_FRe_norm_Dn'
+data_fakes_FRe_pt_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt", SkipMe=True, PostFix='_fakes_FRe_pt_Up'
+data_fakes_FRe_pt_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt", SkipMe=True, PostFix='_fakes_FRe_pt_Dn'
+data_fakes_FRe_be_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt", SkipMe=True, PostFix='_fakes_FRe_be_Up'
+data_fakes_FRe_be_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt", SkipMe=True, PostFix='_fakes_FRe_be_Dn'
+
+promptsub_FRe_norm_Up : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-up.txt", SkipMe=True, PostFix='_promptsub_FRe_norm_Up', AddWeight="-1"
+promptsub_FRe_norm_Dn : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-down.txt", SkipMe=True, PostFix='_promptsub_FRe_norm_Dn', AddWeight="-1"
+promptsub_FRe_pt_Up : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt1.txt", SkipMe=True, PostFix='_promptsub_FRe_pt_Up', AddWeight="-1"
+promptsub_FRe_pt_Dn : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-pt2.txt", SkipMe=True, PostFix='_promptsub_FRe_pt_Dn', AddWeight="-1"
+promptsub_FRe_be_Up : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be1.txt", SkipMe=True, PostFix='_promptsub_FRe_be_Up', AddWeight="-1"
+promptsub_FRe_be_Dn : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-e-be2.txt", SkipMe=True, PostFix='_promptsub_FRe_be_Dn', AddWeight="-1"
+
+data_fakes_FRm_norm_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-up.txt", SkipMe=True, PostFix='_fakes_FRm_norm_Up'
+data_fakes_FRm_norm_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-down.txt", SkipMe=True, PostFix='_fakes_FRm_norm_Dn'
+data_fakes_FRm_pt_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt", SkipMe=True, PostFix='_fakes_FRm_pt_Up'
+data_fakes_FRm_pt_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt", SkipMe=True, PostFix='_fakes_FRm_pt_Dn'
+data_fakes_FRm_be_Up : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt", SkipMe=True, PostFix='_fakes_FRm_be_Up'
+data_fakes_FRm_be_Dn : + ; IncludeMca="mca-data.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt", SkipMe=True, PostFix='_fakes_FRm_be_Dn'
+promptsub_FRm_norm_Up : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-up.txt", SkipMe=True, PostFix='_promptsub_FRm_norm_Up', AddWeight="-1"
+promptsub_FRm_norm_Dn : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-down.txt", SkipMe=True, PostFix='_promptsub_FRm_norm_Dn', AddWeight="-1"
+promptsub_FRm_pt_Up : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt1.txt", SkipMe=True, PostFix='_promptsub_FRm_pt_Up', AddWeight="-1"
+promptsub_FRm_pt_Dn : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-pt2.txt", SkipMe=True, PostFix='_promptsub_FRm_pt_Dn', AddWeight="-1"
+promptsub_FRm_be_Up : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be1.txt", SkipMe=True, PostFix='_promptsub_FRm_be_Up', AddWeight="-1"
+promptsub_FRm_be_Dn : + ; IncludeMca="mca-mc.txt", FakeRate="dps-ww/fullRun2/uncert_vars/fakerate-vars/fakeRate-2lss-frdata-m-be2.txt", SkipMe=True, PostFix='_promptsub_FRm_be_Dn', AddWeight="-1"
+
+
+
+fakes_data_pT :  DoubleMuon_Run2017B_02Apr2020_withpT + DoubleMuon_Run2017C_02Apr2020_withpT + DoubleMuon_Run2017D_02Apr2020_withpT  + DoubleMuon_Run2017E_02Apr2020_withpT + DoubleMuon_Run2017F_02Apr2020_withpT  : 1 ; FillColor=ROOT.kBlue, FakeRate='dps-ww/fullRun2/fakeRate-2lss-frdata.txt', Label="non-prompt-pT"
+
+fakes_data :  DoubleMuon_Run2017B_02Apr2020 + DoubleMuon_Run2017C_02Apr2020 + DoubleMuon_Run2017D_02Apr2020  + DoubleMuon_Run2017E_02Apr2020 + DoubleMuon_Run2017F_02Apr2020  : 1 ; FillColor=ROOT.kRed, FakeRate='dps-ww/fullRun2/fakeRate-2lss-frdata.txt', Label="non-prompt"
+

@@ -1,0 +1,65 @@
+alwaystrue: 1
+trilep: nLepFO==3
+exclusive: nLepTight == 3
+cleanup: minMllAFAS > 12
+trigger: Trigger_2lss
+#trigger: Trigger_3l
+
+oneMu: abs(LepGood1_pdgId) == 13  || abs(LepGood2_pdgId) == 13 || abs(LepGood3_pdgId) == 13 ; Disable=True
+filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
+
+pt251515: LepGood1_conePt>25 && LepGood2_conePt>15 && LepGood3_conePt>15
+pt301010: LepGood1_conePt>30 && LepGood2_conePt>10 && LepGood3_conePt>10; Disable=True
+
+jpsiveto : if3( ( (LepGood1_charge + LepGood2_charge) == 0 && (abs(LepGood1_pdgId) == abs(LepGood2_pdgId)) ),(abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-3.1 ) > 0.6), if3( ((LepGood2_charge + LepGood3_charge) == 0 && (abs(LepGood3_pdgId) == abs(LepGood2_pdgId)) ),( abs (mass_2(LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) - 3.1) > 0.6), (abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass) - 3.1) > 0.6)) ) ; Disable=True
+
+mlllt4 : if3( ( (LepGood1_charge + LepGood2_charge) == 0 && (abs(LepGood1_pdgId) == abs(LepGood2_pdgId)) ),(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) < 4), if3( ((LepGood2_charge + LepGood3_charge) == 0 && (abs(LepGood3_pdgId) == abs(LepGood2_pdgId)) ),(mass_2(LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) < 4), (mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass) < 4 ) ) ) ; Disable=True
+
+
+TTT: LepGood1_isLepTight && LepGood2_isLepTight && LepGood3_isLepTight
+
+
+##same_flav: (LepGood_pdgId[iLepFO_Recl[0]]) == abs(LepGood_pdgId[iLepFO_Recl[2]])) || (abs(LepGood_pdgId[iLepFO_Recl[1]]) == abs(LepGood_pdgId[iLepFO_Recl[2]])))
+
+
+
+m3l_wg: mass_3lep(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood3_conePt,LepGood3_eta,LepGood3_phi) < 100 ; Disable=True
+m3l_wz: mass_3lep(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood3_conePt,LepGood3_eta,LepGood3_phi) > 100 
+
+q1: abs(LepGood1_charge + LepGood2_charge + LepGood3_charge) == 1
+
+zsel :  if3( ( (LepGood1_charge + LepGood2_charge) == 0 && (abs(LepGood1_pdgId) == abs(LepGood2_pdgId)) ),(abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2 ) < 10), if3( ((LepGood2_charge + LepGood3_charge) == 0 && (abs(LepGood3_pdgId) == abs(LepGood2_pdgId)) ),( abs (mass_2(LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) - 91.2) < 10), (abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass) - 91.2) < 10)) )
+
+
+cptll	    : if3((abs(LepGood1_pdgId) == 11 || abs(LepGood2_pdgId) == 11),ptll(LepGood1_conePt, LepGood1_eta, LepGood1_phi, LepGood1_mass, LepGood2_conePt, LepGood2_eta, LepGood2_phi, LepGood2_mass) < 30,1) ; Disable=True 
+
+
+
+
+ele conv cuts: (abs(LepGood1_pdgId)!=11 || (LepGood1_convVeto && LepGood1_lostHits==0)) && (abs(LepGood2_pdgId)!=11 || (LepGood2_convVeto && LepGood2_lostHits==0)) && (abs(LepGood3_pdgId)!=11 || (LepGood3_convVeto && LepGood3_lostHits==0))
+
+
+zsel :  if3( ( (LepGood1_charge + LepGood2_charge) == 0 && (abs(LepGood1_pdgId) == abs(LepGood2_pdgId)) ),(abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2 ) < 10), if3( ((LepGood2_charge + LepGood3_charge) == 0 && (abs(LepGood3_pdgId) == abs(LepGood2_pdgId)) ),( abs (mass_2(LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass) - 91.2) < 10), (abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood3_conePt,LepGood3_eta,LepGood3_phi,LepGood3_mass) - 91.2) < 10)) ) ; Disable=True
+
+gstartomm : if3( (LepGood1_pdgId + LepGood2_pdgId == 0), (abs(LepGood1_pdgId)+abs(LepGood2_pdgId) == 26), if3( (LepGood1_pdgId + LepGood3_pdgId == 0), (abs(LepGood1_pdgId)+abs(LepGood3_pdgId) == 26), abs(LepGood3_pdgId)+abs(LepGood2_pdgId) == 26) ) ; Disable=True
+
+
+##vetottHZZ: !(mZ2>0 && m4l<140)
+
+tauveto: nTauTight==0 
+
+met_wz        : MET_pt > 50 
+met_zg        : MET_pt <= 30 ; Disable=True
+
+bVeto: nBJetMedium25 == 0 
+01j : Sum$(JetSel_Recl_pt > 30) < 2
+
+
+#chanels
+eee : (abs(LepGood1_pdgId) + abs(LepGood2_pdgId) + abs(LepGood3_pdgId)) == 33 ; Disable=True
+eem :(abs(LepGood1_pdgId) + abs(LepGood2_pdgId) + abs(LepGood3_pdgId)) == 35 ; Disable=True
+emm : (abs(LepGood1_pdgId) + abs(LepGood2_pdgId) + abs(LepGood3_pdgId)) == 37 ; Disable=True
+emm : (abs(LepGood1_pdgId) + abs(LepGood2_pdgId) + abs(LepGood3_pdgId)) == 37 ; Disable=True
+mmm : (abs(LepGood1_pdgId) + abs(LepGood2_pdgId) + abs(LepGood3_pdgId)) == 39; Disable=True
+
+

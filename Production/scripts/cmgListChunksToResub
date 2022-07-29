@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # define valid options, those with trailing colon have a second argument
-OPTS=`getopt -n 'parse-options' -o hTdt:lpq:z --long help -- "$@"`
+OPTS=`getopt -n 'parse-options' -o hTdt:lLpq:z --long help -- "$@"`
 
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 
@@ -12,6 +12,7 @@ TERSE=/bin/false
 LSFL=false
 F=JSONAnalyzer/JSON.pck
 LOC=false
+LIST=false
 P=false
 Q=""
 Z=false
@@ -24,6 +25,7 @@ while true; do
     -d )            LSFL=true; shift ;;
     -t )            F="$2"; shift 2 ;;
     -l )            LOC=true; shift ;;
+    -L )            LIST=true; TERSE=true; shift ;;
     -p )            P=true; shift ;;
     -q )            Q="-q $2"; shift 2 ;;
     -z )            Z=true; shift ;;
@@ -43,6 +45,7 @@ function help {
     echo "-d  check for a LSFJOB_ dir or non-empty condor*.out"
     echo "-t <filename>  name of ROOT file to check for zombie (option -z)"
     echo "-l  print commands for local running instead of batch submission"
+    echo "-L  just print the name of the chunks (implies also -T)"
     echo "-p  check for null pck files"
     echo "-q  queue to resubmit to (use HTCondor to resubmit to HTCondor instead of LSF)"
     echo "-z  check for zombie ROOT files"
@@ -85,25 +88,44 @@ for D in */; do
     # test if there are empty pickle files
     ${P} && find $D -name '*.pck' -empty -follow | grep -q pck && PCKBAD=true;
     # test if file to be tested for is present and whether bad pickle file flag has been set
-    if test \! -s $D/$F || $PCKBAD; then
+    TOTEST=$D/${F}
+    if [[ "$F" == "NanoAOD" ]]; then TOTEST=$D/$(basename $D).root; fi
+    if [[ "$F" == "NanoAODurl" ]]; then TOTEST=$D/$(basename $D).root.url; fi
+    if test \! -s $TOTEST || $PCKBAD; then
+        LSFDONE=true
+        if ${LSFL}; then
+            if find $D -maxdepth 1 -type d -name 'LSFJOB_*' -or -name 'condor_job*.out' -not -empty | grep -q .; then
+                LSFDONE=true
+            elif find $D -maxdepth 1 -name 'condor_job*.log' -not -empty | xargs cat | \
+                 grep -q "Job removed by SYSTEM_PERIODIC_REMOVE due to wall time exceeded allowed max"; then
+                LSFDONE=true
+            else
+                LSFDONE=false
+            fi;
+        fi
         # check for batch directory if requested or proceed to command printout
-        if [ "${LSFL}" = false ] || find $D -maxdepth 1 -type d -name 'LSFJOB_*'  -or -name 'condor_job*.out' -not -empty | grep -q . || test -f $D/submission_failed ; then
+        if $LSFDONE || test -f $D/submission_failed ; then
             if $LOC; then
                 # print local command
-                echo "cmgRunChunkLocally ${BASE}${D} ";
-	        else
+                echo "cmgRunChunkLocally ${BASE}${D%%/} "; 
+            elif $LIST; then
+                # print local command
+                echo "${BASE}${D%%/}"; 
+            else
                 # print batch command
-		        echo "cmgResubChunk $Q ${BASE}${D} ";
+                echo "cmgResubChunk $Q ${BASE}${D%%/} ";
             fi
         else
-            $TERSE || echo "# Chunk ${BASE}${D} does not have a LSFJOB directory, maybe still running? ";
+            $TERSE || echo "# Chunk ${BASE}${D%%/} does not have a LSFJOB directory or non-empty condor output file, maybe still running? ";
         fi;
     fi;
 done;
 
 if $Z; then
     $TERSE || echo "# Testing for zombies";
-    for ZOMBIE in $(cmgListZombies  "*/$F"); do
+    ZOMBIEPATTERN="*/$F"
+    if [[ "$F" == "NanoAOD" ]]; then ZOMBIEPATTERN="*/*.root"; fi
+    for ZOMBIE in $(cmgListZombies  "$ZOMBIEPATTERN" ); do
         if test -s $ZOMBIE; then # empty files have already been found
             D=${ZOMBIE%%/*};
             if $LOC; then

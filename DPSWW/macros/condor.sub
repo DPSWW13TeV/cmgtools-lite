@@ -1,0 +1,20 @@
+##### BEGIN condor submit file
+Executable = lxbatch_runner.sh
+Error      = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros/logs/err.$(cluster).$(Dataset).$(Step)
+Output     = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros/logs/out.$(cluster).$(Dataset).$(Step)
+Log        = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros/logs/log.$(cluster).$(Dataset).$(Step)
+
+use_x509userproxy = True
+getenv = True
+request_memory = 2000
++MaxRuntime = 4200
+
+
+Arguments = /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL/src/CMGTools/DPSWW/macros /afs/cern.ch/work/a/anmehta/public/dpsww_runII/CMSSW_10_2_16_UL python prepareEventVariablesFriendTree.py -j 0 -N 100000  -t NanoAOD /eos/cms/store/cmst3/group/dpsww//signal_FRonly_reco/2018 /eos/cms/store/cmst3/group/dpsww//signal_FRonly_reco/2018/2_btag_SFs/  -F  Friends /eos/cms/store/cmst3/group/dpsww//signal_FRonly_reco/2018/2_recl_allvars//{cname}_Friend.root  --FM Friends /eos/cms/store/cmst3/group/dpsww//signal_FRonly_reco/2018/0_jmeUnc_v2/{cname}_Friend.root   -I  CMGTools.DPSWW.tools.nanoAOD.ttH_modules scaleFactorSequence_allVars_2018  --compression ZLIB:3  -d $(Dataset) -c $(Step)
+
+Queue 1 Dataset in WWDoubleTo2L
+Queue 2 Dataset in WWDoubleTo2L_herwig
+Queue 2 Dataset in WWDoubleTo2L_herwig_pvt
+Queue 2 Dataset in WWDoubleTo2L_newsim
+Queue 1 Dataset in WWDoubleTo2L_notaus
+Queue 1 Dataset in WWDouble_cp5

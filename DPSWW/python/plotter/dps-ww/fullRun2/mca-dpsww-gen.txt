@@ -1,0 +1,95 @@
+# vim: syntax=sh
+incl_dpsWW : out_nom_10k+out_nom  : 1 : 1  ; FillColor=ROOT.kAzure+1, Label="incl."
+excl_dpsWW : out_var_10k+out_var  : 1 : 1  ; FillColor=ROOT.kRed, Label="excl."
+
+pdf13: pdf13 : 0.1729 : 1  ; FillColor=ROOT.kAzure+1, Label="nom."  
+pdf14: pdf14 : 0.1729 : 1  ; FillColor=ROOT.kAzure+1, LineStyle=3, Label="alpha_s dn"  
+pdf17: pdf17 : 0.1729 : 1  ; FillColor=ROOT.kRed,   Label="nnpdf3.1"  
+pdf18: pdf18 : 0.1729 : 1  ; FillColor=ROOT.kRed, LineStyle=3, Label="nnpdf3.1 alpha_s dn"  
+pdf5:  pdf5  : 0.1729 : 1  ; FillColor=ROOT.kViolet+2, Label="mstw"   
+
+py8_cp5_bareNano+         : WWTo2L2Nu_DoubleScattering_13TeV-pythia8_RunIIAutumn18  : 0.1729 : 1  ; FillColor=ROOT.kAzure+1, Label="cp5", LineStyle=8 ##am,years="2018"
+py8_cuet_2017_bareNano+   : WWTo2L2Nu_DoubleScattering_13TeV-pythia8_RunIIFall17+WWTo2L2Nu_DoubleScattering_13TeV-pythia8_RunIISummer16    : 0.1729 : 1  ; FillColor=ROOT.kAzure+1, Label="cuet", LineStyle=2 ##am,years="2017"
+#py8_cuet_bareNano+        : WWTo2L2Nu_DoubleScattering_13TeV-pythia8_RunIISummer16  : 0.1729 : 1  ; FillColor=ROOT.kAzure+1, Label="cuet-16", LineStyle=8 ##am,years="2016"
+#py8_cp5_2017_bareNano+    : WW_DoubleScattering_13TeV-pythia8_TuneCP5_RunIIFall17   : 0.1729 : 1  ; FillColor=ROOT.kViolet+2, Label="WW-cp5-17",LineStyle=8 ##am,years="2017"
+#py8_cp5_2018_bareNano+    : WW_DoubleScattering_13TeV-pythia8_TuneCP5_RunIIAutumn18 : 0.1729 : 1  ; FillColor=ROOT.kViolet+2, Label="WW-cp5-18",LineStyle=3
+newsim_bareNano           : WWDoubleTo2L_newsim_Aut18nanoaodV7                      : 0.1729 : 1  ; FillColor=ROOT.kGreen+2, Label="dShr",   LineStyle=9 ##am,years="2018"
+
+#hw7_2017_bareNano+       : WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7_RunIIFall17 : 1  ; FillColor=ROOT.kRed+1, Label="hw7-2017", LineStyle=9
+hw7_2018_bareNano+       : WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7_RunIIAutumn18_pvt+WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7_RunIIFall17 : 1  ; FillColor=ROOT.kRed+1, Label="hw7", LineStyle=2
+hwpp_bareNano+           : WWTo2L2Nu_DoubleScattering_13TeV-herwigpp_RunIISummer16 : 1 ; FillColor=ROOT.kRed+1, Label="hwpp", LineStyle=8
+
+py8_notaus_cp5_bareNano+ : WW2L2Nu_notaus_DPS_pythia8_nanoAODv7_2018 : 0.1729 : 1 ; FillColor=ROOT.kAzure+1, Label="DPSWW_notaus", LineStyle=2
+
+py8_all			 : WWTo2L2Nu_DoubleScattering_13TeV-pythia8_RunIIAutumn18+ WWTo2L2Nu_DoubleScattering_13TeV-pythia8_RunIISummer16+WWTo2L2Nu_DoubleScattering_13TeV-pythia8_RunIIFall17 : 0.1729 : 1 ; FillColor=ROOT.kRed, Label="DPSWW_py8"
+hw_all			 :  WWTo2L2Nu_DoubleScattering_13TeV-herwigpp_RunIISummer16+ WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7_RunIIFall17+WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7_RunIIAutumn18_pvt : 0.1729 : 1 ; FillColor=ROOT.kAzure+1, Label="DPSWW_hw"
+ns_all			 : WWDoubleTo2L_newsim_Aut18nanoaodV7 + WWDoubleTo2L_newsim_Summer16nanoaodV7 + WWDoubleTo2L_newsim_Fall17nanoaodV7 : 0.1729 : 1 ; FillColor=ROOT.kGreen+2, Label="dSh"
+
+py8_cuet_ssWW_bareNano+       : WWTo2L2Nu_DoubleScattering_13TeV-pythia8_summer16_nanoV7 : 0.1729 : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1] > 0) ; FillColor=ROOT.kAzure+1, Label="cuet",  LineStyle=8
+py8_cp5_ssWW_bareNano+        : WWTo2L2Nu_DoubleScattering_13TeV-pythia8 : 0.1729 : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1] > 0)  ; FillColor=ROOT.kAzure+1, Label="cp5", LineStyle=9
+#py8_cp5_bareNano+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8 : 0.1729   ; FillColor=ROOT.kAzure+1, Label="cp5", LineStyle=9
+#py8_cuet_bareNano+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8_summer16_nanoV7 : 0.1729  ; FillColor=ROOT.kAzure+1, Label="cuet",  LineStyle=9
+hw7_ssWW_bareNano+ : WWTo2L2Nu_DoubleScattering_TuneCH3_13TeV-herwig7 : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1] > 0)  ; FillColor=ROOT.kRed+1, Label="hw7", LineStyle=9
+hwpp_ssWW_bareNano+ : WWTo2L2Nu_DoubleScattering_13TeV-herwigpp : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1] > 0) ; FillColor=ROOT.kRed+1, Label="hwpp", LineStyle=8
+
+py8_cp5_osWW_bareNano+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8 : 0.1729 : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1] < 0) ; FillColor=ROOT.kAzure+1, Label="cp5_osWW", LineStyle=8
+py8_cuet_osWW_bareNano+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8_summer16_nanoV7 : 0.1729 : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1] < 0) ; FillColor=ROOT.kRed+1, Label="cuet_osWW", LineStyle=8
+
+
+
+DPSWW_cp5+ : WWDouble_cp5 : 0.1729 : 1 ; FillColor=ROOT.kMagenta, Label="DPSWW_cp5" , years="2018" 
+DPSpy8+ : WWDoubleTo2L : 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
+DPShwpp : WWDoubleTo2L_herwig : 0.1729 : 1 ; FillColor=ROOT.kBlue+1, Label="DPSWW-hw++" 
+DPSnewsim : WWDoubleTo2L_newsim  : 0.1729 : 1 ; FillColor=ROOT.kRed+4, Label="DPSWW-newsim"
+
+
+##amDPSWW_cp5+ : WW_DoubleScattering_13TeV-pythia8_TuneCP5 : 0.1729 : 1 ; FillColor=ROOT.kMagenta, Label="DPSWW_cp5" , years="2018" 
+##amDPSpy8+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8: 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label="DPSWW-py8" 
+##amDPShwpp : WWTo2L2Nu_DoubleScattering_herwig : 0.1729 : 1 ; FillColor=ROOT.kBlue+1, Label="DPSWW-hw++" 
+
+
+
+WZ 	      : WZTo3LNu_fxfx : xsec ; FillColor=ROOT.kAzure+1, Label="WZ" #, SkipMe=True
+
+DPSv5 : signal_v5 : 0.1729 : 1 ; FillColor=ROOT.kGreen+1, Label="DPSWW-py8-nanoV5" 
+
+WZ_amc       : WZTo3LNu_amc  : 4.666 : 1 ; FillColor=ROOT.kAzure+1, FillStyle=3005, Label="WZ_amc"
+WZ_pow	      : WZTo3LNu_pow  : 4.42965 : 1 ; FillColor=ROOT.kRed+1,  Label="WZ_pow" #, LineStyle=2,
+WZ_incl       : WZTo3LNu_pow_incl : 58.59*0.601644 : 1 ; FillColor=ROOT.kViolet+2, Label="WZ_pow_mll > 0.1"
+
+Wgstar        : WGstarToLNuEE_012J_madgraph : 3.526    : 1  ; FillColor=ROOT.kRed+1, Label="W\#gamma*", years="2016"
+Wgstar        : WGstarToLNuMuMu_012Jets_madgraph : 2.793  : 1  ; FillColor=ROOT.kRed+1, Label="W\#gamma*",	years="2016"
+WZ_mllLT4     : WZTo3LNu_pow_incl : 58.59*0.601644 : Sum$(GenPart_mass < 4 && GenPart_mass > 0 && GenPart_status == 22)==1 ; FillColor=ROOT.kGreen-3 ,Label="WZ_pow mll < 4"
+
+WG	      : WGToLNuG_01J_amc.root : 178.4 : 1 ; FillColor=ROOT.kGreen-3, Label="W\#gamma"
+
+ZG  	      : ZGToLLG_01J_amc  : 58.83 : 1 ; FillColor=ROOT.kViolet+2, Label="Z\#gamma" 
+ZG_lowmll     : ZGToLLG_01J_lowMLL_amc : 97.21 : 1 ; FillColor=ROOT.kViolet+2, LineStyle=2, Label="Z\#gamma_lowmll" 
+
+
+
+WgStarLNuEE   :  WgStarLNuEE : 3.526  : 1  ; FillColor=ROOT.kPink+1, Label="W\#gamma*\#rightarrow ee" 
+WgStarLNuMuMu   : WgStarLNuMuMu : 2.793  : 1  ; FillColor=ROOT.kTeal+1, Label="W\#gamma*\#rightarrow \#mu\#mu" 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

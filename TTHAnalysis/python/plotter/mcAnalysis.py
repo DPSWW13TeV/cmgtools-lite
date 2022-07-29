@@ -7,8 +7,9 @@ from CMGTools.TTHAnalysis.plotter.histoWithNuisances import *
 import pickle, re, random, time
 from copy import copy, deepcopy
 from collections import defaultdict
+from glob import glob
 
-#_T0 = long(ROOT.gSystem.Now())
+_T0 = long(ROOT.gSystem.Now())
 
 ## These must be defined as standalone functions, to allow runing them in parallel
 def _runYields(args):
@@ -31,6 +32,10 @@ def _runGetEntries(args):
     key,tty = args
     return (key, tty.getEntries())
 
+def _runSumW(args):
+    key, tty, genWName = args
+    return (key, tty.getSumW(genWName))
+
 
 class MCAnalysis:
     def __init__(self,samples,options):
@@ -44,6 +49,7 @@ class MCAnalysis:
         self._projection  = Projections(options.project, options) if options.project != None else None
         self._premap = []
         self._optionsOnlyProcesses = {}
+        self._groupsToNormalize = [] # list of (gen weight name, list of ttys)
         self.init_defaults = {}
         for premap in options.premap:
             to,fro = premap.split("=")
@@ -52,15 +58,64 @@ class MCAnalysis:
             for k in fro.split(","):
                 self._premap.append((re.compile(k.strip()+"$"), to))
         self.variationsFile = UncertaintyFile(options.variationsFile,options) if options.variationsFile else None
-        self.readMca(samples,options)
+        if ',' in options.year:
+            self._subMcas = []
+            rankoffset = 0
+            years, lumis = options.year.split(','), options.lumi.split(',')
+            if len(years) != len(lumis): raise RuntimeError("Mismatch between number of years and of luminosities")
+            for year,lumi in zip(years,lumis):
+                suboptions = deepcopy(options)
+                suboptions.year = year
+                suboptions.lumi = lumi
+                suboptions.path = [ path  + '/' + year for path in options.path ]
+                self._subMcas.append( MCAnalysis(samples, suboptions))
+                for pname,tty in self._subMcas[-1]._allData.iteritems():
+                    if pname in self._allData:
+                        self._allData[pname].extend( tty )
+                    else:
+                        self._allData[pname] = tty
+                for tty in self._subMcas[-1]._data: self._data.append(tty)
+                for tty in self._subMcas[-1]._signals: self._signals.append(tty)
+                for tty in self._subMcas[-1]._backgrounds: self._backgrounds.append(tty)
+                for key, issig in self._subMcas[-1]._isSignal.iteritems():
+                    if key not in self._isSignal: self._isSignal[key] = issig
+                for key, rank in self._subMcas[-1]._rank.iteritems():
+                    self._rank[key] = rank + rankoffset
+                for key, opt in self._subMcas[-1]._optionsOnlyProcesses:
+                    self._optionsOnlyProcesses[key] = opt
+                for proc in self._subMcas[-1]._groupsToNormalize:
+                    self._groupsToNormalize.append(proc)
+            rankoffset = len( self._rank )
+            return
 
-    def readMca(self,samples,options,addExtras={}):
+        if os.path.isfile(samples): 
+            self.readMca(open(samples,'r'),options)
+        elif os.path.isdir(samples) and options.tree == "NanoAOD":
+            options.path = [ samples ]
+            pseudo_samples = []
+            for f in glob(samples+"/*.root"):
+                cname = os.path.basename(f)[:-len(".root")]
+                if re.match(".*Run201\d[A-Z].*", cname):
+                    pseudo_samples.append( "%s_data : %s" % (cname, cname) )
+                else:
+                    pseudo_samples.append( "%s : %s : 1" % (cname, cname) )
+            self.readMca(pseudo_samples, options)
+        if options.checkFriendsFirst:
+            print "Checking for all friend trees..."
+            ok = True
+            for ttys in self._allData.itervalues():
+                for tty in ttys:
+                    if not tty.checkFriendTrees():
+                        ok = False
+            if not ok: raise RuntimeError()
+    def readMca(self,samples,options,addExtras={},selectProcesses=None):
         field_previous = None
         extra_previous = {}
-        for line in open(samples,'r'):
+        for line in samples:
             if re.match("\s*#.*", line): continue
             line = re.sub(r"(?<!\\)#.*","",line)  ## regexp black magic: match a # only if not preceded by a \!
             line = line.replace(r"\#","#")        ## and now we just unescape the remaining #'s
+            if not line.strip(): continue
             extra = {}
             if ";" in line:
                 (line,more) = line.split(";")[:2]
@@ -71,8 +126,11 @@ class MCAnalysis:
                         extra[key] = eval(val)
                     else: extra[setting] = True
             for k,v in addExtras.iteritems():
-                if k in extra: raise RuntimeError, 'You are trying to overwrite an extra option already set'
-                extra[k] = v
+                if k[-1] == ":": extra[k[:-1]] = v # forced overwrite
+                elif k[-1] == "+": extra[k[:-1]] += v # forced append
+                else:
+                    if k in extra: raise RuntimeError, 'You are trying to overwrite an extra option already set'
+                    extra[k] = v
             field = [f.strip() for f in line.split(':')]
             if len(field) == 1 and field[0] == "*":
                 if len(self._allData): raise RuntimeError, "MCA defaults ('*') can be specified only before all processes"
@@ -86,6 +144,7 @@ class MCAnalysis:
                     if k not in extra: extra[k] = v
             if len(field) <= 1: continue
             if "SkipMe" in extra and extra["SkipMe"] == True and not options.allProcesses: continue
+            if "years"  in extra and options.year and options.year not in extra['years'].split(','): continue
             if 'PostFix' in extra:
                 hasPlus = (field[0][-1]=='+')
                 if hasPlus: field[0] = field[0][:-1]
@@ -125,7 +184,11 @@ class MCAnalysis:
                 if 'IncludeMca' not in extra: raise RuntimeError, 'You have declared a component with IncludeMca format, but not included this option'
                 extra_to_pass = copy(extra)
                 del extra_to_pass['IncludeMca']
-                self.readMca(extra['IncludeMca'],options,addExtras=extra_to_pass) # call readMca recursively on included mca files
+                selectProcesses = None
+                if 'Processes' in extra_to_pass: 
+                    selectProcesses = extra_to_pass['Processes']
+                    del extra_to_pass['Processes']
+                self.readMca(open(extra['IncludeMca'],'r'),options,addExtras=extra_to_pass,selectProcesses=selectProcesses) # call readMca recursively on included mca files
                 continue
             # Customize with additional weight if requested
             if 'AddWeight' in extra:
@@ -143,16 +206,22 @@ class MCAnalysis:
             for p0 in options.filesToExclude:
                 for p in p0.split(","):
                     if re.match(p+"$", field[1]): skipMe = True
+            if selectProcesses and not skipMe:
+                # remove a postfix if it was added
+                pnameOriginal = pname[:-len(extra['PostFix'])] if 'PostFix' in extra else pname
+                skipMe = True
+                for p in selectProcesses.split(","):
+                    if re.match(p+"$", pnameOriginal): skipMe = False
             if skipMe: continue
 
             # Load variations if matching this process name
             variations={}
             if self.variationsFile:
                 for var in self.variationsFile.uncertainty():
-                    if var.procmatch().match(pname) and var.binmatch().match(options.binname): 
-                        if var.name in variations:
-                            print "Variation %s overriden for process %s, new process pattern %r, bin %r (old had %r, %r)" % (
-                                    var.name, pname, var.procpattern(), var.binpattern(), variations[var.name].procpattern(), variations[var.name].binpattern())
+                    if var.procmatch().match(pname) and var.binmatch().match(options.binname) and ( var.year() == None or options.year == var.year()) : 
+                        #if var.name in variations:
+                        #    print "Variation %s overriden for process %s, new process pattern %r, bin %r (old had %r, %r)" % (
+                        #            var.name, pname, var.procpattern(), var.binpattern(), variations[var.name].procpattern(), variations[var.name].binpattern())
                         variations[var.name] = var
                 if 'NormSystematic' in extra:
                     del extra['NormSystematic']
@@ -160,13 +229,15 @@ class MCAnalysis:
                        options._warning_NormSystematic_variationsFile = [pname] + getattr(options, '_warning_NormSystematic_variationsFile',[])
                        print "Using both a NormSystematic and a variationFile is not supported. Will disable the NormSystematic for process %s" % pname
             if 'NormSystematic' in extra:
-                variations['_norm'] = Uncertainty('norm_%s'%pname,pname,options.binname,'normSymm',[1+float(extra['NormSystematic'])])
+                variations['_norm'] = Uncertainty('norm_%s'%pname,pname,options.binname,'normSymm',[1+float(extra['NormSystematic'])], options=options)
                 if not hasattr(options, '_deprecation_warning_NormSystematic'):
                     print 'Added normalization uncertainty %s to %s, %s. Please migrate away from using the deprecated NormSystematic option.'%(extra['NormSystematic'],pname,field[1])
                     options._deprecation_warning_NormSystematic = False
 
             cnames = [ x.strip() for x in field[1].split("+") ]
             total_w = 0.; to_norm = False; ttys = [];
+            genWeightName = extra["genWeightName"] if "genWeightName" in extra else "genWeight"
+            genSumWeightName = extra["genSumWeightName"] if "genSumWeightName" in extra else "genEventSumw"
             is_w = -1
             pname0 = pname
             for cname in cnames:
@@ -183,7 +254,7 @@ class MCAnalysis:
 
                 basepath = None
                 for treepath in options.path:
-                    if os.path.exists(treepath+"/"+cname):
+                    if os.path.exists(treepath+"/"+cname) or (treename == "NanoAOD" and os.path.isfile(treepath+"/"+cname+".root")):
                         basepath = treepath
                         break
                 if not basepath:
@@ -191,7 +262,10 @@ class MCAnalysis:
 
                 rootfile = "%s/%s/%s/%s_tree.root" % (basepath, cname, treename, treename)
                 if options.remotePath:
-                    rootfile = "root:%s/%s/%s_tree.root" % (options.remotePath, cname, treename)
+                    if treename == "NanoAOD":
+                        rootfile = "root:%s/%s.root" % (options.remotePath, cname)
+                    else:
+                        rootfile = "root:%s/%s/%s_tree.root" % (options.remotePath, cname, treename)
                 elif os.path.exists(rootfile+".url"): #(not os.path.exists(rootfile)) and :
                     rootfile = open(rootfile+".url","r").readline().strip()
                 elif (not os.path.exists(rootfile)) and os.path.exists("%s/%s/%s/tree.root" % (basepath, cname, treename)):
@@ -202,8 +276,28 @@ class MCAnalysis:
                     rootfile = "%s/%s/%s/tree.root" % (basepath, cname, treename)
                     rootfile = open(rootfile+".url","r").readline().strip()
                 pckfile = basepath+"/%s/skimAnalyzerCount/SkimReport.pck" % cname
+                if treename == "NanoAOD":
+                    objname = "Events"
+                    pckfile = None
+                    rootfile = "%s/%s" % (basepath, cname)
+                    if os.path.isdir(rootfile):
+                        rootfiles = glob("%s/%s/*.root" % (basepath, cname))
+                    elif os.path.isfile(rootfile):
+                        rootfiles = [ rootfile ]
+                    elif os.path.isfile(rootfile+".root"):
+                        rootfiles = [ rootfile+".root" ]
+                    else:
+                        raise RuntimeError("%s -- ERROR: cannot find NanoAOD file for %s process in paths (%s)" % (__name__, cname, repr(options.path)))
+                else:
+                    rootfiles = [ rootfile ]
+                
+                for rootfile in rootfiles:
+                    mycname = cname if len(rootfiles) == 1 else cname + "-" + os.path.basename(rootfile).replace(".root","") 
+                    tty = TreeToYield(rootfile, basepath, options, settings=extra, name=pname, cname=mycname, objname=objname, variation_inputs=variations.values(), nanoAOD=(treename == "NanoAOD")); 
+                    tty.pckfile = pckfile
+                    ttys.append(tty)
 
-                tty = TreeToYield(rootfile, options, settings=extra, name=pname, cname=cname, objname=objname, variation_inputs=variations.values()); ttys.append(tty)
+            for tty in ttys:
                 if signal: 
                     self._signals.append(tty)
                     self._isSignal[pname] = True
@@ -215,13 +309,16 @@ class MCAnalysis:
                 if pname in self._allData: self._allData[pname].append(tty)
                 else                     : self._allData[pname] =     [tty]
                 if "data" not in pname:
-                    pckobj  = pickle.load(open(pckfile,'r'))
-                    counters = dict(pckobj)
+                    if treename != "NanoAOD":
+                        pckobj  = pickle.load(open(tty.pckfile,'r'))
+                        counters = dict(pckobj)
+                    else:
+                        counters = { 'Sum Weights':0.0, 'All Events':0 }  # fake
                     if ('Sum Weights' in counters) and options.weight:
                         if (is_w==0): raise RuntimeError, "Can't put together a weighted and an unweighted component (%s)" % cnames
                         is_w = 1; 
                         total_w += counters['Sum Weights']
-                        scale = "genWeight*(%s)" % field[2]
+                        scale = "(%s)*(%s)" % (genWeightName, field[2])
                     else:
                         if (is_w==1): raise RuntimeError, "Can't put together a weighted and an unweighted component (%s)" % cnames
                         is_w = 0;
@@ -242,20 +339,41 @@ class MCAnalysis:
                 # Adjust free-float and fixed from command line
                 for p0 in options.processesToFloat:
                     for p in p0.split(","):
-                        if re.match(p+"$", pname): tty.setOption('FreeFloat', True)
+                        if re.match(p+"$", pname): 
+                            tty.setOption('FreeFloat', True)
+                            if 'NormSystematic' in extra: 
+                                myvariations = tty.getVariations()
+                                if len(myvariations) != 1 or myvariations[0].name != "norm_"+pname or myvariations[0].unc_type != "normSymm":
+                                    raise RuntimeError("NormSystematic + FreeFloat from commandline => not supported");
+                                tty.clearVariations()
+                                tty.setOption('NormSystematic',0)
                 for p0 in options.processesToFix:
                     for p in p0.split(","):
                         if re.match(p+"$", pname): tty.setOption('FreeFloat', False)
-                for p0, p1 in options.processesToPeg:
-                    for p in p0.split(","):
-                        if re.match(p+"$", pname): tty.setOption('PegNormToProcess', p1)
                 for p0, p1 in options.processesToSetNormSystematic:
                     for p in p0.split(","):
                         if re.match(p+"$", pname): tty.setOption('NormSystematic', float(p1))
+                thepeg = None
+                for p0, p1 in options.processesToPeg:
+                    for p in p0.split(","):
+                        if re.match(p+"$", pname): 
+                            tty.setOption('PegNormToProcess', p1)
+                if tty.getOption('PegNormToProcess', pname) != pname and tty.getOption('NormSystematic',0):
+                    myvariations = tty.getVariations()
+                    if len(myvariations) != 1 or myvariations[0].name != "norm_"+pname or myvariations[0].unc_type != "normSymm":
+                        raise RuntimeError("PegNormToProcess + NormSystematic + non-trivial uncertainties => not supported");
+                    myvariations[0].name = "norm_"+tty.getOption('PegNormToProcess')
+                    print "Overwrite the norm systematic for %s to make it correlated with %s" % (pname, tty.getOption('PegNormToProcess'))
                 if pname not in self._rank: self._rank[pname] = len(self._rank)
             if to_norm: 
-                for tty in ttys: tty.setScaleFactor("%s*%g" % (scale, 1000.0/total_w))
-            for tty in ttys: tty.makeTTYVariations()
+                if treename != "NanoAOD":
+                    if total_w == 0: raise RuntimeError, "Zero total weight for %s" % pname
+                    for tty in ttys: tty.setScaleFactor("%s*%g" % (scale, 1000.0/total_w))
+                else:
+                    if total_w != 0: raise RuntimeError, "Weights from pck file shoulnd't be there for NanoAOD for %s " % pname
+                    self._groupsToNormalize.append( (ttys, genSumWeightName if is_w == 1 else "genEventCount", scale) )
+                    
+            #for tty in ttys: tty.makeTTYVariations()
         #if len(self._signals) == 0: raise RuntimeError, "No signals!"
         #if len(self._backgrounds) == 0: raise RuntimeError, "No backgrounds!"
     def listProcesses(self,allProcs=False):
@@ -298,11 +416,17 @@ class MCAnalysis:
         elif process in self._optionsOnlyProcesses:
             self._optionsOnlyProcesses[process][name] = value
         else: raise RuntimeError, "Can't set option %s for undefined process %s" % (name,process)
+    def getProcessNuisances(self,process):
+        ret = set()
+        for tty in self._allData[process]: 
+            ret.update([v.name for v in tty.getVariations()])
+        return ret
     def getScales(self,process):
         return [ tty.getScaleFactor() for tty in self._allData[process] ] 
     def setScales(self,process,scales):
         for (tty,factor) in zip(self._allData[process],scales): tty.setScaleFactor(factor,mcCorrs=False)
     def getYields(self,cuts,process=None,nodata=False,makeSummary=False,noEntryLine=False):
+        if self._groupsToNormalize: self._normalizeGroups()
         ## first figure out what we want to do
         tasks = []
         for key,ttys in self._allData.iteritems():
@@ -348,6 +472,7 @@ class MCAnalysis:
                 ret['background'] = mergeReports(allBg)
         return ret
     def getYieldsHN(self,cuts,process=None,nodata=False,makeSummary=False,noEntryLine=False,addUncertainties=True):
+        if self._groupsToNormalize: self._normalizeGroups()
         report = []; cut = ""
         cutseq = [ ['entry point','1'] ]
         if noEntryLine: cutseq = []
@@ -388,6 +513,7 @@ class MCAnalysis:
     def getPlotsRaw(self,name,expr,bins,cut,process=None,nodata=False,makeSummary=False,closeTreeAfter=False):
         return self.getPlots(PlotSpec(name,expr,bins,{}),cut,process=process,nodata=nodata,makeSummary=makeSummary,closeTreeAfter=closeTreeAfter)
     def getPlots(self,plotspec,cut,process=None,nodata=False,makeSummary=False,closeTreeAfter=False):
+        if self._groupsToNormalize: self._normalizeGroups()
         allSig = []; allBg = []
         tasks = []
         for key,ttys in self._allData.iteritems():
@@ -406,6 +532,10 @@ class MCAnalysis:
             if k not in mergemap: mergemap[k] = []
             mergemap[k].append(v)
         ret = dict([ (k,mergePlots(plotspec.name+"_"+k,v)) for k,v in mergemap.iteritems() ])
+        
+        ## construct envelope variations if any
+        for p,h in ret.iteritems():
+            h.buildEnvelopes() 
 
         rescales = []
         self.compilePlotScaleMap(self._options.plotscalemap,rescales)
@@ -456,6 +586,7 @@ class MCAnalysis:
                         self._altPostFits[resalias].label = self._options.altExternalFitResultLabels[i]
         if getattr(self, '_postFit', None):
             roofit = roofitizeReport(ret)
+            addMyPOIs(roofit, ret, self)
             for k,h in ret.iteritems():
                 if k != "data" and h.Integral() > 0:
                     h.setPostFitInfo(self._postFit,True)
@@ -554,9 +685,14 @@ class MCAnalysis:
         nfmtX = "  %8.4f" if self._options.weight else nfmtL
 
         if self._options.errors:
-            nfmtS+=u" %7.2f"
-            nfmtX+=u" %7.4f"
-            nfmtL+=u" %7.2f"
+            if self._options.txtfmt in ("md","jupyter"):
+                nfmtS+=u" &plusmn;%.2f"
+                nfmtX+=u" &plusmn;%.4f"
+                nfmtL+=u" &plusmn;%.2f"
+            else:
+                nfmtS+=u" %7.2f"
+                nfmtX+=u" %7.4f"
+                nfmtL+=u" %7.2f"
             fmtlen+=9
         if self._options.fractions:
             nfmtS+=" %7.1f%%"
@@ -564,9 +700,26 @@ class MCAnalysis:
             nfmtL+=" %7.1f%%"
             fmtlen+=8
 
+        fmttable = []; fmthead = [h for (h,r) in table]
+        for i,(cut,dummy) in enumerate(table[0][1]):
+            row = []
+            for name,report in table:
+                (nev,err,nev_run_upon) = report[i][1]
+                den = report[i-1][1][0] if i>0 else 0
+                fraction = nev/float(den) if den > 0 else 1
+                if self._options.nMinusOne: 
+                    fraction = report[-1][1][0]/float(nev) if nev > 0 else 1
+                elif self._options.nMinusOneInverted: 
+                    fraction = float(nev)/report[-1][1][0] if report[-1][1][0] > 0 else 1
+                toPrint = (nev,)
+                if self._options.errors:    toPrint+=(err,)
+                if self._options.fractions: toPrint+=(fraction*100,)
+                if self._options.weight and nev < 1000: row.append( ( nfmtS if nev > 0.2 else nfmtX) % toPrint )
+                else                                  : row.append( nfmtL % toPrint )
+            fmttable.append((cut,row))
         if self._options.txtfmt == "text":
             print "CUT".center(clen),
-            for h,r in table: 
+            for h in fmthead: 
                 if len("   "+h) <= fmtlen:
                     print ("   "+h).center(fmtlen),
                 elif len(h) <= fmtlen:
@@ -575,39 +728,47 @@ class MCAnalysis:
                     print h[:fmtlen],
             print ""
             print "-"*((fmtlen+1)*len(table)+clen)
-            for i,(cut,dummy) in enumerate(table[0][1]):
+            for (cut,row) in fmttable:
                 print cfmt % cut,
-                for name,report in table:
-                    (nev,err,nev_run_upon) = report[i][1]
-                    den = report[i-1][1][0] if i>0 else 0
-                    fraction = nev/float(den) if den > 0 else 1
-                    if self._options.nMinusOne: 
-                        fraction = report[-1][1][0]/float(nev) if nev > 0 else 1
-                    elif self._options.nMinusOneInverted: 
-                        fraction = float(nev)/report[-1][1][0] if report[-1][1][0] > 0 else 1
-                    toPrint = (nev,)
-                    if self._options.errors:    toPrint+=(err,)
-                    if self._options.fractions: toPrint+=(fraction*100,)
-                    if self._options.weight and nev < 1000: print ( nfmtS if nev > 0.2 else nfmtX) % toPrint,
-                    else                                  : print nfmtL % toPrint,
+                print " ".join(row),
                 print ""
-        elif self._options.txtfmt in ("tsv","csv","dsv","ssv"):
-            sep = { 'tsv':"\t", 'csv':",", 'dsv':';', 'ssv':' ' }[self._options.txtfmt]
+        elif self._options.txtfmt in ("tsv","csv","dsv","ssv","md","jupyter"):
+            sep = { 'tsv':"\t", 'csv':",", 'dsv':';', 'ssv':' ', 'md':' | ', 'jupyter':' | ' }[self._options.txtfmt]
+            ret = []
+            procEscape = {}
+            for k,r in table:
+                if sep in k:
+                    if self._options.txtfmt in ("tsv","ssv"):
+                        procEscape[k] = k.replace(sep,"_")
+                    else:
+                        procEscape[k] = '"'+k.replace('"','""')+'"'
+                else:
+                    procEscape[k] = k
             if len(table[0][1]) == 1:
+                headers = [ "process", "yield" ]
+                if self._options.errors: headers.append("uncert")
+                if self._options.fractions: headers.append("eff[%]")
                 for k,r in table:
-                    if sep in k:
-                        if self._options.txtfmt in ("tsv","ssv"):
-                            k = k.replace(sep,"_")
-                        else:
-                            k = '"'+k.replace('"','""')+'"'
                     (nev,err,fraction) = r[0][1][0], r[0][1][1], 1.0
                     toPrint = (nev,)
                     if self._options.errors:    toPrint+=(err,)
                     if self._options.fractions: toPrint+=(fraction*100,)
                     if self._options.weight and nev < 1000: ytxt = ( nfmtS if nev > 0.2 else nfmtX) % toPrint
                     else                                  : ytxt = nfmtL % toPrint
-                    print "%s%s%s" % (k,sep,sep.join(ytxt.split()))
-                print ""
+                    ret.append([procEscape[k]]+ytxt.split())
+                ret.append("\n")
+            else:
+                headers = [ "CUT" ] + fmthead
+                for cut,row in fmttable: ret.append([cut]+row)
+            if self._options.txtfmt in ("md","jupyter"):
+                ret.insert(0,headers)
+                ret.insert(1,(("---:" if i else "---") for i in xrange(len(headers))))
+            ret = "\n".join(sep.join(c) for c in ret) 
+            if self._options.txtfmt == "jupyter":
+                import IPython.display
+                IPython.display.display(IPython.display.Markdown(ret))
+            else:
+                print ret
 
     def __str__(self):
         mystr = ""
@@ -655,6 +816,8 @@ class MCAnalysis:
             if k2 != to and re.match(patt,k2): k2 = to
             if k2 not in mergemap: mergemap[k2]=[]
             mergemap[k2].append(v)
+        for k3 in mergemap:
+            mergemap[k3].sort(key=lambda x: k3 not in x.GetName())
         return dict([ (k,mergePlots(pspec.name+"_"+k,v)) for k,v in mergemap.iteritems() ])
     def stylePlot(self,process,plot,pspec,mayBeMissing=False):
         if process in self._allData:
@@ -666,21 +829,23 @@ class MCAnalysis:
             stylePlot(plot, pspec, lambda key,default : opts[key] if key in opts else default)
         elif not mayBeMissing:
             raise KeyError, "Process %r not found" % process
-    def _processTasks(self,func,tasks,name=None,chunkTasks=200):
-        #timer = ROOT.TStopwatch()
-        #print "Starting job %s with %d tasks, %d threads" % (name,len(tasks),self._options.jobs)
+    def _processTasks(self,func,tasks,name=None,chunkTasks=200,verbose=False):
+        if verbose:
+            timer = ROOT.TStopwatch()
+            print "Starting job %s with %d tasks, %d threads" % (name,len(tasks),self._options.jobs)
         if self._options.jobs == 0: 
             retlist = map(func, tasks)
         else:
-            from multiprocessing import Pool
+            from multiprocessing import Pool, cpu_count
             retlist = []
             for i in xrange(0,len(tasks),chunkTasks):
-                pool = Pool(self._options.jobs)
+                pool = Pool(min(self._options.jobs,cpu_count()))
                 retlist += pool.map(func, tasks[i:(i+chunkTasks)], 1)
                 pool.close()
                 pool.join()
                 del pool
-        #print "Done %s in %s s at %.2f " % (name,timer.RealTime(),0.001*(long(ROOT.gSystem.Now()) - _T0))
+        if verbose:
+            print "Done %s in %s s at %.2f " % (name,timer.RealTime(),0.001*(long(ROOT.gSystem.Now()) - _T0))
         return retlist
     def _splitTasks(self,tasks):
         nsplit = self._options.splitFactor
@@ -712,7 +877,24 @@ class MCAnalysis:
                     newtasks.append( tuple( (list(task)[:-1]) + [fsplit] ) )
         #print "New task list has %d entries; actual split factor %.2f" % (len(newtasks), len(newtasks)/float(len(tasks)))
         return newtasks
-
+    def _normalizeGroups(self):
+        tasks = []
+        for igroup, (ttys, genWName, scale) in enumerate(self._groupsToNormalize):
+            for tty in ttys: tasks.append( (igroup, tty, genWName) )
+        retlist = self._processTasks(_runSumW, tasks, name="sumw")
+        mergemap = defaultdict(float)
+        mergemap_vars = defaultdict( lambda : defaultdict(float) )
+        for (igroup,(w,var_w)) in retlist:
+            mergemap[igroup] += w
+            for var in var_w: 
+                mergemap_vars[igroup][var] += var_w[var]
+        for (igroup,total_w) in mergemap.iteritems():
+            ttys, _, scale = self._groupsToNormalize[igroup]
+            for tty in ttys: 
+                tty.setScaleFactor("%s*%g" % (scale, 1000.0/total_w))
+                for var in mergemap_vars[igroup]:
+                    tty.setVarScaleFactor(var, "%s*%g" % (scale, 1000.0/mergemap_vars[igroup][var]))
+        self._groupsToNormalize = []
 
 def addMCAnalysisOptions(parser,addTreeToYieldOnesToo=True):
     if addTreeToYieldOnesToo: addTreeToYieldOptions(parser)
@@ -736,6 +918,7 @@ def addMCAnalysisOptions(parser,addTreeToYieldOnesToo=True):
     parser.add_option("--scale-process", dest="processesToScale", type="string", default=[], nargs=2, action="append", help="--scale-process X Y make X scale by Y (equivalent to add it in the mca.txt)");
     parser.add_option("--process-norm-syst", dest="processesToSetNormSystematic", type="string", default=[], nargs=2, action="append", help="--process-norm-syst X Y sets the NormSystematic of X to be Y (for plots, etc. Overrides mca.txt)");
     parser.add_option("--AP", "--all-processes", dest="allProcesses", action="store_true", help="Include also processes that are marked with SkipMe=True in the MCA.txt")
+    parser.add_option("--year", dest="year", type="string", default ="" , help="If non void, only processes of that contain that year or none are processed ")
     parser.add_option("--use-cnames",  dest="useCnames", action="store_true", help="Use component names instead of process names (for debugging)")
     parser.add_option("--project", dest="project", type="string", help="Project to a scenario (e.g 14TeV_300fb_scenario2)")
     parser.add_option("--plotgroup", dest="plotmergemap", type="string", default=[], action="append", help="Group plots into one. Syntax is '<newname> := (comma-separated list of regexp)', can specify multiple times. Note it is applied after plotting.")
@@ -744,10 +927,12 @@ def addMCAnalysisOptions(parser,addTreeToYieldOnesToo=True):
     parser.add_option("--fom", "--figure-of-merit", dest="figureOfMerit", type="string", default=[], action="append", help="Add this figure of merit to the output table (S/B, S/sqrB, S/sqrSB)")
     parser.add_option("--binname", dest="binname", type="string", default='default', help="Bin name for uncertainties matching and datacard preparation [default]")
     parser.add_option("--unc", dest="variationsFile", type="string", default=None, help="Uncertainty file to be loaded")
+    parser.add_option("--su", "--select-uncertainty", dest="uncertaintiesToSelect", type="string", default=[], action="append", help="Uncertainties to select (comma-separated list of regexp, can specify multiple ones); if not specified, select all");
     parser.add_option("--xu", "--exclude-uncertainty", dest="uncertaintiesToExclude", type="string", default=[], action="append", help="Uncertainties to exclude (comma-separated list of regexp, can specify multiple ones)");
     parser.add_option("--efr", "--external-fitResult", dest="externalFitResult", type="string", default=None, nargs=2, help="External fitResult")
     parser.add_option("--aefr", "--alt-external-fitResults", dest="altExternalFitResults", type="string", default=[], nargs=2, action="append", help="External fitResult")
     parser.add_option("--aefrl", "--alt-external-fitResult-labels", dest="altExternalFitResultLabels", type="string", default=[], nargs=1, action="append", help="External fitResult")
+    parser.add_option("--check-friends-first", dest="checkFriendsFirst", action="store_true", default=False, help="At start, check that all friends are available, and raise an error otherwise.");
 
 if __name__ == "__main__":
     from optparse import OptionParser
@@ -755,7 +940,7 @@ if __name__ == "__main__":
     addMCAnalysisOptions(parser)
     (options, args) = parser.parse_args()
     if not options.path: options.path = ['./']
-    tty = TreeToYield(args[0],options) if ".root" in args[0] else MCAnalysis(args[0],options)
+    tty = TreeToYield(args[0],options.path[0],options) if ".root" in args[0] else MCAnalysis(args[0],options)
     cf  = CutsFile(args[1],options)
     for cutFile in args[2:]:
         temp = CutsFile(cutFile,options)

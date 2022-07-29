@@ -1,0 +1,19 @@
+alwaystrue: 1
+
+##elmu : (nMuon > 0 &&  nElectron > 0) ; Disable=True
+mumu : Sum$(abs(LepGood_pdgId) == 13) >= 2 ; Disable=True
+elel : Sum$(abs(LepGood_pdgId) == 13) >= 2 ; Disable=True
+elmu : (Sum$(abs(LepGood_pdgId) == 11) > 0 && Sum$(abs(LepGood_pdgId) == 13) > 0 && Sum$(abs(LepGood_pdgId) == 11) < 2) ; Disable=True
+
+ll_noee  : Sum$(abs(LepGood_pdgId) == 11) < 2; Disable=True
+#ll : nLepGood > 0 ; Disable=True
+pt10 : LepGood_pt > 10 ; Disable=True
+
+nVertL : PV_npvsGood < 20 ; Disable =True
+nVertH : PV_npvsGood >= 20 ; Disable =True
+
+Looselep : nLepGood > 1; Disable=True
+#nVertL : PV_npvsGood < 15 ; Disable =True
+#nVertM : PV_npvsGood >= 15  && PV_npvsGood < 20; Disable =True
+#nVertH : PV_npvsGood >=20  && PV_npvsGood < 25 ; Disable =True
+#nVertU : PV_npvsGood >= 25  ; Disable =True

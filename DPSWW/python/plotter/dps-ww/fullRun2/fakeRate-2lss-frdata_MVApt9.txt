@@ -1,0 +1,18 @@
+cut-change: LepGood_isLepTight_Recl\[iLepFO_Recl\[0\]\]: 1
+cut-change: LepGood_isLepTight_Recl\[iLepFO_Recl\[1\]\]: 1
+
+
+weight: fakeRateWeight_2lss_i(LepGood_conePt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],LepGood_pdgId[iLepFO_Recl[0]],LepGood_isLepTight_Recl[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],LepGood_pdgId[iLepFO_Recl[1]],LepGood_isLepTight_Recl[iLepFO_Recl[1]],year-2016)
+
+
+load-histo: FR_mu_i00 : plots/104X/ttH/lepMVA//v1.1/fr-combTest/fr_2016_MVA_mupt090_elpt070.root : FR_mva090_mu_data_comb    : 2016
+load-histo: FR_el_i00 : plots/104X/ttH/lepMVA//v1.1/fr-combTest/fr_2016_MVA_mupt090_elpt070.root : FR_mva070_el_data_comb_NC : 2016
+
+
+#load-histo: FR_mu_i00 : plots/104X/ttH/lepMVA//v1.1/fr-comb/fr_2016_MVA_mupt90_elpt70.root : FR_mva090_mu_data_comb    : 2016
+#load-histo: FR_el_i00 : plots/104X/ttH/lepMVA//v1.1/fr-comb/fr_2016_MVA_mupt90_elpt70.root : FR_mva070_el_data_comb_NC : 2016
+
+load-histo: FR_mu_i01 : $DATA/fakerate/fr_2017_recorrected.root : FR_mva085_mu_data_comb_recorrected    : 2017
+load-histo: FR_el_i01 : $DATA/fakerate/fr_2017_recorrected.root : FR_mva080_el_data_comb_NC_recorrected : 2017
+load-histo: FR_mu_i02 : $DATA/fakerate/fr_2018_recorrected.root : FR_mva085_mu_data_comb_recorrected    : 2018
+load-histo: FR_el_i02 : $DATA/fakerate/fr_2018_recorrected.root : FR_mva080_el_data_comb_NC_recorrected : 2018

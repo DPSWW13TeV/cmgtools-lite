@@ -1,0 +1,15 @@
+drop *
+keep Gen*
+keep MET_pt
+keep MET_phi
+keep PV*
+keep genWeight
+keep luminosityBlock
+keep run
+keep event
+keep xsec
+keep year
+keep puW*
+keep prescaleFromSkim
+
+ 

@@ -24,18 +24,27 @@ class PlotFile:
         self._plots = []
         defaults = {}
         infile = open(fileName,'r')
+        iline = -1
         for line in infile:
+            iline += 1
             if re.match("\s*#.*", line) or len(line.strip())==0: continue
             while line.strip()[-1] == "\\":
                 line = line.strip()[:-1] + infile.next()
+                iline += 1
             extra = {}
             if ";" in line:
+                oldline = line
                 (line,more) = line.split(";")[:2]
                 more = more.replace("\\,",";")
                 for setting in [f.strip().replace(";",",") for f in more.split(',')]:
+                    setting = setting.replace("==","_____")
                     if "=" in setting: 
-                        (key,val) = [f.strip() for f in setting.split("=")]
-                        extra[key] = eval(val)
+                        (key,val) = [f.strip().replace("_____","==") for f in setting.split("=")]
+                        try:
+                            extra[key] = eval(val)
+                        except:
+                            print "ERROR at line %d of %s:\n\t%s\n" % (iline, fileName, oldline)
+                            raise
                     else: extra[setting] = True
             line = re.sub("#.*","",line) 
             field = [f.strip().replace(";",":") for f in line.replace("::",";;").replace("\\:",";").split(':')]
@@ -134,14 +143,14 @@ def doSpam(text,x1,y1,x2,y2,align=12,fill=False,textSize=0.033,_noDelete={}):
 def doTinyCmsPrelim(textLeft="_default_",textRight="_default_",hasExpo=False,textSize=0.033,lumi=None, xoffs=0, options=None, doWide=False):
     if textLeft  == "_default_": textLeft  = options.lspam
     if textRight == "_default_": textRight = options.rspam
-    if lumi      == None       : lumi      = options.lumi
+    if lumi      == None       : lumi      = sum(map(float, options.lumi.split(',')))
     if   lumi > 3.54e+1: lumitext = "%.0f fb^{-1}" % lumi
     elif lumi > 3.54e+0: lumitext = "%.1f fb^{-1}" % lumi
     elif lumi > 3.54e-1: lumitext = "%.2f fb^{-1}" % lumi
     elif lumi > 3.54e-2: lumitext = "%.0f pb^{-1}" % (lumi*1000)
     elif lumi > 3.54e-3: lumitext = "%.1f pb^{-1}" % (lumi*1000)
     else               : lumitext = "%.2f pb^{-1}" % (lumi*1000)
-    lumitext = "%.1f fb^{-1}" % lumi
+    lumitext = "%.1f fb^{-1}" % float(lumi)
     textLeft = textLeft.replace("%(lumi)",lumitext)
     textRight = textRight.replace("%(lumi)",lumitext)
     if textLeft not in ['', None]:
@@ -245,7 +254,7 @@ def doScaleSigNormData(pspec,pmap,mca):
         bkg = pmap["background"]
     else:
         bkg = sig.raw().Clone(); bkg.Reset()
-    sf = (data.Integral()-bkg.Integral())/sig.Integral()
+    sf = (data.Integral()-bkg.Integral())/sig.Integral() if sig.Integral() else 1
     signals = [ "signal" ] + mca.listSignals()
     for p,h in pmap.iteritems():
         if p in signals: h.Scale(sf)
@@ -258,9 +267,9 @@ def doScaleBkgNormData(pspec,pmap,mca,list = []):
     if any([l not in pmap for l in list]): return -1.0
     data = pmap["data"]
     bkg  = pmap["background"]
-    int = sum([pmap[l].Integral() for l in list])
-    rm = bkg.Integral() - int
-    sf = (data.Integral() - rm) / int
+    integral = sum([pmap[l].Integral() for l in list])
+    rm = bkg.Integral() - integral
+    sf = (data.Integral() - rm) / integral if integral else 0
     bkgs = ["background"] + list
     for p,h in pmap.iteritems():
         if p in bkgs: h.Scale(sf)
@@ -304,10 +313,13 @@ def doNormFit(pspec,pmap,mca,saveScales=False):
     nuisanceList = ROOT.RooArgList()
     constraints = ROOT.RooArgList()
     for nuisance in nuisances:
-        x = w.factory("Gaussian::%sPdf(%s[0,-7,7],0,1)" % (nuisance, nuisance));
+        if nuisance.endswith("_lnU"):
+            x = w.factory("%s[0,-1,1]" % nuisance);
+        else:
+            x = w.factory("Gaussian::%sPdf(%s[0,-7,7],0,1)" % (nuisance, nuisance));
+            constraints.add(x)
         w.nodelete.append(x)
         nuisanceList.add(w.var(nuisance))
-        constraints.add(x)
     # roofitize templates 
     roofit = roofitizeReport(pmap, w, xvarName=pspec.name, density=pspec.getOption('Density',False))
     # create the data
@@ -316,19 +328,12 @@ def doNormFit(pspec,pmap,mca,saveScales=False):
     pdfs   = ROOT.RooArgList()
     coeffs = ROOT.RooArgList()
     procNormMap = {}
-    pois = set()
+    pois = addMyPOIs(roofit, pmap, mca)
     for p in mca.listBackgrounds(allProcs=True) + mca.listSignals(allProcs=True):
         if p not in pmap: continue
         if pmap[p].Integral() <= 0: continue
         (pdf,norm) = pmap[p].rooFitPdfAndNorm()
-        if mca.getProcessOption(p,'FreeFloat',False):
-            normTermName = mca.getProcessOption(p,'PegNormToProcess',p)
-            print "%s scale as %s" % (p, normTermName)
-            poi = w.factory('r_%s[1,%g,%g]' % (p, pmap[p].Integral(), normTermName, 0.0, 5)); w.nodelete.append(poi)
-            pois.add('r_%s' % normTermName)
-            norm.addOtherFactor(poi)
-            procNormMap[p] = norm.getVal()
-        elif pmap[p].hasVariations():
+        if mca.getProcessOption(p,'FreeFloat',False) or pmap[p].hasVariations():
             procNormMap[p] = norm.getVal()
         pdfs.add(pdf)
         coeffs.add(norm)
@@ -372,7 +377,7 @@ def doNormFit(pspec,pmap,mca,saveScales=False):
 def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOnRef=True,ratioNums="signal",ratioDen="background",ylabel="Data/pred.",yndiv=505,doWide=False,showStatTotLegend=False,textSize=0.035):
     numkeys = [ "data" ]
     if "data" not in pmap: 
-        if len(pmap) >= 4 and ratioDen in pmap:
+        if len(pmap) >= 2 and ratioDen in pmap:
             numkeys = []
             for p in pmap.iterkeys():
                 for s in ratioNums.split(","):
@@ -597,7 +602,6 @@ def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-2,cutoffSignals=True,
             (x1,y1,x2,y2) = (.2, .16 + height, .2+legWidth, .15)
 
         leg = ROOT.TLegend(x1,y1,x2,y2)
-        if header: leg.SetHeader(header.replace("\#", "#"))
         leg.SetFillColor(0)
         leg.SetShadowColor(0)
         if header: leg.SetHeader(header.replace("\#", "#"))       
@@ -745,9 +749,13 @@ class PlotMaker:
                 if getattr(mca,'_altPostFits',None):
                     roofit = roofitizeReport(pmap)
                     if self._options.processesToPeg == []:
-                        addDefaultPOI(roofit,pmap,mca,"r")
+                        hasR = False
+                        for pfs in mca._altPostFits.itervalues():
+                            if pfs.fitResult.floatParsFinal().find("r"):
+                                hasR = True
+                        if hasR: addExternalDefaultPOI(roofit,pmap,mca,"r")
                     else:
-                        addPhysicsModelPOIs(roofit,pmap,mca,self._options.processesToPeg)
+                        addExternalPhysicsModelPOIs(roofit,pmap,mca,self._options.processesToPeg)
                     for key,pfs in mca._altPostFits.iteritems():
                         for k,h in pmap.iteritems():
                             if k != "data":
@@ -770,18 +778,18 @@ class PlotMaker:
                         postfix = "_"+(pspec.getOption("SlicesY") % (h0.GetYaxis().GetBinLowEdge(iy), h0.GetYaxis().GetBinUpEdge(iy)))
                         bins_slice = pspec.bins.split("*",1) if "[" == pspec.bins[0] else ",".join(pspec.bins.split(",")[:3])
                         pspec_slice = PlotSpec(pspec.name+postfix, pspec.expr, bins_slice, pspec.opts)
-                        pmap_slice = dict( (k,HistoWithNuisances(h.ProjectionX(h.GetName()+postfix,iy,iy))) for (k,h) in pmap.iteritems() )
+                        pmap_slice = dict( (k,h.projectionX(h.GetName()+postfix,iy,iy)) for (k,h) in pmap.iteritems() )
                         allprocs = mca.listSignals(True)+mca.listBackgrounds(True)+["data"]
                         for k,h in pmap_slice.iteritems():
                             if k in allprocs:
-                                print "%s goes in style for %s" % (k, h.GetName())
                                 stylePlot(h,pspec_slice, lambda opt, deft: mca.getProcessOption(k, opt, deft))
                         self.printOnePlot(mca,pspec_slice,pmap_slice,
                                           xblind=xblind, makeCanvas=makeCanvas, outputDir=dir,
                                           printDir=self._options.printDir+(("/"+subname) if subname else ""))
             if elist: mca.clearCut()
 
-    def printOnePlot(self,mca,pspec,pmap,mytotal=None,makeCanvas=True,outputDir=None,printDir=None,xblind=[9e99,-9e99],extraProcesses=[],plotmode="auto",outputName=None):
+    def printOnePlot(self,mca,pspec,pmapIn,mytotal=None,makeCanvas=True,outputDir=None,printDir=None,xblind=[9e99,-9e99],extraProcesses=[],plotmode="auto",outputName=None):
+                pmap = dict( (k, h if isinstance(h,HistoWithNuisances) else HistoWithNuisances(h)) for (k,h) in pmapIn.iteritems() )
                 options = self._options
                 if printDir == None: printDir=self._options.printDir
                 if outputDir == None: outputDir = self._dir
@@ -947,6 +955,8 @@ class PlotMaker:
                         doStatTests(total, pmap['data'], options.doStatTests, legendCorner=pspec.getOption('Legend','TR'))
                 if pspec.hasOption('YMin') and pspec.hasOption('YMax'):
                     total.GetYaxis().SetRangeUser(pspec.getOption('YMin',1.0), pspec.getOption('YMax',1.0))
+                elif pspec.hasOption('YMin'):
+                    total.SetMinimum(pspec.getOption('YMin'))
                 if pspec.hasOption('ZMin') and pspec.hasOption('ZMax'):
                     total.GetZaxis().SetRangeUser(pspec.getOption('ZMin',1.0), pspec.getOption('ZMax',1.0))
                 #if options.yrange: 
@@ -1062,7 +1072,7 @@ class PlotMaker:
                                 for line in loglines: dump.write("%s\n" % line)
                                 dump.write("\n")
                             dump.close()
-                        if ext == "txt":
+                        if ext == "txt" and "TProfile" not in total.ClassName():
                             dump = open("%s/%s.%s" % (fdir, outputName, ext), "w")
                             maxlen = max([len(mca.getProcessOption(p,'Label',p)) for p in mca.listSignals(allProcs=True) + mca.listBackgrounds(allProcs=True)]+[10])
                             fmt    = "%%-%ds %%9.2f +/- %%9.2f (stat)" % (maxlen+1)
@@ -1076,7 +1086,7 @@ class PlotMaker:
                                 syst = plot.integralSystError(symmetrize=True)
                                 if p == "signal": dump.write(("-"*(maxlen+45))+"\n");
                                 dump.write(fmt % (_unTLatex(mca.getProcessOption(p,'Label',p) if p not in ["signal", "background","total"] else p.upper()), norm, stat))
-                                if syst: dump.write(" +/- %9.2f (syst)"  % syst)
+                                if syst: dump.write(" +/- %9.2f (syst) = +/- %9.2f (all)"  % (syst, math.hypot(stat,syst)))
                                 dump.write("\n")
                             if 'data' in pmap: 
                                 dump.write(("-"*(maxlen+45))+"\n");
@@ -1086,7 +1096,7 @@ class PlotMaker:
                                 for line in loglines: dump.write("%s\n" % line)
                                 dump.write("\n")
                             dump.close()
-                        else:
+                        if ext != "txt":
                             savErrorLevel = ROOT.gErrorIgnoreLevel; ROOT.gErrorIgnoreLevel = ROOT.kWarning;
                             if "TH2" in total.ClassName() or "TProfile2D" in total.ClassName():
                                 pmap["total"] = total
@@ -1183,7 +1193,7 @@ def addPlotMakerOptions(parser, addAlsoMCAnalysis=True):
     parser.add_option("--legendHeader", dest="legendHeader", type="string", default=None, help="Put a header to the legend")
     parser.add_option("--legendColumns", dest="legendColumns", type="int", default=1, help="Number of columns in the legend")
     parser.add_option("--ratioOffset", dest="ratioOffset", type="float", default=0.0, help="Put an offset between ratio and main pad")
-    parser.add_option("--noCms", dest="doOfficialCMS", action="store_false", default=True, help="Use official tool to write CMS spam")
+    parser.add_option("--noCms", dest="doOfficialCMS", action="store_false", default=False, help="Use official tool to write CMS spam")
     parser.add_option("--cmsprel", dest="cmsprel", type="string", default="Preliminary", help="Additional text (Simulation, Preliminary, Internal)")
     parser.add_option("--cmssqrtS", dest="cmssqrtS", type="string", default="13 TeV", help="Sqrt of s to be written in the official CMS text.")
     parser.add_option("--printBin", dest="printBinning", type="string", default=None, help="Write 'Events/xx' instead of 'Events' on the y axis")
@@ -1198,8 +1208,11 @@ if __name__ == "__main__":
     cuts = CutsFile(args[1],options)
     plots = PlotFile(args[2],options)
     outname  = options.out if options.out else (args[2].replace(".txt","")+".root")
-    if (not options.out) and options.printDir:
-        outname = options.printDir + "/"+os.path.basename(args[2].replace(".txt","")+".root")
+    if options.printDir:
+        if not options.out:
+            outname = options.printDir + "/"+os.path.basename(args[2].replace(".txt","")+".root")
+        else:
+            outname = outname.replace("{O}",options.printDir)
     if os.path.dirname(outname) and not os.path.exists(os.path.dirname(outname)):
         os.system("mkdir -p "+os.path.dirname(outname))
         if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/g/gpetrucc/php/index.php "+os.path.dirname(outname))

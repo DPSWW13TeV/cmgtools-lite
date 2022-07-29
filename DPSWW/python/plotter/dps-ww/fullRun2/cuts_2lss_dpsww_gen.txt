@@ -1,0 +1,24 @@
+alwaystrue: 1
+
+noTaus      : Sum$(abs(Genleps_sel_pdgId) == 15) == 0 
+plusplus    : (Genleps_sel_pdgId[0]) < 0; Disable=True
+minusminus  : (Genleps_sel_pdgId[0]) >  0; Disable=True
+ssWW        : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1]) > 0 
+osWW        : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1]) < 0 ; Disable=True
+2l          : nGenleps_sel == 2 
+pt2520      : Genleps_sel_pt[0] > 25 && Genleps_sel_pt[1] > 20 
+etacutl1     : abs(Genleps_sel_eta[0]) < if3(abs(Genleps_sel_pdgId[0])==13,2.4,2.5) 
+etacutl2     : abs(Genleps_sel_eta[1]) < if3(abs(Genleps_sel_pdgId[1])==13,2.4,2.5) 
+etael1      : (abs(Genleps_sel_pdgId[0]) == 13 || (abs(Genleps_sel_eta[0]) < 1.442 || abs(Genleps_sel_eta[0]) > 1.556 && abs(Genleps_sel_pdgId[0])==11)) 
+etael2      : (abs(Genleps_sel_pdgId[1]) == 13 || (abs(Genleps_sel_eta[1]) < 1.442 || abs(Genleps_sel_eta[1]) > 1.556 && abs(Genleps_sel_pdgId[1])==11)) 
+
+ 
+01jets       : Sum$(GenJet_pt > 30 && abs(GenJet_eta) < 2.5) < 2 ;  Disable=True
+
+
+elmu   :  abs(Genleps_sel_pdgId[0]*Genleps_sel_pdgId[1]) == 143  ; Disable=True
+mumu   :  abs(Genleps_sel_pdgId[0]*Genleps_sel_pdgId[1]) == 169      ; Disable=True
+ll_noee : abs(Genleps_sel_pdgId[0]*Genleps_sel_pdgId[1]) == 143 || abs(Genleps_sel_pdgId[0]*Genleps_sel_pdgId[1]) == 169 ; Disable=True
+
+cptll	    : if3((abs(Genleps_sel_pdgId[0]) == 11 || abs(Genleps_sel_pdgId[1]) == 11),ptll(Genleps_sel_pt[0], Genleps_sel_eta[0], Genleps_sel_phi[0], Genleps_sel_mass[0], Genleps_sel_pt[1], Genleps_sel_eta[1], Genleps_sel_phi[1], Genleps_sel_mass[1]) > 20,1)
+mll         : mass_2(Genleps_sel_pt[0],Genleps_sel_eta[0],Genleps_sel_phi[0],Genleps_sel_mass[0],Genleps_sel_pt[1],Genleps_sel_eta[1],Genleps_sel_phi[1],Genleps_sel_mass[1]) > 12

@@ -1,0 +1,19 @@
+alwaystrue: 1
+ssWW_gen        : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1]) > 0 ; Disable=True
+2l           : nGenDressedLepton == 2
+SameSign_dressed     : GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1] > 0
+25/20        : GenDressedLepton_pt[0] > 25 && GenDressedLepton_pt[1] > 20
+
+etacutl1     : abs(GenDressedLepton_eta[0]) < if3(abs(GenDressedLepton_pdgId[0])==13,2.4,2.5)
+etacutl2     : abs(GenDressedLepton_eta[1]) < if3(abs(GenDressedLepton_pdgId[1])==13,2.4,2.5)
+etael1      : (abs(GenDressedLepton_pdgId[0]) == 13 || (abs(GenDressedLepton_eta[0]) < 1.442 || abs(GenDressedLepton_eta[0]) > 1.556 && abs(GenDressedLepton_pdgId[0])==11))
+etael2      : (abs(GenDressedLepton_pdgId[1]) == 13 || (abs(GenDressedLepton_eta[1]) < 1.442 || abs(GenDressedLepton_eta[1]) > 1.556 && abs(GenDressedLepton_pdgId[1])==11))
+
+ll_noee      : (abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 143 || abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 169) ; Disable=True
+noTaus       : GenDressedLepton_hasTauAnc[0] == 0 && GenDressedLepton_hasTauAnc[1] == 0  #; Disable=True
+plusplus     : GenDressedLepton_pdgId[0] < 0 ; Disable=True
+minusminus   : GenDressedLepton_pdgId[0] > 0 ; Disable=True
+
+
+cptll	    : if3((abs(GenDressedLepton_pdgId[0]) == 11 || abs(GenDressedLepton_pdgId[1]) == 11),ptll(GenDressedLepton_pt[0], GenDressedLepton_eta[0], GenDressedLepton_phi[0], GenDressedLepton_mass[0], GenDressedLepton_pt[1], GenDressedLepton_eta[1], GenDressedLepton_phi[1], GenDressedLepton_mass[1]) > 20,1)
+mll         : mass_2(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenDressedLepton_mass[0],GenDressedLepton_pt[1],GenDressedLepton_eta[1],GenDressedLepton_phi[1],GenDressedLepton_mass[1]) > 12

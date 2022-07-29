@@ -1,0 +1,33 @@
+alwaystrue: 1
+fourlep: nLepFO==4
+exclusive: nLepTight == 4
+cleanup: minMllAFAS > 12
+trigger: Trigger_2lss
+#trigger: Trigger_3l
+
+#trigger: Trigger_3l #Trigger_3m || Trigger_mme  || Trigger_mee || Trigger_3e  
+filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
+
+pt25151510: LepGood1_conePt>25 && LepGood2_conePt>15 && LepGood3_conePt>15 && LepGood4_conePt>10
+
+TTTT: LepGood1_isLepTight && LepGood2_isLepTight && LepGood3_isLepTight && LepGood4_isLepTight
+
+
+ele conv cuts: (abs(LepGood1_pdgId)!=11 || (LepGood1_convVeto && LepGood1_lostHits==0 && LepGood1_tightCharge>=2)) && (abs(LepGood2_pdgId)!=11 || (LepGood2_convVeto && LepGood2_lostHits==0 && LepGood2_tightCharge>=2)) && (abs(LepGood3_pdgId)!=11 || (LepGood3_convVeto && LepGood3_lostHits==0 && LepGood3_tightCharge>=2 )) && (abs(LepGood4_pdgId)!=11 || (LepGood4_convVeto && LepGood4_lostHits==0 && LepGood4_tightCharge>=2))
+
+TightChargeMuon: (abs(LepGood1_pdgId)!=13 || LepGood1_tightCharge>=1) && (abs(LepGood2_pdgId)!=13 || LepGood2_tightCharge>=1)
+TightChargeMuon: (abs(LepGood3_pdgId)!=13 || LepGood3_tightCharge>=1) && (abs(LepGood4_pdgId)!=13 || LepGood4_tightCharge>=1)
+
+q1: (LepGood1_charge + LepGood2_charge + LepGood3_charge + LepGood4_charge) == 0
+
+vetottHZZ: !(mZ2>0 && m4l<140)
+met : MET_pt < 40 ; Disable=True
+tauveto: nTauFO==0
+m3l: mass_3lep(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood3_conePt,LepGood3_eta,LepGood3_phi) > 100
+#jetveto: nJet25_Recl < 2
+bVeto: nBJetMedium25 == 0
+mz1: abs(mZ1 - 91.2) < 10
+mz2: abs(mZ2 - 91.2) < 10
+
+onlyMuons: abs(LepGood1_pdgId) == 13 && abs(LepGood2_pdgId) == 13 && abs(LepGood3_pdgId) == 13 && abs(LepGood4_pdgId) == 13 ; Disable=True
+onlyEl: abs(LepGood1_pdgId) == 11 && abs(LepGood2_pdgId) == 11 && abs(LepGood3_pdgId) == 11 && abs(LepGood4_pdgId) == 11 ; Disable=True

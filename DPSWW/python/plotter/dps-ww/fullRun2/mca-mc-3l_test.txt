@@ -1,0 +1,28 @@
+data   : + ; IncludeMca="dps-ww/fullRun2/mca-data.txt"
+
+Convs  : WGToLNuG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma"
+Convs  : ZGToLLG_01J_lowmll_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W/Z\#gamma" 
+
+Rares : TTZ_LO : xsec : 1 ; FillColor=ROOT.kPink+6, Label="Rares"
+Rares : TTW_LO : xsec : 1 ; FillColor=ROOT.kPink+6 , Label="Rares"
+Rares : WpWpJJ : xsec*0.05454/0.03711 : 1 ; FillColor=ROOT.kPink+6 , Label="Rares"
+VVV : WWW    : xsec : 1 ; FillColor=ROOT.kViolet-6, Label="VVV"
+VVV : WWZ    : xsec : 1 ; FillColor=ROOT.kViolet-6, Label="VVV"
+WZ_ewk : WZTo3LNu_ewk  : xsec*0.1 :  1 ; FillColor=ROOT.kViolet-6, Label="WZ_ewk"
+
+ZZ        : ZZTo4L : xsec : 1 ;  FillColor=ROOT.kOrange-3 , Label="ZZ" 
+Wgstar     : WZTo3LNu_mllmin01 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(GenPart_mass < 4. && LepGood_genPartFlav == 1) == 1 ; FillColor=ROOT.kViolet+7, Label="W\#gamma*"
+WZ_alt	   : WZTo3LNu : xsec : 1 ;  FillColor=ROOT.kAzure+1, Label="WZ_alt" 
+WZ         : WZTo3LNu_fxfx : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="WZ" #, SkipMe=True
+WZ_incl    : WZTo3LNu_mllmin01 : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="WZ/\#gamma*"
+
+
+#ZG  : ZGToLLG_01J_lowmll_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kCyan-3, Label="ZG"
+
+#WG  : WGToLNuG_01J_amcatnlo : xsec : ((LepGood1_mcMatchId==0 && LepGood1_mcPromptGamma==1) || (LepGood2_mcMatchId==0 && LepGood2_mcPromptGamma==1)) ; FillColor=ROOT.kGreen-3, Label="W\#gamma"
+
+
+
+
+
+#LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && LepGood3_isMatchRightCharge

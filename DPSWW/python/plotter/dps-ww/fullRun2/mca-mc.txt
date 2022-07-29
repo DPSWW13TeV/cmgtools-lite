@@ -1,0 +1,149 @@
+DPSWW+ : WWDoubleTo2L : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed+1, Label="DPS W^{\#pm}W^{\#pm}"
+DPSWWp+ : WWDoubleTo2L : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed, Label="DPSWWpp"
+DPSWWn+ : WWDoubleTo2L : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kRed, Label="DPSWWmm"
+
+DPSWW_alt : WWDoubleTo2L_herwigpp : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2016" 
+DPSWW_alt : WWDoubleTo2L_herwig : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2017" 
+DPSWW_alt : WWDoubleTo2L_herwig_pvt : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2018" 
+
+
+DPSWW_hw+ : WWDoubleTo2L_herwigpp : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2016" 
+DPSWW_hw+ : WWDoubleTo2L_herwig : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2017" 
+DPSWW_hw+ : WWDoubleTo2L_herwig_pvt : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2018" 
+
+
+DPSWWp_hw+ : WWDoubleTo2L_herwigpp : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2016" 
+DPSWWp_hw+ : WWDoubleTo2L_herwig : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2017" 
+DPSWWp_hw+ : WWDoubleTo2L_herwig_pvt : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2018" 
+
+DPSWWn_hw+ : WWDoubleTo2L_herwigpp : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2016" 
+DPSWWn_hw+ : WWDoubleTo2L_herwig : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2017" 
+DPSWWn_hw+ : WWDoubleTo2L_herwig_pvt : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kBlue, Label="DPSWW_hw" , years="2018" 
+
+
+DPSWW_cp5+ : WWDouble_cp5 : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, Label="DPSWW_cp5" , years="2018" 
+
+DPSWW_newsim+ : WWDoubleTo2L_newsim : 0.1729*4/9 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, Label="DPSWW_dSh" 
+DPSWWp_newsim+ : WWDoubleTo2L_newsim : 0.1729*4/9 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, Label="DPSWW_dSh" 
+DPSWWn_newsim+ : WWDoubleTo2L_newsim : 0.1729*4/9 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen, Label="DPSWW_dSh" 
+
+
+DPSWW_tau : WWDoubleTo2L : 0.1729*5/9 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(abs(Genleps_sel_pdgId) == 15) > 0 ; FillColor=ROOT.kYellow-7, Label="DPS_tau"
+DPSWW_tau_alt : WWDoubleTo2L_herwigpp : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(abs(Genleps_sel_pdgId) == 15) > 0 ; FillColor=ROOT.kBlue, Label="DPSWW_herwig_tau" , years="2016"
+DPSWW_tau_alt : WWDoubleTo2L_herwig : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(abs(Genleps_sel_pdgId) == 15) > 0 ; FillColor=ROOT.kBlue, Label="DPSWW_herwig_tau" , years="2017" 
+DPSWW_tau_alt : WWDoubleTo2L_herwig_pvt : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(abs(Genleps_sel_pdgId) == 15) > 0 ; FillColor=ROOT.kBlue, Label="DPSWW_herwig_tau" , years="2018" 
+
+
+
+
+DPSWW_notau : WWDoubleTo2L : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(abs(Genleps_sel_pdgId) == 15) == 0 ; FillColor=ROOT.kMagenta-9, Label="DPS_notau"
+DPSWW_notau_alt : WWDoubleTo2L_herwigpp : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(abs(Genleps_sel_pdgId) == 15) == 0 ; FillColor=ROOT.kBlue, Label="DPSWW_herwig_notau" , years="2016" #, SkipMe=True
+DPSWW_notau_alt : WWDoubleTo2L_herwig : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(abs(Genleps_sel_pdgId) == 15) == 0 ; FillColor=ROOT.kBlue, Label="DPSWW_herwig_notau" , years="2017" #, SkipMe=True
+DPSWW_notau_alt : WWDoubleTo2L_herwig_pvt : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(abs(Genleps_sel_pdgId) == 15) == 0 ; FillColor=ROOT.kBlue, Label="DPSWW_herwig_notau" , years="2018" #, SkipMe=True
+
+
+
+
+
+
+
+
+DPSWW_gen+ : WWDoubleTo2L : 0.1729 : 1 ; FillColor=ROOT.kRed, Label="py"
+DPSWW_gen_newsim+ : WWDoubleTo2L_newsim : 0.1729 : 1 ; FillColor=ROOT.kGreen, Label="dSh" 
+DPSWW_gen_hw : WWDoubleTo2L_herwigpp : 0.1729 : 1 ; FillColor=ROOT.kBlue, Label="hw" , years="2016" #, SkipMe=True
+DPSWW_gen_hw : WWDoubleTo2L_herwig : 0.1729 : 1 ; FillColor=ROOT.kBlue, Label="hw" , years="2017" #, SkipMe=True
+DPSWW_gen_hw : WWDoubleTo2L_herwig_pvt : 0.1729 :  1 ; FillColor=ROOT.kBlue, Label="hw" , years="2018" #, SkipMe=True
+
+
+DPSWW_gen_notau+ : WWDoubleTo2L : 0.1729 :  Sum$(abs(Genleps_sel_pdgId) == 15) == 0 ; FillColor=ROOT.kRed, LineStyle=5, Label="py_notau"
+DPSWW_gen_notau_hw : WWDoubleTo2L_herwigpp : 0.1729 :  Sum$(abs(Genleps_sel_pdgId) == 15) == 0 ; FillColor=ROOT.kBlue, LineStyle=5, Label="hw_notau" , years="2016" #, SkipMe=True
+DPSWW_gen_notau_hw : WWDoubleTo2L_herwig : 0.1729 :  Sum$(abs(Genleps_sel_pdgId) == 15) == 0 ; FillColor=ROOT.kBlue, LineStyle=5, Label="hw_notau" , years="2017" #, SkipMe=True
+DPSWW_gen_notau_hw : WWDoubleTo2L_herwig_pvt : 0.1729 :  Sum$(abs(Genleps_sel_pdgId) == 15) == 0 ; FillColor=ROOT.kBlue, LineStyle=5, Label="hw_notau" , years="2018" #, SkipMe=True
+
+DPSWW_gen_tau+ : WWDoubleTo2L : 0.1729 :  Sum$(abs(Genleps_sel_pdgId) == 15) > 0 ; FillColor=ROOT.kRed, LineStyle=9, Label="py_tau"
+DPSWW_gen_tau_hw : WWDoubleTo2L_herwigpp : 0.1729 : Sum$(abs(Genleps_sel_pdgId) == 15) > 0  ; FillColor=ROOT.kBlue, LineStyle=9, Label="hw_tau" , years="2016" #, SkipMe=True
+DPSWW_gen_tau_hw : WWDoubleTo2L_herwig : 0.1729 : Sum$(abs(Genleps_sel_pdgId) == 15) > 0  ; FillColor=ROOT.kBlue, LineStyle=9, Label="hw_tau" , years="2017" #, SkipMe=True
+DPSWW_gen_tau_hw : WWDoubleTo2L_herwig_pvt : 0.1729 : Sum$(abs(Genleps_sel_pdgId) == 15) > 0  ; FillColor=ROOT.kBlue, LineStyle=9, Label="hw_tau" , years="2018" #, SkipMe=True
+
+DPSWW_nojets : WWDoubleTo2L_nojets : 0.1729 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kGreen-7, Label="DPSWW_nojets", years="2018"
+
+Rares : TTZ_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="Rares"
+Rares : TTW_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , Label="Rares"
+singleT : T_sch_lep : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6
+singleT : T_tch     : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 
+singleT : TBar_tch  : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 
+
+Top : TTJets_DiLepton : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6, Label="ttbar"
+Top : T_tWch_noFullyHad      : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6    , years="2016\,2018"
+Top : TBar_tWch_noFullyHad   : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6    , years="2016\,2018"
+Top : T_tWch                 : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6    , years="2017"
+Top : TBar_tWch              : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6    , years="2017"
+
+TTsemilep    : TTJets_SingleLeptonFromT : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kViolet, Label="ttbar_semilep", years="2016"
+TTsemilep    : TTJets_SingleLeptonFromTbar : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kViolet, Label="ttbar_semilep", years="2016"
+
+Rares: WpWpJJ : xsec*0.05454/0.03711 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , Label="Rares"
+WpWpJJ: WpWpJJ : xsec*0.05454/0.03711 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kPink+6 , Label="SPS WW"
+
+VVV: WWW    : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=5, Label="VVV" 
+VVV: WWZ    : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=5, Label="VVV"
+WZZ: WZZ    : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=5, Label="VVV"
+ZZZ: ZZZ    : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=5, Label="VVV"
+WWG: WWG    : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=5, Label="WWG" , years="2017\,2018"
+
+ZZ   : ZZTo4L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=ROOT.kOrange-3, Label="ZZ" 
+WW   : WWTo2L2Nu : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=ROOT.kYellow, Label="WW"
+Wgstar     : WZTo3LNu_mllmin01 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge && Sum$(GenPart_mass < 4. && LepGood_genPartFlav == 1) == 1 ; FillColor=ROOT.kViolet+7, Label="W\#gamma*"
+
+
+
+
+WZ_alt	      : WZTo3LNu : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=ROOT.kAzure+1, Label="WZ_powheg" 
+
+WZ 	      : WZTo3LNu_fxfx : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kAzure+1, Label="WZ" #, SkipMe=True
+
+WZ_ewk        : WZTo3LNu_ewk : xsec*0.1 : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kAzure+1, Label="WZ_ewk"
+
+WZ_incl       : WZTo3LNu_mllmin01 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=ROOT.kAzure+1, Label="WZ/\#gamma*"
+
+################### 
+
+
+
+WGstar_excl   :  WgStarLNuEE : xsec  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge  ; FillColor=ROOT.kViolet+7, Label="W\#gamma*_excl" , years="2016"
+WGstar_excl   : WgStarLNuMuMu : xsec  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge  ; FillColor=ROOT.kViolet+7, Label="W\#gamma*_excl" , years="2016"
+
+
+
+WJets        : WJetsToLNu     : xsec  ; FillColor=ROOT.kCyan+2, Label="WJ" , years="2016\,2018"
+WJets        : WJetsToLNu_LO  : xsec  ; FillColor=ROOT.kCyan+2, Label="WJ" , years="2017"
+
+Wnjet 	      : W0JetsToLNu : xsec : 1 ; FillColor=ROOT.kBlue+2, Label="WnJ" , years="2017\,2018"
+Wnjet 	      : W1JetsToLNu : xsec : 1 ; FillColor=ROOT.kBlue+2, Label="WnJ" , years="2017\,2018"
+Wnjet 	      : W2JetsToLNu : xsec : 1 ; FillColor=ROOT.kBlue+2, Label="WnJ" , years="2017\,2018"
+
+Wnjet_LO      : W1JetsToLNu_LO : xsec: 1 ; FillColor=ROOT.kOrange+2, Label="WnJ_LO" , years="2016\,2018"
+Wnjet_LO      : W2JetsToLNu_LO : xsec: 1 ; FillColor=ROOT.kOrange+2, Label="WnJ_LO" , years="2016\,2018"
+Wnjet_LO      : W3JetsToLNu_LO : xsec: 1 ; FillColor=ROOT.kOrange+2, Label="WnJ_LO" , years="2016\,2018"
+Wnjet_LO      : W4JetsToLNu_LO : xsec: 1 ; FillColor=ROOT.kOrange+2, Label="WnJ_LO" , years="2016\,2018"
+
+
+
+DY+    	     : DYJetsToLL_M50 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=8
+DY+   	     : DYJetsToLL_M10to50 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=8 , years="2016\,2017"
+DYLO+        : DYJetsToLL_M50_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge; FillColor=8
+DYLO+        : DYJetsToLL_M10to50_LO : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=8, years="2016"
+
+
+
+dps_PY8+ : WWDoubleTo2L : 0.1729 : 1 ; FillColor=ROOT.kRed, Label="dps" 
+dps_HG : WWDoubleTo2L_herwigpp : 0.1729 : 1 ; FillColor=ROOT.kBlue, Label="dps_herwig" , years="2016"
+dps_HG : WWDoubleTo2L_herwig : 0.1729 : 1 ; FillColor=ROOT.kBlue, Label="dps_herwig" , years="2017\,2018" 
+dps_CP5 : WWDouble_cp5 : 0.1729 : 1 ; FillColor=ROOT.kGreen, Label="dps_cp5" , years="2018" 
+
+dps_UL+ : UL2017 : 0.1729 : 1 ; FillColor=ROOT.kGreen, Label="cp5_UL" 
+dps_n7 : WWDPSTo2Ln7 : 0.1729 : 1 ; FillColor=ROOT.kRed, Label="n7" 
+dps_cp5_n7 : WWDPScp5n7 : 0.1729 : 1 ; FillColor=ROOT.kBlue, Label="cp5_n7_incl" 
+RaresGG : GGHZZ4L    	       : xsec :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6    , Label="Rares"
+RaresGG : GGZZ4L    	       : 0.014352 :   LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge       ; FillColor=ROOT.kPink+6 , Label="Rares"   
+Convs	   : + ; IncludeMca="dps-ww/fullRun2/mca-2lss-convs.txt"

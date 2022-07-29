@@ -1,0 +1,75 @@
+WWDoubleTo2L_newsim : WWDoubleTo2L_newsim : xsec
+WWDoubleTo2L_herwig_pvt : WWDoubleTo2L_herwig_pvt : xsec
+WWDoubleTo2L : WWDoubleTo2L : xsec
+WWDouble_cp5 : WWDouble_cp5 : xsec
+WWDoubleTo2L_notaus : WWDoubleTo2L_notaus : xsec
+
+
+##amWZTo3LNu_fxfx : WZTo3LNu_fxfx : xsec
+##amWZTo3LNu_ewk : WZTo3LNu_ewk : xsec
+##amWWDoubleTo2L_nojets : WWDoubleTo2L_nojets : xsec
+##amGGZZ4m  : GGZZ4m  : xsec
+##amGGHZZ4L : GGHZZ4L : xsec
+##amGGZZ4e  : GGZZ4e  : xsec
+##amGGZZ2e2m: GGZZ2e2m: xsec
+##amGGZZ2e2t: GGZZ2e2t: xsec
+##amGGZZ4t  : GGZZ4t  : xsec
+##amGGZZ2m2t: GGZZ2m2t: xsec
+##amTTGJets: TTGJets: xsec
+##amGGZZ4L : GGZZ4L: xsec
+##amTGJets_lep : TGJets_lep : xsec
+##amWWW : WWW : xsec  
+##amWWW_ll : WWW_ll : xsec  
+##amWZZ : WZZ : xsec
+##amWWZ : WWZ : xsec
+##amZZZ : ZZZ : xsec
+##amWWG : WWG : xsec
+##amWWDoubleTo2L_herwig : WWDoubleTo2L_herwig : xsec
+
+##amZGToLLG_01J_lowmll_amcatnlo : ZGToLLG_01J_lowmll_amcatnlo : xsec
+##amZGToLLG_01J_amcatnlo : ZGToLLG_01J_amcatnlo : xsec
+##amWGToLNuG : WGToLNuG : xsec
+##amWGToLNuG_01J_amcatnlo : WGToLNuG_01J_amcatnlo : xsec
+##amWZTo3LNu : WZTo3LNu : xsec
+##am
+##amWZTo3LNu_mllmin01 : WZTo3LNu_mllmin01 : xsec
+##amZZTo4L : ZZTo4L : xsec
+##amWWTo2L2Nu : WWTo2L2Nu : xsec
+##amWpWpJJ : WpWpJJ : xsec
+##amDYJetsToLL_M10to50_LO : DYJetsToLL_M10to50_LO : xsec
+##amDYJetsToLL_M50 : DYJetsToLL_M50 : xsec
+##amDYJetsToLL_M50_LO : DYJetsToLL_M50_LO : xsec
+##amWJetsToLNu : WJetsToLNu : xsec
+##amWJetsToLNu_LO : WJetsToLNu_LO : xsec
+##amW1JetsToLNu_LO : W1JetsToLNu_LO : xsec
+##amW2JetsToLNu_LO : W2JetsToLNu_LO : xsec
+##amW3JetsToLNu_LO : W3JetsToLNu_LO : xsec
+##amW4JetsToLNu_LO : W4JetsToLNu_LO : xsec
+##amW0JetsToLNu : W0JetsToLNu : xsec
+##amW1JetsToLNu : W1JetsToLNu : xsec
+##amW2JetsToLNu : W2JetsToLNu : xsec
+##amTTZ_LO	      : TTZ_LO : xsec
+##amTTW_LO	      : TTW_LO : xsec
+##amT_sch_lep : T_sch_lep : xsec
+##amT_tch : T_tch : xsec
+##amTBar_tch : TBar_tch : xsec
+##amT_tWch_noFullyHad : T_tWch_noFullyHad : xsec
+##amTBar_tWch_noFullyHad : TBar_tWch_noFullyHad : xsec
+##amTTJets_DiLepton : TTJets_DiLepton : xsec
+##amTTJets : TTJets : xsec
+##amdata : SingleMuon_Run2018A_02Apr2020
+##amdata : SingleMuon_Run2018B_02Apr2020
+##amdata : SingleMuon_Run2018C_02Apr2020
+##amdata : SingleMuon_Run2018D_02Apr2020
+##amdata : DoubleMuon_Run2018A_02Apr2020
+##amdata : DoubleMuon_Run2018B_02Apr2020
+##amdata : DoubleMuon_Run2018C_02Apr2020
+##amdata : DoubleMuon_Run2018D_02Apr2020
+##amdata : MuonEG_Run2018A_02Apr2020
+##amdata : MuonEG_Run2018B_02Apr2020
+##amdata : MuonEG_Run2018C_02Apr2020
+##amdata : MuonEG_Run2018D_02Apr2020
+##amdata : EGamma_Run2018A_02Apr2020
+##amdata : EGamma_Run2018B_02Apr2020
+##amdata : EGamma_Run2018C_02Apr2020
+##amdata : EGamma_Run2018D_02Apr2020

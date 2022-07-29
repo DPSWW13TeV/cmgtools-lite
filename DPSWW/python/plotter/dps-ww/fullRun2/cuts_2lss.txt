@@ -1,0 +1,102 @@
+alwaystrue: 1
+trigger : Trigger_2lss
+filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
+cleanup: minMllAFAS > 12
+dilep: nLepFO == 2
+exclusive: nLepTight<=2
+same-sign: LepGood1_charge*LepGood2_charge > 0
+conept2520 : LepGood1_conePt>25 &&  LepGood2_conePt > 20
+TT: LepGood1_isLepTight && LepGood2_isLepTight 
+
+
+tauveto: nTauFO == 0
+metpt  : MET_pt > 15
+nVertL : PV_npvsGood < 20 ; Disable =True
+nVertH : PV_npvsGood >=20 ; Disable =True  #&& PV_npvsGood < 25 ; Disable =True
+nVertU : PV_npvsGood >= 25  ; Disable =True
+01jets : Sum$(JetSel_Recl_pt > 30) < 2
+jetVeto : Sum$(JetSel_Recl_pt > 30) == 0 ; Disable =True
+bVeto  : nBJetLoose25 == 0
+newbVeto20: Sum$(JetSel_Recl_pt > 20 && JetSel_Recl_btagDeepFlavB > if3(year == 2016,0.0614,if3(year == 2017,0.0521, 0.0494 ))) == 0 ; Disable =True
+newbVeto30: Sum$(JetSel_Recl_pt > 30 && JetSel_Recl_btagDeepFlavB > if3(year == 2016,0.0614,if3(year == 2017,0.0521, 0.0494 ))) == 0 ; Disable =True
+
+deepCSVL : Sum$(JetSel_Recl_pt > 25 && JetSel_Recl_btagDeepB > if3(year == 2016,0.2217,if3(year == 2017,0.1522,0.1241 ))) == 0 ; Disable =True  
+
+ssWW        : (Genleps_sel_pdgId[0] * Genleps_sel_pdgId[1]) > 0 ; Disable=True
+noTaus      : Sum$(abs(Genleps_sel_pdgId) == 15) == 0; Disable=True 
+
+##blinded : $DATA{BDTG_DPS_TLCR_raw_withpt<0.4 && BDTG_DPS_WZ_amc_raw_withpt < 0.4} $MC{1} 
+##blinded : $DATA{BDTG_DPS_TLCR_raw_withpt<0.5 && BDTG_DPS_WZ_amc_raw_withpt < 0.5} $MC{1} 
+Zee_veto: abs(LepGood1_pdgId)!=11 || abs(LepGood2_pdgId) != 11 || abs(mass_2(LepGood1_conePt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_conePt,LepGood2_eta,LepGood2_phi,LepGood2_mass)-91.2) > 10 
+ 
+Z_veto: abs(mZ1-91.2)>10  #; Disable=True
+
+eleID: (abs(LepGood1_pdgId)!=11 || (LepGood1_convVeto && LepGood1_lostHits==0 && LepGood1_tightCharge>=2)) && (abs(LepGood2_pdgId)!=11 || (LepGood2_convVeto && LepGood2_lostHits==0 && LepGood2_tightCharge>=2))
+
+
+TightChargeMuon: (abs(LepGood1_pdgId)!=13 || LepGood1_tightCharge>=1) && (abs(LepGood2_pdgId)!=13 || LepGood2_tightCharge>=1)
+
+
+etael1      : (abs(LepGood1_pdgId) == 13 || (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556 ))
+etael2      : (abs(LepGood2_pdgId) == 13 || (abs(LepGood2_eta) < 1.442 || abs(LepGood2_eta) > 1.556 ))
+
+cptll	    : if3((abs(LepGood1_pdgId) == 11 || abs(LepGood2_pdgId) == 11),ptll(LepGood1_conePt, LepGood1_eta, LepGood1_phi, LepGood1_mass, LepGood2_conePt, LepGood2_eta, LepGood2_phi, LepGood2_mass) > 20,1)
+
+noConvs : ((abs(LepGood1_pdgId) !=11 || LepGood1_mcPromptGamma==0) && (abs(LepGood2_pdgId) !=11 || LepGood2_mcPromptGamma==0)) || $DATA ; Disable=True
+
+tightloose : (LepGood1_isLepTight +  LepGood2_isLepTight) == 1 ; Disable=True
+
+TL : (LepGood1_isLepTight && !LepGood2_isLepTight) || (!LepGood1_isLepTight && LepGood2_isLepTight)  ; Disable=True
+
+# some cuts that are off by default but can be turned on with -E
+tightMVA070: LepGood1_mvaTTH>0.70 && LepGood2_mvaTTH>0.70 ; Disable=True
+tightMVA075: LepGood1_mvaTTH>0.75 && LepGood2_mvaTTH>0.75 ; Disable=True
+tightMVA080: LepGood1_mvaTTH>0.80 && LepGood2_mvaTTH>0.80 ; Disable=True
+tightMVA085: LepGood1_mvaTTH>0.85 && LepGood2_mvaTTH>0.85 ; Disable=True
+tightMVA090: LepGood1_mvaTTH>0.90 && LepGood2_mvaTTH>0.90 ; Disable=True
+tightMVA095: LepGood1_mvaTTH>0.95 && LepGood2_mvaTTH>0.95 ; Disable=True
+
+
+
+elel: abs(LepGood1_pdgId*LepGood2_pdgId) == 121  ; Disable=True
+elmu: abs(LepGood1_pdgId * LepGood2_pdgId) == 143  ;           Disable=True
+mumu: abs(LepGood1_pdgId * LepGood2_pdgId) == 169  ;         Disable=True
+
+ll  : abs(LepGood1_pdgId*LepGood2_pdgId) == 143 || abs(LepGood1_pdgId*LepGood2_pdgId) == 169 || abs(LepGood1_pdgId*LepGood2_pdgId) == 121 ; Disable=True
+ll_noee  : abs(LepGood1_pdgId*LepGood2_pdgId) == 143 || abs(LepGood1_pdgId*LepGood2_pdgId) == 169  ; Disable=True
+
+plusplus: LepGood1_charge > 0 ; Disable=True
+minusminus: LepGood1_charge < 0 ; Disable=True
+
+
+poshem: (LepGood1_eta * LepGood2_eta > 0 || LepGood1_eta * LepGood2_eta == 0) ; Disable=True
+neghem: LepGood1_eta * LepGood2_eta < 0 ; Disable=True
+
+
+##metLDee: abs(LepGood1_pdgId)!=11 || abs(LepGood2_pdgId) != 11 || MET_pt*0.6 + mhtJet25*0.4 > 30
+
+
+fakeIsMu : if3((nLepFO>1)*(LepGood1_isLepTight+LepGood2_isLepTight==1),if3(LepGood1_isLepTight,(abs(LepGood2_pdgId)==13),(abs(LepGood1_pdgId)==13)),0); Disable=True
+fakeIsEl : if3((nLepFO>1)*(LepGood1_isLepTight+LepGood2_isLepTight==1),if3(LepGood1_isLepTight,(abs(LepGood2_pdgId)==11),(abs(LepGood1_pdgId)==11)),0); Disable=True
+
+dressed2l       : nGenDressedLepton == 2 ; Disable=True
+dressedssWW     : GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1] > 0; Disable=True
+dressedpt2520   : GenDressedLepton_pt[0] > 25 && GenDressedLepton_pt[1] > 20; Disable=True
+
+dressedll_noee      : (abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 143 || abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 169); Disable=True
+dressednoTaus        : GenDressedLepton_hasTauAnc[0] == 0 && GenDressedLepton_hasTauAnc[1] == 0; Disable=True
+#dressedplusplus     : GenDressedLepton_pdgId[0] < 0 ; Disable=True
+#dressedminusminus   : GenDressedLepton_pdgId[0] > 0 ; Disable=True
+
+
+dressedetacutl1     : abs(GenDressedLepton_eta[0]) < if3(abs(GenDressedLepton_pdgId[0])==13,2.4,2.5); Disable=True
+dressedetacutl2     : abs(GenDressedLepton_eta[1]) < if3(abs(GenDressedLepton_pdgId[1])==13,2.4,2.5); Disable=True
+dressedetael1      : (abs(GenDressedLepton_pdgId[0]) == 13 || (abs(GenDressedLepton_eta[0]) < 1.442 || abs(GenDressedLepton_eta[0]) > 1.556 && abs(GenDressedLepton_pdgId[0])==11)); Disable=True
+dressedetael2      : (abs(GenDressedLepton_pdgId[1]) == 13 || (abs(GenDressedLepton_eta[1]) < 1.442 || abs(GenDressedLepton_eta[1]) > 1.556 && abs(GenDressedLepton_pdgId[1])==11)); Disable=True
+
+#elmu         : (abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 143) ; Disable=True
+#mumu         : (abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 169) ; Disable=True
+#elel         : (abs(GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1]) == 121) ; Disable=True
+dressedcptll	    : if3((abs(GenDressedLepton_pdgId[0]) == 11 || abs(GenDressedLepton_pdgId[1]) == 11),ptll(GenDressedLepton_pt[0], GenDressedLepton_eta[0], GenDressedLepton_phi[0], GenDressedLepton_mass[0], GenDressedLepton_pt[1], GenDressedLepton_eta[1], GenDressedLepton_phi[1], GenDressedLepton_mass[1]) > 20,1) ; Disable=True
+
+dressedmll : mass_2(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenDressedLepton_mass[0],GenDressedLepton_pt[1],GenDressedLepton_eta[1],GenDressedLepton_phi[1],GenDressedLepton_mass[1]) > 12 ; Disable=True

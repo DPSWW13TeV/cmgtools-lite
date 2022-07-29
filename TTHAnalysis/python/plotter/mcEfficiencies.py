@@ -13,6 +13,7 @@ def addMCEfficiencyOptions(parser):
     parser.add_option("--select-plot", "--sP", dest="plotselect", action="append", default=[], help="Select only these plots out of the full file")
     parser.add_option("--exclude-plot", "--xP", dest="plotexclude", action="append", default=[], help="Exclude these plots from the full file")
     parser.add_option("-o", "--out", dest="out", default=None, help="Output file name. by default equal to plots -'.txt' +'.root'");
+    parser.add_option("--weightNumerator", dest="weightNumerator", default=None, help="Adds a weight only to the numerator (MC only) for closures tests of scale factors")
     parser.add_option("--rebin", dest="globalRebin", type="int", default="0", help="Rebin all plots by this factor")
     parser.add_option("--xrange", dest="xrange", default=None, nargs=2, type='float', help="X axis range");
     parser.add_option("--xcut", dest="xcut", default=None, nargs=2, type='float', help="X axis cut");
@@ -27,11 +28,12 @@ def addMCEfficiencyOptions(parser):
     parser.add_option("--legendWidth", dest="legendWidth", type="float", default=0.35, help="Width of the legend")
     parser.add_option("--compare", dest="compare", default="", help="Samples to compare (by default, all except the totals)")
     parser.add_option("--showRatio", dest="showRatio", action="store_true", default=False, help="Add a data/sim ratio plot at the bottom")
+    parser.add_option("--shiftPoints", dest="shiftPoints", type="float", default=0, help="Shift x coordinates of points by this fraction of the error bar in thew plot to make them more visible when stacking.")
     parser.add_option("--rr", "--ratioRange", dest="ratioRange", type="float", nargs=2, default=(-1,-1), help="Min and max for the ratio")
     parser.add_option("--normEffUncToLumi", dest="normEffUncToLumi", action="store_true", default=False, help="Normalize the dataset to the given lumi for the uncertainties on the calculated efficiency")
 
 
-def doLegend(rocs,options,textSize=0.035):
+def doLegend(rocs,options,textSize=0.035,header=None):
         lwidth = options.legendWidth
         if options.legend == "TR":
             (x1,y1,x2,y2) = (.93-lwidth, .98 - 1.2*textSize*max(len(rocs),3), .93, .98)
@@ -44,6 +46,7 @@ def doLegend(rocs,options,textSize=0.035):
         leg.SetShadowColor(0)
         leg.SetTextFont(42)
         leg.SetTextSize(textSize)
+        if header: leg.SetHeader(header.replace("\#", "#"))       
         for key,val in rocs:
             leg.AddEntry(val, key, "LP")
         leg.Draw()
@@ -52,16 +55,27 @@ def doLegend(rocs,options,textSize=0.035):
         legend_ = leg 
         return leg
 
-def effFromH2D(h2d,options,uncertainties="CP"):
+def effFromH2D(h2d,options,uncertainties="CP", customNum=None, name=None):
     points = []
     for xbin in xrange(1,h2d.GetNbinsX()+1):
         xval = h2d.GetXaxis().GetBinCenter(xbin)
         if options.xcut and (xval < options.xcut[0] or xval > options.xcut[1]):
             continue
         xerrs = h2d.GetXaxis().GetBinLowEdge(xbin)-xval, h2d.GetXaxis().GetBinUpEdge(xbin)-xval 
-        ypass,ypassErr, yfail,yfailErr = h2d.GetBinContent(xbin,2),h2d.GetBinError(xbin,2), h2d.GetBinContent(xbin,1),h2d.GetBinError(xbin,1)
-        yall = ypass+yfail
-        if yall <= 0 or ypass < 0: continue 
+        if customNum and 'data' not in name: 
+            ypass,ypassErr, yfail,yfailErr = customNum.GetBinContent(xbin,2),customNum.GetBinError(xbin,2), h2d.GetBinContent(xbin,1),h2d.GetBinError(xbin,1)
+            ypass2,ypassErr2 = h2d.GetBinContent(xbin,2),h2d.GetBinError(xbin,2)
+            yall = ypass2+yfail
+            
+        else:
+            ypass,ypassErr, yfail,yfailErr = h2d.GetBinContent(xbin,2),h2d.GetBinError(xbin,2), h2d.GetBinContent(xbin,1),h2d.GetBinError(xbin,1)
+            yall = ypass+yfail
+        if yall <= 0: continue
+        if ypass < 0:
+            print "Warning: effFromH2D for %s at x = %g: ypass = %g +- %g  yfail = %g +- %g\n" % (h2d.GetName(), xval, ypass, ypassErr, yfail, yfailErr)
+            if uncertainties == "CP": continue
+            if ypass + 2*ypassErr < 0: continue
+            ypass, yall = 0, yfail
         eff = ypass/yall 
         neff = (yall**2)/(ypassErr**2 + yfailErr**2)
         if uncertainties == "CP":
@@ -101,7 +115,26 @@ def dumpEffFromH2D(h2d,xbin):
     ret += "\t%s" % getattr(h2d, '_cname', '<nil>')
     return ret
 
-def stackEffs(outname,x,effs,options):
+
+def shiftEffsX(effs, amount=0.4):
+    ng = len(effs)
+    if ng <= 1 or amount == 0: return effs
+    shiftedEffs = []
+    for ig, (k,g) in enumerate(effs):
+        gc = g.Clone()
+        delta = 2*ig/float(ng-1) - 1 # -1 for first, +1 for last
+        for i in xrange(g.GetN()):
+            x0 = g.GetX()[i]
+            dxm = g.GetErrorXlow(i)
+            dxp = g.GetErrorXhigh(i)
+            xnew = x0 + amount * delta * ( dxm if delta <= 0 else dxp )
+            gc.SetPoint(i, xnew, g.GetY()[i])
+            gc.SetPointError(i, xnew-(x0-dxm), (x0+dxp)-xnew, g.GetErrorYlow(i), g.GetErrorYhigh(i))
+        g._shifted = gc
+        shiftedEffs.append((k,gc))
+    return shiftedEffs
+
+def stackEffs(outname,x,effs,options,legHeader=None):
     if effs[0][1].ClassName() == "TProfile2D": 
         return stackInXYSlices(outname,x,effs,options)
     if effs[0][1].ClassName() != "TGraphAsymmErrors": 
@@ -153,7 +186,8 @@ def stackEffs(outname,x,effs,options):
     p1.SetLogy(options.logy)
 
     frame.Draw()
-    for title, eff in effs: eff.Draw("P SAME")
+    for title, eff in shiftEffsX(effs,options.shiftPoints): 
+        eff.Draw("P0 SAME")
 
     if options.xrange:
         frame.GetXaxis().SetRangeUser(options.xrange[0], options.xrange[1])
@@ -164,7 +198,7 @@ def stackEffs(outname,x,effs,options):
     for x in options.xlines:
         liner.DrawLine(x, frame.GetYaxis().GetXmin(), x, frame.GetYaxis().GetXmax())
 
-    leg = doLegend(effs,options,textSize=options.fontsize)
+    leg = doLegend(effs,options,textSize=options.fontsize,header=legHeader)
     if doRatio:
         p2.cd()
         keepme = doEffRatio(x,effs,frame,options)
@@ -271,8 +305,8 @@ def doEffRatio(x,effs,frame,options):
     line.SetLineColor(effs[0][1].GetLineColor());
     line.DrawLine(cframe.GetXaxis().GetXmin(),1,cframe.GetXaxis().GetXmax(),1)
     unity.Draw("E2 SAME");
-    for ratio in effrels[1:]:
-        ratio.Draw("PZ SAME");
+    for _, ratio in shiftEffsX([(None,r) for r in effrels[1:]], options.shiftPoints): 
+        ratio.Draw("P0Z SAME");
 
     liner = ROOT.TLine(); liner.SetLineStyle(2)
     for x in options.xlines: liner.DrawLine(x, rmin, x, rmax)
@@ -324,13 +358,32 @@ def makeEff(mca,cut,idplot,xvarplot,returnSeparatePassFail=False,notDoProfile="a
                      mybins,
                      options) 
     report = mca.getPlots(pspec,cut,makeSummary=True)
+    if mainOptions.weightNumerator:
+        pspec_num = PlotSpec("%s_vs_%s_fornum"  % (idplot.name, xvarplot.name), 
+                             "%s:%s" % (idplot.expr,xvarplot.expr),
+                             mybins,
+                             options) 
+        pspec_num.extracut ='(%s)'%mainOptions.weightNumerator
+        report_num = mca.getPlots(pspec_num,cut,makeSummary=True)
+        if 'signal' in report_num and 'background' in report_num:
+            report_num['total'] = mergePlots(pspec.name+"_total", [ report_num[s] for s in ('signal','background') ] )
+        if 'data' in report_num and 'background' in report_num:
+            makeDataSub(report_num, mca)
+        
+    
+
     if 'signal' in report and 'background' in report:
         report['total'] = mergePlots(pspec.name+"_total", [ report[s] for s in ('signal','background') ] )
     if 'data' in report and 'background' in report:
         makeDataSub(report, mca)
-    if notDoProfile and not returnSeparatePassFail:
-        if is2D: report = dict([(title, effFromH3D(hist,mainOptions)) for (title, hist) in report.iteritems()])
-        else:    report = dict([(title, effFromH2D(hist,mainOptions)) for (title, hist) in report.iteritems()])
+    if mainOptions.weightNumerator:
+        if notDoProfile and not returnSeparatePassFail:
+            if is2D: report = dict([(title, effFromH3D(hist,mainOptions, customNum=report_num[title], name=title)) for (title, hist) in report.iteritems()])
+            else:    report = dict([(title, effFromH2D(hist,mainOptions, customNum=report_num[title], name=title)) for (title, hist) in report.iteritems()])
+    else: 
+        if notDoProfile and not returnSeparatePassFail:
+            if is2D: report = dict([(title, effFromH3D(hist,mainOptions)) for (title, hist) in report.iteritems()])
+            else:    report = dict([(title, effFromH2D(hist,mainOptions)) for (title, hist) in report.iteritems()])
     return report
 
 def styleEffsByProc(effmap,procs,mca):

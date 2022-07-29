@@ -1,0 +1,2 @@
+DPSWW+ : WWTo2L2Nu_DoubleScattering_13TeV-pythia8 : 0.1729 : 1 ; FillColor=ROOT.kRed+1, Label "DPS\W^{#pm}W^{#pm}" 
+

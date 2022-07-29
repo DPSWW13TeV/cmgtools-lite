@@ -1,0 +1,21 @@
+#cut-change: LepGood_isLepTight_Recl\[iLepFO_Recl\[0\]\]: 1
+#cut-change: LepGood_isLepTight_Recl\[iLepFO_Recl\[1\]\]: 1
+
+#cut-change: LepGood1_mvaTTH : (LepGood1_mvaTTH > if3(abs(LepGood1_pdgId) == 13, -1.0, -1.0))
+#cut-change: LepGood2_mvaTTH : (LepGood2_mvaTTH > if3(abs(LepGood2_pdgId) == 13, -1.0, -1.0))
+
+cut-change: LepGood_mvaTTH\[iLepFO_Recl\[0\]\]: if3(abs(LepGood_pdgId[iLepFO_Recl[0]])==13,1,1)
+cut-change: LepGood_mvaTTH\[iLepFO_Recl\[1\]\]: if3(abs(LepGood_pdgId[iLepFO_Recl[1]])==13,1,1)
+
+weight: fakeRateWeight_2lssMVA_usingPRs_smooth(LepGood_pt[iLepFO_Recl[0]],LepGood_eta[iLepFO_Recl[0]],LepGood_pdgId[iLepFO_Recl[0]],LepGood_mvaTTH[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[1]],LepGood_eta[iLepFO_Recl[1]],LepGood_pdgId[iLepFO_Recl[1]],LepGood_mvaTTH[iLepFO_Recl[1]],0)
+
+
+
+#load-histo: FR_mu_i00 : $DATA/fakerate/fr_2016_recorrected.root : FR_mva085_mu_data_comb_recorrected    : 2016
+#load-histo: FR_el_i00 : $DATA/fakerate/fr_2016_recorrected.root : FR_mva080_el_data_comb_NC_recorrected : 2016
+
+
+load-histo: FR_mu  : /afs/cern.ch/work/a/anmehta/work/Test/Test2/CMSSW_8_0_25/src/CMGTools/DPS13TeV/python/plotter/dpsww13TeV/dps2016/fakerates/fakerate_promptrate_mu_smoothed_data_2018-06-27.root : fakerates_smoothed_data 
+load-histo: PR_mu  : /afs/cern.ch/work/a/anmehta/work/Test/Test2/CMSSW_8_0_25/src/CMGTools/DPS13TeV/python/plotter/dpsww13TeV/dps2016/fakerates/fakerate_promptrate_mu_smoothed_data_2018-06-27.root : promptrates_smoothed_data
+load-histo: FR_el  : /afs/cern.ch/work/a/anmehta/work/Test/Test2/CMSSW_8_0_25/src/CMGTools/DPS13TeV/python/plotter/dpsww13TeV/dps2016/fakerates/2018-07-27ElFR_nominal/fakerate_promptrate_el_smoothed_data.root : fakerates_smoothed_data
+load-histo: PR_el  : /afs/cern.ch/work/a/anmehta/work/Test/Test2/CMSSW_8_0_25/src/CMGTools/DPS13TeV/python/plotter/dpsww13TeV/dps2016/fakerates/2018-07-27ElFR_nominal/fakerate_promptrate_el_smoothed_data.root : promptrates_smoothed_data

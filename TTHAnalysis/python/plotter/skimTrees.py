@@ -144,6 +144,7 @@ if __name__ == "__main__":
     selectors=[CheckEventVetoList(fname) for fname in options.vetoevents]
     if options.json: selectors.append(JSONSelector(options.json))
 
+    options.lazyKeeps = []
     if options.varfiles:
         mykeeps = set(["run","lumi","evt","genWeight","xsec","isData"])
         def _process(vfname,_norecurse=set()):
@@ -210,7 +211,7 @@ if __name__ == "__main__":
     else:
         from multiprocessing import Pool
         Pool(options.jobs).map(_runIt, tasks)
-    if options.skimFriends:
+    if options.skimFriends and not (options.pretend or options.justcount):
         if not os.path.exists("skimFTrees.py"): raise RuntimeError("missing skimFTrees")
         for D in options.friendTreesSimple + options.friendTreesMCSimple + options.friendTreesDataSimple:
             for P in options.path:
