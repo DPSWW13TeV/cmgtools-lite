@@ -8,11 +8,12 @@
 class CombinedObjectTags {
  public:
   
-  CombinedObjectTags(uint nLep, uint nTau, uint nJet);
+  CombinedObjectTags(uint nLep, uint nTau, uint nJet, uint nFatJet);
   
   void setLepFlags(uint i, bool isL, bool isC, bool isF, bool isT, float conept);
   void setTauFlags(uint i, bool isF, bool isT);
   void setJetFlags(uint i, bool isS);
+  void setFatJetFlags(uint i, bool isS);
     
   std::vector<int> getLepsF_byConePt();
     
@@ -23,6 +24,7 @@ class CombinedObjectTags {
   std::unique_ptr<bool[]> tausF;
   std::unique_ptr<bool[]> tausT;
   std::unique_ptr<bool[]> jetsS;
+  std::unique_ptr<bool[]> fatjetsS;
   std::unique_ptr<float[]> leps_conept;
 
 private:

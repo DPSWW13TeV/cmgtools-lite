@@ -14,10 +14,10 @@ def byCompName(components, regexps):
 year = getHeppyOption("year", "2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
-
+selectComponents = getHeppyOption("selectComponents","MC")
 if year == '2018':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL18NanoAODv9 import samples as mcSamples_
-    from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples_UL18 as allData
+    from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples_UL2018 as allData
 elif year == '2017':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL17NanoAODv9 import samples as mcSamples_
     from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_UL2017 as allData
@@ -28,7 +28,8 @@ elif year == '2016APV':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL16APVNanoAODv9 import samples as mcSamples_
     from CMGTools.RootTools.samples.samples_13TeV_DATA2016APV_NanoAOD import dataSamples_UL16APV as allData
 
-autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it",site="T2_CH_CSCS") # must be done before mergeExtensions
+autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
+#autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cms-xrd-global.cern.ch/",site="T2_CH_CSCS")
 mcSamples_, _ = mergeExtensions(mcSamples_)
 
 # Triggers
@@ -48,24 +49,24 @@ theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # single boson
-        "DYJetsToLL_M50", "DYJetsToLL_M10to50_LO", 
+        "DYJetsToLL_M50", #"DYJetsToLL_M10to50_LO", 
         # Ttbar + single top + tW
-        "TT(Lep|Semi)_pow",
-        "T_tch", "TBar_tch", "T_tWch_noFullyHad", "TBar_tWch_noFullyHad",
-        # conversions
-        "TTGJets",# "WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
-        #  # ttV
-        "TTZToLLNuNu_m1to10", #"TTWToLNu_fxfx", "TTZToLLNuNu_amc", "TTW_LO", "TTZ_LO"
-        #  # ttH + tHq/tHW
-        "TTHnobb_fxfx",# "TTHnobb_pow", # faltan cpcvct "THQ_ctcvcp", "THW_ctcvcp", "TTH_ctcvcp",
-        #  # top + V rare processes
-        "TZQToLL", "TTTT", "TTWW", #  "tWll", <- mirar que pasa con twll
-        #  # diboson + DPS + WWss
-        "ZZTo4L", #"WWTo2L2Nu",  "WZTo3LNu_fxfx",   # "WW_DPS", falta dps y wpwp "WWTo2L2Nu_DPS", "WpWpJJ", # "WZTo3LNu_pow",
-        #  # triboson
-        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ", # "WWW_ll", <- not there, but its just a leptonic filter
-        #  # other Higgs processes
-        "GGHZZ4L", "VHToNonbb",   "ZHToTauTau", "TTWH", "TTZH", # "VHToNonbb_ll","ZHTobb_ll", <- not there, but its just a leptonic filter
+##am        "TT(Lep|Semi)_pow",
+##am        "T_tch", "TBar_tch", "T_tWch_noFullyHad", "TBar_tWch_noFullyHad",
+##am        # conversions
+##am        "TTGJets",# "WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
+##am        #  # ttV
+##am        "TTZToLLNuNu_m1to10", #"TTWToLNu_fxfx", "TTZToLLNuNu_amc", "TTW_LO", "TTZ_LO"
+##am        #  # ttH + tHq/tHW
+##am        "TTHnobb_fxfx",# "TTHnobb_pow", # faltan cpcvct "THQ_ctcvcp", "THW_ctcvcp", "TTH_ctcvcp",
+##am        #  # top + V rare processes
+##am        "TZQToLL", "TTTT", "TTWW", #  "tWll", <- mirar que pasa con twll
+##am        #  # diboson + DPS + WWss
+##am        "ZZTo4L", #"WWTo2L2Nu",  "WZTo3LNu_fxfx",   # "WW_DPS", falta dps y wpwp "WWTo2L2Nu_DPS", "WpWpJJ", # "WZTo3LNu_pow",
+##am        #  # triboson
+##am        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ", # "WWW_ll", <- not there, but its just a leptonic filter
+##am        #  # other Higgs processes
+##am        "GGHZZ4L", "VHToNonbb",   "ZHToTauTau", "TTWH", "TTZH", # "VHToNonbb_ll","ZHTobb_ll", <- not there, but its just a leptonic filter
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] + triggerGroups_dict["Trigger_3m"][theyear]) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_3e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else
@@ -115,15 +116,15 @@ for pd, trigs in DatasetsAndTriggers:
     vetoTriggers += trigs[:]
 
 selectedComponents = mcSamples + dataSamples
-if getHeppyOption('selectComponents'):
-    if getHeppyOption('selectComponents')=='MC':
-        selectedComponents = mcSamples
-    elif getHeppyOption('selectComponents')=='DATA':
-        selectedComponents = dataSamples
-    else:
-        selectedComponents = byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
+#if getHeppyOption('selectComponents'):
+if selectComponents=='MC':
+    selectedComponents = mcSamples
+elif selectComponents=='DATA':
+    selectedComponents = dataSamples
+else:
+    selectedComponents = byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
 
-autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it")
+#autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it")
 configureSplittingFromTime(dataSamples,5,12)
 configureSplittingFromTime(mcSamples,10,12)
 selectedComponents, _ = mergeExtensions(selectedComponents)
@@ -131,6 +132,7 @@ selectedComponents, _ = mergeExtensions(selectedComponents)
 
 
 def setFilesPerJob(comps,filesperjob):
+    #print comps,filesperjob
     for comp in comps:
         comp.splitFactor=len(comp.files) / filesperjob
 
@@ -144,7 +146,7 @@ if analysis == "frqcd":
     #cropToLumi(byCompName(selectedComponents,["QCD_Pt\d+to\d+$"]), 0.1)
 
     configureSplittingFromTime(selectedComponents, 5, 3, maxFiles=8)
-    configureSplittingFromTime(byCompName(selectedComponents, ["EGamma","Single.*Run2017.*","SingleMuon_Run2018.*"]), 0.5, 12, maxFiles=12) 
+    configureSplittingFromTime(byCompName(selectedComponents, ["EGamma","Single.*Run2017.*","SingleMuon_Run2018.*"]), 0.5, 12, maxFiles=5) 
     setFilesPerJob( selectedComponents, 1)
     #configureSplittingFromTime(byCompName(selectedComponents, [r"QCD_Pt\d+to\d+$","QCD.*EME"]), 5, 1, maxFiles=6) 
 else:    

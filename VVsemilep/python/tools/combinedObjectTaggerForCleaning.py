@@ -12,6 +12,7 @@ class CombinedObjectTaggerForCleaning(Module):
                  FOTauSel = lambda t : True,
                  tightTauSel = lambda t : True,
                  selectJet = lambda j : True,
+                 selectFatJet = lambda f : True,
                  coneptdef = lambda l : l.pt,
                  debug=False):
         self.label = "" if (label in ["",None]) else ("_"+label)
@@ -28,7 +29,7 @@ class CombinedObjectTaggerForCleaning(Module):
         self.tightTauSel = tightTauSel # applied on top of FOTauSel
 
         self.selectJet = selectJet
-
+        self.selectFatJet = selectFatJet
         self.coneptdef = coneptdef
         self.debug = debug
 
@@ -41,7 +42,8 @@ class CombinedObjectTaggerForCleaning(Module):
         leps = [l for l in Collection(event,"LepGood","nLepGood")]
         taus = [t for t in Collection(event,"TauGood","nTauGood")]
         jets = [j for j in Collection(event,"Jet","nJet")]
-        self.run(event, leps,taus,jets)
+        fatjets = [f for f in Collection(event,"FatJet","nFatJet")]
+        self.run(event, leps,taus,jets,fatjets)
         return {}
 
     # interface for new code
@@ -50,12 +52,13 @@ class CombinedObjectTaggerForCleaning(Module):
         leps = [l for l in Collection(event,"LepGood")]
         taus = [t for t in Collection(event,"Tau")]
         jets = [j for j in Collection(event,"Jet")]
-        self.run(event, leps,taus,jets)
+        fatjets = [f for f in Collection(event,"FatJet")]
+        self.run(event, leps,taus,jets,fatjets)
         return True
 
-    def run(self, event, leps,taus,jets):
+    def run(self, event, leps,taus,jets,fatjets):
 
-        tags = ROOT.CombinedObjectTags(len(leps),len(taus),len(jets))
+        tags = ROOT.CombinedObjectTags(len(leps),len(taus),len(jets),len(fatjets))
 
         if not self.coneptdef: raise RuntimeError, 'Choose the definition to be used for cone pt'
         for lep in leps: lep.conept = self.coneptdef(lep)
@@ -69,6 +72,8 @@ class CombinedObjectTaggerForCleaning(Module):
             if self.fkbleTauSel(tau): tags.setTauFlags(i,True,self.tightTauSel(tau))
         for i,jet in enumerate(jets):
             if self.selectJet(jet): tags.setJetFlags(i,True)
+        for i,fjet in enumerate(fatjets):
+            if self.selectFatJet(fjet): tags.setFatJetFlags(i,True)
 
         setattr(event,'_CombinedTagsForCleaning%s'%self.label,tags)
         return {}
@@ -86,13 +91,14 @@ if __name__ == '__main__':
         def __init__(self, name):
             CMGModule.__init__(self,name,None)
             self.sf1 = CombinedObjectTaggerForCleaning("Test",
-                                                       looseLeptonSel = lambda lep : lep.miniRelIso < 0.4 and lep.sip3d < 8,
+                                                       looseLeptonSel = lambda lep : lep.sip3d < 8,
                                                        cleaningLeptonSel = lambda lep : True, # cuts applied on top of loose
-                                                       FOLeptonSel = lambda lep : lep.conept>10 and lep.jetBTagCSV<0.80, # cuts applied on top of loose
+                                                       FOLeptonSel = lambda lep : lep.conept>10, # cuts applied on top of loose
                                                        tightLeptonSel = lambda lep : lep.conept>10 and lep.jetBTagCSV<0.80 and lep.mvaTTH > 0.75, # cuts applied on top of loose
                                                        FOTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and tau.idMVAOldDMRun2dR03 >= 1,
                                                        tightTauSel = lambda tau: tau.idMVAOldDMRun2dR03 >= 2, # cuts applied on top of FO tau
                                                        selectJet = lambda jet: abs(jet.eta)<2.4,
+                                                       selectFatJet = lambda fatjet: abs(fatjet.eta)<2.4,
                                                        coneptdef = lambda lep: lep.pt,
                                                        debug = True)
         def analyze(self,ev):

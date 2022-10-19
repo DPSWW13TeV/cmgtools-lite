@@ -4,7 +4,8 @@ kreator = ComponentCreator()
 
 # ----------------------------- 2018 pp run  ----------------------------------------
 
-json = '/work/sesanche/FRs/CMSSW_10_4_0/src/CMGTools/TTHAnalysis/data/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
+json = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt'
+#/work/sesanche/FRs/CMSSW_10_4_0/src/CMGTools/TTHAnalysis/data/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
 
 # ----------------------------- Run2018A 17Sep2018 ----------------------------------------
 JetHT_Run2018A_14Dec2018 = kreator.makeDataComponent("JetHT_Run2018A_14Dec2018", "/JetHT/Run2018A-Nano14Dec2018-v1/NANOAOD", "CMS", ".*root", json)
@@ -190,13 +191,13 @@ Tau_Run2018D_UL18 = kreator.makeDataComponent("Tau_Run2018D_UL18", "/Tau/Run2018
 
 dataSamples_Run2018D_UL18 = [MET_Run2018D_UL18, SingleMuon_Run2018D_UL18, DoubleMuon_Run2018D_UL18, MuonEG_Run2018D_UL18, EGamma_Run2018D_UL18, Tau_Run2018D_UL18] # JetHT_Run2018D_UL18,  , , 
 
-dataSamples_UL18 = dataSamples_Run2018A_UL18 + dataSamples_Run2018B_UL18 + dataSamples_Run2018C_UL18 + dataSamples_Run2018D_UL18
+dataSamples_UL2018 = dataSamples_Run2018A_UL18 + dataSamples_Run2018B_UL18 + dataSamples_Run2018C_UL18 + dataSamples_Run2018D_UL18
 
 
 
-dataSamples = dataSamples_14Dec2018 + dataSamples_1June2019 + dataSamples_25Oct2019 + dataSamples_UL18
+dataSamples = dataSamples_14Dec2018 + dataSamples_1June2019 + dataSamples_25Oct2019 + dataSamples_UL2018
 
-samples = dataSamples
+samples = dataSamples_UL2018
 
 # ---------------------------------------------------------------------
 

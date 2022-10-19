@@ -14,7 +14,7 @@ def byCompName(components, regexps):
 year = getHeppyOption("year", "2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
-selectComponents = getHeppyOption("selectComponents","DATA")
+selectComponents = getHeppyOption("selectComponents","MC")
 if year == '2018':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL18NanoAODv9 import samples as mcSamples_
     from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples_UL2018 as allData
@@ -28,8 +28,8 @@ elif year == '2016APV':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL16APVNanoAODv9 import samples as mcSamples_
     from CMGTools.RootTools.samples.samples_13TeV_DATA2016APV_NanoAOD import dataSamples_UL16APV as allData
 
-#autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",True)), redirectorAAA="xrootd-cms.infn.it",site="T2_CH_CSCS") # must be done before mergeExtensions
-autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cms-xrd-global.cern.ch/",site="T2_CH_CSCS")
+autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
+#autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cms-xrd-global.cern.ch/",site="T2_CH_CSCS")
 mcSamples_, _ = mergeExtensions(mcSamples_)
 
 # Triggers
@@ -42,14 +42,16 @@ elif year in ['2016','2016APV']:
     from CMGTools.RootTools.samples.triggers_13TeV_DATA2016 import all_triggers as triggers
     triggers["FR_1mu_noiso_smpd"] = [] 
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttH_modules import triggerGroups_dict
+from CMGTools.VVsemilep.tools.nanoAOD.ttH_modules import triggerGroups_dict
 
 DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # single boson
-        "DYJetsToLL_M50", "DYJetsToLL_M10to50_LO", 
+        #"ZZTo2Q2L",
+        "WZTo2Q2L",
+        #        "DYJetsToLL_M50", #"DYJetsToLL_M10to50_LO", 
         # Ttbar + single top + tW
 ##am        "TT(Lep|Semi)_pow",
 ##am        "T_tch", "TBar_tch", "T_tWch_noFullyHad", "TBar_tWch_noFullyHad",
@@ -124,7 +126,7 @@ elif selectComponents=='DATA':
 else:
     selectedComponents = byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
 
-#autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it")
+autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it")
 configureSplittingFromTime(dataSamples,5,12)
 configureSplittingFromTime(mcSamples,10,12)
 selectedComponents, _ = mergeExtensions(selectedComponents)
@@ -157,22 +159,22 @@ if getHeppyOption("justSummary"):
     printSummary(selectedComponents)
     sys.exit(0)
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttH_modules import *
+from CMGTools.VVsemilep.tools.nanoAOD.ttH_modules import *
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 
 # in the cut string, keep only the main cuts to have it simpler
-modules = ttH_sequence_step1
-cut = ttH_skim_cut
+modules = vvsemilep_sequence_step1
+cut = vvsemilep_skim_cut
 compression = "ZLIB:3" #"LZ4:4" #"LZMA:9"
-branchsel_in = os.environ['CMSSW_BASE']+"/src/CMGTools/TTHAnalysis/python/tools/nanoAOD/branchsel_in.txt"
-branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/TTHAnalysis/python/tools/nanoAOD/branchsel_out.txt"
+branchsel_in = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_in.txt"
+branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_out.txt"
 
 if analysis == "frqcd":
     modules = ttH_sequence_step1_FR
     cut = ttH_skim_cut_FR
     compression = "LZMA:9"
-    branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/TTHAnalysis/python/plotter/ttH-multilepton/lepton-fr/qcd1l-skim-ec.txt"
+    branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/plotter/ttH-multilepton/lepton-fr/qcd1l-skim-ec.txt"
 
 POSTPROCESSOR = PostProcessor(None, [], modules = modules,
         cut = cut, prefetch = True, longTermCache = False,

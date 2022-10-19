@@ -1,5 +1,5 @@
-dropmatch FatJet_.*
 dropmatch L1_.*
 dropmatch SoftActivityJet_.*
 dropmatch SV_.*
-dropmatch Electron_.*
+dropmatch boostedTau_.*
+dropmatch Photon_.*

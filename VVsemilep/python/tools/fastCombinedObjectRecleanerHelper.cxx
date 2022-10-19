@@ -5,8 +5,8 @@
 #include <TTreeReaderValue.h>
 #include <TTreeReaderArray.h>
 #include <DataFormats/Math/interface/deltaR.h>
-#include <CMGTools/TTHAnalysis/interface/CollectionSkimmer.h>
-#include "CMGTools/TTHAnalysis/interface/CombinedObjectTags.h"
+#include <CMGTools/VVsemilep/interface/CollectionSkimmer.h>
+#include "CMGTools/VVsemilep/interface/CombinedObjectTags.h"
 #include "DataFormats/Math/interface/LorentzVector.h"
 
 struct JetSumCalculatorOutput {
@@ -19,6 +19,7 @@ struct JetSumCalculatorOutput {
   int nFwdJet;
   float fwd1_pt;
   float fwd1_eta;
+
 };
 
 class fastCombinedObjectRecleanerHelper {
@@ -40,9 +41,10 @@ public:
           ruint * unsigned_;
   };
   
-  fastCombinedObjectRecleanerHelper(CollectionSkimmer &clean_taus, CollectionSkimmer &clean_jets, bool cleanJetsWithFOTaus, float bTagL, float bTagM, bool cleanWithRef=false) : clean_taus_(clean_taus), clean_jets_(clean_jets), deltaR2cut(0.16), cleanJetsWithFOTaus_(cleanJetsWithFOTaus), bTagL_(bTagL), bTagM_(bTagM), cleanWithRef_(cleanWithRef), deltaR2cut_taus(0.09) {
+  fastCombinedObjectRecleanerHelper(CollectionSkimmer &clean_taus, CollectionSkimmer &clean_jets, CollectionSkimmer &clean_fatjets, bool cleanJetsWithFOTaus, float bTagL, float bTagM, bool cleanWithRef=false) : clean_taus_(clean_taus), clean_jets_(clean_jets), clean_fatjets_(clean_fatjets),deltaR2cut(0.16), deltaR2cut_fatjets(0.64), cleanJetsWithFOTaus_(cleanJetsWithFOTaus), bTagL_(bTagL), bTagM_(bTagM), cleanWithRef_(cleanWithRef), deltaR2cut_taus(0.09) {
     _ct.reset(new std::vector<int>);
     _cj.reset(new std::vector<int>);
+    _cfj.reset(new std::vector<int>);
 }
   
   void setLeptons(rint *nLep, rfloats* lepPt, rfloats *lepEta, rfloats *lepPhi) {
@@ -65,10 +67,20 @@ public:
     nJet_ = nJet; Jet_pt_ = jetPt; Jet_eta_ = jetEta; Jet_phi_ = jetPhi; Jet_btagCSV_ = jetbtagCSV; 
     Jet_corr_   = jetpt;
   }
+  void setFatJets(ruint *nFatJet, rfloats *fatjetPt, rfloats *fatjetEta, rfloats *fatjetPhi, vector<rfloats*> fatjetpt) { //##am
+    nFatJet_ = nFatJet; FatJet_pt_ = fatjetPt; FatJet_eta_ = fatjetEta; FatJet_phi_ = fatjetPhi; 
+  }
+
+  void setFatJets(ruint *nFatJet, rfloats *fatjetPt, rfloats *fatjetEta, rfloats *fatjetPhi, rints *fatjetmu, rints *fatjetel, vector<rfloats*> fatjetpt) { //##am
+    nFatJet_ = nFatJet; FatJet_pt_ = fatjetPt; FatJet_eta_ = fatjetEta; FatJet_phi_ = fatjetPhi; FatJet_mu_ = fatjetmu;
+    FatJet_el_ = fatjetel;
+  }
+
 
   void addJetPt(int pt){
     _jetptcuts.insert(pt);
   }
+
   void setFwdPt(float fwdJetPt1, float fwdJetPt2){
     fwdJetPt1_= fwdJetPt1;
     fwdJetPt2_= fwdJetPt2;
@@ -114,6 +126,7 @@ public:
 	var = 2*variation-2;
 
 
+
       for (auto j : *_cj){
 	float pt = (*Jet_pt_)[j];
 	if (variation != 0) 
@@ -153,6 +166,10 @@ public:
       output.push_back(sums);
     }
 
+
+
+
+
     return output;
   }
   
@@ -161,21 +178,25 @@ public:
     sel_leps_extrafortau.reset(new bool[*nLep_]);
     sel_taus.reset(new bool[*nTau_]);
     sel_jets.reset(new bool[*nJet_]);
+    sel_fatjets.reset(new bool[*nFatJet_]); //##am
     std::fill_n(sel_leps.get(),*nLep_,false);
     std::fill_n(sel_leps_extrafortau.get(),*nLep_,false);
     std::fill_n(sel_taus.get(),*nTau_,false);
     std::fill_n(sel_jets.get(),*nJet_,false);
+    std::fill_n(sel_fatjets.get(),*nFatJet_,false);//##am
   }
   void selectLepton(uint i, bool what=true) {sel_leps.get()[i]=what;}
   void selectLeptonExtraForTau(uint i, bool what=true) {sel_leps_extrafortau.get()[i]=what;}
   void selectTau(uint i, bool what=true) {sel_taus.get()[i]=what;}
   void selectJet(uint i, bool what=true) {sel_jets.get()[i]=what;}
+  void selectFatJet(uint i, bool what=true) {sel_fatjets.get()[i]=what;}//##am
   void loadTags(CombinedObjectTags *tags, bool cleanTausWithLooseLeptons, float wPL=0, float wPM=0){
     bTagL_ = wPL; bTagM_ = wPM;
     std::copy(tags->lepsC.get(),tags->lepsC.get()+*nLep_,sel_leps.get());
     if (cleanTausWithLooseLeptons) std::copy(tags->lepsL.get(),tags->lepsL.get()+*nLep_,sel_leps_extrafortau.get());
     std::copy(tags->tausF.get(),tags->tausF.get()+*nTau_,sel_taus.get());
     std::copy(tags->jetsS.get(),tags->jetsS.get()+*nJet_,sel_jets.get());
+    std::copy(tags->fatjetsS.get(),tags->fatjetsS.get()+*nFatJet_,sel_fatjets.get());
   }
 
   void setDR(float f) {deltaR2cut = f*f;}
@@ -183,9 +204,10 @@ public:
   std::pair<std::vector<int>*, std::vector<int>* > run() {
     clean_taus_.clear();
     clean_jets_.clear();
-
+    clean_fatjets_.clear(); //##am
     _ct->clear();
     _cj->clear();
+    _cfj->clear();//##am 
 
     for (int iT = 0, nT = *nTau_; iT < nT; ++iT) {
       if (!sel_taus[iT]) continue;
@@ -205,23 +227,61 @@ public:
       }
     }
 
+    //ak8jets
+    for (int iFj = 0, nFj = *nFatJet_; iFj < nFj; ++iFj) {
+      if (!sel_fatjets[iFj]) continue;
+      bool ok = true;
+      for (int iL = 0, nL = *nLep_; iL < nL; ++iL) {
+	if (!(sel_leps.get()[iL])) continue;
+	if (deltaR2((*Lep_eta_)[iL], (*Lep_phi_)[iL], (*FatJet_eta_)[iFj], (*FatJet_phi_)[iFj]) < deltaR2cut_fatjets) {
+	  ok = false;
+	  break;
+	}
+      }
+      if (ok) {
+	clean_fatjets_.push_back(iFj);
+	_ct->push_back(iFj);
+      } else {
+	sel_fatjets.get()[iFj]=false; // do not use unclean taus for cleaning jets, use lepton instead
+      }
+    }
+
+
     { // jet cleaning (clean closest jet - one at most - for each lepton or tau, then apply jet selection)
       std::vector<float> vetos_eta;
       std::vector<float> vetos_phi;
       std::vector<int>   vetos_indices;
+
+      std::vector<float> fvetos_eta;
+      std::vector<float> fvetos_phi;
+      std::vector<int>   fvetos_elindices;
+      std::vector<int>   fvetos_muindices;
       for (int iL = 0, nL = *nLep_; iL < nL; ++iL) if (sel_leps[iL]) {vetos_eta.push_back((*Lep_eta_)[iL]); vetos_phi.push_back((*Lep_phi_)[iL]); if (Lep_jet_) vetos_indices.push_back((*Lep_jet_)[iL]);}
       if ( cleanJetsWithFOTaus_){
 	for (int iT = 0, nT = *nTau_; iT < nT; ++iT) if (sel_taus[iT]) {vetos_eta.push_back((*Tau_eta_)[iT]); vetos_phi.push_back((*Tau_phi_)[iT]); if (Tau_jet_) vetos_indices.push_back((*Tau_jet_)[iT]);}
       }
+      for (int iFj = 0, nFj = *nFatJet_; iFj < nFj; ++iFj) if (sel_fatjets[iFj]) {fvetos_eta.push_back((*FatJet_eta_)[iFj]); fvetos_phi.push_back((*FatJet_phi_)[iFj]); 
+	  if (FatJet_mu_) {fvetos_muindices.push_back((*FatJet_mu_)[iFj]);}
+	  if (FatJet_el_) {fvetos_elindices.push_back((*FatJet_el_)[iFj]);}
+	}
       std::unique_ptr<bool[]> good;
       good.reset(new bool[*nJet_]);
       std::fill_n(good.get(),*nJet_,true);
+
+      std::unique_ptr<bool[]> better;
+      better.reset(new bool[*nJet_]);
+      std::fill_n(better.get(),*nJet_,true);
 
       if (cleanWithRef_){
 	for (uint iV=0; iV<vetos_indices.size(); iV++) {
 	  if (vetos_indices[iV] > -1) good[vetos_indices[iV]] = false;
 	}
-      }
+	for (uint iV=0; iV < fvetos_elindices.size(); iV++) {
+	  if (fvetos_elindices[iV] > -1 || fvetos_muindices[iV] > -1) better[fvetos_elindices[iV]] = false;
+	}
+
+
+      }//cleanWithRef_
       else{
 	for (uint iV=0; iV<vetos_eta.size(); iV++) {
 	  float mindr2 = -1; int best = -1;
@@ -230,12 +290,32 @@ public:
 	    if (mindr2<0 || dr2<mindr2) {mindr2=dr2; best=iJ;}
 	  }
 	  if (best>-1 && mindr2<deltaR2cut) {
+	    for (uint ifV=0; ifV<fvetos_eta.size(); ifV++) {
+	      float mindr2_1 = -1; int best_1 = -1;
+	      
 	    good[best] = false;
+	    }
 	  }
 	}
-      }
+
+	for (uint iV=0; iV<fvetos_eta.size(); iV++) {
+	  float mindr2 = -1; int best = -1;
+	  for (int iJ = 0, nJ = *nJet_; iJ < nJ; ++iJ) {
+	    float dr2 = deltaR2(fvetos_eta[iV],fvetos_phi[iV],(*Jet_eta_)[iJ], (*Jet_phi_)[iJ]);
+	    if (mindr2<0 || dr2<mindr2) {mindr2=dr2; best=iJ;}
+	  }
+	  if (best>-1 && mindr2<deltaR2cut_fatjets) {
+	    for (uint ifV=0; ifV<fvetos_eta.size(); ifV++) {
+	      float mindr2_1 = -1; int best_1 = -1;
+	      
+	      better[best] = false;
+	    }
+	  }
+	}
+	}//ak4 against ak8
+
       for (int iJ = 0, nJ = *nJet_; iJ < nJ; ++iJ) {
-	if (good[iJ] && sel_jets[iJ]) {
+	if (good[iJ] && better[iJ] && sel_jets[iJ]) {
 	  _cj->push_back(iJ);
 	  if(fabs((*Jet_eta_)[iJ]) < 2.4)
 	    clean_jets_.push_back(iJ); // only to count fwd jets
@@ -247,21 +327,27 @@ public:
   }
 
 private:
-  std::unique_ptr<bool[]> sel_leps, sel_leps_extrafortau, sel_taus, sel_jets;
-  CollectionSkimmer &clean_taus_, &clean_jets_;
-  rcount nLep_, nTau_, nJet_;
+  std::unique_ptr<bool[]> sel_leps, sel_leps_extrafortau, sel_taus, sel_jets,sel_fatjets;//##am 
+  CollectionSkimmer &clean_taus_, &clean_jets_,&clean_fatjets_;//##am 
+  rcount nLep_, nTau_, nJet_,nFatJet_;//##am
   rfloats *Lep_pt_, *Lep_eta_, *Lep_phi_;
   rfloats *Tau_pt_, *Tau_eta_, *Tau_phi_;
-  rfloats *Jet_pt_, *Jet_phi_, *Jet_eta_, *Jet_btagCSV_;
+  rfloats *Jet_pt_, *Jet_phi_, *Jet_eta_, *Jet_btagCSV_,*FatJet_pt_, *FatJet_phi_, *FatJet_eta_;//##am
   vector<rfloats*> Jet_corr_;
-  rints    *Lep_jet_, *Tau_jet_;
+
+  rints    *Lep_jet_, *Tau_jet_,*FatJet_mu_,*FatJet_el_;
   float deltaR2cut;
   float deltaR2cut_taus;
+  float deltaR2cut_fatjets;  //##am 
+
   std::set<int> _jetptcuts;
+
   std::unique_ptr<std::vector<int> > _ct;
   std::unique_ptr<std::vector<int> > _cj;
+  std::unique_ptr<std::vector<int> > _cfj;
   bool cleanJetsWithFOTaus_;
+  //  bool cleanJetsWithFatJets_; //##am
   float bTagL_,bTagM_;
   bool cleanWithRef_;
   float fwdJetPt1_, fwdJetPt2_;
-};
+  };

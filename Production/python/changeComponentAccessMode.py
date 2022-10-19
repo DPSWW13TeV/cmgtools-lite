@@ -1,7 +1,7 @@
 import cPickle, re, optparse, os, os.path
 
 
-def convertFile(filename,pattern,verbose=0):
+def convertFile(filename,pattern,verbose=1):
     if "/store" not in filename: 
         raise RuntimeError, "%s doesn't look like a PFN" % filename
     lfn = re.sub(".*(/store/.*)(?:\\?.*)?","\\1",filename)

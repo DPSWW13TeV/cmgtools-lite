@@ -9,12 +9,13 @@ class ttHPrescalingLepSkimmer( Module ):
             electronSel = lambda l : True,
             minLeptons = 0,
             minLeptonsNoPrescale = 0,
-            requireSameSignPair = False,
+            requireOppSignPair = False,
             jetSel = lambda j : True,
             fatjetSel = lambda f : True,     
             minJets = 0,
             minMET = 0,
             useEventNumber = True,
+            minFatJets = 0,     
             label = "prescaleFromSkim"):
 
         self.prescaleFactor = prescaleFactor
@@ -23,7 +24,7 @@ class ttHPrescalingLepSkimmer( Module ):
         self.electronSel = electronSel
         self.minLeptons = minLeptons
         self.minLeptonsNoPrescale = minLeptonsNoPrescale
-        self.requireSameSignPair = requireSameSignPair
+        self.requireOppSignPair = requireOppSignPair
         self.jetSel = jetSel
         self.fatjetSel = fatjetSel
         self.minJets = minJets
@@ -55,24 +56,24 @@ class ttHPrescalingLepSkimmer( Module ):
             if len(leps) < self.minLeptonsNoPrescale:
                 return False
             if len(leps) >= self.minLeptons:
-                if self.requireSameSignPair:
-                    if any([(l1.charge * l2.charge > 0) for l1,l2 in itertools.combinations(leps,2)]):
+                if self.requireOppSignPair:
+                    if any([(l1.charge * l2.charge < 0) for l1,l2 in itertools.combinations(leps,2)]):
                         toBePrescaled = False
                 else:
                     toBePrescaled = False
         if self.minJets > 0:
-            fatjets = filter(self.fatjetSel, Collection(event, 'FatJet'))
+            jets = filter(self.jetSel, Collection(event, 'Jet'))
             if len(jets) >= self.minJets:
                 toBePrescaled = False
+        
         if self.minFatJets > 0:
-            fatjets = filter(self.fatjetSel, Collection(event, 'FatJet'))
-            if len(fatjets) >= self.minFatJets:
-                toBePrescaled = False
+            if (event.nFatJet >= self.minFatJets):
+                fatjets = filter(self.fatjetSel, Collection(event, 'FatJet'))
+                if len(fatjets) >= self.minFatJets:
+                    toBePrescaled = False
+
         if self.minMET > 0:
             if event.MET_pt > self.minMET:
-                toBePrescaled = False
-        if self.minpuppiMET > 0:
-            if event.PuppiMET_pt > self.minMET:
                 toBePrescaled = False
         if not toBePrescaled:
             self.wrappedOutputTree.fillBranch(self.label, 1)

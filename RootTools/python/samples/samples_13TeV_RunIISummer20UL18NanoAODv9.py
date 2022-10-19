@@ -442,6 +442,13 @@ Higgs = [
     ZHToTauTau,
 ]
 
+#VVsemilep samples
+ZZTo2Q2L = kreator.makeMCComponent("ZZTo2Q2L","/ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS",".*root", 3.689, fracNegWeights= 0.1756e-01)
+WZTo2Q2L = kreator.makeMCComponent("WZTo2Q2L","/WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS",".*root", 6.409, fracNegWeights=0.1883)
+
+VVTo2Q2L=[ZZTo2Q2L,WZTo2Q2L]
+
+
 # # ----------------------------- summary ----------------------------------------
 
 TTH_EFT = kreator.makeMCComponentFromJSON("TTH_EFT", "/TTH_EFT/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM", os.environ['CMSSW_BASE']+'/src/CMGTools/RootTools/data/json/UL18_ttHJet_b1.json',0.5071, prefix='/pnfs/psi.ch/cms/trivcat/store/user/sesanche/NanoAOD_ULv9_jan21/')
@@ -454,7 +461,7 @@ TTTT_EFT = kreator.makeMCComponentFromJSON("TTTT_EFT", "/TTTT_EFT/RunIISummer20U
 EFT = [TTH_EFT, THQ_EFT, TllQ_EFT, TTll_EFT, TTln_EFT, TTTT_EFT]
 
 
-mcSamples =  Ws + DYs +  TTs + Ts + TTXs + TTXXs + DiBosons + TriBosons + Higgs + QCD_bcToE + QCD_EMs + QCD_Mus + EFT # VJetsQQHT +
+mcSamples =  Ws + DYs +  TTs + Ts + TTXs + TTXXs + DiBosons + TriBosons + Higgs + QCD_bcToE + QCD_EMs + QCD_Mus + EFT + VVTo2Q2L # VJetsQQHT +
 
 
 samples = mcSamples

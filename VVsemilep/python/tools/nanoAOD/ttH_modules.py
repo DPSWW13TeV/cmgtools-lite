@@ -5,36 +5,48 @@ conf = dict(
         muPt = 5, 
         elePt = 7, 
         miniRelIso = 0.4, 
-        sip3d = 4, 
-        mudxy =  0.2, 
-        mudz = 0.5, 
-        eleId = "mvaFall17V2noIso_WPL",
-        muoId = "looseId",
-        mutrk = "isTracker"
+        sip3d = 8, 
+        dxy =  0.05, 
+        dz = 0.1, 
+        eleIdloose = "mvaFall17V2Iso_WPL",
+        eleIdtight = "mvaFall17V2Iso_WP90",
+        muIdloose = "looseId",
+        muIdtight = "tightId",
+        mutrk = "isTracker",
+        muIsoloose=0.40,
+        muIsotight=0.15,
 
 )
 
-ttH_skim_cut = ("nMuon + nElectron >= 2 &&" + 
-                "Sum$(Muon_pt > {muPt} && Muon_miniPFRelIso_all < {miniRelIso} && Muon_sip3d < {sip3d} && Muon_{muoId} ) +"
-                "Sum$(Electron_pt > {muPt} && Electron_miniPFRelIso_all < {miniRelIso} && Electron_sip3d < {sip3d}  && Electron_{eleId} ) >= 2").format(**conf)
-
-VVsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" + 
-                "Sum$(Muon_pt > {muPt}  && Muon_isTracker && Muon_sip3d < {sip3d} && Muon_{muoId} ) +"
-                "Sum$(Electron_pt > {muPt} && Electron_sip3d < {sip3d}  && Electron_{eleId} ) >= 2").format(**conf)
 
 
-muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["muPt" ] and l.sip3d < conf["sip3d"] and abs(l.dxy) < conf["mudxy"] and abs(l.dz) < conf["mudz"] and getattr(l, conf["muoId"]) and  getattr(l, conf["mutrk"])
-electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] and l.sip3d < conf["sip3d"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["eleId"])
+vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" + 
+                      "Sum$(Muon_pt > {muPt}  && Muon_{mutrk} && Muon_sip3d < {sip3d} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
+                      "Sum$(Electron_pt > {elePt} && Electron_sip3d < {sip3d}  && Electron_{eleIdloose} ) >= 2").format(**conf)
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttHPrescalingLepSkimmer import ttHPrescalingLepSkimmer
+
+muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["muPt" ] and l.sip3d < conf["sip3d"] and \
+                    abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["muIdloose"]) and  \
+                    getattr(l, conf["mutrk"]) and l.pfRelIso03_all < conf["muIsoloose"]
+electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] and l.sip3d < conf["sip3d"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["eleIdloose"])
+
+def clean_and_FO_selection_VVsemilep(lep,year, subera): ##am for tight leptn ids not sure if era is needed now
+    return lep.pt>10 and (abs(lep.pdgId)!=11 or (ttH_idEmu_cuts_E3(lep) ))
+
+tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,subera) and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso03_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
+
+foTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and abs(tau.dxy) < 1000 and abs(tau.dz) < 0.2  and (int(tau.idDeepTau2017v2p1VSjet)>>1 & 1) # VVLoose WP
+tightTauSel = lambda tau: (int(tau.idDeepTau2017v2p1VSjet)>>2 & 1) # VLoose WP
+
+from CMGTools.VVsemilep.tools.nanoAOD.ttHPrescalingLepSkimmer import ttHPrescalingLepSkimmer
 # NB: do not wrap lepSkim a lambda, as we modify the configuration in the cfg itself 
 lepSkim = ttHPrescalingLepSkimmer(5, 
                 muonSel = muonSelection, electronSel = electronSelection,
                 minLeptonsNoPrescale = 1, # things with less than 2 leptons are rejected irrespectively of the prescale
-                minLeptons = 1, requireSameSignPair = False,
+                minLeptons = 1, requireOppSignPair = True,
                 jetSel = lambda j : j.pt > 25 and abs(j.eta) < 2.4 and j.jetId > 0, 
-                fatjetSel = lambda f : f.pt > 25 and abs(f.eta) < 2.4 and f.jetId > 0, ##am here 
-                minJets = 2, minMET = 40, minFatJets = 2)
+                fatjetSel = lambda f : f.pt > 200 and abs(f.eta) < 2.4,  ##not all samples have fatjets
+                minJets = 2, minMET = 70, minFatJets = 1)
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger import collectionMerger
 lepMerge = collectionMerger(input = ["Electron","Muon"], 
                             output = "LepGood", 
@@ -43,30 +55,31 @@ lepMerge_2 = lambda x : collectionMerger(input = ["Electron","Muon"],
                             output = "LepGood", 
                             selector = dict(Muon = muonSelection, Electron = electronSelection))
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttHLeptonCombMasses import ttHLeptonCombMasses
+from CMGTools.VVsemilep.tools.nanoAOD.ttHLeptonCombMasses import ttHLeptonCombMasses
 lepMasses = ttHLeptonCombMasses( [ ("Muon",muonSelection), ("Electron",electronSelection) ], maxLeps = 4)
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.autoPuWeight import autoPuWeight
-from CMGTools.TTHAnalysis.tools.nanoAOD.yearTagger import yearTag
-from CMGTools.TTHAnalysis.tools.nanoAOD.xsecTagger import xsecTag
-from CMGTools.TTHAnalysis.tools.nanoAOD.lepJetBTagAdder import lepJetBTagDeepFlav, lepJetBTagDeepFlavC
+from CMGTools.VVsemilep.tools.nanoAOD.autoPuWeight import autoPuWeight
+from CMGTools.VVsemilep.tools.nanoAOD.yearTagger import yearTag
+from CMGTools.VVsemilep.tools.nanoAOD.xsecTagger import xsecTag
+from CMGTools.VVsemilep.tools.nanoAOD.lepJetBTagAdder import lepJetBTagDeepFlav, lepJetBTagDeepFlavC
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.LepMVAULFriend import lepMVA
+from CMGTools.VVsemilep.tools.nanoAOD.LepMVAULFriend import lepMVA
 
 
-ttH_sequence_step1 = [lepSkim, lepMerge, autoPuWeight, yearTag, lepJetBTagDeepFlav, lepMVA, xsecTag, lepMasses]
+
+vvsemilep_sequence_step1 = [lepSkim, lepMerge, autoPuWeight, yearTag, lepJetBTagDeepFlav, xsecTag, lepMasses]
 
 #==== 
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttHLepQCDFakeRateAnalyzer import ttHLepQCDFakeRateAnalyzer
+from CMGTools.VVsemilep.tools.nanoAOD.ttHLepQCDFakeRateAnalyzer import ttHLepQCDFakeRateAnalyzer
 centralJetSel = lambda j : j.pt > 25 and abs(j.eta) < 2.4 and j.jetId > 0
 lepFR = ttHLepQCDFakeRateAnalyzer(jetSel = centralJetSel,
                                   pairSel = lambda pair : deltaR(pair[0].eta, pair[0].phi, pair[1].eta, pair[1].phi) > 0.7,
                                   maxLeptons = 1, requirePair = True)
-from CMGTools.TTHAnalysis.tools.nanoAOD.nBJetCounter import nBJetCounter
+from CMGTools.VVsemilep.tools.nanoAOD.nBJetCounter import nBJetCounter
 nBJetDeepFlav25NoRecl = lambda : nBJetCounter("DeepFlav25", "btagDeepFlavB", centralJetSel)
 
-ttH_sequence_step1_FR = [m for m in ttH_sequence_step1 if m != lepSkim] + [ lepFR, nBJetDeepFlav25NoRecl() ]
+ttH_sequence_step1_FR = [m for m in vvsemilep_sequence_step1 if m != lepSkim] + [ lepFR, nBJetDeepFlav25NoRecl() ]
 ttH_skim_cut_FR = ("nMuon + nElectron >= 1 && nJet >= 1 && Sum$(Jet_pt > 25 && abs(Jet_eta)<2.4) >= 1 &&" + 
        "Sum$(Muon_pt > {muPt} && Muon_miniPFRelIso_all < {miniRelIso} && Muon_sip3d < {sip3d}) +"
        "Sum$(Electron_pt > {muPt} && Electron_miniPFRelIso_all < {miniRelIso} && Electron_sip3d < {sip3d}) ").format(**conf)
@@ -100,30 +113,20 @@ def clean_and_FO_selection_TTH(lep,year, subera):
              (abs(lep.pdgId)==13 and lep.jetBTagDeepFlav< smoothBFlav(0.9*lep.pt*(1+lep.jetRelIso), 20, 45, year, subera) and lep.jetRelIso < 0.50) or \
              (abs(lep.pdgId)==11 and lep.mvaFall17V2noIso_WP90 and lep.jetBTagDeepFlav< smoothBFlav(0.9*lep.pt*(1+lep.jetRelIso), 20, 45, year, subera)and lep.jetRelIso < 1.0 ))
 
-def clean_and_FO_selection_VVsemilep(lep,year, subera): ##am tight leptn ids
-    bTagCut = ([0.2598,0.2489], [0.3040], [0.2783])[year-2016][subera]
-    return lep.pt>10 and (abs(lep.pdgId)!=11 or (ttH_idEmu_cuts_E3(lep) )) \
-        and (lep.tightId>(0.85 if abs(lep.pdgId)==13 else 0.90) or \
-             (abs(lep.pdgId)==13 and lep.jetBTagDeepFlav< smoothBFlav(0.9*lep.pt*(1+lep.jetRelIso), 20, 45, year, subera) and lep.jetRelIso < 0.50) or \
-             (abs(lep.pdgId)==11 and lep.mvaFall17V2noIso_WP90 and lep.jetBTagDeepFlav< smoothBFlav(0.9*lep.pt*(1+lep.jetRelIso), 20, 45, year, subera)and lep.jetRelIso < 1.0 ))
 
-
-tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and (abs(lep.pdgId)!=13 or lep.tightId>0) and lep.mvaTTHUL > (0.85 if abs(lep.pdgId)==13 else 0.90) ##am tight lepton ids
-
-foTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and abs(tau.dxy) < 1000 and abs(tau.dz) < 0.2  and (int(tau.idDeepTau2017v2p1VSjet)>>1 & 1) # VVLoose WP
-tightTauSel = lambda tau: (int(tau.idDeepTau2017v2p1VSjet)>>2 & 1) # VLoose WP
 jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year" ]] + ['jer%d'%j for j in range(6)]
-from CMGTools.TTHAnalysis.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning
-from CMGTools.TTHAnalysis.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
+from CMGTools.VVsemilep.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning
+from CMGTools.VVsemilep.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
 recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
-                                                           looseLeptonSel = lambda lep : lep.miniPFRelIso_all < 0.4 and lep.sip3d < 8 and (abs(lep.pdgId)!=11 or lep.lostHits<=1) and (abs(lep.pdgId)!=13 or lep.looseId),
+                                                           looseLeptonSel = lambda lep : lep.sip3d < 8 and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WPL) and (abs(lep.pdgId)!=13 or lep.looseId),
                                                            cleaningLeptonSel = clean_and_FO_selection_VVsemilep,
                                                            FOLeptonSel = clean_and_FO_selection_VVsemilep,
                                                            tightLeptonSel = tightLeptonSel,
                                                            FOTauSel = foTauSel,
                                                            tightTauSel = tightTauSel,
-                                                           selectJet = lambda jet: jet.jetId > 0, # pt and eta cuts are (hard)coded in the step2 
-                                                           coneptdef = lambda lep: conept_TTH(lep),
+                                                           selectJet =    lambda jet: jet.jetId > 0, # pt and eta cuts are (hard)coded in the step2 
+                                                           selectFatJet = lambda fatjet: fatjet.pt > 200 and abs(fatjet.eta) < 2.4, # need to first make sure there are fatjets in the event
+                                                           coneptdef =    lambda lep: conept_TTH(lep),
 )
 recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
                                                                         cleanTausWithLooseLeptons=True,
@@ -170,24 +173,24 @@ countTaus_veto             = lambda : ObjTagger('Tight'            ,'TauSel_Recl
 countTaus_FO               = lambda : ObjTagger('FO'               ,'TauSel_Recl', [tauFOs]                               ) # actual FO (the FO above is used for jet cleaning, and corresponds to the loose)
 countTaus_2lss1tau_Veto    = lambda : ObjTagger('2lss1tau_Veto'    ,'TauSel_Recl', [tauVeto_2lss_1tau]                    ) # veto ID for 2lss1tau category 
 countTaus_2lss1tau_Tight   = lambda : ObjTagger('2lss1tau_Tight'   ,'TauSel_Recl', [tauTight_2lss_1tau]                   ) # tight ID for 2lss1tau category 
-from CMGTools.TTHAnalysis.tools.nanoAOD.tauMatcher import tauScaleFactors
+from CMGTools.VVsemilep.tools.nanoAOD.tauMatcher import tauScaleFactors
 
 
 countTaus = [countTaus_veto,countTaus_FO,countTaus_2lss1tau_Veto,countTaus_2lss1tau_Tight]
 
 
 
-from CMGTools.TTHAnalysis.tools.eventVars_2lss import EventVars2LSS
+from CMGTools.VVsemilep.tools.eventVars_2lss import EventVars2LSS
 eventVars               = lambda : EventVars2LSS('','Recl', tauTight_2lss_1tau=tauTight_2lss_1tau)
 eventVars_allvariations = lambda : EventVars2LSS('','Recl',variations = jevariations, tauTight_2lss_1tau=tauTight_2lss_1tau)
 
 
 
 
-from CMGTools.TTHAnalysis.tools.hjDummCalc import HjDummyCalc
+from CMGTools.VVsemilep.tools.hjDummCalc import HjDummyCalc
 hjDummy = lambda : HjDummyCalc(variations  = [ 'jes%s'%v for v in jecGroups] + ['jer%s'%x for x in ['barrel','endcap1','endcap2highpt','endcap2lowpt' ,'forwardhighpt','forwardlowpt']  ]  + ['HEM'])
 
-from CMGTools.TTHAnalysis.tools.objTagger import ObjTagger
+from CMGTools.VVsemilep.tools.objTagger import ObjTagger
 isMatchRightCharge = lambda : ObjTagger('isMatchRightCharge','LepGood', [lambda l,g : (l.genPartFlav==1 or l.genPartFlav == 15) and (g.pdgId*l.pdgId > 0) ], linkColl='GenPart',linkVar='genPartIdx')
 mcMatchId     = lambda : ObjTagger('mcMatchId','LepGood', [lambda l : (l.genPartFlav==1 or l.genPartFlav == 15) ])
 mcPromptGamma = lambda : ObjTagger('mcPromptGamma','LepGood', [lambda l : (l.genPartFlav==22)])
@@ -339,7 +342,7 @@ triggerGroups_dict=dict(
 )
 
 
-from CMGTools.TTHAnalysis.tools.evtTagger import EvtTagger
+from CMGTools.VVsemilep.tools.evtTagger import EvtTagger
 
 Trigger_1e   = lambda : EvtTagger('Trigger_1e',[ lambda ev : triggerGroups['Trigger_1e'][ev.year](ev) ])
 Trigger_1m   = lambda : EvtTagger('Trigger_1m',[ lambda ev : triggerGroups['Trigger_1m'][ev.year](ev) ])
@@ -427,7 +430,7 @@ bTagSFs = lambda : BtagSFs("JetSel_Recl",
 #                                    corrs=jecGroups,
 #                        )
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.lepScaleFactors import lepScaleFactors
+from CMGTools.VVsemilep.tools.nanoAOD.lepScaleFactors import lepScaleFactors
 leptonSFs = lambda : lepScaleFactors()
 
 scaleFactorSequence_2016APV = [btagSF2016APV_dj,bTagSFs] 
