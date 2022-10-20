@@ -290,12 +290,8 @@ public:
 	    if (mindr2<0 || dr2<mindr2) {mindr2=dr2; best=iJ;}
 	  }
 	  if (best>-1 && mindr2<deltaR2cut) {
-	    for (uint ifV=0; ifV<fvetos_eta.size(); ifV++) {
-	      float mindr2_1 = -1; int best_1 = -1;
-	      
 	    good[best] = false;
 	    }
-	  }
 	}
 
 	for (uint iV=0; iV<fvetos_eta.size(); iV++) {
@@ -305,14 +301,11 @@ public:
 	    if (mindr2<0 || dr2<mindr2) {mindr2=dr2; best=iJ;}
 	  }
 	  if (best>-1 && mindr2<deltaR2cut_fatjets) {
-	    for (uint ifV=0; ifV<fvetos_eta.size(); ifV++) {
-	      float mindr2_1 = -1; int best_1 = -1;
-	      
 	      better[best] = false;
 	    }
 	  }
-	}
-	}//ak4 against ak8
+	
+      }//ak4 against ak8
 
       for (int iJ = 0, nJ = *nJet_; iJ < nJ; ++iJ) {
 	if (good[iJ] && better[iJ] && sel_jets[iJ]) {

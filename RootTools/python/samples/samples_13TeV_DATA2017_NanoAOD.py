@@ -4,7 +4,8 @@ kreator = ComponentCreator()
 
 # ----------------------------- 2017 pp run  ----------------------------------------
 
-json = '/work/sesanche/FRs/CMSSW_10_4_0/src/CMGTools/TTHAnalysis/data/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'
+json = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt'
+# /work/sesanche/FRs/CMSSW_10_4_0/src/CMGTools/TTHAnalysis/data/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'
 
 # ----------------------------- Run2017B 14Dec2018 ----------------------------------------
 

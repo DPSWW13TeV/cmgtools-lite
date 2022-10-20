@@ -14,7 +14,8 @@ def byCompName(components, regexps):
 year = getHeppyOption("year", "2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
-selectComponents = getHeppyOption("selectComponents","MC")
+#selectComponents = getHeppyOption("selectComponents","MC")
+selectComponents = getHeppyOption("selectComponents","DATA")
 if year == '2018':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL18NanoAODv9 import samples as mcSamples_
     from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples_UL2018 as allData
@@ -48,27 +49,21 @@ DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
-        # single boson
-        #"ZZTo2Q2L",
-        "WZTo2Q2L",
-        #        "DYJetsToLL_M50", #"DYJetsToLL_M10to50_LO", 
+        # diboson
+        "ZZTo2Q2L",
+        "WZTo2Q2L","WZTo1L1Nu2Q","WWTo1L1Nu2Q"
+        "W.*JetsToLNu.*","DYJets.*",
         # Ttbar + single top + tW
+        "TTJets",
 ##am        "TT(Lep|Semi)_pow",
-##am        "T_tch", "TBar_tch", "T_tWch_noFullyHad", "TBar_tWch_noFullyHad",
+        "T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
 ##am        # conversions
 ##am        "TTGJets",# "WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
-##am        #  # ttV
-##am        "TTZToLLNuNu_m1to10", #"TTWToLNu_fxfx", "TTZToLLNuNu_amc", "TTW_LO", "TTZ_LO"
-##am        #  # ttH + tHq/tHW
-##am        "TTHnobb_fxfx",# "TTHnobb_pow", # faltan cpcvct "THQ_ctcvcp", "THW_ctcvcp", "TTH_ctcvcp",
-##am        #  # top + V rare processes
-##am        "TZQToLL", "TTTT", "TTWW", #  "tWll", <- mirar que pasa con twll
 ##am        #  # diboson + DPS + WWss
 ##am        "ZZTo4L", #"WWTo2L2Nu",  "WZTo3LNu_fxfx",   # "WW_DPS", falta dps y wpwp "WWTo2L2Nu_DPS", "WpWpJJ", # "WZTo3LNu_pow",
 ##am        #  # triboson
 ##am        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ", # "WWW_ll", <- not there, but its just a leptonic filter
-##am        #  # other Higgs processes
-##am        "GGHZZ4L", "VHToNonbb",   "ZHToTauTau", "TTWH", "TTZH", # "VHToNonbb_ll","ZHTobb_ll", <- not there, but its just a leptonic filter
+
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] + triggerGroups_dict["Trigger_3m"][theyear]) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_3e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else
