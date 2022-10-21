@@ -33,7 +33,7 @@ electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] and l.s
 def clean_and_FO_selection_VVsemilep(lep,year, subera): ##am for tight leptn ids not sure if era is needed now
     return lep.pt>10 and (abs(lep.pdgId)!=11 or (ttH_idEmu_cuts_E3(lep) ))
 
-tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,subera) and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso03_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
+tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso03_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
 
 foTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and abs(tau.dxy) < 1000 and abs(tau.dz) < 0.2  and (int(tau.idDeepTau2017v2p1VSjet)>>1 & 1) # VVLoose WP
 tightTauSel = lambda tau: (int(tau.idDeepTau2017v2p1VSjet)>>2 & 1) # VLoose WP
@@ -96,7 +96,7 @@ def ttH_idEmu_cuts_E3(lep):
 
 def conept_TTH(lep):
     if (abs(lep.pdgId)!=11 and abs(lep.pdgId)!=13): return lep.pt
-    if (abs(lep.pdgId)==13 and lep.mediumId>0 and lep.mvaTTHUL > 0.85) or (abs(lep.pdgId) == 11 and lep.mvaTTHUL > 0.90): return lep.pt
+    if (abs(lep.pdgId)==13 and lep.mediumId>0 and lep.mvaTTH > 0.85) or (abs(lep.pdgId) == 11 and lep.mvaTTH > 0.90): return lep.pt
     else: return 0.90 * lep.pt * (1 + lep.jetRelIso)
 
 def smoothBFlav(jetpt,ptmin,ptmax,year, subera,scale_loose=1.0):

@@ -1,10 +1,10 @@
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module 
 
 
-from CMGTools.VVsemilep.tools.collectionSkimmer import CollectionSkimmer
-from CMGTools.VVsemilep.tools.nanoAOD.friendVariableProducerTools import declareOutput
+from CMGTools.TTHAnalysis.tools.collectionSkimmer import CollectionSkimmer
+from CMGTools.TTHAnalysis.tools.nanoAOD.friendVariableProducerTools import declareOutput
 import ROOT, os
-from CMGTools.VVsemilep.tools.nanoAOD.constants import _btagWPs
+from CMGTools.TTHAnalysis.tools.nanoAOD.constants import _btagWPs
 
 class fastCombinedObjectRecleaner(Module):
     def __init__(self,label,inlabel,cleanTausWithLooseLeptons,cleanJetsWithFOTaus,doVetoZ,doVetoLMf,doVetoLMt,jetPts,jetPtsFwd,btagL_thr,btagM_thr,jetCollection='Jet',jetBTag='btagDeepFlavB',tauCollection='Tau',fatjetCollection='FatJet',isMC=None, 
@@ -36,13 +36,14 @@ class fastCombinedObjectRecleaner(Module):
         self.vars = ["eta","phi","mass"]
         self.vars_leptons = ["pdgId",'jetIdx','pt']
         self.vars_taus = ["pt"]
-        self.vars_fatjets = ["pt"]##am
         self.vars_taus_int = ['jetIdx','decayMode','charge'] + (['genPartIdx'] if self.isMC else [])
-        self.vars_taus_uchar = ['idDeepTau2017v2p1VSjet', 'idDeepTau2017v2p1VSjet','idDeepTau2017v2p1VSe','idDeepTau2017v2p1VSmu']
+        self.vars_taus_uchar = ['idDeepTau2017v2p1VSjet','idDeepTau2017v2p1VSe','idDeepTau2017v2p1VSmu']
         self.vars_jets = [("pt","pt_nom") if self.isMC and len(self.variations) else 'pt',"btagDeepB","qgl",'btagDeepFlavB'] + [ 'pt_%s%s'%(x,y) for x in self.variations for y in ["Up","Down"]] 
         self.vars_jets_int = (["hadronFlavour"] if self.isMC else [])
-        self.vars_fatjets = [("pt","pt_nom") if self.isMC and len(self.variations) else 'pt',"btagDeepB","deepTag_WvsQCD",'deepTag_ZvsQCD','deepTag_TvsQCD','deepTag_QCDothers','deepTag_QCD','deepTagMD_ZbbvsQCD','deepTagMD_ZvsQCD','deepTagMD_bbvsLight','deepTagMD_ccvsLight','deepTag_QCD'] + [ 'pt_%s%s'%(x,y) for x in self.variations for y in ["Up","Down"]] ##am
-        self.vars_fatjets_int = (["hadronFlavour","nBHadrons","nCHadrons"] if self.isMC else []) ##am
+        self.vars_fatjets = [("pt","pt_nom") if self.isMC and len(self.variations) else 'pt',"btagDeepB"] + [ 'pt_%s%s'%(x,y) for x in self.variations for y in ["Up","Down"]] ##am
+        #,"deepTag_WvsQCD",'deepTag_ZvsQCD','deepTag_TvsQCD','deepTag_QCDothers','deepTag_QCD','deepTagMD_ZbbvsQCD','deepTagMD_ZvsQCD','deepTagMD_bbvsLight','deepTagMD_ccvsLight',,'particleNet_mass','msoftdrop'
+        self.vars_fatjets_int = (["hadronFlavour","subJetIdx1","subJetIdx2","muonIdx3SJ","electronIdx3SJ"] if self.isMC else []) ##am
+        self.vars_fatjets_uchar = (["nBHadrons","nCHadrons"] if self.isMC else []) ##am
         self.vars_jets_nooutput = []
         self.systsJEC = {0:""}
         if self.isMC:
@@ -65,7 +66,7 @@ class fastCombinedObjectRecleaner(Module):
         self._helper_lepsT = CollectionSkimmer("LepTight"+self.label, "LepGood", floats=[], maxSize=10, saveTagForAll=True)
         self._helper_taus = CollectionSkimmer("TauSel"+self.label, self.tauc, floats=self.vars+self.vars_taus, ints=self.vars_taus_int, uchars=self.vars_taus_uchar, maxSize=10)
         self._helper_jets = CollectionSkimmer("%sSel"%self.jc+self.label, self.jc, floats=self.vars+self.vars_jets, ints=self.vars_jets_int, maxSize=20)
-        self._helper_fatjets = CollectionSkimmer("%sSel"%self.fjc+self.label, self.fjc, floats=self.vars+self.vars_fatjets, ints=self.vars_fatjets_int, maxSize=20) ##am
+        self._helper_fatjets = CollectionSkimmer("%sSel"%self.fjc+self.label, self.fjc, floats=self.vars+self.vars_fatjets, ints=self.vars_fatjets_int,  uchars=self.vars_fatjets_uchar,maxSize=20) ##am
         self._helpers = [self._helper_lepsF,self._helper_lepsT,self._helper_taus,self._helper_jets,self._helper_fatjets]##am
 
 
@@ -92,13 +93,13 @@ class fastCombinedObjectRecleaner(Module):
 
     def initReaders(self,tree):
         self._ttreereaderversion = tree._ttreereaderversion
-        for coll in ["LepGood",self.tauc,self.jc]:
+        for coll in ["LepGood",self.tauc,self.jc,self.fjc]:
             setattr(self,'n'+coll,tree.valueReader('n'+coll))
             _vars = self.vars[:]
             if coll=='LepGood': _vars.extend(self.vars_leptons)
             if coll==self.tauc: _vars.extend(self.vars_taus+self.vars_taus_int+self.vars_taus_uchar)
             if coll==self.jc: _vars.extend(self.vars_jets+self.vars_jets_int+self.vars_jets_nooutput)
-            if coll==self.fjc: _vars.extend(self.vars_fatjets+self.vars_fatjets_int)##am
+            if coll==self.fjc: _vars.extend(self.vars_fatjets+self.vars_fatjets_int+self.vars_fatjets_uchar)##am
             for B in _vars:
                 if type(B) == tuple:
                     setattr(self,"%s_%s"%(coll,B[0]), tree.arrayReader("%s_%s"%(coll,B[1])))
@@ -119,7 +120,7 @@ class fastCombinedObjectRecleaner(Module):
                              getattr(self,'%s_%s'%(self.jc,self.jetBTag)),
                              jecs
                          )
-        self._worker.setFatJets(getattr(self,'n%s'%self.fjc),getattr(self,'%s_pt'%self.fjc),getattr(self,'%s_eta'%self.fjc),getattr(self,'%s_phi'%self.fjc), # Jet pt has already been replaced by Jet_pt_nom in mc above
+        self._worker.setFatJets(getattr(self,'n%s'%self.fjc),getattr(self,'%s_pt'%self.fjc),getattr(self,'%s_eta'%self.fjc),getattr(self,'%s_phi'%self.fjc), 
                                 getattr(self,'%s_muonIdx3SJ'%(self.fjc)),
                                 getattr(self,'%s_electronIdx3SJ'%(self.fjc)),
                              jecs

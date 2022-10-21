@@ -1,11 +1,4 @@
 <use name="CommonTools/Utils"/>
-<use name="CommonTools/MVAUtils"/>
-<use name="TrackingTools/IPTools"/>
-<use name="MagneticField/ParametrizedEngine"/>
-<use name="EgammaAnalysis/ElectronTools"/>
-<use name="SimDataFormats/GeneratorProducts"/>
-<use name="RecoVertex/KalmanVertexFit"/>
-<use name="PhysicsTools/TensorFlow"/>
 <use name="roottmva"/>
 <use name="rootminuit2"/>
 <use name="lhapdf"/>

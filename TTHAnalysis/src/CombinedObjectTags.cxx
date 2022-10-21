@@ -1,6 +1,6 @@
 #include "CMGTools/TTHAnalysis/interface/CombinedObjectTags.h"
 
-CombinedObjectTags::CombinedObjectTags(uint nLep, uint nTau, uint nJet){
+CombinedObjectTags::CombinedObjectTags(uint nLep, uint nTau, uint nJet, uint nFatJet){
   nLep_ = nLep;
   lepsL.reset(new bool[nLep]); std::fill_n(lepsL.get(),nLep,false);
   lepsC.reset(new bool[nLep]); std::fill_n(lepsC.get(),nLep,false);
@@ -9,6 +9,7 @@ CombinedObjectTags::CombinedObjectTags(uint nLep, uint nTau, uint nJet){
   tausF.reset(new bool[nTau]); std::fill_n(tausF.get(),nTau,false);
   tausT.reset(new bool[nTau]); std::fill_n(tausT.get(),nTau,false);
   jetsS.reset(new bool[nJet]); std::fill_n(jetsS.get(),nJet,false);
+  fatjetsS.reset(new bool[nFatJet]); std::fill_n(fatjetsS.get(),nFatJet,false);
   leps_conept.reset(new float[nLep]); std::fill_n(leps_conept.get(),nLep,0);
 }
 
@@ -20,6 +21,9 @@ void CombinedObjectTags::setTauFlags(uint i, bool isF, bool isT){
 }
 void CombinedObjectTags::setJetFlags(uint i, bool isS){
   jetsS[i] = isS;
+}
+void CombinedObjectTags::setFatJetFlags(uint i, bool isS){
+  fatjetsS[i] = isS;
 }
 
 std::vector<int> CombinedObjectTags::getLepsF_byConePt(){

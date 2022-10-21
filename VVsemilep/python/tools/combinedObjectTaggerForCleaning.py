@@ -27,7 +27,6 @@ class CombinedObjectTaggerForCleaning(Module):
 
         self.fkbleTauSel = FOTauSel
         self.tightTauSel = tightTauSel # applied on top of FOTauSel
-
         self.selectJet = selectJet
         self.selectFatJet = selectFatJet
         self.coneptdef = coneptdef

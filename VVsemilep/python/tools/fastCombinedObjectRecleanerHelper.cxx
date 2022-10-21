@@ -5,8 +5,8 @@
 #include <TTreeReaderValue.h>
 #include <TTreeReaderArray.h>
 #include <DataFormats/Math/interface/deltaR.h>
-#include <CMGTools/VVsemilep/interface/CollectionSkimmer.h>
-#include "CMGTools/VVsemilep/interface/CombinedObjectTags.h"
+#include <CMGTools/TTHAnalysis/interface/CollectionSkimmer.h>
+#include "CMGTools/TTHAnalysis/interface/CombinedObjectTags.h"
 #include "DataFormats/Math/interface/LorentzVector.h"
 
 struct JetSumCalculatorOutput {
@@ -69,11 +69,14 @@ public:
   }
   void setFatJets(ruint *nFatJet, rfloats *fatjetPt, rfloats *fatjetEta, rfloats *fatjetPhi, vector<rfloats*> fatjetpt) { //##am
     nFatJet_ = nFatJet; FatJet_pt_ = fatjetPt; FatJet_eta_ = fatjetEta; FatJet_phi_ = fatjetPhi; 
+    if (!nFatJet || !fatjetPt || !fatjetEta || !fatjetPhi) { std::cout << "ERROR: fastCombinedObjectRecleanerHelper initialized setFatJets with a null reader" << std::endl; }
   }
 
   void setFatJets(ruint *nFatJet, rfloats *fatjetPt, rfloats *fatjetEta, rfloats *fatjetPhi, rints *fatjetmu, rints *fatjetel, vector<rfloats*> fatjetpt) { //##am
+
     nFatJet_ = nFatJet; FatJet_pt_ = fatjetPt; FatJet_eta_ = fatjetEta; FatJet_phi_ = fatjetPhi; FatJet_mu_ = fatjetmu;
     FatJet_el_ = fatjetel;
+    if (!nFatJet || !fatjetPt || !fatjetEta || !fatjetPhi || !fatjetmu || !fatjetel) { std::cout << "ERROR: fastCombinedObjectRecleanerHelper initialized setFatJets with a null reader" << std::endl; }
   }
 
 
@@ -321,7 +324,7 @@ public:
 
 private:
   std::unique_ptr<bool[]> sel_leps, sel_leps_extrafortau, sel_taus, sel_jets,sel_fatjets;//##am 
-  CollectionSkimmer &clean_taus_, &clean_jets_,&clean_fatjets_;//##am 
+  CollectionSkimmer &clean_taus_, &clean_jets_, &clean_fatjets_;//##am 
   rcount nLep_, nTau_, nJet_,nFatJet_;//##am
   rfloats *Lep_pt_, *Lep_eta_, *Lep_phi_;
   rfloats *Tau_pt_, *Tau_eta_, *Tau_phi_;
