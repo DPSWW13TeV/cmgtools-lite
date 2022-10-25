@@ -15,7 +15,9 @@ year = getHeppyOption("year", "2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","MC")
-selectComponents = getHeppyOption("selectComponents","DATA")
+#selectComponents = getHeppyOption("selectComponents","DATA")
+selectComponents = getHeppyOption("selectComponents","ALL")
+
 if year == '2018':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL18NanoAODv9 import samples as mcSamples_
     from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples_UL2018 as allData
@@ -113,13 +115,13 @@ for pd, trigs in DatasetsAndTriggers:
     vetoTriggers += trigs[:]
 
 selectedComponents = mcSamples + dataSamples
-#if getHeppyOption('selectComponents'):
-if selectComponents=='MC':
-    selectedComponents = mcSamples
-elif selectComponents=='DATA':
-    selectedComponents = dataSamples
-else:
-    selectedComponents = byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
+if getHeppyOption('selectComponents'):
+    if selectComponents=='MC':
+        selectedComponents = mcSamples
+    elif selectComponents=='DATA':
+        selectedComponents = dataSamples
+    else:
+        selectedComponents = byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
 
 autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it")
 configureSplittingFromTime(dataSamples,5,12)

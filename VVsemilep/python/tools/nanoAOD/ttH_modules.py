@@ -5,7 +5,8 @@ conf = dict(
         muPt = 5, 
         elePt = 7, 
         miniRelIso = 0.4, 
-        sip3d = 8, 
+        sip3dloose = 8, 
+        sip3dtight = 4, 
         dxy =  0.05, 
         dz = 0.1, 
         eleIdloose = "mvaFall17V2Iso_WPL",
@@ -21,19 +22,19 @@ conf = dict(
 
 
 vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" + 
-                      "Sum$(Muon_pt > {muPt}  && Muon_{mutrk} && Muon_sip3d < {sip3d} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
-                      "Sum$(Electron_pt > {elePt} && Electron_sip3d < {sip3d}  && Electron_{eleIdloose} ) >= 2").format(**conf)
+                      "Sum$(Muon_pt > {muPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
+                      "Sum$(Electron_pt > {elePt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) >= 1").format(**conf)
 
 
-muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["muPt" ] and l.sip3d < conf["sip3d"] and \
+muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["muPt" ] and l.sip3d < conf["sip3dloose"] and \
                     abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["muIdloose"]) and  \
                     getattr(l, conf["mutrk"]) and l.pfRelIso03_all < conf["muIsoloose"]
-electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] and l.sip3d < conf["sip3d"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["eleIdloose"])
+electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] and l.sip3d < conf["sip3dloose"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["eleIdloose"])
 
 def clean_and_FO_selection_VVsemilep(lep,year, subera): ##am for tight leptn ids not sure if era is needed now
     return lep.pt>10 and (abs(lep.pdgId)!=11 or (ttH_idEmu_cuts_E3(lep) ))
 
-tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso03_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
+tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and lep.sip3d < conf["sip3dtight"] and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso03_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
 
 foTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and abs(tau.dxy) < 1000 and abs(tau.dz) < 0.2  and (int(tau.idDeepTau2017v2p1VSjet)>>1 & 1) # VVLoose WP
 tightTauSel = lambda tau: (int(tau.idDeepTau2017v2p1VSjet)>>2 & 1) # VLoose WP
@@ -51,9 +52,7 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger im
 lepMerge = collectionMerger(input = ["Electron","Muon"], 
                             output = "LepGood", 
                             selector = dict(Muon = muonSelection, Electron = electronSelection))
-lepMerge_2 = lambda x : collectionMerger(input = ["Electron","Muon"], 
-                            output = "LepGood", 
-                            selector = dict(Muon = muonSelection, Electron = electronSelection))
+
 
 from CMGTools.VVsemilep.tools.nanoAOD.ttHLeptonCombMasses import ttHLeptonCombMasses
 lepMasses = ttHLeptonCombMasses( [ ("Muon",muonSelection), ("Electron",electronSelection) ], maxLeps = 4)
@@ -81,8 +80,8 @@ nBJetDeepFlav25NoRecl = lambda : nBJetCounter("DeepFlav25", "btagDeepFlavB", cen
 
 ttH_sequence_step1_FR = [m for m in vvsemilep_sequence_step1 if m != lepSkim] + [ lepFR, nBJetDeepFlav25NoRecl() ]
 ttH_skim_cut_FR = ("nMuon + nElectron >= 1 && nJet >= 1 && Sum$(Jet_pt > 25 && abs(Jet_eta)<2.4) >= 1 &&" + 
-       "Sum$(Muon_pt > {muPt} && Muon_miniPFRelIso_all < {miniRelIso} && Muon_sip3d < {sip3d}) +"
-       "Sum$(Electron_pt > {muPt} && Electron_miniPFRelIso_all < {miniRelIso} && Electron_sip3d < {sip3d}) ").format(**conf)
+                   "Sum$(Muon_pt > {muPt} && Muon_miniPFRelIso_all < {miniRelIso} && Muon_sip3d < {sip3dloose}) +"
+                   "Sum$(Electron_pt > {muPt} && Electron_miniPFRelIso_all < {miniRelIso} && Electron_sip3d < {sip3dloose}) ").format(**conf)
 
 
 #==== items below are normally run as friends ====
@@ -125,7 +124,7 @@ recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
                                                            FOTauSel = foTauSel,
                                                            tightTauSel = tightTauSel,
                                                            selectJet =    lambda jet: jet.jetId > 0, # pt and eta cuts are (hard)coded in the step2 
-                                                           selectFatJet = lambda fatjet: fatjet.pt > 200 and abs(fatjet.eta) < 2.4, # need to first make sure there are fatjets in the event
+                                                           selectFatJet = lambda fatjet: fatjet.pt > 200 and abs(fatjet.eta) < 2.4, 
                                                            coneptdef =    lambda lep: conept_TTH(lep),
 )
 recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
