@@ -21,7 +21,8 @@ conf = dict(
 
 
 
-vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" + 
+vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
+                      "nJet + nFatJet > 1 &&" +
                       "Sum$(Muon_pt > {muPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
                       "Sum$(Electron_pt > {elePt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) >= 1").format(**conf)
 
