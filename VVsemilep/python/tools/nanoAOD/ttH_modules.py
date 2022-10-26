@@ -2,9 +2,8 @@ import os
 import ROOT 
 import copy 
 conf = dict(
-        muPt = 5, 
-        elePt = 7, 
-        miniRelIso = 0.4, 
+        muPt = 15, 
+        elePt = 15, 
         sip3dloose = 8, 
         sip3dtight = 4, 
         dxy =  0.05, 
@@ -22,7 +21,7 @@ conf = dict(
 
 
 vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
-                      "(nJet > 1 ||  nFatJet > 0) &&" +
+                      "( (Sum$(Jet_pt > 25 && abs(Jet_eta) < 2.4) > 1 && Jet_jetId > 0) || (Sum$(FatJet_pt > 25 && abs(FatJet_eta) < 2.4) > 0) ) &&" + 
                       "Sum$(Muon_pt > {muPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
                       "Sum$(Electron_pt > {elePt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) >= 1").format(**conf)
 
@@ -33,7 +32,7 @@ muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["muPt" ] and l.s
 electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] and l.sip3d < conf["sip3dloose"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["eleIdloose"])
 
 def clean_and_FO_selection_VVsemilep(lep,year, subera): ##am for tight leptn ids not sure if era is needed now
-    return lep.pt>10 and (abs(lep.pdgId)!=11 or (ttH_idEmu_cuts_E3(lep) ))
+    return lep.pt>conf["elePt"] and (abs(lep.pdgId)!=11 or (ttH_idEmu_cuts_E3(lep) ))
 
 tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and lep.sip3d < conf["sip3dtight"] and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso03_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
 
@@ -62,7 +61,6 @@ from CMGTools.VVsemilep.tools.nanoAOD.autoPuWeight import autoPuWeight
 from CMGTools.VVsemilep.tools.nanoAOD.yearTagger import yearTag
 from CMGTools.VVsemilep.tools.nanoAOD.xsecTagger import xsecTag
 from CMGTools.VVsemilep.tools.nanoAOD.lepJetBTagAdder import lepJetBTagDeepFlav, lepJetBTagDeepFlavC
-
 from CMGTools.VVsemilep.tools.nanoAOD.LepMVAULFriend import lepMVA
 
 
@@ -81,8 +79,8 @@ nBJetDeepFlav25NoRecl = lambda : nBJetCounter("DeepFlav25", "btagDeepFlavB", cen
 
 ttH_sequence_step1_FR = [m for m in vvsemilep_sequence_step1 if m != lepSkim] + [ lepFR, nBJetDeepFlav25NoRecl() ]
 ttH_skim_cut_FR = ("nMuon + nElectron >= 1 && nJet >= 1 && Sum$(Jet_pt > 25 && abs(Jet_eta)<2.4) >= 1 &&" + 
-                   "Sum$(Muon_pt > {muPt} && Muon_miniPFRelIso_all < {miniRelIso} && Muon_sip3d < {sip3dloose}) +"
-                   "Sum$(Electron_pt > {muPt} && Electron_miniPFRelIso_all < {miniRelIso} && Electron_sip3d < {sip3dloose}) ").format(**conf)
+                   "Sum$(Muon_pt > {muPt} && Muon_sip3d < {sip3dloose}) +"
+                   "Sum$(Electron_pt > {muPt}  && Electron_sip3d < {sip3dloose}) ").format(**conf)
 
 
 #==== items below are normally run as friends ====
@@ -106,19 +104,12 @@ def smoothBFlav(jetpt,ptmin,ptmax,year, subera,scale_loose=1.0):
     return x*wploose[year-2016][subera]*scale_loose + (1-x)*wpmedium[year-2016][subera]
 
 
-def clean_and_FO_selection_TTH(lep,year, subera):
-    bTagCut = ([0.2598,0.2489], [0.3040], [0.2783])[year-2016][subera]
-    return lep.conept>10 and lep.jetBTagDeepFlav<bTagCut and (abs(lep.pdgId)!=11 or (ttH_idEmu_cuts_E3(lep) )) \
-        and (lep.mvaTTHUL>(0.85 if abs(lep.pdgId)==13 else 0.90) or \
-             (abs(lep.pdgId)==13 and lep.jetBTagDeepFlav< smoothBFlav(0.9*lep.pt*(1+lep.jetRelIso), 20, 45, year, subera) and lep.jetRelIso < 0.50) or \
-             (abs(lep.pdgId)==11 and lep.mvaFall17V2noIso_WP90 and lep.jetBTagDeepFlav< smoothBFlav(0.9*lep.pt*(1+lep.jetRelIso), 20, 45, year, subera)and lep.jetRelIso < 1.0 ))
-
 
 jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year" ]] + ['jer%d'%j for j in range(6)]
 from CMGTools.VVsemilep.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning
 from CMGTools.VVsemilep.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
 recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
-                                                           looseLeptonSel = lambda lep : lep.sip3d < 8 and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WPL) and (abs(lep.pdgId)!=13 or lep.looseId),
+                                                           looseLeptonSel = lambda lep : lep. pt > 10 and lep.sip3d < 8 and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WPL) and (abs(lep.pdgId)!=13 or lep.looseId),
                                                            cleaningLeptonSel = clean_and_FO_selection_VVsemilep,
                                                            FOLeptonSel = clean_and_FO_selection_VVsemilep,
                                                            tightLeptonSel = tightLeptonSel,
@@ -140,7 +131,6 @@ recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="R
                                                                         variations= jevariations,
                                                                         
 )
-
 
 recleaner_step2_mc = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
                                                           cleanTausWithLooseLeptons=False,
