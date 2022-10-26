@@ -14,9 +14,9 @@ def byCompName(components, regexps):
 year = getHeppyOption("year", "2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
-#selectComponents = getHeppyOption("selectComponents","MC")
+selectComponents = getHeppyOption("selectComponents","MC")
 #selectComponents = getHeppyOption("selectComponents","DATA")
-selectComponents = getHeppyOption("selectComponents","ALL")
+#selectComponents = getHeppyOption("selectComponents","ALL")
 
 if year == '2018':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL18NanoAODv9 import samples as mcSamples_
@@ -53,14 +53,14 @@ if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # diboson
         "ZZTo2Q2L",
-        "WZTo2Q2L","WZTo1L1Nu2Q","WWTo1L1Nu2Q"
-        "W.*JetsToLNu.*","DYJets.*",
+        #"WZTo2Q2L","WZTo1L1Nu2Q","WWTo1L1Nu2Q"
+        #"W.*JetsToLNu.*","DYJets.*",
         # Ttbar + single top + tW
-        "TTJets",
+        #"TTJets",
 ##am        "TT(Lep|Semi)_pow",
-        "T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
+        #"T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
 ##am        # conversions
-##am        "TTGJets",# "WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
+       #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
 ##am        #  # diboson + DPS + WWss
 ##am        "ZZTo4L", #"WWTo2L2Nu",  "WZTo3LNu_fxfx",   # "WW_DPS", falta dps y wpwp "WWTo2L2Nu_DPS", "WpWpJJ", # "WZTo3LNu_pow",
 ##am        #  # triboson
@@ -115,13 +115,13 @@ for pd, trigs in DatasetsAndTriggers:
     vetoTriggers += trigs[:]
 
 selectedComponents = mcSamples + dataSamples
-if getHeppyOption('selectComponents'):
-    if selectComponents=='MC':
-        selectedComponents = mcSamples
-    elif selectComponents=='DATA':
-        selectedComponents = dataSamples
-    else:
-        selectedComponents = byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
+#if getHeppyOption('selectComponents'):
+if selectComponents=='MC':
+    selectedComponents = mcSamples
+elif selectComponents=='DATA':
+    selectedComponents = dataSamples
+else:
+    selectedComponents = byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
 
 autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it")
 configureSplittingFromTime(dataSamples,5,12)

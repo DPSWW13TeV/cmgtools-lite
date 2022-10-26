@@ -1,0 +1,13 @@
+ZZTo2Q2L : ZZTo2Q2L : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 ;  FillColor=ROOT.kViolet-4
+WZTo2Q2L : WZTo2Q2L : xsec : LepGood1_mcMatchId!=0  && LepGood2_mcMatchId!=0 ;  FillColor=ROOT.kAzure-9
+WZTo1L1Nu2Q : WZTo1L1Nu2Q : xsec : LepGood1_mcMatchId!=0 ; FillColor=ROOT.kOrange
+WWTo1L1Nu2Q : WWTo1L1Nu2Q : xsec : LepGood1_mcMatchId!=0 ; FillColor=ROOT.kRed
+WJetsToLNu_NLO : WJetsToLNu_NLO  : xsec : LepGood1_mcMatchId!=0 ; FillColor=ROOT.kPink
+TTjets         : TTJets               : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="top"
+T_sch          : T_sch: xsec          : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="top"
+Tbar_tch       : TBar_tch             : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="top" #, years="2018"
+T_tch          : TBar_tch             : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="top" #, years="2018"
+T_tWch         : T_tWch_noFullyHad    : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="top" #, years="2018"
+Tbar_tWch      : Tbar_tWch_noFullyHad : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="top" #, years="2018"
+DYJetsToLL_M50 : DYJetsToLL_M50       : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 ;  FillColor=ROOT.kCyan, Label="dy" 
+

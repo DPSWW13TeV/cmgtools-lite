@@ -22,7 +22,7 @@ conf = dict(
 
 
 vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
-                      "nJet + nFatJet > 1 &&" +
+                      "(nJet > 1 ||  nFatJet > 0) &&" +
                       "Sum$(Muon_pt > {muPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
                       "Sum$(Electron_pt > {elePt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) >= 1").format(**conf)
 
@@ -129,8 +129,8 @@ recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
                                                            coneptdef =    lambda lep: conept_TTH(lep),
 )
 recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
-                                                                        cleanTausWithLooseLeptons=True,
-                                                                        cleanJetsWithFOTaus=True,
+                                                                        cleanTausWithLooseLeptons=False,
+                                                                        cleanJetsWithFOTaus=False,
                                                                         doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                                                         jetPts=[25,30],
                                                                         jetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
@@ -143,8 +143,8 @@ recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="R
 
 
 recleaner_step2_mc = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
-                                                          cleanTausWithLooseLeptons=True,
-                                                          cleanJetsWithFOTaus=True,
+                                                          cleanTausWithLooseLeptons=False,
+                                                          cleanJetsWithFOTaus=False,
                                                           doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                                           jetPts=[25,30],
                                                           jetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
@@ -154,8 +154,8 @@ recleaner_step2_mc = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel=
                                                           
 )
 recleaner_step2_data = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
-                                         cleanTausWithLooseLeptons=True,
-                                         cleanJetsWithFOTaus=True,
+                                         cleanTausWithLooseLeptons=False,
+                                         cleanJetsWithFOTaus=False,
                                          doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                          jetPts=[25,30],
                                          jetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest

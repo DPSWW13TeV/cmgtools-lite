@@ -6,7 +6,7 @@
 
 
 ######## fixed inputs no matter what
-baseDir='/eos/cms/store/cmst3/group/dpsww/vvsemilep/'
+baseDir='/eos/cms/store/cmst3/group/dpsww/'
 
 ######## MVA WPs, year ans steps to run on 
 runWhat=${1}; shift;
@@ -20,13 +20,12 @@ echo $runWhat,$year,$samples
 ################### following should not be changed
 if [[ ${samples} == "skim" ]];then
     #Trees="signal_fullstats_skim2lss/"
-    Trees='NanoTrees_v7_dpsww_skim2lss' 
+    Trees='vvsemilep/' 
     nEvt=50000
 else
     #Trees='NanoTrees_v7_dpsww_04092020'
     #Trees="signal_fullstats/"
-    #Trees="signal_fullstats_nosel"
-    Trees=""
+    Trees="vvsemilep/"
     #Trees='forWWmixing'
     nEvt=20000
 
@@ -40,12 +39,12 @@ case ${runWhat} in
 recl)
 	echo "recl"
 	${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N 10000 --de .*Run.* -q condor --maxruntime 50 --log $PWD/logs #
-	#${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N 60000 --dm .*Run.* -q condor  --maxruntime 50 --log $PWD/logs 
+	${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N 60000 --dm .*Run.* -q condor  --maxruntime 50 --log $PWD/logs 
 	;;
 
 bdtiv)
 	echo "bdtiv"
-	${BCORE}bdt_input_vars_toInfnBeynd -F Friends ${Parent}/2_recl/{cname}_Friend.root --FMC Friends ${Parent}/0_jmeUnc_v2/{cname}_Friend.root  ${CMGT} dpsvars${year}MC  -N 100000 #-q condor --maxruntime 100 --log $PWD/logs  #  --de .*Run.*
+	${BCORE}bdt_input_vars_toInfnBeynd -F Friends ${Parent}/2_recl/{cname}_Friend.root --FMC Friends ${Parent}/0_jmeUnc_v2/{cname}_Friend.root  ${CMGT} dpsvars${year}MC  -N 100000 -q condor --maxruntime 100 --log $PWD/logs  #  --de .*Run.*
 	;;
 bdtDisc)
 	echo "bdtDisc"
@@ -66,17 +65,6 @@ lepSFs)
 	echo "lepsfs"
 	${BCORE}4_scalefactors -F Friends ${Parent}/2_recl/{cname}_Friend.root  ${CMGT} leptonSFs  -N ${nEvt} --de .*Run.*  -q condor --maxruntime 50 --log $PWD/logs #--de .*Run.* 
 ;;
-puwts)
-	echo "running puwts"
-	${BCORE}puWts -F Friends ${Parent}/2_recl/{cname}_Friend.root  ${CMGT} newpuwts  -N 1000000 --de .*Run.*  -q condor --maxruntime 50 --log $PWD/logs #--de .*Run.* 
-	;;
-mupf)
-	echo "running mupf"
-	#${BCORE}muPrefiring -F Friends ${Parent}/2_recl/{cname}_Friend.root  ${CMGT} sfs_${year}  -N 2000000  --de .*Run.* -q condor --maxruntime 80 --log $PWD/logs #--de .*Run.* 
-
-	${BCORE}test_am -F Friends ${Parent}/2_recl/{cname}_Friend.root  ${CMGT} prefiringwt_${year}  -N 200000  -q condor --maxruntime 80 --log $PWD/logs #--de .*Run.* 
-	;;
-
 
 taucount)
 	echo "taucount"
@@ -101,10 +89,6 @@ step2)
 	${BCORE}nnpdf_rms  ${CMGT} rms_val --de .*Run.* -N 100000  -q condor --maxruntime 50 --log $PWD/logs
 	echo "lepsfs"
 	${BCORE}4_scalefactors -F Friends ${Parent}/2_recl/{cname}_Friend.root  ${CMGT} leptonSFs  -N ${nEvt} --de .*Run.*  -q condor --maxruntime 50 --log $PWD/logs #--de .*Run.* 
-	#echo "running puwts"
-	#${BCORE}puWts -F Friends ${Parent}/2_recl/{cname}_Friend.root  ${CMGT} newpuwts  -N 1000000 --de .*Run.*  -q condor --maxruntime 50 --log $PWD/logs #--de .*Run.* 
-	echo "running mupf"
-	${BCORE}muPrefiring -F Friends ${Parent}/2_recl/{cname}_Friend.root  ${CMGT} sfs_${year}  -N 2000000  --de .*Run.* -q condor --maxruntime 80 --log $PWD/logs #--de .*Run.* 
 	echo "taucount"
 	${BCORE}3_tauCount/  -F Friends  ${Parent}/2_recl/{cname}_Friend.root   ${CMGT} countTaus  -N ${nEvt}  --de .*Run.* -q condor --maxruntime 50 --log $PWD/logs 
 	;;

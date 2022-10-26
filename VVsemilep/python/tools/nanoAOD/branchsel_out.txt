@@ -1,5 +1,16 @@
 dropmatch L1_.*
-dropmatch SoftActivityJet_.*
+dropmatch SoftActivityJet.*
 dropmatch SV_.*
 dropmatch boostedTau_.*
 dropmatch Photon_.*
+dropmatch IsoTrack_.*
+dropmatch LowPtElectron_
+dropmatch SoftActivity
+dropmatch HLT_.*Jet.*
+dropmatch HLT_.*HT.*
+dropmatch HLT_BTag.*
+dropmatch HLT_Photon.*
+dropmatch HLT_ZeroBias.*
+dropmatch HLT_Rsq.*
+dropmatch Muon_*
+dropmatch Electron_*
