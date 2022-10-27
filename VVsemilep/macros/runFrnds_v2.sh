@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###### analysis steps starting from nanoAOD samples -------------->
-## post-processing steps: base ntuples (nanoAODs postprocessor)-> recl frnds (MVA WPs from ttH_modules.py) -> bdtiv -> skimming (skims the base ntuples + recl frnds) -> links to flips 
+## post-processing steps: base ntuples (nanoAODs postprocessor)-> recl frnds (MVA WPs from vvsemilep_modules.py) -> bdtiv -> skimming (skims the base ntuples + recl frnds) -> links to flips 
 ## run post-skimming frnds 
 
 
@@ -33,7 +33,7 @@ fi
 #########################################
 Parent=${baseDir}/${Trees}/${year}
 BCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ${Parent}/";
-CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.ttH_modules";
+CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
 ###################################################
 case ${runWhat} in
 recl)

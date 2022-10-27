@@ -1,0 +1,10 @@
+alwaystrue: 1
+trigger: Trigger_2lss
+filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
+
+singlelep: nLepFO>=1
+pt25: LepGood1_pt>25 
+tight: LepGood1_isLepTight
+exclusive: nLepTight==1
+met : MET_pt > 40
+nj : nJet25 == 2 || nFatJet == 1

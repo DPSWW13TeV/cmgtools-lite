@@ -17,6 +17,7 @@ preprocessor = getHeppyOption("nanoPreProcessor")
 selectComponents = getHeppyOption("selectComponents","MC")
 #selectComponents = getHeppyOption("selectComponents","DATA")
 #selectComponents = getHeppyOption("selectComponents","ALL")
+test = getHeppyOption("test","") #"testam")
 
 if year == '2018':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL18NanoAODv9 import samples as mcSamples_
@@ -45,7 +46,7 @@ elif year in ['2016','2016APV']:
     from CMGTools.RootTools.samples.triggers_13TeV_DATA2016 import all_triggers as triggers
     triggers["FR_1mu_noiso_smpd"] = [] 
 
-from CMGTools.VVsemilep.tools.nanoAOD.ttH_modules import triggerGroups_dict
+from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules import triggerGroups_dict
 
 DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
@@ -156,7 +157,7 @@ if getHeppyOption("justSummary"):
     printSummary(selectedComponents)
     sys.exit(0)
 
-from CMGTools.VVsemilep.tools.nanoAOD.ttH_modules import *
+from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules import *
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 
@@ -203,6 +204,18 @@ elif test == "102X-MC":
     TTLep_pow = kreator.makeMCComponent("TTLep_pow", "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 831.76*((3*0.108)**2), useAAA=True )
     TTLep_pow.files = TTLep_pow.files[:1]
     selectedComponents = [TTLep_pow]
+
+elif test == "testam":
+    WZTo1L1Nu2Q           = kreator.makeMCComponent("WZTo1L1Nu2Q","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
+
+    WZTo1L1Nu2Q.files = WZTo1L1Nu2Q.files[:1]
+    selectedComponents = [WZTo1L1Nu2Q]
+    modules = vvsemilep_sequence_step1
+    cut = vvsemilep_skim_cut
+    compression = "ZLIB:3" #"LZ4:4" #"LZMA:9"
+    branchsel_in = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_in.txt"
+    branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_out.txt"
+
 
 elif test == "94X-data":
     json = 'Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'
