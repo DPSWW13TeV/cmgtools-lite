@@ -14,8 +14,8 @@ def byCompName(components, regexps):
 year = getHeppyOption("year", "2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
-selectComponents = getHeppyOption("selectComponents","MC")
-#selectComponents = getHeppyOption("selectComponents","DATA")
+#selectComponents = getHeppyOption("selectComponents","MC")
+selectComponents = getHeppyOption("selectComponents","DATA")
 #selectComponents = getHeppyOption("selectComponents","ALL")
 test = getHeppyOption("test","") #"testam")
 
@@ -53,13 +53,12 @@ theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # diboson
-        "ZZTo2Q2L",
-        #"WZTo2Q2L","WZTo1L1Nu2Q","WWTo1L1Nu2Q"
-        #"W.*JetsToLNu.*","DYJets.*",
+        "ZZTo2Q2L", "WZTo2Q2L","WZTo1L1Nu2Q","WWTo1L1Nu2Q"
+        "W.*JetsToLNu.*LO","DYJets.*LHEFilter.*",
         # Ttbar + single top + tW
-        #"TTJets",
+        "TTJets",
 ##am        "TT(Lep|Semi)_pow",
-        #"T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
+        "T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
 ##am        # conversions
        #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
 ##am        #  # diboson + DPS + WWss

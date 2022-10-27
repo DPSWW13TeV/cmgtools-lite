@@ -381,21 +381,6 @@ BDThttTT_allvariations =  lambda : BDT_eventReco(os.environ["CMSSW_BASE"]+'/src/
                                                  variations = jevariations,
                                              )
 
-from CMGTools.TTHAnalysis.tools.finalMVA_DNN import finalMVA_DNN
-finalMVA = lambda : finalMVA_DNN() # use this for data
-finalMVA_allVars = lambda : finalMVA_DNN( variations = jevariations)
-finalMVA_input = lambda : finalMVA_DNN(doSystJEC=False, fillInputs=True) # use this for training
-
-from CMGTools.TTHAnalysis.tools.finalMVA_DNN_3l import finalMVA_DNN_3l
-finalMVA3L = lambda : finalMVA_DNN_3l() # use this for data
-finalMVA3L_allVars = lambda : finalMVA_DNN_3l(variations = jevariations )
-
-from CMGTools.TTHAnalysis.tools.finalMVA_DNN_2lss1tau import finalMVA_DNN_2lss1tau
-finalMVA2lss1tau = lambda : finalMVA_DNN_2lss1tau() # use this for data
-finalMVA2lss1tau_allVars = lambda : finalMVA_DNN_2lss1tau(variations = [ 'jes%s'%v for v in jecGroups] + ['jer%s'%x for x in ['barrel','endcap1','endcap2highpt','endcap2lowpt' ,'forwardhighpt','forwardlowpt']  ]  + ['HEM'])
-
-from CMGTools.TTHAnalysis.tools.nanoAOD.finalMVA_4l import FinalMVA_4L
-finalMVA_4l = lambda : FinalMVA_4L()
 
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import btagSFProducer
@@ -433,15 +418,6 @@ scaleFactorSequence_2018    = [btagSF2018_dj,bTagSFs]
 # scaleFactorSequence_allVars_2018 = [btagSF2018_dj_allVars,bTagSFs_allvars]
 
 
-from CMGTools.TTHAnalysis.tools.nanoAOD.higgsDecayFinder import higgsDecayFinder
-higgsDecay = lambda : higgsDecayFinder()
-
-from CMGTools.TTHAnalysis.tools.nanoAOD.VHsplitter import VHsplitter
-vhsplitter = lambda : VHsplitter()
-
-# from CMGTools.TTHAnalysis.tools.synchTools import SynchTuples
-# synchTuples = lambda : SynchTuples()
-
 
 # instructions to friend trees  code 
 
@@ -462,77 +438,3 @@ vhsplitter = lambda : VHsplitter()
 # scaleFactorSequence_2018
 
 # 5_evtVars_v0
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttH_gen_reco import ttH_gen_reco
-#
-#from CMGTools.TTHAnalysis.tools.topRecoSemiLept import TopRecoSemiLept
-#topRecoModule = lambda : TopRecoSemiLept(constraints=['kWHadMass','kWLepMass','kTopLepMass','kTopHadMass'])
-
-from CMGTools.TTHAnalysis.tools.nanoAOD.LepMVAULFriend import lepMVA_2016, lepMVA_2016APV, lepMVA_2017, lepMVA_2018
-
-# TTH differential analysis
-from CMGTools.TTHAnalysis.tools.higgsDiffGenTTH import higgsDiffGenTTH
-from CMGTools.TTHAnalysis.tools.higgsDiffRecoTTH import higgsDiffRecoTTH, higgsDiffRecoTTH_noWmassConstraint
-from CMGTools.TTHAnalysis.tools.higgsDiffCompTTH import higgsDiffCompTTH, higgsDiffCompTTH_noWmassConstraint
-from CMGTools.TTHAnalysis.tools.higgsDiffRegressionTTH import higgsDiffRegressionTTH
-
-from CMGTools.TTHAnalysis.tools.nanoAOD.ttH_genericTreeVarForSR import ttH_genericTreeVarForSR
-
-ttH_2lss_tree = lambda  : ttH_genericTreeVarForSR(2, 
-                                               ['len(leps) < 2                                          ',
-                                                'leps[0].pt < 25 or leps[1].pt < 15                     ',
-                                                'event.nLepTight_Recl > 2                               ',
-                                                'leps[0].pdgId*leps[1].pdgId < 0                        ',
-                                                'abs(event.mZ1_Recl-91.2)<10                            ',
-                                                'leps[0].genPartFlav != 1 and leps[0].genPartFlav != 15 ',
-                                                'leps[1].genPartFlav != 1 and leps[1].genPartFlav != 15 ',
-                                                'event.nTauSel_Recl_Tight > 0                           ',
-                                                'not ((event.nJet25_Recl>=3 and (event.nBJetLoose25_Recl >= 2 or event.nBJetMedium25_Recl >= 1)) or (event.nBJetMedium25_Recl >= 1 and (event.nJet25_Recl+event.nFwdJet_Recl-event.nBJetLoose25_Recl) > 0)) ',
-])
-
-ttH_2lss1tau_tree = lambda : ttH_genericTreeVarForSR(2, 
-                                                   ['len(leps) < 2                                          ',
-                                                    'leps[0].pt < 25 or leps[1].pt < 15                     ',
-                                                    'leps[1].conePt < (15 if abs(leps[1].pdgId)==11 else 10)',
-                                                    'leps[1].pdgId*leps[0].pdgId < 0',
-                                                    'abs(event.mZ1_Recl-91.2)<10',
-                                                    'event.nLepTight_Recl > 2 ',
-                                                    'event.nTauSel_Recl_2lss1tau_Tight < 1', 
-                                                    'leps[0].genPartFlav != 1 and leps[0].genPartFlav != 15 ',
-                                                    'leps[1].genPartFlav != 1 and leps[1].genPartFlav != 15 ',
-                                                    'not ((event.nJet25_Recl>=3 and (event.nBJetLoose25_Recl >= 2 or event.nBJetMedium25_Recl >= 1)) or (event.nBJetMedium25_Recl >= 1 and (event.nJet25_Recl+event.nFwdJet_Recl-event.nBJetLoose25_Recl) > 0)) ',
-                                                    '''thetau.charge*leps[0].pdgId<0'''
-                                                ],
-                                                     execute=['''taus = [ t for t in Collection(event,'TauSel_Recl')]''',
-                                                              '''thetau=taus[int(event.Tau_tight2lss1tau_idx)] if event.Tau_tight2lss1tau_idx > -1 else None;'''],
-                                                     extraVars=[('Tau_pt','thetau.pt'), ('Tau_eta','thetau.eta'), ('Tau_phi','thetau.phi')], is2lss1tau=True)
-
-ttH_3l_tree = lambda : ttH_genericTreeVarForSR(3, 
-                                             ['len(leps) < 3                                          ',
-                                              'leps[0].pt < 25 or leps[1].pt < 15 or leps[2].pt<10    ',
-                                              'event.nLepTight_Recl > 3                               ',
-                                              'abs(event.mZ1_Recl-91.2)<10                            ',
-                                              'leps[0].genPartFlav != 1 and leps[0].genPartFlav != 15 ',
-                                              'leps[1].genPartFlav != 1 and leps[1].genPartFlav != 15 ',
-                                              'leps[2].genPartFlav != 1 and leps[2].genPartFlav != 15 ',
-                                              'event.nTauSel_Recl_Tight > 0                           ',
-                                              'not  (event.nJet25_Recl>=2 and (event.nBJetLoose25_Recl >= 2 or event.nBJetMedium25_Recl >= 1) and (event.nJet25_Recl >= 4 or event.MET_pt*0.6 + event.mhtJet25_Recl*0.4 > 30 + 15*(event.mZ1_Recl > 0)) or (event.nBJetMedium25_Recl >= 1 and (event.nJet25_Recl+event.nFwdJet_Recl-event.nBJetLoose25_Recl) > 0))'
-])
-
-
-from CMGTools.TTHAnalysis.tools.nanoAOD.mvaCP_2lss import mvaCP_2lss
-MVAcp_2lss = lambda : mvaCP_2lss(variations = []) # for data
-MVAcp_2lss_allvars = lambda : mvaCP_2lss(variations = [ 'jes%s'%v for v in jecGroups] + ['jer%s'%x for x in ['barrel','endcap1','endcap2highpt','endcap2lowpt' ,'forwardhighpt','forwardlowpt']  ]  + ['HEM'])
-
-from CMGTools.TTHAnalysis.tools.nanoAOD.mvaCP_3l import mvaCP_3l
-MVAcp_3l = lambda : mvaCP_3l(variations = []) # for data
-MVAcp_3l_allvars = lambda : mvaCP_3l(variations = [ 'jes%s'%v for v in jecGroups] + ['jer%s'%x for x in ['barrel','endcap1','endcap2highpt','endcap2lowpt' ,'forwardhighpt','forwardlowpt']  ]  + ['HEM'])
-
-from CMGTools.TTHAnalysis.tools.nanoAOD.mvaCP_2lss1tau import mvaCP_2lss1tau
-MVAcp_2lss1tau = lambda : mvaCP_2lss1tau(variations = []) # for data
-MVAcp_2lss1tau_allvars = lambda : mvaCP_2lss1tau(variations = [ 'jes%s'%v for v in jecGroups] + ['jer%s'%x for x in ['barrel','endcap1','endcap2highpt','endcap2lowpt' ,'forwardhighpt','forwardlowpt']  ]  + ['HEM'])
-
-
-from CMGTools.TTHAnalysis.tools.nanoAOD.selectParticleAndPartonInfo import selectParticleAndPartonInfo
-ttW_diff_gen_info = lambda : selectParticleAndPartonInfo( dresslepSel_ = lambda x : x.pt>20 and abs(x.eta) < 2.4,
-                                                          dressjetSel_ = lambda x : x.pt>25 and abs(x.eta) < 2.4 ) 
-                                               
