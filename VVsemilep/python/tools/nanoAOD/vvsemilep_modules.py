@@ -15,13 +15,15 @@ conf = dict(
         mutrk = "isTracker",
         muIsoloose=0.40,
         muIsotight=0.15,
-
+        fatjetptcut=200,
+        jetptcut=25,
+        jeteta=2.4
 )
 
 
 
 vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
-                      "( (Sum$(Jet_pt > 25 && abs(Jet_eta) < 2.4  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > 25 && abs(FatJet_eta) < 2.4) > 0) ) &&" + 
+                      "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < jeteta  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > fatjetptcut && abs(FatJet_eta) < jeteta) > 0) ) &&" + 
                       "Sum$(Muon_pt > {muPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
                       "Sum$(Electron_pt > {elePt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) >= 1").format(**conf)
 
@@ -45,8 +47,8 @@ lepSkim = ttHPrescalingLepSkimmer(5,
                 muonSel = muonSelection, electronSel = electronSelection,
                 minLeptonsNoPrescale = 1, # things with less than 2 leptons are rejected irrespectively of the prescale
                 minLeptons = 1, requireOppSignPair = True,
-                jetSel = lambda j : j.pt > 25 and abs(j.eta) < 2.4 and j.jetId > 0, 
-                fatjetSel = lambda f : f.pt > 200 and abs(f.eta) < 2.4,  ##not all samples have fatjets
+                jetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) <  conf["jeteta"] and j.jetId > 0, 
+                fatjetSel = lambda f : f.pt > conf["fatjetptcut"] and abs(f.eta) < conf["jeteta"],  ##not all samples have fatjets
                 minJets = 2, minMET = 70, minFatJets = 1)
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger import collectionMerger
 lepMerge = collectionMerger(input = ["Electron","Muon"], 
@@ -70,7 +72,7 @@ vvsemilep_sequence_step1 = [lepSkim, lepMerge, autoPuWeight, yearTag, lepJetBTag
 #==== 
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR
 from CMGTools.VVsemilep.tools.nanoAOD.ttHLepQCDFakeRateAnalyzer import ttHLepQCDFakeRateAnalyzer
-centralJetSel = lambda j : j.pt > 25 and abs(j.eta) < 2.4 and j.jetId > 0
+centralJetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) < conf["jeteta"] and j.jetId > 0
 lepFR = ttHLepQCDFakeRateAnalyzer(jetSel = centralJetSel,
                                   pairSel = lambda pair : deltaR(pair[0].eta, pair[0].phi, pair[1].eta, pair[1].phi) > 0.7,
                                   maxLeptons = 1, requirePair = True)
@@ -109,14 +111,14 @@ jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC
 from CMGTools.VVsemilep.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning
 from CMGTools.VVsemilep.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
 recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
-                                                           looseLeptonSel = lambda lep : lep. pt > 10 and lep.sip3d < 8 and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WPL) and (abs(lep.pdgId)!=13 or lep.looseId),
+                                                           looseLeptonSel = lambda lep : lep. pt > conf["elePt"] and lep.sip3d < conf["sip3dloose"] and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WPL) and (abs(lep.pdgId)!=13 or lep.looseId),
                                                            cleaningLeptonSel = clean_and_FO_selection_VVsemilep,
                                                            FOLeptonSel = clean_and_FO_selection_VVsemilep,
                                                            tightLeptonSel = tightLeptonSel,
                                                            FOTauSel = foTauSel,
                                                            tightTauSel = tightTauSel,
                                                            selectJet =    lambda jet: jet.jetId > 0, # pt and eta cuts are (hard)coded in the step2 
-                                                           selectFatJet = lambda fatjet: fatjet.pt > 200 and abs(fatjet.eta) < 2.4, 
+                                                           selectFatJet = lambda fatjet: fatjet.pt > conf["fatjetptcut"] and abs(fatjet.eta) < conf["jeteta"], 
                                                            coneptdef =    lambda lep: conept_TTH(lep),
 )
 recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",

@@ -45,7 +45,6 @@ dropmatch HLT_SameSign_.*
 dropmatch HLT_CDC.*
 dropmatch HLT.*GsfTrkIdT.*
 dropmatch HLT.*_MW
-drop genTtbarId
 drop LepGood_mvaLowPtId
 drop LepGood_softMvaId
 drop LepGood_multiIsoId
