@@ -122,8 +122,8 @@ recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
                                                            coneptdef =    lambda lep: conept_TTH(lep),
 )
 recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
-                                                                        cleanTausWithLooseLeptons=False,
-                                                                        cleanJetsWithFOTaus=False,
+                                                                        cleanTausWithLooseLeptons=True,
+                                                                        cleanJetsWithFOTaus=True,
                                                                         doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                                                         jetPts=[25,30],
                                                                         jetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
@@ -135,8 +135,8 @@ recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="R
 )
 
 recleaner_step2_mc = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
-                                                          cleanTausWithLooseLeptons=False,
-                                                          cleanJetsWithFOTaus=False,
+                                                          cleanTausWithLooseLeptons=True,
+                                                          cleanJetsWithFOTaus=True,
                                                           doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                                           jetPts=[25,30],
                                                           jetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
@@ -146,8 +146,8 @@ recleaner_step2_mc = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel=
                                                           
 )
 recleaner_step2_data = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
-                                         cleanTausWithLooseLeptons=False,
-                                         cleanJetsWithFOTaus=False,
+                                         cleanTausWithLooseLeptons=True,
+                                         cleanJetsWithFOTaus=True,
                                          doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                          jetPts=[25,30],
                                          jetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
@@ -347,7 +347,7 @@ Trigger_mee  = lambda : EvtTagger('Trigger_mee',[ lambda ev : triggerGroups['Tri
 Trigger_mme  = lambda : EvtTagger('Trigger_mme',[ lambda ev : triggerGroups['Trigger_mme'][ev.year](ev) ])
 Trigger_2lss = lambda : EvtTagger('Trigger_2lss',[ lambda ev : triggerGroups['Trigger_2lss'][ev.year](ev) ])
 Trigger_3l   = lambda : EvtTagger('Trigger_3l',[ lambda ev : triggerGroups['Trigger_3l'][ev.year](ev) ])
-Trigger_MET  = lambda : EvtTagger('Trigger_MET',[ lambda ev : triggerGroups['Trigger_MET'][ev.year](ev) ])
+
 
 triggerSequence = [Trigger_1e,Trigger_1m,Trigger_2e,Trigger_2m,Trigger_em,Trigger_3e,Trigger_3m,Trigger_mee,Trigger_mme,Trigger_2lss,Trigger_3l]
 

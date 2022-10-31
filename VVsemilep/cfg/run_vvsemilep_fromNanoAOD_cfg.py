@@ -14,7 +14,7 @@ def byCompName(components, regexps):
 year = getHeppyOption("year", "2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
-selectComponents = getHeppyOption("selectComponents","MC")
+selectComponents = getHeppyOption("selectComponents","both")
 #selectComponents = getHeppyOption("selectComponents","DATA")
 #selectComponents = getHeppyOption("selectComponents","ALL")
 test = getHeppyOption("test","") #"testam")
@@ -54,7 +54,7 @@ if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # diboson
         "ZZTo2Q2L", "WZTo2Q2L",
-        #"WZTo1L1Nu2Q","WWTo1L1Nu2Q"
+        "WZTo1L1Nu2Q","WWTo1L1Nu2Q"
         "W.*JetsToLNu.*LO","DYJets.*LHEFilter.*",
          #Ttbar + single top + tW
         "TTJets",
@@ -115,15 +115,13 @@ for pd, trigs in DatasetsAndTriggers:
         dataSamples.append(comp)
     vetoTriggers += trigs[:]
 
-selectedComponents = [] #mcSamples + dataSamples
-#if getHeppyOption('selectComponents'):
+selectedComponents = getHeppyOption('selectComponents')
 if selectComponents=='MC':
-    print("i'm here")
     selectedComponents = mcSamples
 elif selectComponents=='DATA':
     selectedComponents = dataSamples
 else:
-    selectedComponents = byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
+    selectedComponents = mcSamples+dataSamples #byCompName(selectedComponents, getHeppyOption('selectComponents').split(","))
 
 autoAAA(selectedComponents, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it")
 configureSplittingFromTime(dataSamples,5,12)
