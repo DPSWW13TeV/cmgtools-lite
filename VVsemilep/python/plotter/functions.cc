@@ -75,6 +75,18 @@ float mt2davis(float pt1, float eta1, float phi1, float pt2, float eta2, float p
     return result;
 }
 
+//double METz_calc_run2(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi){
+//    typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+//PtEtaPhiMVector p41(pt1,eta1,phi1,0.0);
+//PtEtaPhiMVector mv(met,0.,metphi,0.);
+//heppy::METzCalculator_Run2 NeutrinoPz_run2;
+//NeutrinoPz_type0.SetMET(mv);
+//NeutrinoPz_type0.SetLepton(p41);
+//NeutrinoPz_type0.SetLeptonType(pdgId1);
+//double pz1_type0 = NeutrinoPz_type0.Calculate();
+//return pz1_type0;
+//}
+
 float phi_2(float pt1, float phi1, float pt2, float phi2) {
     float px1 = pt1 * std::cos(phi1);
     float py1 = pt1 * std::sin(phi1);

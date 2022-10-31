@@ -23,7 +23,7 @@ conf = dict(
 
 
 vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
-                      "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < jeteta  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > fatjetptcut && abs(FatJet_eta) < jeteta) > 0) ) &&" + 
+                      "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < {jeteta}  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0) ) &&" + 
                       "Sum$(Muon_pt > {muPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
                       "Sum$(Electron_pt > {elePt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) >= 1").format(**conf)
 

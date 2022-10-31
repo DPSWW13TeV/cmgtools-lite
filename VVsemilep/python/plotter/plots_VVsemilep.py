@@ -172,7 +172,7 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
 def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded):
     trees       = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    fsyst       = '' #vvsemilep/fullRun2/systsUnc.txt' 
+    fsyst       = 'vvsemilep/fullRun2/systsUnc.txt' 
     showratio   = False
     cutflow     = False
     fplots      = 'vvsemilep/fullRun2/plots.txt'

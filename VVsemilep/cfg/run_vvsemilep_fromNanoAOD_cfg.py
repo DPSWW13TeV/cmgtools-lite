@@ -14,8 +14,8 @@ def byCompName(components, regexps):
 year = getHeppyOption("year", "2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
-#selectComponents = getHeppyOption("selectComponents","MC")
-selectComponents = getHeppyOption("selectComponents","DATA")
+selectComponents = getHeppyOption("selectComponents","MC")
+#selectComponents = getHeppyOption("selectComponents","DATA")
 #selectComponents = getHeppyOption("selectComponents","ALL")
 test = getHeppyOption("test","") #"testam")
 
@@ -53,13 +53,13 @@ theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # diboson
-        #"ZZTo2Q2L", "WZTo2Q2L",
-        "WZTo1L1Nu2Q","WWTo1L1Nu2Q"
-        #"W.*JetsToLNu.*LO","DYJets.*LHEFilter.*",
-        # Ttbar + single top + tW
-        #"TTJets",
+        "ZZTo2Q2L", "WZTo2Q2L",
+        #"WZTo1L1Nu2Q","WWTo1L1Nu2Q"
+        "W.*JetsToLNu.*LO","DYJets.*LHEFilter.*",
+         #Ttbar + single top + tW
+        "TTJets",
 ##am        "TT(Lep|Semi)_pow",
-        #"T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
+        "T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
 ##am        # conversions
        #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
 ##am        #  # diboson + DPS + WWss
@@ -115,9 +115,10 @@ for pd, trigs in DatasetsAndTriggers:
         dataSamples.append(comp)
     vetoTriggers += trigs[:]
 
-selectedComponents = mcSamples + dataSamples
+selectedComponents = [] #mcSamples + dataSamples
 #if getHeppyOption('selectComponents'):
 if selectComponents=='MC':
+    print("i'm here")
     selectedComponents = mcSamples
 elif selectComponents=='DATA':
     selectedComponents = dataSamples
@@ -215,7 +216,7 @@ elif test == "testam":
     compression = "ZLIB:3" #"LZ4:4" #"LZMA:9"
     branchsel_in = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_in.txt"
     branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_out.txt"
-
+    selectedComponents =[WZTo1L1Nu2Q]
 
 elif test == "94X-data":
     json = 'Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'
