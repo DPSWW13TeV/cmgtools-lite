@@ -49,7 +49,7 @@ lepSkim = ttHPrescalingLepSkimmer(5,
                 minLeptons = 1, requireOppSignPair = True,
                 jetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) <  conf["jeteta"] and j.jetId > 0, 
                 fatjetSel = lambda f : f.pt > conf["fatjetptcut"] and abs(f.eta) < conf["jeteta"],  ##not all samples have fatjets
-                minJets = 2, minMET = 70, minFatJets = 1)
+                minJets = 4, minMET = 70, minFatJets = 1)
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger import collectionMerger
 lepMerge = collectionMerger(input = ["Electron","Muon"], 
                             output = "LepGood", 
@@ -159,22 +159,14 @@ recleaner_step2_data = lambda : fastCombinedObjectRecleaner(label="Recl", inlabe
 )
 
 tauFOs = lambda t : t.idDeepTau2017v2p1VSe & 1 and t.idDeepTau2017v2p1VSmu & 1
-tauVeto_2lss_1tau  = lambda t : t.idDeepTau2017v2p1VSjet & 16
-tauTight_2lss_1tau = lambda t : tauFOs(t) and t.idDeepTau2017v2p1VSjet & 4
 countTaus_veto             = lambda : ObjTagger('Tight'            ,'TauSel_Recl', [lambda t : t.idDeepTau2017v2p1VSjet&4]) # to veto in tauless categories
 countTaus_FO               = lambda : ObjTagger('FO'               ,'TauSel_Recl', [tauFOs]                               ) # actual FO (the FO above is used for jet cleaning, and corresponds to the loose)
-countTaus_2lss1tau_Veto    = lambda : ObjTagger('2lss1tau_Veto'    ,'TauSel_Recl', [tauVeto_2lss_1tau]                    ) # veto ID for 2lss1tau category 
-countTaus_2lss1tau_Tight   = lambda : ObjTagger('2lss1tau_Tight'   ,'TauSel_Recl', [tauTight_2lss_1tau]                   ) # tight ID for 2lss1tau category 
 from CMGTools.VVsemilep.tools.nanoAOD.tauMatcher import tauScaleFactors
 
 
-countTaus = [countTaus_veto,countTaus_FO,countTaus_2lss1tau_Veto,countTaus_2lss1tau_Tight]
+countTaus = [countTaus_veto,countTaus_FO]
 
 
-
-from CMGTools.VVsemilep.tools.eventVars_2lss import EventVars2LSS
-eventVars               = lambda : EventVars2LSS('','Recl', tauTight_2lss_1tau=tauTight_2lss_1tau)
-eventVars_allvariations = lambda : EventVars2LSS('','Recl',variations = jevariations, tauTight_2lss_1tau=tauTight_2lss_1tau)
 
 
 
@@ -242,41 +234,12 @@ triggerGroups=dict(
         or _fires(ev,'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ')\
         or _fires(ev,'HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ'),
     },
-    Trigger_3e={
-        2016 : lambda ev : _fires(ev,'HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL'),
-        2017 : lambda ev : _fires(ev,'HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL'),
-        2018 : lambda ev : _fires(ev,'HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL'), # prescaled in the two years according to https://twiki.cern.ch/twiki/bin/view/CMS/EgHLTRunIISummary#2018
-    },
-    Trigger_3m={
-        2016 : lambda ev : _fires(ev,'HLT_TripleMu_12_10_5'),
-        2017 : lambda ev : _fires(ev,'HLT_TripleMu_12_10_5'),
-        2018 : lambda ev : _fires(ev,'HLT_TripleMu_12_10_5'),
-    },
-    Trigger_mee={
-        2016 : lambda ev : _fires(ev,'HLT_Mu8_DiEle12_CaloIdL_TrackIdL'),
-        2017 : lambda ev : _fires(ev,'HLT_Mu8_DiEle12_CaloIdL_TrackIdL'),
-        2018 : lambda ev : _fires(ev,'HLT_Mu8_DiEle12_CaloIdL_TrackIdL'),
-    },
-    Trigger_mme={
-        2016 : lambda ev : _fires(ev,'HLT_DiMu9_Ele9_CaloIdL_TrackIdL'),
-        2017 : lambda ev : _fires(ev,'HLT_DiMu9_Ele9_CaloIdL_TrackIdL_DZ'),
-        2018 : lambda ev : _fires(ev,'HLT_DiMu9_Ele9_CaloIdL_TrackIdL_DZ'),
-    },
-    Trigger_2lss={
+    Trigger_2l={
         2016 : lambda ev : ev.Trigger_1e or ev.Trigger_1m or ev.Trigger_2e or ev.Trigger_2m or ev.Trigger_em,
         2017 : lambda ev : ev.Trigger_1e or ev.Trigger_1m or ev.Trigger_2e or ev.Trigger_2m or ev.Trigger_em,
         2018 : lambda ev : ev.Trigger_1e or ev.Trigger_1m or ev.Trigger_2e or ev.Trigger_2m or ev.Trigger_em,
     },
-    Trigger_3l={
-        2016 : lambda ev : ev.Trigger_2lss or ev.Trigger_3e or ev.Trigger_3m or ev.Trigger_mee or ev.Trigger_mme,
-        2017 : lambda ev : ev.Trigger_2lss or ev.Trigger_3e or ev.Trigger_3m or ev.Trigger_mee or ev.Trigger_mme,
-        2018 : lambda ev : ev.Trigger_2lss or ev.Trigger_3e or ev.Trigger_3m or ev.Trigger_mee or ev.Trigger_mme,
-    },
-    Trigger_MET={
-        2016 : lambda ev : _fires(ev,'HLT_PFMET120_PFMHT120_IDTight'),
-        2017 : lambda ev : _fires(ev,'HLT_PFMET120_PFMHT120_IDTight'),
-        2018 : lambda ev : _fires(ev,'HLT_PFMET120_PFMHT120_IDTight'),
-    }
+
 )
 
 
@@ -306,31 +269,7 @@ triggerGroups_dict=dict(
         2017 :   ['HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL', 'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ'        , 'HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ'        , 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ'],
         2018 :   ['HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL', 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ'        , 'HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ'],
     },
-    Trigger_3e={
-        2016 :  ['HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL'],
-        2017 :  ['HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL'],
-        2018 :  ['HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL'], # prescaled in the two years according to https://twiki.cern.ch/twiki/bin/view/CMS/EgHLTRunIISummary#2018
-    },
-    Trigger_3m={
-        2016 :  ['HLT_TripleMu_12_10_5'],
-        2017 :  ['HLT_TripleMu_12_10_5'],
-        2018 :  ['HLT_TripleMu_12_10_5'],
-    },
-    Trigger_mee={
-        2016 :  ['HLT_Mu8_DiEle12_CaloIdL_TrackIdL'],
-        2017 :  ['HLT_Mu8_DiEle12_CaloIdL_TrackIdL'],
-        2018 :  ['HLT_Mu8_DiEle12_CaloIdL_TrackIdL'],
-    },
-    Trigger_mme={
-        2016 :  ['HLT_DiMu9_Ele9_CaloIdL_TrackIdL'   ],
-        2017 :  ['HLT_DiMu9_Ele9_CaloIdL_TrackIdL_DZ'],
-        2018 :  ['HLT_DiMu9_Ele9_CaloIdL_TrackIdL_DZ'],
-    },
-    Trigger_MET={ 
-        2016 : ["HLT_PFMET120_PFMHT120_IDTight"],
-        2017 : ["HLT_PFMET120_PFMHT120_IDTight"],
-        2018 : ["HLT_PFMET120_PFMHT120_IDTight"],
-    }
+ 
 )
 
 
@@ -341,49 +280,11 @@ Trigger_1m   = lambda : EvtTagger('Trigger_1m',[ lambda ev : triggerGroups['Trig
 Trigger_2e   = lambda : EvtTagger('Trigger_2e',[ lambda ev : triggerGroups['Trigger_2e'][ev.year](ev) ])
 Trigger_2m   = lambda : EvtTagger('Trigger_2m',[ lambda ev : triggerGroups['Trigger_2m'][ev.year](ev) ])
 Trigger_em   = lambda : EvtTagger('Trigger_em',[ lambda ev : triggerGroups['Trigger_em'][ev.year](ev) ])
-Trigger_3e   = lambda : EvtTagger('Trigger_3e',[ lambda ev : triggerGroups['Trigger_3e'][ev.year](ev) ])
-Trigger_3m   = lambda : EvtTagger('Trigger_3m',[ lambda ev : triggerGroups['Trigger_3m'][ev.year](ev) ])
-Trigger_mee  = lambda : EvtTagger('Trigger_mee',[ lambda ev : triggerGroups['Trigger_mee'][ev.year](ev) ])
-Trigger_mme  = lambda : EvtTagger('Trigger_mme',[ lambda ev : triggerGroups['Trigger_mme'][ev.year](ev) ])
-Trigger_2lss = lambda : EvtTagger('Trigger_2lss',[ lambda ev : triggerGroups['Trigger_2lss'][ev.year](ev) ])
-Trigger_3l   = lambda : EvtTagger('Trigger_3l',[ lambda ev : triggerGroups['Trigger_3l'][ev.year](ev) ])
+Trigger_2l   = lambda : EvtTagger('Trigger_2l',[ lambda ev : triggerGroups['Trigger_2l'][ev.year](ev) ])
 
 
-triggerSequence = [Trigger_1e,Trigger_1m,Trigger_2e,Trigger_2m,Trigger_em,Trigger_3e,Trigger_3m,Trigger_mee,Trigger_mme,Trigger_2lss,Trigger_3l]
 
-
-from CMGTools.TTHAnalysis.tools.BDT_eventReco_cpp import BDT_eventReco
-
-BDThttTT_Hj = lambda : BDT_eventReco(os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/TMVAClassification_bloose_BDTG.weights.xml',
-                                     os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/TMVAClassification_btight_BDTG.weights.xml',
-                                     os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/Hjtagger_legacy_xgboost_v1.weights.xml',
-                                     os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/Hjj_csv_BDTG.weights.xml',
-                                     os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/resTop_xgb_csv_order_deepCTag.xml.gz',
-                                     os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/HTT_HadTopTagger_2017_nomasscut_nvar17_resolved.xml',
-                                     os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/TF_jets_kinfit_httTT.root',
-                                     algostring = 'k_httTT_Hj',
-                                     selection = [
-                                         lambda leps,jets,event : len(leps)>=2,
-                                         lambda leps,jets,event : leps[0].conePt>20 and leps[1].conePt>10,
-                                     ]
-)
-
-BDThttTT_allvariations =  lambda : BDT_eventReco(os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/TMVAClassification_bloose_BDTG.weights.xml',
-                                                 os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/TMVAClassification_btight_BDTG.weights.xml',
-                                                 os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/Hjtagger_legacy_xgboost_v1.weights.xml',
-                                                 os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/Hjj_csv_BDTG.weights.xml',
-                                                 os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/resTop_xgb_csv_order_deepCTag.xml.gz',
-                                                 os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/HTT_HadTopTagger_2017_nomasscut_nvar17_resolved.xml',
-                                                 os.environ["CMSSW_BASE"]+'/src/CMGTools/TTHAnalysis/data/kinMVA/tth/TF_jets_kinfit_httTT.root',
-                                                 algostring = 'k_httTT_Hj',
-                                                 selection = [
-                                                     lambda leps,jets,event : len(leps)>=2,
-                                                          lambda leps,jets,event : leps[0].conePt>20 and leps[1].conePt>10,
-                                                 ],
-                                                 variations = jevariations,
-                                             )
-
-
+triggerSequence = [Trigger_1e,Trigger_1m,Trigger_2e,Trigger_2m,Trigger_em,Trigger_2l]
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import btagSFProducer
 

@@ -14,9 +14,9 @@ def byCompName(components, regexps):
 year = getHeppyOption("year", "2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
-selectComponents = getHeppyOption("selectComponents","both")
+#selectComponents = getHeppyOption("selectComponents","both")
 #selectComponents = getHeppyOption("selectComponents","DATA")
-#selectComponents = getHeppyOption("selectComponents","ALL")
+selectComponents = getHeppyOption("selectComponents","MC")
 test = getHeppyOption("test","") #"testam")
 
 if year == '2018':
@@ -53,13 +53,14 @@ theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # diboson
-        "ZZTo2Q2L", "WZTo2Q2L",
-        "WZTo1L1Nu2Q","WWTo1L1Nu2Q"
-        "W.*JetsToLNu.*LO","DYJets.*LHEFilter.*",
+    #    "ZZTo2Q2L", 
+   #     "WZTo2Q2L",
+  #      "WZTo1L1Nu2Q","WWTo1L1Nu2Q"
+ #       "W.*JetsToLNu.*LO","DYJets.*LHEFilter.*",
          #Ttbar + single top + tW
         "TTJets",
 ##am        "TT(Lep|Semi)_pow",
-        "T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
+#        "T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
 ##am        # conversions
        #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
 ##am        #  # diboson + DPS + WWss
@@ -68,10 +69,10 @@ if analysis == "main":
 ##am        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ", # "WWW_ll", <- not there, but its just a leptonic filter
 
      ])
-    DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] + triggerGroups_dict["Trigger_3m"][theyear]) )
-    DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_3e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else
-                                ("DoubleEG",   triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_3e"][theyear]) )
-    DatasetsAndTriggers.append( ("MuonEG",     triggerGroups_dict["Trigger_em"][theyear] + triggerGroups_dict["Trigger_mee"][theyear] + triggerGroups_dict["Trigger_mme"][theyear]) )
+    DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
+    DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else
+                                ("DoubleEG",   triggerGroups_dict["Trigger_2e"][theyear] ) )
+    DatasetsAndTriggers.append( ("MuonEG",     triggerGroups_dict["Trigger_em"][theyear] ) )
     DatasetsAndTriggers.append( ("SingleMuon", triggerGroups_dict["Trigger_1m"][theyear]) )
     DatasetsAndTriggers.append( ("SingleElectron", triggerGroups_dict["Trigger_1e"][theyear]) if theyear != 2018 else (None,None) )
     # DatasetsAndTriggers.append( ("MET", triggerGroups_dict["Trigger_MET"][theyear]) )
@@ -137,6 +138,7 @@ def setFilesPerJob(comps,filesperjob):
 
 if analysis == "main":
     cropToLumi(byCompName(selectedComponents,["DYJetsToLL", "T_","TBar_","TT(Lep|Semi)_pow"]),50.)
+    cropToLumi(byCompName(selectedComponents,["TTJets"]),100.)
     cropToLumi(byCompName(selectedComponents,["ZZTo4L"]),40.)
 
 if analysis == "frqcd":
@@ -221,7 +223,7 @@ elif test == "94X-data":
     SingleElectron_Run2017C_14Dec2018 = kreator.makeDataComponent("SingleElectron_Run2017C_14Dec2018", "/SingleElectron/Run2017C-Nano14Dec2018-v1/NANOAOD", "CMS", ".*root", json)
     SingleElectron_Run2017C_14Dec2018.files = ["0450ACEF-E1E5-1345-8660-28CF5ABE26BE.root"]
     SingleElectron_Run2017C_14Dec2018.triggers = triggerGroups_dict["Trigger_1e"][year]
-    SingleElectron_Run2017C_14Dec2018.vetoTriggers = triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_3m"][year]+triggerGroups_dict["Trigger_2e"][year] + triggerGroups_dict["Trigger_3e"][year]+triggerGroups_dict["Trigger_em"][year] + triggerGroups_dict["Trigger_mee"][year] + triggerGroups_dict["Trigger_mme"][year]+triggerGroups_dict["Trigger_1m"][year]
+    SingleElectron_Run2017C_14Dec2018.vetoTriggers = triggerGroups_dict["Trigger_2m"][year] + triggerGroups_dict["Trigger_2e"][year] +triggerGroups_dict["Trigger_em"][year] +triggerGroups_dict["Trigger_1m"][year]
     
     selectedComponents = [SingleElectron_Run2017C_14Dec2018]
 elif test in ('2','3','3s'):

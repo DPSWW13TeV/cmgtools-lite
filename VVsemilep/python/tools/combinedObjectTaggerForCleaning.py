@@ -92,7 +92,7 @@ if __name__ == '__main__':
             self.sf1 = CombinedObjectTaggerForCleaning("Test",
                                                        looseLeptonSel = lambda lep : lep.sip3d < 8,
                                                        cleaningLeptonSel = lambda lep : True, # cuts applied on top of loose
-                                                       FOLeptonSel = lambda lep : lep.conept>10, # cuts applied on top of loose
+                                                       FOLeptonSel = lambda lep : lep.pt>10, # cuts applied on top of loose
                                                        tightLeptonSel = lambda lep : lep.conept>10 and lep.jetBTagCSV<0.80 and lep.mvaTTH > 0.75, # cuts applied on top of loose
                                                        FOTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and tau.idMVAOldDMRun2dR03 >= 1,
                                                        tightTauSel = lambda tau: tau.idMVAOldDMRun2dR03 >= 2, # cuts applied on top of FO tau

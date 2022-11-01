@@ -152,7 +152,7 @@ def haddNano(odir, idirs, firstTime=True):
         print 
         raise
 
-def haddChunks(idir, removeDestDir=False, cleanUp=False, ignoreDirs=None, maxSize=None, nanoAOD=False):
+def haddChunks(idir, removeDestDir=False, cleanUp=False, ignoreDirs=None, maxSize=5, nanoAOD=False):
 
     chunks = {}
     compsToSpare = set()

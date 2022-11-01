@@ -428,22 +428,8 @@ MODULES.append( ('Trigger_em', lambda : EvtTagger("Trigger_em",[
                     ev.HLT_BIT_HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v or \
                     ev.HLT_BIT_HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v
                     ])))
-MODULES.append( ('Trigger_3e', lambda : EvtTagger("Trigger_3e",[
-                lambda ev : ev.HLT_BIT_HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL_v
-                    ])))
-MODULES.append( ('Trigger_3m', lambda : EvtTagger("Trigger_3m",[
-                lambda ev : ev.HLT_BIT_HLT_TripleMu_12_10_5_v
-                    ])))
-MODULES.append( ('Trigger_mee', lambda : EvtTagger("Trigger_mee",[
-                lambda ev : ev.HLT_BIT_HLT_Mu8_DiEle12_CaloIdL_TrackIdL_v
-                    ])))
-MODULES.append( ('Trigger_mme', lambda : EvtTagger("Trigger_mme",[
-                lambda ev : ev.HLT_BIT_HLT_DiMu9_Ele9_CaloIdL_TrackIdL_DZ_v
-                    ])))
-MODULES.append( ('Trigger_2lss', lambda : EvtTagger("Trigger_2lss",[
+MODULES.append( ('Trigger_2l', lambda : EvtTagger("Trigger_2l",[
                 lambda ev : ev.Trigger_1e or ev.Trigger_1m or ev.Trigger_2e or ev.Trigger_2m or ev.Trigger_em ])))
-MODULES.append( ('Trigger_3l', lambda : EvtTagger("Trigger_3l",[
-                lambda ev : ev.Trigger_2lss or ev.Trigger_3e or ev.Trigger_3m or ev.Trigger_mee or ev.Trigger_mme ])))
 
 
 from CMGTools.TTHAnalysis.tools.objTagger import ObjTagger
