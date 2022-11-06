@@ -38,6 +38,7 @@ def haddPck(file, odir, idirs):
 
 
 def hadd(file, odir, idirs, appx=''):
+    print "running hadd"
     MAX_ARG_STRLEN = 131072
     if file.endswith('.pck'):
         try:
@@ -95,6 +96,7 @@ def haddRec(odir, idirs):
             hadd('/'.join([root, file]), odir, idirs)
 
 def haddNano(odir, idirs, firstTime=True):
+    print "running haddNANO"
     print 'adding', idirs
     print 'to', odir
 
@@ -127,7 +129,7 @@ def haddNano(odir, idirs, firstTime=True):
     if len(files) == 0:
         raise RuntimeError("Error, no files for target %s" % odir)
     elif len(files) > 200:
-        newlist = []; sublist = []
+        newlist = []; sublist = []; size=0
         for f in files:
             sublist.append(f)
             if len(sublist) == 200:
@@ -145,6 +147,7 @@ def haddNano(odir, idirs, firstTime=True):
         if len(files) == 1:
             shutil.move(files[0], odir+".root")
         else:
+            print"i have produced more sub root files since the size is larger than expected"
             subprocess.call(["haddnano.py", odir+".root" ] + files)
     except OSError:
         print 
@@ -152,8 +155,7 @@ def haddNano(odir, idirs, firstTime=True):
         print 
         raise
 
-def haddChunks(idir, removeDestDir=False, cleanUp=False, ignoreDirs=None, maxSize=5, nanoAOD=False):
-
+def haddChunks(idir, removeDestDir=False, cleanUp=False, ignoreDirs=None, maxSize=None, nanoAOD=True):
     chunks = {}
     compsToSpare = set()
     if ignoreDirs == None: ignoreDirs = set()
@@ -188,13 +190,13 @@ def haddChunks(idir, removeDestDir=False, cleanUp=False, ignoreDirs=None, maxSiz
         tasks = [ (odir,cchunks) ]
         if maxSize:
             threshold = maxSize*(1024.**3)
-            #print odir, cchunks
             running = [ dict(files=[], size=0.) ]
             for ch in cchunks:
                 if nanoAOD and os.path.isfile(ch+".root"):
-                    size = os.path.getsize(ch+".root")
+                    size= os.path.getsize(ch+".root")
+                    print (ch+".root"),size
                 else:
-                    size = sum(sum(os.path.getsize(os.path.join(p,f)) for f in fs) for p,d,fs in os.walk(ch))
+                    size= sum(sum(os.path.getsize(os.path.join(p,f)) for f in fs) for p,d,fs in os.walk(ch))
                 if running[-1]['size'] + size > threshold:
                     running.append(dict(files=[], size=0.))
                 running[-1]['files'].append(ch)
@@ -214,7 +216,42 @@ def haddChunks(idir, removeDestDir=False, cleanUp=False, ignoreDirs=None, maxSiz
                 elif os.path.isdir( odir ):
                     shutil.rmtree(odir)
             if nanoAOD:
-                haddNano(odir, cchunks)
+                tot_size=0;   subtasks={};
+                for odir, cchunks in tasks:
+                    tot_size=0; elements=[]  
+                    for i,chunk in enumerate(cchunks):
+                        ich=''
+                        if os.path.isdir(chunk):
+                            found = False
+                            for fname in os.listdir(chunk):
+                                if fname.endswith(".root") and os.path.isfile(os.path.join(chunk, fname)):
+                                    ich=(os.path.join(chunk, fname))
+                                    found = True
+                                elif fname.endswith(".root.url") and os.path.isfile(os.path.join(chunk, fname)):
+                                    with open(os.path.join(chunk, fname)) as urlfile:
+                                        ich=urlfile.read().rstrip()
+                                    found=True
+                        if not found: print 'missing root file in %s'%(chunk)
+                        tot_size+= os.path.getsize(ich.split("root://eoscms.cern.ch/")[-1])
+                        if(tot_size < maxSize*(1024.**3)):
+                            elements.append(chunk)
+                            if chunk == cchunks[-1]:
+                                ikey=str(odir+'_part'+str(len(subtasks))) ##am
+                                subtasks[ikey]=elements;
+                            else: continue
+                        else:
+                            ikey=str(odir+'_part'+str(len(subtasks))) ##am
+                            subtasks[ikey]=elements;
+                            elements=[chunk]; tot_size=os.path.getsize(ich.split("root://eoscms.cern.ch/")[-1])
+                            continue;
+                for ikey,ival in subtasks.iteritems():
+                    if len(subtasks) == 1 :
+                        haddNano(ikey.split('_part')[0],ival)
+                    else:
+                        print ikey,ival
+                        haddNano(ikey,ival)
+                    #                haddNano(odir, cchunks)
+                        
             else:
                 haddRec(odir, cchunks)
             if cleanUp and (comp not in compsToSpare):
@@ -233,3 +270,4 @@ if __name__ == '__main__':
     # idirs = args[2:]
     # haddRec(odir, idirs)
     haddChunks(sys.argv[1])
+

@@ -1,0 +1,36 @@
+T_tWch_incldecays : T_tWch_incldecays : xsec
+
+##amWZTo1L1Nu2Q : WZTo1L1Nu2Q : xsec
+##amT_sch : T_sch : xsec
+##amZZTo2Q2L : ZZTo2Q2L : xsec
+##amWZTo2Q2L : WZTo2Q2L : xsec
+##amT_tch : T_tch : xsec
+##amT_tWch_noFullyHad : T_tWch_noFullyHad : xsec
+##amDYJetsToLL_LHEFilterPtZ50to100  : DYJetsToLL_LHEFilterPtZ50to100  : xsec
+##amDYJetsToLL_LHEFilterPtZ400to650 : DYJetsToLL_LHEFilterPtZ400to650 : xsec
+##amDYJetsToLL_LHEFilterPtZ650toinf : DYJetsToLL_LHEFilterPtZ650toinf : xsec
+##amDYJetsToLL_LHEFilterPtZ250to400 : DYJetsToLL_LHEFilterPtZ250to400 : xsec
+##amDYJetsToLL_LHEFilterPtZ100to250 : DYJetsToLL_LHEFilterPtZ100to250 : xsec
+##amDYJetsToLL_LHEFilterPtZ0to50_sub0 : DYJetsToLL_LHEFilterPtZ0to50_sub0 : xsec
+##amDYJetsToLL_LHEFilterPtZ0to50_sub0_1 : DYJetsToLL_LHEFilterPtZ0to50_sub0_1 : xsec
+##amDYJetsToLL_LHEFilterPtZ0to50_sub1 : DYJetsToLL_LHEFilterPtZ0to50_sub1 : xsec
+
+##amdata : EGamma_Run2018D_UL18
+##amdata : MuonEG_Run2018B_UL18
+##amdata : SingleMuon_Run2018D_UL18
+##amdata : EGamma_Run2018B_UL18
+##amdata : MuonEG_Run2018D_UL18
+##amdata : DoubleMuon_Run2018B_UL18
+##amdata : MuonEG_Run2018A_UL18
+##amdata : EGamma_Run2018C_UL18
+##amdata : MuonEG_Run2018C_UL18
+##amdata : SingleMuon_Run2018C_UL18
+##amdata : SingleMuon_Run2018A_UL18
+##amdata : SingleMuon_Run2018B_UL18
+##amdata : DoubleMuon_Run2018C_UL18
+##amdata : EGamma_Run2018A_UL18
+##amdata : DoubleMuon_Run2018A_UL18
+##amdata : DoubleMuon_Run2018D_UL18_part0
+##amdata : DoubleMuon_Run2018D_UL18_part1
+##amdata : DoubleMuon_Run2018D_UL18_part2
+##amdata : DoubleMuon_Run2018D_UL18_part3

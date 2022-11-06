@@ -22,9 +22,11 @@ test = getHeppyOption("test","") #"testam")
 if year == '2018':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL18NanoAODv9 import samples as mcSamples_
     from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples_UL2018 as allData
+    from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples_UL2018 as allData
 elif year == '2017':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL17NanoAODv9 import samples as mcSamples_
-    from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_UL2017 as allData
+    #from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_UL2017 as allData
+    from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_Run2017B_UL2017 as allData
 elif year == '2016':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL16NanoAODv9 import samples as mcSamples_
     from CMGTools.RootTools.samples.samples_13TeV_DATA2016_NanoAOD import dataSamples_UL16 as allData
@@ -41,10 +43,10 @@ if year == '2018':
     from CMGTools.RootTools.samples.triggers_13TeV_DATA2018 import all_triggers as triggers
 elif year == '2017':
     from CMGTools.RootTools.samples.triggers_13TeV_DATA2017 import all_triggers as triggers
-    triggers["FR_1mu_iso"] = [] # they probably existed but we didn't use them in 2017
+    #triggers["FR_1mu_iso"] = [] # they probably existed but we didn't use them in 2017
 elif year in ['2016','2016APV']:
     from CMGTools.RootTools.samples.triggers_13TeV_DATA2016 import all_triggers as triggers
-    triggers["FR_1mu_noiso_smpd"] = [] 
+    #triggers["FR_1mu_noiso_smpd"] = [] 
 
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules import triggerGroups_dict
 
@@ -53,21 +55,25 @@ theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # diboson
-    #    "ZZTo2Q2L", 
-   #     "WZTo2Q2L",
-  #      "WZTo1L1Nu2Q","WWTo1L1Nu2Q"
- #       "W.*JetsToLNu.*LO","DYJets.*LHEFilter.*",
-         #Ttbar + single top + tW
-        "TTJets",
-##am        "TT(Lep|Semi)_pow",
-#        "T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
+##am        "ZZTo2Q2L",   "WZTo2Q2L",        "WZTo1L1Nu2Q","WWTo1L1Nu2Q"
+#        "WJetsToLNu.*", 
+        "WJetsToLNu_NLO","WJetsToLNu_HT70To100",
+        #"DYJetsToLL_M50", 
+        #"DYJetsToLL_M50_LO",
+        #"WZToLNuQQ01j_5f_amcatnloFxFx",
+        #"DYJetsToLL_M10to50_LO",
+        #,"DYJets.*",
+        ##am         #Ttbar + single top + tW
+        #"WJetsToLNu_HT.*","WJetsToLNu_LO",
+        #"TTJets",         "TTSemi_pow",
+        ##am    "T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
 ##am        # conversions
        #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
 ##am        #  # diboson + DPS + WWss
-##am        "ZZTo4L", #"WWTo2L2Nu",  "WZTo3LNu_fxfx",   # "WW_DPS", falta dps y wpwp "WWTo2L2Nu_DPS", "WpWpJJ", # "WZTo3LNu_pow",
+##am        "ZZTo4L", #"WWTo2L2Nu",  "WZTo3LNu_fxfx",   
 ##am        #  # triboson
 ##am        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ", # "WWW_ll", <- not there, but its just a leptonic filter
-
+        #"WWW"
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else
@@ -137,10 +143,8 @@ def setFilesPerJob(comps,filesperjob):
         comp.splitFactor=len(comp.files) / filesperjob
 
 if analysis == "main":
-    cropToLumi(byCompName(selectedComponents,["DYJetsToLL", "T_","TBar_","TT(Lep|Semi)_pow"]),50.)
-    cropToLumi(byCompName(selectedComponents,["TTJets"]),100.)
-    cropToLumi(byCompName(selectedComponents,["ZZTo4L"]),40.)
-
+    cropToLumi(byCompName(selectedComponents,["TTJets", "T_","TBar_","TT(Lep|Semi)_pow"]),55.)
+    cropToLumi(byCompName(selectedComponents,["DYJetsToLL_M50_LO"]),50.)
 if analysis == "frqcd":
     cropToLumi(selectedComponents, 5.0)
     #cropToLumi(byCompName(selectedComponents,["QCD"]), 0.3)

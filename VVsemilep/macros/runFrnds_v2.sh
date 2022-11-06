@@ -3,7 +3,7 @@
 ###### analysis steps starting from nanoAOD samples -------------->
 ## post-processing steps: base ntuples (nanoAODs postprocessor)-> recl frnds (MVA WPs from vvsemilep_modules.py) -> bdtiv -> skimming (skims the base ntuples + recl frnds) -> links to flips 
 ## run post-skimming frnds 
-
+##maxruntime here is in minutes
 
 ######## fixed inputs no matter what
 baseDir='/eos/cms/store/cmst3/group/dpsww/'
@@ -11,16 +11,14 @@ baseDir='/eos/cms/store/cmst3/group/dpsww/'
 ######## MVA WPs, year ans steps to run on 
 runWhat=${1}; shift;
 year=${1}; shift; 
-samples=${1}; shift;
-#runWhat=${1}
-#steps=("bdtiv")
+#samples=${1}; shift;
 
-echo $runWhat,$year,$samples
+echo $runWhat,$year
 
 
 ################### following should not be changed
 Trees='vvsemilep/'
-nEvt=20000 
+nEvt=80000
 Parent=${baseDir}/${Trees}/${year}
 BCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ${Parent}/";
 CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
@@ -28,8 +26,8 @@ CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
 case ${runWhat} in
 recl)
 	echo "recl"
-	${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N 10000 --de .*Run.* -q condor --maxruntime 50 --log $PWD/logs #
-	${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N 60000 --dm .*Run.* -q condor  --maxruntime 50 --log $PWD/logs 
+	${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} --de .*Run.* -q condor --maxruntime 50 --log $PWD/logs #
+	#${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 50 --log $PWD/logs 
 	;;
 
 postFSR)

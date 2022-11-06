@@ -56,6 +56,7 @@ def configureSplittingFromTime(selectedComponents,msPerEvent,jobTimeInHours,minS
 def cropToLumi(selectedComponents, maxLumi, minFiles=4):
     from math import ceil
     for comp in selectedComponents:
+        print "cropping %s to lumi %f"%(comp,maxLumi)
         nev   = getattr(comp, 'dataset_entries', 0)
         lumi  = nev/(1.e3 * comp.xSection) if comp.isMC and getattr(comp,'xSection',0) > 0 else 0
         if not lumi: continue

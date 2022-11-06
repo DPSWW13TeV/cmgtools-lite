@@ -1,0 +1,4 @@
+alwaystrue: 1
+lep: nLepFO>=1
+sign: (nLepFO>1) || (LepGood1_charge*LepGood2_charge < 0) # now acting also on data
+

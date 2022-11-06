@@ -26,7 +26,7 @@ if __name__ == '__main__':
                       default=False,action="store_true",
                       help="move chunks to Chunks/ after processing.")
     parser.add_option("--max-size", dest="maxSize",
-                      default=None,type="float",
+                      default=15.0,type="float",
                       help="max size of a chunk (in Gb)")
 
     (options,args) = parser.parse_args()

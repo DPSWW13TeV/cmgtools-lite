@@ -133,15 +133,19 @@ QCD_bcToE = [
 WJetsToLNu_LO = kreator.makeMCComponent("WJetsToLNu_LO","/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 3* 20508.9)
 
 # ## LO XSec from genXSecAna times NNLO/LO XSec for inclusive W+jets
+
 W1JetsToLNu_LO = kreator.makeMCComponent("W1JetsToLNu_LO","/W1JetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 8123*1.17)
 W2JetsToLNu_LO = kreator.makeMCComponent("W2JetsToLNu_LO","/W2JetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 2785*1.17)
 W3JetsToLNu_LO = kreator.makeMCComponent("W3JetsToLNu_LO","/W3JetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 993.4*1.17)
 W4JetsToLNu_LO = kreator.makeMCComponent("W4JetsToLNu_LO","/W4JetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM", "CMS", ".*root", 542.4*1.17)
 
 # XSec from genXSecAna
+WJetsToLNu_NLO        = kreator.makeMCComponent("WJetsToLNu_NLO","/WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM", "CMS", ".*root",6.748e+04,fracNegWeights=1.589e-01)
+
 WJetsToLNu_012JetsNLO_34JetsLO = kreator.makeMCComponent("WJetsToLNu_012JetsNLO_34JetsLO","/WJetsToLNu_012JetsNLO_34JetsLO_EWNLOcorr_13TeV-sherpa/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM",  "CMS", ".*root", 6.228e+04)
 
 # ### W+jets HT-binned
+WJetsToLNu_HT70To100  = kreator.makeMCComponent("WJetsToLNu_HT70To100","/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",1.267e+03)
 WJetsToLNu_HT100to200 = kreator.makeMCComponent("WJetsToLNu_HT100to200", "/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",1395*1.17) 
 WJetsToLNu_HT200to400 = kreator.makeMCComponent("WJetsToLNu_HT200to400", "/WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",408.7*1.17) 
 WJetsToLNu_HT400to600      = kreator.makeMCComponent("WJetsToLNu_HT400to600", "/WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",57.52*1.17) 
@@ -151,6 +155,7 @@ WJetsToLNu_HT1200to2500    = kreator.makeMCComponent("WJetsToLNu_HT1200to2500", 
 WJetsToLNu_HT2500toInf = kreator.makeMCComponent("WJetsToLNu_HT2500toInf", "/WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM", "CMS", ".*root",0.00819*1.17) 
 
 WJetsToLNuHT = [
+    WJetsToLNu_HT70To100,
     WJetsToLNu_HT100to200,
     WJetsToLNu_HT200to400,
     WJetsToLNu_HT400to600,
@@ -166,8 +171,12 @@ Ws = [
     W2JetsToLNu_LO,
     W3JetsToLNu_LO,
     W4JetsToLNu_LO,
+    WJetsToLNu_NLO,
     WJetsToLNu_012JetsNLO_34JetsLO,
 ]+WJetsToLNuHT
+
+
+
 
 
 
@@ -220,7 +229,7 @@ DYJetsToLL_LHEFilterPtZ100to250 = kreator.makeMCComponent("DYJetsToLL_LHEFilterP
 
 DYJetsToLL_LHEFilterPtZ250to400  = kreator.makeMCComponent("DYJetsToLL_LHEFilterPtZ250to400","/DYJetsToLL_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 3.784e+00 , fracNegWeights=2.877e-01)
 
-DYJetsToLL_LHEFilterPtZ400to600 = kreator.makeMCComponent("DYJetsToLL_LHEFilterPtZ400to600","/DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 5.083e-01 , fracNegWeights=2.786e-01)
+DYJetsToLL_LHEFilterPtZ400to650 = kreator.makeMCComponent("DYJetsToLL_LHEFilterPtZ400to650","/DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 5.083e-01 , fracNegWeights=2.786e-01)
 DYJetsToLL_LHEFilterPtZ650toinf = kreator.makeMCComponent("DYJetsToLL_LHEFilterPtZ650toinf","/DYJetsToLL_LHEFilterPtZ-650ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 4.662e-02, fracNegWeights=2.823e-01)
 
 
@@ -230,7 +239,7 @@ DYJetsPtbinned = [
     DYJetsToLL_LHEFilterPtZ50to100,
     DYJetsToLL_LHEFilterPtZ100to250,
     DYJetsToLL_LHEFilterPtZ250to400,
-    DYJetsToLL_LHEFilterPtZ400to600,
+    DYJetsToLL_LHEFilterPtZ400to650,
     DYJetsToLL_LHEFilterPtZ650toinf,
 ]
 
@@ -310,9 +319,12 @@ WLLJJ_WToLNu_EWK = kreator.makeMCComponent("WLLJJ_WToLNu_EWK","/WLLJJ_WToLNu_EWK
 ZZTo2Q2L              = kreator.makeMCComponent("ZZTo2Q2L", "/ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 3.689, fracNegWeights=0.1756)
 WZTo2Q2L              = kreator.makeMCComponent("WZTo2Q2L", "/WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 6.409, fracNegWeights=0.1883)
 WZTo1L1Nu2Q           = kreator.makeMCComponent("WZTo1L1Nu2Q","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
+
+basepath_private = "/eos/cms/store/cmst3/group/dpsww/WZToLNuQQ01j_5f_amcatnloFxFx_nanov9UL2018/"
+WZToLNuQQ01j_5f_amcatnloFxFx    = kreator.makeMCComponent("WZToLNuQQ01j_5f_amcatnloFxFx","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
+WZToLNuQQ01j_5f_amcatnloFxFx.files   = [basepath_private+x for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x))]
+
 WWTo1L1Nu2Q           = kreator.makeMCComponent("WWTo1L1Nu2Q","/WWTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",5.090e+01,fracNegWeights=2.011e-01)
-WJetsToLNu_NLO        = kreator.makeMCComponent("WJetsToLNu_NLO","/WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM", "CMS", ".*root",6.748e+04,fracNegWeights=1.589e-01)
-WJetsToLNu_HT70To100  = kreator.makeMCComponent("WJetsToLNu_HT70To100","/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",1.267e+03)
 
 
 DiBosons = [
@@ -336,7 +348,7 @@ DiBosons = [
     WZTo2Q2L,
     WZTo1L1Nu2Q,
     WWTo1L1Nu2Q,
-
+    WZToLNuQQ01j_5f_amcatnloFxFx,
 ]
 
 # # ===  TRI-BOSONS

@@ -96,8 +96,8 @@ QCD_Mus = [ QCD_Mu15 ] + QCD_Mu5s
 # QCD_Pt15to20_EMEnriched   = kreator.makeMCComponent("QCD_Pt15to20_EMEnriched"  ,"/QCD_Pt-15to20_EMEnriched_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16_ext1-v1/NANOAODSIM"  , "CMS", ".*root",  1.33e+06)
 QCD_Pt20to30_EMEnriched   = kreator.makeMyPrivateMCComponent("QCD_Pt20to30_EMEnriched"  ,"/QCD_Pt-20to30_EMEnriched_TuneCP5_13TeV-pythia8/sesanche-Summer20UL17-3f0b140a720de1c801ff414923884f7b/USER"  , "PRIVATE", ".*root",  "phys03", 4.928e+06)
 
-from CMGTools.Production.nanoAODPreprocessor import nanoAODPreprocessor
-QCD_Pt20to30_EMEnriched.preprocessor = nanoAODPreprocessor(cfg='/work/sesanche/FRs/CMSSW_10_6_27/src/NANO_Summer20UL17_Nanov2_MC_NANO.py',cmsswArea='/work/sesanche/FRs/CMSSW_10_6_27/src',keepOutput=True)
+##amfrom CMGTools.Production.nanoAODPreprocessor import nanoAODPreprocessor
+##amQCD_Pt20to30_EMEnriched.preprocessor = nanoAODPreprocessor(cfg='/work/sesanche/FRs/CMSSW_10_6_27/src/NANO_Summer20UL17_Nanov2_MC_NANO.py',cmsswArea='/work/sesanche/FRs/CMSSW_10_6_27/src',keepOutput=True)
 
 
 
