@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #from mcPlots import *
-from CMGTools.TTHAnalysis.plotter.mcPlots import *
+from CMGTools.VVsemilep.plotter.mcPlots import *
 
 
 class Param:

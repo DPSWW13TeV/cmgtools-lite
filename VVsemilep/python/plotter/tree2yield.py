@@ -16,18 +16,18 @@ ROOT.gSystem.Load("libpng") # otherwise we may end up with a bogus version
 
 import copy
 
-from CMGTools.TTHAnalysis.plotter.cutsFile import CutsFile
-from CMGTools.TTHAnalysis.plotter.mcCorrections import *
-from CMGTools.TTHAnalysis.plotter.fakeRate import *
-from CMGTools.TTHAnalysis.plotter.uncertaintyFile import *
-from CMGTools.TTHAnalysis.plotter.histoWithNuisances import HistoWithNuisances, cropNegativeBins
+from CMGTools.VVsemilep.plotter.cutsFile import CutsFile
+from CMGTools.VVsemilep.plotter.mcCorrections import *
+from CMGTools.VVsemilep.plotter.fakeRate import *
+from CMGTools.VVsemilep.plotter.uncertaintyFile import *
+from CMGTools.VVsemilep.plotter.histoWithNuisances import HistoWithNuisances, cropNegativeBins
 
 if "/functions_cc.so" not in ROOT.gSystem.GetLibraries(): 
-    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/functions.cc+" % os.environ['CMSSW_BASE']);
+    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/functions.cc+" % os.environ['CMSSW_BASE']);
 
 def scalarToVector(x):
     x0 = x
-    x = re.sub(r"(LepGood|Lep|JetFwd|Jet|GenTop|SV|PhoGood|TauGood|Tau|Muon|Electron)(\d)_(\w+)", lambda m : "%s_%s[%d]" % (m.group(1),m.group(3),int(m.group(2))-1), x)
+    x = re.sub(r"(LepGood|Lep|JetFwd|Jet|JetSel|FatJet|FatJetSel|GenTop|SV|PhoGood|TauGood|Tau|Muon|Electron)(\d)_(\w+)", lambda m : "%s_%s[%d]" % (m.group(1),m.group(3),int(m.group(2))-1), x)
     x = re.sub(r"\bmet\b", "met_pt", x)
     return x
 
@@ -624,7 +624,7 @@ class TreeToYield:
         if canKeys and histo.GetEntries() > 0 and histo.GetEntries() < self.getOption('KeysPdfMinN',2000) and not self._isdata and self.getOption("KeysPdf",False):
             #print "Histogram for %s/%s has %d entries, so will use KeysPdf " % (self._cname, self._name, histo.GetEntries())
             if "/TH1Keys_cc.so" not in ROOT.gSystem.GetLibraries(): 
-                ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/TH1Keys.cc+" % os.environ['CMSSW_BASE']);
+                ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/TH1Keys.cc+" % os.environ['CMSSW_BASE']);
             (nb,xmin,xmax) = bins.split(",")
             histo = ROOT.TH1KeysNew("dummyk","dummyk",int(nb),float(xmin),float(xmax),"a",1.0)
             self._tree.Draw("%s>>%s" % (expr,"dummyk"), cut, "goff", maxEntries, firstEntry)

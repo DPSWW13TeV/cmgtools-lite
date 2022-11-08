@@ -4,8 +4,8 @@ ROOT.gROOT.SetBatch(True)
 
 from math import *
 from os.path import dirname,basename
-from CMGTools.TTHAnalysis.tools.plotDecorations import *
-from CMGTools.TTHAnalysis.plotter.mcPlots import *
+from CMGTools.VVsemilep.tools.plotDecorations import *
+from CMGTools.VVsemilep.plotter.mcPlots import *
 
 options = None
 if __name__ == "__main__":

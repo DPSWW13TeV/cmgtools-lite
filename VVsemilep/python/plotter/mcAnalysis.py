@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 #from tree2yield import *
-from CMGTools.TTHAnalysis.plotter.tree2yield import *
-from CMGTools.TTHAnalysis.plotter.projections import *
-from CMGTools.TTHAnalysis.plotter.figuresOfMerit import FOM_BY_NAME
-from CMGTools.TTHAnalysis.plotter.histoWithNuisances import *
+from CMGTools.VVsemilep.plotter.tree2yield import *
+from CMGTools.VVsemilep.plotter.projections import *
+from CMGTools.VVsemilep.plotter.figuresOfMerit import FOM_BY_NAME
+from CMGTools.VVsemilep.plotter.histoWithNuisances import *
 import pickle, re, random, time
 from copy import copy, deepcopy
 from collections import defaultdict

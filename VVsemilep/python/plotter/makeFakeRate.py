@@ -7,7 +7,7 @@ import ROOT
 ROOT.gROOT.SetBatch(True)
 sys.argv.remove('-b-')
 
-from CMGTools.TTHAnalysis.plotter.mcPlots import *
+from CMGTools.VVsemilep.plotter.mcPlots import *
 
 def H1DToH2D(h1d,h2d,func):
     ax = h2d.GetXaxis()

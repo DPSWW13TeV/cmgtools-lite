@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 #from tree2yield import *
-from CMGTools.TTHAnalysis.plotter.tree2yield import *
-from CMGTools.TTHAnalysis.plotter.projections import *
-from CMGTools.TTHAnalysis.plotter.mcAnalysis import *
-from CMGTools.TTHAnalysis.plotter.mcPlots import *
-from CMGTools.TTHAnalysis.plotter.mcDump import MCDumpEvent
-from CMGTools.TTHAnalysis.treeReAnalyzer2 import *
+from CMGTools.VVsemilep.plotter.tree2yield import *
+from CMGTools.VVsemilep.plotter.projections import *
+from CMGTools.VVsemilep.plotter.mcAnalysis import *
+from CMGTools.VVsemilep.plotter.mcPlots import *
+from CMGTools.VVsemilep.plotter.mcDump import MCDumpEvent
+from CMGTools.VVsemilep.treeReAnalyzer2 import *
 import string
 
 if "/fakeRate_cc.so" not in ROOT.gSystem.GetLibraries(): 
-    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/fakeRate.cc+" % os.environ['CMSSW_BASE']);
+    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/fakeRate.cc+" % os.environ['CMSSW_BASE']);
 
 class MCNtupleModule(Module):
     def __init__(self,name,cut,columns,options=None,booker=None):

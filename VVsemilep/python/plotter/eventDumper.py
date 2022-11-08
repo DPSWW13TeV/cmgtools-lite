@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 from math import *
 import re, string
-from CMGTools.TTHAnalysis.treeReAnalyzer import *
-from CMGTools.TTHAnalysis.plotter.tree2yield import CutsFile, scalarToVector
+from CMGTools.VVsemilep.treeReAnalyzer import *
+from CMGTools.VVsemilep.plotter.tree2yield import CutsFile, scalarToVector
 
 from optparse import OptionParser
 import json

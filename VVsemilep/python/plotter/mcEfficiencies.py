@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 #from mcPlots import *
-from CMGTools.TTHAnalysis.plotter.mcPlots import *
+from CMGTools.VVsemilep.plotter.mcPlots import *
 
 if "/fakeRate_cc.so" not in ROOT.gSystem.GetLibraries():
-    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/fakeRate.cc+" % os.environ['CMSSW_BASE']);
+    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/fakeRate.cc+" % os.environ['CMSSW_BASE']);
 
 if "/bin2Dto1Dlib_cc.so" not in ROOT.gSystem.GetLibraries():
-    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/bin2Dto1Dlib.cc+" % os.environ['CMSSW_BASE']);
+    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/bin2Dto1Dlib.cc+" % os.environ['CMSSW_BASE']);
 
 def addMCEfficiencyOptions(parser):
     addMCAnalysisOptions(parser)

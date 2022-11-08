@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #from mcPlots import *
-from CMGTools.TTHAnalysis.plotter.mcAnalysis import *
+from CMGTools.VVsemilep.plotter.mcAnalysis import *
 
 import array
 import ROOT

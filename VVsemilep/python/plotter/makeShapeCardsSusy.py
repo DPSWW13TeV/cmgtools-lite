@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from CMGTools.TTHAnalysis.plotter.mcAnalysis import *
+from CMGTools.VVsemilep.plotter.mcAnalysis import *
 import re, sys, os, os.path, copy
 systs = {}
 

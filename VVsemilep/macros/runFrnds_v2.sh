@@ -11,8 +11,8 @@ baseDir='/eos/cms/store/cmst3/group/dpsww/'
 ######## MVA WPs, year ans steps to run on 
 runWhat=${1}; shift;
 year=${1}; shift; 
-#samples=${1}; shift;
-
+samples=${1}; shift;
+chunks=( "$@" )
 echo $runWhat,$year
 
 
@@ -26,8 +26,17 @@ CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
 case ${runWhat} in
 recl)
 	echo "recl"
-	${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} --de .*Run.* -q condor --maxruntime 50 --log $PWD/logs #
-	#${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 50 --log $PWD/logs 
+	#${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt}  -q condor --dm DYJetsToLL_M50_LO.* --maxruntime 50 --log $PWD/logs #--de .*Run.*
+	if [ -z "$chunks" ] || [ -z == "$samples" ]
+	    then
+	    echo "nothing to do"
+	else
+	    for i in "${chunks[@]}"
+	    do 
+		${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} -d ${samples} -c ${i}
+	    done
+	fi
+	#	${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} -d EGamma_Run2018B_UL18 -c 0 -c 1 -c 10 -c 100 -c 101 -c 102 -c 103 -c 104 #--dm .*Run.* -q condor  --maxruntime 50 --log $PWD/logs 
 	;;
 
 postFSR)

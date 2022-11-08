@@ -8,10 +8,13 @@ WJetsToLNu_LO  : WJetsToLNu_LO  : xsec : LepGood1_mcMatchId!=0 ; FillColor=ROOT.
 TTjets         : TTJets               : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kOrange, Label="top"
 TTsemi	       : TTSemi_pow_part0 + TTSemi_pow_part1+ TTSemi_pow_part2 : xsec : LepGood1_mcMatchId!=0 ; FillColor=ROOT.kBlue, Label="ttsemi"
 T_sch          : T_sch: xsec          : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="single top"
-Tbar_tch       : TBar_tch             : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="single top" #, years="2018"
-T_tch          : TBar_tch             : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="single top" #, years="2018"
+#Tbar_tch       : TBar_tch             : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="single top" #, years="2018"
+T_tch          : T_tch             : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="single top" #, years="2018"
 T_tWch         : T_tWch_noFullyHad    : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="single top" #, years="2018"
 Tbar_tWch      : Tbar_tWch_noFullyHad : xsec : LepGood1_mcMatchId==0 || LepGood2_mcMatchId==0 ; FillColor=ROOT.kGray+2, Label="single top" #, years="2018"
-DYJetsM+       : DYJetsToLL_M50       : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 ;  FillColor=ROOT.kCyan, Label="dy" 
-DYJetsToLL_LHEFilter+ : DYJetsToLL_LHEFilterPtZ0to50_sub0+DYJetsToLL_LHEFilterPtZ0to50_sub1+DYJetsToLL_LHEFilterPtZ250to400+DYJetsToLL_LHEFilterPtZ50to100+DYJetsToLL_LHEFilterPtZ0to50_sub0_1+DYJetsToLL_LHEFilterPtZ100to250+DYJetsToLL_LHEFilterPtZ400to650+DYJetsToLL_LHEFilterPtZ650toinf  : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 ;  FillColor=ROOT.kCyan, Label="dy_lheF"
+
+DYJetsM+       : DYJetsToLL_M50_LO_part0+ DYJetsToLL_M50_LO_part12+DYJetsToLL_M50_LO_part3+ DYJetsToLL_M50_LO_part7+ DYJetsToLL_M50_LO_part1+ DYJetsToLL_M50_LO_part13+DYJetsToLL_M50_LO_part4+ DYJetsToLL_M50_LO_part8+ DYJetsToLL_M50_LO_part10+DYJetsToLL_M50_LO_part14+DYJetsToLL_M50_LO_part5+ DYJetsToLL_M50_LO_part9+DYJetsToLL_M50_LO_part11+DYJetsToLL_M50_LO_part2+ DYJetsToLL_M50_LO_part6+: xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 ; FillColor=ROOT.kCyan, Label="dy" 
+
+DYJetsToLLLHEFilter+ : DYJetsToLL_LHEFilterPtZ0to50_sub0 + DYJetsToLL_LHEFilterPtZ0to50_sub 1 +DYJetsToLL_LHEFilterPtZ250to400+DYJetsToLL_LHEFilterPtZ50to100+DYJetsToLL_LHEFilterPtZ0to50_sub0_1+DYJetsToLL_LHEFilterPtZ100to250+DYJetsToLL_LHEFilterPtZ400to650+DYJetsToLL_LHEFilterPtZ650toinf  : xsec : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 ;  FillColor=ROOT.kCyan, Label="dy_lheF"
+
 DYJetsHT+      : DYJetsToLL_M50_HT100to200_part0+DYJetsToLL_M50_HT1200to2500+DYJetsToLL_M50_HT2500toInf+DYJetsToLL_M50_HT600to800+DYJetsToLL_M50_HT100to200_part1+DYJetsToLL_M50_HT200to400+DYJetsToLL_M50_HT400to600+DYJetsToLL_M50_HT800to1200 : xsec :  : LepGood1_mcMatchId!=0 && LepGood2_mcMatchId!=0 ;  FillColor=ROOT.kCyan, Label="dy_HT"

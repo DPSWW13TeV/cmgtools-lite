@@ -3,9 +3,9 @@ import os
 
 import ROOT
 if "/smearer_cc.so" not in ROOT.gSystem.GetLibraries(): 
-    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/smearer.cc+" % os.environ['CMSSW_BASE']);
+    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/smearer.cc+" % os.environ['CMSSW_BASE']);
 if "/mcCorrections_cc.so" not in ROOT.gSystem.GetLibraries(): 
-    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/mcCorrections.cc+" % os.environ['CMSSW_BASE']);
+    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/mcCorrections.cc+" % os.environ['CMSSW_BASE']);
 
 class SimpleCorrection:
     def __init__(self,find,replace,procMatch=None,componentMatch=None,onlyForCuts=False,alsoData=False, year=None, noInMC=False):

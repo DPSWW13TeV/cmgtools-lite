@@ -57,7 +57,8 @@ if analysis == "main":
         # diboson
 ##am        "ZZTo2Q2L",   "WZTo2Q2L",        "WZTo1L1Nu2Q","WWTo1L1Nu2Q"
 #        "WJetsToLNu.*", 
-        "WJetsToLNu_NLO","WJetsToLNu_HT70To100",
+        #"WJetsToLNu_NLO",
+        #   "WJetsToLNu_HT70To100",
         #"DYJetsToLL_M50", 
         #"DYJetsToLL_M50_LO",
         #"WZToLNuQQ01j_5f_amcatnloFxFx",
@@ -73,7 +74,7 @@ if analysis == "main":
 ##am        "ZZTo4L", #"WWTo2L2Nu",  "WZTo3LNu_fxfx",   
 ##am        #  # triboson
 ##am        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ", # "WWW_ll", <- not there, but its just a leptonic filter
-        #"WWW"
+        "WWW"
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else

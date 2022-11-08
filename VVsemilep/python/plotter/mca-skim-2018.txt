@@ -1,7 +1,8 @@
-T_tWch_incldecays : T_tWch_incldecays : xsec
 
-##amWZTo1L1Nu2Q : WZTo1L1Nu2Q : xsec
-##amT_sch : T_sch : xsec
+#WZTo1L1Nu2Q : WZTo1L1Nu2Q : xsec
+#T_tWch_incldecays : T_tWch_incldecays : xsec
+
+T_sch : T_sch : xsec
 ##amZZTo2Q2L : ZZTo2Q2L : xsec
 ##amWZTo2Q2L : WZTo2Q2L : xsec
 ##amT_tch : T_tch : xsec

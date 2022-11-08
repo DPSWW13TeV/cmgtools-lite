@@ -1,6 +1,6 @@
 #!/umakeShapeCardsNewsr/bin/env python
-from CMGTools.TTHAnalysis.plotter.mcAnalysis import *
-from CMGTools.TTHAnalysis.plotter.histoWithNuisances import _cloneNoDir
+from CMGTools.VVsemilep.plotter.mcAnalysis import *
+from CMGTools.VVsemilep.plotter.histoWithNuisances import _cloneNoDir
 import re, sys, os, os.path
 systs = {}
 
@@ -26,7 +26,7 @@ options.weight = True
 options.final  = True
 
 if "/functions_cc.so" not in ROOT.gSystem.GetLibraries(): 
-    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/functions.cc+" % os.environ['CMSSW_BASE']);
+    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/functions.cc+" % os.environ['CMSSW_BASE']);
 
 mca  = MCAnalysis(args[0],options)
 cuts = CutsFile(args[1],options)

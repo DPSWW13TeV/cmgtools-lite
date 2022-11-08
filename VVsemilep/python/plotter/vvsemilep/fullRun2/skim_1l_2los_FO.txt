@@ -1,4 +1,5 @@
 alwaystrue: 1
 lep: nLepFO>=1
-sign: (nLepFO>1) || (LepGood1_charge*LepGood2_charge < 0) # now acting also on data
-
+sign: (nLepFO==1) || (LepGood1_charge*LepGood2_charge < 0)
+nj: nJetSel_Recl>=2 || nFatJetSel_Recl ==1
+2lep_promptrightcharge: (!isData) && LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge; Disable=True

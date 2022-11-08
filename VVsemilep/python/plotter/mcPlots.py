@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #from mcAnalysis import *
-from CMGTools.TTHAnalysis.plotter.mcAnalysis import *
-import CMGTools.TTHAnalysis.plotter.CMS_lumi as CMS_lumi
+from CMGTools.VVsemilep.plotter.mcAnalysis import *
+import CMGTools.VVsemilep.plotter.CMS_lumi as CMS_lumi
 import itertools, math
 
 CMS_lumi.writeExtraText = 1
@@ -9,9 +9,9 @@ CMS_lumi.writeExtraText = 1
 _global_workspaces=[] # avoid crash in 80X, to be investigated
 
 if "/bin2Dto1Dlib_cc.so" not in ROOT.gSystem.GetLibraries():
-    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/bin2Dto1Dlib.cc+" % os.environ['CMSSW_BASE']);
+    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/bin2Dto1Dlib.cc+" % os.environ['CMSSW_BASE']);
 if "/fakeRate_cc.so" not in ROOT.gSystem.GetLibraries(): 
-    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/fakeRate.cc+" % os.environ['CMSSW_BASE']);
+    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/fakeRate.cc+" % os.environ['CMSSW_BASE']);
 
 SAFE_COLOR_LIST=[
 ROOT.kBlack, ROOT.kRed, ROOT.kGreen+2, ROOT.kBlue, ROOT.kMagenta+1, ROOT.kOrange+7, ROOT.kCyan+1, ROOT.kGray+2, ROOT.kViolet+5, ROOT.kSpring+5, ROOT.kAzure+1, ROOT.kPink+7, ROOT.kOrange+3, ROOT.kBlue+3, ROOT.kMagenta+3, ROOT.kRed+2,
@@ -454,7 +454,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     if errorsOnRef:
         unityErr.Draw("E2");
     if fitRatio != None and len(ratios) == 1:
-        from CMGTools.TTHAnalysis.tools.plotDecorations import fitTGraph
+        from CMGTools.VVsemilep.tools.plotDecorations import fitTGraph
         fitTGraph(ratio,order=fitRatio)
         unityErr.SetFillStyle(3013);
         unityErr0.SetFillStyle(3013);

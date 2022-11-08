@@ -6,7 +6,7 @@ parser = OptionParser(usage="%prog [options] skimmed_trees_dir input_friends_dir
 parser.add_option("--pretend",    dest="pretend", default=False, action="store_true",  help="Pretend to skim, don't actually do it") 
 parser.add_option("--verbose",    dest="verbose", default=False, action="store_true",  help="More verbose output") 
 parser.add_option("--elist", dest="elist", type="string", default="skimTrees_elist", help="Name of the skim elist (default: skimTrees_elist)")
-parser.add_option("--new","--skip-existing", dest="skipExisting", default=False, action="store_true",  help="Don't skim samples that already exist in the output directory") 
+parser.add_option("--new","--skip-existing", dest="skipExisting", default=True, action="store_true",  help="Don't skim samples that already exist in the output directory") 
 parser.add_option("--rename", dest="renamePatterns", type="string", default=[], nargs=2, action="append", help="Use --rename from_name to_name to handle cases where a dataset was renamed after skimming; regexp supported (uses re.sub)")
 (options, args) = parser.parse_args()
 
@@ -54,8 +54,10 @@ for dset in dsets:
     elist = fsel.Get(options.elist)
     if not elist:
         fsel.ls()
+        print fsel.ls()
         raise RuntimeError("Can't find %s in %s"  % (options.elist, args[0]+'/'+toDataset[dset]+'.root'))
     f_f = ROOT.TFile.Open(args[1]+'/'+dset+'_Friend.root')
+    print "opening this",f_f
     if not f_f: raise RuntimeError("Error opening %s"  % args[1]+'/'+dset+'_Friend.root')
     t_f = f_f.Get("Friends")
     if not t_f: raise RuntimeError("Can't find %s in %s"  % ("Friends", args[1]+'/'+dset+'_Friend.root'))

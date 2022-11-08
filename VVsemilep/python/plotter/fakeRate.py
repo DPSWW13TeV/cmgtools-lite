@@ -3,10 +3,10 @@ import os
 
 import ROOT
 if "/fakeRate_cc.so" not in ROOT.gSystem.GetLibraries(): 
-    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/fakeRate.cc+" % os.environ['CMSSW_BASE']);
+    ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/fakeRate.cc+" % os.environ['CMSSW_BASE']);
 
-from CMGTools.TTHAnalysis.plotter.mcCorrections import SimpleCorrection
-from CMGTools.TTHAnalysis.plotter.cutsFile import CutsFile 
+from CMGTools.VVsemilep.plotter.mcCorrections import SimpleCorrection
+from CMGTools.VVsemilep.plotter.cutsFile import CutsFile 
 
 _loads = {}
 class FakeRate:
@@ -35,7 +35,7 @@ class FakeRate:
                 elif fields[0] == "alt-norm":
                     self._altNorm = fields[1] # this only does something when the fr is part of an unc file
 	        elif fields[0] == "load-histo":
-	            data = "%s/src/CMGTools/TTHAnalysis/data/" % os.environ['CMSSW_BASE'];
+	            data = "%s/src/CMGTools/VVsemilep/data/" % os.environ['CMSSW_BASE'];
                     fname = fields[2].replace("$DATA",data)
                     hname = fields[3] if len(fields) >= 4 else fields[1]
                     if len(fields) < 5 or year == None or year in fields[4].split(','):

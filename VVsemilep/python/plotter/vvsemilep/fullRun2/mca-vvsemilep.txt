@@ -1,6 +1,6 @@
 # vim: syntax=sh
-incl_sigprompt : + ; IncludeMca="vvsemilep/mca-includes/mca-mc.txt"
-incl_data : + ; IncludeMca="vvsemilep/mca-includes/mca-data.txt"
+incl_sigprompt : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-mc.txt"
+incl_data : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-data.txt"
 
 ##amincl_datafakes  : + ; IncludeMca="vvsemilep/mca-includes/mca-data.txt", FakeRate="vvsemilep/fakeRate-2lss-frdata.txt", Label="Non-prompt", FillColor=ROOT.kBlack, FillStyle=3005, PostFix='_fakes'
 
