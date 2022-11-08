@@ -72,7 +72,7 @@ def simpleMCplots(trees,MCfriends,Datafriends,targetdir, fmca, fcut,fplots, enab
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 
-
+######################################
 
 def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses,applyWtsnSFs, year,nLep=2,extraopts = '',invertedcuts = []):
     
@@ -144,9 +144,9 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
     if applyWtsnSFs and not bareNano:
         if(nLep == 1): 
-            cmd += ''.join(" -W L1PreFiringWeight_Nom*puWeight")
+            cmd += ''.join(" -W L1PreFiringWeight_Nom*puWeight*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]],1,year,suberaId)")
         else: 
-            cmd += ''.join(" -W L1PreFiringWeight_Nom*puWeight") #*btagSF_shape*puWeight*leptonSF_2lss *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_conePt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_conePt[iLepFO_Recl[1]],2,year)")
+            cmd += ''.join(" -W L1PreFiringWeight_Nom*puWeight*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_pt[iLepFO_Recl[1]],2,year,suberaId)")
     else:
         if not bareNano:
             cmd += ''.join(" -W puWeight*L1PreFiringWeight_Nom")
