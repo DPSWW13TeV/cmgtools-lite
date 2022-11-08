@@ -66,15 +66,17 @@ if analysis == "main":
         #,"DYJets.*",
         ##am         #Ttbar + single top + tW
         #"WJetsToLNu_HT.*","WJetsToLNu_LO",
-        #"TTJets",         "TTSemi_pow",
-        ##am    "T_sch",        "T_tch", "TBar_tch", "T_tWch.*", "TBar_tWch.*",
+        #"TTJets",   
+        #      "TTSemi_pow",
+        ##am    "T_sch",        "T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
+        "Tbar_.*"
 ##am        # conversions
        #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
 ##am        #  # diboson + DPS + WWss
 ##am        "ZZTo4L", #"WWTo2L2Nu",  "WZTo3LNu_fxfx",   
 ##am        #  # triboson
 ##am        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ", # "WWW_ll", <- not there, but its just a leptonic filter
-        "WWW"
+        #"WWW"
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else
@@ -144,7 +146,7 @@ def setFilesPerJob(comps,filesperjob):
         comp.splitFactor=len(comp.files) / filesperjob
 
 if analysis == "main":
-    cropToLumi(byCompName(selectedComponents,["TTJets", "T_","TBar_","TT(Lep|Semi)_pow"]),55.)
+    cropToLumi(byCompName(selectedComponents,["TTJets"]),50.)
     cropToLumi(byCompName(selectedComponents,["DYJetsToLL_M50_LO"]),50.)
 if analysis == "frqcd":
     cropToLumi(selectedComponents, 5.0)

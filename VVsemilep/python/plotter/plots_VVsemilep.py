@@ -75,7 +75,6 @@ def simpleMCplots(trees,MCfriends,Datafriends,targetdir, fmca, fcut,fplots, enab
 ######################################
 
 def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses,applyWtsnSFs, year,nLep=2,extraopts = '',invertedcuts = []):
-    
     varToFit= '{plotvar} {binning}'.format(plotvar=plotbin.split()[0], binning=plotbin.split()[1])
 
     cmd  = ' makeShapeCardsNew.py -f -j 8 -l {lumi} --od {CARDSOUTDIR} --tree NanoAOD --year {YEAR} --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt {fmca} {fcut} --amc --threshold 0.01 --split-factor=-1 --unc {fsyst}  {varName} '.format(lumi=lumis[year],CARDSOUTDIR=targetdir, trees=trees, fmca=fmca, fcut=fcut,YEAR=year if year !='all' else '2016,2017,2018',fsyst=fsyst,varName=varToFit) #--asimov signal 
@@ -176,10 +175,11 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded):
     showratio   = True
     cutflow     = False
     fplots      = 'vvsemilep/fullRun2/plots.txt'
-    fcut       = 'vvsemilep/fullRun2/cuts_%dl.txt'%(nLep)
+    fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['ZZTo2Q2L','WZTo2Q2L','WZTo1L1Nu2Q','WJetsToLNu_NLO','TTSemi','T_sch','T_tch','data']#,'DYJetsM']
-
+    processes    = ['ZZTo2Q2L','WZTo2Q2L','WZTo1L1Nu2Q','WJetsLO','TTSemi','T_sch','T_tch','Tbar_tch','data','DYJetslhef','TTJets','Tbar_tWch']
+    cuts_onelep  = ['singlelep','met','puppimet']
+    cuts_2los    = ['2los','etael2','cleanup']
     if blinded:
         showratio   = False
         fsyst=''
@@ -190,22 +190,23 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded):
     
     #procs=[x+'_promptsub' for x in processes if not x.startswith('data')] 
     print processes
-
+    signal  = '--sp ZZTo2Q2L --sp WZTo2Q2L' if nLep > 1 else '--sp WZTo1L1Nu2Q --sp WWTo1L1Nu2Q'
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.32  --legendColumns 3 '
     ubands  =  ' --showMCError '
     exclude = '  ' #--xu DPSWW_shape '
     ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.5 1.5' #--plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.' # --plotmode nostack --ratioDen WZ --ratioNums WZ_scaleV1,WZ_scaleV2,WZ_scaleV3,WZ_scaleV4,WZ_scaleV5,WZ_scaleV6 --ratioYLabel=var./nom.' 
-    extraopts = ratio + spam + legends + ubands  + exclude
+    extraopts = ratio + spam + legends + ubands  + exclude + signal
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
 
     for FS in finalState:
-        print 'running plots for %s'%FS
-        binName = '{fs}'.format(fs = '2los' if  nLep > 1 else 'onelep') ##will be used for datacards
+        binName = '{lep}{jet}'.format(lep = '2los' if  nLep > 1 else 'onelep',jet=FS) ##will be used for datacards
+        print 'running plots for %s'%binName
         targetcarddir = 'Cards/cards_{date}{pf}_{FS}_{year}'.format(FS=FS,year=year,date=date, pf=('-'+postfix if postfix else '') )
         targetdir = eos+'{yr}/{dd}{pf}{sf}_{bN}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName)
         enable=[];
-        if nLep > 1 : enable.append(FS);
+        enable=cuts_2los if nLep > 1 else cuts_onelep
+        enable.append(FS);
         plotvars= allvars #['ndressedLep'] #asymvar #only #bdtGM if blinded else allvars 
         if nLep >1:        
             makeplots  = ['{}_{}'.format(a,FS)  for a in plotvars]

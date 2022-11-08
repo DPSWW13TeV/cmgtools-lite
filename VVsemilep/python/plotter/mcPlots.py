@@ -516,7 +516,8 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     leg0.SetTextSize(textSize*0.7/0.3)
     leg0.AddEntry(unityErr0, "stat. unc.", "F")
     if showStatTotLegend: leg0.Draw()
-    leg1 = ROOT.TLegend(0.25 if doWide else 0.45, 0.84, 0.38 if doWide else 0.7, 0.94)
+    leg1 = ROOT.TLegend(0.25 if doWide else 0.45, 0.75, 0.38 if doWide else 0.65, 0.85)
+    ##amleg1 = ROOT.TLegend(0.25 if doWide else 0.45, 0.84, 0.38 if doWide else 0.7, 0.94)
     leg1.SetFillColor(0)
     leg1.SetShadowColor(0)
     leg1.SetLineColor(0)
@@ -564,7 +565,7 @@ def doStatTests(total,data,test,legendCorner):
 
 
 legend_ = None;
-def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-2,cutoffSignals=True,mcStyle="F",legWidth=0.18,legBorder=True,signalPlotScale=None,totalError=None,header="",doWide=False,columns=1):
+def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-7,cutoffSignals=True,mcStyle="F",legWidth=0.18,legBorder=True,signalPlotScale=None,totalError=None,header="",doWide=False,columns=1):
         if (corner == None): return
         total = sum([x.Integral() for x in pmap.itervalues()])
         sigEntries = []; bgEntries = []
@@ -853,7 +854,7 @@ class PlotMaker:
                     blist = binlabels.split(",")
                     for i in range(1,total.GetNbinsX()+1): 
                         total.GetXaxis().SetBinLabel(i,blist[i-1]) 
-                        total.GetYaxis().SetLabelSize(0.05)
+                        total.GetYaxis().SetLabelSize(0.04)
 
                 if not self._options.emptyStack and stack.GetNhists() == 0:
                     print "ERROR: for %s, all histograms are empty\n " % pspec.name
@@ -871,13 +872,13 @@ class PlotMaker:
                 total.GetXaxis().SetTitleSize(0.05)
                 total.GetXaxis().SetTitleOffset(1.1)
                 total.GetXaxis().SetLabelFont(42)
-                total.GetXaxis().SetLabelSize(0.05)
+                total.GetXaxis().SetLabelSize(0.04)
                 total.GetXaxis().SetLabelOffset(0.007)
                 total.GetYaxis().SetTitleFont(42)
                 total.GetYaxis().SetTitleSize(0.05)
                 total.GetYaxis().SetTitleOffset(0.9 if doWide else 2.0)
                 total.GetYaxis().SetLabelFont(42)
-                total.GetYaxis().SetLabelSize(0.05)
+                total.GetYaxis().SetLabelSize(0.04)
                 total.GetYaxis().SetLabelOffset(0.007)
                 total.GetYaxis().SetTitle(pspec.getOption('YTitle',ytitle))
                 total.GetXaxis().SetTitle(pspec.getOption('XTitle',outputName))

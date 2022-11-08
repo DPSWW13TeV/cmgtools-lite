@@ -85,19 +85,19 @@ nVert_ll	      :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
 nVert_ll_noee	      :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
 nVert  		      :  PV_npvsGood  : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
 
-jetpt_elmu      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)"
-jetpt_mumu      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)"
-jetpt_elel      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)"
-jetpt_ll        :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)"
-jetpt_ll_noee   :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)"
-jetpt           :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)"
+jetpt_elmu      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)", IncludeOverflows=False
+jetpt_mumu      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)", IncludeOverflows=False
+jetpt_elel      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)", IncludeOverflows=False
+jetpt_ll        :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)", IncludeOverflows=False
+jetpt_ll_noee   :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)", IncludeOverflows=False
+jetpt           :     if3(JetSel_Recl_pt > 30,JetSel_Recl_pt,-99)  : 40,0,400; XTitle="jet p_{T} (GeV)", IncludeOverflows=False
 
-jeteta_elmu      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta"
-jeteta_mumu      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta"
-jeteta_elel      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta"
-jeteta_ll        :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta"
-jeteta_ll_noee   :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta"
-jeteta           :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta"
+jeteta_elmu      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta", IncludeOverflows=False
+jeteta_mumu      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta", IncludeOverflows=False
+jeteta_elel      :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta", IncludeOverflows=False
+jeteta_ll        :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta", IncludeOverflows=False
+jeteta_ll_noee   :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta", IncludeOverflows=False
+jeteta           :     if3(JetSel_Recl_pt > 30,JetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="jet #eta", IncludeOverflows=False
 
 njets30_elmu  	     :  Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5] ; XTitle='njets wiht pT > 30' , MoreY=1.5
 njets30_mumu  	     :  Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5] ; XTitle='njets wiht pT > 30' , MoreY=1.5
@@ -106,50 +106,50 @@ njets30_ll  	     :  Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5] ; XTitle='njets wi
 njets30_ll_noee      :  Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5] ; XTitle='njets wiht pT > 30' , MoreY=1.5
 njets30              :  Sum$(JetSel_Recl_pt > 30): [0,1,2,3,4,5] ; XTitle='njets wiht pT > 30' , MoreY=1.5
 
-jetmass_elmu      :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass"
-jetmass_mumu      :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass"
-jetmass_elel      :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass"
-jetmass_ll        :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass"
-jetmass_ll_noee   :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass"
-jetmass           :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass"
+jetmass_elmu      :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass", IncludeOverflows=False
+jetmass_mumu      :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass", IncludeOverflows=False
+jetmass_elel      :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass", IncludeOverflows=False
+jetmass_ll        :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass", IncludeOverflows=False
+jetmass_ll_noee   :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass", IncludeOverflows=False
+jetmass           :     if3(nJet_Recl > 1,JetSel_Recl_mass,-99)  : 30,0,300; XTitle="ak4 mass", IncludeOverflows=False
 
 
 
 nfajets200         : 	 nFatJet_Recl     : [0,1,2,3] ; XTitle='nfatjets wiht pT > 200' , MoreY=1.5
-fatjetpt_elmu      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (GeV)"
-fatjetpt_mumu      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (GeV)"
-fatjetpt_elel      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (GeV)"
-fatjetpt_ll        :     if3(nFatJet_Recl > 1,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (GeV)"
-fatjetpt_ll_noee   :     if3(nFatJet_Recl > 1,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (GeV)"
-fatjetpt           :     if3(nFatJet_Recl > 1,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (GeV)"
-fatjeteta_elmu      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta"
-fatjeteta_mumu      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta"
-fatjeteta_elel      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta"
-fatjeteta_ll        :     if3(nFatJet_Recl > 1,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta"
-fatjeteta_ll_noee   :     if3(nFatJet_Recl > 1,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta"
-fatjeteta           :     if3(nFatJet_Recl > 1,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta"
+fatjetpt_elmu      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (, IncludeOverflows=False
+fatjetpt_mumu      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (, IncludeOverflows=False
+fatjetpt_elel      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (, IncludeOverflows=False
+fatjetpt_ll        :     if3(nFatJet_Recl > 0,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (, IncludeOverflows=False
+fatjetpt_ll_noee   :     if3(nFatJet_Recl > 0,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (, IncludeOverflows=False
+fatjetpt           :     if3(nFatJet_Recl > 0,FatJetSel_Recl_pt,-99)  : 28,200,3000; XTitle="fatjet p_{T} (, IncludeOverflows=False
+fatjeteta_elmu      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta", IncludeOverflows=False
+fatjeteta_mumu      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta", IncludeOverflows=False
+fatjeteta_elel      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta", IncludeOverflows=False
+fatjeteta_ll        :     if3(nFatJet_Recl > 0,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta", IncludeOverflows=False
+fatjeteta_ll_noee   :     if3(nFatJet_Recl > 0,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta", IncludeOverflows=False
+fatjeteta           :     if3(nFatJet_Recl > 0,FatJetSel_Recl_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta", IncludeOverflows=False
 
-fatjetpNet_mass_elmu      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass"
-fatjetpNet_mass_mumu      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass"
-fatjetpNet_mass_elel      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass"
-fatjetpNet_mass_ll        :     if3(nFatJet_Recl > 1,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass"
-fatjetpNet_mass_ll_noee   :     if3(nFatJet_Recl > 1,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass"
-fatjetpNet_mass           :     if3(nFatJet_Recl > 1,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass"
+fatjetpNet_mass_elmu      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass", IncludeOverflows=False
+fatjetpNet_mass_mumu      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass", IncludeOverflows=False
+fatjetpNet_mass_elel      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass", IncludeOverflows=False
+fatjetpNet_mass_ll        :     if3(nFatJet_Recl > 0,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass", IncludeOverflows=False
+fatjetpNet_mass_ll_noee   :     if3(nFatJet_Recl > 0,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass", IncludeOverflows=False
+fatjetpNet_mass           :     if3(nFatJet_Recl > 0,FatJetSel_Recl_particleNet_mass,-99)  : 50,0,500; XTitle="ak8 pNet_mass", IncludeOverflows=False
 
-fatjetsDrop_mass_elmu      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass"
-fatjetsDrop_mass_mumu      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass"
-fatjetsDrop_mass_elel      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass"
-fatjetsDrop_mass_ll        :     if3(nFatJet_Recl > 1,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass"
-fatjetsDrop_mass_ll_noee   :     if3(nFatJet_Recl > 1,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass"
-fatjetsDrop_mass           :     if3(nFatJet_Recl > 1,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass"
+fatjetsDrop_mass_elmu      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass", IncludeOverflows=False
+fatjetsDrop_mass_mumu      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass", IncludeOverflows=False
+fatjetsDrop_mass_elel      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass", IncludeOverflows=False
+fatjetsDrop_mass_ll        :     if3(nFatJet_Recl > 0,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass", IncludeOverflows=False
+fatjetsDrop_mass_ll_noee   :     if3(nFatJet_Recl > 0,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass", IncludeOverflows=False
+fatjetsDrop_mass           :     if3(nFatJet_Recl > 0,FatJetSel_Recl_msoftdrop,-99)  : 50,0,500; XTitle="ak8 sDrop_mass", IncludeOverflows=False
 
 
-fatjetmass_elmu      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass"
-fatjetmass_mumu      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass"
-fatjetmass_elel      :     if3(nFatJet_Recl > 1,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass"
-fatjetmass_ll        :     if3(nFatJet_Recl > 1,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass"
-fatjetmass_ll_noee   :     if3(nFatJet_Recl > 1,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass"
-fatjetmass           :     if3(nFatJet_Recl > 1,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass"
+fatjetmass_elmu      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass", IncludeOverflows=False
+fatjetmass_mumu      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass", IncludeOverflows=False
+fatjetmass_elel      :     if3(nFatJet_Recl > 0,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass", IncludeOverflows=False
+fatjetmass_ll        :     if3(nFatJet_Recl > 0,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass", IncludeOverflows=False
+fatjetmass_ll_noee   :     if3(nFatJet_Recl > 0,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass", IncludeOverflows=False
+fatjetmass           :     if3(nFatJet_Recl > 0,FatJetSel_Recl_mass,-99)  : 50,0,500; XTitle="ak8 mass", IncludeOverflows=False
 
 
 
