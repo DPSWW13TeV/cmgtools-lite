@@ -2,7 +2,10 @@
 #from mcAnalysis import *
 from CMGTools.VVsemilep.plotter.mcAnalysis import *
 import CMGTools.VVsemilep.plotter.CMS_lumi as CMS_lumi
-import itertools, math
+import itertools, math, time
+from datetime import datetime
+today = datetime.today()
+
 
 CMS_lumi.writeExtraText = 1
 
@@ -565,7 +568,7 @@ def doStatTests(total,data,test,legendCorner):
 
 
 legend_ = None;
-def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-7,cutoffSignals=True,mcStyle="F",legWidth=0.18,legBorder=True,signalPlotScale=None,totalError=None,header="",doWide=False,columns=1):
+def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=0,cutoffSignals=True,mcStyle="F",legWidth=0.18,legBorder=True,signalPlotScale=None,totalError=None,header="",doWide=False,columns=1):
         if (corner == None): return
         total = sum([x.Integral() for x in pmap.itervalues()])
         sigEntries = []; bgEntries = []
@@ -1208,12 +1211,18 @@ if __name__ == "__main__":
     mca  = MCAnalysis(args[0],options)
     cuts = CutsFile(args[1],options)
     plots = PlotFile(args[2],options)
+    ##amoutname  = options.out if options.out else (args[2].replace(".txt","")+".root")
     outname  = options.out if options.out else (args[2].replace(".txt","")+".root")
+    if len(outname) > 500:
+        outname = options.printDir+'/plots_%s.root' % today.strftime("%d%h%y_%H%M")
     if options.printDir:
         if not options.out:
             outname = options.printDir + "/"+os.path.basename(args[2].replace(".txt","")+".root")
         else:
+            
             outname = outname.replace("{O}",options.printDir)
+            if len(outname) > 500:outname = options.printDir+'/plots_%s.root' % today.strftime("%d%h%y_%H%M")
+
     if os.path.dirname(outname) and not os.path.exists(os.path.dirname(outname)):
         os.system("mkdir -p "+os.path.dirname(outname))
         if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/g/gpetrucc/php/index.php "+os.path.dirname(outname))

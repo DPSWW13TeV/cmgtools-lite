@@ -10,6 +10,7 @@
 #include "TH1F.h"
 #include "TFile.h"
 #include "PhysicsTools/Heppy/interface/Davismt2.h"
+#include "PhysicsTools/Heppy/interface/METzCalculator_Run2.h"
 #include "TSystem.h"
 
 TString CMSSW_BASE = gSystem->ExpandPathName("${CMSSW_BASE}");
@@ -75,17 +76,25 @@ float mt2davis(float pt1, float eta1, float phi1, float pt2, float eta2, float p
     return result;
 }
 
-//double METz_calc_run2(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi){
-//    typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
-//PtEtaPhiMVector p41(pt1,eta1,phi1,0.0);
-//PtEtaPhiMVector mv(met,0.,metphi,0.);
-//heppy::METzCalculator_Run2 NeutrinoPz_run2;
-//NeutrinoPz_type0.SetMET(mv);
-//NeutrinoPz_type0.SetLepton(p41);
-//NeutrinoPz_type0.SetLeptonType(pdgId1);
-//double pz1_type0 = NeutrinoPz_type0.Calculate();
-//return pz1_type0;
-//}
+double METz_calc_run2(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi,int type=0){
+  //  typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+  //  PtEtaPhiMVector lep(pt1,eta1,phi1,0.0);
+  //  PtEtaPhiMVector mv(met,0.,metphi,0.);
+
+    TLorentzVector p4l(0.,0.,0.,0);
+    p4l.SetPtEtaPhiM(pt1,eta1,phi1,0.0);
+    TLorentzVector mv(0.,0.,0.,0.);
+    mv.SetPtEtaPhiM(met,0.,metphi,0.0);
+    heppy::METzCalculator_Run2 NeutrinoPz_run2;
+    //std::cout<<"check this lepton pt\t"<<p41.Pt()<<"\t"<<p41.E()<<"\t here"<<std::endl;
+    //std::cout<<"check this MET   "<<mv.Pt()<<std::endl;
+    NeutrinoPz_run2.SetMET(mv);
+    NeutrinoPz_run2.SetLepton(p4l);
+    NeutrinoPz_run2.SetLeptonType(pdgId1);
+    double pz1_type0 = NeutrinoPz_run2.Calculate();
+    //    std::cout<<"and the result is"<<pz1_type0<<std::endl;
+    return pz1_type0;
+}
 
 float phi_2(float pt1, float phi1, float pt2, float phi2) {
     float px1 = pt1 * std::cos(phi1);
@@ -359,6 +368,15 @@ float triggerSF_ttH(int pdgid1, float pt1, int pdgid2, float pt2, int nlep, int 
 
 }
 
+
+float ttH_2lss_ifflav(int LepGood1_pdgId, int LepGood2_pdgId, float ret_ee, float ret_em, float ret_mm){
+  if (abs(LepGood1_pdgId)==11 && abs(LepGood2_pdgId)==11) return ret_ee;
+  if ((abs(LepGood1_pdgId) != abs(LepGood2_pdgId)))       return ret_em;
+  if (abs(LepGood1_pdgId)==13 && abs(LepGood2_pdgId)==13) return ret_mm;
+  std::cerr << "ERROR: invalid input " << abs(LepGood1_pdgId) << ", " << abs(LepGood1_pdgId) << std::endl;
+  assert(0);
+  return 0;
+}
 
 void functions() {}
 

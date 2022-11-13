@@ -55,7 +55,11 @@ theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # diboson
-##am        "ZZTo2Q2L",   "WZTo2Q2L",        "WZTo1L1Nu2Q","WWTo1L1Nu2Q"
+##am        "ZZTo2Q2L",   "WZTo2Q2L",        "WZTo1L1Nu2Q",
+##        "WWTo1L1Nu2Q"
+#        "DYJetsToLL_LHEFilterPtZ0to50",
+#        "DYJetsToLL_LHEFilterPtZ50to100"
+    "TT_mtt.*"
 #        "WJetsToLNu.*", 
         #"WJetsToLNu_NLO",
         #   "WJetsToLNu_HT70To100",
@@ -69,7 +73,7 @@ if analysis == "main":
         #"TTJets",   
         #      "TTSemi_pow",
         ##am    "T_sch",        "T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
-        "Tbar_.*"
+        #        "Tbar_.*"
 ##am        # conversions
        #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
 ##am        #  # diboson + DPS + WWss
@@ -147,7 +151,10 @@ def setFilesPerJob(comps,filesperjob):
 
 if analysis == "main":
     cropToLumi(byCompName(selectedComponents,["TTJets"]),50.)
-    cropToLumi(byCompName(selectedComponents,["DYJetsToLL_M50_LO"]),50.)
+    #cropToLumi(byCompName(selectedComponents,["DYJetsToLL_M50_LO"]),50.)
+    #cropToLumi(byCompName(selectedComponents,["DYJetsToLL_LHEFilterPtZ0to50","]),50.)
+    #cropToLumi(byCompName(selectedComponents,["DYJetsToLL_LHEFilterPtZ50to100""]),50.)
+
 if analysis == "frqcd":
     cropToLumi(selectedComponents, 5.0)
     #cropToLumi(byCompName(selectedComponents,["QCD"]), 0.3)

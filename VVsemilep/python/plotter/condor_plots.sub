@@ -7,5 +7,8 @@ Error      = jobs/log_running_$(ProcId)_all.error
 getenv = True
 
 
-arguments =  /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter 2018 1l
+#arguments =  /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter 2018 resolved 
+#queue 1	    
+
+arguments =  /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter 2018 boosted
 queue 1	    
