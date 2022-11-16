@@ -42,6 +42,7 @@ class fastCombinedObjectRecleaner(Module):
         self.vars_jets_int = (["hadronFlavour"] if self.isMC else [])
         self.vars_fatjets = [("pt","pt_nom") if self.isMC and len(self.variations) else 'pt',"btagDeepB"] + [ 'pt_%s%s'%(x,y) for x in self.variations for y in ["Up","Down"]] ##am
         #,"deepTag_WvsQCD",'deepTag_ZvsQCD','deepTag_TvsQCD','deepTag_QCDothers','deepTag_QCD','deepTagMD_ZbbvsQCD','deepTagMD_ZvsQCD','deepTagMD_bbvsLight','deepTagMD_ccvsLight',,'particleNet_mass','msoftdrop'
+        self.vars_fatjets_floats = ["particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2"]
         self.vars_fatjets_int = (["hadronFlavour"] if self.isMC else []) + ["muonIdx3SJ","electronIdx3SJ"] ##am
         self.vars_fatjets_uchar = (["nBHadrons","nCHadrons"] if self.isMC else []) ##am
         self.vars_jets_nooutput = []
@@ -66,7 +67,7 @@ class fastCombinedObjectRecleaner(Module):
         self._helper_lepsT = CollectionSkimmer("LepTight"+self.label, "LepGood", floats=[], maxSize=10, saveTagForAll=True)
         self._helper_taus = CollectionSkimmer("TauSel"+self.label, self.tauc, floats=self.vars+self.vars_taus, ints=self.vars_taus_int, uchars=self.vars_taus_uchar, maxSize=10)
         self._helper_jets = CollectionSkimmer("%sSel"%self.jc+self.label, self.jc, floats=self.vars+self.vars_jets, ints=self.vars_jets_int, maxSize=20, saveSelectedIndices=True)
-        self._helper_fatjets = CollectionSkimmer("%sSel"%self.fjc+self.label, self.fjc, floats=self.vars+self.vars_fatjets, ints=self.vars_fatjets_int,  uchars=self.vars_fatjets_uchar,maxSize=10, saveSelectedIndices=True) ##am
+        self._helper_fatjets = CollectionSkimmer("%sSel"%self.fjc+self.label, self.fjc, floats=self.vars+self.vars_fatjets+self.vars_fatjets_floats, ints=self.vars_fatjets_int,  uchars=self.vars_fatjets_uchar,maxSize=10, saveSelectedIndices=True) ##am
         self._helpers = [self._helper_lepsF,self._helper_lepsT,self._helper_taus,self._helper_jets,self._helper_fatjets]##am
 
 

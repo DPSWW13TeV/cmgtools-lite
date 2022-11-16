@@ -29,12 +29,14 @@ recl)
 	if [ -z "$chunks" ] || [ -z == "$samples" ]
 	    then
 	    echo "running for the first time"
-	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt}  --dm DYJetsToLL_LHEFilterPtZ50.*  -q condor --maxruntime 70 --log $PWD/logs #--de .*Run.*
-	    #${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} -d EGamma_Run2018B_UL18 -c 0 -c 1 -c 10 -c 100 -c 101 -c 102 -c 103 -c 104 #--dm .*Run.* -q condor  --maxruntime 50 --log $PWD/logs 
-	else
+	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt}  --de .*Run.*  -q condor --maxruntime 70 --log $PWD/logs #run on data
+	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 50 --log $PWD/logs ##run on MC
+	else #for running missing chunks locally
 	    for i in "${chunks[@]}"
 	    do 
+		##amFIXME: check if run in the sample -> execute data friends else MC
 		${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} -d ${samples} -c ${i}
+		##am${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} -d ${samples} -c ${i}
 	    done
 	fi
 	;;

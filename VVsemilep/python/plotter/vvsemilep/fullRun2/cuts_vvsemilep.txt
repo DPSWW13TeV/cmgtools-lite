@@ -1,5 +1,6 @@
 alwaystrue: 1
 trigger: Trigger_2l
+
 filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
 
 cleanup: minMllAFAS > 12 ;           Disable=True
@@ -15,13 +16,18 @@ singlelep: (nLepFO==1 && nLepTight==1 &&  MET_pt > 40) ;           Disable=True
 
 nj: (nJetSel >= 2 || nFatJetSel > 0) ;           Disable=True
 
-#boosted: nFatJetSel >0;   Disable=True
+##amboosted: nFatJetSel >0 &&  nJetSel > 0 ;   Disable=True
+
 boosted: Sum$((FatJetSel_particleNetMD_Xcc+FatJetSel_particleNetMD_Xqq)/(FatJetSel_particleNetMD_Xcc+FatJetSel_particleNetMD_Xqq+FatJetSel_particleNetMD_QCD) > 0.5) > 0;   Disable=True
+##amFatJetSel_Recl_blah
+
 ##boosted: (FatJetSel_particleNetMD_Xcc+FatJetSel_particleNetMD_Xqq)/(FatJetSel_particleNetMD_Xcc+FatJetSel_particleNetMD_Xqq+FatJetSel_particleNetMD_QCD) > 0.5;   Disable=True
 
 
-resolved: nJetSel >= 2 && (nFatJetSel == 0 || Sum$((FatJetSel_tau2/FatJet_tau1) < 0.55)==0);    Disable=True
+resolved: nJetSel >= 2 && (nFatJetSel == 0 || Sum$((FatJetSel_tau2/FatJetSel_tau1) < 0.55)==0);    Disable=True
+
 ll  : abs(LepGood1_pdgId*LepGood2_pdgId) == 143 || abs(LepGood1_pdgId*LepGood2_pdgId) == 169 || abs(LepGood1_pdgId*LepGood2_pdgId) == 121 ; Disable=True
+
 ll_noee  : abs(LepGood1_pdgId*LepGood2_pdgId) == 143 || abs(LepGood1_pdgId*LepGood2_pdgId) == 169  ; Disable=True
 
 elel: abs(LepGood1_pdgId*LepGood2_pdgId) == 121    ; Disable=True

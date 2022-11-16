@@ -19,17 +19,17 @@ Datafriends = ['2_recl']
 friends     = []#'3_tauCount','dpsbdt_neu_ssnoeebkg_afacdps','dpsbdt_neu_ssnoeebkg_afacdps_unclEn']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
 fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-eventvars   = ['nVert','met','puppimet','ptWV'] #'ptZV''metphi','puppimetphi',
+eventvars   = ['nVert','met','puppimet'] #'metphi','puppimetphi',
 
 ak4jetvars = ['Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','nJet30','Jet_pt','Jet_eta','Jet_mass','Jet1_pt','Jet1_eta','Jet1_mass','Jet2_pt','Jet2_eta','Jet2_mass','mjj','mt1']
 
 MConly     = ['Jet1_hadronFlavour','Jet1_partonFlavour','Jet2_hadronFlavour','Jet2_partonFlavour']
 
-ak8jetvars = ['nFatJet_wtagged','dRfjlep','FatJet2_tau21','dphifjlep','dphifjmet','FatJet_tau21','FatJet_pNetMD_Wtag']#'nFatJet','FatJet_pt','FatJet_eta','FatJet_pNet_mass','FatJet_sDrop_mass','FatJet_mass','FatJet_deepTagMD_WvsQCD','FatJet_deepTag_WvsQCD','FatJet_deepTag_ZvsQCD','FatJet_n2b1','FatJet_n3b1','FatJet_particleNetMD_QCD','FatJet_particleNetMD_Xbb','FatJet_particleNetMD_Xqq','FatJet_particleNet_QCD','FatJet_particleNet_WvsQCD','FatJet_tau21','FatJet_tau21_tau32','FatJet_pNetMD_Wtag']
+ak8jetvars = ['FatJet2_muonIdx3SJ_wtag','FatJet1_muonIdx3SJ_wtag','FatJet2_electronIdx3SJ_wtag','FatJet1_electronIdx3SJ_wtag','nFatJet_wtagged','dRfjlep','FatJet2_tau21','dphifjlep','dphifjmet','FatJet_tau21','FatJet_pNetMD_Wtag','nFatJet','FatJet_pt','FatJet_eta','FatJet_pNet_mass','FatJet_sDrop_mass','FatJet_mass']#,'FatJet_deepTagMD_WvsQCD','FatJet_deepTag_WvsQCD','FatJet_deepTag_ZvsQCD','FatJet_n2b1','FatJet_n3b1','FatJet_particleNetMD_QCD','FatJet_particleNetMD_Xbb','FatJet_particleNetMD_Xqq','FatJet_particleNet_QCD','FatJet_particleNet_WvsQCD','FatJet_tau21','FatJet_tau21_tau32','FatJet_pNetMD_Wtag']
 
 ak8more   = ['FatJet_area','FatJet_btagCSVV2','FatJet_btagDDBvLV2','FatJet_btagDeepB','FatJet_deepTagMD_ZbbvsQCD','FatJet_deepTagMD_ZvsQCD','FatJet_deepTagMD_bbvsLight','FatJet_deepTag_QCD','FatJet_deepTag_QCDothers','FatJet_particleNet_ZvsQCD','FatJet_tau1','FatJet_tau2','FatJet_tau3','FatJet_tau4','FatJet_hadronFlavour','FatJet_nBHadrons','FatJet_nCHadrons','FatJet_tau32','FatJet_tau42']
 
-lepvars     = ['neupz']#,'lep2_pt']#,'nLepGood','lep1_pt','
+lepvars     = ['neupz','lep2_pt','nLepGood','lep1_pt','dilep_charge','dilep_flav','mll','dphil1met']#'ptZV'
 
 bdtiv      = ['conept1','conept2','met','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2']
 allvars    = eventvars+lepvars
@@ -187,8 +187,9 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,plotvars=lepvars
     #processes    = ['ZV']#,'WV']#,'WJetsLO','TTSemi','T_sch','T_tch','Tbar_tch','data','lhefdy','htbdy','TTJets','Tbar_tWch']
         #processes    = ['WV','WJetsLO','TTSemi','T_sch','T_tch','Tbar_tch','data','Tbar_tWch']
     #processes     = ['ZV','TTJets','data','DYJetsLO'] if nLep > 1 else ['WV','WJetsLO','TTJets','T_sch','T_tch','Tbar_tch','data','Tbar_tWch']
-    processes     = ['test','WJtest']#'WV','WJetsHT','TTJets']#,'data', 'T_sch','T_tch','Tbar_tch','data','Tbar_tWch'] #'TTSemi','DYJetsLO']
-    cuts_onelep   = ['singlelep']#,'puppimet']
+    #processes     = ['test']#HT','testHT','testTT']
+    processes     = ['WV','WJetsHT','TTJets','data', 'T_sch','T_tch','Tbar_tch','ZV','Tbar_tWch','lhefdy'] #data
+    cuts_onelep   = ['singlelep']#with pfmet cut 
     cuts_2los     = ['2los','etael2','cleanup','ll'] #for now aall flavors 
     if blinded:
         showratio   = False

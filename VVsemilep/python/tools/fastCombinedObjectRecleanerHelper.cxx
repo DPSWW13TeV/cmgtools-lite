@@ -231,24 +231,29 @@ public:
     }
 
     //ak8jets
+    //    std::cout<<"nFats before"<<*nFatJet_<<std::endl;
     for (int iFj = 0, nFj = *nFatJet_; iFj < nFj; ++iFj) {
       if (!sel_fatjets[iFj]) continue;
+      //      std::cout<<"before checking"<<(*FatJet_el_)[iFj]<<"\t"<<(*FatJet_mu_)[iFj]<<std::endl;
       bool ok = true;
       for (int iL = 0, nL = *nLep_; iL < nL; ++iL) {
 	if (!(sel_leps.get()[iL])) continue;
-	if (deltaR2((*Lep_eta_)[iL], (*Lep_phi_)[iL], (*FatJet_eta_)[iFj], (*FatJet_phi_)[iFj]) < deltaR2cut_fatjets) {
+	if (deltaR2((*Lep_eta_)[iL],(*Lep_phi_)[iL],(*FatJet_eta_)[iFj], (*FatJet_phi_)[iFj]) < deltaR2cut_fatjets) {
+	  //	  std::cout<<"dR based checking"<<(*FatJet_el_)[iFj]<<"\t"<<(*FatJet_mu_)[iFj]<<std::endl;
+	  //std::cout<<"dR based checking"<<deltaR2((*Lep_eta_)[iL], (*Lep_phi_)[iL], (*FatJet_eta_)[iFj], (*FatJet_phi_)[iFj])<<"\t"<<(*FatJet_eta_)[iFj]<<"\t"<<(*FatJet_pt_)[iFj]<<std::endl;
 	  ok = false;
+	  //	  std::cout<<"dR based checking \t"<<ok<<"\t"<<(*FatJet_el_)[iFj]<<"\t"<<(*FatJet_mu_)[iFj]<<std::endl;
 	  break;
 	}
       }
       if (ok) {
 	clean_fatjets_.push_back(iFj);
-	_ct->push_back(iFj);
-      } else {
-	sel_fatjets.get()[iFj]=false; // do not use unclean taus for cleaning jets, use lepton instead
+	_cfj->push_back(iFj);}
+       else {
+	sel_fatjets.get()[iFj]=false;
       }
     }
-
+      //    std::cout<<"after cleaning"<<clean_fatjets_.size()<<std::endl;
 
     { // jet cleaning (clean closest jet - one at most - for each lepton or tau, then apply jet selection)
       std::vector<float> vetos_eta;
@@ -272,15 +277,17 @@ public:
       std::fill_n(good.get(),*nJet_,true);
 
       std::unique_ptr<bool[]> better;
-      better.reset(new bool[*nJet_]);
-      std::fill_n(better.get(),*nJet_,true);
+      better.reset(new bool[*nFatJet_]);
+      std::fill_n(better.get(),*nFatJet_,true);
 
       if (cleanWithRef_){
 	for (uint iV=0; iV<vetos_indices.size(); iV++) {
 	  if (vetos_indices[iV] > -1) good[vetos_indices[iV]] = false;
 	}
 	for (uint iV=0; iV < fvetos_elindices.size(); iV++) {
-	  if (fvetos_elindices[iV] > -1 || fvetos_muindices[iV] > -1) better[fvetos_elindices[iV]] = false;
+	  if (fvetos_elindices[iV] > -1 || fvetos_muindices[iV] > -1) {
+	    //	    std::cout<<"i am gonna remove this jet\t"<<fvetos_elindices[iV]<<std::endl;
+	    better[fvetos_elindices[iV]] = false;}
 	}
 
 
@@ -319,7 +326,7 @@ public:
       }
     }
 
-    return std::make_pair(_ct.get(),_cj.get());
+    return std::make_pair(_cfj.get(),_cj.get());
   }
 
 private:

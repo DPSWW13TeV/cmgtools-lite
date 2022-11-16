@@ -117,7 +117,7 @@ recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
                                                            tightLeptonSel = tightLeptonSel,
                                                            FOTauSel = foTauSel,
                                                            tightTauSel = tightTauSel,
-                                                           selectJet =    lambda jet: jet.jetId > 0, # pt and eta cuts are (hard)coded in the step2 
+                                                           selectJet =    lambda jet: jet.pt > conf["jetptcut"] and abs(jet.eta) < conf["jeteta"] and jet.jetId > 0, # pt and eta cuts are (hard)coded in the step2 
                                                            selectFatJet = lambda fatjet: fatjet.pt > conf["fatjetptcut"] and abs(fatjet.eta) < conf["jeteta"], 
                                                            coneptdef =    lambda lep: conept_TTH(lep),
 )
