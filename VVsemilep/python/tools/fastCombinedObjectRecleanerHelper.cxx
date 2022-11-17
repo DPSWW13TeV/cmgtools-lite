@@ -231,18 +231,14 @@ public:
     }
 
     //ak8jets
-    //    std::cout<<"nFats before"<<*nFatJet_<<std::endl;
+
     for (int iFj = 0, nFj = *nFatJet_; iFj < nFj; ++iFj) {
       if (!sel_fatjets[iFj]) continue;
-      //      std::cout<<"before checking"<<(*FatJet_el_)[iFj]<<"\t"<<(*FatJet_mu_)[iFj]<<std::endl;
       bool ok = true;
       for (int iL = 0, nL = *nLep_; iL < nL; ++iL) {
 	if (!(sel_leps.get()[iL])) continue;
 	if (deltaR2((*Lep_eta_)[iL],(*Lep_phi_)[iL],(*FatJet_eta_)[iFj], (*FatJet_phi_)[iFj]) < deltaR2cut_fatjets) {
-	  //	  std::cout<<"dR based checking"<<(*FatJet_el_)[iFj]<<"\t"<<(*FatJet_mu_)[iFj]<<std::endl;
-	  //std::cout<<"dR based checking"<<deltaR2((*Lep_eta_)[iL], (*Lep_phi_)[iL], (*FatJet_eta_)[iFj], (*FatJet_phi_)[iFj])<<"\t"<<(*FatJet_eta_)[iFj]<<"\t"<<(*FatJet_pt_)[iFj]<<std::endl;
 	  ok = false;
-	  //	  std::cout<<"dR based checking \t"<<ok<<"\t"<<(*FatJet_el_)[iFj]<<"\t"<<(*FatJet_mu_)[iFj]<<std::endl;
 	  break;
 	}
       }
@@ -250,10 +246,10 @@ public:
 	clean_fatjets_.push_back(iFj);
 	_cfj->push_back(iFj);}
        else {
-	sel_fatjets.get()[iFj]=false;
+	 sel_fatjets.get()[iFj]=false; //will be used to make sure we clean jets against these (precleaned) fatjets
       }
     }
-      //    std::cout<<"after cleaning"<<clean_fatjets_.size()<<std::endl;
+
 
     { // jet cleaning (clean closest jet - one at most - for each lepton or tau, then apply jet selection)
       std::vector<float> vetos_eta;
@@ -264,34 +260,31 @@ public:
       std::vector<float> fvetos_phi;
       std::vector<int>   fvetos_elindices;
       std::vector<int>   fvetos_muindices;
+
       for (int iL = 0, nL = *nLep_; iL < nL; ++iL) if (sel_leps[iL]) {vetos_eta.push_back((*Lep_eta_)[iL]); vetos_phi.push_back((*Lep_phi_)[iL]); if (Lep_jet_) vetos_indices.push_back((*Lep_jet_)[iL]);}
       if ( cleanJetsWithFOTaus_){
 	for (int iT = 0, nT = *nTau_; iT < nT; ++iT) if (sel_taus[iT]) {vetos_eta.push_back((*Tau_eta_)[iT]); vetos_phi.push_back((*Tau_phi_)[iT]); if (Tau_jet_) vetos_indices.push_back((*Tau_jet_)[iT]);}
       }
-      for (int iFj = 0, nFj = *nFatJet_; iFj < nFj; ++iFj) if (sel_fatjets[iFj]) {fvetos_eta.push_back((*FatJet_eta_)[iFj]); fvetos_phi.push_back((*FatJet_phi_)[iFj]); 
-	  if (FatJet_mu_) {fvetos_muindices.push_back((*FatJet_mu_)[iFj]);}
-	  if (FatJet_el_) {fvetos_elindices.push_back((*FatJet_el_)[iFj]);}
+      for (int iFj = 0, nFj = *nFatJet_; iFj < nFj; ++iFj) if (sel_fatjets[iFj]) {fvetos_eta.push_back((*FatJet_eta_)[iFj]); 
+	  fvetos_phi.push_back((*FatJet_phi_)[iFj]); // ok here the fatjets are already cleaned w.r.t leps so lep indices are not needed 
+	  if(FatJet_mu_){fvetos_muindices.push_back((*FatJet_mu_)[iFj]);}
+	  if(FatJet_el_){fvetos_elindices.push_back((*FatJet_el_)[iFj]);}
 	}
       std::unique_ptr<bool[]> good;
       good.reset(new bool[*nJet_]);
-      std::fill_n(good.get(),*nJet_,true);
+      std::fill_n(good.get(),*nJet_,true);//for jets vs leps n taus
 
-      std::unique_ptr<bool[]> better;
-      better.reset(new bool[*nFatJet_]);
-      std::fill_n(better.get(),*nFatJet_,true);
-
+      //jets versus fatjets is impossible wihtout dR
       if (cleanWithRef_){
 	for (uint iV=0; iV<vetos_indices.size(); iV++) {
 	  if (vetos_indices[iV] > -1) good[vetos_indices[iV]] = false;
 	}
-	for (uint iV=0; iV < fvetos_elindices.size(); iV++) {
-	  if (fvetos_elindices[iV] > -1 || fvetos_muindices[iV] > -1) {
-	    //	    std::cout<<"i am gonna remove this jet\t"<<fvetos_elindices[iV]<<std::endl;
-	    better[fvetos_elindices[iV]] = false;}
-	}
+	//ok so all jets cross cleanned with taus and leps if there is a matching indiex
+      }
 
 
-      }//cleanWithRef_
+      // now need to clean jets with fatjets and jets with leptons based on dR mathing
+
       else{
 	for (uint iV=0; iV<vetos_eta.size(); iV++) {
 	  float mindr2 = -1; int best = -1;
@@ -301,32 +294,33 @@ public:
 	  }
 	  if (best>-1 && mindr2<deltaR2cut) {
 	    good[best] = false;
-	    }
+	  }
+	}
+      }
+    
+      for (int iJ = 0, nJ = *nJet_; iJ < nJ; ++iJ) {
+	if (not sel_jets[iJ]) continue;
+	bool isok=true;
+	for (uint iV=0; iV<fvetos_eta.size(); iV++) {
+	  if (deltaR2(fvetos_eta[iV],fvetos_phi[iV],(*Jet_eta_)[iJ], (*Jet_phi_)[iJ])< deltaR2cut_fatjets) {
+	    isok = false;
+	  break;
+	  }
+       
 	}
 
-	for (uint iV=0; iV<fvetos_eta.size(); iV++) {
-	  float mindr2 = -1; int best = -1;
-	  for (int iJ = 0, nJ = *nJet_; iJ < nJ; ++iJ) {
-	    float dr2 = deltaR2(fvetos_eta[iV],fvetos_phi[iV],(*Jet_eta_)[iJ], (*Jet_phi_)[iJ]);
-	    if (mindr2<0 || dr2<mindr2) {mindr2=dr2; best=iJ;}
+	if(good[iJ] && isok){
+	  if(fabs((*Jet_eta_)[iJ]) < 2.4 && (*Jet_pt_)[iJ] > 25 ){
+	    //	    std::cout<<"index of the passed jet\t"<<iJ<<std::endl;
+	    _cj->push_back(iJ);
+	    clean_jets_.push_back(iJ); 
 	  }
-	  if (best>-1 && mindr2<deltaR2cut_fatjets) {
-	      better[best] = false;
-	    }
-	  }
-	
-      }//ak4 against ak8
-
-      for (int iJ = 0, nJ = *nJet_; iJ < nJ; ++iJ) {
-	if (good[iJ] && better[iJ] && sel_jets[iJ]) {
-	  _cj->push_back(iJ);
-	  if(fabs((*Jet_eta_)[iJ]) < 2.4)
-	    clean_jets_.push_back(iJ); // only to count fwd jets
 	}
       }
     }
-
+  
     return std::make_pair(_cfj.get(),_cj.get());
+    
   }
 
 private:
@@ -354,3 +348,31 @@ private:
   bool cleanWithRef_;
   float fwdJetPt1_, fwdJetPt2_;
   };
+
+
+
+      /*   else{
+	std::cout<<"in here"<<std::endl;
+      for (int iJ = 0, nJ = *nJet_; iJ < nJ; ++iJ) {
+	if (not sel_jets[iJ]) continue;
+	std::cout<<"jet passed the preselection"<<std::endl;
+	bool ok=true; float bestak4=-1;float bestak8=-1;
+	for (uint iV=0; iV<vetos_eta.size(); iV++) {
+	  float mindr2 = -1; int best = -1;
+	  float dr2 = deltaR2(vetos_eta[iV],vetos_phi[iV],(*Jet_eta_)[iJ], (*Jet_phi_)[iJ]);
+	  if (bestak4<0 || dr2<bestak4) {bestak4=dr2;}
+	}
+	for (uint iV=0; iV<fvetos_eta.size(); iV++) {
+	  float dr2 = deltaR2(fvetos_eta[iV],fvetos_phi[iV],(*Jet_eta_)[iJ], (*Jet_phi_)[iJ]);
+	  if (bestak8<0 || dr2<bestak8) {bestak8=dr2;}
+	}
+	std::cout<<"bestak8\t"<<bestak8<<"\tbestak4\t"<<bestak4<<std::endl;
+	if (bestak8 < deltaR2cut_fatjets || bestak4 < deltaR2cut){ continue;}
+	else{
+	  std::cout<<"bestak8\t"<<bestak8<<"\tbestak4\t"<<bestak4<<std::endl;
+	    _cj->push_back(iJ);
+	  clean_jets_.push_back(iJ); // only to count fwd jets
+	}}}
+    
+    }
+      */

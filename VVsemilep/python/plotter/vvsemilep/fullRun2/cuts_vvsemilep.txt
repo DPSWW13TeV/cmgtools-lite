@@ -16,9 +16,9 @@ singlelep: (nLepFO==1 && nLepTight==1 &&  MET_pt > 40) ;           Disable=True
 
 nj: (nJetSel >= 2 || nFatJetSel > 0) ;           Disable=True
 
-##amboosted: nFatJetSel >0 &&  nJetSel > 0 ;   Disable=True
+#boosted: nFatJetSel >0 &&  nJetSel > 0 ;   Disable=True
 
-boosted: Sum$((FatJetSel_particleNetMD_Xcc+FatJetSel_particleNetMD_Xqq)/(FatJetSel_particleNetMD_Xcc+FatJetSel_particleNetMD_Xqq+FatJetSel_particleNetMD_QCD) > 0.5) > 0;   Disable=True
+boosted: (Sum$((FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq)/(FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq+FatJetSel_Recl_particleNetMD_QCD) > 0.5) > 0);   Disable=True
 ##amFatJetSel_Recl_blah
 
 ##boosted: (FatJetSel_particleNetMD_Xcc+FatJetSel_particleNetMD_Xqq)/(FatJetSel_particleNetMD_Xcc+FatJetSel_particleNetMD_Xqq+FatJetSel_particleNetMD_QCD) > 0.5;   Disable=True

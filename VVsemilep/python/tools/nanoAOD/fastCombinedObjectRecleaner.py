@@ -67,7 +67,7 @@ class fastCombinedObjectRecleaner(Module):
         self._helper_lepsT = CollectionSkimmer("LepTight"+self.label, "LepGood", floats=[], maxSize=10, saveTagForAll=True)
         self._helper_taus = CollectionSkimmer("TauSel"+self.label, self.tauc, floats=self.vars+self.vars_taus, ints=self.vars_taus_int, uchars=self.vars_taus_uchar, maxSize=10)
         self._helper_jets = CollectionSkimmer("%sSel"%self.jc+self.label, self.jc, floats=self.vars+self.vars_jets, ints=self.vars_jets_int, maxSize=20, saveSelectedIndices=True)
-        self._helper_fatjets = CollectionSkimmer("%sSel"%self.fjc+self.label, self.fjc, floats=self.vars+self.vars_fatjets+self.vars_fatjets_floats, ints=self.vars_fatjets_int,  uchars=self.vars_fatjets_uchar,maxSize=10, saveSelectedIndices=True) ##am
+        self._helper_fatjets = CollectionSkimmer("%sSel"%self.fjc+self.label, self.fjc, floats=self.vars+self.vars_fatjets+self.vars_fatjets_floats, ints=self.vars_fatjets_int,  uchars=self.vars_fatjets_uchar,maxSize=5, saveSelectedIndices=True) ##am
         self._helpers = [self._helper_lepsF,self._helper_lepsT,self._helper_taus,self._helper_jets,self._helper_fatjets]##am
 
 

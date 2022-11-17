@@ -187,8 +187,8 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,plotvars=lepvars
     #processes    = ['ZV']#,'WV']#,'WJetsLO','TTSemi','T_sch','T_tch','Tbar_tch','data','lhefdy','htbdy','TTJets','Tbar_tWch']
         #processes    = ['WV','WJetsLO','TTSemi','T_sch','T_tch','Tbar_tch','data','Tbar_tWch']
     #processes     = ['ZV','TTJets','data','DYJetsLO'] if nLep > 1 else ['WV','WJetsLO','TTJets','T_sch','T_tch','Tbar_tch','data','Tbar_tWch']
-    #processes     = ['test']#HT','testHT','testTT']
-    processes     = ['WV','WJetsHT','TTJets','data', 'T_sch','T_tch','Tbar_tch','ZV','Tbar_tWch','lhefdy'] #data
+    processes     = ['test']#HT','testHT','testTT']
+    #processes     = ['WV','WJetsHT','TTJets','data', 'T_sch','T_tch','Tbar_tch','ZV','Tbar_tWch','lhefdy'] #data
     cuts_onelep   = ['singlelep']#with pfmet cut 
     cuts_2los     = ['2los','etael2','cleanup','ll'] #for now aall flavors 
     if blinded:

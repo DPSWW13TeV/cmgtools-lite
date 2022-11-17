@@ -29,8 +29,8 @@ recl)
 	if [ -z "$chunks" ] || [ -z == "$samples" ]
 	    then
 	    echo "running for the first time"
-	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt}  --de .*Run.*  -q condor --maxruntime 70 --log $PWD/logs #run on data
-	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 50 --log $PWD/logs ##run on MC
+	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} -d WWTo1L1Nu2Q_part0 -c 0 #-q condor --maxruntime 70 --log $PWD/logs #run on mc --de .*Run.*  
+	    #${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 50 --log $PWD/logs ##run on data
 	else #for running missing chunks locally
 	    for i in "${chunks[@]}"
 	    do 
