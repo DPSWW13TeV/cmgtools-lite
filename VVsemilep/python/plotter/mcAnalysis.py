@@ -34,6 +34,7 @@ def _runGetEntries(args):
 
 def _runSumW(args):
     key, tty, genWName = args
+    #print "in mcanal",key,tty,tty.getSumW(genWName)
     return (key, tty.getSumW(genWName))
 
 
@@ -319,6 +320,7 @@ class MCAnalysis:
                         is_w = 1; 
                         total_w += counters['Sum Weights']
                         scale = "(%s)*(%s)" % (genWeightName, field[2])
+                        ##amprint "scaled by",genWeightName,field[2]
                     else:
                         if (is_w==1): raise RuntimeError, "Can't put together a weighted and an unweighted component (%s)" % cnames
                         is_w = 0;
@@ -369,10 +371,12 @@ class MCAnalysis:
                 if treename != "NanoAOD":
                     if total_w == 0: raise RuntimeError, "Zero total weight for %s" % pname
                     for tty in ttys: tty.setScaleFactor("%s*%g" % (scale, 1000.0/total_w))
+                    ##print "this one",genSumWeightName,scale
+
                 else:
                     if total_w != 0: raise RuntimeError, "Weights from pck file shoulnd't be there for NanoAOD for %s " % pname
                     self._groupsToNormalize.append( (ttys, genSumWeightName if is_w == 1 else "genEventCount", scale) )
-                    
+                    #print "this one",genSumWeightName,scale
             #for tty in ttys: tty.makeTTYVariations()
         #if len(self._signals) == 0: raise RuntimeError, "No signals!"
         #if len(self._backgrounds) == 0: raise RuntimeError, "No backgrounds!"
@@ -891,6 +895,7 @@ class MCAnalysis:
         for (igroup,total_w) in mergemap.iteritems():
             ttys, _, scale = self._groupsToNormalize[igroup]
             for tty in ttys: 
+                print "also this",scale,total_w
                 tty.setScaleFactor("%s*%g" % (scale, 1000.0/total_w))
                 for var in mergemap_vars[igroup]:
                     tty.setVarScaleFactor(var, "%s*%g" % (scale, 1000.0/mergemap_vars[igroup][var]))

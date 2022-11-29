@@ -316,6 +316,10 @@ scaleFactorSequence_2016    = [btagSF2016_dj,bTagSFs]
 scaleFactorSequence_2017    = [btagSF2017_dj,bTagSFs] 
 scaleFactorSequence_2018    = [btagSF2018_dj,bTagSFs]
 
+from CMGTools.VVsemilep.tools.nanoAOD.npdf_rms import npdf_rms
+rms_val = lambda : npdf_rms()
+
+
 # scaleFactorSequence_allVars_2016 = [btagSF2016_dj_allVars,bTagSFs_allvars] 
 # scaleFactorSequence_allVars_2017 = [btagSF2017_dj_allVars,bTagSFs_allvars] 
 # scaleFactorSequence_allVars_2018 = [btagSF2018_dj_allVars,bTagSFs_allvars]

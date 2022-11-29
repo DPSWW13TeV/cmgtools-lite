@@ -59,9 +59,9 @@ if analysis == "main":
 ##        "WWTo1L1Nu2Q"
 #        "DYJetsToLL_LHEFilterPtZ0to50",
 #        "DYJetsToLL_LHEFilterPtZ50to100"
-    "TT_mtt.*"
-#        "WJetsToLNu.*", 
-        #"WJetsToLNu_NLO",
+    #"TT_mtt.*"
+        "WJetsToLNu_HT.*", 
+        #"WJetsToLNu_.*",
         #   "WJetsToLNu_HT70To100",
         #"DYJetsToLL_M50", 
         #"DYJetsToLL_M50_LO",

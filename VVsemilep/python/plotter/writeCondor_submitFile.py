@@ -1,7 +1,7 @@
 import os,string
 from plots_VVsemilep import *
 
-allvars=lepvars+ak8jetvars+ak4jetvars+eventvars
+allvars= eventvars #+lepvars +ak8jetvars+WVvars #+ak4jetvars+MConly
 
 tmp_condor = open('jobs/submitFile.condor', 'w')
 tmp_condor.write('''Executable = dummy_plots.sh 
@@ -12,9 +12,9 @@ Error      = jobs/log_running_$(ProcId).error
 environment = "LS_SUBCWD={here}"
 +JobFlavour = "workday"
 \n\n'''.format(here=os.environ['PWD']))
-pf="shapes"
+pf="nom"
 for nl in ["1"]: #"1,2".split(","):
-    for cat in "boosted","resolved".split(","):
+    for cat in ["boosted"]: #,"resolved"]: #.split(","):
         for yr in ["2018"]: #2016,2017,2018".split(","): 
             for iVar in allvars:
                 tmp_condor.write('arguments = {cmssw} {yr} {nl} {cat} {iVar} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,nl=nl,iVar=iVar,pf=pf  ) )

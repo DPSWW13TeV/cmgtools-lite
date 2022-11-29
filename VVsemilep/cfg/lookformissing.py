@@ -1,6 +1,6 @@
 import os
 
-idir="jobs_TTmore"
+idir="jobs"
 missingChunks=[]
 
 for i in os.listdir(idir):

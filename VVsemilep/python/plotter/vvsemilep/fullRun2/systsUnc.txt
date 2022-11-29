@@ -3,8 +3,14 @@
 
 ### Alias definitions. Careful to avoid trailing '.*' to avoid matching _promptsub
 $alias : vvsl  : WZToLNu2Q|WWToLNu2Q|ZZTo2Q2L|WZTo2Q2L|WV|ZV
-$alias : wzj   : WJets[A-Z]|DYJets[A-Z]|DYJets[a-z]|lhefdy|[a-z]dy
-$alias : top   : TTSemi|TTjets|T_[a-z]+ch|T[a-z]+_[a-z]+ch
+$alias : wj    : WJets.*
+$alias : dy    : DYJets.*|lhefdy
+$alias : st    : stop|T_[a-z]+ch|T[a-z]+_[a-z]+ch
+$alias : tt    : TTSemi|TTJets|TTJets_part.*|tthighmass
+$alias : top   : $st|$tt
+
+$alias : wzj   : $wj|$dy
+
 $alias : PromptFromMC : $top|$vvsl|$wzj
 $alias : FRData : data_fakes|.*_promptsub
 $alias : FRAll  : data_fakes|.*_promptsub|TT_FR_QCD
@@ -34,6 +40,30 @@ lumi_13TeV_BCC 		: $PromptFromMC : .* : normSymm : 1.002; year="2018"
 lumi_13TeV_GS 		: $PromptFromMC : .* : normSymm : 1.004; year="2016"
 lumi_13TeV_GS 		: $PromptFromMC : .* : normSymm : 1.001; year="2017"
 
+## pdf
+nnpdf : $PromptFromMC :  .* : templateSymm; Normalize=False, AddWeight='nnpdf_rms', year="2018"
+
+CMS_vvsl_qcdscales_shape_ZV : ZV : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+CMS_vvsl_qcdscales_shape_WV : WV : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+
+CMS_vvsl_qcdscales_shape_tt : $tt : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+
+CMS_vvsl_qcdscales_shape_st : $st : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+
+CMS_vvsl_qcdscales_shape_dy : $dy  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
+
+CMS_vvsl_qcdscales_shape_wj : $wj  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
+
+
+## L1 ECAL prefiring
+CMS_vvsl16_L1PreFiring : $PromptFromMC : .* : templateAsymm; AddWeights=['L1PreFiringWeight_Up/L1PreFiringWeight_Nom'\,'L1PreFiringWeight_Dn/L1PreFiringWeight_Nom'], year="2016"
+CMS_vvsl17_L1PreFiring : $PromptFromMC : .* : templateAsymm; AddWeights=['L1PreFiringWeight_Up/L1PreFiringWeight_Nom'\,'L1PreFiringWeight_Dn/L1PreFiringWeight_Nom'], year="2017"
+
+#pu
+CMS_vvsl_pileup : $PromptFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight']
+
+
+
 
 # lepton efficiencies
 ##amCMS_eff_vvsl_mloose : $PromptFromMC : .*2lss.* : templateAsymm ; AddWeights=['leptonSF_2lss_mu_up/leptonSF_2lss'\,'leptonSF_2lss_mu_dn/leptonSF_2lss']
@@ -55,9 +85,6 @@ lumi_13TeV_GS 		: $PromptFromMC : .* : normSymm : 1.001; year="2017"
 
 
 
-## L1 ECAL prefiring
-CMS_vvsl16_L1PreFiring : $PromptFromMC : .* : templateAsymm; AddWeights=['L1PreFiringWeight_Up/L1PreFiringWeight_Nom'\,'L1PreFiringWeight_Dn/L1PreFiringWeight_Nom'], year="2016"
-CMS_vvsl17_L1PreFiring : $PromptFromMC : .* : templateAsymm; AddWeights=['L1PreFiringWeight_Up/L1PreFiringWeight_Nom'\,'L1PreFiringWeight_Dn/L1PreFiringWeight_Nom'], year="2017"
 
 
 # trigger efficiencies
@@ -82,7 +109,6 @@ CMS_vvsl16_trigger_3l      : $PromptFromMC : .*4l.* : normSymm : 1.01; year="201
 CMS_vvsl17_trigger_3l      : $PromptFromMC : .*4l.* : normSymm : 1.01; year="2017"
 CMS_vvsl18_trigger_3l      : $PromptFromMC : .*4l.* : normSymm : 1.01; year="2018"
 
-CMS_vvsl_pileup : $PromptFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight']
 
 ##amCMS_vvsl_UnclusteredEn : $PromptFromMC : .* : templateAsymm; \
 ##am        FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
@@ -234,48 +260,47 @@ CMS_vvsl_pileup : $PromptFromMC : .* : templateAsymm; AddWeights=['puWeightUp/pu
 
 
 
-CMS_vvsl_qcdscales_shape_ZZTo2Q2L : ZZTo2Q2L : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-CMS_vvsl_qcdscales_shape_WZTo2Q2L : WZTo2Q2L : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-
-CMS_vvsl_qcdscales_shape_WZTo1L1Nu2Q : WZTo1L1Nu2Q : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-CMS_vvsl_qcdscales_shape_DYJetsM : DYJetsM  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
-CMS_vvsl_qcdscales_shape_top : $top  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
 
 
 ##amFIXME need to check if this is vaid for all samples!!
 
-PDF4LHC_1   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[1]/LHEPdfWeight[0]'
-PDF4LHC_2   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[2]/LHEPdfWeight[0]'
-PDF4LHC_3   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[3]/LHEPdfWeight[0]'
-PDF4LHC_4   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[4]/LHEPdfWeight[0]'
-PDF4LHC_5   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[5]/LHEPdfWeight[0]'
-PDF4LHC_6   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[6]/LHEPdfWeight[0]'
-PDF4LHC_7   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[7]/LHEPdfWeight[0]'
-PDF4LHC_8   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[8]/LHEPdfWeight[0]'
-PDF4LHC_9   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[9]/LHEPdfWeight[0]'
-PDF4LHC_10  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[10]/LHEPdfWeight[0]'
-PDF4LHC_11  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[11]/LHEPdfWeight[0]'
-PDF4LHC_12  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[12]/LHEPdfWeight[0]'
-PDF4LHC_13  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[13]/LHEPdfWeight[0]'
-PDF4LHC_14  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[14]/LHEPdfWeight[0]'
-PDF4LHC_15  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[15]/LHEPdfWeight[0]'
-PDF4LHC_16  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[16]/LHEPdfWeight[0]'
-PDF4LHC_17  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[17]/LHEPdfWeight[0]'
-PDF4LHC_18  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[18]/LHEPdfWeight[0]'
-PDF4LHC_19  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[19]/LHEPdfWeight[0]'
-PDF4LHC_20  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[20]/LHEPdfWeight[0]'
-PDF4LHC_21  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[21]/LHEPdfWeight[0]'
-PDF4LHC_22  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[22]/LHEPdfWeight[0]'
-PDF4LHC_23  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[23]/LHEPdfWeight[0]'
-PDF4LHC_24  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[24]/LHEPdfWeight[0]'
-PDF4LHC_25  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[25]/LHEPdfWeight[0]'
-PDF4LHC_26  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[26]/LHEPdfWeight[0]'
-PDF4LHC_27  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[27]/LHEPdfWeight[0]'
-PDF4LHC_28  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[28]/LHEPdfWeight[0]'
-PDF4LHC_29  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[29]/LHEPdfWeight[0]'
-PDF4LHC_30  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[30]/LHEPdfWeight[0]'
-PDF4LHC_alphaS  : $PromptFromMC : .* : templateAsymm; AddWeights=['LHEPdfWeight[31]/LHEPdfWeight[0]'\,'LHEPdfWeight[32]/LHEPdfWeight[0]']
+##amPDF4LHC_1   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[1]/LHEPdfWeight[0]'
+##amPDF4LHC_2   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[2]/LHEPdfWeight[0]'
+##amPDF4LHC_3   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[3]/LHEPdfWeight[0]'
+##amPDF4LHC_4   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[4]/LHEPdfWeight[0]'
+##amPDF4LHC_5   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[5]/LHEPdfWeight[0]'
+##amPDF4LHC_6   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[6]/LHEPdfWeight[0]'
+##amPDF4LHC_7   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[7]/LHEPdfWeight[0]'
+##amPDF4LHC_8   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[8]/LHEPdfWeight[0]'
+##amPDF4LHC_9   : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[9]/LHEPdfWeight[0]'
+##amPDF4LHC_10  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[10]/LHEPdfWeight[0]'
+##amPDF4LHC_11  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[11]/LHEPdfWeight[0]'
+##amPDF4LHC_12  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[12]/LHEPdfWeight[0]'
+##amPDF4LHC_13  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[13]/LHEPdfWeight[0]'
+##amPDF4LHC_14  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[14]/LHEPdfWeight[0]'
+##amPDF4LHC_15  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[15]/LHEPdfWeight[0]'
+##amPDF4LHC_16  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[16]/LHEPdfWeight[0]'
+##amPDF4LHC_17  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[17]/LHEPdfWeight[0]'
+##amPDF4LHC_18  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[18]/LHEPdfWeight[0]'
+##amPDF4LHC_19  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[19]/LHEPdfWeight[0]'
+##amPDF4LHC_20  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[20]/LHEPdfWeight[0]'
+##amPDF4LHC_21  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[21]/LHEPdfWeight[0]'
+##amPDF4LHC_22  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[22]/LHEPdfWeight[0]'
+##amPDF4LHC_23  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[23]/LHEPdfWeight[0]'
+##amPDF4LHC_24  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[24]/LHEPdfWeight[0]'
+##amPDF4LHC_25  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[25]/LHEPdfWeight[0]'
+##amPDF4LHC_26  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[26]/LHEPdfWeight[0]'
+##amPDF4LHC_27  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[27]/LHEPdfWeight[0]'
+##amPDF4LHC_28  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[28]/LHEPdfWeight[0]'
+##amPDF4LHC_29  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[29]/LHEPdfWeight[0]'
+##amPDF4LHC_30  : $PromptFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[30]/LHEPdfWeight[0]'
+##amPDF4LHC_alphaS  : $PromptFromMC : .* : templateAsymm; AddWeights=['LHEPdfWeight[31]/LHEPdfWeight[0]'\,'LHEPdfWeight[32]/LHEPdfWeight[0]']
 
 
 
  
+
+
+
+
+

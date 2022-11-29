@@ -18,7 +18,7 @@ echo $runWhat,$year
 
 ################### following should not be changed
 Trees='vvsemilep/'
-nEvt=80000
+nEvt=120000
 Parent=${baseDir}/${Trees}/${year}
 BCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ${Parent}/";
 CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
@@ -29,8 +29,8 @@ recl)
 	if [ -z "$chunks" ] || [ -z == "$samples" ]
 	    then
 	    echo "running for the first time"
-	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} -d WWTo1L1Nu2Q_part0 -c 0 #-q condor --maxruntime 70 --log $PWD/logs #run on mc --de .*Run.*  
-	    #${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 50 --log $PWD/logs ##run on data
+	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} -d WJetsToLNu_HT400to600 -d WJetsToLNu_HT800to1200 -d WJetsToLNu_HT600to800 -d WJetsToLNu_HT1200to2500 -d WJetsToLNu_HT2500toInf -d WJetsToLNu_HT70to100 -d WJetsToLNu_HT100to200 -d WJetsToLNu_HT200to400 -q condor --maxruntime 100 --log $PWD/logs #run on mc --de .*Run.*  
+	    #	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 100 --log $PWD/logs ##run on data
 	else #for running missing chunks locally
 	    for i in "${chunks[@]}"
 	    do 
@@ -49,7 +49,7 @@ postFSR)
 	;;
 npdf)
 	echo "npdf"
-	${BCORE}nnpdf_rms  ${CMGT} rms_val --de .*Run.* -N 100000  -q condor --maxruntime 50 --log $PWD/logs
+	${BCORE}nnpdf_rms  ${CMGT} rms_val --de .*Run.* -N ${nEvt}  -q condor --maxruntime 50 --log $PWD/logs
 	;;
 lepSFs)
 	echo "lepsfs"

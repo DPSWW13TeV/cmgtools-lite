@@ -1,0 +1,8 @@
+WJetsHT7 : WJetsToLNu_HT-70To100    : 1271*1.21 : 1 ; FillColor=ROOT.kAzure+1, Label="WJ_htb70"
+WJetsHT10 : WJetsToLNu_HT-100To200   : 1253*1.21 : 1 ; FillColor=ROOT.kOrange+1, Label="WJ_htb100" 
+WJetsHT20 : WJetsToLNu_HT-200To400   : 335.9*1.0 : 1 ; FillColor=ROOT.kBlue+1, Label="WJ_htb200" 
+WJetsHT40 : WJetsToLNu_HT-400To600   : 45.21*1.0 : 1 ; FillColor=ROOT.kGray+1, Label="WJ_htb400"
+WJetsHT60 : WJetsToLNu_HT-600To800   : 10.99*1.0 : 1 ; FillColor=ROOT.kTeal+1, Label="WJ_htb600"
+WJetsHT80 : WJetsToLNu_HT-800To1200  : 4.936*1.0 : 1 ; FillColor=ROOT.kYellow+1, Label="WJ_htb800"
+WJetsHT120 : WJetsToLNu_HT-1200To2500 : 1.156*1.0 : 1 ; FillColor=ROOT.kPink+1, Label="WJ_htb1200"  
+WJetsHT250 : WJetsToLNu_HT-2500ToInf  : 0.02623*1.21 : 1 ; FillColor=ROOT.kCyan, Label="WJ_htb2500"

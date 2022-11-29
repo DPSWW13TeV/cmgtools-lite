@@ -104,6 +104,13 @@ public:
       crvec lep(ptvec((*Lep_pt_)[i],0,(*Lep_phi_)[i],0));
       _mht = _mht - lep;
     }
+    for (int i=0; i<*nFatJet_; i++) {
+      if (!sel_fatjets[i]) continue;
+      crvec fjet(ptvec((*FatJet_pt_)[i],0,(*FatJet_phi_)[i],0));
+      _mht = _mht - fjet;
+    }
+
+
     if (cleanJetsWithFOTaus_) {
       for (auto i : *_ct){
 	crvec tau(ptvec((*Tau_pt_)[i],0,(*Tau_phi_)[i],0));
@@ -351,28 +358,3 @@ private:
 
 
 
-      /*   else{
-	std::cout<<"in here"<<std::endl;
-      for (int iJ = 0, nJ = *nJet_; iJ < nJ; ++iJ) {
-	if (not sel_jets[iJ]) continue;
-	std::cout<<"jet passed the preselection"<<std::endl;
-	bool ok=true; float bestak4=-1;float bestak8=-1;
-	for (uint iV=0; iV<vetos_eta.size(); iV++) {
-	  float mindr2 = -1; int best = -1;
-	  float dr2 = deltaR2(vetos_eta[iV],vetos_phi[iV],(*Jet_eta_)[iJ], (*Jet_phi_)[iJ]);
-	  if (bestak4<0 || dr2<bestak4) {bestak4=dr2;}
-	}
-	for (uint iV=0; iV<fvetos_eta.size(); iV++) {
-	  float dr2 = deltaR2(fvetos_eta[iV],fvetos_phi[iV],(*Jet_eta_)[iJ], (*Jet_phi_)[iJ]);
-	  if (bestak8<0 || dr2<bestak8) {bestak8=dr2;}
-	}
-	std::cout<<"bestak8\t"<<bestak8<<"\tbestak4\t"<<bestak4<<std::endl;
-	if (bestak8 < deltaR2cut_fatjets || bestak4 < deltaR2cut){ continue;}
-	else{
-	  std::cout<<"bestak8\t"<<bestak8<<"\tbestak4\t"<<bestak4<<std::endl;
-	    _cj->push_back(iJ);
-	  clean_jets_.push_back(iJ); // only to count fwd jets
-	}}}
-    
-    }
-      */

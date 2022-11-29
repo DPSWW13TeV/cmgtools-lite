@@ -500,6 +500,7 @@ class TreeToYield:
             cut  = scalarToVector(cut)
         if self._weightStringAll != "1":
             cut = "(%s)*(%s)" % (self._weightStringAll, cut)
+        #print "cut streing muliplied by wt string",cut
         return cut
     def _getYield(self,tree,cut,fsplit=None,cutNeedsPreprocessing=True):
         cut = self._getCut(cut) if cutNeedsPreprocessing else cut
@@ -512,6 +513,7 @@ class TreeToYield:
             nev = tree.Draw("0.5>>dummy", cut, "goff", maxEntries, firstEntry)
             self.negativeCheck(histo)
             return [ histo.GetBinContent(1), histo.GetBinError(1), nev ]
+            #print "in here the yields",cut,histo.GetBinContent(1)
         else: 
             if self._options.doS2V:
                 cut  = scalarToVector(cut)
@@ -721,6 +723,7 @@ def _treeSum(tree,expr):
     if ROOT.gROOT.FindObject("dummy") != None: ROOT.gROOT.FindObject("dummy").Delete()
     histo = ROOT.TH1D("dummy","dummy",1,0.0,1.0); histo.Sumw2()
     tree.Draw("0.5>>dummy", expr, "goff")
+    #print"sumw",histo.GetBinContent(1),histo.GetIntegral()##HEREAM
     return histo.GetBinContent(1)
 
 def addTreeToYieldOptions(parser):
