@@ -6,7 +6,7 @@ $alias : vvsl  : WZToLNu2Q|WWToLNu2Q|ZZTo2Q2L|WZTo2Q2L|WV|ZV
 $alias : wj    : WJets.*
 $alias : dy    : DYJets.*|lhefdy
 $alias : st    : stop|T_[a-z]+ch|T[a-z]+_[a-z]+ch
-$alias : tt    : TTSemi|TTJets|TTJets_part.*|tthighmass
+$alias : tt    : TTSemi|top|TTJets|TTJets_part.*|tthighmass
 $alias : top   : $st|$tt
 
 $alias : wzj   : $wj|$dy

@@ -895,7 +895,6 @@ class MCAnalysis:
         for (igroup,total_w) in mergemap.iteritems():
             ttys, _, scale = self._groupsToNormalize[igroup]
             for tty in ttys: 
-                print "also this",scale,total_w
                 tty.setScaleFactor("%s*%g" % (scale, 1000.0/total_w))
                 for var in mergemap_vars[igroup]:
                     tty.setVarScaleFactor(var, "%s*%g" % (scale, 1000.0/mergemap_vars[igroup][var]))

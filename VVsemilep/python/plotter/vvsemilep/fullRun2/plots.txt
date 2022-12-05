@@ -23,7 +23,7 @@ mlepfj : mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,FatJet1_pt,F
 
 
 
-sumBoosted : Sum$(FatJetSel_Recl_particleNet_mass > 40 && ( (FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq)/(FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq+FatJetSel_Recl_particleNetMD_QCD) > 0.7) ) : [0,1,2,3]; XTitle="cutval", IncludeOverflows=False
+sumBoosted : Sum$(FatJetSel_Recl_particleNet_mass > 40 && (( (FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq)/(FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq+FatJetSel_Recl_particleNetMD_QCD)) > 0.85) ) : [0,1,2,3]; XTitle="cutval", IncludeOverflows=False
 
 neupz                  : METz_calc_run2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_pdgId,MET_pt,MET_phi) : 30,0,150; XTitle="pz#nu (GeV)", IncludeOverflows=False
 
