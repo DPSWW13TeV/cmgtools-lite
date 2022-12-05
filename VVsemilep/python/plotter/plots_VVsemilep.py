@@ -159,11 +159,12 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,plotvars=lepvars
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['WV','WJets','top','data']#'TTJets','TTSemi','tthighmass'] #'data',
+    processes    = ['WV','WJets','top','data'] if nLep ==1 else ['ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
-    cuts_topCR   = ['topCR','singlelep']#,'nfatjets']   
-    cuts_onelep  = ['singlelep']#,'bVeto']#,'dRfjlep','dphifjmet','dphifjlep']#with pfmet cut 
-    cuts_2los    = ['2los','etael2','cleanup','ll'] #for now aall flavors 
+    cuts_onelep  = ['singlelep','trigger']#,'bVeto']#,'dRfjlep','dphifjmet','dphifjlep']#with pfmet cut 
+    cuts_2los    = ['dileptrg','etael2','cleanup','ll','oppsign','twolep'] #for now aall flavors 
+    cuts_topCR   = cuts_onelep+['topCR']
+
     if blinded:
         showratio   = False
         fsyst=''
@@ -177,7 +178,7 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,plotvars=lepvars
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.32  --legendColumns 1 '
     ubands  =  ' --showMCError '
     exclude = '' #' --xu TTJets' if nLep ==1
-    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.5 2.5' #--plotmode norm --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.' # --plotmode nostack --ratioDen WZ --ratioNums WZ_scaleV1,WZ_scaleV2,WZ_scaleV3,WZ_scaleV4,WZ_scaleV5,WZ_scaleV6 --ratioYLabel=var./nom.' 
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.5 2.5' #--plotmode norm --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.' 
     extraopts = ratio + spam + legends + ubands  + exclude + signal
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
     for pR in selection:
@@ -186,8 +187,8 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,plotvars=lepvars
             ##binName = '{lep}{jet}'.format(lep = '2los' if  nLep > 1 else 'onelep',jet=FS) ##will be used for datacards
             binName = '{lep}{jet}'.format(lep=if3(pR == 'SR',if3(nLep > 1,'2los','onelep'), 'topCR'),jet=FS)
             print 'running plots for %s'%binName
-            targetcarddir = 'Cards/cards_{date}{pf}_{FS}_{year}'.format(FS=pR+FS,year=year,date=date, pf=('-'+postfix if postfix else '') )
-            targetdir = eos+'{yr}/{dd}{pf}{sf}_{bN}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName)
+            #targetcarddir = 'Cards/cards_{date}{pf}_{FS}_{year}'.format(FS=pR+FS,year=year,date=date, pf=('-'+postfix if postfix else '') )
+            targetdir = eos+'{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName)
             enable=[];
             enable=if3(pR == 'SR',if3(nLep > 1,cuts_2los,cuts_onelep),cuts_topCR)
             enable.append(FS);
@@ -197,7 +198,7 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,plotvars=lepvars
             extraopts+= anything
             print 'plot settings:  ',extraopts
             if 'plots' in doWhat:
-                print 'gotta do'
+                ##print 'gotta do'
                 runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, year, nLep,extraopts,invert,cutFlow)
             else:
                 extraoptscards=anything

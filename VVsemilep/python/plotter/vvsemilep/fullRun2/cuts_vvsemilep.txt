@@ -1,33 +1,31 @@
 alwaystrue: 1
 
-##trigger: Trigger_2l 
+dileptrg: Trigger_2l ;           Disable=True
+trigger:Trigger_1m || Trigger_1e ;           Disable=True
 
-trigger:Trigger_1m || Trigger_1e 
 filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
 
 cleanup: minMllAFAS > 12 ;           Disable=True
 
-pt25: LepGood1_pt>35 
-tight: LepGood1_isLepTight
+singlelep   : (nLepFO==1 && nLepTight==1 &&  LepGood1_pt>35 && LepGood1_isLepTight && PuppiMET_pt > 35) ;           Disable=True
 etael1      : (abs(LepGood1_pdgId) == 13 || (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556 ))
 etael2      : (abs(LepGood2_pdgId) == 13 || (abs(LepGood2_eta) < 1.442 || abs(LepGood2_eta) > 1.556 ));  Disable=True
-
-##singlelep: (nLepFO==1 && nLepTight==1 &&  MET_pt > 40) ;           Disable=True
-singlelep: (nLepFO==1 && nLepTight==1 &&  PuppiMET_pt > 35) ;           Disable=True
+twolep      : (nLepFO==2 && nLepTight==2 &&  LepGood1_isLepTight && LepGood2_isLepTight && LepGood1_pt > 25 && LepGood2_pt > 20);Disable=True
+oppsign     : (LepGood1_charge*LepGood2_charge < 0) ;           Disable=True
+ll          : abs(LepGood1_pdgId*LepGood2_pdgId) == 143 || abs(LepGood1_pdgId*LepGood2_pdgId) == 169 || abs(LepGood1_pdgId*LepGood2_pdgId) == 121 ; Disable=True
 
 
 bVeto : nBJetMedium30_Recl == 0  ;           Disable=True
 nj: (nJetSel >= 2 || nFatJetSel > 0) ;           Disable=True
-
 nfatjets: nFatJetSel > 0 ;           Disable=True
+topCR: nBJetMedium30_Recl > 1 ;           Disable=True
+resolved: Sum$(JetSel_Recl_pt > 30) >= 2 && nFatJetSel == 0 ;    Disable=True
 
-2los: (nLepFO==2 && nLepTight==2 && LepGood2_isLepTight && (LepGood1_charge*LepGood2_charge < 0) && LepGood2_pt > 20);Disable=True
 
 ##amboosted: Sum$( ( (FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq)/(FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq+FatJetSel_Recl_particleNetMD_QCD)) > 0.85); Disable=True
 boosted: nFatJetSel > 0 ;           Disable=True
 #boosted:  Sum$( FatJetSel_Recl_particleNet_mass > 40 && ( (FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq)/(FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq+FatJetSel_Recl_particleNetMD_QCD) > 0.85) ) > 0 ;   Disable=True
 
-topCR: nBJetMedium30_Recl > 1 ;           Disable=True
 
 ##boostedFJ1: if3(nFatJetSel > 0, FatJet1_particleNet_mass > 40 && (FatJet1_particleNetMD_Xcc+FatJet1_particleNetMD_Xqq)/(FatJet1_particleNetMD_Xcc+FatJet1_particleNetMD_Xqq+FatJet1_particleNetMD_QCD) > 0.7, 1);   Disable=True 
 dRfjlep : deltaR(FatJet1_eta,FatJet1_phi,LepGood1_eta,LepGood1_phi) > 1.6 ; Disable=True
@@ -42,9 +40,8 @@ dphifjmet : abs(deltaPhi(FatJet1_phi,MET_phi)) > 2.0 ; Disable=True
 
 
 
-resolved: Sum$(JetSel_Recl_pt > 30) >= 2 && (nFatJetSel == 0 || Sum$(( (FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq)/(FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq+FatJetSel_Recl_particleNetMD_QCD) > 0.7))==0);    Disable=True
+##amresolved: Sum$(JetSel_Recl_pt > 30) >= 2 && (nFatJetSel == 0 || Sum$(( (FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq)/(FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq+FatJetSel_Recl_particleNetMD_QCD) > 0.7))==0);    Disable=True
 
-ll  : abs(LepGood1_pdgId*LepGood2_pdgId) == 143 || abs(LepGood1_pdgId*LepGood2_pdgId) == 169 || abs(LepGood1_pdgId*LepGood2_pdgId) == 121 ; Disable=True
 
 ##amll_noee  : abs(LepGood1_pdgId*LepGood2_pdgId) == 143 || abs(LepGood1_pdgId*LepGood2_pdgId) == 169  ; Disable=True
 
