@@ -207,7 +207,7 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 ##################
 def makeResults(year,finalState,splitCharge,doWhat,applylepSFs,binningSch,blinded):
     trees       = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    fsyst       = 'dps-ww/fullRun2/systsUnc.txt' 
+    fsyst       = '' #dps-ww/fullRun2/systsUnc.txt' 
     showratio   = False
     cutflow     = False
     fplots      = 'dps-ww/fullRun2/plots_copy.txt'
@@ -226,16 +226,16 @@ def makeResults(year,finalState,splitCharge,doWhat,applylepSFs,binningSch,blinde
         processes.remove('DPSWW_alt')
     else:
         print 'plots will be made with data points on top of the stack'
-    processes=fRvars+processes 
+    #processes=fRvars+processes 
     
     #procs=[x+'_promptsub' for x in processes if not x.startswith('data')] 
     print processes
     #processes=procs+fRvars+processes
     spam    = ' --topSpamSize 1.0 --noCms '
-    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.32  --legendColumns 1 '
+    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.32  --legendColumns 3 '
     ubands  =  ' ' #--showMCError '
     exclude = '  ' #--xu DPSWW_shape '
-    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75 --plotmode norm' #--plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.' # --plotmode nostack --ratioDen WZ --ratioNums WZ_scaleV1,WZ_scaleV2,WZ_scaleV3,WZ_scaleV4,WZ_scaleV5,WZ_scaleV6 --ratioYLabel=var./nom.' 
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.5 1.5' #--plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.' # --plotmode nostack --ratioDen WZ --ratioNums WZ_scaleV1,WZ_scaleV2,WZ_scaleV3,WZ_scaleV4,WZ_scaleV5,WZ_scaleV6 --ratioYLabel=var./nom.' 
     extraopts = ratio + spam + legends + ubands  + exclude
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
 
@@ -248,7 +248,7 @@ def makeResults(year,finalState,splitCharge,doWhat,applylepSFs,binningSch,blinde
         targetdir = eos+'{yr}/{dd}{pf}{sf}_{bN}_suppMaterial_shapesForPaper/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName)
         
         if binName == '2lss':
-            plotvars= allvars #['ndressedLep'] #asymvar #only #bdtGM if blinded else allvars 
+            plotvars= ['conept1'] #allvars #['ndressedLep'] #asymvar #only #bdtGM if blinded else allvars 
             for ch in loop:
                 enable=[] #'dressed'] 
                 enable.append(FS);
@@ -348,31 +348,32 @@ def makeAsymResults(year,finalState,splitCharge,doWhat,applylepSFs,binningSch,si
 
 ########################################
 def makeResultsFiducial(year,finalState,splitCharge):
-    baseDir     = "/eos/cms/store/cmst3/group/dpsww/signal_FRonly_reco/" 
-    #baseDir     = "/eos/cms/store/cmst3/group/dpsww/signal_fullstats_nosel/"
-    #MCfriends   = [] #["postFSRinfo"]
-    #friends     = []
+    #baseDir     = "/eos/cms/store/cmst3/group/dpsww/signal_FRonly_reco/" 
+    baseDir     = "/eos/cms/store/cmst3/group/dpsww/signal_fullstats_nosel/"
+    MCfriends   = [] #["postFSRinfo"]
+    friends     = []
     trees       = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
     fsyst       = 'dps-ww/fullRun2/systsUnc.txt'
     fmca        = 'dps-ww/fullRun2/mca-dpsww.txt'
-    fcut        = 'dps-ww/fullRun2/cuts_2lss.txt' #cuts_2lss_dpsww_dressed.txt' #cuts_2lss_dpsww_gen.txt' #cuts_2lss.txt'
+    fcut        = 'dps-ww/fullRun2/cuts_2lss_dpsww_dressed.txt' #cuts_2lss_dpsww_dressed.txt' #cuts_2lss_dpsww_gen.txt' #cuts_2lss.txt'
     showratio   = False
-    cutflow     = True
+    cutflow     = False
     disable     = [];    invert    = [];    fittodata = [];    scalethem = {}
     loop        = ['minusminus', 'plusplus',''] if splitCharge else ['']
     print 'running for %s with charge split flag %s' %(finalState,splitCharge)
-    processes   = ['DPSWW','DPSWW_alt','DPSWW_newsim','DPSWW_hw']#'DPSWW_gen','DPSWW_gen_hw','DPSWW_gen_newsim']#,'DPSWW_gen_notau','DPSWW_gen_notau_hw','DPSWW_gen_tau','DPSWW_gen_tau_hw']#'WZ',,'DPSWW_alt','DPSWW_newsim',
+    #processes   = ['DPSWW','DPSWW_alt','DPSWW_newsim','DPSWW_hw']#
+    processes    = ['DPSWW_gen','DPSWW_gen_hw','DPSWW_gen_newsim']#,'DPSWW_gen_notau','DPSWW_gen_notau_hw','DPSWW_gen_tau','DPSWW_gen_tau_hw']#'WZ',,'DPSWW_alt','DPSWW_newsim',
     binName     = '2lss'
     spam        = ' --topSpamSize 1.0 --noCms '
     legends     = '  --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 '
     ubands      =  ' ' #--showMCError ' 
     exclude     = ' '
-    ratio       = '  --fixRatioRange  --ratioYNDiv 505  --maxRatioRange 0.5 1.5  ' #--plotmode norm --ratioNums DPSWW_gen_newsim,DPSWW_gen_hw --ratioDen DPSWW_gen' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --ratioYLabel=var./nom.' 
-    targetdir = eos+'{yr}/{dd}_2lss_signalRecofromFR/'.format(dd=date,yr=year if year !='all' else 'fullRun2')
+    ratio       = '  --fixRatioRange  --ratioYNDiv 505  --maxRatioRange 0.5 1.5  --uf ' #--plotmode norm --ratioNums DPSWW_gen_newsim,DPSWW_gen_hw --ratioDen DPSWW_gen' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --ratioYLabel=var./nom.' 
+    targetdir = eos+'{yr}/{dd}_2lss_signal_PlusPlus/cut_00_alwaystrue/'.format(dd=date,yr=year if year !='all' else 'fullRun2')
     extraopts = ratio + spam + legends + ubands  + exclude
 
     for FS in finalState:
-        plotvars   = ['met'] #['ndressedLep'] #'etaprod_absetamin_genlep'] #dressedLepvars #  ['nGenlep'] #'ndressedLep']#
+        plotvars   = ['ndressedLep'] #'etaprod_absetamin_genlep'] #dressedLepvars #  ['nGenlep'] #'ndressedLep']#
         for ch in loop:
             enable=[] 
             enable.append(FS);
@@ -383,7 +384,7 @@ def makeResultsFiducial(year,finalState,splitCharge):
             anything = " --binname %s "%bN
             extraopts+= anything
             print 'plot settings:  ',extraopts
-            runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, True, year, 2,extraopts,invert,cutflow,bareNano=False)
+            runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, True, year, 2,extraopts,invert,cutflow,bareNano=True)
             #def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, applyWtsnSFs, year,nLep,extraopts = '', invertedcuts = [],cutflow=False,bareNano=False):
 ########################################
 
@@ -435,21 +436,21 @@ def plotFRvars(year,finalState):
 ############################################ plots using barenano/gen/dressed leptons
 def makesimpleplots(year,finalState,splitCharge,useDressed=True):
     #trees="/eos/cms/store/cmst3/group/dpsww/NANOGEN/"
-    trees="/eos/cms/store/cmst3/group/dpsww/NANOGEN_v1/"
-    #trees       = '/eos/cms/store/cmst3/group/dpsww/bufferZone/Signal_nanoV7/All_gen/'
+    #trees="/eos/cms/store/cmst3/group/dpsww/NANOGEN_v1/"
+    trees       = '/eos/cms/store/cmst3/group/dpsww/bufferZone/Signal_nanoV7/All_gen/'
     MCfriends   = '' #['/eos/cms/store/cmst3/group/dpsww/bufferZone/Signal_nanoV7/All_gen/postFSRinfo'] 
     targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/GeneratorLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') )
     fmca        = 'dps-ww/fullRun2/mca-dpsww-gen.txt' #mca-dpsww.txt' 
     fsyst       = ''
     fcut        = 'dps-ww/fullRun2/{cf}'.format(cf='cuts_2lss_dpsww_gen.txt' if not useDressed else 'cuts_2lss_dpsww_dressed.txt' )
     bareNano    = True
-    cutFlow     = False
+    cutFlow     = True
     loop = [ 'minusminus', 'plusplus'] if splitCharge else ['']
 
     print 'running for %s with charge split flag %s' %(finalState,splitCharge)
     #processes = ['pdf13','pdf14','pdf17','pdf18','pdf5']   #
-    #processes = ['py8_all','hw_all','ns_all']
-    processes=['incl_dpsWW','excl_dpsWW']#'py8_cp5_bareNano','newsim_bareNano','hw7_2018_bareNano','hwpp_bareNano','py8_cuet_2017_bareNano','py8_cuet_bareNano']#,'py8_cp5_2017_bareNano','py8_cp5_2018_bareNano','hw7_2017_bareNano']
+    processes = ['py8_all','hw_all','ns_all']
+    #processes=['incl_dpsWW','excl_dpsWW']#'py8_cp5_bareNano','newsim_bareNano','hw7_2018_bareNano','hwpp_bareNano','py8_cuet_2017_bareNano','py8_cuet_bareNano']#,'py8_cp5_2017_bareNano','py8_cp5_2018_bareNano','hw7_2017_bareNano']
 
     plotvars   = dressedLepvars if useDressed else barelepvars 
 
@@ -462,8 +463,8 @@ def makesimpleplots(year,finalState,splitCharge,useDressed=True):
             disable   = []
             ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  1.5'
             spam    = ' --topSpamSize 1.0 --noCms '
-            legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2' # --plotmode nostack'
-            anything = '  --showRatio --plotmode norm  --ratioNums incl_dpsWW --ratioDen excl_dpsWW' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
+            legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2 --plotmode nostack'
+            anything = '  ' #--showRatio --plotmode norm  --ratioNums incl_dpsWW --ratioDen excl_dpsWW' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
             extraopts = ratio + spam + legends +  anything
                
             
@@ -630,8 +631,8 @@ def tempResults(year,finalState,extra):
     fcut        = 'dps-ww/fullRun2/cuts_2lss.txt' #cuts_temp.txt' 
     MCfriends   = ['2_recl_allvars','4_scalefactors','0_jmeUnc_v2','2_btag_SFs',"muPrefiring","nnpdf_rms","postFSRinfo"]
     showratio   = True
-    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{year}/{date}{pf}_suppMaterial_scaledtopostfit_FORPAPER/'.format(date=date, year=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else '') ) 
-    processes    = ['DPSWW','WZ','data_fakes','Convs','Rares','Wgstar','ZZ','VVV','DPSWW_alt','data_fakes','data_flips','data']#,'Convs_promptsub']'DPSWW_newsim','DPSWW_hw',
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{year}/{date}{pf}_suppMaterial_scaledtopostfit_FORPAPERL/'.format(date=date, year=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else '') ) 
+    processes    = ['DPSWW','WZ','data_fakes','Convs','Rares','Wgstar','ZZ','DPSWW_alt','data_fakes','data_flips','data']#,'Convs_promptsub']'DPSWW_newsim','DPSWW_hw',
     #processes    = ['DPSWW','DPSWW_newsim','DPSWW_hw']#,'data_fakes','Convs_promptsub']#'DPSWW_tau','DPSWW_tau_alt','DPSWW_newsim','DPSWW_notau','DPSWW_notau_alt','DPSWW','DPSWW_alt']#,'data_fakesConv'] #'WG01J',WG,'DPSWW','WZ','Convs','Rares','Wgstar','ZZ','VVV','data_fakes','data_flips']#,'DPSWW_alt','data']#,'WZ_ewk']
     fRvars    = ['data_fakes_FRe_pt_Up','data_fakes_FRe_pt_Dn','data_fakes_FRe_be_Up','data_fakes_FRe_be_Dn','data_fakes_FRm_pt_Up','data_fakes_FRm_pt_Dn','data_fakes_FRm_be_Up','data_fakes_FRm_be_Dn','data_fakes_FRe_norm_Up','data_fakes_FRe_norm_Dn','data_fakes_FRm_norm_Up','data_fakes_FRm_norm_Dn','promptsub_FRe_norm_Up','promptsub_FRe_norm_Dn','promptsub_FRe_pt_Up','promptsub_FRe_pt_Dn','promptsub_FRe_be_Up','promptsub_FRe_be_Dn']#,'DPSWW_jecDn','DPSWW_jecUp','WZ_jecDn','WZ_jecUp']#,
     processes+=fRvars
@@ -658,12 +659,57 @@ def tempResults(year,finalState,extra):
         anything += ' '.join(["--plotgroup data_fakes%s+='.*_promptsub%s'"%(x,x) for x in procs ])+" --neglist '.*_promptsub.*' "
         #'.*_promptsub.* -plotgroup data_fakes+=.*_promptsub.* '
         extraopts = ratio + spam + legends + ubands + anything
-        plotvars   =  allvars #['MVA2','MVA1'] #+all1Ds  #['dphill_T','absdphill','met_absdphill','cptll_dphill'] #bdtiv #bdtG2d #allvars + bdtGM + all1Ds #bdtGvarsUp + bdtGvarsDn + allbdts 
+        plotvars   = ['conept1'] #allvars #['MVA2','MVA1'] #+all1Ds  #['dphill_T','absdphill','met_absdphill','cptll_dphill'] #bdtiv #bdtG2d #allvars + bdtGM + all1Ds #bdtGvarsUp + bdtGvarsDn + allbdts 
         makeplots  = ['{}_{}'.format(a,FS) for a in plotvars]
         #scalethem={}            
-        scalethem = {'ZZ':1.36,'WZ':1.06,'Rares':0.98,'VVV':0.77,'data_fakes':0.70,'Convs':1.15,'DPSWW':1.01,'Wgstar':1.65,'data_flips':1.08}
+        scalethem = {'ZZ':1.36,'WZ':1.06,'Rares':1.0,'data_fakes':0.70,'Convs':1.15,'DPSWW':1.01,'Wgstar':1.65,'data_flips':1.08}
+        #scalethem = {'ZZ':1.36,'WZ':1.06,'Rares':0.98,'VVV':0.77,'data_fakes':0.70,'Convs':1.15,'DPSWW':1.01,'Wgstar':1.65,'data_flips':1.08}
+
         runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, year, 2,extraopts,invert,cutflow)
 #%%%%%%%%%%%%%%%%
+
+def tempResultsQ(year,finalState,extra,vtp):
+    trees       = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
+    fsyst       = 'dps-ww/fullRun2/systsUnc.txt'
+    fmca        = 'dps-ww/fullRun2/mca-dpsww_temp.txt'
+    fcut        = 'dps-ww/fullRun2/cuts_2lss.txt' #cuts_temp.txt' 
+    MCfriends   = ['2_recl_allvars','4_scalefactors','0_jmeUnc_v2','2_btag_SFs',"muPrefiring","nnpdf_rms","postFSRinfo"]
+    showratio   = True
+    targetdir   = '/eos/user/a/anmehta/www/DPSWW_v2/{year}/{date}{pf}_suppMaterial_scaledtopostfit_FORPAPERn/'.format(date=date, year=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else '') ) 
+    processes    = ['DPSWW','WZ','data_fakes','Convs','Rares','Wgstar','ZZ','DPSWW_alt','data_fakes','data_flips','data']
+    fRvars    = ['data_fakes_FRe_pt_Up','data_fakes_FRe_pt_Dn','data_fakes_FRe_be_Up','data_fakes_FRe_be_Dn','data_fakes_FRm_pt_Up','data_fakes_FRm_pt_Dn','data_fakes_FRm_be_Up','data_fakes_FRm_be_Dn','data_fakes_FRe_norm_Up','data_fakes_FRe_norm_Dn','data_fakes_FRm_norm_Up','data_fakes_FRm_norm_Dn','promptsub_FRe_norm_Up','promptsub_FRe_norm_Dn','promptsub_FRe_pt_Up','promptsub_FRe_pt_Dn','promptsub_FRe_be_Up','promptsub_FRe_be_Dn']#,'DPSWW_jecDn','DPSWW_jecUp','WZ_jecDn','WZ_jecUp']#,
+    processes+=fRvars
+
+    print processes
+
+    cutflow=False
+    applylepSFs=True
+    for FS in finalState:            
+        enable=[] #'ssWW','noTaus'] #'nVertH']
+        enable.append(FS);
+        disable   = []#'01jets']#'cptll','01jets','bVeto','metpt']
+        invert    = []
+        fittodata = []
+        ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75' # --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_hw,DPSWW_newsim --ratioYLabel=hw,dSh/py '#--plotmode nostack --ratioDen data_fakes --ratioNums Convs --ratioYLabel=Convs/nonprompt'
+        spam    = ' --topSpamSize 1.0 --noCms '
+        legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 3 --showMCError'
+        ubands  =  ' ' 
+        anything = " --binname %s "%finalState
+        procs = [ '' ]
+        procs += ['_FRe_norm_Up','_FRe_norm_Dn','_FRe_pt_Up','_FRe_pt_Dn','_FRe_be_Up','_FRe_be_Dn','_FRm_norm_Up','_FRm_norm_Dn','_FRm_pt_Up','_FRm_pt_Dn','_FRm_be_Up','_FRm_be_Dn']
+        anything += ' '.join(["--plotgroup data_fakes%s+='.*_promptsub%s'"%(x,x) for x in procs ])+" --neglist '.*_promptsub.*' "
+        #'.*_promptsub.* -plotgroup data_fakes+=.*_promptsub.* '
+        extraopts = ratio + spam + legends + ubands + anything
+        plotvars   = vtp #allvars #['MVA2','MVA1'] #+all1Ds  #['dphill_T','absdphill','met_absdphill','cptll_dphill'] #bdtiv #bdtG2d #allvars + bdtGM + all1Ds #bdtGvarsUp + bdtGvarsDn + allbdts 
+        makeplots  = ['{}_{}'.format(a,FS) for a in plotvars]
+        #scalethem={}            
+        scalethem = {'ZZ':1.36,'WZ':1.06,'Rares':1.0,'data_fakes':0.70,'Convs':1.15,'DPSWW':1.01,'Wgstar':1.65,'data_flips':1.08}
+        #scalethem = {'ZZ':1.36,'WZ':1.06,'Rares':0.98,'VVV':0.77,'data_fakes':0.70,'Convs':1.15,'DPSWW':1.01,'Wgstar':1.65,'data_flips':1.08}
+
+        runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, year, 2,extraopts,invert,cutflow)
+#%%%%%%%%%%%%%%%%
+
+
 def plotsystvars(year,finalState,splitCharge=True):
     trees       = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
     showratio   = False
@@ -710,11 +756,13 @@ if __name__ == '__main__':
     parser.add_option('--wzCR',dest='threelepCR', action='store_true', default=False , help='make plots in 3lep CR')
     parser.add_option('--zzCR',dest='fourlepCR', action='store_true' , default=False , help='make plots in 4lep CR')
     parser.add_option('--finalState',dest='finalState',type='string' , default=[], action="append", help='final state(s) to run on')
+    parser.add_option('--vtp',dest='vtp',type='string' , default=[], action="append", help='variables to plot')
+
     parser.add_option('--extra',dest='extra',type='string' , default='', help='additional cuts/settings')
 
     parser.add_option('--splitCharge',dest='splitCharge',action='store_true', default=False , help='split by charge')
     parser.add_option('--year',   dest='year'  , type='string' , default='' , help='make plots/cards for specified year')
-    parser.add_option('--wzbkg',dest='threesome', action='store_true' , default=False, help='make plots in 3lep CR enriched with WZ otherwise dominated by conversions')
+    parser.add_option('--wzbkg',dest='threelep', action='store_true' , default=False, help='make plots in 3lep CR enriched with WZ otherwise dominated by conversions')
     parser.add_option('--results' , '--makeResults'  , dest='results', action='store_true' , default=False , help='make plots')
     parser.add_option('--old' , dest='old', action='store_true' , default=False , help='make plots')
     parser.add_option('--dW' , '--doWhat'  , dest='doWhat', type='string' , default=[] , help='plots or cards')
@@ -728,6 +776,7 @@ if __name__ == '__main__':
     parser.add_option('--frV',dest='frVars', action='store_true' , default=False , help='plot FR variations')
     parser.add_option('--binning',dest='binningSch', type='string' , default='', help='binning scheme for datacards')
     parser.add_option('--temp', dest='temp', action='store_true' , default=False , help='make temp plots ')
+    parser.add_option('--tempQ', dest='tempQ', action='store_true' , default=False , help='make temp plots ')
     parser.add_option('--fid', dest='fid', action='store_true' , default=False , help='make plots with fiducial region and sr cuts')
     parser.add_option('--syst', dest='syst', action='store_true' , default=False , help='make plots with syst vars')
     parser.add_option('--asym', dest='asym', action='store_true' , default=False , help='make plots or cards categorized in terms of  etaprod')
@@ -744,7 +793,7 @@ if __name__ == '__main__':
     if opts.date:
         date = opts.date
     if opts.threelepCR:
-        threelepCRPlot(opts.year,opts.threesome)
+        threelepCRPlot(opts.year,opts.threelep)
     if opts.fourlepCR:
         fourlepCRPlot(opts.year)
     if opts.onelepCR:
@@ -765,6 +814,9 @@ if __name__ == '__main__':
         plotFRvars(opts.year,opts.finalState)
     if opts.temp:
         tempResults(opts.year,opts.finalState,opts.extra)
+    if opts.tempQ:
+        tempResultsQ(opts.year,opts.finalState,opts.extra,opts.vtp)
+
     if opts.fid:
         makeResultsFiducial(opts.year,opts.finalState,opts.splitCharge)
     if opts.syst:
