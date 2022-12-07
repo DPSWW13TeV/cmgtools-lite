@@ -208,8 +208,9 @@ nFatJet_wtagged : Sum$((FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particle
 nFatJet              : 	  nFatJetSel     : [0,1,2,3] ; XTitle='nfatjets wiht pT > 200' , MoreY=1.5
 FatJet_pt            :     if3(nFatJetSel > 0,FatJetSel_Recl_pt,-99)  : 80,200,1000; XTitle="fatjet p_{T} (GeV)", IncludeOverflows=False
 
+FatJet1_pt          :     if3(nFatJetSel > 0,FatJet1_pt,-99)  : 80,200,1000; XTitle="fatjet p_{T} (GeV)", IncludeOverflows=False
 
-FatJet1_eta          :     if3(nFatJetSel > 0,FatJet1_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta", IncludeOverflows=False
+FatJet1_eta         :     if3(nFatJetSel > 0,FatJet1_eta,-99)  : 24,-2.4,2.4; XTitle="fatjet #eta", IncludeOverflows=False
 
 FatJet_pNet_mass    :     if3(nFatJetSel > 0,FatJetSel_Recl_particleNet_mass,-99)  : 20,0,200; XTitle="ak8 pNet_mass", IncludeOverflows=False
 

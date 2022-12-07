@@ -1,7 +1,7 @@
 import os,string
 from plots_VVsemilep import *
 
-allvars=  ak8jetvars +eventvars +lepvars+ak4jetvars +WVvars #+ak4jetvars+MConly
+allvars=  ak8jetvars +eventvars +lepvars+WVvars #+ak4jetvars+MConly+ak4jetvars 
 
 tmp_condor = open('jobs/submitFile.condor', 'w')
 tmp_condor.write('''Executable = dummy_plots.sh 
@@ -12,13 +12,14 @@ Error      = jobs/log_running_$(ProcId).error
 environment = "LS_SUBCWD={here}"
 +JobFlavour = "workday"
 \n\n'''.format(here=os.environ['PWD']))
-pf="singleLeptrig"
-for nl in ["1"]: #"1,2".split(","):
-    for cat in ["boosted"]: #,"resolved"]: #.split(","):
-        for yr in ["2018"]: #2016,2017,2018".split(","): 
-            for iVar in allvars:
-                tmp_condor.write('arguments = {cmssw} {yr} {nl} {cat} {iVar} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,nl=nl,iVar=iVar,pf=pf  ) )
-                tmp_condor.write('queue 1\n\n')
+pf="nom"
+for dW in ["topCR","SR"]: 
+    for nl in ["1"]: #"1,2".split(","):
+        for cat in ["boosted"]: #,"resolved"]: #.split(","):
+            for yr in ["2018"]: #2016,2017,2018".split(","): 
+                for iVar in allvars:
+                    tmp_condor.write('arguments = {cmssw} {yr} {nl} {cat} {iVar} {pf} {dW} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,nl=nl,iVar=iVar,pf=pf,dW=dW ) )
+                    tmp_condor.write('queue 1\n\n')
 
 tmp_condor.close()
 

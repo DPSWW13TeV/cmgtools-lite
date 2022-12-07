@@ -15,8 +15,8 @@ year = getHeppyOption("year", "2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","both")
-#selectComponents = getHeppyOption("selectComponents","DATA")
-selectComponents = getHeppyOption("selectComponents","MC")
+selectComponents = getHeppyOption("selectComponents","DATA")
+#selectComponents = getHeppyOption("selectComponents","MC")
 test = getHeppyOption("test","") #"testam")
 
 if year == '2018':
@@ -60,7 +60,7 @@ if analysis == "main":
 #        "DYJetsToLL_LHEFilterPtZ0to50",
 #        "DYJetsToLL_LHEFilterPtZ50to100"
     #"TT_mtt.*"
-        "WJetsToLNu_HT.*", 
+       ## "WJetsToLNu_HT.*", 
         #"WJetsToLNu_.*",
         #   "WJetsToLNu_HT70To100",
         #"DYJetsToLL_M50", 
@@ -80,7 +80,7 @@ if analysis == "main":
 ##am        "ZZTo4L", #"WWTo2L2Nu",  "WZTo3LNu_fxfx",   
 ##am        #  # triboson
 ##am        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ", # "WWW_ll", <- not there, but its just a leptonic filter
-        #"WWW"
+        "WWW"
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else

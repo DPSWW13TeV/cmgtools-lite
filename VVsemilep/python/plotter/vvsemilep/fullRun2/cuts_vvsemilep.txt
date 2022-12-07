@@ -16,26 +16,26 @@ ll          : abs(LepGood1_pdgId*LepGood2_pdgId) == 143 || abs(LepGood1_pdgId*Le
 
 
 bVeto : nBJetMedium30_Recl == 0  ;           Disable=True
-nj: (nJetSel >= 2 || nFatJetSel > 0) ;           Disable=True
+inclusive: (nJetSel >= 2 || nFatJetSel > 0) ;           Disable=True
 nfatjets: nFatJetSel > 0 ;           Disable=True
 topCR: nBJetMedium30_Recl > 1 ;           Disable=True
 resolved: Sum$(JetSel_Recl_pt > 30) >= 2 && nFatJetSel == 0 ;    Disable=True
 
 
-##amboosted: Sum$( ( (FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq)/(FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq+FatJetSel_Recl_particleNetMD_QCD)) > 0.85); Disable=True
+boosted: Sum$( ( (FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq)/(FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq+FatJetSel_Recl_particleNetMD_QCD)) > 0.85); Disable=True
 boosted: nFatJetSel > 0 ;           Disable=True
 #boosted:  Sum$( FatJetSel_Recl_particleNet_mass > 40 && ( (FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq)/(FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq+FatJetSel_Recl_particleNetMD_QCD) > 0.85) ) > 0 ;   Disable=True
 
 
 ##boostedFJ1: if3(nFatJetSel > 0, FatJet1_particleNet_mass > 40 && (FatJet1_particleNetMD_Xcc+FatJet1_particleNetMD_Xqq)/(FatJet1_particleNetMD_Xcc+FatJet1_particleNetMD_Xqq+FatJet1_particleNetMD_QCD) > 0.7, 1);   Disable=True 
+
 dRfjlep : deltaR(FatJet1_eta,FatJet1_phi,LepGood1_eta,LepGood1_phi) > 1.6 ; Disable=True
 dphifjlep : abs(deltaPhi(LepGood1_phi,FatJet1_phi)) > 2.0 ; Disable=True
-dphifjmet : abs(deltaPhi(FatJet1_phi,MET_phi)) > 2.0 ; Disable=True
+dphifjmet : abs(deltaPhi(FatJet1_phi,PuppiMET_phi)) > 2.0 ; Disable=True
 
 
 
 #boostedFJ2: if3(nFatJetSel > 1, (FatJet2_tau2/FatJet2_tau1) < 0.6 && FatJet2_particleNet_mass > 40 && (FatJet2_particleNetMD_Xcc+FatJet2_particleNetMD_Xqq)/(FatJet2_particleNetMD_Xcc+FatJet2_particleNetMD_Xqq+FatJet2_particleNetMD_QCD) > 0.7, 1);   Disable=True
-
 
 
 

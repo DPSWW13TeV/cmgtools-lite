@@ -101,7 +101,7 @@ def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
 #####################################
 
-def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, applyWtsnSFs, year,nLep,extraopts = '', invertedcuts = [],cutFlow=False,bareNano=False):
+def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, applyWtsnSFs, year,nLep,extraopts = '', invertedcuts = [],cutFlow=False,bareNano=False,category="boosted"):
 
     if bareNano:
         cmd  = ' mcPlots.py {CF} -j 10 -l {lumi}  --tree NanoAOD  --year {YEAR} --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,lumi=lumis[year],YEAR=year if year!='all' else '2016APV,2016,2017,2018',CF='' if cutFlow else '-f')
@@ -124,10 +124,14 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     cmd += ' -p '+','.join(processes)
 
     if applyWtsnSFs and not bareNano:
+        pNetSF="1"
+        if "resolved" not in category:pNetSF="pNetSFMD_WvsQCD(FatJet_pt[iFatJetSel_Recl[0]],year,suberaId)"
         if(nLep == 1): 
-            cmd += ''.join(" -W L1PreFiringWeight_Nom*puWeight*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]],1,year,suberaId)")
+            cmd+=" '-W L1PreFiringWeight_Nom*puWeight*%s*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]],1,year,suberaId) ' "%pNetSF 
+            ##amcmd += ''.join(" -W L1PreFiringWeight_Nom*puWeight*pNetSF*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]],1,year,suberaId)")
         else: 
-            cmd += ''.join(" -W L1PreFiringWeight_Nom*puWeight*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_pt[iLepFO_Recl[1]],2,year,suberaId)")
+            cmd+=" '-W L1PreFiringWeight_Nom*puWeight*%s*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_pt[iLepFO_Recl[1]],2,year,suberaId) ' "%pNetSF 
+
     else:
         if not bareNano:
             cmd += ''.join(" -W puWeight*L1PreFiringWeight_Nom")
@@ -151,17 +155,18 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
 ##################
 
-def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,plotvars=lepvars[0],postfix='',selection=['SR']):
+def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars):
+
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
     fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' 
     showratio    = True
-    cutFlow      = True
+    cutFlow      = False
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['WV','WJets','top','data'] if nLep ==1 else ['ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',
+    processes    = ['WV','WJets','top','data'] if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
-    cuts_onelep  = ['singlelep','trigger']#,'bVeto']#,'dRfjlep','dphifjmet','dphifjlep']#with pfmet cut 
+    cuts_onelep  = ['singlelep','trigger','dRfjlep','dphifjmet','dphifjlep']#with pfmet cut #,'bVeto']#,
     cuts_2los    = ['dileptrg','etael2','cleanup','ll','oppsign','twolep'] #for now aall flavors 
     cuts_topCR   = cuts_onelep+['topCR']
 
@@ -173,7 +178,7 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,plotvars=lepvars
         print 'plots will be made with data points on top of the stack'
     #procs=[x+'_promptsub' for x in processes if not x.startswith('data')] 
     print processes
-    signal  = '--sp ZV' if nLep > 1 else '--sp WV' 
+    signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.32  --legendColumns 1 '
     ubands  =  ' --showMCError '
@@ -187,11 +192,13 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,plotvars=lepvars
             ##binName = '{lep}{jet}'.format(lep = '2los' if  nLep > 1 else 'onelep',jet=FS) ##will be used for datacards
             binName = '{lep}{jet}'.format(lep=if3(pR == 'SR',if3(nLep > 1,'2los','onelep'), 'topCR'),jet=FS)
             print 'running plots for %s'%binName
-            #targetcarddir = 'Cards/cards_{date}{pf}_{FS}_{year}'.format(FS=pR+FS,year=year,date=date, pf=('-'+postfix if postfix else '') )
+            targetcarddir = 'Cards/cards_{date}{pf}_{FS}_{year}'.format(FS=pR+FS,year=year,date=date, pf=('_'+postfix if postfix else '') )
+            print '{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName)
             targetdir = eos+'{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName)
             enable=[];
             enable=if3(pR == 'SR',if3(nLep > 1,cuts_2los,cuts_onelep),cuts_topCR)
-            enable.append(FS);
+            enable.append(FS); ## need to confirm
+            
             makeplots  = ['{}'.format(a)  for a in plotvars]
             print makeplots
             anything = "  --binname %s "%binName #--showIndivSigs
@@ -259,7 +266,7 @@ def makesimpleplots(year,useDressed=True):
 
 if __name__ == '__main__':
     parser = optparse.OptionParser(usage='usage: %prog [opts] ', version='%prog 1.0')
-    parser.add_option('--pf', '--postfix', dest='postfix' , type='string', default='', help='postfix for running each module')
+    parser.add_option('--pf', '--postfix', dest='postfix', type='string', default='', help='postfix for running each module')
     parser.add_option('-d', '--date', dest='date' , type='string', default='', help='run with specified date instead of today')
     parser.add_option('-n', '--nLep', dest='nLep' , type='int'  , default=1.    , help='number of leps')
     parser.add_option('--finalState',dest='finalState',type='string' , default=[], action="append", help='final state(s) to run on')
@@ -278,23 +285,25 @@ if __name__ == '__main__':
 
     (opts, args) = parser.parse_args()
 
-    global date, postfix, date
+    global date, postfix
     postfix = opts.postfix
     year= opts.year
+    #print type(postfix)
     date = datetime.date.today().isoformat()
 
     if opts.date:
         date = opts.date
     if opts.results:
-        print 'running {here} for {bin}' .format(here=opts.doWhat,bin=opts.finalState)
-        makeResults(opts.year,opts.nLep,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.plotvar,opts.postfix,opts.sel)
+        print 'will make {here} {pt} for {bin}' .format(here=opts.doWhat,bin=opts.finalState,pt=(opts.plotvar if 'plots' in opts.doWhat else ''))
+        #makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars):
+        makeResults(opts.year,opts.nLep,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.sel,opts.postfix,opts.plotvar)
     if opts.simple:
         makesimpleplots(opts.year,opts.genDressed)
         #    if opts.fid:
         #       makeResultsFiducial(opts.year,opts.finalState,opts.splitCharge)
 
 
-# python plots_VVsemilep.py --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv dRfjj --pf nom #--applylepSFs
+# python plots_VVsemilep.py --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv dRfjj --pf nom --sel SR #--applylepSFs
 # python plots_VVsemilep.py --results --dW plots --year 2016 --nLep 1 #--finalState 3l --applylepSFs
 # python plots_VVsemilep.py --results --dW plots --year all --finalState ll --nlep 2 #  --applylepSFs
 # python plots_VVsemilep.py --results --dW plots --year all --finalState ll --nlep 1 #  --applylepSFs

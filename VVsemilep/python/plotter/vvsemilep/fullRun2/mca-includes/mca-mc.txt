@@ -63,15 +63,26 @@ tthighmass : TT_mttp7kto1k_part2: xsec : LepGood1_mcMatchId==1 ; FillColor=ROOT.
 tthighmass : TT_mttp7kto1k_part0: xsec : LepGood1_mcMatchId==1 ; FillColor=ROOT.kPink+2, Label="topHM"
 tthighmass : TT_mttp7kto1k_part1: xsec : LepGood1_mcMatchId==1 ; FillColor=ROOT.kPink+2, Label="topHM"
 
+##amtop	    : TTSemi_pow_part0 : xsec  : LepGood1_mcMatchId==1 ; FillColor=ROOT.kViolet+7, Label="top"
+##amtop	    : TTSemi_pow_part1 : xsec  : LepGood1_mcMatchId==1 ; FillColor=ROOT.kViolet+7, Label="top"
+##amtop	    : TTSemi_pow_part2 : xsec  : LepGood1_mcMatchId==1 ; FillColor=ROOT.kViolet+7, Label="top"
+##amtop   	    : T_sch: xsec      : xsec  : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
+##amtop   	    : Tbar_tch_part0   : 80.95 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
+##amtop   	    : Tbar_tch_part1   : 80.95 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
+##amtop   	    : T_tch            : 136.02 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
+##amtop   	    : T_tWch_noFullyHad    : 35.85*0.543 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
+##amtop   	    : Tbar_tWch_noFullyHad : 35.85*0.543 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top" #, years="2018"
+
 top	    : TTSemi_pow_part0 : xsec  : LepGood1_mcMatchId==1 ; FillColor=ROOT.kViolet+7, Label="top"
 top	    : TTSemi_pow_part1 : xsec  : LepGood1_mcMatchId==1 ; FillColor=ROOT.kViolet+7, Label="top"
 top	    : TTSemi_pow_part2 : xsec  : LepGood1_mcMatchId==1 ; FillColor=ROOT.kViolet+7, Label="top"
 top   	    : T_sch: xsec      : xsec  : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
-top   	    : Tbar_tch_part0   : 80.95 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
-top   	    : Tbar_tch_part1   : 80.95 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
-top   	    : T_tch            : 136.02 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
-top   	    : T_tWch_noFullyHad    : 35.85*0.543 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
-top   	    : Tbar_tWch_noFullyHad : 35.85*0.543 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top" #, years="2018"
+top   	    : Tbar_tch_part0   : xsec : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
+top   	    : Tbar_tch_part1   : xsec : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
+top   	    : T_tch            : xsec : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
+top   	    : T_tWch_noFullyHad    : xsec : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top"
+top   	    : Tbar_tWch_noFullyHad : xsec : LepGood1_mcMatchId==1 ; FillColor=ROOT.kGray+1, Label="s-top" #, years="2018"
+
 
 DYJetsLO    : DYJetsToLL_M50_LO_part0+ DYJetsToLL_M50_LO_part12+DYJetsToLL_M50_LO_part3+ DYJetsToLL_M50_LO_part7+ DYJetsToLL_M50_LO_part1+ DYJetsToLL_M50_LO_part13+DYJetsToLL_M50_LO_part4+ DYJetsToLL_M50_LO_part8+ DYJetsToLL_M50_LO_part10+DYJetsToLL_M50_LO_part14+DYJetsToLL_M50_LO_part5+ DYJetsToLL_M50_LO_part9+DYJetsToLL_M50_LO_part11+DYJetsToLL_M50_LO_part2+ DYJetsToLL_M50_LO_part6: xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=8, Label="dy" 
 

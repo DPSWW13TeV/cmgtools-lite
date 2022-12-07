@@ -372,6 +372,192 @@ float triggerSF_ttH(int pdgid1, float pt1, int pdgid2, float pt2, int nlep, int 
 }
 
 
+
+//##########################################
+float pNetSFMD_WvsQCD(float pt, int year, int suberaid, float WP=0.5,int var=0){
+  //WP 0.5/1.0/2.5% of mistag rate
+  TString yearString= TString::Format("%d",year) + (( year == 2016 && suberaid == 0) ? "APV" : "");
+  if (yearString == "2018"){
+
+    if(pt >= 200 && pt < 300){
+      if(WP == 0.5){
+	return 0.81*(1 + var*0.03);
+      }
+      else if(WP == 1.0){
+	return 0.87*(1 + var*0.02);
+      }
+      else{
+	if (var > 0){
+	  return 0.92*(1 + var*0.03);}
+	else {return 0.92*(1 + var*0.02);}
+      }
+    }
+    
+    else if(pt >= 300 && pt < 400){
+      if(WP == 0.5){
+	return 0.81*(1 + var*0.02);
+      }
+      else if(WP == 1.0){
+	return 0.86*(1 + var*0.02);
+      }
+      else{
+	  return 0.92*(1 + var*0.02);}
+    }
+
+    else {
+      if(WP == 0.5){
+	return 0.77*(1 + var*0.04);
+      }
+      else if(WP == 1.0){
+	return 0.82*(1 + var*0.04);
+      }
+      else{
+	  return 0.87*(1 + var*0.04);}
+    }
+
+  }//2018
+
+
+
+
+
+  if (yearString == "2017"){
+    if(pt >= 200 && pt < 300){
+      if(WP == 0.5){
+	return 0.85*(1 + var*0.03);
+      }
+      else if(WP == 1.0){
+	return 0.91*(1 + var*0.02);
+      }
+      else{
+	return 0.96*(1 + var*0.03);}
+    
+    }
+    
+    else if(pt >= 300 && pt < 400){
+      if(WP == 0.5){
+	return 0.85*(1 + var*0.03);
+      }
+      else if(WP == 1.0){
+	return 0.90*(1 + var*0.02);
+      }
+      else{
+	if(var > 0){return 0.95*(1 + var*0.03);}
+	else{return 0.95*(1 + var*0.02);}
+      }
+    }
+
+    else{
+      if(WP == 0.5){
+	return 0.86*(1 + var*0.05);
+      }
+      else if(WP == 1.0){
+	if(var > 0){return 0.89*(1 + var*0.05);}
+	else{return 0.89*(1 + var*0.04);}
+      }
+      else{
+	  return 0.98*(1 + var*0.05);}
+    }
+
+  }//2017
+
+
+
+
+  if (yearString == "2016APV"){
+
+    if(pt >= 200 && pt < 300){
+      if(WP == 0.5){
+	return 0.85*(1 + var*0.03);
+      }
+      else if(WP == 1.0){
+	return 0.90*(1 + var*0.03);
+      }
+      else{
+	if (var > 0){
+	  return 0.90*(1 + var*0.02);}
+      }
+    }
+    
+    else if(pt >= 300 && pt < 400){
+      if(WP == 0.5){
+	return 0.86*(1 + var*0.04);
+      }
+      else if(WP == 1.0){
+	return 0.87*(1 + var*0.04);
+      }
+      else{
+	  return 0.94*(1 + var*0.04);}
+    }
+
+    else {
+      if(WP == 0.5){
+	return 0.86*(1 + var*0.08);
+      }
+      else if(WP == 1.0){
+	if(var > 0){return 0.92*(1 + var*0.08);}
+	else{	return 0.92*(1 + var*0.07);}
+      }
+      else{
+	  return 0.94*(1 + var*0.07);}
+    }
+
+  }//2016APV
+
+
+
+  if (yearString == "2016"){
+
+    if(pt >= 200 && pt < 300){
+      if(WP == 0.5){
+	return 0.85*(1 + var*0.04);
+      }
+      else if(WP == 1.0){
+	if(var > 0){return 0.89*(1 + var*0.04);}
+	else{	return 0.89*(1 + var*0.03);}
+      }
+      else{
+	  return 0.95*(1 + var*0.04);}
+
+    }
+    
+    else if(pt >= 300 && pt < 400){
+      if(WP == 0.5){
+	return 0.83*(1 + var*0.04);
+      }
+      else if(WP == 1.0){
+	return 0.86*(1 + var*0.04);
+      }
+      else{
+	  return 0.91*(1 + var*0.04);}
+    }
+
+    else {
+      if(WP == 0.5){
+	if(var > 0){return 0.69*(1 + var*0.07);}
+	else{	return 0.69*(1 + var*0.06);}
+      }
+      else if(WP == 1.0){
+	return 0.73*(1 + var*0.07);
+      }
+      else{
+	  return 0.84*(1 + var*0.07);}
+    }
+  
+  }//2016
+
+
+
+
+  //need to implement 2016 
+
+
+}//pNet
+
+
+//###########################################
+
+
 float ttH_2lss_ifflav(int LepGood1_pdgId, int LepGood2_pdgId, float ret_ee, float ret_em, float ret_mm){
   if (abs(LepGood1_pdgId)==11 && abs(LepGood2_pdgId)==11) return ret_ee;
   if ((abs(LepGood1_pdgId) != abs(LepGood2_pdgId)))       return ret_em;

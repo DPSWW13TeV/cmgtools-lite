@@ -48,7 +48,7 @@ MuonEG_Run2018D_UL18 = kreator.makeDataComponent("MuonEG_Run2018D_UL18", "/MuonE
 dataSamples_Run2018D_UL18 = [SingleMuon_Run2018D_UL18, DoubleMuon_Run2018D_UL18, MuonEG_Run2018D_UL18, EGamma_Run2018D_UL18]
 #, Tau_Run2018D_UL18] # JetHT_Run2018D_UL18,  , , MET_Run2018D_UL18, 
 
-dataSamples_UL2018 = [DoubleMuon_Run2018D_UL18] #dataSamples_Run2018A_UL18 + dataSamples_Run2018B_UL18 + dataSamples_Run2018C_UL18 + dataSamples_Run2018D_UL18
+dataSamples_UL2018 = [DoubleMuon_Run2018D_UL18,DoubleMuon_Run2018C_UL18,DoubleMuon_Run2018B_UL18,DoubleMuon_Run2018A_UL18] #dataSamples_Run2018A_UL18 + dataSamples_Run2018B_UL18 + dataSamples_Run2018C_UL18 + dataSamples_Run2018D_UL18
 
 
 
