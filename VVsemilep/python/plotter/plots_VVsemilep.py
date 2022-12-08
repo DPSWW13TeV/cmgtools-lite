@@ -167,7 +167,7 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,selection,postfi
     processes    = ['WV','WJets','top','data'] if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_onelep  = ['singlelep','trigger','dRfjlep','dphifjmet','dphifjlep']#with pfmet cut #,'bVeto']#,
-    cuts_2los    = ['dileptrg','etael2','cleanup','ll','oppsign','twolep'] #for now aall flavors 
+    cuts_2los    = ['dileptrg','etael2','cleanup','ll','oppsign','twolep','ptll'] #for now aall flavors 
     cuts_topCR   = cuts_onelep+['topCR']
 
     if blinded:

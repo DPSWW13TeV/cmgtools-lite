@@ -52,7 +52,10 @@ mumu: abs(LepGood1_pdgId * LepGood2_pdgId) == 169  ; Disable=True
 ConvsVeto : ((abs(LepGood1_pdgId) !=11 || LepGood1_mcPromptGamma==0) && (abs(LepGood2_pdgId) !=11 || LepGood2_mcPromptGamma==0)) || $DATA ; Disable=True
 eleID: (abs(LepGood1_pdgId)!=11 || (LepGood1_convVeto && LepGood1_lostHits==0 && LepGood1_tightCharge>=2)) && (abs(LepGood2_pdgId)!=11 || (LepGood2_convVeto && LepGood2_lostHits==0 && LepGood2_tightCharge>=2));Disable=True
 TightChargeMuon: (abs(LepGood1_pdgId)!=13 || LepGood1_tightCharge>=1) && (abs(LepGood2_pdgId)!=13 || LepGood2_tightCharge>=1);Disable=True
-ptll : if3((abs(LepGood1_pdgId) == 11 || abs(LepGood2_pdgId) == 11),ptll(LepGood1_pt, LepGood1_eta, LepGood1_phi, LepGood1_mass, LepGood2_pt, LepGood2_eta, LepGood2_phi, LepGood2_mass) > 20,1);Disable=True
+
+ptll : ptll(LepGood1_pt, LepGood1_eta, LepGood1_phi, LepGood1_mass, LepGood2_pt, LepGood2_eta, LepGood2_phi, LepGood2_mass) > 100;Disable=True 
+
+##amptll : if3((abs(LepGood1_pdgId) == 11 || abs(LepGood2_pdgId) == 11),ptll(LepGood1_pt, LepGood1_eta, LepGood1_phi, LepGood1_mass, LepGood2_pt, LepGood2_eta, LepGood2_phi, LepGood2_mass) > 20,1);Disable=True
 
 exclusive: nLepTight==1;           Disable=True
 
