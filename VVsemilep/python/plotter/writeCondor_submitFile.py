@@ -12,13 +12,13 @@ Error      = jobs/log_running_$(ProcId).error
 environment = "LS_SUBCWD={here}"
 +JobFlavour = "workday"
 \n\n'''.format(here=os.environ['PWD']))
-pf="nom"
-for dW in ["topCR","SR"]: 
+pf=""
+for dW in ["SR","topCR"]:
     for nl in ["1"]: #"1,2".split(","):
-        for cat in ["boosted"]: #,"resolved"]: #.split(","):
+        for cat in ["boosted","resolved"]: #.split(","):
             for yr in ["2018"]: #2016,2017,2018".split(","): 
                 for iVar in allvars:
-                    tmp_condor.write('arguments = {cmssw} {yr} {nl} {cat} {iVar} {pf} {dW} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,nl=nl,iVar=iVar,pf=pf,dW=dW ) )
+                    tmp_condor.write('arguments = {cmssw} {yr} {nl} {cat} {iVar} {dW} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,nl=nl,iVar=iVar,dW=dW,pf=pf ) )
                     tmp_condor.write('queue 1\n\n')
 
 tmp_condor.close()

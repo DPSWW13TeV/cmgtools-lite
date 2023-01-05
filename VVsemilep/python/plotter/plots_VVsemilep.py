@@ -164,7 +164,7 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,selection,postfi
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['WV','WJets','top','data'] if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',
+    processes    = ['WV','WJets','data','ttsemi','singletop'] if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_onelep  = ['singlelep','trigger','dRfjlep','dphifjmet','dphifjlep']#with pfmet cut #,'bVeto']#,
     cuts_2los    = ['dileptrg','etael2','cleanup','ll','oppsign','twolep','ptll'] #for now aall flavors 
@@ -187,7 +187,7 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,selection,postfi
     extraopts = ratio + spam + legends + ubands  + exclude + signal
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
     for pR in selection:
-        signal= if3(pR == 'SR',if3(nLep > 1,'--sp ZV','--sp WV'), ' --sp top')
+        signal= if3(pR == 'SR',if3(nLep > 1,'--sp ZV','--sp WV'), ' --sp ttsemi --sp singletop')
         for FS in finalState:
             ##binName = '{lep}{jet}'.format(lep = '2los' if  nLep > 1 else 'onelep',jet=FS) ##will be used for datacards
             binName = '{lep}{jet}'.format(lep=if3(pR == 'SR',if3(nLep > 1,'2los','onelep'), 'topCR'),jet=FS)
@@ -303,7 +303,7 @@ if __name__ == '__main__':
         #       makeResultsFiducial(opts.year,opts.finalState,opts.splitCharge)
 
 
-# python plots_VVsemilep.py --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv dRfjj --pf nom --sel SR #--applylepSFs
+# python plots_VVsemilep.py --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv dRfjj --pf nom --sel SR --applylepSFs
 # python plots_VVsemilep.py --results --dW plots --year 2016 --nLep 1 #--finalState 3l --applylepSFs
 # python plots_VVsemilep.py --results --dW plots --year all --finalState ll --nlep 2 #  --applylepSFs
 # python plots_VVsemilep.py --results --dW plots --year all --finalState ll --nlep 1 #  --applylepSFs

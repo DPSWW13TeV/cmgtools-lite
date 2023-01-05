@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###### analysis steps starting from nanoAOD samples -------------->
-## post-processing steps: base ntuples (nanoAODs postprocessor)-> recl frnds (MVA WPs from vvsemilep_modules.py) -> bdtiv -> skimming (skims the base ntuples + recl frnds) -> links to flips 
+## post-processing steps: base ntuples (nanoAODs postprocessor)-> recl frnds (selections from vvsemilep_modules.py) -> npdf #bdtiv -> skimming (skims the base ntuples + recl frnds) -> links to flips 
 ## run post-skimming frnds 
 ##maxruntime here is in minutes
 
@@ -29,7 +29,7 @@ recl)
 	if [ -z "$chunks" ] || [ -z == "$samples" ]
 	    then
 	    echo "running for the first time"
-	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} -d TTSemi_pow  -q condor --maxruntime 100 --log $PWD/logs #run on mc --de .*Run.*  
+	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} -d TTJets  -q condor --maxruntime 100 --log $PWD/logs #run on mc --de .*Run.*  
 	    #	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 100 --log $PWD/logs ##run on data
 	else #for running missing chunks locally
 	    for i in "${chunks[@]}"
@@ -49,7 +49,7 @@ postFSR)
 	;;
 npdf)
 	echo "npdf"
-	${BCORE}nnpdf_rms  ${CMGT} rms_val -d TTSemi_pow  -N ${nEvt}  -q condor --maxruntime 50 --log $PWD/logs #--de .*Run.*
+	${BCORE}nnpdf_rms  ${CMGT} rms_val -d TTJets  -N ${nEvt} -c 65 -c 151 -c  253 # -q condor --maxruntime 50 --log $PWD/logs #--de .*Run.*
 	;;
 lepSFs)
 	echo "lepsfs"
