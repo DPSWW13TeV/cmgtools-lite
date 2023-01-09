@@ -24,10 +24,16 @@ conf = dict(
 
 
 
-vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
+vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" + 
+                      "Sum$(Muon_pt > {tightlepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsotight}) +"
+                      "Sum$(Electron_pt > {tightlepPt} && Electron_sip3d < {sip3dtight}  && Electron_{eleIdloose} && Electron_{eleIdtight}) >= 1" +
+                      "Sum$(Muon_pt > {tightlepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsotight}) +"
+                      "Sum$(Electron_pt > {tightlepPt} && Electron_sip3d < {sip3dtight}  && Electron_{eleIdloose} && Electron_{eleIdtight}) < 3" +
                       "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < {jeteta}  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0) ) &&" + 
                       "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
-                      "Sum$(Electron_pt > {looselepPt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) >= 1").format(**conf)
+                      "Sum$(Electron_pt > {looselepPt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) >= 1" +
+                      "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
+                      "Sum$(Electron_pt > {looselepPt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) < 3").format(**conf)
 
 
 muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["looselepPt" ] and l.sip3d < conf["sip3dloose"] and \
@@ -203,14 +209,15 @@ jetmetUncertainties2016Total = createJMECorrector(dataYear='UL2016', jesUncert="
 jetmetUncertainties2017Total = createJMECorrector(dataYear='UL2017', jesUncert="Total")
 jetmetUncertainties2018Total = createJMECorrector(dataYear='UL2018', jesUncert="Total")
 
-fatjetmetUncertainties2016APVAll = createJMECorrector(jetType="AK8PFchs",dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=True)
-fatjetmetUncertainties2016All = createJMECorrector(jetType="AK8PFchs",dataYear='UL2016', jesUncert="Merged", splitJER=True)
-fatjetmetUncertainties2017All = createJMECorrector(jetType="AK8PFchs",dataYear='UL2017', jesUncert="Merged", splitJER=True)
-fatjetmetUncertainties2018All = createJMECorrector(jetType="AK8PFchs",dataYear='UL2018', jesUncert="Merged", splitJER=True)
-fatjetmetUncertainties2016APVTotal = createJMECorrector(jetType="AK8PFchs",dataYear='UL2016_preVFP', jesUncert="Total")
-fatjetmetUncertainties2016Total = createJMECorrector(jetType="AK8PFchs",dataYear='UL2016', jesUncert="Total")
-fatjetmetUncertainties2017Total = createJMECorrector(jetType="AK8PFchs",dataYear='UL2017', jesUncert="Total")
-fatjetmetUncertainties2018Total = createJMECorrector(jetType="AK8PFchs",dataYear='UL2018', jesUncert="Total")
+fatjetmetUncertainties2016APVAll = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=True)
+fatjetmetUncertainties2016All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Merged", splitJER=True)
+fatjetmetUncertainties2017All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Merged", splitJER=True)
+fatjetmetUncertainties2018All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2018', jesUncert="Merged", splitJER=True)
+
+fatjetmetUncertainties2016APVTotal = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Total")
+fatjetmetUncertainties2016Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Total")
+fatjetmetUncertainties2017Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Total")
+fatjetmetUncertainties2018Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2018', jesUncert="Total")
 
 
 
