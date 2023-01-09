@@ -15,7 +15,7 @@ year = getHeppyOption("year", "2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","both")
-selectComponents = getHeppyOption("selectComponents","DATA")
+selectComponents = getHeppyOption("selectComponents","MC")
 #selectComponents = getHeppyOption("selectComponents","MC")
 test = getHeppyOption("test","") #"testam")
 
@@ -55,32 +55,27 @@ theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # diboson
-##am        "ZZTo2Q2L",   "WZTo2Q2L",        "WZTo1L1Nu2Q",
-##        "WWTo1L1Nu2Q"
-#        "DYJetsToLL_LHEFilterPtZ0to50",
-#        "DYJetsToLL_LHEFilterPtZ50to100"
-    #"TT_mtt.*"
-       ## "WJetsToLNu_HT.*", 
-        #"WJetsToLNu_.*",
+        #"ZZTo2Q2L",   "WZTo2Q2L",        "WZTo1L1Nu2Q",
+        #"WWTo1L1Nu2Q"
+        #"WJets.*",
         #   "WJetsToLNu_HT70To100",
         #"DYJetsToLL_M50", 
         #"DYJetsToLL_M50_LO",
         #"WZToLNuQQ01j_5f_amcatnloFxFx",
         #"DYJetsToLL_M10to50_LO",
-        #,"DYJets.*",
+      #  "DYJets.*",
         ##am         #Ttbar + single top + tW
         #"WJetsToLNu_HT.*","WJetsToLNu_LO",
         #"TTJets",   
-        #      "TTSemi_pow",
-        ##am    "T_sch",        "T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
-        #        "Tbar_.*"
+        #"TTSemi_pow",        "TT_mtt.*",
+        "T_sch" #,        "T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
 ##am        # conversions
        #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
 ##am        #  # diboson + DPS + WWss
 ##am        "ZZTo4L", #"WWTo2L2Nu",  "WZTo3LNu_fxfx",   
 ##am        #  # triboson
 ##am        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ", # "WWW_ll", <- not there, but its just a leptonic filter
-        "WWW"
+        ##"WWW"
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else
@@ -150,7 +145,8 @@ def setFilesPerJob(comps,filesperjob):
         comp.splitFactor=len(comp.files) / filesperjob
 
 if analysis == "main":
-    cropToLumi(byCompName(selectedComponents,["TTJets"]),50.)
+    print 'nothing to crop'
+    #cropToLumi(byCompName(selectedComponents,["TTJets"]),50.)
     #cropToLumi(byCompName(selectedComponents,["DYJetsToLL_M50_LO"]),50.)
     #cropToLumi(byCompName(selectedComponents,["DYJetsToLL_LHEFilterPtZ0to50","]),50.)
     #cropToLumi(byCompName(selectedComponents,["DYJetsToLL_LHEFilterPtZ50to100""]),50.)

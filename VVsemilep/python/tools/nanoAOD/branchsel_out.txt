@@ -8,12 +8,16 @@ dropmatch IsoTrack_.*
 dropmatch LowPtElectron_.*
 dropmatch SoftActivity.*
 dropmatch HLT_.*Jet.*
+dropmatch Electron_.*
+dropmatch Muon_.*Id
+dropmatch Muon_.*Iso.*
+dropmatch Muon_mva.*
+dropmatch .*TrigObj.*
+dropmatch .*OtherPV.*
 dropmatch HLT_.*HT.*
 dropmatch HLT_BTag.*
 dropmatch HLT_ZeroBias.*
 dropmatch HLT_Rsq.*
-dropmatch Muon_.*
-dropmatch Electron_.*
 dropmatch HLT_.*PF.*
 dropmatch HLT_Physics.*
 dropmatch HTXS.*
@@ -51,8 +55,6 @@ dropmatch LepGood_vidNestedWPBitmap
 dropmatch HLT_TripleMu.*
 dropmatch HLTrigger.*
 dropmatch HLT_Mu[0-9]+
-dropmatch SubJet.*
-dropmatch SubGenJetAK8.*
 drop L1simulation_step
 dropmatch HLT_.*SameSign.*
 drop HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL

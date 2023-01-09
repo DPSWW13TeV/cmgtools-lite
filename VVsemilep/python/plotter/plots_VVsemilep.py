@@ -22,7 +22,7 @@ fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
 
 ak4jetvars = ['nBJetLoose30_Recl,','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt']#'htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1']#'Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl',','htJet25j_Recl','mhtJet25_Recl',
-
+hpt= ['lep1_hpt']
 MConly     = ['LHE_HT']#,'LHE_HT_log','LHE_HT_lin']#,'Jet1_hadronFlavour','Jet1_partonFlavour','Jet2_hadronFlavour','Jet2_partonFlavour']
 dRchecks   = ['dR','dRfjj','dRjj','dRfjlep']
 ak8jetvars = ['nFatJet','sumBoosted','FatJet1_pt','FatJet1_pNet_mass','dphifjmet','dphifjlep','dphifjj1','FatJet1_pt','FatJet1_pNetMD_Wtag','FatJet1_tau21']#,'htFatJet200','dphifjmet','dphifjlep','dphifjj1','nFatJet_wtagged','FatJet1_tau21','FatJet1_sDrop_mass','FatJet1_pNet_mass','FatJet1_pt','FatJet1_pNetMD_Wtag','FatJet_tau21','FatJet_pNet_mass','FatJet_pNetMD_Wtag']#'FatJet2_muonIdx3SJ_wtag','FatJet1_muonIdx3SJ_wtag','FatJet2_electronIdx3SJ_wtag','FatJet1_electronIdx3SJ_wtag','FatJet2_tau21','FatJet1_pNetMD_Wtag','FatJet1_eta','FatJet_deepTagMD_WvsQCD','FatJet_deepTag_WvsQCD','FatJet_deepTag_ZvsQCD','FatJet1_n2b1','FatJet1_n3b1','FatJet1_particleNetMD_QCD','FatJet1_particleNetMD_Xbb','FatJet1_particleNetMD_Xqq','FatJet1_particleNet_QCD','FatJet1_particleNet_WvsQCD','FatJet1_tau21','FatJet1_tau21_tau32',]'FatJet1_deepTag_WvsQCD',
@@ -30,7 +30,7 @@ ak8jetvars = ['nFatJet','sumBoosted','FatJet1_pt','FatJet1_pNet_mass','dphifjmet
 ak8more   = ['FatJet1_area','FatJet1_btagCSVV2','FatJet1_btagDDBvLV2','FatJet1_btagDeepB','FatJet1_deepTagMD_ZbbvsQCD','FatJet1_deepTagMD_ZvsQCD','FatJet1_deepTagMD_bbvsLight','FatJet1_deepTag_QCD','FatJet1_deepTag_QCDothers','FatJet1_particleNet_ZvsQCD','FatJet1_tau1','FatJet1_tau2','FatJet1_tau3','FatJet1_tau4','FatJet1_hadronFlavour','FatJet1_nBHadrons','FatJet1_nCHadrons','FatJet1_tau32','FatJet1_tau42']
 
 lepvars     = ['nLepGood','lep1_pt']
-WVvars      = ['neupz','dphil1met','ptlmet','met','puppimet','ptlepfj','mlepfj','dphifjj1','dphifjlep','dphifjmet','dRfjlep','ptlepmet'] #'metphi','puppimetphi',]
+WVvars      = ['neupz','neupzpmet','dphil1met','dphil1pmet','mt1','mt1pmet','ptlmet','ptleppmet','met','puppimet','ptlepfj','mlepfj','dphifjj1','dphifjlep','dphifjmet','dphifjpmet','dRfjlep','ptlepmet','ptlpmet'] #'metphi','puppimetphi',]
 ZVvars     =  ['mll','lep2_pt','dilep_charge','dilep_flav','ptZV','ptll']
 bdtiv      =  ['conept1','conept2','met','mt2ll','mt1','mtll','etasum','etaprod','dphill','dphil2met','dphilll2']
 allvars    = eventvars+lepvars
@@ -183,7 +183,7 @@ def makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,selection,postfi
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.32  --legendColumns 1 '
     ubands  =  ' --showMCError '
     exclude = '' #' --xu TTJets' if nLep ==1
-    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.5 2.5' #--plotmode norm --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.' 
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.5 2.0' #--plotmode norm --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.' 
     extraopts = ratio + spam + legends + ubands  + exclude + signal
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
     for pR in selection:

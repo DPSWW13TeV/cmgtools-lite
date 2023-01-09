@@ -1,6 +1,6 @@
-import os
+import os, sys
 
-idir="jobs"
+idir=sys.argv[1] #"jobs2018MC"
 missingChunks=[]
 
 for i in os.listdir(idir):

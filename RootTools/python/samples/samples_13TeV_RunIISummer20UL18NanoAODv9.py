@@ -322,9 +322,9 @@ ZZTo2Q2L              = kreator.makeMCComponent("ZZTo2Q2L", "/ZZTo2Q2L_mllmin4p0
 WZTo2Q2L              = kreator.makeMCComponent("WZTo2Q2L", "/WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 6.409, fracNegWeights=0.1883)
 WZTo1L1Nu2Q           = kreator.makeMCComponent("WZTo1L1Nu2Q","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
 
-basepath_private = "/eos/cms/store/cmst3/group/dpsww/WZToLNuQQ01j_5f_amcatnloFxFx_nanov9UL2018/"
-WZToLNuQQ01j_5f_amcatnloFxFx    = kreator.makeMCComponent("WZToLNuQQ01j_5f_amcatnloFxFx","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
-WZToLNuQQ01j_5f_amcatnloFxFx.files   = [basepath_private+x for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x))]
+#basepath_private = "/eos/cms/store/cmst3/group/dpsww/WZToLNuQQ01j_5f_amcatnloFxFx_nanov9UL2018/"
+#WZToLNuQQ01j_5f_amcatnloFxFx    = kreator.makeMCComponent("WZToLNuQQ01j_5f_amcatnloFxFx","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
+#WZToLNuQQ01j_5f_amcatnloFxFx.files   = [basepath_private+x for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x))]
 
 WWTo1L1Nu2Q           = kreator.makeMCComponent("WWTo1L1Nu2Q","/WWTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",5.090e+01,fracNegWeights=2.011e-01)
 
@@ -350,7 +350,7 @@ DiBosons = [
     WZTo2Q2L,
     WZTo1L1Nu2Q,
     WWTo1L1Nu2Q,
-    WZToLNuQQ01j_5f_amcatnloFxFx,
+    #    WZToLNuQQ01j_5f_amcatnloFxFx,
 ]
 
 # # ===  TRI-BOSONS

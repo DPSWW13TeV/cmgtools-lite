@@ -3,36 +3,36 @@ ZV+ : WZTo2Q2L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightChar
 
 #WV+ : WZToLNuQQ01j_5f_amcatnloFxFx : xsec : LepGood1_isMatchRightCharge ; FillColor=46, Label="WV"
 
-WV+ : WZTo2Q2L          : xsec : LepGood1_mcMatchId==1 ; FillColor=30, Label="WV"
-WV+ : WWTo1L1Nu2Q_part0 : xsec : LepGood1_mcMatchId==1 ; FillColor=30, Label="WV"
-WV+ : WWTo1L1Nu2Q_part1 : xsec : LepGood1_mcMatchId==1 ; FillColor=30, Label="WV"
-WV+ : WWTo1L1Nu2Q_part2 : xsec : LepGood1_mcMatchId==1 ; FillColor=30, Label="WV"
+WV+ : WZTo1L1Nu2Q       : 10.71  : 1 ; FillColor=30, Label="WV"
+WV+ : WWTo1L1Nu2Q_part0 : 49.997 : 1 ; FillColor=30, Label="WV"
+WV+ : WWTo1L1Nu2Q_part1 : 49.997 : 1 ; FillColor=30, Label="WV"
+WV+ : WWTo1L1Nu2Q_part2 : 49.997 : 1 ; FillColor=30, Label="WV"
 
 
 
-WJetsNLO : WJetsToLNu_NLO  : xsec : LepGood1_mcMatchId==1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True
-WJetsLO  : WJetsToLNu_LO   : xsec : LepGood1_mcMatchId==1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True
+WJetsNLO : WJetsToLNu_NLO  : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True
+WJetsLO  : WJetsToLNu_LO   : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True
 
-testHT : WJetsToLNu_HT70to100    : 1271*1.21 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kAzure+1, Label="WJ_htb"
-
-
-
-WJets : WJetsToLNu_HT70to100     : 1271*1.21    : LepGood1_mcMatchId==1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
-WJets : WJetsToLNu_HT100to200    : 1253*1.21    : LepGood1_mcMatchId==1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
-WJets : WJetsToLNu_HT200to400    : 335.9*1.21 	: LepGood1_mcMatchId==1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
-WJets : WJetsToLNu_HT400to600    : 45.21*1.21 	: LepGood1_mcMatchId==1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
-WJets : WJetsToLNu_HT600to800    : 10.99*1.21 	: LepGood1_mcMatchId==1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
-WJets : WJetsToLNu_HT800to1200   : 4.936*1.21 	: LepGood1_mcMatchId==1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
-WJets : WJetsToLNu_HT1200to2500  : 1.156*1.21 	: LepGood1_mcMatchId==1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
-WJets : WJetsToLNu_HT2500toInf   : 0.02623*1.21 : LepGood1_mcMatchId==1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
+testHT : WJetsToLNu_HT70to100    : 1271*1.21 : 1 ; FillColor=ROOT.kAzure+1, Label="WJ_htb"
 
 
+##taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py
+WJets : WJetsToLNu_HT70to100     : 1271*1.21    : 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
+WJets : WJetsToLNu_HT100to200    : 1253*1.21    : 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
+WJets : WJetsToLNu_HT200to400    : 335.9*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
+WJets : WJetsToLNu_HT400to600    : 45.21*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
+WJets : WJetsToLNu_HT600to800    : 10.99*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
+WJets : WJetsToLNu_HT800to1200   : 4.936*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
+WJets : WJetsToLNu_HT1200to2500  : 1.156*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
+WJets : WJetsToLNu_HT2500toInf   : 0.02623*1.21 : 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
 
 
 
-WZTo1L1Nu2Q_4f : WZTo1L1Nu2Q : xsec : LepGood1_mcMatchId==1 ; FillColor=ROOT.kRed,SkipMe=True
 
-testTT : TTJets_part0  : xsec  : LepGood1_mcMatchId==1 ; FillColor=ROOT.kOrange+7, Label="top"
+
+WZTo1L1Nu2Q_4f : WZTo1L1Nu2Q : xsec : 1 ; FillColor=ROOT.kRed,SkipMe=True
+
+testTT : TTJets_part0  : xsec  : 1 ; FillColor=ROOT.kOrange+7, Label="top"
 
 TTJets : TTJets_part0  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
 TTJets : TTJets_part11 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
@@ -86,10 +86,7 @@ tthighmass : TT_mttp7kto1k_part2: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topH
 tthighmass : TT_mttp7kto1k_part0: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topHM"
 tthighmass : TT_mttp7kto1k_part1: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topHM"
 
-ttsemi	    : TTSemi_pow : xsec  : 1 ; FillColor=ROOT.kViolet+7, Label="top"
-##amttsemi  : TTSemi_pow_part0 : xsec  : 1 ; FillColor=ROOT.kViolet+7, Label="ttsemi"
-##amttsemi  : TTSemi_pow_part1 : xsec  : 1 ; FillColor=ROOT.kViolet+7, Label="ttsemi"
-##amttsemi  : TTSemi_pow_part2 : xsec  : 1 ; FillColor=ROOT.kViolet+7, Label="ttsemi"
+ttsemi	    : TTSemi_pow : xsec  : 1 ; FillColor=ROOT.kViolet+7, Label="ttsemi"
 singletop   : T_sch: xsec      : xsec  : 1 ; FillColor=ROOT.kGray+1, Label="s-top"
 singletop   : Tbar_tch_part0   : xsec : 1 ; FillColor=ROOT.kGray+1, Label="s-top"
 singletop   : Tbar_tch_part1   : xsec : 1 ; FillColor=ROOT.kGray+1, Label="s-top"

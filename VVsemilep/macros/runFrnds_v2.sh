@@ -6,7 +6,7 @@
 ##maxruntime here is in minutes
 
 ######## fixed inputs no matter what
-baseDir='/eos/cms/store/cmst3/group/dpsww/'
+baseDir='/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/' #/eos/cms/store/cmst3/group/dpsww/'
 
 ######## MVA WPs, year ans steps to run on 
 runWhat=${1}; shift;
@@ -17,7 +17,7 @@ echo $runWhat,$year
 
 
 ################### following should not be changed
-Trees='vvsemilep/'
+Trees='local_dir_NAME/'   #NanoTrees_v9_vvsemilep_06012023/'
 nEvt=120000
 Parent=${baseDir}/${Trees}/${year}
 BCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ${Parent}/";
@@ -29,8 +29,8 @@ recl)
 	if [ -z "$chunks" ] || [ -z == "$samples" ]
 	    then
 	    echo "running for the first time"
-	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} -d TTJets  -q condor --maxruntime 100 --log $PWD/logs #run on mc --de .*Run.*  
-	    #	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 100 --log $PWD/logs ##run on data
+	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} --de .*Run.* #-d TTJets  -q condor --maxruntime 100 --log $PWD/logs #run on mc --de .*Run.*  
+	    #${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 100 --log $PWD/logs ##run on data
 	else #for running missing chunks locally
 	    for i in "${chunks[@]}"
 	    do 
@@ -62,11 +62,14 @@ taucount)
 	;;
 jme)
 	echo "jme"
-	${BCORE}0_jmeUnc_v2/   ${CMGT} jme${year}_allvariations  -N ${nEvt} --de .*Run.*  -q condor --maxruntime 70 --log $PWD/logs # --de .*Run.*
+	#${BCORE}0_jmeUnc_v3/   ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  -N ${nEvt} --de .*Run.*  #-q condor --maxruntime 70 --log $PWD/logs # --de .*Run.*
+	${BCORE}0_jmeUnc_v4/   ${CMGT} fatjetmetUncertainties${year}All  -N ${nEvt} --de .*Run.*  #-q condor --maxruntime 70 --log $PWD/logs # --de .*Run.*
+
+	#${BCORE}0_jmeUnc_v1/   ${CMGT} jetmetUncertainties${year}Total  -N ${nEvt} --de .*Run.*  #-q condor --maxruntime 70 --log $PWD/logs # --de .*Run.*
 	;;
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/0_jmeUnc_v2/{cname}_Friend.root  -N ${nEvt} --de .*Run.* -q condor --maxruntime 100 --log $PWD/logs        #--de .*Run.*    
+	${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/0_jmeUnc_v3/{cname}_Friend.root  -N ${nEvt} --de .*Run.* #-q condor --maxruntime 100 --log $PWD/logs        #--de .*Run.*    
 	;;
 bTagSF)
 	echo 'btag'
@@ -103,3 +106,6 @@ step4)
 	;;
 
 esac;
+
+
+##. runFrnds_v2.sh recl 2018 TTJets 182

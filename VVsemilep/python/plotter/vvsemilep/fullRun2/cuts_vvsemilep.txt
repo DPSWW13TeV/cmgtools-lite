@@ -29,9 +29,9 @@ boosted: nFatJetSel > 0 ;           Disable=True
 
 ##boostedFJ1: if3(nFatJetSel > 0, FatJet1_particleNet_mass > 40 && (FatJet1_particleNetMD_Xcc+FatJet1_particleNetMD_Xqq)/(FatJet1_particleNetMD_Xcc+FatJet1_particleNetMD_Xqq+FatJet1_particleNetMD_QCD) > 0.7, 1);   Disable=True 
 
-dRfjlep : deltaR(FatJet1_eta,FatJet1_phi,LepGood1_eta,LepGood1_phi) > 1.6 ; Disable=True
-dphifjlep : abs(deltaPhi(LepGood1_phi,FatJet1_phi)) > 2.0 ; Disable=True
-dphifjmet : abs(deltaPhi(FatJet1_phi,PuppiMET_phi)) > 2.0 ; Disable=True
+boosteddRfjlep : deltaR(FatJet1_eta,FatJet1_phi,LepGood1_eta,LepGood1_phi) > 1.6 ; Disable=True
+boosteddphifjlep : abs(deltaPhi(LepGood1_phi,FatJet1_phi)) > 2.0 ; Disable=True
+boosteddphifjmet : abs(deltaPhi(FatJet1_phi,PuppiMET_phi)) > 2.0 ; Disable=True
 
 
 

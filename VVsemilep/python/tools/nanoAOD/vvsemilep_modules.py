@@ -2,8 +2,10 @@ import os
 import ROOT 
 import copy 
 conf = dict(
-        muPt = 15, 
-        elePt = 15, 
+        looselepPt=10,
+        tightlepPt=30,
+        muPt = 10, 
+        elePt = 10, 
         sip3dloose = 8, 
         sip3dtight = 4, 
         dxy =  0.05, 
@@ -24,19 +26,25 @@ conf = dict(
 
 vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
                       "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < {jeteta}  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0) ) &&" + 
-                      "Sum$(Muon_pt > {muPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
-                      "Sum$(Electron_pt > {elePt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) >= 1").format(**conf)
+                      "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
+                      "Sum$(Electron_pt > {looselepPt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) >= 1").format(**conf)
 
 
-muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["muPt" ] and l.sip3d < conf["sip3dloose"] and \
+muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["looselepPt" ] and l.sip3d < conf["sip3dloose"] and \
                     abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["muIdloose"]) and  \
                     getattr(l, conf["mutrk"]) and l.pfRelIso03_all < conf["muIsoloose"]
-electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["elePt"] and l.sip3d < conf["sip3dloose"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["eleIdloose"])
+electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["looselepPt"] and l.sip3d < conf["sip3dloose"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["eleIdloose"])
 
 def clean_and_FO_selection_VVsemilep(lep,year, subera): ##am for tight leptn ids not sure if era is needed now
-    return lep.pt>conf["elePt"] and (abs(lep.pdgId)!=11 or (ttH_idEmu_cuts_E3(lep) ))
+    if abs(lep.pdgId) == 13:
+        return ( abs(lep.eta) < 2.4 and lep.pt > conf["looselepPt" ] and lep.sip3d < conf["sip3dloose"] and \
+                    abs(lep.dxy) < conf["dxy"] and abs(lep.dz) < conf["dz"] and getattr(lep, conf["muIdloose"]) and  \
+                    getattr(lep, conf["mutrk"]) and lep.pfRelIso03_all < conf["muIsoloose"])
+    else:
+        return ( ttH_idEmu_cuts_E3(lep) and \
+                 abs(lep.eta) < 2.5 and lep.pt > conf["looselepPt"] and lep.sip3d < conf["sip3dloose"] and abs(lep.dxy) < conf["dxy"] and abs(lep.dz) < conf["dz"] and getattr(lep, conf["eleIdloose"]) )
 
-tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and lep.sip3d < conf["sip3dtight"] and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso03_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
+tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and lep.pt>conf["tightlepPt"] and lep.sip3d < conf["sip3dtight"] and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso03_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
 
 foTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and abs(tau.dxy) < 1000 and abs(tau.dz) < 0.2  and (int(tau.idDeepTau2017v2p1VSjet)>>1 & 1) # VVLoose WP
 tightTauSel = lambda tau: (int(tau.idDeepTau2017v2p1VSjet)>>2 & 1) # VLoose WP
@@ -111,7 +119,8 @@ jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC
 from CMGTools.VVsemilep.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning
 from CMGTools.VVsemilep.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
 recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
-                                                           looseLeptonSel = lambda lep : lep. pt > conf["elePt"] and lep.sip3d < conf["sip3dloose"] and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WPL) and (abs(lep.pdgId)!=13 or lep.looseId),
+                                                           looseLeptonSel = clean_and_FO_selection_VVsemilep,
+                                                           #lambda lep : lep. pt > conf["looselepPt"] and lep.sip3d < conf["sip3dloose"] and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WPL) and (abs(lep.pdgId)!=13 or lep.looseId),
                                                            cleaningLeptonSel = clean_and_FO_selection_VVsemilep,
                                                            FOLeptonSel = clean_and_FO_selection_VVsemilep,
                                                            tightLeptonSel = tightLeptonSel,
@@ -193,6 +202,15 @@ jetmetUncertainties2016APVTotal = createJMECorrector(dataYear='UL2016_preVFP', j
 jetmetUncertainties2016Total = createJMECorrector(dataYear='UL2016', jesUncert="Total")
 jetmetUncertainties2017Total = createJMECorrector(dataYear='UL2017', jesUncert="Total")
 jetmetUncertainties2018Total = createJMECorrector(dataYear='UL2018', jesUncert="Total")
+
+fatjetmetUncertainties2016APVAll = createJMECorrector(jetType="AK8PFchs",dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=True)
+fatjetmetUncertainties2016All = createJMECorrector(jetType="AK8PFchs",dataYear='UL2016', jesUncert="Merged", splitJER=True)
+fatjetmetUncertainties2017All = createJMECorrector(jetType="AK8PFchs",dataYear='UL2017', jesUncert="Merged", splitJER=True)
+fatjetmetUncertainties2018All = createJMECorrector(jetType="AK8PFchs",dataYear='UL2018', jesUncert="Merged", splitJER=True)
+fatjetmetUncertainties2016APVTotal = createJMECorrector(jetType="AK8PFchs",dataYear='UL2016_preVFP', jesUncert="Total")
+fatjetmetUncertainties2016Total = createJMECorrector(jetType="AK8PFchs",dataYear='UL2016', jesUncert="Total")
+fatjetmetUncertainties2017Total = createJMECorrector(jetType="AK8PFchs",dataYear='UL2017', jesUncert="Total")
+fatjetmetUncertainties2018Total = createJMECorrector(jetType="AK8PFchs",dataYear='UL2018', jesUncert="Total")
 
 
 

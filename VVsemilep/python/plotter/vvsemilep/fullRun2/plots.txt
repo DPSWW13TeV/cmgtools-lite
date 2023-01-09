@@ -5,17 +5,24 @@
 
 
 dphifjmet : abs(deltaPhi(FatJet1_phi,MET_phi)): 20,0,3.15; XTitle="#Delta#phi_{ak8\,MET}",Logy, MoreY=1.5, IncludeOverflows=False
+dphifjpmet : abs(deltaPhi(FatJet1_phi,PuppiMET_phi)): 20,0,3.15; XTitle="#Delta#phi_{ak8\,MET}",Logy, MoreY=1.5, IncludeOverflows=False
+
 
 dphifjlep :  abs(deltaPhi(LepGood1_phi,FatJet1_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{ak8\,lep}", Logy, MoreY=1.5, IncludeOverflows=False
 dphil1met :  abs(deltaPhi(LepGood1_phi,MET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l1 MET} (e^{#pm}#mu^{#pm}) (rad.)", Logy, MoreY=1.5
+dphil1pmet :  abs(deltaPhi(LepGood1_phi,PuppiMET_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l1 MET} (e^{#pm}#mu^{#pm}) (rad.)", Logy, MoreY=1.5
 dphifjj1 : abs(deltaPhi(FatJet1_phi,JetSel1_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{j1 fj} (e^{#pm}#mu^{#pm}) (rad.)", Logy, MoreY=1.5
 dRfjlep		    : if3((nLepFO >0 && nFatJetSel > 0),(deltaR(FatJet1_eta,FatJet1_phi,LepGood1_eta,LepGood1_phi)),999) : 50,0,5.0; XTitle="dR(fj1\,lep)", IncludeOverflows=False
 
 mjj		    : mass_2(JetSel1_pt,JetSel1_eta,JetSel1_phi,JetSel1_mass,JetSel2_pt,JetSel2_eta,JetSel2_phi,JetSel2_mass) : 15,0,200; XTitle="m_{jj} (GeV)" , IncludeOverflows=False
 mt1                 : mt_2(LepGood1_pt,LepGood1_phi,MET_pt,MET_phi) : 20,0,250; XTitle="m_{T} (GeV)" , IncludeOverflows=False
+mt1pmet                 : mt_2(LepGood1_pt,LepGood1_phi,PuppiMET_pt,PuppiMET_phi) : 20,0,250; XTitle="m_{T} (GeV)" , IncludeOverflows=False
+
 mll                 : mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass)   : 15,0,200; XTitle="m_{ll}(e^{#pm}#mu^{#pm}) (GeV)" , MoreY=1.5,IncludeOverflows=False
 
 ptlepmet     : pt_2(LepGood1_pt,LepGood1_phi,MET_pt,MET_phi) : 100,0,1000; XTitle="pTlepmet", IncludeOverflows=False
+ptleppmet     : pt_2(LepGood1_pt,LepGood1_phi,PuppiMET_pt,PuppiMET_phi) : 100,0,1000; XTitle="pTlepmet", IncludeOverflows=False
+
 ptZV         : pt_4(LepGood1_pt,LepGood1_phi,LepGood2_pt,LepGood2_phi,JetSel1_pt,JetSel1_phi,JetSel2_pt,JetSel2_phi)  : 100,0,1000; XTitle="pTZV", IncludeOverflows=False
 
 ptlepfj : pt_2(LepGood1_pt,LepGood1_phi,FatJet1_pt,FatJet1_phi) : 100,0,1000; XTitle="pTWV", Logy, IncludeOverflows=False
@@ -26,8 +33,10 @@ mlepfj : mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass,FatJet1_pt,F
 sumBoosted : Sum$(FatJetSel_Recl_particleNet_mass > 40 && (( (FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq)/(FatJetSel_Recl_particleNetMD_Xcc+FatJetSel_Recl_particleNetMD_Xqq+FatJetSel_Recl_particleNetMD_QCD)) > 0.85) ) : [0,1,2,3]; XTitle="cutval", IncludeOverflows=False
 
 neupz                  : METz_calc_run2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_pdgId,MET_pt,MET_phi) : 30,0,150; XTitle="pz#nu (GeV)", IncludeOverflows=False
+neupzpmet                  : METz_calc_run2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_pdgId,PuppiMET_pt,PuppiMET_phi) : 30,0,150; XTitle="pz#nu (GeV)", IncludeOverflows=False
 
 ptlmet         : pt_2(LepGood1_pt,LepGood1_phi,MET_pt,MET_phi) : 20,0.,200; XTitle="pT_{l MET} (GeV)", MoreY=1.5
+ptlpmet         : pt_2(LepGood1_pt,LepGood1_phi,PuppiMET_pt,PuppiMET_phi) : 20,0.,200; XTitle="pT_{l MET} (GeV)", MoreY=1.5
 
 ##dRfj1lep	       	     : if3((nLepFO_Recl > 0 && nFatJetSel_Recl > 0),(deltaR(FatJet_eta[iFatJetSel_Recl[0]],FatJet_phi[iFatJetSel_Recl[0]],LepGood1_eta,LepGood1_phi)),999) : 55,-0.5,5.0; XTitle="dR(fj1\,lep)", IncludeOverflows=False
 
@@ -296,8 +305,16 @@ nLepFO_mumu	      : nLepFO : [0,1,2,3,4] ; XTitle='nLepFO' , MoreY=1.5
 nLepFO_elel	      : nLepFO : [0,1,2,3,4] ; XTitle='nLepFO' , MoreY=1.5
 nLepFO_ll_noee      : nLepFO : [0,1,2,3,4] ; XTitle='nLepFO' , MoreY=1.5
 
+nLepGood	      : nLepGood : [0,1,2,3,4] ; XTitle='nLepGood' , MoreY=1.5
+nLepGood_ll	      : nLepGood : [0,1,2,3,4] ; XTitle='nLepGood' , MoreY=1.5
+nLepGood_elmu	      : nLepGood : [0,1,2,3,4] ; XTitle='nLepGood' , MoreY=1.5
+nLepGood_mumu	      : nLepGood : [0,1,2,3,4] ; XTitle='nLepGood' , MoreY=1.5
+nLepGood_elel	      : nLepGood : [0,1,2,3,4] ; XTitle='nLepGood' , MoreY=1.5
+nLepGood_ll_noee      : nLepGood : [0,1,2,3,4] ; XTitle='nLepGood' , MoreY=1.5
+
 
 lep1_pt:         LepGood1_pt                                     : 40,0,200; XTitle="Leading lepton p_{T} (GeV)"
+lep1_hpt:        LepGood1_pt                                     : 200,0,1000; XTitle="Leading lepton p_{T} (GeV)"
 lep1_dz:         abs(LepGood1_dz)*10000                          : 40,0.0,100.; XTitle="Leading lepton dz [#mum]"
 lep1_eta:        LepGood1_eta                                    : 15,-2.5,2.5; XTitle="Leading lepton #eta"
 lep1_phi:        LepGood1_phi                                    : 20,-3.14,3.14; XTitle="Leading lepton #phi"
