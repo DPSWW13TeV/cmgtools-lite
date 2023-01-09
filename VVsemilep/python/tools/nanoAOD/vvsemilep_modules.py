@@ -22,18 +22,19 @@ conf = dict(
         jeteta=2.4
 )
 
+nElTight = "Sum$(Electron_pt > {tightlepPt} && Electron_sip3d < {sip3dtight}  && Electron_{eleIdloose} && Electron_{eleIdtight})".format(**conf)
+nElLoose = "Sum$(Electron_pt > {looselepPt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose})".format(**conf)
+nMuLoose = "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose})".format(**conf)
+nMuTight = "Sum$(Muon_pt > {tightlepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsotight})".format(**conf)
+nJetLoose = "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < {jeteta}  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0) )".format(**conf)
 
+vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
+                      "{nMuTight} + {nElTight} >= 1 &&" + 
+                      "{nMuTight} + {nElTight} < 3 &&" +
+                      "{nJetLoose} && " +
+                      "{nMuLoose} + {nElLoose} >= 1 &&" +
+                      "{nMuLoose} + {nElLoose} < 3").format(nMuTight = nMuTight, nElTight = nElTight, nJetLoose = nJetLoose, nMuLoose= nMuLoose, nElLoose = nElLoose)
 
-vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" + 
-                      "Sum$(Muon_pt > {tightlepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsotight}) +"
-                      "Sum$(Electron_pt > {tightlepPt} && Electron_sip3d < {sip3dtight}  && Electron_{eleIdloose} && Electron_{eleIdtight}) >= 1" +
-                      "Sum$(Muon_pt > {tightlepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsotight}) +"
-                      "Sum$(Electron_pt > {tightlepPt} && Electron_sip3d < {sip3dtight}  && Electron_{eleIdloose} && Electron_{eleIdtight}) < 3" +
-                      "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < {jeteta}  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0) ) &&" + 
-                      "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
-                      "Sum$(Electron_pt > {looselepPt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) >= 1" +
-                      "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose}) +"
-                      "Sum$(Electron_pt > {looselepPt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose} ) < 3").format(**conf)
 
 
 muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["looselepPt" ] and l.sip3d < conf["sip3dloose"] and \
