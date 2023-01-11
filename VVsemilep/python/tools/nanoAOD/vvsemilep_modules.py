@@ -197,6 +197,13 @@ mcPromptGamma = lambda : ObjTagger('mcPromptGamma','LepGood', [lambda l : (l.gen
 mcMatch_seq   = [ isMatchRightCharge, mcMatchId ,mcPromptGamma]
 
 
+from CMGTools.VVsemilep.tools.nanoAOD.toppTrwt import toppTrwt
+topsf = lambda : toppTrwt()
+from CMGTools.VVsemilep.tools.nanoAOD.npdf_rms import npdf_rms
+rms_val = lambda : npdf_rms()
+
+
+
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import createJMECorrector
 
 
@@ -342,8 +349,6 @@ scaleFactorSequence_2016    = [btagSF2016_dj,bTagSFs]
 scaleFactorSequence_2017    = [btagSF2017_dj,bTagSFs] 
 scaleFactorSequence_2018    = [btagSF2018_dj,bTagSFs]
 
-from CMGTools.VVsemilep.tools.nanoAOD.npdf_rms import npdf_rms
-rms_val = lambda : npdf_rms()
 
 
 # scaleFactorSequence_allVars_2016 = [btagSF2016_dj_allVars,bTagSFs_allvars] 

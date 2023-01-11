@@ -12,6 +12,9 @@ dropmatch Electron_.*
 dropmatch Muon_.*Id
 dropmatch Muon_.*Iso.*
 dropmatch Muon_mva.*
+dropmatch Muon_s.*
+dropmatch Muon_d.*
+dropmatch Muon_n.*
 dropmatch .*TrigObj.*
 dropmatch .*OtherPV.*
 dropmatch HLT_.*HT.*

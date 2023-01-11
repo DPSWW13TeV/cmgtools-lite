@@ -31,8 +31,7 @@ WJets : WJetsToLNu_HT2500toInf   : 0.02623*1.21 : 1 ; FillColor=ROOT.kAzure+1,  
 
 
 WZTo1L1Nu2Q_4f : WZTo1L1Nu2Q : xsec : 1 ; FillColor=ROOT.kRed,SkipMe=True
-
-testTT : TTJets_part0  : xsec  : 1 ; FillColor=ROOT.kOrange+7, Label="top"
+testTT : TTJets_part0  : xsec  : 1 ; FillColor=ROOT.kOrange+7, Label="top", FriendsSimple="{P}/0_toppT_rw/"
 
 TTJets : TTJets_part0  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
 TTJets : TTJets_part11 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"

@@ -55,26 +55,21 @@ theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # diboson
-        #"ZZTo2Q2L",   "WZTo2Q2L",        "WZTo1L1Nu2Q",
-        #"WWTo1L1Nu2Q"
-        #"WJets.*",
+        "ZZTo2Q2L",   "WZTo2Q2L",        "WZTo1L1Nu2Q",
+        "WWTo1L1Nu2Q",
+        "WJets.*",
         #   "WJetsToLNu_HT70To100",
         #"DYJetsToLL_M50", 
         #"DYJetsToLL_M50_LO",
         #"WZToLNuQQ01j_5f_amcatnloFxFx",
         #"DYJetsToLL_M10to50_LO",
-      #  "DYJets.*",
-        ##am         #Ttbar + single top + tW
-        #"WJetsToLNu_HT.*","WJetsToLNu_LO",
+        #  "DYJets.*",
         #"TTJets",   
-        #"TTSemi_pow",        "TT_mtt.*",
-        "T_sch" #,        "T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
-##am        # conversions
-       #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
-##am        #  # diboson + DPS + WWss
-##am        "ZZTo4L", #"WWTo2L2Nu",  "WZTo3LNu_fxfx",   
-##am        #  # triboson
-##am        "WWW",  "WWZ", "WZG", "WZZ", "ZZZ", # "WWW_ll", <- not there, but its just a leptonic filter
+        "TTSemi_pow",        "TT_mtt.*",
+        "T_sch" , "T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
+        ##am        # conversions
+        #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
+        ##am        #  # triboson
         ##"WWW"
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
