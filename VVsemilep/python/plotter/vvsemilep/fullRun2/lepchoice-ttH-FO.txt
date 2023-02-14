@@ -12,6 +12,7 @@ JetSel3_(\w+) : Jet_\1[iJetSel_Recl[2]]; AlsoData
 JetSel4_(\w+) : Jet_\1[iJetSel_Recl[3]]; AlsoData
 FatJet1_(\w+): FatJet_\1[iFatJetSel_Recl[0]]; AlsoData
 FatJet2_(\w+): FatJet_\1[iFatJetSel_Recl[1]]; AlsoData
+FatJet3_(\w+): FatJet_\1[iFatJetSel_Recl[2]]; AlsoData
 nFatJetSel\b: nFatJetSel_Recl; AlsoData
 nLepFO\b : nLepFO_Recl; AlsoData
 nLepTight\b : nLepTight_Recl; AlsoData
@@ -20,6 +21,7 @@ nTauFO\b : nTauSel_Recl; AlsoData
 nTauTight\b    : nTauSel_Recl_Tight; AlsoData
 nJet25\b       : nJet25_Recl; AlsoData
 nJet40\b       : nJet40_Recl; AlsoData
+nJet30\b       : nJet30_Recl; AlsoData
 nBJetLoose25\b : nBJetLoose25_Recl; AlsoData
 nBJetMedium25\b: nBJetMedium25_Recl; AlsoData
 nBJetTight25\b : nBJetTight25_Recl; AlsoData
@@ -33,10 +35,12 @@ minMllAFOS\b   : minMllAFOS_Recl; AlsoData
 minMllAFSS\b   : minMllAFSS_Recl; AlsoData
 minMllSFOS\b   : minMllSFOS_Recl; AlsoData
 dTakingEra\b : if3(isData,(run>=275657)+(run>=276315)+(run>=276831)+(run>=277772)+(run>=278820)+(run>=280919),-1); AlsoData # 2016B==0,C,D,E,F,G,H
-elLooseUnc_2lss_up\b : leptonSF_2lss_el_up/leptonSF_2lss
-elLooseUnc_2lss_dn\b : leptonSF_2lss_el_dn/leptonSF_2lss
-muLooseUnc_2lss_up\b : leptonSF_2lss_mu_up/leptonSF_2lss
-muLooseUnc_2lss_dn\b : leptonSF_2lss_mu_dn/leptonSF_2lss
+fatindex\b : if3(FatJetSel_Recl_particleNet_mass > 40,iFatJetSel_Recl,-99); AlsoData
+wjcrindex\b : if3(( (FatJetSel_Recl_particleNet_mass > 40 && FatJetSel_Recl_particleNet_mass < 65) || (FatJetSel_Recl_particleNet_mass > 105 && FatJetSel_Recl_particleNet_mass < 150)),iFatJetSel_Recl,-99); AlsoData
+el_eff_up\b : lepsf_el_up/lepsf
+el_eff_dn\b : lepsf_el_dn/lepsf
+mu_eff_up\b : lepsf_mu_up/lepsf
+mu_eff_dn\b : lepsf_mu_dn/lepsf
 elLooseUnc_3l_up\b : leptonSF_3l_el_up/leptonSF_3l
 elLooseUnc_3l_dn\b : leptonSF_3l_el_dn/leptonSF_3l
 muLooseUnc_3l_up\b : leptonSF_3l_mu_up/leptonSF_3l

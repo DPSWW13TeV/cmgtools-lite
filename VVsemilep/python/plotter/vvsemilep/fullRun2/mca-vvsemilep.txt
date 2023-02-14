@@ -2,3 +2,7 @@
 incl_mc : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-mc.txt"
 incl_data : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-data.txt"
 
+##amincl_mc_el_eff_Up : + ; IncludeMca="mca-mc.txt", AddWeight="el_eff_up", SkipMe=True, PostFix="_el_eff_Up"
+##amincl_mc_el_eff_Dn : + ; IncludeMca="mca-mc.txt", AddWeight="el_eff_dn", SkipMe=True, PostFix="_el_eff_Dn"
+##amincl_mc_mu_eff_Up : + ; IncludeMca="mca-mc.txt", AddWeight="mu_eff_up", SkipMe=True, PostFix="_mu_eff_Up"
+##amincl_mc_mu_eff_Dn : + ; IncludeMca="mca-mc.txt", AddWeight="mu_eff_dn", SkipMe=True, PostFix="_mu_eff_Dn"

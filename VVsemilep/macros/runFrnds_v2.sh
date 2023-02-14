@@ -30,30 +30,40 @@ recl)
 	if [ -z "$chunks" ] || [ -z == "$samples" ]
 	    then
 	    echo "running for the first time"
-	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} --de .*Run.*  -q condor --maxruntime 100 --log $PWD/logs #run on mc --de .*Run.*  
+	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} -d GGH -d ZH -d WplusH -d WminusH -q condor --maxruntime 100 --log $PWD/logs #run on mc --de .*Run.*  
 	    #${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 100 --log $PWD/logs ##run on data
 	else #for running missing chunks locally
 	    for i in "${chunks[@]}"
 	    do 
 		##amFIXME: check if run in the sample -> execute data friends else MC
 		${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} -d ${samples} -c ${i}
-		##am${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} -d ${samples} -c ${i}
+		#${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} -d ${samples} -c ${i}
+		#${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/0_jmeUnc/{cname}_Friend.root  -N ${nEvt} -d ${samples} -c ${i}
+
 	    done
 	fi
 	;;
 top)
 	echo "top pT reweighting "
-	${BCORE}0_toppT_rw  ${CMGT} topsf   -N ${nEvt} --dm TT.* -q condor --maxruntime 50 --log $PWD/logs
+	${BCORE}0_toppT_rw  ${CMGT} topsf   -N ${nEvt} --dm TT.* -q condor --maxruntime 40 --log $PWD/logs
 	;;
 
 npdf)
 	echo "npdf"
-	${BCORE}nnpdf_rms  ${CMGT} rms_val --de .*Run.* -N ${nEvt}  -q condor --maxruntime 50 --log $PWD/logs #--de .*Run.*
+	${BCORE}nnpdf_rms  ${CMGT} rms_val --de .*Run.* -N ${nEvt}  -q condor --maxruntime 40 --log $PWD/logs #--de .*Run.*
+	;;
+
+fjtagged)
+	echo "fjtagged"
+	#${BCORE}ak8Vtagged  ${CMGT} taggedfj_data -N ${nEvt}  -F Friends ${Parent}/2_recl/{cname}_Friend.root -d --dm .*Run.* -q condor --maxruntime 40 --log $PWD/logs 
+	${BCORE}ak8Vtagged  ${CMGT} taggedfj -N ${nEvt}  -F Friends ${Parent}/2_recl/{cname}_Friend.root -d GGH -d ZH -d WplusH -d WminusH  -q condor --maxruntime 40 --log $PWD/logs 
+
 	;;
 
 jme)
 	echo "jme"
-	${BCORE}0_jmeUnc/   ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  -N ${nEvt} --de .*Run.* -q condor --maxruntime 100 --log $PWD/logs # --de .*Run.*
+	${BCORE}0_jmeUnc/  ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  -N ${nEvt} -d ZH -c 14 #-d ZH -d WplusH -d WminusH  -q condor --maxruntime 100 --log $PWD/logs #--de .*Run.* -q condor --maxruntime 100 --log $PWD/logs # --de .*Run.*
+	${BCORE}0_jmeUnc/  ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  -N ${nEvt} -d WplusH -c 1 #-d ZH -d WplusH -d WminusH  -q condor --maxruntime 100 --log $PWD/lo
 	;;
 
 recl_allvars)
@@ -63,11 +73,9 @@ recl_allvars)
 
 step2)
 	echo "jme"
-	${BCORE}0_jmeUnc/   ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  -N ${nEvt} --de .*Run.* -q condor --maxruntime 100 --log $PWD/logs # --de .*Run.*
+	${BCORE}0_jmeUnc/  ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  -N ${nEvt} -d WZToLNuQQ01j_5f_amcatnloFxFx  -q condor --maxruntime 100 --log $PWD/logs # --de .*Run.*
 	echo "npdf"
-	${BCORE}nnpdf_rms  ${CMGT} rms_val --de .*Run.* -N 100000  -q condor --maxruntime 50 --log $PWD/logs
-    	echo "top pT reweighting "
-	${BCORE}0_toppT_rw  ${CMGT} topsf   -N ${nEvt} --dm TT.* -q condor --maxruntime 50 --log $PWD/logs
+	${BCORE}nnpdf_rms  ${CMGT} rms_val -d WZToLNuQQ01j_5f_amcatnloFxFx   -N 100000  -q condor --maxruntime 40 --log $PWD/logs #--de .*Run.*
 	;;
 
 step3)

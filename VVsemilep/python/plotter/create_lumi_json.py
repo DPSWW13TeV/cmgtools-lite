@@ -2,7 +2,7 @@ import ROOT
 import os
 import json
 
-path="/eos/cms/store/cmst3/group/dpsww/vvsemilep/"
+path="/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/"
 for year in ["2018"]: #'2016,2017,2018'.split(','):
         thepath=path+year+'/'
         for PD in ["DoubleMuon","MuonEG","SingleMuon","EGamma", "SingleElectron"]:#,"DoubleEG"                                                                                             
@@ -44,4 +44,4 @@ for year in ["2018"]: #'2016,2017,2018'.split(','):
                                         end = t
                         forjson[str(key)].append([start,end])
 
-                json.dump(forjson, open("JSON_complete_%s_%s.json"%(year,PD),"w"), sort_keys=True)
+                json.dump(forjson, open("JSON_06012023_%s_%s.json"%(year,PD),"w"), sort_keys=True)

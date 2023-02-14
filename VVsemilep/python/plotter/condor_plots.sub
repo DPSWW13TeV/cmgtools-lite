@@ -1,4 +1,4 @@
-Executable = dummy_plots.sh
+Executable = doIt.sh
 use_x509userproxy = true
 Log        = jobs/log_running_$(ProcId)_all.log
 Output     = jobs/log_running_$(ProcId)_all.out
@@ -7,8 +7,6 @@ Error      = jobs/log_running_$(ProcId)_all.error
 getenv = True
 
 
-#arguments =  /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter 2018 resolved 
-#queue 1	    
 
-arguments =  /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter 2018 boosted
+arguments =  /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter
 queue 1	    

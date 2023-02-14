@@ -11,6 +11,7 @@
 #include "TFile.h"
 #include "PhysicsTools/Heppy/interface/Davismt2.h"
 #include "PhysicsTools/Heppy/interface/METzCalculator_Run2.h"
+#include "PhysicsTools/Heppy/interface/METzCalculator.h"
 #include "TSystem.h"
 
 TString CMSSW_BASE = gSystem->ExpandPathName("${CMSSW_BASE}");
@@ -54,18 +55,32 @@ float mt_2(float pt1, float phi1, float pt2, float phi2) {
     return std::sqrt(2*pt1*pt2*(1-std::cos(phi1-phi2)));
 }
 
-float mass_2(float pt1, float eta1, float phi1, float m1, float pt2, float eta2, float phi2, float m2) {
+float mass_2(float pt1, float eta1, float phi1, int pdgId1, float pt2, float eta2, float phi2, int pdgId2) {
     typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+    float m1= abs(pdgId1) == 13 ? 0.106 : 0.512e-3;
+    float m2= abs(pdgId2) == 13 ? 0.106 : 0.512e-3;
     PtEtaPhiMVector p41(pt1,eta1,phi1,m1);
     PtEtaPhiMVector p42(pt2,eta2,phi2,m2);
     return (p41+p42).M();
 }
 
-float ptll(float pt1, float eta1, float phi1, float m1, float pt2, float eta2, float phi2, float m2) {
+float ptll(float pt1, float eta1, float phi1, int pdgId1, float pt2, float eta2, float phi2, int pdgId2) {
     typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+    float m1= abs(pdgId1) == 13 ? 0.106 : 0.512e-3;
+    float m2= abs(pdgId2) == 13 ? 0.106 : 0.512e-3;
     PtEtaPhiMVector p41(pt1,eta1,phi1,m1);
     PtEtaPhiMVector p42(pt2,eta2,phi2,m2);
     return (p41+p42).Pt();
+}
+
+
+float ptWV(float pt1, float eta1, float phi1, int pdgId, float pt2, float eta2, float phi2, float mass, float met, float metphi) {
+    typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+    float m1= abs(pdgId) == 13 ? 0.106 : 0.512e-3;
+    PtEtaPhiMVector p41(pt1,eta1,phi1,m1);
+    PtEtaPhiMVector p42(pt2,eta2,phi2,mass);
+    PtEtaPhiMVector mv(met,0.,metphi,0.);
+    return (p41+p42+mv).Pt();
 }
 
 
@@ -105,6 +120,67 @@ double METz_calc_run2(float pt1, float eta1, float phi1,int pdgId1,float met, fl
     double pz1_type0 = NeutrinoPz_run2.Calculate();
     //    std::cout<<"and the result is"<<pz1_type0<<std::endl;
     return pz1_type0;
+}
+
+double METz_calc(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi,int type=0){
+  //complex roots-> pick the real part
+  //if real roots
+  //type 0,1,2,3
+  // type0: pick the one closest to pz of muon  unless pznu is > 300 then pick the most central root 
+  //typ1: pick the one closest to pz of muon 
+  //typ2: pick the most central root
+  //typ3:pick the largest value of the cosine
+    float m1= abs(pdgId1) == 13 ? 0.106 : 0.512e-3;
+    TLorentzVector p4l(0.,0.,0.,0);
+    p4l.SetPtEtaPhiM(pt1,eta1,phi1,m1);
+    TLorentzVector mv(0.,0.,0.,0.);
+    mv.SetPtEtaPhiM(met,0.,metphi,0.0);
+    heppy::METzCalculator_Run2 NeutrinoPz_run2_M;
+    //std::cout<<"check this lepton pt\t"<<p41.Pt()<<"\t"<<p41.E()<<"\t here"<<std::endl;
+    //std::cout<<"check this MET   "<<mv.Pt()<<std::endl;
+    NeutrinoPz_run2_M.SetMET(mv);
+    NeutrinoPz_run2_M.SetLepton(p4l);
+    NeutrinoPz_run2_M.SetLeptonType(pdgId1);
+    double pz1_type0 = NeutrinoPz_run2_M.Calculate(type);
+    //    std::cout<<"and the result is"<<pz1_type0<<std::endl;
+    return pz1_type0;
+}
+
+double mass_WV_el(float jpt,float jeta,float jphi, float jm,float lpt,float leta,float lphi,float met,float metphi, int type){
+  //FIXME: compute neupz first and pass it as an argument ->get rid of pdgId and type args
+  float massWV=-999.0;
+  TLorentzVector lep(0.,0.,0.,0);
+  TLorentzVector jet(0.,0.,0.,0);
+  TLorentzVector metV(0.,0.,0.,0);
+  TLorentzVector mWV(0.,0.,0.,0);
+  //float lmass= abs(lpdgId) == 13 ? 0.106 : 0.512e-3;
+  lep.SetPtEtaPhiM(lpt,leta,lphi,0.512e-3);
+  jet.SetPtEtaPhiM(jpt,jeta,jphi,jm);
+  
+  float pz1=METz_calc(lpt,leta, lphi,11,met,metphi,type);
+  metV.SetPxPyPzE(met*TMath::Cos(metphi), met*TMath::Sin(metphi),pz1,sqrt(met*met+pz1*pz1));
+  mWV=lep+jet+metV;
+  massWV=mWV.M();
+  return massWV;
+}
+
+double mass_WV_mu(float jpt,float jeta,float jphi, float jm,float lpt,float leta,float lphi,float met,float metphi, int type){
+  //FIXME: compute neupz first and pass it as an argument ->get rid of pdgId and type args
+  float massWV=-999.0;
+  TLorentzVector lep(0.,0.,0.,0);
+  TLorentzVector jet(0.,0.,0.,0);
+  TLorentzVector metV(0.,0.,0.,0);
+  TLorentzVector mWV(0.,0.,0.,0);
+  //float lmass= abs(lpdgId) == 13 ? 0.106 : 0.512e-3;
+  
+  lep.SetPtEtaPhiM(lpt,leta,lphi,0.106);
+  jet.SetPtEtaPhiM(jpt,jeta,jphi,jm);
+  
+  float pz1=METz_calc(lpt,leta, lphi,13,met,metphi,type);
+  metV.SetPxPyPzE(met*TMath::Cos(metphi), met*TMath::Sin(metphi),pz1,sqrt(met*met+pz1*pz1));
+  mWV=lep+jet+metV;
+  massWV=mWV.M();
+  return massWV;
 }
 
 float phi_2(float pt1, float phi1, float pt2, float phi2) {

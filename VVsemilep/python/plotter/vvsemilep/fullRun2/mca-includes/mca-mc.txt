@@ -1,12 +1,10 @@
 ZV+ : ZZTo2Q2L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=46, Label="ZV"
 ZV+ : WZTo2Q2L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=46, Label="ZV"
 
-#WV+ : WZToLNuQQ01j_5f_amcatnloFxFx : xsec : LepGood1_isMatchRightCharge ; FillColor=46, Label="WV"
+WV+ : WZToLNuQQ01j_5f_amcatnloFxFx : xsec : 1 ; FillColor=30, Label="WV"
+WV+ : WWTo1L1Nu2Q : 49.997 : 1 ; FillColor=30, Label="WV"
 
-WV+ : WZTo1L1Nu2Q       : 10.71  : 1 ; FillColor=30, Label="WV"
-WV+ : WWTo1L1Nu2Q_part0 : 49.997 : 1 ; FillColor=30, Label="WV"
-WV+ : WWTo1L1Nu2Q_part1 : 49.997 : 1 ; FillColor=30, Label="WV"
-WV+ : WWTo1L1Nu2Q_part2 : 49.997 : 1 ; FillColor=30, Label="WV"
+WV+ : WZTo1L1Nu2Q : 10.71  : 1 ; FillColor=30, Label="WZ_4f",SkipMe=True
 
 
 
@@ -15,6 +13,12 @@ WJetsLO  : WJetsToLNu_LO   : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="W+jets",
 
 testHT : WJetsToLNu_HT70to100    : 1271*1.21 : 1 ; FillColor=ROOT.kAzure+1, Label="WJ_htb"
 
+#higgs
+
+WplusH  : WplusH  : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
+WminusH : WminusH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
+ZH      : ZH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
+GGH     : GGH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
 
 ##taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py
 WJets : WJetsToLNu_HT70to100     : 1271*1.21    : 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
@@ -28,97 +32,58 @@ WJets : WJetsToLNu_HT2500toInf   : 0.02623*1.21 : 1 ; FillColor=ROOT.kAzure+1,  
 
 
 
+TTJets : TTJets_part0  : xsec  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
+
+tthighmass : TT_mtt1ktoinf: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topHM"
+tthighmass : TT_mttp7kto1k: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topHM"
+
+QCD : QCD_Pt15to20_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
+QCD : QCD_Pt20to30_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
+QCD : QCD_Pt30to50_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
+QCD : QCD_Pt50to80_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
+QCD : QCD_Pt80to120_EMEnriched  :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
+QCD : QCD_Pt120to170_EMEnriched :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
+QCD : QCD_Pt170to300_EMEnriched :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
+QCD : QCD_Pt300toInf_EMEnriched :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
+QCD : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt20to30_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt80to120_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
+QCD : QCD_Pt15to20_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
+QCD : QCD_Pt170to250_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
+##QCD : QCD_Pt20to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
+QCD : QCD_Pt250toInf_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
+QCD : QCD_Pt30to80_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
+QCD : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
 
 
-WZTo1L1Nu2Q_4f : WZTo1L1Nu2Q : xsec : 1 ; FillColor=ROOT.kRed,SkipMe=True
-testTT : TTJets_part0  : xsec  : 1 ; FillColor=ROOT.kOrange+7, Label="top", FriendsSimple="{P}/0_toppT_rw/"
 
-TTJets : TTJets_part0  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part11 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part14 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part17 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part2  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part4  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part7  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part1  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part12 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part15 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part18 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part20 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part5  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part8  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part10 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part13 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part16 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part19 : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part3  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part6  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
-TTJets : TTJets_part9  : 831.76*2*(3*0.108)*(1-3*0.108)  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
+ttsemi : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : 1 ; FillColor=ROOT.kViolet+7, Label="ttsemi"
+
+Rwtttsemi : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttsemi", FriendsSimple="{P}/0_toppT_rw/"
 
 
-ttincl : TTJets_part0  : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part11 : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part14 : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part17 : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part2  : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part4  : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part7  : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part1  : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part12 : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part15 : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part18 : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part20 : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part5  : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part8  : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part10 : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part13 : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part16 : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part19 : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part3  : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part6  : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-ttincl : TTJets_part9  : xsec  : 1 ; FillColor=ROOT.kYellow, Label="top-inc"
-   
-
-tthighmass : TT_mtt1ktoinf_part1: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topHM"
-tthighmass : TT_mtt1ktoinf_part0: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topHM"
-tthighmass : TT_mttp7kto1k_part2: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topHM"
-tthighmass : TT_mttp7kto1k_part0: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topHM"
-tthighmass : TT_mttp7kto1k_part1: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topHM"
-
-ttsemi	    : TTSemi_pow : xsec  : 1 ; FillColor=ROOT.kViolet+7, Label="ttsemi"
 singletop   : T_sch: xsec      : xsec  : 1 ; FillColor=ROOT.kGray+1, Label="s-top"
-singletop   : Tbar_tch_part0   : xsec : 1 ; FillColor=ROOT.kGray+1, Label="s-top"
-singletop   : Tbar_tch_part1   : xsec : 1 ; FillColor=ROOT.kGray+1, Label="s-top"
+singletop   : Tbar_tch   : xsec : 1 ; FillColor=ROOT.kGray+1, Label="s-top"
 singletop   : T_tch            : xsec : 1 ; FillColor=ROOT.kGray+1, Label="s-top"
 singletop   : T_tWch_noFullyHad    : xsec : 1 ; FillColor=ROOT.kGray+1, Label="s-top"
 singletop   : Tbar_tWch_noFullyHad : xsec : 1 ; FillColor=ROOT.kGray+1, Label="s-top" #, years="2018"
+
 
 
 DYJetsLO    : DYJetsToLL_M50_LO_part0+ DYJetsToLL_M50_LO_part12+DYJetsToLL_M50_LO_part3+ DYJetsToLL_M50_LO_part7+ DYJetsToLL_M50_LO_part1+ DYJetsToLL_M50_LO_part13+DYJetsToLL_M50_LO_part4+ DYJetsToLL_M50_LO_part8+ DYJetsToLL_M50_LO_part10+DYJetsToLL_M50_LO_part14+DYJetsToLL_M50_LO_part5+ DYJetsToLL_M50_LO_part9+DYJetsToLL_M50_LO_part11+DYJetsToLL_M50_LO_part2+ DYJetsToLL_M50_LO_part6: xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ; FillColor=8, Label="dy" 
 
 
 
-lhefdy : DYJetsToLL_LHEFilterPtZ50to100_part4 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ50to100_part5 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ50to100_part6 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ50to100_part7 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ50to100_part0 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ50to100_part1 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ50to100_part2 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ50to100_part3 : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ0to50_part8   : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ0to50_part3   : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ0to50_part2   : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ0to50_part1   : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ0to50_part0   : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ0to50_part7   : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ0to50_part6   : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ0to50_part5   : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ0to50_part4   : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
-lhefdy : DYJetsToLL_LHEFilterPtZ100to250      : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"      
-lhefdy : DYJetsToLL_LHEFilterPtZ250to400      : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"      
-lhefdy : DYJetsToLL_LHEFilterPtZ400to650      : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"    
-lhefdy : DYJetsToLL_LHEFilterPtZ650toinf      : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
 
+lhefdy : DYJetsToLL_LHEFilterPtZ0to50+DYJetsToLL_LHEFilterPtZ50to100+DYJetsToLL_LHEFilterPtZ100to250+DYJetsToLL_LHEFilterPtZ250to400+DYJetsToLL_LHEFilterPtZ400to650+DYJetsToLL_LHEFilterPtZ650toinf   : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="DYlhef"
 
 htbdy   : DYJetsToLL_M50_HT100to200_part0+DYJetsToLL_M50_HT1200to2500+DYJetsToLL_M50_HT2500toInf+DYJetsToLL_M50_HT600to800+DYJetsToLL_M50_HT100to200_part1+DYJetsToLL_M50_HT200to400+DYJetsToLL_M50_HT400to600+DYJetsToLL_M50_HT800to1200 : xsec :  : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=8, Label="dy_HT"

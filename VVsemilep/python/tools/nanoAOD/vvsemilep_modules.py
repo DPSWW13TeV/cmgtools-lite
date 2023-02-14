@@ -127,7 +127,6 @@ from CMGTools.VVsemilep.tools.combinedObjectTaggerForCleaning import CombinedObj
 from CMGTools.VVsemilep.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
 recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
                                                            looseLeptonSel = clean_and_FO_selection_VVsemilep,
-                                                           #lambda lep : lep. pt > conf["looselepPt"] and lep.sip3d < conf["sip3dloose"] and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WPL) and (abs(lep.pdgId)!=13 or lep.looseId),
                                                            cleaningLeptonSel = clean_and_FO_selection_VVsemilep,
                                                            FOLeptonSel = clean_and_FO_selection_VVsemilep,
                                                            tightLeptonSel = tightLeptonSel,
@@ -142,7 +141,7 @@ recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="R
                                                                         cleanJetsWithFOTaus=True,
                                                                         doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                                                         jetPts=[25,30],
-                                                                        jetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
+                                                                        ##am                                                                        jetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
                                                                         btagL_thr=99, # they are set at runtime 
                                                                         btagM_thr=99,
                                                                         isMC = True,
@@ -155,7 +154,7 @@ recleaner_step2_mc = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel=
                                                           cleanJetsWithFOTaus=True,
                                                           doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                                           jetPts=[25,30],
-                                                          jetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
+                                                          ##amjetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
                                                           btagL_thr=99, # they are set at runtime 
                                                           btagM_thr=99,
                                                           isMC = True,
@@ -166,7 +165,7 @@ recleaner_step2_data = lambda : fastCombinedObjectRecleaner(label="Recl", inlabe
                                          cleanJetsWithFOTaus=True,
                                          doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                          jetPts=[25,30],
-                                         jetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
+                                         ##amjetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
                                          btagL_thr=-99., # they are set at runtime  
                                          btagM_thr=-99., # they are set at runtime  
                                          isMC = False,
@@ -348,6 +347,10 @@ scaleFactorSequence_2016APV = [btagSF2016APV_dj,bTagSFs]
 scaleFactorSequence_2016    = [btagSF2016_dj,bTagSFs] 
 scaleFactorSequence_2017    = [btagSF2017_dj,bTagSFs] 
 scaleFactorSequence_2018    = [btagSF2018_dj,bTagSFs]
+
+from CMGTools.VVsemilep.tools.nanoAOD.saveVtaggedJet import saveVtaggedJet
+taggedfj      = lambda : saveVtaggedJet(isMC = True)
+taggedfj_data = lambda : saveVtaggedJet(isMC = False)
 
 
 

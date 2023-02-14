@@ -16,13 +16,12 @@ analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","both")
 selectComponents = getHeppyOption("selectComponents","MC")
-#selectComponents = getHeppyOption("selectComponents","MC")
+#selectComponents = getHeppyOption("selectComponents","DATA")
 test = getHeppyOption("test","") #"testam")
 
 if year == '2018':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL18NanoAODv9 import samples as mcSamples_
-    from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples_UL2018 as allData
-    from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples_UL2018 as allData
+    from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples as allData
 elif year == '2017':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL17NanoAODv9 import samples as mcSamples_
     #from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_UL2017 as allData
@@ -55,22 +54,25 @@ theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         # diboson
-        "ZZTo2Q2L",   "WZTo2Q2L",        "WZTo1L1Nu2Q",
-        "WWTo1L1Nu2Q",
-        "WJets.*",
+        #"ZZTo2Q2L",   "WZTo2Q2L",        "WZTo1L1Nu2Q",
+        #"WWTo1L1Nu2Q",
+        #"WJets.*",
         #   "WJetsToLNu_HT70To100",
         #"DYJetsToLL_M50", 
         #"DYJetsToLL_M50_LO",
-        #"WZToLNuQQ01j_5f_amcatnloFxFx",
+        #        "WZToLNuQQ01j_5f_amcatnloFxFx",
         #"DYJetsToLL_M10to50_LO",
         #  "DYJets.*",
         #"TTJets",   
-        "TTSemi_pow",        "TT_mtt.*",
-        "T_sch" , "T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
+        #"TTSemi_pow",        "TT_mtt.*",
+        #"T_sch" , "T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
         ##am        # conversions
         #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
         ##am        #  # triboson
         ##"WWW"
+        #"QCD.*"
+        #        "QCD_Pt20to30_bcToE"        
+        "WplusH","ZH","GGH","WminusH"
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else
