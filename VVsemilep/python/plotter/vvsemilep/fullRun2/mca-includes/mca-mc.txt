@@ -15,10 +15,10 @@ testHT : WJetsToLNu_HT70to100    : 1271*1.21 : 1 ; FillColor=ROOT.kAzure+1, Labe
 
 #higgs
 
-WplusH  : WplusH  : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
-WminusH : WminusH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
-ZH      : ZH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
-GGH     : GGH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
+higgs : WplusH  : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
+higgs : WminusH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
+higgs : ZH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
+higgs : GGH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
 
 ##taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py
 WJets : WJetsToLNu_HT70to100     : 1271*1.21    : 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
@@ -30,45 +30,49 @@ WJets : WJetsToLNu_HT800to1200   : 4.936*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   
 WJets : WJetsToLNu_HT1200to2500  : 1.156*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
 WJets : WJetsToLNu_HT2500toInf   : 0.02623*1.21 : 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets"
 
+#WJets_amc: WJetsToLNu_Pt400To600_part1+WJetsToLNu_Pt400To600_part0 : xsec : 1 ; FillColor=ROOT.kAzure+1,   Label="Wjets_amc"
+#WJets_amc:WJetsToLNu_Pt100To250_part20+WJetsToLNu_Pt100To250_part21+
 
 
 TTJets : TTJets_part0  : xsec  : 1 ; FillColor=ROOT.kOrange+7, Label="top-amc"
 
-tthighmass : TT_mtt1ktoinf: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topHM"
-tthighmass : TT_mttp7kto1k: xsec : 1 ; FillColor=ROOT.kPink+2, Label="topHM"
 
-QCD : QCD_Pt15to20_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
-QCD : QCD_Pt20to30_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
-QCD : QCD_Pt30to50_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
-QCD : QCD_Pt50to80_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
-QCD : QCD_Pt80to120_EMEnriched  :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
-QCD : QCD_Pt120to170_EMEnriched :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
-QCD : QCD_Pt170to300_EMEnriched :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
-QCD : QCD_Pt300toInf_EMEnriched :  xsec : 1 ; FillColor=ROOT.kTeal+9, Label="QCDem"
-QCD : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt20to30_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt80to120_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD\#mu"
-QCD : QCD_Pt15to20_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
-QCD : QCD_Pt170to250_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
-##QCD : QCD_Pt20to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
-QCD : QCD_Pt250toInf_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
-QCD : QCD_Pt30to80_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
-QCD : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kOrange+7, Label="QCDel"
+QCD : QCD_Pt15to20_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt20to30_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt30to50_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt50to80_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt80to120_EMEnriched  :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt120to170_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt170to300_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt300toInf_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt20to30_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt80to120_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt15to20_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt170to250_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+#QCD : QCD_Pt20to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt250toInf_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt30to80_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
 
 
 
-ttsemi : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : 1 ; FillColor=ROOT.kViolet+7, Label="ttsemi"
+#ttsemi : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttsemi", FriendsSimple="{P}/0_toppT_rw/"
 
-Rwtttsemi : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttsemi", FriendsSimple="{P}/0_toppT_rw/"
+tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<700) ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/1_toppT_rw/"
+
+#Top_pTrw
+tt : TT_mtt1ktoinf: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/1_toppT_rw/" 
+tt : TT_mttp7kto1k: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/1_toppT_rw/"
 
 
 singletop   : T_sch: xsec      : xsec  : 1 ; FillColor=ROOT.kGray+1, Label="s-top"

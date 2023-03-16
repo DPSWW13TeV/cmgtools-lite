@@ -19,10 +19,11 @@ class toppTrwt(Module):
         self.out = wrappedOutputTree
 
         self.out.branch("nGentops"+self.label,"I")
+        self.out.branch("nGenalltops"+self.label,"I")
         self.out.branch("Top_pTrw"+self.label,"F")
         for V in self.vars:
             self.out.branch("Gentops"+self.label+"_"+V, "F", lenVar="nGentops"+self.label)
-
+            self.out.branch("Genalltops"+self.label+"_"+V, "F", lenVar="nGenalltops"+self.label)
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -36,10 +37,12 @@ class toppTrwt(Module):
  
         genparticles=Collection(event,"GenPart")
         tops=[];         ret={};   
-        
+        alltops=[]; retA={};
         foundt=False;foundtbar=False; tgenPt=0.0; AtopPt=0.0;
         for iGen in genparticles:
             if abs(iGen.pdgId) == 6:
+                if iGen.status == 22:  
+                    alltops.append(iGen)
                 lastcopy=ROOT.TMath.Odd(iGen.statusFlags/(1<<13))
                 #       print 'in here',lastcopy
                 if iGen.pdgId == 6 and lastcopy:
@@ -60,11 +63,11 @@ class toppTrwt(Module):
 
         self.out.fillBranch('Top_pTrw'+self.label,sf)    
         self.out.fillBranch('nGentops'+self.label,len(tops))
-
+        self.out.fillBranch('nGenalltops'+self.label,len(alltops))
         for V in self.vars:
             ret["Gentops"+self.label+"_"+V] = [getattr(j,V) for j in tops]
-
+            retA["Genalltops"+self.label+"_"+V] = [getattr(j,V) for j in alltops]
         for V in self.vars:
             self.out.fillBranch("Gentops"+self.label+"_"+V, [ ret["Gentops"+self.label+"_"+V][j] for j in range (len(tops))])
-
+            self.out.fillBranch("Genalltops"+self.label+"_"+V, [ retA["Genalltops"+self.label+"_"+V][j] for j in range (len(alltops))])
         return True

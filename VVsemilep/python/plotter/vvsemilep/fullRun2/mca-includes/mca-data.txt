@@ -81,8 +81,3 @@ data : SingleMuon_Run2016C_HIPM_UL16; years="2016APV"
 data : SingleMuon_Run2016D_HIPM_UL16; years="2016APV"
 data : SingleMuon_Run2016E_HIPM_UL16; years="2016APV"
 data : SingleMuon_Run2016F_HIPM_UL16; years="2016APV"
-
-##amdata : DoubleMuon_Run2018D_UL18_part0 ; years="2018"
-##amdata : DoubleMuon_Run2018D_UL18_part1 ; years="2018"
-##amdata : DoubleMuon_Run2018D_UL18_part2 ; years="2018"
-##amdata : DoubleMuon_Run2018D_UL18_part3 ; years="2018"

@@ -141,7 +141,6 @@ recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="R
                                                                         cleanJetsWithFOTaus=True,
                                                                         doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                                                         jetPts=[25,30],
-                                                                        ##am                                                                        jetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
                                                                         btagL_thr=99, # they are set at runtime 
                                                                         btagM_thr=99,
                                                                         isMC = True,
@@ -351,6 +350,9 @@ scaleFactorSequence_2018    = [btagSF2018_dj,bTagSFs]
 from CMGTools.VVsemilep.tools.nanoAOD.saveVtaggedJet import saveVtaggedJet
 taggedfj      = lambda : saveVtaggedJet(isMC = True)
 taggedfj_data = lambda : saveVtaggedJet(isMC = False)
+
+from CMGTools.VVsemilep.tools.nanoAOD.saveVtaggedJetV1 import saveVtaggedJetV1
+taggedfjvars           = lambda : saveVtaggedJetV1(isMC = True, jecs = jevariations)
 
 
 

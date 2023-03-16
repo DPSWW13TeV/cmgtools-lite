@@ -1,4 +1,5 @@
 change: MET_pt\b: MET_pt_res_j_endcap2highpt_yearUp
+change: PuppiMET_pt_res_j_endcap2highpt_yearUp\b: PuppiMET_pt
 change: METFixEE2017_pt\b: METFixEE2017_pt_res_j_endcap2highpt_yearUp
 change: nJet25_Recl\b: nJet25_res_j_endcap2highpt_yearUp_Recl
 change: nJet30_Recl\b: nJet30_res_j_endcap2highpt_yearUp_Recl
@@ -11,6 +12,10 @@ change: nBJetMedium40_Recl\b: nBJetMedium40_res_j_endcap2highpt_yearUp_Recl
 change: nBJetTight40_Recl\b: nBJetTight40_res_j_endcap2highpt_yearUp_Recl
 change: JetSel_Recl_pt\b: JetSel_Recl_pt_res_j_endcap2highpt_yearUp
 change: FatJetSel_Recl_pt\b: FatJetSel_Recl_pt_res_j_endcap2highpt_yearUp
+change: ak8Vtagged_pt\b:ak8Vtagged_pt_res_j_endcap2highpt_yearUp
+change: ak8Vtagged_WPL_pt\b:ak8Vtagged_WPL_pt_res_j_endcap2highpt_yearUp
+change: ak8Vtagged_WPM_pt\b:ak8Vtagged_WPM_pt_res_j_endcap2highpt_yearUp
+change: ak8Vtagged_WPT_pt\b:ak8Vtagged_WPT_pt_res_j_endcap2highpt_yearUp
 change: mindr_lep1_jet\b: mindr_lep1_jet_res_j_endcap2highpt_yearUp
 change: mindr_lep2_jet\b: mindr_lep2_jet_res_j_endcap2highpt_yearUp
 change: mindr_lep3_jet\b: mindr_lep3_jet_res_j_endcap2highpt_yearUp

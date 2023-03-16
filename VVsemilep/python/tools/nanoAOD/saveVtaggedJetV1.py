@@ -8,10 +8,13 @@ from PhysicsTools.Heppy.physicsobjects.Jet import _btagWPs
 
 from copy import deepcopy
 
-class saveVtaggedJet(Module):
-    def __init__(self,isMC):
+class saveVtaggedJetV1(Module):
+    def __init__(self,isMC,jecs):
         self.isMC=isMC
-        self.vars=("eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2","hadronFlavour","muonIdx3SJ","electronIdx3SJ","nBHadrons","nCHadrons","msoftdrop") if self.isMC else ("eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2","msoftdrop") 
+        self.jecs=jecs 
+        self.shift=["Up","Down"] 
+        self.vars=["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2","hadronFlavour","muonIdx3SJ","electronIdx3SJ","nBHadrons","nCHadrons"] if self.isMC else ["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2"]#,"msoftdrop"]
+        if self.isMC: self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
         print type(self.vars)
         self.WPL = 0.64
         self.WPM = 0.85
@@ -26,7 +29,8 @@ class saveVtaggedJet(Module):
         for var in self.vars:
             self.out.branch('ak8pNMgt40_%s'%var, "F", lenVar="nak8pNMgt40")
             for WP in ["L","M","T"]:
-                self.out.branch('ak8Vtagged_%s_WP%s'%(var,WP), "F", lenVar="nak8Vtagged_WP"+WP)
+                self.out.branch('ak8Vtagged_WP%s_%s'%(WP,var), "F", lenVar="nak8Vtagged_WP"+WP)
+                
 
     def beginJob(self):
         pass
@@ -37,10 +41,11 @@ class saveVtaggedJet(Module):
 
 
     def analyze(self, event):
-        all_fjets = [l for l in Collection(event,"FatJet")]
-        nfj = getattr(event,"nFatJetSel_Recl")
-        chosen = getattr(event,"iFatJetSel_Recl")
-        fjets = [all_fjets[chosen[i]] for i in xrange(nfj)]
+        #all_fjets = [l for l in Collection(event,"FatJet")]
+        #nfj = getattr(event,"nFatJetSel_Recl")
+        #chosen = getattr(event,"iFatJetSel_Recl")
+        #fjets = [all_fjets[chosen[i]] for i in xrange(nfj)]
+        fjets=[f for f in Collection(event,"FatJetSel_Recl")] #FatJetSel_Recl_pt
         jindex=[]
         jindex_WPL=[]
         jindex_WPM=[]
@@ -55,14 +60,13 @@ class saveVtaggedJet(Module):
 
         for V in self.vars:
             ret['ak8pNMgt40_%s'%V]      = [getattr(j,V) for j in fjets]
-            retL['ak8Vtagged_%s_WPL'%V] = [getattr(j,V) for j in fjets]
-            retM['ak8Vtagged_%s_WPM'%V] = [getattr(j,V) for j in fjets]
-            retT['ak8Vtagged_%s_WPT'%V] = [getattr(j,V) for j in fjets]
+            retL['ak8Vtagged_WPL_%s'%V] = [getattr(j,V) for j in fjets]
+            retM['ak8Vtagged_WPM_%s'%V] = [getattr(j,V) for j in fjets]
+            retT['ak8Vtagged_WPT_%s'%V] = [getattr(j,V) for j in fjets]
 
         for index,iJet in enumerate(fjets):
             if iJet.particleNet_mass < 40: continue
             jindex.append(index)
-            #            Xbb= 0.0 if getattr(ev,''))
             pNetScore=(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_Xbb)/(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_QCD+iJet.particleNetMD_Xbb) ##FIXME add Xbb for Z
             #pNetScore1=(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq)/(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_QCD) 
             #print pNetScore,pNetScore1,iJet.particleNetMD_Xbb
@@ -82,7 +86,7 @@ class saveVtaggedJet(Module):
         #print len(jindex_WPL),len(jindex_WPM),len(jindex_WPT)
         for V in self.vars:
             self.out.fillBranch("ak8pNMgt40_%s"%V, [ ret['ak8pNMgt40_%s'%V][j] for j in jindex])
-            self.out.fillBranch("ak8Vtagged_%s_WPL"%V, [ retL['ak8Vtagged_%s_WPL'%V][j] for j in jindex_WPL])
-            self.out.fillBranch("ak8Vtagged_%s_WPM"%V, [ retM['ak8Vtagged_%s_WPM'%V][j] for j in jindex_WPM])
-            self.out.fillBranch("ak8Vtagged_%s_WPT"%V, [ retT['ak8Vtagged_%s_WPT'%V][j] for j in jindex_WPT])
+            self.out.fillBranch("ak8Vtagged_WPL_%s"%V, [ retL['ak8Vtagged_WPL_%s'%V][j] for j in jindex_WPL])
+            self.out.fillBranch("ak8Vtagged_WPM_%s"%V, [ retM['ak8Vtagged_WPM_%s'%V][j] for j in jindex_WPM])
+            self.out.fillBranch("ak8Vtagged_WPT_%s"%V, [ retT['ak8Vtagged_WPT_%s'%V][j] for j in jindex_WPT])
         return True 

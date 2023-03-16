@@ -42,7 +42,7 @@ class fastCombinedObjectRecleaner(Module):
         self.vars_jets_int = (["hadronFlavour"] if self.isMC else [])
         self.vars_fatjets = [("pt","pt_nom") if self.isMC and len(self.variations) else 'pt',"btagDeepB"] + [ 'pt_%s%s'%(x,y) for x in self.variations for y in ["Up","Down"]] ##am
         #,"deepTag_WvsQCD",'deepTag_ZvsQCD','deepTag_TvsQCD','deepTag_QCDothers','deepTag_QCD','deepTagMD_ZbbvsQCD','deepTagMD_ZvsQCD','deepTagMD_bbvsLight','deepTagMD_ccvsLight',,'particleNet_mass','msoftdrop'
-        self.vars_fatjets_floats = ["particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2"]
+        self.vars_fatjets_floats = ["particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2","msoftdrop","mass"]
         self.vars_fatjets_int = (["hadronFlavour"] if self.isMC else []) + ["muonIdx3SJ","electronIdx3SJ"] ##am
         self.vars_fatjets_uchar = (["nBHadrons","nCHadrons"] if self.isMC else []) ##am
         self.vars_jets_nooutput = []

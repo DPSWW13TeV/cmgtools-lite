@@ -1,9 +1,10 @@
 alwaystrue: 1
+
 singlelep           : nGenDressedLepton == 1
 leadlep : GenDressedLepton_pt[0] > 25
 etacutl1     : abs(GenDressedLepton_eta[0]) < if3(abs(GenDressedLepton_pdgId[0])==13,2.4,2.5)
 etael1      : (abs(GenDressedLepton_pdgId[0]) == 13 || (abs(GenDressedLepton_eta[0]) < 1.442 || abs(GenDressedLepton_eta[0]) > 1.556 && abs(GenDressedLepton_pdgId[0])==11))
-
+ttbar : Sum$(abs(GenPart_pdgId) == 6 && GenPart_status == 22) ==2
 OppSign_dressed     : GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1] < 0 ; Disable=True
 25/20        : GenDressedLepton_pt[0] > 25 && GenDressedLepton_pt[1] > 20 ; Disable=True
 etacutl2     : abs(GenDressedLepton_eta[1]) < if3(abs(GenDressedLepton_pdgId[1])==13,2.4,2.5); Disable=True

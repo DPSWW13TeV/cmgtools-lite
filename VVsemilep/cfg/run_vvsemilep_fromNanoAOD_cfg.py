@@ -60,7 +60,7 @@ if analysis == "main":
         #   "WJetsToLNu_HT70To100",
         #"DYJetsToLL_M50", 
         #"DYJetsToLL_M50_LO",
-        #        "WZToLNuQQ01j_5f_amcatnloFxFx",
+        #"WZToLNuQQ01j_5f_amcatnloFxFx",
         #"DYJetsToLL_M10to50_LO",
         #  "DYJets.*",
         #"TTJets",   
@@ -69,10 +69,18 @@ if analysis == "main":
         ##am        # conversions
         #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
         ##am        #  # triboson
-        ##"WWW"
+        #"WWW"
         #"QCD.*"
         #        "QCD_Pt20to30_bcToE"        
-        "WplusH","ZH","GGH","WminusH"
+        #        "WplusH","ZH","GGH","WminusH"
+        #        "WJetsToLNu_.*J","WJetsToLNu_Pt.*"
+        "WmWp_aTGCmWV800toInf",
+        "WmWp_aTGCmWV600to800",
+        "WmWp_aTGCmWV150to600",
+        "WpWm_aTGCmWV800toInf",
+        "WpWm_aTGCmWV600to800",
+        "WpWm_aTGCmWV150to600"
+
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else
@@ -157,7 +165,7 @@ if analysis == "frqcd":
     configureSplittingFromTime(byCompName(selectedComponents, ["EGamma","Single.*Run2017.*","SingleMuon_Run2018.*"]), 0.5, 12, maxFiles=5) 
     setFilesPerJob( selectedComponents, 1)
     #configureSplittingFromTime(byCompName(selectedComponents, [r"QCD_Pt\d+to\d+$","QCD.*EME"]), 5, 1, maxFiles=6) 
-else:    
+else:
     setFilesPerJob( selectedComponents, 1)
 
 # print summary of components to process
@@ -216,7 +224,7 @@ elif test == "102X-MC":
 elif test == "testam":
     WZTo1L1Nu2Q           = kreator.makeMCComponent("WZTo1L1Nu2Q","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
 
-    WZTo1L1Nu2Q.files = WZTo1L1Nu2Q.files[:1]
+    WZTo1L1Nu2Q.files = WZTo1L1Nu2Q.files['/eos/cms/store/cmst3/group/dpsww/WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600/WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_part1.root']
     selectedComponents = [WZTo1L1Nu2Q]
     modules = vvsemilep_sequence_step1
     cut = vvsemilep_skim_cut

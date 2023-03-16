@@ -64,6 +64,13 @@ float mass_2(float pt1, float eta1, float phi1, int pdgId1, float pt2, float eta
     return (p41+p42).M();
 }
 
+float Mass_2(float pt1, float eta1, float phi1, float m1, float pt2, float eta2, float phi2, float m2) {
+    typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
+    PtEtaPhiMVector p41(pt1,eta1,phi1,m1);
+    PtEtaPhiMVector p42(pt2,eta2,phi2,m2);    
+    return (p41+p42).M();
+}
+
 float ptll(float pt1, float eta1, float phi1, int pdgId1, float pt2, float eta2, float phi2, int pdgId2) {
     typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
     float m1= abs(pdgId1) == 13 ? 0.106 : 0.512e-3;
@@ -336,6 +343,28 @@ float lnN1D_p1(float kappa, float x, float xmin, float xmax) {
     return std::pow(kappa,(x-xmin)/(xmax-xmin));
 }
 
+float HEMhandle(int year, float phi1, float eta1, float phi2, float eta2, int pdgId, int run, bool isData){
+  //  bool isData=false;
+  float HEM_eta_min =  -3.2; float HEM_eta_max = -1.3;
+  float HEM_phi_min= -1.57; float HEM_phi_max= -0.87;
+  float weight=1.0;  bool vetoHEM=false; bool vetofj=false; bool vetoel=false;
+  //  isData=run>319077 ? true : false; //assuming for MC run=1 always!!
+  
+  vetofj = (year>2017 && eta1 < HEM_eta_max && eta1 > HEM_eta_min && phi1 < HEM_phi_max && phi1 > HEM_phi_min) ? true : false;
+  vetoel = (abs(pdgId) == 11 && year>2017 && eta2 > -2.5 && eta2 < -1.479 && phi2 < HEM_phi_max && phi2 > HEM_phi_min) ? true : false;
+  vetoHEM=vetofj||vetoel;
+  if (vetoHEM){
+    if (isData) {
+      if(run > 319077){ 	weight=0;      }
+      else{	weight=1.0;}    }//isdata
+    else{      weight=0.35;    }//for MC
+  }//veto HEM
+  else{	weight=1.0;    }//if outside HEM
+  //std::cout<<"isdata\t"<<isData<<"\t run\t"<<run<<"\t vetoHEM \t"<<vetoHEM<<"\t wt\t"<<weight<<endl;
+  return weight;
+  
+}
+
 
 
 float triggerSF_ttH(int pdgid1, float pt1, int pdgid2, float pt2, int nlep, int year, int suberaid, int var=0){
@@ -413,7 +442,7 @@ float triggerSF_ttH(int pdgid1, float pt1, int pdgid2, float pt2, int nlep, int 
         else  return 1.*(1 + var*0.005);
       }
     }
-
+  
     else{
       if (yearString == "2016APV"){
         if (pt2 < 25){

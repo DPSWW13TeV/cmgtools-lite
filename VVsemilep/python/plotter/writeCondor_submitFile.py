@@ -1,10 +1,10 @@
 import os,string
 from plots_VVsemilep import *
 
-allvars= theWVultimateset #newVars+lepvars+WVvars+eventvars # mainVars+lepvars #newVars++WVvars #mainVars #ak8jetvars+WVvars +eventvars +lepvars #+MConly
+allvars= HEM #theWVultimateset #theWVultimateset #newVars+lepvars+WVvars+eventvars # mainVars+lepvars #newVars++WVvars #mainVars #ak8jetvars+WVvars +eventvars +lepvars #+MConly
 
 tmp_condor = open('jobs/submitFile.condor', 'w')
-tmp_condor.write('''Executable = dummy_plots.sh 
+tmp_condor.write('''Executable = dummy_plots.sh
 use_x509userproxy = true
 getenv      = True                                                                                                              
 environment = "LS_SUBCWD={here}"
@@ -14,11 +14,11 @@ Error      = jobs/log_$(ProcId).error
 +JobFlavour = "tomorrow"
 \n\n'''.format(here=os.environ['PWD']))
 pf=""
-for dW in ["inclB","topCR","wjCR"]: #," inclB"]: #,"topCR"]: #,"SR"]:
+for dW in ["wjCR"]: #topCR","wjCR","SR"]: #," inclB"]: #,"topCR"]: #,"SR"]:
     for nl in ["1"]: #"1,2".split(","):
         for cat in ["boosted"]: #,"resolved"]: #.split(","):
             for yr in ["2018"]: #2016,2017,2018".split(","):
-                for lep in ["el","mu","onelep"]:
+                for lep in ["el","mu"]: #,"onelep"]:
                     for iVar in allvars:
                         tmp_condor.write('arguments  = {cmssw} {yr} {nl} {cat} {iVar} {dW} {lf} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,nl=nl,iVar=iVar,dW=dW,lf=lep,pf=pf ) )
                         tmp_condor.write('queue 1\n\n')
