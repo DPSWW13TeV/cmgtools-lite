@@ -74,13 +74,15 @@ if analysis == "main":
         #        "QCD_Pt20to30_bcToE"        
         #        "WplusH","ZH","GGH","WminusH"
         #        "WJetsToLNu_.*J","WJetsToLNu_Pt.*"
-        "WmWp_aTGCmWV800toInf",
-        "WmWp_aTGCmWV600to800",
-        "WmWp_aTGCmWV150to600",
-        "WpWm_aTGCmWV800toInf",
-        "WpWm_aTGCmWV600to800",
-        "WpWm_aTGCmWV150to600"
-
+        #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600"
+        #".*_aTGC_pTW.*"
+        #        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600",
+        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",#problem
+        #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
+        #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf"
+        #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
+        #        "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800"
+        #".*_aTGC_pTZ.*"
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else

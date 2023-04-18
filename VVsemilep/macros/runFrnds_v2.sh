@@ -30,7 +30,7 @@ recl)
 	if [ -z "$chunks" ] || [ -z == "$samples" ]
 	    then
 	    echo "running for the first time"
-	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} --de .*Run.*  -q condor --maxruntime 100 --log $PWD/logs #run on mc --de .*Run.*  
+	    ${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -N ${nEvt} --dm .*aTGCmWV.*  -q condor --maxruntime 100 --log $PWD/logs #run on mc --de .*Run.*  
 	    #${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  -N ${nEvt} --dm .*Run.* -q condor  --maxruntime 100 --log $PWD/logs ##run on data
 	    
 	else #for running missing chunks locally
@@ -56,28 +56,42 @@ npdf)
 fjtagged)
 	echo "fjtagged"
 	#${BCORE}ak8VtaggedV1  ${CMGT} taggedfj_data -N ${nEvt}  -F Friends ${Parent}/2_recl/{cname}_Friend.root -d DoubleMuon_Run2018C_UL18 -c 12  #--dm .*Run.* -q condor --maxruntime 40 --log $PWD/logs 
-	${BCORE}ak8VtaggedV1  ${CMGT} taggedfj -N ${nEvt}  -F Friends ${Parent}/2_recl/{cname}_Friend.root  -d WJetsToLNu_Pt250To400_part6 -c 51 #--dm WJetsToLNu_Pt.*   -q condor --maxruntime 40 --log $PWD/logs #--de .*Run.* 
-	${BCORE}ak8VtaggedV1  ${CMGT} taggedfj -N ${nEvt}  -F Friends ${Parent}/2_recl/{cname}_Friend.root  -d WJetsToLNu_Pt250To400_part5 -c 12 
+	${BCORE}ak8VtaggedV1  ${CMGT} taggedfj -N ${nEvt}  -F Friends ${Parent}/2_recl/{cname}_Friend.root  --dm .*aTGCmWV.*  -q condor --maxruntime 40 --log $PWD/logs #--de .*Run.* 
 	;;
 
 fjvars)
 	echo "fjvars"
 	#${BCORE}ak8VtaggedV1_vars  ${CMGT} taggedfjvars -N ${nEvt}  -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --de .*Run.* -q condor --maxruntime 40 --log $PWD/logs 
-	${BCORE}ak8VtaggedV1_vars  ${CMGT} taggedfjvars -N ${nEvt}  -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --dm WJetsToLNu_Pt.*   -q condor --maxruntime 70 --log $PWD/logs #
+	${BCORE}ak8VtaggedV1_vars  ${CMGT} taggedfjvars -N ${nEvt}  -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --dm .*aTGC.*   -q condor --maxruntime 70 --log $PWD/logs #
 
 	;;
 
 jme)
 	echo "jme"
-	${BCORE}0_jmeUnc/  ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  -N ${nEvt} --dm WJetsToLNu_Pt.*  -q condor --maxruntime 180 --log $PWD/logs #--de .*Run.* -q condor --maxruntime 100 --log $PWD/logs # --de .*Run.*
+	${BCORE}0_jmeUnc/  ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  -N ${nEvt} --dm .*aTGCmWV.*  -q condor --maxruntime 180 --log $PWD/logs #--de .*Run.* -q condor --maxruntime 100 --log $PWD/logs # --de .*Run.*
 	;;
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/0_jmeUnc/{cname}_Friend.root  -N ${nEvt} --dm WJetsToLNu_Pt.*  -q condor --maxruntime 100 --log $PWD/logs #--dm  WJetsToLNu_Pt.*          #--de .*Run.* 
+	${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/0_jmeUnc/{cname}_Friend.root  -N ${nEvt} --dm .*aTGC.* -q condor --maxruntime 100 --log $PWD/logs #--dm  WJetsToLNu_Pt.*          #--de .*Run.* 
 	;;
 
+step2) 
+	echo "jme"
+	${BCORE}0_jmeUnc/  ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  -N ${nEvt} --dm .*aTGCmWV.*  -q condor --maxruntime 180 --log $PWD/logs #--de .*Run.* -q condor --maxruntime 100 --log $PWD/logs # --de .*Run.*
+	echo "fjtagged"
+	#${BCORE}ak8VtaggedV1  ${CMGT} taggedfj_data -N ${nEvt}  -F Friends ${Parent}/2_recl/{cname}_Friend.root -d DoubleMuon_Run2018C_UL18 -c 12  #--dm .*Run.* -q condor --maxruntime 40 --log $PWD/logs 
+	${BCORE}ak8VtaggedV1  ${CMGT} taggedfj -N ${nEvt}  -F Friends ${Parent}/2_recl/{cname}_Friend.root  --dm .*aTGCmWV.*  -q condor --maxruntime 40 --log $PWD/logs #--de .*Run.* 
+	#echo "npdf"
+	#${BCORE}nnpdf_rms  ${CMGT} rms_val --dm .*aTGCmWV.* -N ${nEvt}  -q condor --maxruntime 40 --log $PWD/logs #--de .*Run.*
 
+	;;
+
+wjet)	
+	
+	${BCORE}testAM/  ${CMGT} wvsemilep_tree  -N 5000 -d WWTo1L1Nu2Q --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/2_recl/{cname}_Friend.root  -F Friends ${Parent}/ak8VtaggedV1/{cname}_Friend.root -c 1 
+	#${nEvt} --dm .*aTGCmWV.*  -q condor --maxruntime 180 --log $PWD/logs #--de .*Run.* -q condor --maxruntime 100 --log $PWD/logs # --de .*Run.*
+	;;
 *)
 	echo "enter a valid opt"
 	;;

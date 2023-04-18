@@ -6,7 +6,14 @@ WV+ : WWTo1L1Nu2Q : 49.997 : 1 ; FillColor=30, Label="WV"
 
 WV+ : WZTo1L1Nu2Q : 10.71  : 1 ; FillColor=30, Label="WZ_4f",SkipMe=True
 
+WW+ : WWTo1L1Nu2Q : 49.997 : 1 ; FillColor=30, Label="WW"
 
+aTGC : WmWp_aTGCmWV150to600 : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kMagenta-9, Label="WWaTGC" 
+aTGC : WmWp_aTGCmWV600to800 : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kMagenta-9, Label="WWaTGC" 
+aTGC : WmWp_aTGCmWV800toInf : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kMagenta-9, Label="WWaTGC" 
+aTGC : WpWm_aTGCmWV150to600 : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kMagenta-9, Label="WWaTGC" 
+aTGC : WpWm_aTGCmWV600to800 : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kMagenta-9, Label="WWaTGC" 
+aTGC : WpWm_aTGCmWV800toInf : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kMagenta-9, Label="WWaTGC" 
 
 WJetsNLO : WJetsToLNu_NLO  : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True
 WJetsLO  : WJetsToLNu_LO   : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True

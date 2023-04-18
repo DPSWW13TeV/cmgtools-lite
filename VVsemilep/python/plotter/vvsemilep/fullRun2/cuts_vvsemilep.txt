@@ -12,8 +12,11 @@ filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENo
 ##am    & (events.phi < HEM_phi_max)
 ##am    & (events.phi > HEM_phi_min)
 
+##HEM : $DATA{(HEMhandle(year,ak8pNMgt40_phi[0],ak8pNMgt40_eta[0],LepGood1_phi, LepGood1_eta, LepGood1_pdgId,run,1))} $MC{1}
+
 HEM : $DATA{(HEMhandle(year,ak8pNMgt40_phi[0],ak8pNMgt40_eta[0],LepGood1_phi, LepGood1_eta, LepGood1_pdgId,run,1))} $MC{(HEMhandle(year,ak8pNMgt40_phi[0],ak8pNMgt40_eta[0],LepGood1_phi, LepGood1_eta, LepGood1_pdgId,run,0))}
-##HEM : $DATA{((year !=2018 || run <= 319077) || (run > 319077  && year == 2018 && run > 319077 && ak8pNMgt40_eta[0] < -3.2 && ak8pNMgt40_eta[0] > -1.3 && ak8pNMgt40_phi[0] < -1.57 &&  ak8pNMgt40_phi[0] > -0.87))} $MC{year !=2018 || 0.3}
+
+
 
 
 dileptrg: Trigger_2l ;           Disable=True
