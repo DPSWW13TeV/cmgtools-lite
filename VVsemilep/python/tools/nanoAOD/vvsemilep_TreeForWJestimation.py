@@ -110,7 +110,7 @@ class vvsemilep_TreeForWJestimation(Module):
             vetoHEM = vetofj or vetoel;
             if (vetoHEM):
                 if (isData):
-                    if(event.run > 319077): 	weight=0;    
+                    if(run > 319077): 	weight=0;    
                     else:	weight=1.0;
                 else:      weight=0.35; 
             else:	weight=1.0; 
