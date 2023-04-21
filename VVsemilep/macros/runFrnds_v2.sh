@@ -89,9 +89,14 @@ step2)
 
 wjet)	
 	
-	${BCORE}testAM/  ${CMGT} wvsemilep_tree  -N 5000 -d WWTo1L1Nu2Q --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/2_recl/{cname}_Friend.root  -F Friends ${Parent}/ak8VtaggedV1/{cname}_Friend.root -c 1 
-	#${nEvt} --dm .*aTGCmWV.*  -q condor --maxruntime 180 --log $PWD/logs #--de .*Run.* -q condor --maxruntime 100 --log $PWD/logs # --de .*Run.*
+	${BCORE}testAM/  ${CMGT} wvsemilep_tree  -N ${nEvt} --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/2_recl/{cname}_Friend.root  -F Friends ${Parent}/ak8VtaggedV1/{cname}_Friend.root  -q condor --maxruntime 200 --log $PWD/logs --de .*aTGC.* #--de .*Run.* -q condor --maxruntime 100 --log $PWD/logs # --de .*Run.*
 	;;
+
+whad)
+	${BCORE}genInfo/  ${CMGT} whad_info  -N ${nEvt} -q condor --maxruntime 200 --log $PWD/logs -d WWTo1L1Nu2Q #--dm .*aTGCmWV.* #--de .*Run.* -q condor --maxruntime 100 --log $PWD/logs # --de .*Run.*
+	;; #-d WWTo1L1Nu2Q -c 1 #
+
+
 *)
 	echo "enter a valid opt"
 	;;

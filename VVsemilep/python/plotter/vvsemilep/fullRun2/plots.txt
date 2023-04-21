@@ -2,6 +2,17 @@
 
 #########################vvsemilep vars 
 
+genw_costcm : genw_costcm: 20,-1.2,1.2; XTitle="cos #theta\_{CM}", IncludeOverflows=False, MoreY=1.2                                        
+genw_costcs : genw_costcs: 20,-1.2,1.2; XTitle="cos #theta\_{CS}", IncludeOverflows=False, MoreY=1.2              
+genw_cost2d : genw_cost2d: 20,-1.2,1.2; XTitle="cost2d", IncludeOverflows=False, MoreY=1.2                                       
+genw_phics : genw_phics: 35,0,7.0; XTitle="#phi\_CS", IncludeOverflows=False, MoreY=1.2                                       
+genw_mt   : genw_mt: 100,0,2000; XTitle="mtW", IncludeOverflows=False, MoreY=1.2                                             
+genw_pt   : genw_pt: 100,0,2000; XTitle="ptW", IncludeOverflows=False, MoreY=1.2   
+genw_eta  : genw_eta: 48,-6.0,6.0; XTitle="W eta", IncludeOverflows=False, MoreY=1.2                                            
+genw_y    : genw_y: 48,-6.0,6.0; XTitle="W rapidity", IncludeOverflows=False, MoreY=1.2                                              
+recoil_x  : recoil_x : 100,-20,20; XTitle="ux", IncludeOverflows=False, MoreY=1.2                  
+recoil_y  : recoil_y : 100,-20,20; XTitle="uy", IncludeOverflows=False, MoreY=1.2                  
+
 
 sumBoosted : Sum$(( (ak8pNMgt40_particleNetMD_Xcc+ak8pNMgt40_particleNetMD_Xqq)/(ak8pNMgt40_particleNetMD_Xcc+ak8pNMgt40_particleNetMD_Xqq+ak8pNMgt40_particleNetMD_QCD)) > 0.85)  : [0,1,2,3]; XTitle="cutval", IncludeOverflows=False, MoreY=2.0
 

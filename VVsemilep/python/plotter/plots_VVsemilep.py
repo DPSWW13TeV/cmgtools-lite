@@ -33,7 +33,7 @@ theWVultimateset=['nJet30_Recl','nBJetMedium30_Recl','FatJet1_sDrop_mass','FatJe
 topCR=['FatJet1_sDrop_mass','FatJet1_pNet_mass','mWV_typ0_pmet_boosted','puppimet','puppimetphi','lep1_pt','sumBoosted','FatJet1_pNetMD_Wtagscore','nFatJet','FatJet1_pt']
 ak4jetvars = ['nBJetLoose30_Recl,','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt']#'htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1']#'Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl',','htJet25j_Recl','mhtJet25_Recl',
 
-MConly     = ['nGenJetAK8','nGenJetAK8_ptgtp2k','GenJetAK8_pt','GenJetAK8_mass','GenmWV_typ0_pmet_boosted','GenDressedLeptonpt','GenMETphi','GenMET','Genptlepmet','Genptlepfj','Genmlepfj']#'Mttbar']#'sum_ttbar','pdgid1','pdgid2']#,'LHE_HT']#,'LHE_HT_log','LHE_HT_lin']#,'Jet1_hadronFlavour','Jet1_partonFlavour','Jet2_hadronFlavour','Jet2_partonFlavour']
+MConly     = ['genw_costcm','genw_costcs','genw_cost2d','genw_phics','genw_mt','genw_pt','genw_eta','genw_y','recoil_x','nGenJetAK8','nGenJetAK8_ptgtp2k','GenJetAK8_pt','GenJetAK8_mass','GenmWV_typ0_pmet_boosted','GenDressedLeptonpt','GenMETphi','GenMET','Genptlepmet','Genptlepfj','Genmlepfj','recoil_y']#'Mttbar']#'sum_ttbar','pdgid1','pdgid2']#,'LHE_HT']#,'LHE_HT_log','LHE_HT_lin']#,'Jet1_hadronFlavour','Jet1_partonFlavour','Jet2_hadronFlavour','Jet2_partonFlavour']
 dRchecks   = ['dR','dRfjj','dRjj','dRfjlep']
 moreak8jetvars = ['dphifjmet','dphifjlep','nFatJet_wtagged','FatJet1_tau21','FatJet1_sDrop_mass','FatJet1_pNet_mass','FatJet1_pt','FatJet1_pNetMD_Wtag','FatJet1_muonIdx3SJ_wtag','FatJet1_electronIdx3SJ_wtag','FatJet1_pNetMD_Wtag','FatJet1_eta','FatJet1_n2b1','FatJet1_n3b1','FatJet1_particleNetMD_QCD','FatJet1_particleNetMD_Xbb','FatJet1_particleNetMD_Xqq','FatJet1_particleNet_QCD','FatJet1_particleNet_WvsQCD','FatJet1_tau21','FatJet1_tau21_tau32','FatJet1_area','FatJet1_btagCSVV2','FatJet1_btagDDBvLV2','FatJet1_btagDeepB','FatJet1_deepTagMD_ZbbvsQCD','FatJet1_deepTagMD_ZvsQCD','FatJet1_deepTagMD_bbvsLight','FatJet1_deepTag_QCD','FatJet1_deepTag_QCDothers','FatJet1_particleNet_ZvsQCD','FatJet1_tau1','FatJet1_tau2','FatJet1_tau3','FatJet1_tau4','FatJet1_hadronFlavour','FatJet1_nBHadrons','FatJet1_nCHadrons','FatJet1_tau32','FatJet1_tau42']
 
@@ -287,7 +287,7 @@ def alphaRatio(year,nLep,lepflav,finalState,applylepSFs,postfix,plotvars):
 def makesimpleplots(year,useDressed=True):
     #baseDir = '/eos/cms/store/cmst3/group/dpsww/testWJ_htbinned/'
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    MCfriends   = [] #'1_toppT_rw']
+    MCfriends   = ['genInfo'] #'1_toppT_rw']
     Datafriends = []
     friends     = []
     targetdir = '/eos/user/a/anmehta/www/VVsemilep/GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') )
@@ -296,13 +296,13 @@ def makesimpleplots(year,useDressed=True):
     fplots      = 'vvsemilep/fullRun2/plots.txt'
     fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep_{cf}.txt'.format(cf='gen' if not useDressed else 'dressed' )
     bareNano    = False
-    cutFlow     = True
-    processes   = ['WW','aTGC']#'ttmtt1ktoinf','ttmttp7kto1k','Rwtttsemi']#'ttsemi']
+    cutFlow     = False
+    processes   = ['WW','aTGC','aTGC_61']#'ttmtt1ktoinf','ttmttp7kto1k','Rwtttsemi']#'ttsemi']
     #'WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT80','WJetsHT60','WJetsHT40','WJetsHT20']
     #cuts_onelep   = ['singlelep']
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
 
-    showratio=False
+    showratio=True
     applylepSFs=False
     nLep=1
     plotvars   = MConly #dressedLepvars if useDressed else barelepvars 
@@ -311,7 +311,7 @@ def makesimpleplots(year,useDressed=True):
     ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  1.5'
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
-    anything = ' --showRatio --plotmode norm  --ratioNums aTGC --ratioDen WW --ratioYLabel=aTGC/WW ' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
+    anything = ' --showRatio --plotmode norm  --ratioNums aTGC,aTGC_61 --ratioDen WW --ratioYLabel=aTGC/WW ' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
     extraopts = ratio + spam + legends +  anything
     makeplots  = ['{}'.format(a)  for a in plotvars]
     applypNetSFs=False

@@ -374,6 +374,9 @@ wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,
                                                 '(event.run ==1 or event.Flag_eeBadScFilter)         '
 ])
 
+from CMGTools.VVsemilep.tools.nanoAOD.genFriendProducer import genFriendProducer
+whad_info = lambda : genFriendProducer()
+
 # scaleFactorSequence_allVars_2016 = [btagSF2016_dj_allVars,bTagSFs_allvars] 
 # scaleFactorSequence_allVars_2017 = [btagSF2017_dj_allVars,bTagSFs_allvars] 
 # scaleFactorSequence_allVars_2018 = [btagSF2018_dj_allVars,bTagSFs_allvars]
