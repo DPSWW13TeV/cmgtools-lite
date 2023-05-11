@@ -122,7 +122,7 @@ def smoothBFlav(jetpt,ptmin,ptmax,year, subera,scale_loose=1.0):
 
 
 
-jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year","HEMIssue"]] + ['jer%d'%j for j in range(6)]
+jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year"]] + ['jer%d'%j for j in range(6)] #,"HEMIssue"]
 from CMGTools.VVsemilep.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning
 from CMGTools.VVsemilep.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
 recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
@@ -347,13 +347,13 @@ scaleFactorSequence_2016    = [btagSF2016_dj,bTagSFs]
 scaleFactorSequence_2017    = [btagSF2017_dj,bTagSFs] 
 scaleFactorSequence_2018    = [btagSF2018_dj,bTagSFs]
 
+#from CMGTools.VVsemilep.tools.nanoAOD.saveVtaggedJet import saveVtaggedJet
+#taggedfj      = lambda : saveVtaggedJet(isMC = True)
+#taggedfj_data = lambda : saveVtaggedJet(isMC = False)
+
 from CMGTools.VVsemilep.tools.nanoAOD.saveVtaggedJet import saveVtaggedJet
-taggedfj      = lambda : saveVtaggedJet(isMC = True)
-taggedfj_data = lambda : saveVtaggedJet(isMC = False)
-
-from CMGTools.VVsemilep.tools.nanoAOD.saveVtaggedJetV1 import saveVtaggedJetV1
-taggedfjvars           = lambda : saveVtaggedJetV1(isMC = True, jecs = jevariations)
-
+taggedfj           = lambda : saveVtaggedJet(isMC = True, jecs = jevariations)
+taggedfj_data           = lambda : saveVtaggedJet(isMC = False)
 
 
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import vvsemilep_TreeForWJestimation

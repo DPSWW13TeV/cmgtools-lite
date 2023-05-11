@@ -351,6 +351,16 @@ WWTo1L1Nu2Q           = kreator.makeMCComponent("WWTo1L1Nu2Q","/WWTo1L1Nu2Q_4f_T
 
 basepath_eos="/eos/cms/store/group/phys_smp/ec/anmehta/Combined/"
 
+WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX   = kreator.makeMCComponent('WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.957e+01)
+
+WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX.files   = [os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_hadded",x))]
+
+WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX   = kreator.makeMCComponent('WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.927e+01)
+
+WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX.files   = [os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_hadded",x))]
+
+
+
 WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   = kreator.makeMCComponent('WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",5.401e-01)
 
 WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600.files   = [os.path.join(basepath_eos,"WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-150to600_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x))]
@@ -413,7 +423,7 @@ WmWp_aTGCmWV800toInf = kreator.makeMCComponent("WmWp_aTGCmWV800toInf","/WZTo1L1N
 
 
 
-basepath_private = "/eos/cms/store/cmst3/group/dpsww/WZToLNuQQ01j_5f_amcatnloFxFx_nanov9UL2018/"
+basepath_private = "/eos/cms/store/group/phys_smp/anmehta/WZToLNuQQ01j_5f_amcatnloFxFx_nanov9UL2018/"
 WZToLNuQQ01j_5f_amcatnloFxFx    = kreator.makeMCComponent("WZToLNuQQ01j_5f_amcatnloFxFx","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
 WZToLNuQQ01j_5f_amcatnloFxFx.files   = [basepath_private+x for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x))]
 
@@ -421,7 +431,6 @@ WZToLNuQQ01j_5f_amcatnloFxFx.files   = [basepath_private+x for x in os.listdir(b
 
 
 DiBosons = [
-
     WW,
     WZ, 
     WGToLNuG ,
@@ -455,6 +464,8 @@ DiBosons = [
     WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600,
     WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800,
     WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf,
+    WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX,
+    WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX,
   
 ]
 

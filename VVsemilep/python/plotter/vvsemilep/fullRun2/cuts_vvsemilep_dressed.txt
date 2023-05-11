@@ -1,16 +1,19 @@
 alwaystrue: 1
 singlelep   : nGenDressedLepton == 1 
-leadlep     : GenDressedLepton_pt[0] > 40
-etacutl1    : abs(GenDressedLepton_eta[0]) < if3(abs(GenDressedLepton_pdgId[0])==13,2.4,2.5)
+leadlep     : GenDressedLepton_pt[0] > 40 ; Disable=True
+etacutl1    : abs(GenDressedLepton_eta[0]) < if3(abs(GenDressedLepton_pdgId[0])==13,2.4,2.5) ; Disable=True
 etael1      : (abs(GenDressedLepton_pdgId[0]) == 13 || (abs(GenDressedLepton_eta[0]) < 1.442 || abs(GenDressedLepton_eta[0]) > 1.556 && abs(GenDressedLepton_pdgId[0])==11)); Disable=True
-fatjet      : Sum$(GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4 && GenJetAK8_mass > 40) > 0 
-leadfatjet      : GenJetAK8_pt[0] > 200 && abs(GenJetAK8_eta[0]) < 2.4 && GenJetAK8_mass[0] > 40
-ptWlep:  pt_2(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi) > 150
-mWV : if3(abs(GenDressedLepton_pdgId[0]) == 13, mass_WV_mu(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0),mass_WV_el(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0) ) > 900
-WhadpT : genw_pt > 200
-##ttbar       : nGentops ==2
-##ttbar       : Sum$(Genalltops_status==22) ==2
-#nQ          : Sum$(abs(LHEPart_pdgId) < 6) > 2 
+fatjet      : Sum$(GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4 && GenJetAK8_mass > 40) > 0  ; Disable=True
+leadfatjet      : GenJetAK8_pt[0] > 200 && abs(GenJetAK8_eta[0]) < 2.4 && GenJetAK8_mass[0] > 40 ; Disable=True
+
+ptWlep:  pt_2(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi) > 150 ; Disable=True
+
+mWV : if3(abs(GenDressedLepton_pdgId[0]) == 13, mass_WV_mu(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0),mass_WV_el(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0) ) > 900; Disable=True
+
+WhadpT : genwhad_pt > 200 ; Disable=True
+
+ttbar       : Sum$(Genalltops_status==22) ==2 ; Disable=True
+nQ          : Sum$(abs(LHEPart_pdgId) < 6) > 2 ; Disable=True
 
 ##nLep : Sum$(abs(LHEPart_pdgId)> 10 && abs(LHEPart_pdgId)<17) == 2
 OppSign_dressed     : GenDressedLepton_pdgId[0]*GenDressedLepton_pdgId[1] < 0 ; Disable=True

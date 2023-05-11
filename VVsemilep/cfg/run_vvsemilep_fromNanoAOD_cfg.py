@@ -77,12 +77,15 @@ if analysis == "main":
         #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600"
         #".*_aTGC_pTW.*"
         #        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600",
-        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",#problem
+        #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",#problem
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
         #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf"
         #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
         #        "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800"
         #".*_aTGC_pTZ.*"
+        #".*aTGC.*"
+        "WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX",
+        "WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX"
      ])
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
     DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else

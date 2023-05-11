@@ -9,7 +9,8 @@ def _runIt(args):
         (mysource,myoutpath,mycut,options) = args
         pp = PostProcessor(myoutpath,[mysource], postfix='',
                 cut = mycut, 
-                saveSelectionElist = options.elist,
+                saveSelectionElist = False, #options.elist,
+                fwkJobReport=True,           
                 outputbranchsel = options.branchsel_out, 
                 compression = options.compression,
                 justcount = options.justcount,

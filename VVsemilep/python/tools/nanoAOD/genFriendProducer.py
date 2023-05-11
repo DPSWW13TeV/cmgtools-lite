@@ -29,7 +29,8 @@ def findW(lhe_parts):
             charge_i=pdgIds[abs(lhe_parts[i].pdgId)]*abs(lhe_parts[i].pdgId)/lhe_parts[i].pdgId
             charge_j=pdgIds[abs(lhe_parts[j].pdgId)]*abs(lhe_parts[j].pdgId)/lhe_parts[j].pdgId
             chargeW=charge_i+charge_j
-            if (abs(lhe_parts[i].pdgId) != abs(lhe_parts[j].pdgId) and chargeW != 0 and lhe_parts[i].pdgId*lhe_parts[j].pdgId < 0):
+            if (chargeW != 0 and lhe_parts[i].pdgId*lhe_parts[j].pdgId < 0 and  (lhe_parts[i].pdgId != lhe_parts[j].pdgId ) and ( (abs(lhe_parts[i].pdgId)%2 == 0 and abs(lhe_parts[j].pdgId)%2 != 0) or (abs(lhe_parts[j].pdgId)%2 == 0 and abs(lhe_parts[i].pdgId)%2 != 0) )): 
+            #    if (min(abs(lhe_parts[i].pdgId),abs(lhe_parts[j].pdgId)) > 10 or abs(abs(lhe_parts[i].pdgId)-abs(lhe_parts[j].pdgId)) !=1 ):
                 foundWplus = True if chargeW > 0 else False
                 foundWminus = True if chargeW < 0 else False
                 q1_index = i if lhe_parts[i].pdgId >0 else j
@@ -128,6 +129,10 @@ class genFriendProducer(Module):
 
         self.out.branch("recoil_wlep_x","F")
         self.out.branch("recoil_wlep_y","F")
+        self.out.branch("dR","F")
+        self.out.branch("dphi","F")
+        self.out.branch("dR_q","F")
+        self.out.branch("dphi_q","F")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -136,14 +141,26 @@ class genFriendProducer(Module):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         Quarks = filter(outgoingQs, Collection(event,"LHEPart"))
         Leptons= filter(outgoingLeptons, Collection(event,"LHEPart"))
-
+        
         if len(Quarks)+len(Leptons) < 4: return False
+        dR=0.0;dRmin=99;dphi=-999.0
+        for i,j in enumerate(Quarks):
+            for k,l in enumerate(Quarks):
+                if i==k: 
+                    continue
+                else:
+                    dphi=abs(deltaPhi(j.phi,l.phi))
+                    dR=deltaR(j.eta,j.phi,l.eta,l.phi)
+                    if dR < dRmin:
+                        dRmin=dR
+        self.out.fillBranch("dphi",dphi)
+        self.out.fillBranch("dR",dRmin)
         l1,l2,charge_Wlep=findW(Leptons) #lepton (el-,mu-,tau-) & neu have pdgid >0 #first particle is the one with a negatively charged lepton or a quark or a neu 
         q1,q2,charge_Whad=findW(Quarks) #qbars have negative pdgIds
   
-        #print "found these leps",l1,l2, " and quarks",q1,q2
+        #print "found these leps indices ",l1,l2, " and quarks indices",q1,q2
         if len({l1,l2})+len({q1,q2}) < 4 : return False
-        #print "set",({l1,l2,q1,q2})
+
         # convention for phiCS: use l- direction for W-, use neutrino for W+
         #neu has pdgId higher than lep
         (Lplus,Lminus)=(None,None)
@@ -173,7 +190,8 @@ class genFriendProducer(Module):
         # convention for phiCS: use l- direction for W-, use neutrino for W+
         #W+ couples with q(left handed) and W- with qbar (right handed)
         #(lplus,lminus) = (neutrinos[0],dressedLeptons[0]) if lep_pdgid[0]<0 else (dressedLeptons[0],neutrinos[0])
-
+        self.out.fillBranch("dphi_q",abs(deltaPhi(q.Phi(),qbar.Phi())))
+        self.out.fillBranch("dR_q",deltaR(q.Eta(),q.Phi(),qbar.Eta(),qbar.Phi()))
         self.out.fillBranch("genwhad_costcm",self.cosThetaCM(q,qbar))
         self.out.fillBranch("genwhad_costcs",self.cosThetaCS(q,qbar))
         self.out.fillBranch("genwhad_cost2d",self.cosTheta2D(genwhad,q))

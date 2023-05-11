@@ -2,34 +2,45 @@
 
 #########################vvsemilep vars 
 
-genw_costcm : genw_costcm: 20,-1.2,1.2; XTitle="cos #theta\_{CM}", IncludeOverflows=False, MoreY=1.2                                        
-genw_costcs : genw_costcs: 20,-1.2,1.2; XTitle="cos #theta\_{CS}", IncludeOverflows=False, MoreY=1.2              
-genw_cost2d : genw_cost2d: 20,-1.2,1.2; XTitle="cost2d", IncludeOverflows=False, MoreY=1.2                                       
-genw_phics : genw_phics: 35,0,7.0; XTitle="#phi\_CS", IncludeOverflows=False, MoreY=1.2                                       
-genw_mt   : genw_mt: 100,0,2000; XTitle="mtW", IncludeOverflows=False, MoreY=1.2                                             
-genw_pt   : genw_pt: 100,0,2000; XTitle="ptW", IncludeOverflows=False, MoreY=1.2   
-genw_eta  : genw_eta: 48,-6.0,6.0; XTitle="W eta", IncludeOverflows=False, MoreY=1.2                                            
-genw_y    : genw_y: 48,-6.0,6.0; XTitle="W rapidity", IncludeOverflows=False, MoreY=1.2                                              
-recoil_x  : recoil_x : 100,-20,20; XTitle="ux", IncludeOverflows=False, MoreY=1.2                  
-recoil_y  : recoil_y : 100,-20,20; XTitle="uy", IncludeOverflows=False, MoreY=1.2                  
+genwlep_costcm : genwlep_costcm: 20,-1.05,1.05; XTitle="cos#theta_{CM}(W_{lep.})", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                                        
+genwlep_costcs : genwlep_costcs: 20,-1.05,1.05; XTitle="cos#theta_{CS}(W_{lep.})", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2              
+genwlep_cost2d : genwlep_cost2d: 20,-1.05,1.05; XTitle="cost2d(W_{lep.})", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                                       
+genwlep_phics : genwlep_phics: 24,0,6.0; XTitle="#phi_{CS}(W_{lep.})", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                                       
+genwlep_mt   : genwlep_mt: 30,0,600; XTitle="m_{T}(W_{lep.}) (GeV)", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                                             
+genwlep_pt   : genwlep_pt: 50,0,2000; XTitle="p_{T}(W_{lep.}) (GeV)", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2   
+genwlep_eta  : genwlep_eta: 20,-5.0,5.0; XTitle="#eta (W_{lep.})", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                                            
+genwlep_y    : genwlep_y: 20,-5.0,5.0; XTitle="y (W_{lep.})", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                                              
+recoil_wlep_x  : recoil_wlep_x : 100,-20,20; XTitle="ux", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                  
+recoil_wlep_y  : recoil_wlep_y : 100,-20,20; XTitle="uy", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                  
+
+genwhad_costcm : genwhad_costcm: 20,-1.05,1.05; XTitle="cos#theta_{CM}(W_{had.})", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                                        
+genwhad_costcs : genwhad_costcs: 20,-1.05,1.05; XTitle="cos#theta_{CS}(W_{had.})", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2              
+genwhad_cost2d : genwhad_cost2d: 20,-1.05,1.05; XTitle="cost2d(W_{had.})", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                                       
+genwhad_phics : genwhad_phics: 24,0,6.0; XTitle="#phi_CS(W_{had.})", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                                       
+genwhad_mt   : genwhad_mt: 30,0,600; XTitle="m_{T}(W_{had.}) (GeV)", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                                             
+genwhad_pt   : genwhad_pt: 50,0,2000; XTitle="p_{T} (W_{had.}) (GeV)", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2   
+genwhad_eta  : genwhad_eta: 20,-5.0,5.0; XTitle="#eta (W_{had.})", IncludeOverflows=False, YTitle="Arbitrary units", MoreY=1.2                                            
+genwhad_y    : genwhad_y: 20,-5.0,5.0; XTitle="y (W_{had.})", IncludeOverflows=False, MoreY=1.2 , YTitle="Arbitrary units"                      
+recoil_whad_x  : recoil_whad_x : 100,-20,20; XTitle="ux", IncludeOverflows=False, MoreY=1.2  , YTitle="Arbitrary units"                
+recoil_whad_y  : recoil_whad_y : 100,-20,20; XTitle="uy", IncludeOverflows=False, MoreY=1.2 , YTitle="Arbitrary units"                 
 
 
-sumBoosted : Sum$(( (ak8pNMgt40_particleNetMD_Xcc+ak8pNMgt40_particleNetMD_Xqq)/(ak8pNMgt40_particleNetMD_Xcc+ak8pNMgt40_particleNetMD_Xqq+ak8pNMgt40_particleNetMD_QCD)) > 0.85)  : [0,1,2,3]; XTitle="cutval", IncludeOverflows=False, MoreY=2.0
+sumBoosted : Sum$(( (ak8pNMgt40_particleNetMD_Xcc+ak8pNMgt40_particleNetMD_Xqq)/(ak8pNMgt40_particleNetMD_Xcc+ak8pNMgt40_particleNetMD_Xqq+ak8pNMgt40_particleNetMD_QCD)) > 0.85)  : [0,1,2,3]; XTitle="cutval", IncludeOverflows=False, MoreY=2.0, YTitle="Arbitrary units"
 
-pdgid1 : abs(Gentops_pdgId[0]) : 8,0,8; XTitle="pdgid1", IncludeOverflows=False, MoreY=1.2
-pdgid2 : abs(Gentops_pdgId[1]) : 8,0,8; XTitle="pdgid2", IncludeOverflows=False, MoreY=1.2
+pdgid1 : abs(Gentops_pdgId[0]) : 8,0,8; XTitle="pdgid1", IncludeOverflows=False, MoreY=1.2, YTitle="Arbitrary units"
+pdgid2 : abs(Gentops_pdgId[1]) : 8,0,8; XTitle="pdgid2", IncludeOverflows=False, MoreY=1.2, YTitle="Arbitrary units"
 
-nGenJetAK8 : nGenJetAK8 : [0,1,2,3,4,5]; XTitle="nGenJetAK8", IncludeOverflows=False, MoreY=1.1
-nGenJetAK8_ptgtp2k : Sum$(GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4)	: [0,1,2,3,4,5]; XTitle="nGenJetAK8", IncludeOverflows=False, MoreY=1.1
-GenJetAK8_pt : if3((GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4),GenJetAK8_pt,-999): 75,0,1500; XTitle="fatjet p_{T} (GeV)", Logy, IncludeOverflows=False , MoreY=5
-GenJetAK8_mass : if3((GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4 && GenJetAK8_mass > 40),GenJetAK8_mass,-999): 30,0,300; XTitle="fatjet mass(GeV)", Logy, IncludeOverflows=False , MoreY=10
-GenMET : GenMET_pt : 50,0,500 ; XTitle="p_{T}^{miss} (GeV)",MoreY=10, Logy
-GenMETphi : GenMET_phi  : 32,-3.2,3.2 ; XTitle="p_{T}^{miss} (#phi)",MoreY=1.85
-GenDressedLeptonpt : GenDressedLepton_pt : 50,0,500; XTitle="lepton p_{T} (GeV)",IncludeOverflows=False , Logy, MoreY=10
+#nGenJetAK8 : nGenJetAK8 : [0,1,2,3,4,5,6,7]; XTitle="nGenJetAK8", IncludeOverflows=False, MoreY=1.1, YTitle="Arbitrary units"
+nGenJetAK8: Sum$(GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4)	: [0,1,2,3,4,5,6,7]; XTitle="nGenJetAK8", IncludeOverflows=False, MoreY=1.1, YTitle="Arbitrary units"
+GenJetAK8_pt : if3((GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4),GenJetAK8_pt,-999): 50,0,2000; XTitle="Genak8jet p_{T} (GeV)", Logy, IncludeOverflows=False , MoreY=5, YTitle="Arbitrary units"
+GenJetAK8_mass : if3((GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4 && GenJetAK8_mass > 40),GenJetAK8_mass,-999): 30,0,500; XTitle="Genak8jet mass (GeV)", Logy, IncludeOverflows=False , MoreY=10, YTitle="Arbitrary units"
+GenMET : GenMET_pt : 50,0,2000 ; XTitle="Gen. p_{T}^{miss} (GeV)",MoreY=10, Logy, YTitle="Arbitrary units"
+GenMETphi : GenMET_phi  : 16,-3.2,3.2 ; XTitle="Gen. p_{T}^{miss} (#phi)",MoreY=1.85, YTitle="Arbitrary units"
+GenDressedLeptonpt : GenDressedLepton_pt : 50,0,2000; XTitle="Dressed lep. p_{T} (GeV)",IncludeOverflows=False , Logy, MoreY=10, YTitle="Arbitrary units"
 
-Genptlepmet  : pt_2(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi) : 100,0,1000; XTitle="pTlepmet", IncludeOverflows=False, Logy, MoreY=10
-Genptlepfj : pt_2(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenJetAK8_pt[0],GenJetAK8_phi[0]) : 100,0,1000; XTitle="pTlepfj", Logy, IncludeOverflows=False, MoreY=10
-Genmlepfj : mass_2(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenDressedLepton_pdgId[0],GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0]) : 100,0,1000; XTitle="mlepfj", Logy, IncludeOverflows=False, MoreY=10
+Genptlepmet  : pt_2(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi) : 50,0,2000; XTitle="pTlepmet", IncludeOverflows=False, Logy, MoreY=10, YTitle="Arbitrary units"
+Genptlepfj : pt_2(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenJetAK8_pt[0],GenJetAK8_phi[0]) : 50,0,2000; XTitle="pTlepfj", Logy, IncludeOverflows=False, MoreY=10, YTitle="Arbitrary units"
+Genmlepfj : mass_2(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenDressedLepton_pdgId[0],GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0]) : 50,0,2000; XTitle="mlepfj", Logy, IncludeOverflows=False, MoreY=10, YTitle="Arbitrary units"
 
 GenmWV_typ0_pmet_boosted : if3(abs(GenDressedLepton_pdgId[0]) == 13, mass_WV_mu(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0),mass_WV_el(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0) ): [50,   61,   74,   88,   103,  119,  137,  156,  176,197,  220,  244,  270,  296, 325,  354,  386,  419,  453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1058,1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558]; XTitle="mWV (GeV)", Logy, MoreY=10, IncludeOverflows=False, YTitle="Arbitrary units"
 
@@ -203,6 +214,8 @@ dRfjj:  deltaR(JetSel1_eta,JetSel1_phi,ak8pNMgt40_eta[0],ak8pNMgt40_phi[0])  : 9
 LHE_HT : LHE_HT : 100,0,5000 ; XTitle='LHE_HT',Logy, MoreY=200, IncludeOverflows=False
 LHE_HT_log : LHE_HT : 100,0,5000 ; XTitle='LHE_HT',Logy, Logx,MoreY=100, IncludeOverflows=False
 LHE_HT_lin : LHE_HT : 100,0,5000 ; XTitle='LHE_HT_lin',MoreY=2.0, IncludeOverflows=False
+
+LHE_Vpt : LHE_Vpt : 100,0,3500 ; XTitle='LHE_Vpt',Logy,MoreY=150, IncludeOverflows=False
 
 htJet30          : Sum$(JetSel_Recl_pt)       : 150,0,1500 ; XTitle='ht(jets)', Logy,IncludeOverflows=False
 htFatJet200      : Sum$(ak8pNMgt40_pt)       : 150,0,1500 ; XTitle='ht(fatjets)', Logy,IncludeOverflows=False

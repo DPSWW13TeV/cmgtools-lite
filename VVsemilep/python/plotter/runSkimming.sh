@@ -1,7 +1,7 @@
 #!/bin/bash
 baseDir='/eos/cms/store/cmst3/group/dpsww/'
-Trees='testTT/' #'vvsemilep/' 
-skimmedTrees='vvsemilep_skimmed' 
+Trees='NanoTrees_v9_vvsemilep_06012023/' #'vvsemilep/' 
+skimmedTrees='NanoTrees_v9_vvsemilep_skimmed' 
 Friends_recl_unskimmed='2_recl'
 
 [ ! -d "$skimmedTrees" ] && mkdir -p "$skimmedTrees"
@@ -11,7 +11,8 @@ frnds=("dpsbdt_neu_ssnoeebkg_afacdps_unclEn" "dpsbdt_neu_ssnoeebkg_afacdps")
 for yr in "${years[@]}"
 do
     echo "running skimming for $yr"
-    python skimTreesNew.py mca-skim-${yr}.txt vvsemilep/fullRun2/skim_1l_2los_FO.txt ${baseDir}/${skimmedTrees}/${yr}/ -P ${baseDir}/${Trees}/${yr} --Fs ${baseDir}/${Trees}/${yr}/${Friends_recl_unskimmed}  --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  -j 1  --tree NanoAOD --skim-friends
+
+    python skimTreesNew.py mca-skim-${yr}.txt vvsemilep/fullRun2/skim_1l_2los_FO.txt ${baseDir}/${skimmedTrees}/${yr}/ -P ${baseDir}/${Trees}/${yr} --Fs ${baseDir}/${Trees}/${yr}/${Friends_recl_unskimmed}  --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  -j 1  --tree NanoAOD #--skim-friends
 
     #for frnd in "${frnds[@]}"
     #do
