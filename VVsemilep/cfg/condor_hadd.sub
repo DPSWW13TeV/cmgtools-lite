@@ -1,0 +1,53 @@
+Executable = dummy_hadd.sh
+use_x509userproxy = true
+Log        = logs/log_running_$(ProcId)_all.log
+Output     = logs/log_running_$(ProcId)_all.out
+Error      = logs/log_running_$(ProcId)_all.error
++JobFlavour = "workday"
+getenv = True
+
+
+arguments=WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX
+queue 
+
+arguments=WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX
+queue
+
+#arguments = ttsemi/TTSemi_pow_part3.root TTSemi_pow_part16.root TTSemi_pow_part17.root
+#queue 1
+#arguments = ttsemi/TTSemi_pow_part4.root TTSemi_pow_part18.root TTSemi_pow_part20.root
+#queue 1
+#arguments = ttsemi/TTSemi_pow_part5.root TTSemi_pow_part10.root TTSemi_pow_part15.root
+#queue 1
+#arguments = ttsemi/TTSemi_pow_part6.root TTSemi_pow_part7.root TTSemi_pow_part6.root
+#queue 1
+#arguments = ttsemi/TTSemi_pow_part7.root TTSemi_pow_part5.root TTSemi_pow_part4.root
+#queue 1
+#arguments = ttsemi/TTSemi_pow_part8.root TTSemi_pow_part8.root TTSemi_pow_part19.root
+#queue 1
+#arguments = ttsemi/TTSemi_pow_part9.root TTSemi_pow_part12.root TTSemi_pow_part13.root TTSemi_pow_part9.root
+#queue 1
+
+
+#arguments = WZTo2Q2L.root  WZTo2Q2L_part0.root  WZTo2Q2L_part1.root
+#queue 1
+#arguments = ZZTo2Q2L.root ZZTo2Q2L_part0.root  ZZTo2Q2L_part1.root
+#queue 1
+#arguments = T_tch.root T_tch_part0.root  T_tch_part1.root   T_tch_part2.root
+#queue 1
+#arguments = jobs_hadd
+#queue 1
+#arguments =  TTSemi_pow.root  TTSemi_pow_part0.root  TTSemi_pow_part1.root  TTSemi_pow_part2.root  
+#queue 1
+##amarguments = WJetsToLNu_HT100to200 WJetsToLNu_HT100to200_part0.root WJetsToLNu_HT100to200_part1.root
+##amqueue 1   
+#arguments = WJetsToLNu_HT200to400 WJetsToLNu_HT200to400_part0.root  WJetsToLNu_HT200to400_part2.root  WJetsToLNu_HT200to400_part4.root WJetsToLNu_HT200to400_part1.root  WJetsToLNu_HT200to400_part3.root  
+#queue 1   
+##amarguments = WJetsToLNu_HT600to800
+##amqueue 1   
+##amarguments = WJetsToLNu_HT800to1p2k
+##amqueue 1
+##amarguments = WJetsToLNu_HT1p2kto2p5k
+##amqueue 1 
+##amarguments = WJetsToLNu_HT400to600
+##amqueue 1   
