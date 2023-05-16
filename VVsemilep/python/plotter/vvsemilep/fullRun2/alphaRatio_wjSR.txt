@@ -1,0 +1,1 @@
+weight: pNetSFMD_WvsQCD(ak8pNMgt40_pt[0],year,suberaId,0)

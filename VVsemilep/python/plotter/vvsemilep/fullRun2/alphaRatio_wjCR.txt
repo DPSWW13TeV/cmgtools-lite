@@ -1,0 +1,1 @@
+weight: ((ak8pNMgt40_particleNet_mass[0] < 65 || (ak8pNMgt40_particleNet_mass[0] > 105 && ak8pNMgt40_particleNet_mass[0] < 150)) )

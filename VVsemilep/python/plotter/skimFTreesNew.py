@@ -6,7 +6,7 @@ parser = OptionParser(usage="%prog [options] skimmed_trees_dir input_friends_dir
 parser.add_option("--pretend",    dest="pretend", default=False, action="store_true",  help="Pretend to skim, don't actually do it") 
 parser.add_option("--verbose",    dest="verbose", default=False, action="store_true",  help="More verbose output") 
 parser.add_option("--elist", dest="elist", type="string", default="skimTrees_elist", help="Name of the skim elist (default: skimTrees_elist)")
-parser.add_option("--new","--skip-existing", dest="skipExisting", default=True, action="store_true",  help="Don't skim samples that already exist in the output directory") 
+parser.add_option("--new","--skip-existing", dest="skipExisting", default=False, action="store_true",  help="Don't skim samples that already exist in the output directory") 
 parser.add_option("--rename", dest="renamePatterns", type="string", default=[], nargs=2, action="append", help="Use --rename from_name to_name to handle cases where a dataset was renamed after skimming; regexp supported (uses re.sub)")
 (options, args) = parser.parse_args()
 

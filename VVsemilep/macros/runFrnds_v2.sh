@@ -59,7 +59,7 @@ npdf)
 
 fjtagged)
 	echo "fjtagged + vars"
-	${BCORE}1_ak8Vtagged  ${CMGT} taggedfj -N ${nEvt} -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root  -q condor --dm .*_aTGC_.* --maxruntime 70 --log $PWD/logs #--de .*Run.*
+	${BCORE}1_ak8Vtagged  ${CMGT} taggedfj -N ${nEvt} -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root #--de .*Run.*
 	#${BCORE}1_ak8Vtagged  ${CMGT} taggedfj_data -N ${nEvt}  -F Friends ${Parent}/2_recl/{cname}_Friend.root --dm .*Run.*   -q condor --maxruntime 70 --log $PWD/logs #
 
 	;;
