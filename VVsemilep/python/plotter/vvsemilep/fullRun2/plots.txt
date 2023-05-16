@@ -63,7 +63,7 @@ sumBoosted_withXbb : Sum$(( (ak8pNMgt40_particleNetMD_Xbb+ak8pNMgt40_particleNet
 
 
 nFatJet              : 	 nak8pNMgt40    : [0,1,2,3] ; XTitle='nfatjets' , MoreY=1.5,IncludeOverflows=False,MoreY=1.5
-FatJet1_pt           :   ak8pNMgt40_pt[0]  : 80,200,1000; XTitle="lead. fatjet p_{T} (GeV)", Logy, IncludeOverflows=False , MoreY=20
+FatJet1_pt           :   ak8pNMgt40_pt[0]  : 90,200,2000; XTitle="lead. fatjet p_{T} (GeV)", Logy, IncludeOverflows=False , MoreY=20
 FatJet1_eta          :   ak8pNMgt40_eta[0]  : 24,-2.4,2.4; XTitle="lead. fatjet #eta", IncludeOverflows=False, MoreY=1.85
 FatJet1_phi          :   ak8pNMgt40_phi[0]  : 24,-3.2,3.2; XTitle="lead. fatjet #phi", IncludeOverflows=False, MoreY=1.85
 FatJet1_pNet_mass    :   ak8pNMgt40_particleNet_mass[0] : 20,0,200; XTitle="lead. ak8 pNet_mass", Logy, IncludeOverflows=False,MoreY=10
