@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import optparse, subprocess, ROOT, datetime, math, array, copy, os, re, sys
 import numpy as np
-eos='/eos/user/a/anmehta/www/VVsemilep/' ##save plots here
+#eos='/eos/user/a/anmehta/www/VVsemilep/' ##save plots here
+eos='/eos/user/c/ckomjati/www/'
 afs_am=os.getcwd()+'/'
 lumis = {
     '2016APV': '19.5',
@@ -290,7 +291,8 @@ def makesimpleplots(year,useDressed=True):
     MCfriends   = ['genInfo'] #'2_toppT_rw']
     Datafriends = []
     friends     = []
-    targetdir = '/eos/user/a/anmehta/www/VVsemilep/GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') )
+    #targetdir = '/eos/user/a/anmehta/www/VVsemilep/GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') )
+    targetdir = '/eos/user/c/ckomjati/www/GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') )
     fmca        = 'vvsemilep/fullRun2/mca-includes/mca-mc.txt' #mca-semilep-gen.txt'
     fsyst       = ''
     fplots      = 'vvsemilep/fullRun2/plots.txt'
