@@ -175,7 +175,8 @@ class doFit_wj_and_wlvj:
         rrv_mass_lvj.setRange('sig',900,options.mlvj_hi)
 
         #prepare the data and mc files --> set the working directory and the files name
-        self.file_Directory=os.path.join(self.year,"0_wjest") #"/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//"+self.channel+"/";
+        self.file_Directory=os.path.join(self.year,"0_wjest") 
+        self.file1_Directory=os.path.join(self.year,"1_wjest") 
         self.samples={
             'WJets':[wjets],#,printnEvt(fN="WJetsToLNu_H",yr=self.year)],
             'data':[data],#,1],
@@ -184,7 +185,7 @@ class doFit_wj_and_wlvj:
             "WW":[["WWTo1L1Nu2Q"],3393645436],
             "WZ":[["WZToLNuQQ01j_5f_amcatnloFxFx"],41724242]}#stop 24011170135.9
         
-        self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91}
+        self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.75}
 
         #prepare background data and signal samples            
         
@@ -201,7 +202,7 @@ class doFit_wj_and_wlvj:
         self.mean_shift = -1.294
         self.sigma_scale=0.958
 
-        self.wtagger_label        = 'WPL' ##amtagger label
+        self.wtagger_label        = 'WPU' ##amtagger label
         self.PNS = self.PNSWP[self.wtagger_label]
 
         eos='/eos/user/a/anmehta/www/VVsemilep/WJest/%s/%s'%(self.year,date)
@@ -1898,19 +1899,14 @@ objName ==objName_before ):
                 self.get_mj_and_mlvj_dataset_from_file(in_file_name, label)
         else:
                 print "################### get_mj_and_mlvj_dataset : ",in_file_name,"  ",label,"  ##################";
-                treeIn = ROOT.TChain('Friends')
+                treeIn  = ROOT.TChain('Friends')
+                treeIn1 = ROOT.TChain('Friends')
                 for i in self.samples[in_file_name][0]:
                     fileIn_name = str(options.inPath+"/"+self.file_Directory+"/"+i+"_Friend.root");
-                    fIn=ROOT.TFile.Open(fileIn_name)
-                    print "adding fileIn_name",fileIn_name
-                    tree=fIn.Get("Friends");
-                    if not TString(label).Contains('data'):
-                        weight=printnEvt(fN=i,yr=self.year)
-                        tree.SetWeight(1.0/weight)#,"global")
-                        tree.AutoSave()
-                        print "weight %f added to %s",tree.GetWeight(),fileIn_name
-                    fIn.Close()
                     treeIn.Add(fileIn_name)
+                    fileIn1_name = str(options.inPath+"/"+self.file1_Directory+"/"+i+"_Friend.root");
+                    treeIn1.Add(fileIn1_name)
+                treeIn.AddFriend(treeIn1)
                 rrv_mass_j   = self.workspace4fit_.var("rrv_mass_j") #realvar kind #pNet mass
                 rrv_mass_lvj = self.workspace4fit_.var("rrv_mass_lvj")#mWV
                 rrv_weight   = RooRealVar("rrv_weight","rrv_weight",-1000. ,10000000.)
@@ -1953,13 +1949,12 @@ objName ==objName_before ):
                 combData4fit = RooDataSet("combData4fit"+label+"_"+self.channel,"combData4fit"+label+"_"+self.channel,RooArgSet(rrv_mass_lvj, data_category, rrv_weight),RooFit.WeightVar(rrv_weight) );
                 print "###### N entries: ", treeIn.GetEntries()
                 ##"all magic happens here"
-                if not "data" in label: print "per entry $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",treeIn.GetTree().GetWeight()
+                #                if not "data" in label: print "per entry $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",treeIn.GetTree().GetWeight()
                 for i in range(treeIn.GetEntries()):
                     if i % 100000 == 0: print "iEntry: ",i
                     treeIn.GetEntry(i);
-                    
-                    #if not "data" in label: print "per entry $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",treeIn.GetTree().GetWeight()
-                    tmp_scale_to_lumi = 1.0 if "data" in label else treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*lumis[self.year]
+                    tmp_scale_to_lumi = 1.0 if "data" in label else 1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*lumis[self.year]/treeIn.sumw
+                    #print label,"da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum event weight",tmp_scale_to_lumi
                     tmp_jet_mass=treeIn.Selak8Jet_particleNet_mass[0]
                     tmp_jet_pNetscore=treeIn.Selak8Jet_pNetZtagscore[0] 
                     dRfjlep=treeIn.dR_fjlep > 1.6 
@@ -2009,8 +2004,7 @@ objName ==objName_before ):
                             
 
                         #mj spectrum, cut out data in signal region if needed
-                          #datasets for simultaneaous fit in combine
-                          ##sideband lo ##am only FOLLOWING IS DATA
+                        #datasets for simultaneaous fit in combine                          ##sideband lo ##am only FOLLOWING IS DATA
                         if tmp_jet_mass>= self.mj_sideband_lo_min and tmp_jet_mass < self.mj_sideband_lo_max:
                             rrv_mass_j_sb_lo.setVal(tmp_jet_mass)
                             dataset_mj_sb_lo.add(RooArgSet(rrv_mass_j_sb_lo,rrv_mass_lvj), 1)
