@@ -79,7 +79,7 @@ recl_allvars)
 
 wjet)	
 	
-	basecmd="${BCORE}testAM/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/2_recl/{cname}_Friend.root  -F Friends ${Parent}/ak8VtaggedV1/{cname}_Friend.root "
+	basecmd="${BCORE}0_wjest/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/2_recl/{cname}_Friend.root  -F Friends ${Parent}/ak8VtaggedV1/{cname}_Friend.root -d TTSemi_pow_part0 "
 	;;
 
 genInfo)
