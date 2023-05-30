@@ -22,8 +22,12 @@ def printnEvt(fN,yr):
             sumw+=ev.genEventSumw
     #print fN,int(sumw)
     fIn.Close()
-    print fN,int(sumw)
+    print "sample and number of events",fN,int(sumw)
     return int(sumw)
+
+
+
+
 #if __name__ == '__main__':
 ##    parser = optparse.OptionParser(usage='usage: %prog [opts] ', version='%prog 1.0')
 ##    parser.add_option('--drawScans', action='store_true', dest='drawScans'        , default=True, help='overlay shapes for VBS ssWW')
@@ -33,3 +37,7 @@ def printnEvt(fN,yr):
 #    printnEvt(fN,year)
 
 #print fname,int(sumw)
+
+#hadd /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/data_Friend.root /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/*UL18_Friend.root
+#hadd /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/TTSemi_pow_Friend.root /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/TTSemi_pow_part*root
+#mv /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/TTSemi_pow_part* /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/chunks/

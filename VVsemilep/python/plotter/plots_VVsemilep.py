@@ -165,12 +165,12 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 ##################
 def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow):
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
-    showratio    = False
+    fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
+    showratio    = True
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['WJets']#'WV','higgs','QCD','WJets','tt','singletop']#,'aTGC']#,'data'] #'data',if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',['WW','aTGC']#
+    processes    = ['WJets','WV','higgs','QCD','WJets','tt','singletop','data']#,'aTGC']#,'data'] #'data',if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',['WW','aTGC']#
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_boosted = ['singlelep','trigger','ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','etael1']
     cuts_onelep  = ['singlelep','trigger','ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','SR','etael1']#,'bVeto',
@@ -193,7 +193,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     if cutflow: showratio =False; processes.remove('data')
 
     for pR in selection:
-        applypNetSFs=True if 'wjCR' not in pR else False
+        #applypNetSFs=True if 'wjCR' not in pR else False
         exclude = ' --xu CMS_vvsl18_pNetscore' if 'wjCR' not in pR else  ' '
         signal= if3(pR == 'SR',if3(nLep > 1,'--sp ZV','--sp WV'), if3('top' in pR, ' --sp tt --sp singletop', ' --sp WJets'))
         for LF in lepflav:
@@ -206,8 +206,8 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 targetdir = eos+'{yr}/{pR}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+'cutflow' if cutflow else '' + postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR)
                 enable=[];
                 enable=if3(pR == 'SR',if3(nLep > 1,cuts_2los,cuts_onelep),if3(pR=='topCR',cuts_topCR,if3(pR=='wjCR',cuts_wjCR,cuts_inclB)))
-                if "wjCR" not in pR:                enable.append(FS); ## need to confirm
-                enable.append(lepSel)
+                #if "wjCR" not in pR:                enable.append(FS); ## need to confirm
+                enable.append(lepSel); enable.append(FS); #now applying pNET tagger in WJCR also
                 #if blinded or "SR" in pR:
                     #processes.remove('data')
                     #enable.append('blinded')
