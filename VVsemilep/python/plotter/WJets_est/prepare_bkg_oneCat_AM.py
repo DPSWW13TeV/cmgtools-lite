@@ -114,7 +114,7 @@ class doFit_wj_and_wlvj:
         self.leg = TLegend(); 
         self.MODEL_4_mlvj=fit_model;
         self.MODEL_4_mlvj_alter=fit_model_alter;
-        self.plotsDir=""
+
         print "########################################################################################"
         print "######## define class: binning, variables, cuts, files and nuissance parameters ########"
         print "########################################################################################"
@@ -185,7 +185,7 @@ class doFit_wj_and_wlvj:
             "WW":[["WWTo1L1Nu2Q"],3393645436],
             "WZ":[["WZToLNuQQ01j_5f_amcatnloFxFx"],41724242]}#stop 24011170135.9
         
-        self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.75}
+        self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.5}
 
         #prepare background data and signal samples            
         
@@ -202,7 +202,7 @@ class doFit_wj_and_wlvj:
         self.mean_shift = -1.294
         self.sigma_scale=0.958
 
-        self.wtagger_label        = 'WPU' ##amtagger label
+        self.wtagger_label        = 'WPM' ##amtagger label
         self.PNS = self.PNSWP[self.wtagger_label]
 
         eos='/eos/user/a/anmehta/www/VVsemilep/WJest/%s/%s'%(self.year,date)
@@ -277,23 +277,15 @@ class doFit_wj_and_wlvj:
                 theLeg.SetNColumns(2);
             if isalpha: theLeg = TLegend(0.3944724+x_offset_low,0.4370629+y_offset_low,0.7650754+x_offset_high,0.8374126+y_offset_high, "", "NDC");  
             
-        theLeg.SetFillColor(0);
-        theLeg.SetFillStyle(0);
-        theLeg.SetBorderSize(0);
-        theLeg.SetLineColor(0);
-        theLeg.SetLineWidth(0);
-        theLeg.SetLineStyle(0);
-        theLeg.SetTextSize(0.05);
-        theLeg.SetTextFont(42);
+        theLeg.SetFillColor(0);        theLeg.SetFillStyle(0);        theLeg.SetTextSize(0.05);        theLeg.SetTextFont(42);
+        theLeg.SetBorderSize(0);        theLeg.SetLineColor(0);        theLeg.SetLineWidth(0);        theLeg.SetLineStyle(0);
 
         entryCnt = 0;
         objName_before = "";
         objName_signal_graviton = "";
         objNameLeg_signal_graviton = "";        
 
-
-        if   self.channel == 'el': legHeader="e#nu";
-        elif self.channel == 'mu': legHeader="#mu#nu";
+        legHeader="e#nu" if   self.channel == 'el' else "#mu#nu";
         
         for obj in range(int(plot.numItems()) ):
           objName = plot.nameOf(obj);
@@ -372,53 +364,33 @@ objName ==objName_before ):
     def get_canvas(self,cname,isalpha=False):
 
        #tdrstyle.setTDRStyle()
-       CMS_lumi.lumi_13TeV = "%s fb^{-1}" %str(lumis[self.year]) #"35.9 fb^{-1}"
+       CMS_lumi.lumi_13TeV = "%s fb^{-1}" %str(lumis[self.year])
        CMS_lumi.writeExtraText = False
        if isalpha:
                        CMS_lumi.extraText = "Simulation\n Preliminary"
        else:
                        CMS_lumi.extraText = "Preliminary"
-
        iPos = 11
        if( iPos==0 ): CMS_lumi.relPosX = 0.15
-
-       H_ref = 600; 
-       W_ref = 800; 
-       W = W_ref
-       H  = H_ref
-
-       T = 0.08*H_ref
-       B = 0.12*H_ref 
-       L = 0.12*W_ref
-       R = 0.06*W_ref
-
+       H_ref = 600;        W_ref = 800;        W = W_ref;       H  = H_ref
+       T = 0.08*H_ref;       B = 0.12*H_ref;       L = 0.12*W_ref;       R = 0.06*W_ref
        canvas = ROOT.TCanvas(cname,cname,W,H)
-       canvas.SetFillColor(0)
-       canvas.SetBorderMode(0)
-       canvas.SetFrameFillStyle(0)
-       canvas.SetFrameBorderMode(0)
-       canvas.SetLeftMargin( L/W )
-       canvas.SetRightMargin( R/W )
-       canvas.SetTopMargin( T/H+0.05)
-       canvas.SetBottomMargin( B/H+0.03 )
-       canvas.SetTickx()
-       canvas.SetTicky()
-       if isalpha:
-        canvas.SetTicky(0)
+       canvas.SetFillColor(0);       canvas.SetBorderMode(0);
+       canvas.SetFrameFillStyle(0);       canvas.SetFrameBorderMode(0);       canvas.SetLeftMargin( L/W );
+       canvas.SetRightMargin( R/W );       canvas.SetTopMargin( T/H+0.05);       canvas.SetBottomMargin( B/H+0.03 );
+       canvas.SetTickx();       canvas.SetTicky();
+       if isalpha:        canvas.SetTicky(0)
 
        return canvas
-
     #################################################################################################
     #################################################################################################
 
     #### just drawing canvas with no pull
     def draw_canvas(self, in_obj,in_directory, in_file_name, is_range=0, logy=0, frompull=0, isalpha=0, fix_axis=0, force_plots=0):
       
-        if options.noplots and not force_plots:
-          return 0
+        if options.noplots and not force_plots:          return 0
 
         print "############### draw the canvas without pull check AM ########################"
-        print "got it",in_directory, in_file_name,in_obj.GetName()
         cMassFit = self.get_canvas(in_obj.GetName())#TCanvas("cMassFit","cMassFit", 600,600);
         print type(cMassFit),"this is something i wanna save"
         if fix_axis == 0:
@@ -429,23 +401,16 @@ objName ==objName_before ):
 
         if is_range:
             h2=TH2D("h2","",100,400,1400,4,0.00001,4);
-            h2.Draw();
-            in_obj.Draw("same")
-            saveFiles.append(h2);
+            h2.Draw();            in_obj.Draw("same")
+            ##amsaveFiles.append(h2);
         else :
             in_obj.Draw()
-        saveFiles.append(in_obj); 
+        ##amsaveFiles.append(in_obj); 
         
-        in_obj.GetXaxis().SetTitleSize(0.045);
-        in_obj.GetXaxis().SetTitleOffset(1.15);
-        in_obj.GetXaxis().SetLabelSize(0.04);
-
-        in_obj.GetYaxis().SetTitleSize(0.04);
-        in_obj.GetYaxis().SetTitleOffset(0.45);##am
-        in_obj.GetYaxis().SetLabelSize(0.04);
-
+        in_obj.GetXaxis().SetTitleSize(0.045);        in_obj.GetXaxis().SetTitleOffset(1.15);        in_obj.GetXaxis().SetLabelSize(0.04);
+        in_obj.GetYaxis().SetTitleSize(0.04);        in_obj.GetYaxis().SetTitleOffset(0.45);        in_obj.GetYaxis().SetLabelSize(0.04);
         self.leg.SetTextSize(0.031); 
-        if isalpha: self.leg.SetTextSize(0.038)
+        if isalpha: self.leg.SetTextSize(0.035)
 
         cMassFit.Update()
         cMassFit.cd()
@@ -460,7 +425,7 @@ objName ==objName_before ):
         frame.Draw()   
         cMassFit.cd()
         cMassFit.Update()
-        saveFiles.append(frame);saveFiles.append(cMassFit);
+        ##amsaveFiles.append(frame);saveFiles.append(cMassFit);
         Directory=TString(in_directory); #+"_%02d_%02d/"%(options.cprime,options.BRnew));
         if not Directory.EndsWith("/"):Directory=Directory.Append("/");
         if not os.path.isdir(Directory.Data()):
@@ -469,7 +434,7 @@ objName ==objName_before ):
         rlt_file=TString(Directory.Data()+in_file_name);
         if rlt_file.EndsWith(".root"):
             rlt_file.ReplaceAll(".root","_rlt_without_pull_and_paramters.root");
-            cMassFit.SaveAs(rlt_file.Data());
+            ##amcMassFit.SaveAs(rlt_file.Data());
             rlt_file.ReplaceAll(".root","_rlt_without_pull_and_paramters.png");
         else:
             rlt_file.ReplaceAll(".root","");
@@ -487,7 +452,7 @@ objName ==objName_before ):
             cMassFit.SetLogy() ;
             cMassFit.Update();
             rlt_file.ReplaceAll(".root","_log.root");
-            cMassFit.SaveAs(rlt_file.Data());##am
+            ##cMassFit.SaveAs(rlt_file.Data());##am
             rlt_file.ReplaceAll(".root",".pdf");
             cMassFit.SaveAs(rlt_file.Data());
             rlt_file.ReplaceAll(".pdf",".png");
@@ -505,12 +470,9 @@ objName ==objName_before ):
 
 
         print "############### draw the canvas with pull ########################" 
-        mplot.GetXaxis().SetTitle("")
-        mplot.GetYaxis().SetTitleSize(0.07)
-        mplot.GetYaxis().SetTitleOffset(0.65)##am
-        mplot.GetYaxis().SetLabelSize(0.06)
-        mplot.GetXaxis().SetLabelSize(0);
-        
+        mplot.GetXaxis().SetTitle("");        mplot.GetYaxis().SetTitleSize(0.07);        mplot.GetYaxis().SetTitleOffset(0.65);
+        mplot.GetYaxis().SetLabelSize(0.06);        mplot.GetXaxis().SetLabelSize(0);
+    
         cMassFit = self.get_canvas(mplot.GetName())
         print "got the canvas for pull plotter"
         # if parameters_list is empty, don't draw pad3
@@ -522,22 +484,14 @@ objName ==objName_before ):
             pad1=TPad("pad1","pad1",0.,0. ,0.8,0.24);
             pad2=TPad("pad2","pad2",0.,0.24,0.8,1. );
             pad3=TPad("pad3","pad3",0.8,0.,1,1);
-            pad1.Draw();
-            pad2.Draw();
-            pad3.Draw();
-            print "three pads drawn"
+            pad1.Draw();pad2.Draw();            pad3.Draw();
         else:
             pad1=TPad("pad1","pad1",0.,0. ,1,0.30); #pad1 - pull
             pad2=TPad("pad2","pad2",0.,0.3,1.,1. ); #pad0
-            pad2.SetRightMargin(0.1);
-            pad2.SetTopMargin(0.1);
-            pad2.SetBottomMargin(0.0001);
-            pad1.SetRightMargin(0.1)
-            pad1.SetTopMargin(0)
-            pad1.SetBottomMargin(0.4)   
-            pad1.Draw();
-            pad2.Draw();
-            print "two pads drawn"
+            pad2.SetRightMargin(0.1);            pad2.SetTopMargin(0.1);
+            pad2.SetBottomMargin(0.0001);            pad1.SetRightMargin(0.1)
+            pad1.SetTopMargin(0);            pad1.SetBottomMargin(0.4)   
+            pad1.Draw();            pad2.Draw();
                                                                                                                                                                      
         pad2.cd();
         print "drawing the mplot",type(mplot)
@@ -546,7 +500,7 @@ objName ==objName_before ):
         pad1.cd();
         mplot_pull.Draw("APsame");##am
         cMassFit.Update();
-        saveFiles.append(cMassFit);saveFiles.append(pad1);saveFiles.append(pad2);
+        ##amsaveFiles.append(cMassFit);saveFiles.append(pad1);saveFiles.append(pad2);
         if 'm_j_prefit' in in_file_name:
             medianLine_sb_lo = TLine(mplot.GetXaxis().GetXmin(),0.,65.,0.); medianLine_sb_lo.SetLineWidth(2); medianLine_sb_lo.SetLineColor(kRed); medianLine_sb_lo.Draw();
             medianLine_sb_hi = TLine(105,0.,mplot.GetXaxis().GetXmax(),0.); medianLine_sb_hi.SetLineWidth(2); medianLine_sb_hi.SetLineColor(kRed); medianLine_sb_hi.Draw();
@@ -615,9 +569,9 @@ objName ==objName_before ):
         pad2.RedrawAxis()
         #frame = pad2.GetFrame()##am would not remove it 
         #frame.Draw() ##am would not remove it   
-
+        #cMassFit.cd()
         cMassFit.Update();cMassFit.Write();
-        saveFiles.append(cMassFit);saveFiles.append(pad1);saveFiles.append(pad2);                
+        ##amsaveFiles.append(cMassFit);saveFiles.append(pad1);saveFiles.append(pad2);                
         ## create the directory where store the plots
 
         Directory = TString(in_directory);
@@ -629,7 +583,7 @@ objName ==objName_before ):
 
         if rlt_file.EndsWith(".root"):
             rlt_file.ReplaceAll(".root","_"+in_model_name+"_with_pull.root");
-            cMassFit.SaveAs(rlt_file.Data());
+            ##amcMassFit.SaveAs(rlt_file.Data());
             TString(in_model_name).ReplaceAll(".root","");
             rlt_file.ReplaceAll(".root","_"+in_model_name+"_with_pull.png");
         else:
@@ -667,7 +621,7 @@ objName ==objName_before ):
             rlt_file.ReplaceAll(".pdf",".png");
             cMassFit.SaveAs(rlt_file.Data());
 
-        saveFiles.append(cMassFit);saveFiles.append(pad2);saveFiles.append(pad1);
+        ##amsaveFiles.append(cMassFit);saveFiles.append(pad2);saveFiles.append(pad1);
         #self.draw_canvas(mplot,in_directory,string_file_name.Data(),0,logy,1,0,fix_axis);
 
     #################################################################################################
@@ -713,28 +667,14 @@ objName ==objName_before ):
                 hpull.SetPoint(ipoint,x,10)
         print "may be this",mplot_orig.GetName()
         self.gt = ROOT.TH1F(mplot_orig.GetName()+'_pull',mplot_orig.GetName()+'_pull',rrv_x.getBins(),rrv_x.getMin(),rrv_x.getMax());
-        self.gt.SetMinimum(-3.999);
-        self.gt.SetMaximum(3.999);
-        self.gt.SetDirectory(0);
-        self.gt.SetStats(0);
-        self.gt.SetLineStyle(0);
-        self.gt.SetMarkerStyle(20);
+        self.gt.SetMinimum(-3.999);        self.gt.SetMaximum(3.999);
+        self.gt.SetDirectory(0);        self.gt.SetStats(0);
+        self.gt.SetLineStyle(0);        self.gt.SetMarkerStyle(20);
         self.gt.GetXaxis().SetTitle(rrv_x.GetTitle() + " (GeV)");
-        self.gt.GetXaxis().SetLabelFont(42);
-        self.gt.GetXaxis().SetLabelOffset(0.02);
-        self.gt.GetXaxis().SetLabelSize(0.15);
-        self.gt.GetXaxis().SetTitleSize(0.15);
-        self.gt.GetXaxis().SetTitleOffset(1.2);
-        self.gt.GetXaxis().SetTitleFont(42);
-        self.gt.GetYaxis().SetTitle("#frac{Data-Fit}{#sigma_{Data}}");
-        self.gt.GetYaxis().CenterTitle(True);
-        self.gt.GetYaxis().SetNdivisions(205);
-        self.gt.GetYaxis().SetLabelFont(42);
-        self.gt.GetYaxis().SetLabelOffset(0.007);
-        self.gt.GetYaxis().SetLabelSize(0.15);
-        self.gt.GetYaxis().SetTitleSize(0.15);
-        self.gt.GetYaxis().SetTitleOffset(0.25);##am
-        self.gt.GetYaxis().SetTitleFont(42);
+        self.gt.GetXaxis().SetLabelFont(42);        self.gt.GetXaxis().SetLabelOffset(0.02);      self.gt.GetXaxis().SetLabelSize(0.15);
+        self.gt.GetXaxis().SetTitleSize(0.15);        self.gt.GetXaxis().SetTitleOffset(1.2);     self.gt.GetXaxis().SetTitleFont(42);        self.gt.GetYaxis().SetTitle("#frac{Data-Fit}{#sigma_{Data}}");
+        self.gt.GetYaxis().CenterTitle(True);        self.gt.GetYaxis().SetNdivisions(205);        self.gt.GetYaxis().SetLabelFont(42);        self.gt.GetYaxis().SetLabelOffset(0.007);
+        self.gt.GetYaxis().SetLabelSize(0.15);        self.gt.GetYaxis().SetTitleSize(0.15);        self.gt.GetYaxis().SetTitleOffset(0.25);        self.gt.GetYaxis().SetTitleFont(42);
         hpull.SetHistogram(self.gt)
         return hpull
 
@@ -982,16 +922,6 @@ objName ==objName_before ):
             
             model_pdf = ROOT.RooGenericPdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,"pow(@0,@1+@2*log(@0))",ROOT.RooArgList(rrv_x,alpha,beta))
 
-        if in_model_name == "Steffen" :
-            print "########### modified plaw for mj fit  ############"
-            
-            #
-            p1mod= ROOT.RooRealVar("p1mod","p1mod",5.,-100.,100.);
-            p2mod= ROOT.RooRealVar("p2mod","p2mod",5.,-100.,100.);
-            ##            myfunc             = ROOT.RooGenericPdf("plaw_log","plaw2","TMath::Power(mgg,plawlog_a + plawlog_b* TMath::Log(mgg))",ROOT.RooArgList(mgg,alpha,beta))
-            #            bkg_fitTmp = new RooGenericPdf(TString::Format("bkg_fit_%s",cat_names.at(c).c_str()), "pow(1-@0, @1)/pow(@0, @2)", RooArgList(*x, *p1mod, *p2mod)); // 3 parameter fitnew 
-            #            bkg_fitTmp = new RooGenericPdf(TString::Format("bkg_fit_%s",cat_names.at(c).c_str()), "pow(1-@0, @1)/pow(@0, @2)", RooArgList(*x, *p1mod, *p2mod)); // 3 parameter fitnew 
-            model_pdf = ROOT.RooGenericPdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,"pow(1-@0, @1)/pow(@0, @2)",ROOT.RooArgList(rrv_x,p1mod,p2mod))
 
             
 
@@ -1352,7 +1282,7 @@ objName ==objName_before ):
     #################################################################################################
 
     ### method to get the alpha function to extrapolate the wjets in the signal region
-    def get_WJets_mlvj_correction_sb_to_sig(self,label, mlvj_model):
+    def get_WJets_mlvj_correction_sb_to_sig(self,label, mlvj_model): ##alphacalculation
 
         print" ############# get the extrapolation function alpha from MC : ",label,"   ",mlvj_model," ###############";          
 
@@ -1362,9 +1292,12 @@ objName ==objName_before ):
         rdataset_WJets_sig_mlvj         = self.workspace4fit_.data("rdataset4fit%s_sig_%s_mlvj"%(label,self.channel))
 
         ### create a frame for the next plots 
-        mplot = rrv_x.frame(RooFit.Title("correlation_pdf"), RooFit.Bins(rrv_x.getBins())) ;
-        mplot.GetYaxis().SetTitle("F_{W+jets}^{SR,MC},F_{W+jets}^{SB,MC} (Arbitrary units)");
-                
+        mplot = rrv_x.frame(RooFit.Title(""), RooFit.Bins(rrv_x.getBins())) ;
+        mplot.GetYaxis().SetTitle("F_{W+jets}^{SR,MC},F_{W+jets}^{SB,MC} (A.U.)");
+        mplot.GetYaxis().SetTitleOffset(1.05)
+        mplot.GetYaxis().SetTitleSize(0.045)
+ 
+
         ### define alpha function depending on used signal model
         if mlvj_model=="ExpN":
             rrv_c_sb  = self.workspace4fit_.var("rrv_c_ExpN%s_sb_%s"%(label,self.channel));
@@ -1405,27 +1338,25 @@ objName ==objName_before ):
         model_pdf_sb_WJets      = self.workspace4fit_.pdf("model_pdf%s_sb_%s_mlvj"%(label,self.channel));
         model_pdf_sig_WJets     = RooProdPdf("model_pdf%s_sig_%s_mlvj"%(label,self.channel),"model_pdf%s_sig_%s_mlvj"%(label,self.channel) ,model_pdf_sb_WJets,correct_factor_pdf);
 
+
         simPdf = RooSimultaneous("simPdf","simPdf",data_category);
+
         simPdf.addPdf(model_pdf_sb_WJets,"sideband");
         simPdf.addPdf(model_pdf_sig_WJets,"sig");
         simPdf.fitTo(combData4fit, RooFit.SumW2Error(kTRUE));
         rfresult=simPdf.fitTo(combData4fit,RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer("Minuit2"));
+
+
         #self.fitresultsfinal.append(rfresult)
 
         ### Decorrelate the parameters in the alpha shape
         wsfit_tmp = RooWorkspace("wsfit_tmp%s_sim_mlvj"%(label));
-        print "############### diagonalizer alpha ";
         Deco      = PdfDiagonalizer("Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel,self.wtagger_label),wsfit_tmp,rfresult);
         correct_factor_pdf_deco = Deco.diagonalize(correct_factor_pdf);
-        print "##################### workspace for decorrelation ";
         wsfit_tmp.Print("v");
-        print "##################### original  parameters ";
         correct_factor_pdf.getParameters(rdataset_WJets_sig_mlvj).Print("v");
-        print "##################### original  decorrelated parameters ";
         correct_factor_pdf_deco.getParameters(rdataset_WJets_sig_mlvj).Print("v");
-        print "##################### original  pdf ";
         correct_factor_pdf.Print();
-        print "##################### decorrelated pdf ";
         correct_factor_pdf_deco.Print();
 
         getattr(self.workspace4fit_,"import")(correct_factor_pdf_deco);
@@ -1434,12 +1365,12 @@ objName ==objName_before ):
         ### Total plot shape in sb, sr and alpha
         model_pdf_sb_WJets.plotOn(mplot,RooFit.Name("Sideband"),RooFit.LineStyle(kDashed));
         model_pdf_sig_WJets.plotOn(mplot, RooFit.LineColor(kRed), RooFit.Name('Signal Region'));
-        correct_factor_pdf_deco.plotOn(mplot, RooFit.LineColor(kBlack),RooFit.Name("Transfer function #alpha"));
+        correct_factor_pdf_deco.plotOn(mplot, RooFit.LineColor(kBlack),RooFit.LineStyle(3),RooFit.Name("Transfer function #alpha bbnb"));
 
         ### plot also what is get from other source if available : alternate PS and shape: 1 PS and 01 is shape or fitting function
         if TString(label).Contains("_WJets"):
-            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)):
-                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kMagenta), RooFit.LineStyle(3),RooFit.Name("#alpha: Alternate PS") );
+            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets0_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)):
+                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets0_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kMagenta), RooFit.LineStyle(3),RooFit.Name("#alpha: Alternate PS blah") );
 
             if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)):
                 self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kOrange+7), RooFit.LineStyle(7),RooFit.Name("#alpha: Alternate Function") );
@@ -1453,12 +1384,12 @@ objName ==objName_before ):
             paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig3"%(label,self.channel, self.wtagger_label) ));
         
         if TString(label).Contains("_WJets") or TString(label).Contains("_WJets1"): ### draw error band at 1 and 2 sigma using the decorrelated shape
-            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot,kGreen,"F",3001,"#alpha #pm",20,400);
-            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,2 ,mplot,kYellow,"F",3001,"#alpha #pm",20,400);
-            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot,kGreen,"F",3001,"#alpha_invisible #pm",20,400);
+            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot,ROOT.kAzure+1,"F",3001,"#alpha #pm",20,400);
+            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,2 ,mplot,kAzure,"F",3001,"#alpha #pm",20,400);
+            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot,kAzure+1,"F",3001,"#alpha_invisible #pm",20,400);
             
         ### plot on the same canvas
-        correct_factor_pdf_deco.plotOn(mplot, RooFit.LineColor(kBlack),RooFit.Name("#alpha_invisible"))
+        correct_factor_pdf_deco.plotOn(mplot, RooFit.LineColor(kBlack),RooFit.Name("#alpha_invisible"))##am this is needed
 
         if TString(label).Contains("_WJets") : ## add also the plot of alternate ps and function on the canvas
             if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
@@ -1477,7 +1408,7 @@ objName ==objName_before ):
         mplot.addObject(self.leg);
         
         ## set the Y axis in arbitrary unit 
-        tmp_y_max=0.125
+        tmp_y_max=0.15
         tmp_y_min=1e-5
         mplot.GetYaxis().SetRangeUser(tmp_y_min,tmp_y_max);
 
@@ -1488,17 +1419,17 @@ objName ==objName_before ):
         tmp_alpha_ratio         = ( model_pdf_sig_WJets.getVal(RooArgSet(rrv_x))/model_pdf_sb_WJets.getVal(RooArgSet(rrv_x)) );
         tmp_alpha_pdf           = correct_factor_pdf_deco.getVal(RooArgSet(rrv_x)) * mplot.getFitRangeBinW(); ## value of the pdf in each point
         tmp_alpha_scale         = tmp_alpha_ratio/tmp_alpha_pdf;
-
+        print "===================================================tmp_alpha_scale================================================",tmp_alpha_scale
         #add alpha scale axis
         axis_alpha=TGaxis( rrv_x.getMax(), 0, rrv_x.getMax(), tmp_y_max, tmp_y_min * tmp_alpha_scale, tmp_y_max*tmp_alpha_scale, 510, "+L" ); #-,-+,+,L
         axis_alpha.SetTitle("Transfer function #alpha");
-        axis_alpha.SetTitleOffset(0.75);
-        axis_alpha.SetTitleSize(0.05);
-        axis_alpha.SetLabelSize(0.045);
+        axis_alpha.SetTitleOffset(0.65);
+        axis_alpha.SetTitleSize(0.045);
+        axis_alpha.SetLabelSize(0.035);
         axis_alpha.SetTitleFont(42);
         axis_alpha.SetLabelFont(42);
         #axis_alpha.RotateTitle(1);
-        mplot.addObject(axis_alpha);
+        #mplot.addObject(axis_alpha);
         os.system("cp ~/public/index.php %s"%self.plotsDir+"/other")
         self.draw_canvas(mplot,"%s/other/"%(self.plotsDir),"correction_pdf%s_%s_M_lvj_sig_to_sideband"%(label,mlvj_model),0,1,0,1);
 
@@ -1538,7 +1469,7 @@ objName ==objName_before ):
             pad_log.SetFillStyle(4000)
             pad_log.SetFillColor(0)
             pad_log.SetFrameFillStyle(4000)
-            pad_log.SetRightMargin(0.1)
+            pad_log.SetRightMargin(0.05)##am
             pad_log.Draw()
             pad_log.cd()
             mplot3.addObject(axis_alpha)
@@ -1549,15 +1480,16 @@ objName ==objName_before ):
             mplot3.GetYaxis().SetNdivisions(0)
             mplot3.Draw()
 
-            CMS_lumi.cmsTextSize=1.05
-            CMS_lumi.lumiTextSize=0.85
+            CMS_lumi.cmsTextSize=0.35
+            CMS_lumi.lumiTextSize=0.35
             CMS_lumi.relPosY = -0.0625
             CMS_lumi.CMS_lumi(pad_log, 4, 11)
             ptChannel = TPaveText(0.178,0.84,0.498,0.94, "blNDC")
             ptChannel.SetFillStyle(0)
             ptChannel.SetBorderSize(0)
             ptChannel.SetTextAlign(12)
-            ptChannel.SetTextSize(0.048)
+            ptChannel.SetTextFont(42)
+            ptChannel.SetTextSize(0.045)
             if self.channel=='el':
                 ptChannel.AddText("Electron channel")
             elif self.channel=='mu':
@@ -1812,7 +1744,6 @@ objName ==objName_before ):
 
         ## make the extended model
         model = self.make_Model(label,in_model_name);
-        #rfresult = model.fitTo(rdataset_mj,RooFit.Save(1), RooFit.Extended(kTRUE), RooFit.PrintLevel(-1) );
 	rfresult = model.fitTo(rdataset_mj,RooFit.Save(1), RooFit.SumW2Error(kTRUE) ,RooFit.Extended(kTRUE), RooFit.PrintLevel(-1), RooFit.Minimizer("Minuit2") );
         rfresult.Print();
         getattr(self.workspace4fit_,'import')(rfresult)
@@ -1822,11 +1753,6 @@ objName ==objName_before ):
         mplot = rrv_mass_j.frame(RooFit.Title(label+" fitted by "+in_model_name), RooFit.Bins(rrv_mass_j.getBins()));
         rdataset_mj.plotOn( mplot, RooFit.MarkerSize(1), RooFit.DataError(RooAbsData.SumW2), RooFit.XErrorSize(0) );
 
-	print "Get Data for fitting in Matlab"
-	#rdataset_mj.write("mjData.txt");
-	#dataHist=mplot.getHist();
-	#for i in range(dataHist.GetN()):
-	#	print dataHist.GetY()[i]
 
         ## draw the error band for an extend pdf
         draw_error_band_extendPdf(rdataset_mj, model, rfresult,mplot,6,"L");
@@ -1843,8 +1769,6 @@ objName ==objName_before ):
         #nBinX = mplot.GetNbinsX();
         nBinX = 22
         ndof  = nBinX-nPar;
-        #print "#################### nPar=%s, nBinX=%s , chiSquare=%s/%s"%(nPar,nBinX,mplot.chiSquare('model%s_%s_mj_Norm[rrv_mass_j]'%(label,self.channel),'h_rdataset4fit%s_%s_mj'%(label,self.channel),nPar)*ndof,ndof);
-        #print self.calculate_chi2(rdataset_mj,rrv_mass_j, mplot, ndof,1)
         mplot.Print()
 
         datahist = rdataset_mj.binnedClone( rdataset_mj.GetName()+"_binnedClone",rdataset_mj.GetName()+"_binnedClone" )
@@ -1904,8 +1828,9 @@ objName ==objName_before ):
                 for i in self.samples[in_file_name][0]:
                     fileIn_name = str(options.inPath+"/"+self.file_Directory+"/"+i+"_Friend.root");
                     treeIn.Add(fileIn_name)
-                    fileIn1_name = str(options.inPath+"/"+self.file1_Directory+"/"+i+"_Friend.root");
-                    treeIn1.Add(fileIn1_name)
+                    if "data" not in label:
+                        fileIn1_name = str(options.inPath+"/"+self.file1_Directory+"/"+i+"_Friend.root");
+                        treeIn1.Add(fileIn1_name)
                 treeIn.AddFriend(treeIn1)
                 rrv_mass_j   = self.workspace4fit_.var("rrv_mass_j") #realvar kind #pNet mass
                 rrv_mass_lvj = self.workspace4fit_.var("rrv_mass_lvj")#mWV
@@ -1961,18 +1886,16 @@ objName ==objName_before ):
                     dphifjlep=treeIn.dphi_fjlep > 2.0 
                     dphifjmet=treeIn.dphi_fjmet > 2.0 
                     ptWlep=treeIn.pTWlep > 200
-                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore >= self.PNS
+                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore >= self.PNS and treeIn.Selak8Jet_particleNet_mass[0] < 150 and treeIn.Selak8Jet_particleNet_mass[0] > 40
                     self.isGoodEvent = 0;   
-                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.mWV > rrv_mass_lvj.getMin() and treeIn.nBJetMedium30 == 0 and treeIn.mWV<rrv_mass_lvj.getMax() and tmp_jet_mass>rrv_mass_j.getMin() and tmp_jet_mass<rrv_mass_j.getMax() and boosted_sel:
+                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.mWV > rrv_mass_lvj.getMin() and treeIn.nBJetMedium30 == 0 and treeIn.mWV<rrv_mass_lvj.getMax() and tmp_jet_mass>rrv_mass_j.getMin() and boosted_sel:
                         self.isGoodEvent = 1;  
                     if self.isGoodEvent == 1:
-                        tmp_event_weight=tmp_scale_to_lumi
-                        tmp_event_weight4fit=tmp_scale_to_lumi
+                        #tmp_event_weight4fit=tmp_scale_to_lumi
+                        tmp_event_weight=tmp_scale_to_lumi #if "data" in label else treeIn.evt_wt*treeIn.genwt/abs(treeIn.genwt)
+                        tmp_event_weight4fit= tmp_scale_to_lumi #1.0 if "data" in label else treeIn.evt_wt*treeIn.lepSF #treeIn.evt_wt*treeIn.genwt/abs(treeIn.genwt)
 
                         rrv_mass_lvj.setVal(treeIn.mWV); ###passing mWV in rrv
-                        rrv_mass_j.setVal( tmp_jet_mass );##passing mjet in rrv
-                        rdataset_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight )
-                        rdataset4fit_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight4fit )
 
                         #sideband lo only
                         if (tmp_jet_mass >= self.mj_sideband_lo_min and tmp_jet_mass < self.mj_sideband_lo_max): # and tmp_jet_pNetscore < 0.4):
@@ -1988,6 +1911,7 @@ objName ==objName_before ):
                         if tmp_jet_mass >= self.mj_signal_min and tmp_jet_mass < self.mj_signal_max:
                             rdataset_sig_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight );
                             rdataset4fit_sig_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight4fit );
+
                             data_category.setLabel("sig");
                             combData.add(RooArgSet(rrv_mass_lvj,data_category),tmp_event_weight);
                             combData4fit.add(RooArgSet(rrv_mass_lvj,data_category),tmp_event_weight4fit);
@@ -1998,10 +1922,14 @@ objName ==objName_before ):
                             rdataset4fit_sb_hi_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight4fit );
                             rdataset_sb_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight );
                             rdataset4fit_sb_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight4fit ); 
+
                             data_category.setLabel("sideband");
                             combData.add(RooArgSet(rrv_mass_lvj,data_category),tmp_event_weight);
                             combData4fit.add(RooArgSet(rrv_mass_lvj,data_category),tmp_event_weight4fit);            
-                            
+                        
+                        rrv_mass_j.setVal( tmp_jet_mass );##passing mjet in rrv
+                        rdataset_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight )
+                        rdataset4fit_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight4fit )
 
                         #mj spectrum, cut out data in signal region if needed
                         #datasets for simultaneaous fit in combine                          ##sideband lo ##am only FOLLOWING IS DATA
@@ -2361,7 +2289,6 @@ objName ==objName_before ):
         rrv_number_WW     = workspace.var("rrv_number_WW_"+self.channel+"_sig");
         rrv_number_WZ     = workspace.var("rrv_number_WZ_"+self.channel+"_sig");
         rrv_number_TTbar  = workspace.var("rrv_number_TTbar_"+self.channel+"_sig");
-        
         rrv_number_STop   = workspace.var("rrv_number_STop_"+self.channel+"_sig");
 
         rrv_number_WJets.Print();
