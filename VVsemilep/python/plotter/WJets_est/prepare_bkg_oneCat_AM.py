@@ -569,7 +569,7 @@ objName ==objName_before ):
         pad2.RedrawAxis()
         #frame = pad2.GetFrame()##am would not remove it 
         #frame.Draw() ##am would not remove it   
-
+        #cMassFit.cd()
         cMassFit.Update();cMassFit.Write();
         ##amsaveFiles.append(cMassFit);saveFiles.append(pad1);saveFiles.append(pad2);                
         ## create the directory where store the plots
@@ -1282,7 +1282,7 @@ objName ==objName_before ):
     #################################################################################################
 
     ### method to get the alpha function to extrapolate the wjets in the signal region
-    def get_WJets_mlvj_correction_sb_to_sig(self,label, mlvj_model):
+    def get_WJets_mlvj_correction_sb_to_sig(self,label, mlvj_model): ##alphacalculation
 
         print" ############# get the extrapolation function alpha from MC : ",label,"   ",mlvj_model," ###############";          
 
@@ -1292,10 +1292,11 @@ objName ==objName_before ):
         rdataset_WJets_sig_mlvj         = self.workspace4fit_.data("rdataset4fit%s_sig_%s_mlvj"%(label,self.channel))
 
         ### create a frame for the next plots 
-        mplot = rrv_x.frame(RooFit.Title("correlation_pdf"), RooFit.Bins(rrv_x.getBins())) ;
-        mplot.GetYaxis().SetTitle("F_{W+jets}^{SR,MC},F_{W+jets}^{SB,MC} (Arbitrary units)");
+        mplot = rrv_x.frame(RooFit.Title(""), RooFit.Bins(rrv_x.getBins())) ;
+        mplot.GetYaxis().SetTitle("F_{W+jets}^{SR,MC},F_{W+jets}^{SB,MC} (A.U.)");
         mplot.GetYaxis().SetTitleOffset(1.05)
         mplot.GetYaxis().SetTitleSize(0.045)
+ 
 
         ### define alpha function depending on used signal model
         if mlvj_model=="ExpN":
@@ -1343,27 +1344,19 @@ objName ==objName_before ):
         simPdf.addPdf(model_pdf_sb_WJets,"sideband");
         simPdf.addPdf(model_pdf_sig_WJets,"sig");
         simPdf.fitTo(combData4fit, RooFit.SumW2Error(kTRUE));
-        print "done up to this point====================================================================================== fitting"
-
         rfresult=simPdf.fitTo(combData4fit,RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer("Minuit2"));
-        print "done up to this point====================================================================================== fitting2"
+
 
         #self.fitresultsfinal.append(rfresult)
-        print "am getting starting with dec0orrrrr parth ======================================================================================================================="
+
         ### Decorrelate the parameters in the alpha shape
         wsfit_tmp = RooWorkspace("wsfit_tmp%s_sim_mlvj"%(label));
-        print "############### diagonalizer alpha ";
         Deco      = PdfDiagonalizer("Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel,self.wtagger_label),wsfit_tmp,rfresult);
         correct_factor_pdf_deco = Deco.diagonalize(correct_factor_pdf);
-        print "##################### workspace for decorrelation ";
         wsfit_tmp.Print("v");
-        print "##################### original  parameters ";
         correct_factor_pdf.getParameters(rdataset_WJets_sig_mlvj).Print("v");
-        print "##################### original  decorrelated parameters ";
         correct_factor_pdf_deco.getParameters(rdataset_WJets_sig_mlvj).Print("v");
-        print "##################### original  pdf ";
         correct_factor_pdf.Print();
-        print "##################### decorrelated pdf ";
         correct_factor_pdf_deco.Print();
 
         getattr(self.workspace4fit_,"import")(correct_factor_pdf_deco);
@@ -1372,12 +1365,12 @@ objName ==objName_before ):
         ### Total plot shape in sb, sr and alpha
         model_pdf_sb_WJets.plotOn(mplot,RooFit.Name("Sideband"),RooFit.LineStyle(kDashed));
         model_pdf_sig_WJets.plotOn(mplot, RooFit.LineColor(kRed), RooFit.Name('Signal Region'));
-        correct_factor_pdf_deco.plotOn(mplot, RooFit.LineColor(kBlack),RooFit.LineStyle(3),RooFit.Name("Transfer function #alpha"));
+        correct_factor_pdf_deco.plotOn(mplot, RooFit.LineColor(kBlack),RooFit.LineStyle(3),RooFit.Name("Transfer function #alpha bbnb"));
 
         ### plot also what is get from other source if available : alternate PS and shape: 1 PS and 01 is shape or fitting function
         if TString(label).Contains("_WJets"):
-            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)):
-                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kMagenta), RooFit.LineStyle(3),RooFit.Name("#alpha: Alternate PS") );
+            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets0_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)):
+                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets0_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kMagenta), RooFit.LineStyle(3),RooFit.Name("#alpha: Alternate PS blah") );
 
             if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)):
                 self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel, self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kOrange+7), RooFit.LineStyle(7),RooFit.Name("#alpha: Alternate Function") );
@@ -1396,19 +1389,19 @@ objName ==objName_before ):
             draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot,kAzure+1,"F",3001,"#alpha_invisible #pm",20,400);
             
         ### plot on the same canvas
-        correct_factor_pdf_deco.plotOn(mplot, RooFit.LineColor(kBlack),RooFit.Name("#alpha_invisible"))
+        correct_factor_pdf_deco.plotOn(mplot, RooFit.LineColor(kBlack),RooFit.Name("#alpha_invisible"))##am this is needed
 
-##am        if TString(label).Contains("_WJets") : ## add also the plot of alternate ps and function on the canvas
-##am            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
-##am                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kMagenta), RooFit.LineStyle(3),RooFit.Name("#alpha_invisible: Alternate PS") );
-##am            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
-##am                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kOrange+7), RooFit.LineStyle(7),RooFit.Name("#alpha_invisible: Alternate Function"));
-##am
-##am        elif TString(label).Contains("_WJets1") : ## add also the plot of alternate ps and function on the canvas
-##am            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
-##am                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kMagenta), RooFit.LineStyle(3),RooFit.Name("#alpha_invisible: Alternate PS") );
-##am            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
-##am                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kOrange-3), RooFit.LineStyle(7),RooFit.Name("#alpha_invisible: Alternate Function") );
+        if TString(label).Contains("_WJets") : ## add also the plot of alternate ps and function on the canvas
+            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
+                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kMagenta), RooFit.LineStyle(3),RooFit.Name("#alpha_invisible: Alternate PS") );
+            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
+                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kOrange+7), RooFit.LineStyle(7),RooFit.Name("#alpha_invisible: Alternate Function"));
+
+        elif TString(label).Contains("_WJets1") : ## add also the plot of alternate ps and function on the canvas
+            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
+                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kMagenta), RooFit.LineStyle(3),RooFit.Name("#alpha_invisible: Alternate PS") );
+            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
+                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)).plotOn(mplot, RooFit.LineColor(kOrange-3), RooFit.LineStyle(7),RooFit.Name("#alpha_invisible: Alternate Function") );
 
         ### Add the legend
         self.leg= self.legend4Plot(mplot,1,0, 0, 0., 0., -0.1, 0., True);
@@ -1426,7 +1419,7 @@ objName ==objName_before ):
         tmp_alpha_ratio         = ( model_pdf_sig_WJets.getVal(RooArgSet(rrv_x))/model_pdf_sb_WJets.getVal(RooArgSet(rrv_x)) );
         tmp_alpha_pdf           = correct_factor_pdf_deco.getVal(RooArgSet(rrv_x)) * mplot.getFitRangeBinW(); ## value of the pdf in each point
         tmp_alpha_scale         = tmp_alpha_ratio/tmp_alpha_pdf;
-
+        print "===================================================tmp_alpha_scale================================================",tmp_alpha_scale
         #add alpha scale axis
         axis_alpha=TGaxis( rrv_x.getMax(), 0, rrv_x.getMax(), tmp_y_max, tmp_y_min * tmp_alpha_scale, tmp_y_max*tmp_alpha_scale, 510, "+L" ); #-,-+,+,L
         axis_alpha.SetTitle("Transfer function #alpha");
@@ -1436,7 +1429,7 @@ objName ==objName_before ):
         axis_alpha.SetTitleFont(42);
         axis_alpha.SetLabelFont(42);
         #axis_alpha.RotateTitle(1);
-        mplot.addObject(axis_alpha);
+        #mplot.addObject(axis_alpha);
         os.system("cp ~/public/index.php %s"%self.plotsDir+"/other")
         self.draw_canvas(mplot,"%s/other/"%(self.plotsDir),"correction_pdf%s_%s_M_lvj_sig_to_sideband"%(label,mlvj_model),0,1,0,1);
 
@@ -1451,10 +1444,10 @@ objName ==objName_before ):
             model_pdf_sb_WJets.plotOn(mplot2,RooFit.Name("Sideband"),RooFit.LineStyle(kDashed));
            
             correct_factor_pdf_deco.plotOn(mplot3, RooFit.LineColor(kBlack),RooFit.Name("Transfer function #alpha"));
-            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot3,kRed,"F",3001,"#alpha #pm",20,400);
+            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot3,kGreen,"F",3001,"#alpha #pm",20,400);
             draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,2 ,mplot3,kYellow,"F",3001,"#alpha #pm",20,400);
-            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot3,kRed,"F",3001,"#alpha_invisible #pm",20,400);
-            #correct_factor_pdf_deco.plotOn(mplot3, RooFit.LineColor(kBlack),RooFit.Name("Transfer function #alpha"));
+            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot3,kGreen,"F",3001,"#alpha_invisible #pm",20,400);
+            correct_factor_pdf_deco.plotOn(mplot3, RooFit.LineColor(kBlack),RooFit.Name("Transfer function #alpha"));
              
             c1        = TCanvas('alpha_log_plot','aplha_log_plot',800,600)
             c1.SetRightMargin(0.1)
@@ -1751,7 +1744,6 @@ objName ==objName_before ):
 
         ## make the extended model
         model = self.make_Model(label,in_model_name);
-        #rfresult = model.fitTo(rdataset_mj,RooFit.Save(1), RooFit.Extended(kTRUE), RooFit.PrintLevel(-1) );
 	rfresult = model.fitTo(rdataset_mj,RooFit.Save(1), RooFit.SumW2Error(kTRUE) ,RooFit.Extended(kTRUE), RooFit.PrintLevel(-1), RooFit.Minimizer("Minuit2") );
         rfresult.Print();
         getattr(self.workspace4fit_,'import')(rfresult)
@@ -1761,11 +1753,6 @@ objName ==objName_before ):
         mplot = rrv_mass_j.frame(RooFit.Title(label+" fitted by "+in_model_name), RooFit.Bins(rrv_mass_j.getBins()));
         rdataset_mj.plotOn( mplot, RooFit.MarkerSize(1), RooFit.DataError(RooAbsData.SumW2), RooFit.XErrorSize(0) );
 
-	print "Get Data for fitting in Matlab"
-	#rdataset_mj.write("mjData.txt");
-	#dataHist=mplot.getHist();
-	#for i in range(dataHist.GetN()):
-	#	print dataHist.GetY()[i]
 
         ## draw the error band for an extend pdf
         draw_error_band_extendPdf(rdataset_mj, model, rfresult,mplot,6,"L");
@@ -1782,8 +1769,6 @@ objName ==objName_before ):
         #nBinX = mplot.GetNbinsX();
         nBinX = 22
         ndof  = nBinX-nPar;
-        #print "#################### nPar=%s, nBinX=%s , chiSquare=%s/%s"%(nPar,nBinX,mplot.chiSquare('model%s_%s_mj_Norm[rrv_mass_j]'%(label,self.channel),'h_rdataset4fit%s_%s_mj'%(label,self.channel),nPar)*ndof,ndof);
-        #print self.calculate_chi2(rdataset_mj,rrv_mass_j, mplot, ndof,1)
         mplot.Print()
 
         datahist = rdataset_mj.binnedClone( rdataset_mj.GetName()+"_binnedClone",rdataset_mj.GetName()+"_binnedClone" )
@@ -1849,7 +1834,7 @@ objName ==objName_before ):
                 treeIn.AddFriend(treeIn1)
                 rrv_mass_j   = self.workspace4fit_.var("rrv_mass_j") #realvar kind #pNet mass
                 rrv_mass_lvj = self.workspace4fit_.var("rrv_mass_lvj")#mWV
-                rrv_weight   = RooRealVar("rrv_weight","rrv_weight",-500.,500.) ##am1000. ,10000000.)
+                rrv_weight   = RooRealVar("rrv_weight","rrv_weight",-1000. ,10000000.)
                 rrv_mass_j_sb_lo        = rrv_mass_j.clone("mj_sb_lo")
                 rrv_mass_j_sb_hi        = rrv_mass_j.clone("mj_sb_hi")
                 rrv_mass_j_sig                = rrv_mass_j.clone("mj_sig")
@@ -1903,16 +1888,14 @@ objName ==objName_before ):
                     ptWlep=treeIn.pTWlep > 200
                     boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore >= self.PNS and treeIn.Selak8Jet_particleNet_mass[0] < 150 and treeIn.Selak8Jet_particleNet_mass[0] > 40
                     self.isGoodEvent = 0;   
-                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.mWV > rrv_mass_lvj.getMin() and treeIn.nBJetMedium30 == 0 and treeIn.mWV<rrv_mass_lvj.getMax() and tmp_jet_mass>rrv_mass_j.getMin() and tmp_jet_mass<rrv_mass_j.getMax() and boosted_sel:
+                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.mWV > rrv_mass_lvj.getMin() and treeIn.nBJetMedium30 == 0 and treeIn.mWV<rrv_mass_lvj.getMax() and tmp_jet_mass>rrv_mass_j.getMin() and boosted_sel:
                         self.isGoodEvent = 1;  
                     if self.isGoodEvent == 1:
-                        tmp_event_weight4fit=tmp_scale_to_lumi
+                        #tmp_event_weight4fit=tmp_scale_to_lumi
                         tmp_event_weight=tmp_scale_to_lumi #if "data" in label else treeIn.evt_wt*treeIn.genwt/abs(treeIn.genwt)
+                        tmp_event_weight4fit= tmp_scale_to_lumi #1.0 if "data" in label else treeIn.evt_wt*treeIn.lepSF #treeIn.evt_wt*treeIn.genwt/abs(treeIn.genwt)
 
                         rrv_mass_lvj.setVal(treeIn.mWV); ###passing mWV in rrv
-                        rrv_mass_j.setVal( tmp_jet_mass );##passing mjet in rrv
-                        rdataset_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight )
-                        rdataset4fit_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight4fit )
 
                         #sideband lo only
                         if (tmp_jet_mass >= self.mj_sideband_lo_min and tmp_jet_mass < self.mj_sideband_lo_max): # and tmp_jet_pNetscore < 0.4):
@@ -1928,6 +1911,7 @@ objName ==objName_before ):
                         if tmp_jet_mass >= self.mj_signal_min and tmp_jet_mass < self.mj_signal_max:
                             rdataset_sig_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight );
                             rdataset4fit_sig_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight4fit );
+
                             data_category.setLabel("sig");
                             combData.add(RooArgSet(rrv_mass_lvj,data_category),tmp_event_weight);
                             combData4fit.add(RooArgSet(rrv_mass_lvj,data_category),tmp_event_weight4fit);
@@ -1938,10 +1922,14 @@ objName ==objName_before ):
                             rdataset4fit_sb_hi_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight4fit );
                             rdataset_sb_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight );
                             rdataset4fit_sb_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight4fit ); 
+
                             data_category.setLabel("sideband");
                             combData.add(RooArgSet(rrv_mass_lvj,data_category),tmp_event_weight);
                             combData4fit.add(RooArgSet(rrv_mass_lvj,data_category),tmp_event_weight4fit);            
-                            
+                        
+                        rrv_mass_j.setVal( tmp_jet_mass );##passing mjet in rrv
+                        rdataset_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight )
+                        rdataset4fit_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight4fit )
 
                         #mj spectrum, cut out data in signal region if needed
                         #datasets for simultaneaous fit in combine                          ##sideband lo ##am only FOLLOWING IS DATA
@@ -2301,7 +2289,6 @@ objName ==objName_before ):
         rrv_number_WW     = workspace.var("rrv_number_WW_"+self.channel+"_sig");
         rrv_number_WZ     = workspace.var("rrv_number_WZ_"+self.channel+"_sig");
         rrv_number_TTbar  = workspace.var("rrv_number_TTbar_"+self.channel+"_sig");
-        
         rrv_number_STop   = workspace.var("rrv_number_STop_"+self.channel+"_sig");
 
         rrv_number_WJets.Print();

@@ -40,16 +40,17 @@ condor)
 esac
 
 case ${runWhat} in
-recl)
-	basecmd="${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence  --dm .*Nujj_01j_aTGC_4f_NLO_FXFX_4f.*  #run on mc --de .*Run.* "
+
+reclmc)
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --de .*Run.* "
 	;;
 
 recldata)
-	basecmd="${BCORE}2_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  --dm .*Run.* "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  --dm .*Run.* "
 	;;
 
 jme)
-	basecmd="${BCORE}0_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  -d WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800 -c 1 " #--de .*Run.* " WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800
+	basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  --de .*Run.* " 
 	;;
 
 top)
@@ -65,21 +66,21 @@ npdf)
 
 fjtagged)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}1_ak8Vtagged  ${CMGT} taggedfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800 -c 0 " #--de .*Run.* "
-
+	basecmd="${BCORE}2_ak8Vtagged  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root --de .*Run.* "
 	;;
+
 fjtaggeddata)
-	basecmd="${BCORE}1_ak8Vtagged  ${CMGT} taggedfj_data -F Friends ${Parent}/2_recl/{cname}_Friend.root --dm .*Run.*"
+	basecmd="${BCORE}2_ak8Vtagged  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
 	;;
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/0_jmeUnc/{cname}_Friend.root  --de .*Run.* "
+	basecmd="${BCORE}1_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root  --de .*Run.* "
 	;;
 
 wjet)	
 	
-	basecmd="${BCORE}0_wjest/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/2_recl/{cname}_Friend.root  -F Friends ${Parent}/ak8VtaggedV1/{cname}_Friend.root -d TTSemi_pow_part0 "
+	basecmd="${BCORE}0_wjest/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/ak8VtaggedV1/{cname}_Friend.root -d TTSemi_pow_part0 "
 	;;
 
 genInfo)

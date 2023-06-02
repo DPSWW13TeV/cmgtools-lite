@@ -13,7 +13,7 @@ class saveVtaggedJet(Module):
         self.isMC=isMC
         self.jecs=jecs 
         self.shift=["Up","Down"] 
-        self.vars=["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2","hadronFlavour","muonIdx3SJ","electronIdx3SJ","nBHadrons","nCHadrons"] if self.isMC else ["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2"]#,"msoftdrop"]
+        self.vars=["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","msoftdrop","deepTag_WvsQCD","tau1","tau2","hadronFlavour","muonIdx3SJ","electronIdx3SJ","nBHadrons","nCHadrons"] if self.isMC else ["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2","msoftdrop"]
         if self.isMC: self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
         print type(self.vars)
         self.WPL = 0.64
@@ -75,7 +75,8 @@ class saveVtaggedJet(Module):
 
 
         for index,iJet in enumerate(fjets):
-            if iJet.particleNet_mass < 40: continue
+            ##amif iJet.particleNet_mass < 40: continue
+            if iJet.msoftdrop  < 40: continue
             jindex.append(index)
             pNetScore_wtag=(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq)/(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_QCD) ##FIXME add Xbb for Z
             pNetScore_ztag=(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_Xbb)/(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_QCD+iJet.particleNetMD_Xbb) ##FIXME add Xbb for Z
