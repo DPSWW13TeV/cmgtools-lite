@@ -17,12 +17,12 @@ WW : WWTo1L1Nu2Q : 49.997 : 1 ; FillColor=30, Label="WW SM (excl.)"
 ##aTGC : WpWm_aTGCmWV600to800 : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kMagenta-9, Label="WWaTGC" 
 ##aTGC : WpWm_aTGCmWV800toInf : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kMagenta-9, Label="WWaTGC" 
 
-aTGC+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
-aTGC+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
-aTGC+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
-aTGC+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
-aTGC+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
-aTGC+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
+#aTGC+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
+#aTGC+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
+#aTGC+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
+#aTGC+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
+#aTGC+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
+#aTGC+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec : 1; FillColor=ROOT.kRed, Label="aTGC"
 #aTGC+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="aTGC"
 #aTGC+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="aTGC"
 #aTGC+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="aTGC"
@@ -31,13 +31,13 @@ aTGC+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec : 1; FillColor=ROO
 #aTGC+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="aTGC"
 
 
-
-aTGC_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=True
-aTGC_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=True
-aTGC_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=True
-aTGC_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=True
-aTGC_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=True
-aTGC_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=True
+#xsec*LHEReweightinhWeight[62]
+aTGC_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=False 
+aTGC_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=False
+aTGC_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=False
+aTGC_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=False
+aTGC_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=False
+aTGC_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kRed, Label="WWaTGC_SM",SkipMe=False
 
 aTGC_incl : WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_4f: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kBlue, Label="WWaTGC_incl_SM",SkipMe=True
 aTGC_incl : WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f: xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kBlue, Label="WWaTGC_incl_SM",SkipMe=True
