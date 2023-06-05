@@ -43,7 +43,7 @@ topCR : (nBJetMedium30_Recl > 0 && nak8pNMgt40 > 0 && ak8pNMgt40_particleNet_mas
 resolved: Sum$(JetSel_Recl_pt > 30) >= 2 && nFatJetSel == 0 ;    Disable=True
 
 
-wjCR : nBJetMedium30_Recl == 0 && (ak8pNMgt40_particleNet_mass[0] < 65 || (ak8pNMgt40_particleNet_mass[0] > 105 && ak8pNMgt40_particleNet_mass[0] < 150)) ;    Disable=True 
+wjCR : nBJetMedium30_Recl == 0 #&& (ak8pNMgt40_particleNet_mass[0] < 65 || (ak8pNMgt40_particleNet_mass[0] > 105 && ak8pNMgt40_particleNet_mass[0] < 150)) ;    Disable=True 
 
 testwjCR : nBJetMedium30 == 0  ;    Disable=True
 
