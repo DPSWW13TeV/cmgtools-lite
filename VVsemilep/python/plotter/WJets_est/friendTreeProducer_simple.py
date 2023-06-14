@@ -17,9 +17,9 @@ if not os.path.isdir(outdir):
 more=["WWTo1L1Nu2Q","WZToLNuQQ01j_5f_amcatnloFxFx"]
 top=['TTSemi_pow','TT_mtt1ktoinf','TT_mttp7kto1k']
 
-stop=['T_sch','T_tWch_incldecays','T_tWch_noFullyHad','T_tch']
-wjets=['WJetsToLNu_HT100to200','WJetsToLNu_HT200to400','WJetsToLNu_HT400to600','WJetsToLNu_HT70to100','WJetsToLNu_HT1200to2500','WJetsToLNu_HT2500toInf','WJetsToLNu_HT600to800','WJetsToLNu_HT800to1200']
-samples=wjets+top+stop+more
+stop=['T_sch','T_tWch_incldecays','Tbar_tWch_noFullyHad','T_tch','Tbar_tch'] #['T_sch','T_tWch_incldecays','T_tWch_noFullyHad','T_tch']
+wjets=['WJetsToLNu_HT100to200','WJetsToLNu_HT200to400','WJetsToLNu_HT400to600','WJetsToLNu_HT70to100','WJetsToLNu_HT1200to2500','WJetsToLNu_HT2500toInf','WJetsToLNu_HT600to800','WJetsToLNu_HT800to1200']#'WJetsToLNu_LO']
+samples=stop #wjets+top+stop+more
 
 def printnEvt(fN,yr):
     files=[] 

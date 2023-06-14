@@ -24,10 +24,11 @@ class vvsemilep_TreeForWJestimation(Module):
                 self.out.branch('Lep%d_%s'%(l+1,var),'F')
         
         self.out.branch('nSelak8Jets'  ,'I')
-        for var in 'pt,eta,phi,mass,msoftdrop,particleNet_mass,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetZtagscore,pNetWtagSF'.split(','):
+        for var in 'pt,eta,phi,mass,particleNet_mass,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetZtagscore,pNetWtagSF'.split(','): #msoftdrop,
             self.out.branch('Selak8Jet_%s'%var, 'F', 10, 'nSelak8Jets')
 
-        self.out.branch('event', 'I')
+        self.out.branch('event', 'L')
+        self.out.branch('event_presel', 'L')
         self.out.branch('nBJetMedium30', 'I')
         self.out.branch('pmet'       ,'F')
         self.out.branch('pmet_phi'   ,'F')
@@ -40,6 +41,11 @@ class vvsemilep_TreeForWJestimation(Module):
         self.out.branch('trigger2l','I')
         self.out.branch('trigger1e','I')
         self.out.branch('trigger1m','I')
+
+        self.out.branch('dR_fjlep','F')
+        self.out.branch('dphi_fjlep','F')
+        self.out.branch('dphi_fjmet','F')
+        self.out.branch('pTWlep','F')
     
     def beginJob(self):
         pass
@@ -130,10 +136,11 @@ class vvsemilep_TreeForWJestimation(Module):
         
         for sel in self.selection: 
             if not eval(sel): return False
+        self.out.fillBranch('event_presel',event.event)
         for lep in range(self.lepMultiplicity):
             for var in 'pt,eta,phi,pdgId'.split(','):
                 self.out.fillBranch('Lep%d_%s'%(lep+1,var), getattr(leps[lep],var))
-        for var in 'pt,eta,phi,mass,msoftdrop,particleNet_mass,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore
+        for var in 'pt,eta,phi,mass,particleNet_mass,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore#,msoftdrop
             jetVar=[]
             for j in jets:
                 jetVar.append(getattr(j,var))
@@ -158,6 +165,18 @@ class vvsemilep_TreeForWJestimation(Module):
         self.out.fillBranch('trigger1e',event.Trigger_1e)
         self.out.fillBranch('trigger1m',event.Trigger_1m)
         self.out.fillBranch('nBJetMedium30',event.nBJetMedium30_Recl)
+
+        self.out.fillBranch('dR_fjlep',deltaR(leps[0].eta,leps[0].phi,jets[0].eta,jets[0].phi))
+        self.out.fillBranch('dphi_fjlep',abs(deltaPhi(leps[0].phi,jets[0].phi)))
+        self.out.fillBranch('dphi_fjmet',abs(deltaPhi(event.PuppiMET_phi,jets[0].phi)))
+        pmet=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        lep1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        lmet=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        pmet.SetPtEtaPhiM(event.PuppiMET_pt,0.,event.PuppiMET_phi,0.);
+        lep1.SetPtEtaPhiM(leps[0].pt,leps[0].eta,leps[0].phi,leps[0].mass);
+        lmet=pmet+lep1
+        self.out.fillBranch('pTWlep',lmet.Pt())
+
         hemwt=self.HEM(event.year,leps[0],jets[0],event.run,isData)
         #print hemwt,event.prescaleFromSkim,event.L1PreFiringWeight_Nom,event.puWeight
         eventWt=hemwt * (event.prescaleFromSkim if isData else event.L1PreFiringWeight_Nom*event.puWeight*event.prescaleFromSkim)

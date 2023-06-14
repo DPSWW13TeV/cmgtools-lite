@@ -23,6 +23,7 @@ Trees='NanoTrees_v9_vvsemilep_06012023/'
 nEvt=120000
 Parent=${baseDir}/${Trees}/${year}
 BCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ${Parent}/";
+TBCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ";
 CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
 
 
@@ -30,7 +31,7 @@ CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
 case ${runWhere} in
 condor)
 	echo "running on condor"
-	cmd_1=" -q condor --maxruntime 100 --log $PWD/logs"
+	cmd_1=" -q condor --maxruntime 180 --log $PWD/logs"
 
 	;;
 *) 
@@ -50,7 +51,8 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  --de .*Run.* " 
+	##basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total " #--dm TTSemi_pow_part.*  "  #--de .*Run.* "
+	basecmd="${TBCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total "
 	;;
 
 top)
@@ -78,9 +80,8 @@ recl_allvars)
 	basecmd="${BCORE}1_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root  --de .*Run.* "
 	;;
 
-wjet)	
-	
-	basecmd="${BCORE}0_wjest/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/ak8VtaggedV1/{cname}_Friend.root -d TTSemi_pow_part0 "
+wjet)		
+	basecmd="${BCORE}0_wjest_comp/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/1_ak8Vtagged/{cname}_Friend.root "
 	;;
 
 genInfo)

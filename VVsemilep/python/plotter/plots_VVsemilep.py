@@ -20,9 +20,9 @@ flavors = {
 
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
-MCfriends   = ['2_recl','0_jmeUnc','4_scalefactors']#'ak8VtaggedV1_vars']#,'nnpdf_rms']#,'2_recl_allvars','2_btag_SFs'] #,"postFSRinfo"]
-Datafriends = ['2_recl']
-friends     = ['1_ak8Vtagged']#'3_tauCount','dpsbdt_neu_ssnoeebkg_afacdps','dpsbdt_neu_ssnoeebkg_afacdps_unclEn']
+MCfriends   = ['1_recl','0_jmeUnc','4_scalefactors']#'ak8VtaggedV1_vars']#,'nnpdf_rms']#,'2_recl_allvars','2_btag_SFs'] #,"postFSRinfo"]
+Datafriends = ['1_recl']
+friends     = ['1_ak8Vtagged']#,'0_wjest_test']#'3_tauCount','dpsbdt_neu_ssnoeebkg_afacdps','dpsbdt_neu_ssnoeebkg_afacdps_unclEn']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
 fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
@@ -131,6 +131,7 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
         #if applypNetSFs :pNetSF="pNetSFMD_WvsQCD(ak8pNMgt40_pt[0],year,suberaId,0)"
         if(nLep == 1): 
             if applypNetSFs:
+                #cmd +=''.join(" -W evt_wt*lepsf ")
                 cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *pNetSFMD_WvsQCD(ak8pNMgt40_pt[0],year,suberaId,0) *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
             else:
                 cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
@@ -170,7 +171,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['WW','aTGC','aTGC_incl']#'WJets','WV','higgs','QCD','WJets','tt','singletop','data','aTGC']#,'aTGC']#,'data'] #'data',if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',['WW','aTGC']#
+    processes    = ['WJets','WV','WJets','tt','singletop','data']##'higgs','QCD','aTGC']#,'data'] #'data',if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',['WW','aTGC']#'WW','aTGC','aTGC_incl']#
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_boosted = ['singlelep','trigger','ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','etael1']
     cuts_onelep  = ['singlelep','trigger','ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','SR','etael1']#,'bVeto',
@@ -178,6 +179,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     cuts_wjCR    = cuts_boosted+['wjCR']
     cuts_topCR   = cuts_boosted+['topCR']
     cuts_inclB   = cuts_boosted+['inclB']
+    cuts_WJest   = ['WJEST']
     applypNetSFs=True
     #procs=[x+'_promptsub' for x in processes if not x.startswith('data')] 
     print processes
@@ -186,7 +188,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.32  --legendColumns 1 '
     ubands  =  ' ' #--showMCError --noStackSig --showSigShape'
     exclude = ' ' #--xu CMS_vvsl18_pNetscore' 
-    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75  --plotmode norm --ratioDen WW --ratioNums aTGC,aTGC_incl' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75' #  --plotmode norm --ratioDen WW --ratioNums aTGC,aTGC_incl' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
     more = '--plotmode norm' if cutflow else ''
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
@@ -197,7 +199,8 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         exclude = ' --xu CMS_vvsl18_pNetscore' if 'wjCR' not in pR else  ' '
         signal= if3(pR == 'SR',if3(nLep > 1,'--sp ZV','--sp WV'), if3('top' in pR, ' --sp tt --sp singletop', ' --sp WJets'))
         for LF in lepflav:
-            lepSel= if3(LF == 'mu','muOnly',if3(LF == 'el','elOnly','trigger'))
+            lepSel= if3(LF == 'mu','muOnly',if3(LF == 'el','elOnly','trigger')) if not 'wjest' in pR else '1'
+
             for FS in finalState:
                 binName = '{lep}{jet}'.format(lep=if3(nLep > 1,'2los',flavors[LF]),jet=FS)
                 print 'running plots for %s'%binName
@@ -205,14 +208,8 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 print '{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName)
                 targetdir = eos+'{yr}/{pR}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+'cutflow' if cutflow else '' + postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR)
                 enable=[];
-                enable=if3(pR == 'SR',if3(nLep > 1,cuts_2los,cuts_onelep),if3(pR=='topCR',cuts_topCR,if3(pR=='wjCR',cuts_wjCR,cuts_inclB)))
-                #if "wjCR" not in pR:                enable.append(FS); ## need to confirm
-                enable.append(lepSel); enable.append(FS); #now applying pNET tagger in WJCR also
-                #if blinded or "SR" in pR:
-                    #processes.remove('data')
-                    #enable.append('blinded')
-                #else:
-                #    print 'plots will be made with data points on top of the stack'
+                enable=cuts_WJest if 'wjest' in pR else if3(pR == 'SR',if3(nLep > 1,cuts_2los,cuts_onelep),if3(pR=='topCR',cuts_topCR,if3(pR=='wjCR',cuts_wjCR,cuts_inclB)))
+                if "wjest" not in pR:   enable.append(lepSel); enable.append(FS); #now applying pNET tagger in WJCR also
                 makeplots  = ['{}'.format(a)  for a in plotvars]
                 print makeplots
                 anything = "  --binname %s "%binName #--showIndivSigs
