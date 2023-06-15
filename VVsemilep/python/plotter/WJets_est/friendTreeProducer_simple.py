@@ -4,10 +4,10 @@ from glob import glob
 #from  printnEvt import printnEvt
 #fN=sys.argv[1]
 year=sys.argv[1]
-frnds="0_wjest/"
+frnds="0_wjest_comp/"
 eospath="/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/"
 #files=[]
-outname="1_wjest"
+outname="1_wjest_comp"
 outdir=os.path.join(eospath,year,outname)
 
 if not os.path.isdir(outdir):
@@ -19,7 +19,7 @@ top=['TTSemi_pow','TT_mtt1ktoinf','TT_mttp7kto1k']
 
 stop=['T_sch','T_tWch_incldecays','Tbar_tWch_noFullyHad','T_tch','Tbar_tch'] #['T_sch','T_tWch_incldecays','T_tWch_noFullyHad','T_tch']
 wjets=['WJetsToLNu_HT100to200','WJetsToLNu_HT200to400','WJetsToLNu_HT400to600','WJetsToLNu_HT70to100','WJetsToLNu_HT1200to2500','WJetsToLNu_HT2500toInf','WJetsToLNu_HT600to800','WJetsToLNu_HT800to1200']#'WJetsToLNu_LO']
-samples=stop #wjets+top+stop+more
+samples=stop +wjets+top+stop+more
 
 def printnEvt(fN,yr):
     files=[] 

@@ -352,8 +352,8 @@ scaleFactorSequence_2018    = [btagSF2018_dj,bTagSFs]
 #taggedfj_data = lambda : saveVtaggedJet(isMC = False)
 
 from CMGTools.VVsemilep.tools.nanoAOD.saveVtaggedJet import saveVtaggedJet
-taggedfj           = lambda : saveVtaggedJet(isMC = True, jecs = jevariations)
-taggedfj_data           = lambda : saveVtaggedJet(isMC = False)
+taggedfj           = lambda : saveVtaggedJet(isMC = True, massVar='sD',jecs = jevariations)
+taggedfj_data           = lambda : saveVtaggedJet(isMC = False,massVar='sD')
 
 
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import vvsemilep_TreeForWJestimation

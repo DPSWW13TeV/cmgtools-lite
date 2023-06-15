@@ -51,8 +51,8 @@ recldata)
 	;;
 
 jme)
-	##basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total " #--dm TTSemi_pow_part.*  "  #--de .*Run.* "
-	basecmd="${TBCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total "
+	basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total " #--dm TTSemi_pow_part.*  "  #--de .*Run.* "
+	##	basecmd="${TBCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total "
 	;;
 
 top)
@@ -68,7 +68,7 @@ npdf)
 
 fjtagged)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}2_ak8Vtagged  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root --de .*Run.* "
+	basecmd="${BCORE}2_ak8Vtagged  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root -d T_sch -c 1 " # #--de .*Run.* "
 	;;
 
 fjtaggeddata)
@@ -81,7 +81,7 @@ recl_allvars)
 	;;
 
 wjet)		
-	basecmd="${BCORE}0_wjest_comp/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/1_ak8Vtagged/{cname}_Friend.root "
+	basecmd="${BCORE}0_wjest_comp/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/1_ak8Vtagged/{cname}_Friend.root -d T_sch -c 3"
 	;;
 
 genInfo)
@@ -99,16 +99,29 @@ esac;
 
 
 
-if [ -z "$chunks" ] || [ -z == "$samples" ]
+if [ -z "$chunks" ] && [ -z  "$samples" ]
 then
     echo "running for the first time  ${basecmd}  ${cmd_1}"
     ${basecmd}  ${cmd_1}   
-else #for running missing chunks locally
+elif [ -n  "$samples" ] && [ -z "$chunks" ]
+then
+    echo "running ${basecmd} ${cmd_1} for ${samples}"
+    ${basecmd}  ${cmd_1} -d ${samples}
+else 
     for i in "${chunks[@]}"
     do 
+	echo "running ${basecmd} ${cmd_1} for ${samples} and chunk ${i}"
 	${basecmd} ${cmd_1} -d ${samples} -c ${i}
     done
+  
 fi
 
+
+
+##am    if [ "${#chunks[@]}" -eq 0 ]
+##am	then
+##am	echo "running ${basecmd} ${cmd_1} for ${samples} insided" 
+##am	#${basecmd}  ${cmd_1} -d ${samples}
+##am	else 
 
 

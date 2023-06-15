@@ -179,8 +179,8 @@ class doFit_wj_and_wlvj:
         rrv_mass_lvj.setRange('sig',900,options.mlvj_hi)
 
         #prepare the data and mc files --> set the working directory and the files name
-        self.file_Directory=os.path.join(self.year,"0_wjest") 
-        self.file1_Directory=os.path.join(self.year,"1_wjest") 
+        self.file_Directory=os.path.join(self.year,"0_wjest_comp") 
+        self.file1_Directory=os.path.join(self.year,"1_wjest_comp") 
         self.samples={
             'WJets':[wjets],
             'data':[data],
