@@ -79,9 +79,7 @@ class saveVtaggedJet(Module):
 
 
         for index,iJet in enumerate(fjets):
-            selcut=iJet.particleNet_mass < 40 if self.massVar == "pN" else iJet.msoftdrop  < 40
-            ##amif iJet.particleNet_mass < 40: continue
-            #if iJet.msoftdrop  < 40: continue
+            selcut=iJet.particleNet_mass > 40 if self.massVar == "pN" else iJet.msoftdrop  > 40
             if not selcut: continue
             jindex.append(index)
             pNetScore_wtag=(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq)/(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_QCD) ##FIXME add Xbb for Z

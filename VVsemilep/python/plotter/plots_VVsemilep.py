@@ -20,15 +20,15 @@ flavors = {
 
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
-MCfriends   = ['1_recl','4_scalefactors']#'0_jmeUnc','ak8VtaggedV1_vars']#,'nnpdf_rms']#,'2_recl_allvars','2_btag_SFs'] #,"postFSRinfo"]
+MCfriends   = ['1_recl','4_scalefactors','1_jmeUnc']#,'ak8VtaggedV1_vars']#,'nnpdf_rms']#,'2_recl_allvars','2_btag_SFs'] #,"postFSRinfo"]
 Datafriends = ['1_recl']
-friends     = ['1_ak8Vtagged']#,'0_wjest_test']#'3_tauCount','dpsbdt_neu_ssnoeebkg_afacdps','dpsbdt_neu_ssnoeebkg_afacdps_unclEn']
+friends     = ['2_ak8Vtagged']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
 fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
 HEM=['puppimetphi','FatJet1_etaphi','eta1','phi1','etaphi1','FatJet1_phi','FatJet1_eta']
 cutflow = ['puppimet1','mWV1_typ0_pmet_boosted','lep1_ptt','FatJet1_pNet_mass','FatJet1_ptt','FatJet1_pNetMD_Wtagscoret']
-theWVultimateset=['nJet30_Recl','nBJetMedium30_Recl','FatJet1_pNet_mass','mWV_typ0_pmet_boosted','puppimet','puppimetphi','lep1_pt','lep1_eta','sumBoosted','dphifjpmet','dphifjlep','ptWV_pmet','neupzpmet_typ0','dphil1pmet','dphifjpmet','ptleppmet','nFatJet','FatJet1_pt','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_pNetMD_Ztagscore','FatJet1_tau21']#'FatJet1_sDrop_mass','mWV_typ1_pmet_boosted','mWV_typ2_pmet_boosted','neupzpmet','neupzpmet_typ1','neupzpmet_typ2','neupzpmet_typ3','mt1pmet',','nLepGood','nLepFO',,'FatJet1_pNetMD_Wtagscore_wXbb','sumBoosted_withXbb',
+theWVultimateset=['nJet30_Recl','nBJetMedium30_Recl','FatJet1_pNet_mass','mWV_typ0_pmet_boosted','puppimet','puppimetphi','lep1_pt','lep1_eta','sumBoosted','dphifjpmet','dphifjlep','ptWV_pmet','neupzpmet_typ0','dphil1pmet','dphifjpmet','ptleppmet','nFatJet','FatJet1_pt','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_pNetMD_Ztagscore','FatJet1_tau21','FatJet1_sDrop_mass']#,'mWV_typ1_pmet_boosted','mWV_typ2_pmet_boosted','neupzpmet','neupzpmet_typ1','neupzpmet_typ2','neupzpmet_typ3','mt1pmet',','nLepGood','nLepFO',,'FatJet1_pNetMD_Wtagscore_wXbb','sumBoosted_withXbb',
 
 topCR=['FatJet1_sDrop_mass','FatJet1_pNet_mass','mWV_typ0_pmet_boosted','puppimet','puppimetphi','lep1_pt','sumBoosted','FatJet1_pNetMD_Wtagscore','nFatJet','FatJet1_pt']
 ak4jetvars = ['nBJetLoose30_Recl,','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt']#'htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1']#'Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl',','htJet25j_Recl','mhtJet25_Recl',
@@ -132,12 +132,12 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
         if(nLep == 1): 
             if applypNetSFs:
                 #cmd +=''.join(" -W evt_wt*lepsf ")
-                cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *pNetSFMD_WvsQCD(ak8pNMgt40_pt[0],year,suberaId,0) *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
+                cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *pNetSFMD_WvsQCD(ak8sDMgt40_pt[0],year,suberaId,0) *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
             else:
                 cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
         else: 
             if applypNetSFs:
-                cmd+=" '-W L1PreFiringWeight_Nom*puWeight*pNetSFMD_WvsQCD(ak8pNMgt40_pt[0],year,suberaId,0)*lepsf*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_pt[iLepFO_Recl[1]],2,year,suberaId) ' "
+                cmd+=" '-W L1PreFiringWeight_Nom*puWeight*pNetSFMD_WvsQCD(ak8sDMgt40_pt[0],year,suberaId,0)*lepsf*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_pt[iLepFO_Recl[1]],2,year,suberaId) ' "
             else:
                 cmd+=" '-W L1PreFiringWeight_Nom*puWeight*lepsf*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_pt[iLepFO_Recl[1]],2,year,suberaId) ' "
                 

@@ -1,10 +1,10 @@
 ZV : ZZTo2Q2L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=46, Label="ZV"
 ZV : WZTo2Q2L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=46, Label="ZV"
 
-WV : WZToLNuQQ01j_5f_amcatnloFxFx : xsec : 1 ; FillColor=30, Label="WV"
-WV : WWTo1L1Nu2Q : 49.997 : 1 ; FillColor=30, Label="WV"
+WV+ : WZToLNuQQ01j_5f_amcatnloFxFx : xsec : 1 ; FillColor=30, Label="WV"
+WV+ : WWTo1L1Nu2Q : 49.997 : 1 ; FillColor=30, Label="WV"
 
-WV+ : WZTo1L1Nu2Q : 10.71  : 1 ; FillColor=30, Label="WZ_4f",SkipMe=True
+WZ_4f : WZTo1L1Nu2Q : 10.71  : 1 ; FillColor=30, Label="WZ_4f",SkipMe=True
 
 WW : WWTo1L1Nu2Q : 49.997 : 1 ; FillColor=30, Label="WW SM (excl.)"
 

@@ -13,8 +13,8 @@ Output     = jobs/log_$(ProcId).out
 Error      = jobs/log_$(ProcId).error
 +JobFlavour = "tomorrow"
 \n\n'''.format(here=os.environ['PWD']))
-pf="withtagger"
-for dW in ["wjCR"]: #,"SR","topCR"]: #topCR","wjCR","SR"]: #," inclB"]: #,"topCR"]: #,"SR"]:
+pf="withSDM"
+for dW in ["wjCR","SR","topCR"]: #topCR","wjCR","SR"]: #," inclB"]: #,"topCR"]: #,"SR"]:
     for nl in ["1"]: #"1,2".split(","):
         for cat in ["boosted"]: #,"resolved"]: #.split(","):
             for yr in ["2018"]: #2016,2017,2018".split(","):
