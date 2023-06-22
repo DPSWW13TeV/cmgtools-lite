@@ -189,7 +189,7 @@ class doFit_wj_and_wlvj:
             "WW":[["WWTo1L1Nu2Q"],3393645436],
             "WZ":[["WZToLNuQQ01j_5f_amcatnloFxFx"],41724242]}#stop 24011170135.9
         
-        self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.5}
+        self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.5,'WPD':-1}
 
         #prepare background data and signal samples            
         
@@ -233,7 +233,7 @@ class doFit_wj_and_wlvj:
         
         self.file_out=open(self.file_rlt_txt,"w");
         self.file_out.write("Welcome:\n");
-        self.file_out.close()
+        #self.file_out.close()
         self.file_out=open(self.file_rlt_txt,"a+");
 
         ## color palette 
@@ -883,7 +883,7 @@ objName ==objName_before ):
         ## sum of two exponential 
         if in_model_name == "Exp" or in_model_name == "Exp_sr":
             print "########### Exp = levelled exp funtion for W+jets mlvj ############"
-            rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.05,-0.1,0.);
+            rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.0036,-10,10.);
             model_pdf = ROOT.RooExponential("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c_Exp);
 
         ## Chi-square or Bernstein polynomial for mj spectrum
@@ -1223,6 +1223,11 @@ objName ==objName_before ):
         self.fix_Model("_STop","_sig","_mlvj")
         self.fix_Model("_WW","_sig","_mlvj")
         self.fix_Model("_WZ","_sig","_mlvj")
+        
+        self.get_mlvj_normalization_insignalregion("_TTbar");
+        self.get_mlvj_normalization_insignalregion("_STop");
+        self.get_mlvj_normalization_insignalregion("_WW");
+        self.get_mlvj_normalization_insignalregion("_WZ");
 
     #################################################################################################
     #################################################################################################
@@ -1912,7 +1917,7 @@ objName ==objName_before ):
                     treeIn.GetEntry(i);
                     if i==0: print "IMPCHK xsec %f for sample %s"%(treeIn.xsec,label)
                     totEventWeight = treeIn.evt_wt if "data" in label else 1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*lumis[self.year]/treeIn.sumw #*treeIn.Selak8Jet_pNetWtagSF[0]
-                    totEventWeight = totEventWeight if "WJets" in label else totEventWeight*treeIn.Selak8Jet_pNetWtagSF[0] 
+                    totEventWeight = totEventWeight #if "WJets" in label else totEventWeight*treeIn.Selak8Jet_pNetWtagSF[0] 
                     tmp_scale_to_lumi = 1.0 if "data" in label else 1000*treeIn.genwt*treeIn.xsec*lumis[self.year]/treeIn.sumw
                     #print label,"da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum event weight",tmp_scale_to_lumi
                     tmp_jet_mass=treeIn.Selak8Jet_particleNet_mass[0]
@@ -2015,7 +2020,7 @@ objName ==objName_before ):
                     getattr(self.workspace4fit_,'import')(dataset_mj_sig)
 
                 ### write in the output 
-                self.file_out.write("\n%s events number in m_lvj from dataset: %s"%(label,rdataset_sig_mlvj.sumEntries()))
+                self.file_out.write("\n%s number of events in m_lvj from dataset: %s"%(label,rdataset_sig_mlvj.sumEntries()))
 
                 #@#write datasets to file
                 if 'WJets' in label:

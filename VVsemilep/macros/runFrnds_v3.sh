@@ -77,7 +77,7 @@ fjtaggeddata)
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}1_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root  --de .*Run.* "
+	basecmd="${BCORE}1_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root " #  --de .*Run.* "
 	;;
 
 wjet)		
