@@ -128,9 +128,13 @@ QCD : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
 
 
 
+##TTSemi_pow_part8 something wrong with ak8vtagged file
+##+TTSemi_pow_part6 less entries than parent in the 1_Recl
 
-tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<700) ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
 
+TTSEMI : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
+#TTSemi_pow_part8+
+tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part9  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<700) ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
 #Top_pTrw
 tt : TT_mtt1ktoinf: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/" 
 tt : TT_mttp7kto1k: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"

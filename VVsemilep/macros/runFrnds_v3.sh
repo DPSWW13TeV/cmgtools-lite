@@ -31,7 +31,7 @@ CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
 case ${runWhere} in
 condor)
 	echo "running on condor"
-	cmd_1=" -q condor --maxruntime 180 --log $PWD/logs"
+	cmd_1=" -q condor --maxruntime 280 --log $PWD/logs" #180 
 
 	;;
 *) 
@@ -43,7 +43,7 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --de .*Run.* "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence " #--de .*Run.* "
 	;;
 
 recldata)
