@@ -24,7 +24,7 @@ class vvsemilep_TreeForWJestimation(Module):
                 self.out.branch('Lep%d_%s'%(l+1,var),'F')
         
         self.out.branch('nSelak8Jets'  ,'I')
-        for var in 'pt,eta,phi,mass,particleNet_mass,particleNetMD_Xqq,msoftdrop,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetZtagscore,pNetWtagSF'.split(','): #msoftdrop,
+        for var in 'pt,eta,phi,mass,particleNetMD_Xqq,msoftdrop,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetZtagscore,pNetWtagSF'.split(','): #msoftdrop,particleNet_mass,
             self.out.branch('Selak8Jet_%s'%var, 'F', 10, 'nSelak8Jets')
 
         self.out.branch('event', 'L')
@@ -66,7 +66,7 @@ class vvsemilep_TreeForWJestimation(Module):
         mWV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         met.SetPtEtaPhiM(metpt,0.,metphi,0.);
         lepton1.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,l1.mass);
-        fatjet1.SetPtEtaPhiM(fjet.pt,fjet.eta,fjet.phi,fjet.particleNet_mass);
+        fatjet1.SetPtEtaPhiM(fjet.pt,fjet.eta,fjet.phi,fjet.msoftdrop); #particleNet_mass);
         NeutrinoPz.SetMET(met);
         NeutrinoPz.SetLepton(lepton1);
         NeutrinoPz.SetLeptonType(l1.pdgId);
@@ -140,7 +140,7 @@ class vvsemilep_TreeForWJestimation(Module):
         for lep in range(self.lepMultiplicity):
             for var in 'pt,eta,phi,pdgId'.split(','):
                 self.out.fillBranch('Lep%d_%s'%(lep+1,var), getattr(leps[lep],var))
-        for var in 'pt,eta,phi,mass,particleNet_mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore#,msoftdrop
+        for var in 'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore#,msoftdrop particleNet_mass,
             jetVar=[]
             for j in jets:
                 jetVar.append(getattr(j,var))

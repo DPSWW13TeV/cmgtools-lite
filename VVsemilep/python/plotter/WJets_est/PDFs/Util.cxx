@@ -463,8 +463,9 @@ void draw_error_band_Decor( std::string pdf_name, std::string xaxis_name, RooArg
 } 
 
 /// Just the shape and don't touch the normalization 
-void draw_error_band_shape_Decor( std::string pdf_name, std::string xaxis_name, RooArgList &paras, RooWorkspace &ws,Double_t sigma , RooPlot *mplot, Int_t kcolor=6,std::string opt="F", Int_t fillstyle=3013,std::string uncertainty_title="", Int_t number_point=100, const Int_t number_errorband=2000){
-
+void draw_error_band_shape_Decor( std::string pdf_name, std::string xaxis_name, RooArgList &paras, RooWorkspace &ws,Double_t sigma , RooPlot *mplot, Int_t kcolor=6,std::string opt="F", Int_t fillstyle=3013,std::string uncertainty_title="", Int_t number_point=1000, const Int_t number_errorband=2000){
+  std::cout<<"IMPCHK from alpha band"<<std::endl;
+  std::cout<<"input args"<<pdf_name.c_str()<<"\t"<<xaxis_name.c_str()<<"\t"<<uncertainty_title.c_str()<<std::endl;
 	TRandom3 rand(1234);
         /// take the observable
 	RooRealVar *rrv_x=ws.var(xaxis_name.c_str());
@@ -473,8 +474,9 @@ void draw_error_band_shape_Decor( std::string pdf_name, std::string xaxis_name, 
 	Double_t x_max=rrv_x->getMax();
 	Double_t delta_x=(x_max-x_min)/number_point;
 	Double_t width_x=mplot->getFitRangeBinW();
-
+	std::cout<<"IMPCHK from alpha band \t"<<x_min<<x_max<<delta_x<<width_x<<std::endl;
         /// bkg prediction central value
+	//	TCanvas *c1_band=new TCanvas("c1_band","c1_band",600,600);
 	TGraph *bkgpred=new TGraph(number_point+1);
 	for(int i =0 ; i<= number_point ; i++){
 		rrv_x->setVal(x_min+delta_x*i); 
@@ -482,7 +484,7 @@ void draw_error_band_shape_Decor( std::string pdf_name, std::string xaxis_name, 
 	}
 	bkgpred->SetLineWidth(2);
 	bkgpred->SetLineColor(kcolor+3);
-
+	
         // make the envelope
 	TGraph* syst[number_errorband];
 	for(int j=0;j<number_errorband;j++){
@@ -528,6 +530,9 @@ void draw_error_band_shape_Decor( std::string pdf_name, std::string xaxis_name, 
 	for(Int_t ipara=0;ipara<paras.getSize();ipara++){
 		ws.var(paras[ipara].GetName())->setVal(0.);
 	}
+	mplot->Draw();
+//	c1_band->Print("/eos/user/a/anmehta/www/VVsemilep/WJest/2018/2023-06-30/plots_mu_WPM_900_4500/other/test.png");
+//	c1_band->Print("/eos/user/a/anmehta/www/VVsemilep/WJest/2018/2023-06-30/plots_mu_WPM_900_4500/other/test.pdf");
 } 
 
 //with scale for aplha function plot
