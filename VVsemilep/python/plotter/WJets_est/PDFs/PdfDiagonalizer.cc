@@ -16,23 +16,26 @@ PdfDiagonalizer::PdfDiagonalizer(const char *name, RooWorkspace *w, RooFitResult
     parameters_(result.floatParsFinal())
 {
     int n = parameters_.getSize();
-
+    //std::cout<<"from pdf diag num of params\t"<<n<<std::endl;
     TMatrixDSym cov(result.covarianceMatrix()); 
     TMatrixDSymEigen eigen(cov);
 
     const TMatrixD& vectors = eigen.GetEigenVectors();
     const TVectorD& values  = eigen.GetEigenValues();
-
+    //std::cout<<"from pdf diag eigen vecs"<<eigen.GetEigenVectors()<<std::endl;
+    //std::cout<<"from pdf diag eigen vals"<<eigen.GetEigenValues()<<std::endl;
     char buff[10240];
 
     // create unit gaussians per eigen-vector
     for (int i = 0; i < n; ++i) {
         snprintf(buff,sizeof(buff),"%s_eig%d[-5,5]", name, i);
+
         eigenVars_.add(*w->factory(buff));
     }
     // put them in a list, with a one at the end to set the mean
     RooArgList eigvVarsPlusOne(eigenVars_);
     if (w->var("_one_") == 0) w->factory("_one_[1]");
+    //    std::cout<<"from pdf diag."<<*w->var("_one_")<<std::endl;
     eigvVarsPlusOne.add(*w->var("_one_"));
 
     // then go create the linear combinations
@@ -48,6 +51,7 @@ PdfDiagonalizer::PdfDiagonalizer(const char *name, RooWorkspace *w, RooFitResult
         snprintf(buff,sizeof(buff),"%s_eigLin_%d", name, i);
         RooAddition *add = new RooAddition(buff,buff,coeffs,eigvVarsPlusOne);
         w->import(*add);
+	//std::cout<<"from pdf diag replacement."<<*add<<std::endl;
         replacements_.add(*add);
     }
 }
@@ -60,6 +64,7 @@ RooAbsPdf *PdfDiagonalizer::diagonalize(RooAbsPdf &pdf)
     RooCustomizer custom(pdf, name_.c_str());
     for (int i = 0, n = parameters_.getSize(); i < n; ++i) { 
         if (pdf.dependsOn(*parameters_.at(i))) {
+	  //std::cout<<"from pdf diag cust"<<*parameters_.at(i)<<"\t"<<*replacements_.at(i)<<std::endl;
             custom.replaceArg(*parameters_.at(i), *replacements_.at(i));
         }
     }
