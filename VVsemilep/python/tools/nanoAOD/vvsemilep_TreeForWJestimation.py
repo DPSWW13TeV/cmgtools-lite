@@ -1,7 +1,7 @@
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 import ROOT 
-
+import math
 from math import sqrt, cos, sin
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR, deltaPhi
 #_rootLeafType2rootBranchType = { 'UChar_t':'b', 'Char_t':'B', 'UInt_t':'i', 'Int_t':'I', 'Float_t':'F', 'Double_t':'D', 'ULong64_t':'l', 'Long64_t':'L', 'Bool_t':'O'}
@@ -28,6 +28,7 @@ class vvsemilep_TreeForWJestimation(Module):
             self.out.branch('Selak8Jet_%s'%var, 'F', 10, 'nSelak8Jets')
 
         self.out.branch('event', 'L')
+        self.out.branch("Top_pTrw","F")
         self.out.branch('event_presel', 'L')
         self.out.branch('nBJetMedium30', 'I')
         self.out.branch('pmet'       ,'F')
@@ -131,6 +132,7 @@ class vvsemilep_TreeForWJestimation(Module):
         chosen = getattr(event,"iLepFO_Recl")
         leps = [all_leps[chosen[i]] for i in xrange(nFO)]
         jets = [j for j in Collection(event,"ak8%sMgt40"%self.mvar)]
+        
         if len(leps) < self.lepMultiplicity: return False
         if len(jets) < 1: return False
         
@@ -148,7 +150,6 @@ class vvsemilep_TreeForWJestimation(Module):
             self.out.fillBranch('Selak8Jet_%s'%var, jetVar)
         pNetZscore=[];        pNetWscore=[];pnetsf=[];
         for j in jets:
-
             score=(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xqq'))/(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xqq')+getattr(j,'particleNetMD_QCD'))
             pNetWscore.append(score)
             score=(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xbb')+getattr(j,'particleNetMD_Xqq'))/(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xqq')+getattr(j,'particleNetMD_QCD')+getattr(j,'particleNetMD_Xbb'))
@@ -185,6 +186,23 @@ class vvsemilep_TreeForWJestimation(Module):
         #self.out.fillBranch('genSumw',event.genEventSumw if not isData else 1.0   )
         self.out.fillBranch('xsec',event.xsec if not isData else 1.0  )
         self.out.fillBranch('lepSF',event.lepsf if not isData else 1.0  ) 
+        topsf=1.0;
+        if not isData:
+            tops=[];
+            genparticles=Collection(event,"GenPart")
+            foundt=False;foundtbar=False; tgenPt=0.0; AtopPt=0.0;
+            for iGen in genparticles:
+                if abs(iGen.pdgId) == 6:
+                    lastcopy=ROOT.TMath.Odd(iGen.statusFlags/(1<<13))
+                    if iGen.pdgId == 6 and lastcopy:
+                        topPt=iGen.pt;foundt=True;tops.append(iGen);
+                    if iGen.pdgId == -6 and lastcopy:
+                        AtopPt=iGen.pt;foundtbar=True;tops.append(iGen);
+                    else: continue
+            if len(tops)==2 and foundt and foundtbar:
+                topsf=(math.sqrt(math.exp(0.0615 - 0.0005 * topPt) * math.exp(0.0615 - 0.0005 * AtopPt)))
+        self.out.fillBranch('Top_pTrw',topsf)    
+
         return True
 
 

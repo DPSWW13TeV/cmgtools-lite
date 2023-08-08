@@ -16,6 +16,7 @@ verbose_num=False
 verbose=False
 doalter=True
 usepNM=False
+useWts=True
 from ROOT import TGaxis, TPaveText, TLatex, TString, TFile,TLine, TLegend, TCanvas,  TMath, TText, TPad, RooFit, RooArgSet, RooArgList,  RooAddition, RooProduct, RooConstraintSum, RooCustomizer, RooMinuit,  RooAbsData, RooAbsPdf, RooAbsReal, RooAddPdf, RooWorkspace, RooExtendPdf,RooGaussian, RooDataSet, RooExponential, RooRealVar,RooFormulaVar, RooDataHist, RooHist,RooCategory, RooSimultaneous, RooGenericPdf, RooProdPdf, kTRUE, kFALSE, kGray, kRed, kDashed, kGreen,kAzure, kOrange, kBlack,kBlue,kYellow,kCyan, kMagenta, kWhite,kDot,kDashDotted,kDotted
 
 #ROOT.gErrorIgnoreLevel = ROOT.kWarning #kInfo
@@ -111,8 +112,8 @@ class doFit_wj_and_wlvj:
         #tdrstyle.setTDRStyle()
         TGaxis.SetMaxDigits(3)
         
-        RooAbsPdf.defaultIntegratorConfig().setEpsRel(1e-9) ;
-        RooAbsPdf.defaultIntegratorConfig().setEpsAbs(1e-9) ;
+        RooAbsPdf.defaultIntegratorConfig().setEpsRel(1e-15) ;
+        RooAbsPdf.defaultIntegratorConfig().setEpsAbs(1e-15) ;
         self.year=year
         self.pf="_"+pf if len(pf) >0 else ""
         ###to save all fitresults
@@ -124,7 +125,7 @@ class doFit_wj_and_wlvj:
         self.leg = TLegend(); 
         self.MODEL_4_mlvj=fit_model;
         self.MODEL_4_mlvj_alter=fit_model_alter;
-
+        self.mj_model_name=""
         print "########################################################################################"
         print "######## define class: binning, variables, cuts, files and nuissance parameters ########"
         print "########################################################################################"
@@ -144,7 +145,7 @@ class doFit_wj_and_wlvj:
         in_mlvj_max=in_mlvj_min+nbins_mlvj*self.BinWidth_mlvj;
 
         ## define jet mass variable
-        varname = "M_{pNet}" ##am
+        varname = "m_{j}^{%s}"%("pnM" if usepNM else "sD")
         rrv_mass_j = RooRealVar("rrv_mass_j",varname,(in_mj_min+in_mj_max)/2.,in_mj_min,in_mj_max,"GeV");
         rrv_mass_j.setBins(nbins_mj);
 
@@ -189,7 +190,7 @@ class doFit_wj_and_wlvj:
             self.file_Directory=os.path.join(self.year,"0_wjest_comp") 
             self.file1_Directory=os.path.join(self.year,"1_wjest_comp") 
         else: 
-            self.file_Directory=os.path.join(self.year,"0_wjest_sDM") 
+            self.file_Directory=os.path.join(self.year,"0_wjest_sDM_toppTrwt") #0_wjest_sDM") 
             self.file1_Directory=os.path.join(self.year,"1_wjest_sDM") 
 
         self.samples={
@@ -223,12 +224,13 @@ class doFit_wj_and_wlvj:
         eos='/eos/user/a/anmehta/www/VVsemilep/WJest/%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date)
         if not os.path.isdir(eos): os.system("mkdir %s"%eos)
         if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+eos)
-        self.plotsDir = eos+'/plots_%s_%s_%s_%s%s' %(self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi),self.pf)
+        self.plotsDir = eos+'/plots_%s_%s_%s_%s_%s%s' %(self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi),"weighted" if useWts else "unweighted",self.pf)
         if not os.path.isdir(self.plotsDir): os.system("mkdir %s"%self.plotsDir)
         os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
+        os.system("cp prepare_bkg_oneCat_AM.py "+self.plotsDir)
         if not os.path.isdir(os.path.join(self.plotsDir,"other")): os.system("mkdir %s"%(os.path.join(self.plotsDir,"other")))
         os.system("cp ~/public/index.php %s"%self.plotsDir+"/other")
-        self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))
+        self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))
 
         if not os.path.isdir(self.rlt_DIR_name):
                 os.system("mkdir -p %s " %self.rlt_DIR_name);
@@ -855,16 +857,17 @@ objName ==objName_before ):
         if in_model_name == "ExpN":
         
             print "########### ExpN funtion for W+jets mlvj ############"
-            rrv_c_ExpN = RooRealVar("rrv_c_ExpN"+label+"_"+self.channel,"rrv_c_ExpN"+label+"_"+self.channel,-2e-3,-1e-2,1e3);
+            #rrv_c_ExpN = RooRealVar("rrv_c_ExpN"+label+"_"+self.channel,"rrv_c_ExpN"+label+"_"+self.channel,-2e-3,-1e-2,1e3);
+            rrv_c_ExpN = RooRealVar("rrv_c_ExpN"+label+"_"+self.channel,"rrv_c_ExpN"+label+"_"+self.channel,-2e-3,-1e-1,-1e-5);
             if "WZ" in label and "sig" in label:
                 rrv_n_ExpN = RooRealVar("rrv_n_ExpN"+label+"_"+self.channel,"rrv_n_ExpN"+label+"_"+self.channel, -1e4, -1e5, 1e2);
             elif "WZ" in label and "sb" in label:
                 rrv_c_ExpN = RooRealVar("rrv_c_ExpN"+label+"_"+self.channel,"rrv_c_ExpN"+label+"_"+self.channel,-2e-3,-1e-1,0);
                 rrv_n_ExpN = RooRealVar("rrv_n_ExpN"+label+"_"+self.channel,"rrv_n_ExpN"+label+"_"+self.channel, -1, -1e5, 1e2); #1e1
             else:
-                rrv_n_ExpN = RooRealVar("rrv_n_ExpN"+label+"_"+self.channel,"rrv_n_ExpN"+label+"_"+self.channel, 4e3, -1e4, 1e4);
+                rrv_n_ExpN = RooRealVar("rrv_n_ExpN"+label+"_"+self.channel,"rrv_n_ExpN"+label+"_"+self.channel, 4e3, -1e5, 1e4);
             if rrv_x.getMin() == 700 and "WZ" not in label:
-                rrv_c_ExpN = RooRealVar("rrv_c_ExpN"+label+"_"+self.channel,"rrv_c_ExpN"+label+"_"+self.channel,-2e-3,-1e-3,1e3);
+                rrv_c_ExpN = RooRealVar("rrv_c_ExpN"+label+"_"+self.channel,"rrv_c_ExpN"+label+"_"+self.channel,0,-1e-3,1e3);
                 #rrv_n_ExpN = RooRealVar("rrv_n_ExpN"+label+"_"+self.channel,"rrv_n_ExpN"+label+"_"+self.channel, 0, -10000, 10000);               
 
             model_pdf = ROOT.RooExpNPdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c_ExpN, rrv_n_ExpN);
@@ -880,7 +883,7 @@ objName ==objName_before ):
                 if self.channel == "mu" :
                  if ismc == 1 and label_tstring.Contains("sb"):
                    rrv_s_ExpTail = RooRealVar("rrv_s_ExpTail"+label+"_"+self.channel,"rrv_s_ExpTail"+label+"_"+self.channel, 139,70.,355);
-                   rrv_a_ExpTail = RooRealVar("rrv_a_ExpTail"+label+"_"+self.channel,"rrv_a_ExpTail"+label+"_"+self.channel, 1.6e-1,-1.e-1,5.5e-4);
+                   rrv_a_ExpTail = RooRealVar("rrv_a_ExpTail"+label+"_"+self.channel,"rrv_a_ExpTail"+label+"_"+self.channel,1.8e-2,-1.e-2,3.5e-2); # 1.2e-2,1e-1,5.5e-2); #1e-1,-1.e-1,5.5e-2);
                  elif ismc == 1 and label_tstring.Contains("sig"):
                    rrv_s_ExpTail = RooRealVar("rrv_s_ExpTail"+label+"_"+self.channel,"rrv_s_ExpTail"+label+"_"+self.channel, 162,18,395);
                    rrv_a_ExpTail = RooRealVar("rrv_a_ExpTail"+label+"_"+self.channel,"rrv_a_ExpTail"+label+"_"+self.channel, 1.6e-2,-1.e-2,5.5e-2);
@@ -907,9 +910,9 @@ objName ==objName_before ):
                 rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.003,-1,0);
             else:
                 if "sig" in label:
-                    rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.05,-10,10); #
+                    rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.05,-0.15,0); #
                 else:
-                    rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel, -0.001,-1e2,1e2) #;-0.15,1e2); #here
+                    rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel, -0.01,-0.15,0); #-1e2,1e2) #;-0.15,1e2); #here
                 #rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,0.0323819,-0.1,-1e-6); #-0.05,-1,0); #-0.165,0);##valid until -0.15 below this invalid minima
             model_pdf = ROOT.RooExponential("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c_Exp);
 
@@ -930,16 +933,13 @@ objName ==objName_before ):
         ## Chi-square or Bernstein polynomial for mj spectrum
         if in_model_name == "ChiSqBern" :
             print "########### Chi-square or Bernstein polynomial for mj fit  ############"
-
             # Chi-square
-            rrv_shift_ChiSq    = RooRealVar("rrv_shift_ChiSq"+label+"_"+self.channel,"rrv_shift_ChiSq"+label+"_"+self.channel,21.47,5.,35);
-            rrv_c_ChiSq        = RooRealVar("rrv_c_ChiSq"+label+"_"+self.channel,"rrv_c_ChiSq"+label+"_"+self.channel,-0.02318,-0.026,-0.020); ##ADJUST here
+            rrv_shift_ChiSq    = RooRealVar("rrv_shift_ChiSq"+label+"_"+self.channel,"rrv_shift_ChiSq"+label+"_"+self.channel,15,5.,25);
+            rrv_c_ChiSq        = RooRealVar("rrv_c_ChiSq"+label+"_"+self.channel,"rrv_c_ChiSq"+label+"_"+self.channel,-0.0228558,-0.026,-0.024); ##ADJUST here
             model_pdf          = ROOT.RooChiSqPdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_shift_ChiSq,rrv_c_ChiSq);
 
         if in_model_name == "Bern" :
             print "########### Chi-square or Bernstein polynomial for mj fit  ############"
-
-
             rrv_shift_Bern    = RooRealVar("rrv_shift_Bern"+label+"_"+self.channel,"rrv_shift_Bern"+label+"_"+self.channel,21.47,5.,35.);
             rrv_c_Bern        = RooRealVar("rrv_c_Bern"+label+"_"+self.channel,"rrv_c_Bern"+label+"_"+self.channel,-0.02318,-0.026,-0.020); ##ADJUST here            
             p0 = ROOT.RooFit.RooConst(0.3)
@@ -952,61 +952,6 @@ objName ==objName_before ):
             model_pdf  = ROOT.RooBernstein("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,ROOT.RooArgList(p0,a,b,c));
         
 	## Function for mWW fit from 160 to tail
-        if in_model_name == "ErfPow2":
-            rrv_c0     = RooRealVar("rrv_c0_ErfPow2"+label+"_"+self.channel,"rrv_c0_ErfPow2"+label+"_"+self.channel,20.696,-500.,500) 
-            rrv_c1     = RooRealVar("rrv_c1_ErfPow2"+label+"_"+self.channel,"rrv_c1_ErfPow2"+label+"_"+self.channel,3.092,-100,100)
-            rrv_c2     = RooRealVar("rrv_c2_ErfPow2"+label+"_"+self.channel,"rrv_c2_ErfPow2"+label+"_"+self.channel,3.092,-100,100)
-            rrv_offset = RooRealVar("rrv_offset_ErfPow2"+label+"_"+self.channel,"rrv_offset_ErfPow2"+label+"_"+self.channel,-482,-900,100)
-            rrv_width  = RooRealVar("rrv_width_ErfPow2"+label+"_"+self.channel,"rrv_width_ErfPow2"+label+"_"+self.channel,-4665,-7000,100.0)
-	    model_pdf = ROOT.RooErfPow3Pdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c0,rrv_c1,rrv_c2,rrv_offset,rrv_width);
-        if in_model_name == "ErfPow_v1":
-            print "########### Erf*Pow Pdf  for mlvj fit ############"
-            rrv_c      = RooRealVar("rrv_c_ErfPow"+label+"_"+self.channel,"rrv_c_ErfPow"+label+"_"+self.channel, -5,-10,0);
-            rrv_offset = RooRealVar("rrv_offset_ErfPow"+label+"_"+self.channel,"rrv_offset_ErfPow"+label+"_"+self.channel, 450,350,550);
-            rrv_width  = RooRealVar("rrv_width_ErfPow"+label+"_"+self.channel,"rrv_width_ErfPow"+label+"_"+self.channel,50,20,90);
-            model_pdf  = RooErfPowPdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c,rrv_offset,rrv_width);
-
-        if in_model_name == "ErfPow2_v1_sr":
-            print "########### Erf*Pow2 Pdf  for mlvj fit in the SR  ############"
-            rrv_c0 = RooRealVar("rrv_c0_ErfPow2"+label+"_"+self.channel,"rrv_c0_ErfPow2"+label+"_"+self.channel, 4,2, 8);
-            rrv_c1 = RooRealVar("rrv_c1_ErfPow2"+label+"_"+self.channel,"rrv_c1_ErfPow2"+label+"_"+self.channel, -0.5,-2,0);
-            rrv_offset = RooRealVar("rrv_offset_ErfPow2"+label+"_"+self.channel,"rrv_offset_ErfPow2"+label+"_"+self.channel, 490,440,520);
-            rrv_width  = RooRealVar("rrv_width_ErfPow2"+label+"_"+self.channel,"rrv_width_ErfPow2"+label+"_"+self.channel,50,30,80);
-            model_pdf = RooErfPow2Pdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c0,rrv_c1,rrv_offset,rrv_width);
- 
-        ## For mlvj fit ->Erf*Pow*Exp can replace Erf*Exp 
-        if in_model_name == "ErfPowExp_v1":
-            print "########### Erf*Pow*Exp Pdf  for mlvj fit   ############"
-            rrv_c0 = RooRealVar("rrv_c0_ErfPowExp"+label+"_"+self.channel,"rrv_c0_ErfPowExp"+label+"_"+self.channel,11,5,20);
-            rrv_c1 = RooRealVar("rrv_c1_ErfPowExp"+label+"_"+self.channel,"rrv_c1_ErfPowExp"+label+"_"+self.channel, 0,-2,2);
-            rrv_offset = RooRealVar("rrv_offset_ErfPowExp"+label+"_"+self.channel,"rrv_offset_ErfPowExp"+label+"_"+self.channel, 470,420,520);
-            rrv_width  = RooRealVar("rrv_width_ErfPowExp"+label+"_"+self.channel,"rrv_width_ErfPowExp"+label+"_"+self.channel,40,30,50);
-            model_pdf  = RooErfPowExpPdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c0,rrv_c1,rrv_offset,rrv_width);
-
-        ## For mlvj fit ->Erf*Pow*Exp can replace Erf*Exp 
-        if in_model_name == "ErfPowExp_v1_sr":
-            print "########### Erf*Pow*Exp Pdf for mlvj fit in SR  ############"
-            rrv_c0 = RooRealVar("rrv_c0_ErfPowExp"+label+"_"+self.channel,"rrv_c0_ErfPowExp"+label+"_"+self.channel,6,2,15);
-            rrv_c1 = RooRealVar("rrv_c1_ErfPowExp"+label+"_"+self.channel,"rrv_c1_ErfPowExp"+label+"_"+self.channel, -1,-3,2);
-            rrv_offset = RooRealVar("rrv_offset_ErfPowExp"+label+"_"+self.channel,"rrv_offset_ErfPowExp"+label+"_"+self.channel, 490,440,520);
-            rrv_width  = RooRealVar("rrv_width_ErfPowExp"+label+"_"+self.channel,"rrv_width_ErfPowExp"+label+"_"+self.channel,50,30,70);
-            model_pdf=RooErfPowExpPdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c0,rrv_c1,rrv_offset,rrv_width);
-
-        if in_model_name == "ErfPow2_v1":
-            print "########### Erf*Pow2 Pdf  for mlvj fit ############"
-            rrv_c0 = RooRealVar("rrv_c0_ErfPow2"+label+"_"+self.channel,"rrv_c0_ErfPow2"+label+"_"+self.channel,14,1,30);
-            rrv_c1 = RooRealVar("rrv_c1_ErfPow2"+label+"_"+self.channel,"rrv_c1_ErfPow2"+label+"_"+self.channel, 5,-5,10);
-            rrv_offset = RooRealVar("rrv_offset_ErfPow2"+label+"_"+self.channel,"rrv_offset_ErfPow2"+label+"_"+self.channel, 450,400,520);
-            rrv_width  = RooRealVar("rrv_width_ErfPow2"+label+"_"+self.channel,"rrv_width_ErfPow2"+label+"_"+self.channel,30,10,80);
-            model_pdf  = RooErfPow2Pdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c0,rrv_c1,rrv_offset,rrv_width);
-        ## For mlvj fit ->Erf*Pow can replace Erf*Exp for sr
-        if in_model_name == "ErfPow2_v1_sr":
-            print "########### Erf*Pow2 Pdf  for mlvj fit in the SR  ############"
-            rrv_c0 = RooRealVar("rrv_c0_ErfPow2"+label+"_"+self.channel,"rrv_c0_ErfPow2"+label+"_"+self.channel, 4,2, 8);
-            rrv_c1 = RooRealVar("rrv_c1_ErfPow2"+label+"_"+self.channel,"rrv_c1_ErfPow2"+label+"_"+self.channel, -0.5,-2,0);
-            rrv_offset = RooRealVar("rrv_offset_ErfPow2"+label+"_"+self.channel,"rrv_offset_ErfPow2"+label+"_"+self.channel, 490,440,520);
-            rrv_width  = RooRealVar("rrv_width_ErfPow2"+label+"_"+self.channel,"rrv_width_ErfPow2"+label+"_"+self.channel,50,30,80);
-            model_pdf = RooErfPow2Pdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c0,rrv_c1,rrv_offset,rrv_width);
  
 
         if in_model_name == "ErfExp" :
@@ -1071,12 +1016,14 @@ objName ==objName_before ):
         ###TTBARMJFIT
         if in_model_name == "2Gaus_ErfExp":
             print "########### 2Gaus + Erf*Exp for mj fit  ############"
-            mean1_tmp      = 8.5141e+01; mean1_tmp_err      = 1.63e-01;
+            mean1_tmp      = 8.5541e+01; mean1_tmp_err      = 1.63e-01;
             ##amorgmean1_tmp      = 8.3141e+01; mean1_tmp_err      = 1.63e-01;
             if "WZ" in label:
+                mean1_tmp      = 8.5141e+01; mean1_tmp_err      = 1.63e-01;
                 deltamean_tmp  = 7.9129e+00; deltamean_tmp_err  = 1.24e+00;
             else:
-                deltamean_tmp  = 6.9129e+00; deltamean_tmp_err  = 1.24e+00;
+                #deltamean_tmp  = 7.9129e+00; deltamean_tmp_err  = 1.24e+00;
+                deltamean_tmp  = 4.9129e+00; deltamean_tmp_err  = 1.24e+00;
             sigma1_tmp     = 7.5145e+00; sigma1_tmp_err     = 1.99e-01;
             scalesigma_tmp = 3.6819e+00; scalesigma_tmp_err = 2.11e-01;
             #frac_tmp       = 6.7125e-01; frac_tmp_err       = 2.09e-02;
@@ -1095,7 +1042,7 @@ objName ==objName_before ):
 
             c0_tmp     = -2.9893e-02 ; c0_tmp_err     = 6.83e-03;
             offset_tmp = 7.9350e+01  ; offset_tmp_err = 9.35e+00;
-            width_tmp  = 3.5083e+01  ; width_tmp_err  = 2.97e+00;
+            width_tmp  = 3.7083e+01  ; width_tmp_err  = 2.97e+00;
             #width_tmp  = 43.0497;width_tmp_err  = 7.86749
             rrv_c_ErfExp      = RooRealVar("rrv_c_ErfExp"+label+"_"+self.channel,"rrv_c_ErfExp"+label+"_"+self.channel,c0_tmp, c0_tmp-4e-2, c0_tmp+4e-2 );
             rrv_offset_ErfExp = RooRealVar("rrv_offset_ErfExp"+label+"_"+self.channel,"rrv_offset_ErfExp"+label+"_"+self.channel, offset_tmp, offset_tmp-offset_tmp_err*4,offset_tmp+offset_tmp_err*4);
@@ -1340,6 +1287,14 @@ objName ==objName_before ):
         Deco      = PdfDiagonalizer("Deco%s_sb_from_fitting_%s_%s_mlvj_13TeV"%(label,self.channel,purity),wsfit_tmp,rfresult);
         print"#################### diagonalize data sideband fit "
         model_pdf_WJets_deco = Deco.diagonalize(model_pdf_WJets);
+
+        c3_AM=ROOT.TCanvas('c3%s%s'%(label,mlvj_model),'',600,600); #c3_AM.SetLogy();
+        mplot_tmp_AM = rrv_mass_lvj.frame( RooFit.Bins(rrv_mass_lvj.getBins()));
+        rdataset_data_mlvj.plotOn( mplot_tmp_AM ,RooFit.MarkerSize(1), RooFit.DataError(RooAbsData.Poisson), RooFit.XErrorSize(0), RooFit.MarkerColor(1), RooFit.LineColor(1) );
+        #RooFit.MarkerSize(1), RooFit.DataError(RooAbsData.SumW2), RooFit.XErrorSize(0) );
+
+        model_pdf_WJets.plotOn(mplot_tmp_AM, RooFit.Name("postfit SB"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kOrange));
+
         if verbose:print "##################### wanna check name workspace for decorrelation ";
         if verbose: wsfit_tmp.Print("v");
         if verbose:print "##################### original  parameters ";
@@ -1352,22 +1307,19 @@ objName ==objName_before ):
         if verbose:model_pdf_WJets_deco.Print();
 
         getattr(self.workspace4fit_,"import")(model_pdf_WJets_deco);
+        model_pdf_WJets_deco.plotOn(mplot_tmp_AM, RooFit.Name("postfit SB deco."), RooFit.LineStyle(kDotted),RooFit.LineColor(ROOT.kBlue));
 
-        #### Call the alpha evaluation in automatic
-        self.get_WJets_mlvj_correction_sb_to_sig(label,mlvj_model);
+        self.leg_tmp_AM= self.legend4Plot(mplot_tmp_AM,1,0, 0, 0., 0., -0.1, 0., True,False,label);
+        mplot_tmp_AM.addObject(self.leg_tmp_AM);
+        mplot_tmp_AM.Draw();        c3_AM.Update();        c3_AM.Draw();
+        c3_AM.SaveAs(self.plotsDir+'/other/postfitpdfs_%s%s_%s.png'%(self.channel,label,mlvj_model))
+        c3_AM.SaveAs(self.plotsDir+'/other/postfitpdfs_%s%s_%s.pdf'%(self.channel,label,mlvj_model))
 
-        ### Fix the pdf of signal, TTbar, STop WW and WZ in the signal region 
-        self.fix_Model("_TTbar","_sig","_mlvj")
-        self.fix_Model("_STop","_sig","_mlvj")
-        self.fix_Model("_WW","_sig","_mlvj")
-        self.fix_Model("_WZ","_sig","_mlvj")
-        
-        #self.get_mlvj_normalization_insignalregion("_TTbar");
-        #self.get_mlvj_normalization_insignalregion("_STop");
-        #self.get_mlvj_normalization_insignalregion("_WW");
-        #self.get_mlvj_normalization_insignalregion("_WZ");
-
-        print "IMPCHK looking into eigen values using postfit undeco. pdf in SB region"
+        ###################### calculating uncert on alpha###########
+        if ROOT.gROOT.FindObject("hist") != None: ROOT.gROOT.FindObject("hist").Delete()
+        hist = model_pdf_WJets.createHistogram(rrv_mass_lvj.GetName(),rrv_mass_lvj)
+	hist.SaveAs(self.rlt_DIR+"/var"+label+mlvj_region+"_"+mlvj_model+"_auto.root")
+        print "CHKCHK looking into eigen values using fit result in Wj SB region"
         initialPars = []; 	initialParNames = [];	initialParErrors = []
         parameters = model_pdf_WJets.getParameters(RooArgSet(rrv_mass_lvj));
         par=parameters.createIterator(); par.Reset();
@@ -1375,20 +1327,20 @@ objName ==objName_before ):
         while (param):
             initialPars.append(param.getVal())
 	    initialParErrors.append(param.getError())
-	    print "IMPCHK Initial pars = ",param.getVal(), " +/- ", param.getError()
+	    print "CHKCHK Initial pars = ",param.getVal(), " +/- ", param.getError()
             param=par.Next()
         
 	cov = rfresult.covarianceMatrix();
-	print "IMPCHK ==> Covariance matrix :"
+	print "CHKCHK ==> Covariance matrix :"
 	cov.Print()
 	parToVary = cov.GetNrows()
-	print "IMPCHK Parameters to vary = ",parToVary
+	print "CHKCHK Parameters to vary = ",parToVary
 	eigen = ROOT.TMatrixDSymEigen(cov)
 	EigenVector_matrix = eigen.GetEigenVectors()
 	EigenValues = eigen.GetEigenValues()
-        print"IMPCHK EigenVector_matrix"
+        print"CHKCHK EigenVector_matrix"
 	EigenVector_matrix.Print();
-        print"IMPCHK EigenVals"
+        print"CHKCHK EigenVals"
 	EigenValues.Print();
 
 	eigenvectors =[]
@@ -1409,53 +1361,46 @@ objName ==objName_before ):
 
 	    	# compute unit vector in direction of i-th Eigenvector
                 eigenvector_unit=ROOT.TVectorD()
-	    	eigenvector_unit =  ROOT.Double(1.0/norm)*eigenvector #(1.0/norm)*eigenvector
-	    	#eigenvector_unit = eigenvector
-	    	
+	    	eigenvector_unit =  eigenvector #ROOT.Double(1.0/norm)*eigenvector #(1.0/norm)*eigenvector
 	    	upPars = [];	    	downPars = []
 	    	#print "initial pars = ",len(initialPars)
-	    	print "IMPCHK eigenvector:"
+	    	print "CHKCHK eigenvector:"
 	    	eigenvector.Print()
 	    	print "Norm = ",norm
+                print "norm constant",ROOT.Double(1.0/norm)*eigenvector
 	    	print "Eigenvalue : ",eigenvalue
-	    	#eigenvalue.Print()
-	    	print "=="*10
 	    	print "sigma = ",sigma
 	    	for i in xrange(len(initialPars)):
-	    	    newParUp = initialPars[i] + sigma*eigenvector_unit[i]
+	    	    newParUp = initialPars[i] + sigma*eigenvector_unit[2*i]
 	    	    print "initialPars[",i,"] = ",initialPars[i],"\t sigma = ",sigma,"\teigenvector_unit = ",eigenvector_unit[i]
 	    	    upPars.append(newParUp)
-	    	    print "==> UP: ",initialPars[i],"\t",newParUp,"\t",sigma,"\t",eigenvector_unit[i]
+	    	    print "==> UP: ", newParUp
 	    	for i in xrange(len(initialPars)):
 	    	    newParDown = initialPars[i] - sigma*eigenvector_unit[i]
-	    	    print "initialPars[",i,"] = ",initialPars[i],"\t sigma = ",sigma,"\teigenvector_unit = ",eigenvector_unit[i]
 	    	    downPars.append(newParDown)
-	    	    print "==> Down: ",initialPars[i],"\t",newParDown,"\t",sigma,"\t",eigenvector_unit[i]
+	    	    print "==> Down: ",newParDown
+	    	print "CHKCHK now varrying parameters from the WJ pdf"
 	    	model_pdf_WJets.getParameters(rdataset_data_mlvj).Print("v");
-	    	print "--"*21
-	    	print "Up pars..."
-	    	print "--"*21
 	    	parameters_list = model_pdf_WJets.getParameters(rdataset_data_mlvj);
-	    	par=parameters_list.createIterator(); par.Reset();
-	    	param=par.Next()
+	    	par=parameters_list.createIterator(); par.Reset(); param=par.Next();
 	    	parCount=0
 	    	print "==== Par Setting up ===="
 	    	while (param):
 	    	    param.setVal(upPars[parCount])
-	    	    #print param.getName(),"\t",upPars[parCount]
 	    	    print "upPars = ", upPars[parCount]
 	    	    param.Print()
 	    	    parCount+=1
 	    	    param=par.Next()
 	    	print "=="*10
 	    	model_pdf_WJets.getParameters(rdataset_data_mlvj).Print("v");
+                if ROOT.gROOT.FindObject("hist") != None: ROOT.gROOT.FindObject("hist").Delete()
+                hist = model_pdf_WJets.createHistogram(rrv_mass_lvj.GetName(),rrv_mass_lvj);
+                hist.SaveAs(self.rlt_DIR+"/var"+label+mlvj_region+"_"+mlvj_model+"_auto_Up_"+str(k)+".root");
 	    	print "--"*21
 	    	print "Down pars..."
 	    	print "--"*21
 	    	parameters_list = model_pdf_WJets.getParameters(rdataset_data_mlvj);
-	    	par=parameters_list.createIterator();
-	    	par.Reset();
-	    	param=par.Next()
+	    	par=parameters_list.createIterator(); 	par.Reset();	    	param=par.Next();
 	    	parCount=0
 	    	while (param):
 	    	    param.setVal(downPars[parCount])
@@ -1463,6 +1408,9 @@ objName ==objName_before ):
 	    	    param=par.Next()
                 print "IMPCHK what follows"
 	    	model_pdf_WJets.getParameters(rdataset_data_mlvj).Print("v");
+                if ROOT.gROOT.FindObject("hist") != None: ROOT.gROOT.FindObject("hist").Delete()
+                hist = model_pdf_WJets.createHistogram(rrv_mass_lvj.GetName(),rrv_mass_lvj);
+                hist.SaveAs(self.rlt_DIR+"/var"+label+mlvj_region+"_"+mlvj_model+"_auto_Down_"+str(k)+".root");
 	    	print "--"*21
 	    	print "Reset pars..."
 	    	print "--"*21
@@ -1477,6 +1425,21 @@ objName ==objName_before ):
 	    	    parCount+=1
                 print "IMPCHK what follows after resetting"
 	    	model_pdf_WJets.getParameters(rdataset_data_mlvj).Print("v");
+
+
+        #### Call the alpha evaluation in automatic
+        self.get_WJets_mlvj_correction_sb_to_sig(label,mlvj_model);
+
+        ### Fix the pdf of signal, TTbar, STop WW and WZ in the signal region 
+        self.fix_Model("_TTbar","_sig","_mlvj")
+        self.fix_Model("_STop","_sig","_mlvj")
+        self.fix_Model("_WW","_sig","_mlvj")
+        self.fix_Model("_WZ","_sig","_mlvj")
+        
+        #self.get_mlvj_normalization_insignalregion("_TTbar");
+        #self.get_mlvj_normalization_insignalregion("_STop");
+        #self.get_mlvj_normalization_insignalregion("_WW");
+        #self.get_mlvj_normalization_insignalregion("_WZ");
 
 
     #################################################################################################
@@ -1615,12 +1578,12 @@ objName ==objName_before ):
             rrv_a_sb =self.workspace4fit_.var("rrv_a_ExpTail%s_sb_%s"%(label,self.channel));
             rrv_delta_s = RooRealVar("rrv_delta_s_ExpTail%s_%s"%(label,self.channel),"rrv_delta_s_ExpTail%s_%s"%(label,self.channel),
                                       self.workspace4fit_.var("rrv_s_ExpTail%s_sig_%s"%(label,self.channel)).getVal()-rrv_s_sb.getVal(),
-                                      self.workspace4fit_.var("rrv_s_ExpTail%s_sig_%s"%(label,self.channel)).getVal()-rrv_s_sb.getVal()-2*rrv_s_sb.getError(),
-                                      self.workspace4fit_.var("rrv_s_ExpTail%s_sig_%s"%(label,self.channel)).getVal()-rrv_s_sb.getVal()+2*rrv_s_sb.getError() )
+                                      self.workspace4fit_.var("rrv_s_ExpTail%s_sig_%s"%(label,self.channel)).getVal()-rrv_s_sb.getVal()-4*rrv_s_sb.getError(),
+                                      self.workspace4fit_.var("rrv_s_ExpTail%s_sig_%s"%(label,self.channel)).getVal()-rrv_s_sb.getVal()+4*rrv_s_sb.getError() )
             rrv_delta_a = RooRealVar("rrv_delta_a_ExpTail%s_%s"%(label,self.channel),"rrv_delta_a_ExpTail%s_%s"%(label,self.channel),
                                       self.workspace4fit_.var("rrv_a_ExpTail%s_sig_%s"%(label,self.channel)).getVal()-rrv_a_sb.getVal(),
-                                      self.workspace4fit_.var("rrv_a_ExpTail%s_sig_%s"%(label,self.channel)).getVal()-rrv_a_sb.getVal()-2*rrv_a_sb.getError(),
-                                      self.workspace4fit_.var("rrv_a_ExpTail%s_sig_%s"%(label,self.channel)).getVal()-rrv_a_sb.getVal()+2*rrv_a_sb.getError() )
+                                      self.workspace4fit_.var("rrv_a_ExpTail%s_sig_%s"%(label,self.channel)).getVal()-rrv_a_sb.getVal()-4*rrv_a_sb.getError(),
+                                      self.workspace4fit_.var("rrv_a_ExpTail%s_sig_%s"%(label,self.channel)).getVal()-rrv_a_sb.getVal()+4*rrv_a_sb.getError() )
                      
             rrv_a_sr = RooFormulaVar("rrv_a_ExpTail%s_sig_%s"%(label,self.channel), "@0+@1",RooArgList(rrv_a_sb, rrv_delta_a ) );
             rrv_s_sr = RooFormulaVar("rrv_s_ExpTail%s_sig_%s"%(label,self.channel), "@0+@1",RooArgList(rrv_s_sb, rrv_delta_s ) );
@@ -1636,80 +1599,66 @@ objName ==objName_before ):
         if ROOT.gROOT.FindObject("model_pdf%s_sig_%s_mlvj"%(label,self.channel)) != None: ROOT.gROOT.FindObject("model_pdf%s_sig_%s_mlvj"%(label,self.channel)).Delete()
         if ROOT.gROOT.FindObject("model_pdf%s_sb_%s_mlvj"%(label,self.channel)) != None: ROOT.gROOT.FindObject("model_pdf%s_sb_%s_mlvj"%(label,self.channel)).Delete()
 
+        model_pdf_sb_WJets           = self.workspace4fit_.pdf("model_pdf%s_sb_%s_mlvj"%(label,self.channel));
+        model_pdf_sb_postfit_WJets   = self.workspace4fit_.pdf("model_pdf%s_sb_from_fitting_%s_mlvj"%(label,self.channel));
+        model_pdf_sig_WJets_precorr  = self.workspace4fit_.pdf("model_pdf%s_sig_%s_mlvj"%(label,self.channel));
+        model_pdf_sb_WJets_copy      = self.workspace4fit_.pdf("model_pdf%s_sb_%s_mlvj"%(label,self.channel));
+        model_pdf_sig_WJets          = RooProdPdf("model_pdf%s_sig_%s_mlvj"%(label,self.channel),"model_pdf%s_sig_%s_mlvj"%(label,self.channel) ,model_pdf_sb_WJets_copy,correct_factor_pdf);
+        correct_factor_pdf_copy      = correct_factor_pdf.clone("correct_factor_pdf%s_copy_%s"%(label,self.channel))
+
+
+
+        c2_AM=ROOT.TCanvas('c2%s%s'%(label,mlvj_model),'',800,800);
+        c2_AM.SetFrameFillStyle(0);       c2_AM.SetFrameBorderMode(0);      c2_AM.SetLeftMargin(0.15);        c2_AM.SetRightMargin(0.1);
+        mplot_AM = rrv_x.frame(RooFit.Title("%s%s"%(label,mlvj_model)), RooFit.Name("%s%s"%(label,mlvj_model)),RooFit.Bins(rrv_x.getBins())) ;
+        mplot_AM.GetYaxis().SetTitle("F_{W+jets}^{SR,MC},F_{W+jets}^{SB,MC} (Arbitrary units)");        mplot_AM.GetXaxis().SetTitle("m_{WV} (GeV)");
+        mplot_AM.GetYaxis().SetTitleOffset(1.45);mplot_AM.GetYaxis().SetTitleSize(0.035);mplot_AM.GetYaxis().SetTitleFont(42);mplot_AM.GetXaxis().SetTitleFont(42);
+        mplot_AM.GetYaxis().SetLabelSize(0.03);mplot_AM.GetXaxis().SetLabelSize(0.03);mplot_AM.GetXaxis().SetTitleSize(0.035);
+        mplot_AM.GetXaxis().SetLabelFont(42);        mplot_AM.GetYaxis().SetLabelFont(42);
+        model_pdf_sb_WJets.plotOn(mplot_AM,RooFit.Name("SB MC (prefit)"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kGray+2));
+        #model_pdf_sb_postfit_WJets.plotOn(mplot_AM,RooFit.Name("SB MC (postfit deco)"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kYellow+2));
+        #model_pdf_sig_WJets_precorr.plotOn(mplot_AM,RooFit.Name("SR MC"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kGreen));
+        model_pdf_sig_WJets.plotOn(mplot_AM,RooFit.Name("SB #times #alpha"),RooFit.LineStyle(kDotted),RooFit.LineColor(ROOT.kBlue));
+        correct_factor_pdf_copy.plotOn(mplot_AM,ROOT.RooFit.Name("#alpha"),RooFit.LineStyle(kDashed),RooFit.LineColor(ROOT.kCyan));
+        
+        getattr(self.workspace4fit_,"import")(correct_factor_pdf_copy);    
+        #getattr(self.workspace4fit_,"import")(correct_factor_pdf);
         data_category = RooCategory("data_category","data_category");
         data_category.defineType("sideband");        data_category.defineType("sig");
         combData4fit = self.workspace4fit_.data("combData4fit%s_%s"%(label,self.channel));
-        model_pdf_sb_WJets           = self.workspace4fit_.pdf("model_pdf%s_sb_%s_mlvj"%(label,self.channel));
-        model_pdf_sig_WJets_precorr  = self.workspace4fit_.pdf("model_pdf%s_sig_%s_mlvj"%(label,self.channel));
-        model_pdf_sb_WJets_copy      = self.workspace4fit_.pdf("model_pdf%s_sb_%s_mlvj"%(label,self.channel));
-        model_pdf_sig_WJets          = RooProdPdf("model_pdf%s_sig_%s_mlvj"%(label,self.channel),"model_pdf%s_sig_%s_mlvj"%(label,self.channel) ,model_pdf_sb_WJets,correct_factor_pdf);
-        model_pdf_corrsig_WJets_copy = RooProdPdf("model_pdf%s_sig_%s_mlvj"%(label,self.channel),"model_pdf%s_sig_%s_mlvj"%(label,self.channel) ,model_pdf_sb_WJets,correct_factor_pdf);
-        correct_factor_pdf_copy=correct_factor_pdf.clone("correct_factor_pdf_copy")
-        if verbose : print "IMPCHK for alpha pdf parameters SB",model_pdf_sb_WJets.getParameters(rdataset_WJets_sb_mlvj).Print("v");
-        if verbose : print "IMPCHK for alpha pdf parameters sig",model_pdf_sig_WJets_precorr.getParameters(rdataset_WJets_sig_mlvj).Print("v");
-
-        c2_AM=ROOT.TCanvas('c2%s%s'%(label,mlvj_model),'',600,600)
-        mplot_AM = rrv_x.frame(RooFit.Title("%s%s"%(label,mlvj_model)), RooFit.Name("%s%s"%(label,mlvj_model)),RooFit.Bins(rrv_x.getBins())) ;
-        mplot_AM.GetYaxis().SetTitle("AU");#F_{W+jets}^{SR,MC},F_{W+jets}^{SB,MC} (Arbitrary units)");
-        model_pdf_sb_WJets.plotOn(mplot_AM,RooFit.Name("SB MC (prefit)"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kGray+2));
-        model_pdf_sig_WJets_precorr.plotOn(mplot_AM,RooFit.Name("SR MC"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kGreen));
-        model_pdf_sig_WJets.plotOn(mplot_AM,RooFit.Name("SB #times #alpha"),RooFit.LineStyle(kDotted),RooFit.LineColor(ROOT.kBlue));
-        correct_factor_pdf_copy.plotOn(mplot_AM,ROOT.RooFit.Name("#alpha"),RooFit.LineStyle(kDashed),RooFit.LineColor(ROOT.kCyan));
-##am
-##am        if ROOT.gROOT.FindObject("simPdf") != None: ROOT.gROOT.FindObject("simPdf").Delete()
-##am        if ROOT.gROOT.FindObject("wsfit_tmp%s_sim_mlvj"%(label))!= None: ROOT.gROOT.FindObject("wsfit_tmp%s_sim_mlvj"%(label)).Delete()
-##am        if ROOT.gROOT.FindObject("Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel,self.wtagger_label))!= None: ROOT.gROOT.FindObject("Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel,self.wtagger_label)).Delete()
-##am        if ROOT.gROOT.FindObject("correct_factor_pdf_deco")!= None: ROOT.gROOT.FindObject("correct_factor_pdf_deco").Delete()
-##am        if ROOT.gROOT.FindObject("rfresult") != None: ROOT.gROOT.FindObject("rfresult").Delete()
-
-
-
-
-        getattr(self.workspace4fit_,"import")(correct_factor_pdf);
         simPdf = RooSimultaneous("simPdf%s"%label,"simPdf%s"%label,data_category);
         simPdf.addPdf(model_pdf_sb_WJets_copy,"sideband");
-        simPdf.addPdf(model_pdf_sig_WJets,"sig");##AM FIXME
-        rfresult=simPdf.fitTo(combData4fit,RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer("Minuit2")); ##this is a biggie
-        
+        simPdf.addPdf(model_pdf_sig_WJets,"sig");
+        simPdf.fitTo(combData4fit,RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE))
+        rfresult=simPdf.fitTo(combData4fit,RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer("Minuit2","Migrad")); 
         self.fitresultsfinal.append(rfresult)
-        print "IMPCHK cov matrix from simFit"
-        print rfresult.covarianceMatrix().Print();
-        self.fitresultsfinal.append(rfresult.covarianceMatrix())
-        #draw_error_band(combData4fit,,self.workspace4fit_.var("rrv_number_data_sb_%s_mlvj"%(self.channel)) ,rfresult,mplot,self.color_palet["Uncertainty"],"F");
-        ### Decorrelate the parameters in the alpha shape
+
+        #self.decorelate(correct_factor_pdf,rfresult,combData4fit,rrv_x,label,mlvj_model)
         wsfit_tmp = RooWorkspace("wsfit_tmp%s_sim_mlvj"%(label)); 
         Deco      = PdfDiagonalizer("Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel,self.wtagger_label),wsfit_tmp,rfresult);
         correct_factor_pdf_deco = Deco.diagonalize(correct_factor_pdf);
-        #self.decorelated(correct_factor_pdf,rrv_x,rfresult)
-
-        
+        print "IMPCHK cov matrix from simFit"
+        print rfresult.covarianceMatrix().Print();
+        #self.fitresultsfinal.append(rfresult.covarianceMatrix())
+        ### Decorrelate the parameters in the alpha shape
         print "IMPCHK simPDF fitted and diag"
         if verbose:wsfit_tmp.Print("v");
         if verbose:correct_factor_pdf.getParameters(rdataset_WJets_sig_mlvj).Print("v");
         if verbose:correct_factor_pdf_deco.getParameters(rdataset_WJets_sig_mlvj).Print("v");
         if verbose:correct_factor_pdf.Print();
-        if verbose:correct_factor_pdf_deco.Print();
 
-        getattr(self.workspace4fit_,"import")(correct_factor_pdf_deco);
-
+        getattr(self.workspace4fit_,"import")(correct_factor_pdf_deco);        
         correct_factor_pdf_deco.plotOn(mplot_AM,ROOT.RooFit.Name("#alpha (deco)"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kOrange));
 
 
-        mplot_AM.GetXaxis().SetTitle("m_{WV} (GeV)");
-        mplot_AM.GetYaxis().SetTitleOffset(1.08)
         if ROOT.gROOT.FindObject("leg_AM") != None: ROOT.gROOT.FindObject("leg_AM").Delete()
         mplot_AM.GetYaxis().SetRangeUser(0.0,0.12)
         mplot_AM.Draw(); 
-        CMS_lumi.cmsTextSize=0.45
-        CMS_lumi.lumiTextSize=0.45
+        CMS_lumi.cmsTextSize=0.45;        CMS_lumi.lumiTextSize=0.45
         #CMS_lumi.relPosY = -0.0625
         CMS_lumi.CMS_lumi(c2_AM, 4, 11,0.05) # CMS_lumi(pad,  iPeriod,  iPosX , xOffset=0):
         ptChannel = TPaveText(0.17,0.8,0.498,0.9, "blNDC")
-        ptChannel.SetFillStyle(0)
-        ptChannel.SetBorderSize(0)
-        ptChannel.SetTextAlign(12)
-        ptChannel.SetTextFont(42)
-        ptChannel.SetTextSize(0.045)
+        ptChannel.SetFillStyle(0); ptChannel.SetBorderSize(0);  ptChannel.SetTextAlign(12);        ptChannel.SetTextFont(42);        ptChannel.SetTextSize(0.045);
         if self.channel=='el':
             ptChannel.AddText("Electron channel")
         elif self.channel=='mu':
@@ -1727,39 +1676,86 @@ objName ==objName_before ):
             paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig2"%(label,self.channel, self.wtagger_label) ));
             paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig3"%(label,self.channel, self.wtagger_label) ));
         
-        if mlvj_model=="ErfExp_v1" or mlvj_model=="ErfPow" or mlvj_model=="2Exp" :
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig0"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig1"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig2"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig3"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig4"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig5"%(label,self.channel, self.wtagger_label) ));
-
-        if mlvj_model=="ErfPow2" or mlvj_model=="ErfPowExp" :
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig0"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig1"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig2"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig3"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig4"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig5"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig6"%(label,self.channel, self.wtagger_label) ));
-            paras.add(self.workspace4fit_.var("Deco%s_sim_%s_%s_mlvj_13TeV_eig7"%(label,self.channel, self.wtagger_label) ));
             #        print "IMP check list of parameters",self.decorelated(correct_factor_pdf,rrv_x,rfresult);
+##following does not work :(
+        #if "WJets" in label: 
+            #draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot_AM,kGreen,"F",3001,"#alpha #pm",20,400);
+            #draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,2 ,mplot_AM,kYellow,"F",3001,"#alpha #pm",20,400);
+            #draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot_AM,kGreen,"F",3001,"#alpha_invisible #pm",20,400);
+        
+                ### plot on the same canvas
+        #correct_factor_pdf_deco.plotOn(mplot_AM, RooFit.LineColor(kBlack),RooFit.Name("#alpha_invisible"))
 
-        if "WJets" in label: 
-            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot_AM,kGreen,"F",3001,"#alpha #pm",20,400);
-            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,2 ,mplot_AM,kYellow,"F",3001,"#alpha #pm",20,400);
-            draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot_AM,kGreen,"F",3001,"#alpha_invisible #pm",20,400);
+        if TString(label).Contains("_WJets0") : ## add also the plot of alternate ps and function on the canvas
+            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
+                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets1_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)).plotOn(mplot_AM, RooFit.LineColor(kMagenta), RooFit.LineStyle(7),RooFit.Name("#alpha: Alternate Function"));
 
+        elif TString(label).Contains("_WJets1") : ## add also the plot of alternate ps and function on the canvas
+            if self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets0_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
+                self.workspace4fit_.pdf("correct_factor_pdf_Deco_WJets0_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)).plotOn(mplot_AM, RooFit.LineColor(kMagenta), RooFit.LineStyle(7),RooFit.Name("#alpha: Alt. Fxn. (deco.)") );
+            if self.workspace4fit_.pdf("correct_factor_pdf_WJets0_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)):
+                self.workspace4fit_.pdf("correct_factor_pdf_WJets0_sim_%s_%s_mlvj_13TeV"%(self.channel,self.wtagger_label)).plotOn(mplot_AM, RooFit.LineColor(kMagenta), RooFit.LineStyle(2),RooFit.Name("#alpha: Alt. Fxn.") );
 
             #draw_error_band(rdataset, model_pdf,rrv_number_dataset,rfresult,mplot_deco,self.color_palet["Uncertainty"],"F"); ## draw the error band with the area
 
         self.leg_AM= self.legend4Plot(mplot_AM,1,0, 0, 0., 0., -0.1, 0., True,False,label);
         mplot_AM.addObject(self.leg_AM);
+        
+        tmp_y_max=0.125;tmp_y_min=1e-5;
+        mplot_AM.GetYaxis().SetRangeUser(tmp_y_min,tmp_y_max);
+        model_pdf_sb_WJets.getVal(RooArgSet(rrv_x))
+        model_pdf_sig_WJets.getVal(RooArgSet(rrv_x))
+        correct_factor_pdf_deco.getVal(RooArgSet(rrv_x))
+        tmp_alpha_ratio      = ( model_pdf_sig_WJets.getValV(RooArgSet(rrv_x))/model_pdf_sb_WJets.getValV(RooArgSet(rrv_x)) );
+        tmp_alpha_pdf        = correct_factor_pdf_deco.getValV(RooArgSet(rrv_x)) * mplot_AM.getFitRangeBinW(); ## value of the pdf in each point
+        tmp_alpha_scale         = tmp_alpha_ratio/tmp_alpha_pdf;
+        #add alpha scale axis
+        print "for the plot",tmp_y_max, tmp_y_min * tmp_alpha_scale, tmp_y_max*tmp_alpha_scale,tmp_alpha_scale, mplot_AM.getFitRangeBinW(),correct_factor_pdf_deco.getVal(RooArgSet(rrv_x))
+        axis_alpha=TGaxis( rrv_x.getMax(), 0, rrv_x.getMax(), tmp_y_max, tmp_y_min * tmp_alpha_scale, tmp_y_max*tmp_alpha_scale, 510, "+L" ); #-,-+,+,L
+        axis_alpha.SetTitle("Transfer function #alpha");
+        axis_alpha.SetTitleOffset(1.05);
+        axis_alpha.SetTitleSize(0.035);        axis_alpha.SetLabelSize(0.03);        axis_alpha.SetTitleFont(42);        axis_alpha.SetLabelFont(42);
+        #axis_alpha.RotateTitle(1);
+        mplot_AM.addObject(axis_alpha);
         mplot_AM.Draw();        c2_AM.Update();        c2_AM.Draw();
         c2_AM.SaveAs(self.plotsDir+'/other/pdfs_%s%s_%s.png'%(self.channel,label,mlvj_model))
         c2_AM.SaveAs(self.plotsDir+'/other/pdfs_%s%s_%s.pdf'%(self.channel,label,mlvj_model))
-
+        
+        cN_AM=ROOT.TCanvas('cN%s%s'%(label,mlvj_model),'',800,800);
+        cN_AM.SetFrameFillStyle(0);       cN_AM.SetFrameBorderMode(0);      cN_AM.SetLeftMargin(0.15);        cN_AM.SetRightMargin(0.1);
+        hist_alpha = correct_factor_pdf_deco.createHistogram(rrv_x.GetName(),rrv_x); #hist_alpha.Draw("hist");
+        hist_alpha.GetXaxis().SetTitle("m_{WV} (GeV)");
+        hist_alpha.GetYaxis().SetTitle("#alpha = #frac{N^{MC,W+jets}_{signal}}{N^{MC,W+jets}_{side-band}}");
+        hist_alpha.GetYaxis().SetRangeUser(-1,1.0)
+        #hist_alpha.SaveAs("alpha"+label+"_"+mlvj_region+"_"+mlvj_model+"_nom.root")
+        ROOT.gStyle.SetOptFit(1);
+        f1 = ROOT.TF1("f1","pol1",rrv_x.getMin(),rrv_x.getMax());
+        f1.SetLineColor(2);
+        fitRes = hist_alpha.Fit("f1","S");
+        hConf1s = hist_alpha.Clone("hConf1s");
+        hConf2s = hist_alpha.Clone("hConf2s");
+        hConf1s.Reset();        hConf2s.Reset();
+        (ROOT.TVirtualFitter.GetFitter()).GetConfidenceIntervals(hConf1s, 0.68);
+        (ROOT.TVirtualFitter.GetFitter()).GetConfidenceIntervals(hConf2s, 0.95);
+        hConf1s.SetName("hAlpha_1Sigma_Band");        hConf2s.SetName("hAlpha_2Sigma_Band");
+        hConf1s.SetStats(kFALSE);        hConf2s.SetStats(kFALSE);
+        hConf1s.SetMarkerSize(0);        hConf2s.SetMarkerSize(0);
+        hConf1s.SetFillColor(kGreen+1);        hConf2s.SetFillColor(kOrange);
+        hConf1s.SetLineColor(kGreen+1);        hConf2s.SetLineColor(kOrange);
+        hConf2s.SetTitle("");        hConf2s.Draw("e3");        hConf1s.Draw("e3 same");
+        hist_alpha.Draw("E0same");
+        f1.Draw("same");
+        
+        
+        leg = ROOT.TLegend(0.18,0.95,0.60,0.75);
+        leg.SetNColumns(2);        leg.AddEntry(hist_alpha, "MC", "lep");
+        leg.AddEntry(f1, "Fit", "l");
+        leg.AddEntry(hConf1s, "1 #sigma band","f");
+        leg.AddEntry(hConf2s, "2 #sigma band","f");
+        leg.Draw();
+        cN_AM.Draw();
+        cN_AM.SaveAs(self.plotsDir+'/other/alpha_fit_%s%s_%s.png'%(self.channel,label,mlvj_model))
+        cN_AM.SaveAs(self.plotsDir+'/other/alpha_fit_%s%s_%s.pdf'%(self.channel,label,mlvj_model))
         
         if verbose : correct_factor_pdf_deco.getParameters(rdataset_WJets_sb_mlvj).Print("v");
 
@@ -1799,10 +1795,11 @@ objName ==objName_before ):
             mplot3.GetYaxis().SetTitle("F_{W+jets}^{SR,MC},F_{W+jets}^{SB,MC} (Arbitrary units)");
             mplot3.GetXaxis().SetTitle("m_{WV} (GeV)"); 
            # mplot3.GetXaxis().SetTitle("");
-#            model_pdf_corrsig_WJets_copy.plotOn(mplot2, RooFit.LineColor(kRed), RooFit.Name("Signal Region (SB #times #alpha)"));
- #           model_pdf_sb_WJets_copy.plotOn(mplot2, RooFit.LineColor(kBlue),RooFit.Name("Sideband"),RooFit.LineStyle(kDashed));
+            model_pdf_WJets_sig_after_correct_mlvj.plotOn(mplot3, RooFit.LineColor(kRed), RooFit.Name("Signal Region (SB #times #alpha)"));
+            #            model_pdf_WJets_sig_undeco_mlvj.plotOn(mplot3, RooFit.LineColor(kBlue),RooFit.Name("SR undec SB #times #alpha"),RooFit.LineStyle(kDashed));
            
             correct_factor_pdf_deco.plotOn(mplot3, RooFit.LineColor(kBlack),RooFit.Name("Transfer function #alpha"));
+
             draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot3,kGreen,"F",3001,"#alpha #pm",20,400);
             draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,2 ,mplot3,kYellow,"F",3001,"#alpha #pm",20,400);
             draw_error_band_shape_Decor("correct_factor_pdf_Deco%s_sim_%s_%s_mlvj_13TeV"%(label,self.channel, self.wtagger_label),"rrv_mass_lvj", paras, self.workspace4fit_,1 ,mplot3,kGreen,"F",3001,"#alpha_invisible #pm",20,400);
@@ -1925,7 +1922,7 @@ objName ==objName_before ):
         parameters_list = model_data.getParameters(rdataset_data_mj);
         
         mplot_pull = self.get_pull(rrv_mass_j,mplot);
-        self.draw_canvas_with_pull( rrv_mass_j,rdataset_data_mj,mplot,mplot_pull,0,parameters_list,"%s/m_j_fitting/"%(self.plotsDir), "m_j_prefit",'',1,0,1)
+        self.draw_canvas_with_pull( rrv_mass_j,rdataset_data_mj,mplot,mplot_pull,0,parameters_list,"%s/m_j_fitting/"%(self.plotsDir), "m_j_prefit%s"%self.mj_model_name,'',1,0,1)
 
     #################################################################################################
     #################################################################################################
@@ -1942,7 +1939,7 @@ objName ==objName_before ):
 
         ## make the extended pdf model
         model = self.make_Model(label+in_range,mlvj_model,"_mlvj",constrainslist,ismc);
-
+        prefit_model= model.clone("prefit_model"+label+in_range+"_"+self.channel+"_mlvj")
         ## make the fit ##IMP using un-normalized yields
         model.fitTo( rdataset, RooFit.Save(1), RooFit.SumW2Error(kTRUE) ,RooFit.Extended(kTRUE), RooFit.PrintLevel(-1) );
         rfresult = model.fitTo( rdataset, RooFit.Save(1), RooFit.SumW2Error(kTRUE) ,RooFit.Extended(kTRUE), RooFit.PrintLevel(-1), RooFit.Minimizer("Minuit2") );
@@ -1979,7 +1976,6 @@ objName ==objName_before ):
         if 'TTbar' in in_file_name and 'sb' in in_range:
             self.draw_canvas_with_pull( rrv_mass_lvj, datahist,mplot, mplot_pull,ndof,parameters_list,"%s/m_lvj_fitting/"%(self.plotsDir), in_file_name,"m_lvj"+in_range+mlvj_model, show_constant_parameter, 1)
 
-         
         ## if the shape parameters has to be decorrelated ##IMP only decorrelated for ttbar
         if deco :
             print "################### Decorrelated mlvj single mc shape ################",label
@@ -2010,25 +2006,18 @@ objName ==objName_before ):
             ### define a frame for TTbar or other plots
             mplot_deco = rrv_mass_lvj.frame( RooFit.Bins(rrv_mass_lvj.getBins()));
             
-            if label=="_TTbar" and in_range=="_sig":
-                
+            if label=="_TTbar" and in_range=="_sig":                
                 rdataset.plotOn(mplot_deco, RooFit.Name("Powheg Sample"), RooFit.MarkerSize(1), RooFit.DataError(RooAbsData.SumW2), RooFit.XErrorSize(0) );
                 model_pdf_deco.plotOn(mplot_deco,RooFit.Name("TTbar_Powheg"),RooFit.LineColor(kBlack));
-
                 mplot_deco.GetYaxis().SetRangeUser(1e-5,mplot_deco.GetMaximum()*1.2);
-
                 rrv_number_dataset = RooRealVar("rrv_number_dataset","rrv_number_dataset",rdataset.sumEntries());
                 rrv_number_dataset.setError(0.)
-
                 draw_error_band(rdataset, model_pdf,rrv_number_dataset,rfresult,mplot_deco,self.color_palet["Uncertainty"],"F"); ## draw the error band with the area
                 self.workspace4fit_.var("rrv_number_TTbar_sig_%s_mlvj"%(self.channel)).Print();
             else:
-                print "IMPCHK for deco plot for %s"%label
                 rdataset.plotOn(mplot_deco, RooFit.Name("Data"), RooFit.MarkerSize(1), RooFit.DataError(RooAbsData.SumW2), RooFit.XErrorSize(0) );
                 model_pdf_deco.plotOn(mplot_deco,RooFit.Name(label),RooFit.LineColor(kBlack));
-
                 mplot_deco.GetYaxis().SetRangeUser(1e-5,mplot_deco.GetMaximum()*1.2);
-
                 rrv_number_dataset=RooRealVar("rrv_number_dataset","rrv_number_dataset",rdataset.sumEntries());
                 rrv_number_dataset.setError(0.)
                 draw_error_band(rdataset, model_pdf,rrv_number_dataset,rfresult,mplot_deco,self.color_palet["Uncertainty"],"F"); ## don't store the number in the workspace
@@ -2053,7 +2042,7 @@ objName ==objName_before ):
 
     ### Method for a single MC fit of the mj spectra giving: file name, label, model name
     def fit_mj_single_MC(self,in_file_name, label, in_model_name, additioninformation=""):
-
+        self.mj_model_name=in_model_name if "WJets0" in label else self.mj_model_name
         print "###############!!!!!! Fit mj single MC sample",in_file_name," ",label,"  ",in_model_name," ##################"
         ## import variable and dataset
         rrv_mass_j = self.workspace4fit_.var("rrv_mass_j");
@@ -2189,6 +2178,7 @@ objName ==objName_before ):
 
 
 
+
                 ### categorize the event in sideband and signal region --> combined dataset 
 
                 data_category   = RooCategory("data_category","data_category");
@@ -2201,12 +2191,16 @@ objName ==objName_before ):
                     if i % 100000 == 0: print "iEntry: ",i
                     treeIn.GetEntry(i);
                     if verbose_num and  i==0: print "IMPCHK xsec %f for sample %s"%(treeIn.xsec,label)
-                    totEventWeight = treeIn.evt_wt if "data" in label else 1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*lumis[self.year]/treeIn.sumw #*treeIn.Selak8Jet_pNetWtagSF[0]
-                    totEventWeight = totEventWeight #if "WJets" in label else totEventWeight*treeIn.Selak8Jet_pNetWtagSF[0] 
+                    if "data" in label:
+                        totEventWeight = treeIn.evt_wt #if "data" in label else 1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*lumis[self.year]/treeIn.sumw #*treeIn.Selak8Jet_pNetWtagSF[0]
+                    elif "WJets" in label:
+                        totEventWeight=1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*lumis[self.year]/treeIn.sumw
+                    else: totEventWeight=1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
+                    #totEventWeight = totEventWeight #if "WJets" in label else totEventWeight*treeIn.Selak8Jet_pNetWtagSF[0] 
                     tmp_scale_to_lumi = 1.0 if "data" in label else 1000*treeIn.genwt*treeIn.xsec*lumis[self.year]/treeIn.sumw
                     #print label,"da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum event weight",tmp_scale_to_lumi
                     tmp_jet_mass=treeIn.Selak8Jet_particleNet_mass[0] if usepNM else treeIn.Selak8Jet_msoftdrop[0]
-                    tmp_jet_pNetscore=treeIn.Selak8Jet_pNetZtagscore[0] 
+                    tmp_jet_pNetscore=treeIn.Selak8Jet_pNetWtagscore[0] 
                     dRfjlep=treeIn.dR_fjlep > 1.6 
                     dphifjlep=treeIn.dphi_fjlep > 2.0 
                     dphifjmet=treeIn.dphi_fjmet > 2.0 
@@ -2217,7 +2211,14 @@ objName ==objName_before ):
                         self.isGoodEvent = 1;  
                     if self.isGoodEvent == 1:
                         tmp_event_weight=totEventWeight 
-                        tmp_event_weight4fit=  totEventWeight #if "WJets" not in label else treeIn.evt_wt*treeIn.lepSF 
+                        if "data" in label: 
+                            tmp_event_weight4fit=  treeIn.evt_wt #treeIn.lepSF*treeIn.evt_wt if "data" not in label else treeIn.evt_wt
+                        elif "WJets" in label: 
+                            tmp_event_weight4fit=treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw
+                        else:
+                            tmp_event_weight4fit=treeIn.evt_wt*treeIn.lepSF*treeIn.Selak8Jet_pNetWtagSF[0]*treeIn.Top_pTrw
+                        #tmp_event_weight4fit=  treeIn.evt_wt*treeIn.lepSF if "data" not in label else  #totEventWeight #if "WJets" not in label else treeIn.evt_wt*treeIn.lepSF 
+                        if useWts: tmp_event_weight4fit = totEventWeight;
                         rrv_mass_lvj.setVal(treeIn.mWV); ###passing mWV in rrv
                         rrv_mass_j.setVal( tmp_jet_mass );##passing mjet in rrv
                         rdataset_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight )
@@ -2236,7 +2237,6 @@ objName ==objName_before ):
                         if tmp_jet_mass >= self.mj_signal_min and tmp_jet_mass < self.mj_signal_max:
                             rdataset_sig_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight );
                             rdataset4fit_sig_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight4fit );
-
                             data_category.setLabel("sig");
                             combData.add(RooArgSet(rrv_mass_lvj,data_category),tmp_event_weight);
                             combData4fit.add(RooArgSet(rrv_mass_lvj,data_category),tmp_event_weight4fit);
@@ -2269,7 +2269,8 @@ objName ==objName_before ):
 
                 
                 ### scale to lumi for MC in 4fit datasets
-                tmp_scale_to_lumi= 1.0  #tmp_scale_to_lumi  if "WJets" in label else 1.0 #tmp_scale_to_lumi #since everything is perfectly normalized already
+                if useWts:tmp_scale_to_lumi =1.0 #since everything is perfectly normalized already
+                else: tmp_scale_to_lumi= tmp_scale_to_lumi  
                 if verbose_num:                print "IMPCHK value of tmp_scale_to_lumi %f for label %s"%(tmp_scale_to_lumi,label)
                 rrv_scale_to_lumi=RooRealVar("rrv_scale_to_lumi"+label+"_"+self.channel,"rrv_scale_to_lumi"+label+"_"+self.channel,tmp_scale_to_lumi) #rdataset_mj.sumEntries()/rdataset4fit_mj.sumEntries())
                 getattr(self.workspace4fit_,"import")(rrv_scale_to_lumi)
@@ -2400,8 +2401,11 @@ objName ==objName_before ):
         ### Build the dataset
         self.get_mj_and_mlvj_dataset(self.file_WZ_mc,"_WZ")
         self.fit_mj_single_MC(self.file_WZ_mc,"_WZ","2GausWZ");       
-        self.fit_mlvj_model_single_MC(self.file_WZ_mc,"_WZ","_sb","ExpN", 0, 0, 1);
-        self.fit_mlvj_model_single_MC(self.file_WZ_mc,"_WZ","_sig","ExpN", 0, 0, 1);
+        #self.fit_mlvj_model_single_MC(self.file_WZ_mc,"_WZ","_sb","ExpN", 0, 0, 1);
+        #self.fit_mlvj_model_single_MC(self.file_WZ_mc,"_WZ","_sig","ExpN", 0, 0, 1);
+        self.fit_mlvj_model_single_MC(self.file_WZ_mc,"_WZ","_sb","Exp", 0, 0, 1);
+        self.fit_mlvj_model_single_MC(self.file_WZ_mc,"_WZ","_sig","Exp", 0, 0, 1);
+
         print "________________done done done________________________________________________________"   
         
     #################################################################################################
@@ -2430,7 +2434,11 @@ objName ==objName_before ):
         if usepNM:
             self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","Exp"); #ChiSqBern")#"Exp");
         else:
-            self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","ChiSqBern")
+            if useWts:
+                self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","ChiSqBern")
+            else: self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","Exp")
+            #self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","Exp")
+            #self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","User1");
         if doalter:        self.fit_mj_single_MC(self.file_WJets_mc,"_WJets1","User1");
         #### Fit the mlvj in sb_lo, signal region using two different model as done in the mj
         self.fit_mlvj_model_single_MC(self.file_WJets_mc,"_WJets0","_sb",self.MODEL_4_mlvj, 1, 0, 1, 1);
@@ -2469,10 +2477,10 @@ objName ==objName_before ):
         self.fit_mlvj_in_Mj_sideband("_WJets0","_sb",self.MODEL_4_mlvj,1)
         if doalter:        self.fit_mlvj_in_Mj_sideband("_WJets1","_sb",self.MODEL_4_mlvj_alter,1)
         ### Prepare the workspace and datacards     
-        self.prepare_limit("sideband_correction_method1",1,0,0)
+        self.prepare_limit("sideband_correction_method1",0,0,0)
 
         ### finale plot and check of the workspace
-        ##amself.read_workspace(1)
+        #self.read_workspace(1)
         ### print all fitresults
         #for results in [self.fitresultsmj,self.fitresultsmlvj,self.fitresultsfinal]:
          #   for i in results:
@@ -2510,40 +2518,6 @@ objName ==objName_before ):
                 self.workspace4fit_.var("Deco_TTbar_sb_%s_%s_mlvj_13TeV_eig1"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_TTbar);
 
         
-        if self.MODEL_4_mlvj=="ErfPow2_v1" or self.MODEL_4_mlvj=="ErfPowExp_v1" :
-        
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig0"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig1"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig2"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig3"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig4"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig5"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig6"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig7"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            ### TTbar use expN
-            if isTTbarFloating !=0:
-                self.workspace4fit_.var("Deco_TTbar_sig_%s_%s_mlvj_13TeV_eig0"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_TTbar);
-                self.workspace4fit_.var("Deco_TTbar_sig_%s_%s_mlvj_13TeV_eig1"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_TTbar);
-                self.workspace4fit_.var("Deco_TTbar_sb_%s_%s_mlvj_13TeV_eig0"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_TTbar);
-                self.workspace4fit_.var("Deco_TTbar_sb_%s_%s_mlvj_13TeV_eig1"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_TTbar);
-        
-        if self.MODEL_4_mlvj=="ErfExp_v1" or self.MODEL_4_mlvj=="ErfPow_v1" or self.MODEL_4_mlvj=="2Exp" :
-        
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig0"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig1"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig2"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig3"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig4"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-            self.workspace4fit_.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig5"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_alpha);
-
-            ### TTbar use expN
-            if isTTbarFloating !=0:
-                self.workspace4fit_.var("Deco_TTbar_sig_%s_%s_mlvj_13TeV_eig0"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_TTbar);
-                self.workspace4fit_.var("Deco_TTbar_sig_%s_%s_mlvj_13TeV_eig1"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_TTbar);
-                self.workspace4fit_.var("Deco_TTbar_sb_%s_%s_mlvj_13TeV_eig0"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_TTbar);
-                self.workspace4fit_.var("Deco_TTbar_sb_%s_%s_mlvj_13TeV_eig1"%(self.channel, self.wtagger_label)).setError(self.shape_para_error_TTbar);
-
-
         #@#prepare functions for simultaneous fit in combine
         #all pdfs are splitted into sb and sig regions (only in mj spectrum, mlvj is done in the signal code)
         getattr(self.workspace4fit_,'import')(self.workspace4fit_.pdf("model_pdf_WJets0_%s_mj"%self.channel).clone("model_pdf_WJets_%s_mj"%self.channel))
@@ -2658,122 +2632,117 @@ objName ==objName_before ):
         self.file_out.close()
         
     #################################################################################################
-    #################################################################################################
+    def decorelate(self,pdf,simfresult,rdataset_data_mWV,rrv,label,mlvj_model):
+        if ROOT.gROOT.FindObject("hist") != None: ROOT.gROOT.FindObject("hist").Delete()
+        hist = pdf.createHistogram(rrv.GetName(),rrv)
+        hist.SaveAs(self.rlt_DIR+"/alpha"+label+"_"+mlvj_model+"_auto.root")
     
-    def decorelated(self,input_model_pdf,input_rrv,input_rfitres):
-        print "IMPCHK looking into eigen values using pdf ",input_model_pdf
+        print "CHKCHK looking into eigen values using alpha"
         initialPars = []; 	initialParNames = [];	initialParErrors = []
-        parameters = input_rfitres.floatParsFinal(); #input_model_pdf.getParameters(RooArgSet(input_rrv));
-        print "IMPCHK parameters from fit result or model",parameters,input_model_pdf.getParameters(RooArgSet(input_rrv))
+        parameters = pdf.getParameters(RooArgSet(rrv));
         par=parameters.createIterator(); par.Reset();
         param=par.Next()
         while (param):
-	    initialPars.append(param.getVal())
-	    initialParErrors.append(param.getError())
-	    print "IMPCHK Initial pars = ",param.getVal(), " +/- ", param.getError()
+            initialPars.append(param.getVal())
+            initialParErrors.append(param.getError())
+            print "CHKCHK Initial pars = ",param.getVal(), " +/- ", param.getError()
             param=par.Next()
         
-	cov = input_rfitres.covarianceMatrix();
-	print "IMPCHK ==> Covariance matrix output from decorelated:"
+        cov = simfresult.covarianceMatrix();
+        print "CHKCHK ==> Covariance matrix :"
         cov.Print()
-	parToVary = cov.GetNrows()
-	print "IMPCHK Parameters to vary = ",parToVary
-	eigen = ROOT.TMatrixDSymEigen(cov) 
-	EigenVector_matrix = eigen.GetEigenVectors();
-	EigenValues = eigen.GetEigenValues()
-        print"IMPCHK EigenVector_matrix"
-	EigenVector_matrix.Print()
-        print"IMPCHK EigenVals"
-	EigenValues.Print()
-	eigenvectors =[]
-	for i in xrange(EigenVector_matrix.GetNrows()):
-    		eigenvector = ROOT.TVectorD(EigenVector_matrix.GetNrows())
-    		for j in xrange(EigenVector_matrix.GetNrows()):
-    	    		eigenvector[j] = EigenVector_matrix[j][i]
-    		eigenvectors.append(eigenvector)
+        parToVary = cov.GetNrows()
+        print "CHKCHK Parameters to vary = ",parToVary
+        eigen = ROOT.TMatrixDSymEigen(cov)
+        EigenVector_matrix = eigen.GetEigenVectors()
+        EigenValues = eigen.GetEigenValues()
+        print"CHKCHK EigenVector_matrix"
+        EigenVector_matrix.Print();
+        print"CHKCHK EigenVals"
+        EigenValues.Print();
+        eigenvectors =[]
+        for i in xrange(EigenVector_matrix.GetNrows()):
+            eigenvector = ROOT.TVectorD(EigenVector_matrix.GetNrows())
+            for j in xrange(EigenVector_matrix.GetNrows()):
+                eigenvector[j] = EigenVector_matrix[j][i]
+            eigenvectors.append(eigenvector)
 
-	systFunctions = [];	names = []
-	eigenvector = ROOT.TVectorD()
-	
-	for k in xrange(EigenVector_matrix.GetNrows()):
-	    if k != 1:
-	    	eigenvector = eigenvectors[k]
-                #norm= ROOT.Double(0.);
-	    	norm = ROOT.Double(eigenvector.Norm2Sqr())
-                print "IMPCHK type of norm",type(norm),type(1.0/norm)
-	    	eigenvalue = EigenValues[k]
-	    	sigma = math.sqrt(ROOT.TMath.Abs(eigenvalue))
-                print "IMPCHK norm: %f and sigma: %f"%(norm,sigma)
-	    	# compute unit vector in direction of i-th Eigenvector
-                eigenvector_unit= ROOT.TVectorD();
-	    	eigenvector_unit = ROOT.Double(1.0/norm)*eigenvector #eigenvector
-	    	print "IMPCHK eigenvector",eigenvector.Print()
-	    	upPars = [];	    	downPars = []
-	    	#print "initial pars = ",len(initialPars)
-	    	#print "IMPCHK: 1: ",k,"=="*10
-	    	#print "Eigenvalue : ",eigenvalue
-	    	#eigenvalue.Print()
-	    	print "=="*10
-	    	for i in xrange(len(initialPars)):
-	    	    newParUp = initialPars[i] + sigma*eigenvector_unit[i]
-	    	    print "initialPars[",i,"] = ",initialPars[i],"\t sigma = ",sigma,"\teigenvector_unit = ",eigenvector_unit[i]
-	    	    upPars.append(newParUp)
-	    	    print "==> UP: ",initialPars[i],"\t",newParUp,"\t",sigma,"\t",eigenvector_unit[i]
-	    	for i in xrange(len(initialPars)):
-	    	    newParDown = initialPars[i] - sigma*eigenvector_unit[i]
-	    	    print "initialPars[",i,"] = ",initialPars[i],"\t sigma = ",sigma,"\teigenvector_unit = ",eigenvector_unit[i]
-	    	    downPars.append(newParDown)
-	    	    print "==> Down: ",initialPars[i],"\t",newParDown,"\t",sigma,"\t",eigenvector_unit[i]
-##am	    	input_model_pdf.getParameters(rdataset_data_mlvj).Print("v");
-##am	    	print "--"*21
-##am	    	print "Up pars..."
-##am	    	print "--"*21
-##am	    	parameters_list = input_model_pdf.getParameters(rdataset_data_mlvj);
-##am	    	par=parameters_list.createIterator(); par.Reset();
-##am	    	param=par.Next()
-##am	    	parCount=0
-##am	    	print "==== Par Setting up ===="
-##am	    	while (param):
-##am	    	    param.setVal(upPars[parCount])
-##am	    	    #print param.getName(),"\t",upPars[parCount]
-##am	    	    print "upPars = ", upPars[parCount]
-##am	    	    param.Print()
-##am	    	    parCount+=1
-##am	    	    param=par.Next()
-##am	    	print "=="*10
-##am	    	input_model_pdf.getParameters(rdataset_data_mlvj).Print("v");
-##am	    	print "--"*21
-##am	    	print "Down pars..."
-##am	    	print "--"*21
-##am	    	parameters_list = input_model_pdf.getParameters(rdataset_data_mlvj);
-##am	    	par=parameters_list.createIterator();
-##am	    	par.Reset();
-##am	    	param=par.Next()
-##am	    	parCount=0
-##am	    	while (param):
-##am	    	    param.setVal(downPars[parCount])
-##am	    	    parCount+=1
-##am	    	    param=par.Next()
-##am                print "IMPCHK what follows"
-##am	    	input_model_pdf.getParameters(rdataset_data_mlvj).Print("v");
-##am	    	print "--"*21
-##am	    	print "Reset pars..."
-##am	    	print "--"*21
-##am	    	parameters_list = input_model_pdf.getParameters(rdataset_data_mlvj);
-##am	    	par=parameters_list.createIterator();
-##am	    	par.Reset();
-##am	    	param=par.Next()
-##am	    	parCount=0
-##am	    	while (param):
-##am	    	    param.setVal(initialPars[parCount])
-##am	    	    param=par.Next()
-##am	    	    parCount+=1
-##am                print "IMPCHK what follows after resetting"
-##am	    	input_model_pdf.getParameters(rdataset_data_mlvj).Print("v");
+        systFunctions = [];	names = []
+        eigenvector = ROOT.TVectorD()
+        for k in xrange(EigenVector_matrix.GetNrows()):
+            if k != 1:
+                eigenvector = eigenvectors[k]
+                norm = eigenvector.Norm2Sqr()
+                eigenvalue = EigenValues[k]
+                sigma = math.sqrt(ROOT.TMath.Abs(eigenvalue))
+                # compute unit vector in direction of i-th Eigenvector
+                eigenvector_unit=ROOT.TVectorD()
+                eigenvector_unit =  eigenvector #ROOT.Double(1.0/norm)*eigenvector #(1.0/norm)*eigenvector
+        upPars = [];	    	downPars = []
+        #print "initial pars = ",len(initialPars)
+        print "CHKCHK eigenvector:"
+        eigenvector.Print()
+        print "Norm = ",norm
+        print "norm constant",ROOT.Double(1.0/norm)*eigenvector
+        print "Eigenvalue : ",eigenvalue
+        print "sigma = ",sigma
+        for i in xrange(len(initialPars)):
+            newParUp = initialPars[i] + sigma*eigenvector_unit[2*i]
+            print "initialPars[",i,"] = ",initialPars[i],"\t sigma = ",sigma,"\teigenvector_unit = ",eigenvector_unit[i]
+            upPars.append(newParUp)
+            print "==> UP: ", newParUp
+        for i in xrange(len(initialPars)):
+            newParDown = initialPars[i] - sigma*eigenvector_unit[i]
+            downPars.append(newParDown)
+            print "==> Down: ",newParDown
+        print "CHKCHK now varrying parameters from the WJ pdf"
+        pdf.getParameters(rdataset_data_mWV).Print("v");
+        parameters_list = pdf.getParameters(rdataset_data_mWV);
+        par=parameters_list.createIterator(); par.Reset(); param=par.Next();
+        parCount=0
+        print "==== Par Setting up ===="
+        while (param):
+            param.setVal(upPars[parCount])
+            print "upPars = ", upPars[parCount]
+            param.Print()
+            parCount+=1
+            param=par.Next()
+        print "=="*10
+        pdf.getParameters(rdataset_data_mWV).Print("v");
+        if ROOT.gROOT.FindObject("hist") != None: ROOT.gROOT.FindObject("hist").Delete()
+        hist = pdf.createHistogram(rrv.GetName(),rrv);
+        hist.SaveAs(self.rlt_DIR+"/alpha"+label+"_"+mlvj_model+"_auto_Up_"+str(k)+".root");
+        print "--"*21
+        print "Down pars..."
+        print "--"*21
+        parameters_list = pdf.getParameters(rdataset_data_mWV);
+        par=parameters_list.createIterator(); 	par.Reset();	    	param=par.Next();
+        parCount=0
+        while (param):
+            param.setVal(downPars[parCount])
+            parCount+=1
+            param=par.Next()
+        print "IMPCHK what follows"
+        pdf.getParameters(rdataset_data_mWV).Print("v");
+        if ROOT.gROOT.FindObject("hist") != None: ROOT.gROOT.FindObject("hist").Delete()
+        hist = pdf.createHistogram(rrv.GetName(),rrv);
+        hist.SaveAs(self.rlt_DIR+"/alpha"+label+"_"+mlvj_model+"_auto_Down_"+str(k)+".root");
+        print "--"*21
+        print "Reset pars..."
+        print "--"*21
+        parameters_list = pdf.getParameters(rdataset_data_mWV);
+        par=parameters_list.createIterator();
+        par.Reset();
+        param=par.Next()
+        parCount=0
+        while (param):
+            param.setVal(initialPars[parCount])
+            param=par.Next()
+            parCount+=1
+        print "IMPCHK what follows after resetting"
+        pdf.getParameters(rdataset_data_mWV).Print("v");
 
-
-
-    #### Read the final workspace and produce the latest plots
+    #################################################################################################
     def read_workspace(self, logy=0):
 
         ### Taket the workspace for limits  
@@ -2892,14 +2861,17 @@ def pre_limit_sb_correction(method, year,channel, in_mj_min=40, in_mj_max=150, i
     #################################################################################################
     #################################################################################################
 
+
+
+
 #### Main Code
 if __name__ == '__main__':
     channel="mu" #options.channel;
-    #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","Pow2",options.pf)
-    pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpN",options.pf)
+    pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"ExpN","Exp",options.pf)
+    #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Pow","Pow2",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Pow2","Exp",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpN",options.pf)
-    #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"ExpN","ExpTail",options.pf)
+    #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpTail",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfPow_v1",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfExp_v1",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfPow2_v1",options.pf)

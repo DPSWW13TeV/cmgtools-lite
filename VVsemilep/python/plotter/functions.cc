@@ -343,6 +343,7 @@ float lnN1D_p1(float kappa, float x, float xmin, float xmax) {
 
 float HEMhandle(int year, float phi1, float eta1, float phi2, float eta2, int pdgId, int run, bool isData){
   //  bool isData=false;
+  isData= run > 1;
   float HEM_eta_min =  -3.2; float HEM_eta_max = -1.3;
   float HEM_phi_min= -1.57; float HEM_phi_max= -0.87;
   float weight=1.0;  bool vetoHEM=false; bool vetofj=false; bool vetoel=false;
