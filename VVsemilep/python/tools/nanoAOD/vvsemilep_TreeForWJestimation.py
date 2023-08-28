@@ -3,6 +3,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 import ROOT 
 import math
 from math import sqrt, cos, sin
+from array import array
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR, deltaPhi
 #_rootLeafType2rootBranchType = { 'UChar_t':'b', 'Char_t':'B', 'UInt_t':'i', 'Int_t':'I', 'Float_t':'F', 'Double_t':'D', 'ULong64_t':'l', 'Long64_t':'L', 'Bool_t':'O'}
 
@@ -46,8 +47,9 @@ class vvsemilep_TreeForWJestimation(Module):
         self.out.branch('dR_fjlep','F')
         self.out.branch('dphi_fjlep','F')
         self.out.branch('dphi_fjmet','F')
-        self.out.branch('pTWlep','F')
-    
+        self.out.branch('pTWlep','F');
+        self.out.branch('naGC_wt','I')
+        self.out.branch('aGC_wt',"F",lenVar="naGC_wt")
     def beginJob(self):
         pass
     def endJob(self):
@@ -186,6 +188,15 @@ class vvsemilep_TreeForWJestimation(Module):
         #self.out.fillBranch('genSumw',event.genEventSumw if not isData else 1.0   )
         self.out.fillBranch('xsec',event.xsec if not isData else 1.0  )
         self.out.fillBranch('lepSF',event.lepsf if not isData else 1.0  ) 
+        max_n=event.nLHEReweightingWeight if hasattr(event,"nLHEReweightingWeight") else 150 
+        self.out.fillBranch('naGC_wt', event.nLHEReweightingWeight if hasattr(event,"nLHEReweightingWeight") else max_n)
+        tmp=[1.0]*max_n
+        if hasattr(event,"nLHEReweightingWeight"):            
+            for j in range(max_n):
+                #print event.LHEReweightingWeight[j]
+                tmp[j]=event.LHEReweightingWeight[j]
+        self.out.fillBranch('aGC_wt', tmp)
+
         topsf=1.0;
         if not isData:
             tops=[];

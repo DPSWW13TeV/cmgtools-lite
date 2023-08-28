@@ -81,7 +81,7 @@ recl_allvars)
 	;;
 
 wjet)		
-	basecmd="${BCORE}0_wjest_sDM_toppTrwt/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/2_ak8Vtagged/{cname}_Friend.root "
+	basecmd="${BCORE}0_wjest_sDM_all/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/2_ak8Vtagged/{cname}_Friend.root "
 	;;
 
 genInfo)

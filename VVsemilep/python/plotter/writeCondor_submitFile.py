@@ -13,12 +13,12 @@ Output     = jobs/log_$(ProcId).out
 Error      = jobs/log_$(ProcId).error
 +JobFlavour = "tomorrow"
 \n\n'''.format(here=os.environ['PWD']))
-pf="cutflow_withouttp_pt_rwt"
-for dW in ["topCR","wjCR"]:#"wjCR","SR","topCR"]: #topCR","wjCR","SR"]: #," inclB"]: #,"topCR"]: #,"SR"]:
+pf="cutflow"
+for dW in ["SR","topCR","wjCR"]:#"wjCR","SR","topCR"]: #topCR","wjCR","SR"]: #," inclB"]: #,"topCR"]: #,"SR"]:
     for nl in ["1"]: #"1,2".split(","):
         for cat in ["boosted"]: #,"resolved"]: #.split(","):
             for yr in ["2018"]: #2016,2017,2018".split(","):
-                for lep in ["el","mu"]: #,"onelep"]:
+                for lep in ["el","mu","onelep"]:
                     for iVar in allvars:
                         tmp_condor.write('arguments  = {cmssw} {yr} {nl} {cat} {iVar} {dW} {lf} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,nl=nl,iVar=iVar,dW=dW,lf=lep,pf=pf ) )
                         tmp_condor.write('queue 1\n\n')
