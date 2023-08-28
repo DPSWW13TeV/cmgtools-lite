@@ -23,6 +23,7 @@ Trees='NanoTrees_v9_vvsemilep_06012023/'
 nEvt=120000
 Parent=${baseDir}/${Trees}/${year}
 BCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ${Parent}/";
+TBCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ";
 CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
 
 
@@ -30,7 +31,7 @@ CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
 case ${runWhere} in
 condor)
 	echo "running on condor"
-	cmd_1=" -q condor --maxruntime 100 --log $PWD/logs"
+	cmd_1=" -q condor --maxruntime 280 --log $PWD/logs" #180 
 
 	;;
 *) 
@@ -42,7 +43,7 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --de .*Run.* "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence " #--de .*Run.* "
 	;;
 
 recldata)
@@ -50,7 +51,8 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total  --de .*Run.* " 
+	basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total " #--dm TTSemi_pow_part.*  "  #--de .*Run.* "
+	#basecmd="${TBCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total "
 	;;
 
 top)
@@ -66,7 +68,7 @@ npdf)
 
 fjtagged)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}2_ak8Vtagged  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root --de .*Run.* "
+	basecmd="${BCORE}2_ak8Vtagged  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root " #--de .*Run.* "
 	;;
 
 fjtaggeddata)
@@ -75,12 +77,11 @@ fjtaggeddata)
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}1_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root  --de .*Run.* "
+	basecmd="${BCORE}1_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root " #  --de .*Run.* "
 	;;
 
-wjet)	
-	
-	basecmd="${BCORE}0_wjest/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/ak8VtaggedV1/{cname}_Friend.root -d TTSemi_pow_part0 "
+wjet)		
+	basecmd="${BCORE}0_wjest_sDM_all/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/2_ak8Vtagged/{cname}_Friend.root "
 	;;
 
 genInfo)
@@ -98,16 +99,29 @@ esac;
 
 
 
-if [ -z "$chunks" ] || [ -z == "$samples" ]
+if [ -z "$chunks" ] && [ -z  "$samples" ]
 then
     echo "running for the first time  ${basecmd}  ${cmd_1}"
     ${basecmd}  ${cmd_1}   
-else #for running missing chunks locally
+elif [ -n  "$samples" ] && [ -z "$chunks" ]
+then
+    echo "running ${basecmd} ${cmd_1} for ${samples}"
+    ${basecmd}  ${cmd_1} -d ${samples}
+else 
     for i in "${chunks[@]}"
     do 
+	echo "running ${basecmd} ${cmd_1} for ${samples} and chunk ${i}"
 	${basecmd} ${cmd_1} -d ${samples} -c ${i}
     done
+  
 fi
 
+
+
+##am    if [ "${#chunks[@]}" -eq 0 ]
+##am	then
+##am	echo "running ${basecmd} ${cmd_1} for ${samples} insided" 
+##am	#${basecmd}  ${cmd_1} -d ${samples}
+##am	else 
 
 

@@ -463,8 +463,7 @@ void draw_error_band_Decor( std::string pdf_name, std::string xaxis_name, RooArg
 } 
 
 /// Just the shape and don't touch the normalization 
-void draw_error_band_shape_Decor( std::string pdf_name, std::string xaxis_name, RooArgList &paras, RooWorkspace &ws,Double_t sigma , RooPlot *mplot, Int_t kcolor=6,std::string opt="F", Int_t fillstyle=3013,std::string uncertainty_title="", Int_t number_point=100, const Int_t number_errorband=2000){
-
+void draw_error_band_shape_Decor( std::string pdf_name, std::string xaxis_name, RooArgList &paras, RooWorkspace &ws, Double_t sigma , RooPlot *mplot, Int_t kcolor=6,std::string opt="F", Int_t fillstyle=3013,std::string uncertainty_title="", Int_t number_point=100, const Int_t number_errorband=2000){
 	TRandom3 rand(1234);
         /// take the observable
 	RooRealVar *rrv_x=ws.var(xaxis_name.c_str());
@@ -473,25 +472,28 @@ void draw_error_band_shape_Decor( std::string pdf_name, std::string xaxis_name, 
 	Double_t x_max=rrv_x->getMax();
 	Double_t delta_x=(x_max-x_min)/number_point;
 	Double_t width_x=mplot->getFitRangeBinW();
-
+	//	std::cout<<"IMPCHK from alpha band binning scheme xmin:\t"<<x_min<<"\t xmax: "<<x_max<<"\t delta_x: "<<delta_x<<"\t width: "<<width_x<<std::endl;
         /// bkg prediction central value
 	TGraph *bkgpred=new TGraph(number_point+1);
 	for(int i =0 ; i<= number_point ; i++){
 		rrv_x->setVal(x_min+delta_x*i); 
+		//		std::cout<<"IMPCHK from alpha band old value"<<ws.pdf(pdf_name.c_str())->getVal(*rrv_x)*width_x<<std::endl;
 		bkgpred->SetPoint( i , x_min+delta_x*i , ws.pdf(pdf_name.c_str())->getVal(*rrv_x)*width_x);
 	}
 	bkgpred->SetLineWidth(2);
 	bkgpred->SetLineColor(kcolor+3);
-
+	
         // make the envelope
 	TGraph* syst[number_errorband];
 	for(int j=0;j<number_errorband;j++){
 		for(Int_t ipara=0;ipara<paras.getSize();ipara++){
-		  ws.var(paras[ipara].GetName())->setVal( rand.Gaus(0.,sigma) ); // choose how many sigma on the parameters you wamt
+		  //		  std::cout<<"IMPCHK from alpha band old value"<<ws.var(paras[ipara].GetName())->getVal(*rrv_x)<<"\t new value \t"<<rand.Gaus(0.,sigma)<<std::endl;
+		  ws.var(paras[ipara].GetName())->setVal( rand.Gaus(0.,sigma)); // choose how many sigma on the parameters you wamt
 		}
 		syst[j]=new TGraph(number_point+1);
 		for(int i =0 ; i<=number_point ; i++){
 			rrv_x->setVal(x_min+delta_x*i); 
+			//	std::cout<<"IMPCHK from alpha band variation in y with new parms \t"<<ws.pdf(pdf_name.c_str())->getVal(*rrv_x)*width_x<<std::endl;
 			syst[j]->SetPoint( i , x_min+delta_x*i ,ws.pdf(pdf_name.c_str())->getVal(*rrv_x)*width_x);
 		}
 	}
@@ -509,16 +511,17 @@ void draw_error_band_shape_Decor( std::string pdf_name, std::string xaxis_name, 
 			val[j]=(syst[j])->GetY()[i];
 		}
 		std::sort(val.begin(),val.end());
+		//std::cout<<"IMPCHK from alpha error band \t"<<bkgpred->GetY()[i]<<"\t"<<val[Int_t(0.84*number_errorband)]<<"\t"<<val[Int_t(0.16*number_errorband)]<<std::endl;
 		ap->SetPoint(i, x_min+delta_x*i,val[Int_t(0.16*number_errorband)]);
 		am->SetPoint(i, x_min+delta_x*i,val[Int_t(0.84*number_errorband)]);
 		errorband->SetPoint(i, x_min+delta_x*i,bkgpred->GetY()[i] );
 		errorband->SetPointError(i, 0.,0., bkgpred->GetY()[i]-val[Int_t(0.84*number_errorband)],val[Int_t(0.16*number_errorband)]-bkgpred->GetY()[i]);
-        if (i==55)cout<<val[Int_t(0.16*number_errorband)]<<"  "<<bkgpred->GetY()[i] <<"  "<<val[Int_t(0.84*number_errorband)] <<endl;
+		if (i==55)cout<<"IMPCHK this work"<<val[Int_t(0.16*number_errorband)]<<"  "<<bkgpred->GetY()[i] <<"  "<<val[Int_t(0.84*number_errorband)] <<endl;
 	}
 	ap->SetLineWidth(2);
 	ap->SetLineColor(kcolor);
 	am->SetLineWidth(2);
-	am->SetLineColor(kcolor);
+	am->SetLineColor(kcolor+2);
         errorband->SetFillStyle(fillstyle);
 	errorband->SetFillColor(kcolor);
         errorband->SetName(Form("%s %g#sigma",uncertainty_title.c_str(),sigma));
@@ -526,8 +529,10 @@ void draw_error_band_shape_Decor( std::string pdf_name, std::string xaxis_name, 
         if( TString(opt).Contains("F") ){ mplot->addObject(errorband,"E3"); }
 	if( TString(opt).Contains("L") ){ mplot->addObject(am); mplot->addObject(ap); }
 	for(Int_t ipara=0;ipara<paras.getSize();ipara++){
-		ws.var(paras[ipara].GetName())->setVal(0.);
+	  ws.var(paras[ipara].GetName())->setVal(0.);
 	}
+
+
 } 
 
 //with scale for aplha function plot

@@ -1,8 +1,9 @@
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 import ROOT 
-
+import math
 from math import sqrt, cos, sin
+from array import array
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR, deltaPhi
 #_rootLeafType2rootBranchType = { 'UChar_t':'b', 'Char_t':'B', 'UInt_t':'i', 'Int_t':'I', 'Float_t':'F', 'Double_t':'D', 'ULong64_t':'l', 'Long64_t':'L', 'Bool_t':'O'}
 
@@ -12,10 +13,10 @@ def if3(cond, iftrue, iffalse):
     return iftrue if cond else iffalse
 
 class vvsemilep_TreeForWJestimation(Module):
-    def __init__(self, lepMultiplicity, selection,finalstate='onelep'):
+    def __init__(self, lepMultiplicity, selection,mvar='sD'):
         self.lepMultiplicity=lepMultiplicity
         self.selection=selection
-        self.finalstate=finalstate
+        self.mvar=mvar
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
@@ -24,10 +25,12 @@ class vvsemilep_TreeForWJestimation(Module):
                 self.out.branch('Lep%d_%s'%(l+1,var),'F')
         
         self.out.branch('nSelak8Jets'  ,'I')
-        for var in 'pt,eta,phi,mass,msoftdrop,particleNet_mass,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetZtagscore,pNetWtagSF'.split(','):
+        for var in 'pt,eta,phi,mass,particleNetMD_Xqq,msoftdrop,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetZtagscore,pNetWtagSF'.split(','): #msoftdrop,particleNet_mass,
             self.out.branch('Selak8Jet_%s'%var, 'F', 10, 'nSelak8Jets')
 
-        self.out.branch('event', 'I')
+        self.out.branch('event', 'L')
+        self.out.branch("Top_pTrw","F")
+        self.out.branch('event_presel', 'L')
         self.out.branch('nBJetMedium30', 'I')
         self.out.branch('pmet'       ,'F')
         self.out.branch('pmet_phi'   ,'F')
@@ -40,7 +43,13 @@ class vvsemilep_TreeForWJestimation(Module):
         self.out.branch('trigger2l','I')
         self.out.branch('trigger1e','I')
         self.out.branch('trigger1m','I')
-    
+
+        self.out.branch('dR_fjlep','F')
+        self.out.branch('dphi_fjlep','F')
+        self.out.branch('dphi_fjmet','F')
+        self.out.branch('pTWlep','F');
+        self.out.branch('naGC_wt','I')
+        self.out.branch('aGC_wt',"F",lenVar="naGC_wt")
     def beginJob(self):
         pass
     def endJob(self):
@@ -60,7 +69,7 @@ class vvsemilep_TreeForWJestimation(Module):
         mWV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         met.SetPtEtaPhiM(metpt,0.,metphi,0.);
         lepton1.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,l1.mass);
-        fatjet1.SetPtEtaPhiM(fjet.pt,fjet.eta,fjet.phi,fjet.particleNet_mass);
+        fatjet1.SetPtEtaPhiM(fjet.pt,fjet.eta,fjet.phi,fjet.msoftdrop); #particleNet_mass);
         NeutrinoPz.SetMET(met);
         NeutrinoPz.SetLepton(lepton1);
         NeutrinoPz.SetLeptonType(l1.pdgId);
@@ -124,16 +133,18 @@ class vvsemilep_TreeForWJestimation(Module):
         nFO = getattr(event,"nLepFO_Recl")
         chosen = getattr(event,"iLepFO_Recl")
         leps = [all_leps[chosen[i]] for i in xrange(nFO)]
-        jets = [j for j in Collection(event,"ak8pNMgt40")]
+        jets = [j for j in Collection(event,"ak8%sMgt40"%self.mvar)]
+        
         if len(leps) < self.lepMultiplicity: return False
         if len(jets) < 1: return False
         
         for sel in self.selection: 
             if not eval(sel): return False
+        self.out.fillBranch('event_presel',event.event)
         for lep in range(self.lepMultiplicity):
             for var in 'pt,eta,phi,pdgId'.split(','):
                 self.out.fillBranch('Lep%d_%s'%(lep+1,var), getattr(leps[lep],var))
-        for var in 'pt,eta,phi,mass,msoftdrop,particleNet_mass,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore
+        for var in 'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore#,msoftdrop particleNet_mass,
             jetVar=[]
             for j in jets:
                 jetVar.append(getattr(j,var))
@@ -141,7 +152,6 @@ class vvsemilep_TreeForWJestimation(Module):
             self.out.fillBranch('Selak8Jet_%s'%var, jetVar)
         pNetZscore=[];        pNetWscore=[];pnetsf=[];
         for j in jets:
-
             score=(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xqq'))/(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xqq')+getattr(j,'particleNetMD_QCD'))
             pNetWscore.append(score)
             score=(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xbb')+getattr(j,'particleNetMD_Xqq'))/(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xqq')+getattr(j,'particleNetMD_QCD')+getattr(j,'particleNetMD_Xbb'))
@@ -158,6 +168,18 @@ class vvsemilep_TreeForWJestimation(Module):
         self.out.fillBranch('trigger1e',event.Trigger_1e)
         self.out.fillBranch('trigger1m',event.Trigger_1m)
         self.out.fillBranch('nBJetMedium30',event.nBJetMedium30_Recl)
+
+        self.out.fillBranch('dR_fjlep',deltaR(leps[0].eta,leps[0].phi,jets[0].eta,jets[0].phi))
+        self.out.fillBranch('dphi_fjlep',abs(deltaPhi(leps[0].phi,jets[0].phi)))
+        self.out.fillBranch('dphi_fjmet',abs(deltaPhi(event.PuppiMET_phi,jets[0].phi)))
+        pmet=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        lep1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        lmet=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        pmet.SetPtEtaPhiM(event.PuppiMET_pt,0.,event.PuppiMET_phi,0.);
+        lep1.SetPtEtaPhiM(leps[0].pt,leps[0].eta,leps[0].phi,leps[0].mass);
+        lmet=pmet+lep1
+        self.out.fillBranch('pTWlep',lmet.Pt())
+
         hemwt=self.HEM(event.year,leps[0],jets[0],event.run,isData)
         #print hemwt,event.prescaleFromSkim,event.L1PreFiringWeight_Nom,event.puWeight
         eventWt=hemwt * (event.prescaleFromSkim if isData else event.L1PreFiringWeight_Nom*event.puWeight*event.prescaleFromSkim)
@@ -166,6 +188,32 @@ class vvsemilep_TreeForWJestimation(Module):
         #self.out.fillBranch('genSumw',event.genEventSumw if not isData else 1.0   )
         self.out.fillBranch('xsec',event.xsec if not isData else 1.0  )
         self.out.fillBranch('lepSF',event.lepsf if not isData else 1.0  ) 
+        max_n=event.nLHEReweightingWeight if hasattr(event,"nLHEReweightingWeight") else 150 
+        self.out.fillBranch('naGC_wt', event.nLHEReweightingWeight if hasattr(event,"nLHEReweightingWeight") else max_n)
+        tmp=[1.0]*max_n
+        if hasattr(event,"nLHEReweightingWeight"):            
+            for j in range(max_n):
+                #print event.LHEReweightingWeight[j]
+                tmp[j]=event.LHEReweightingWeight[j]
+        self.out.fillBranch('aGC_wt', tmp)
+
+        topsf=1.0;
+        if not isData:
+            tops=[];
+            genparticles=Collection(event,"GenPart")
+            foundt=False;foundtbar=False; tgenPt=0.0; AtopPt=0.0;
+            for iGen in genparticles:
+                if abs(iGen.pdgId) == 6:
+                    lastcopy=ROOT.TMath.Odd(iGen.statusFlags/(1<<13))
+                    if iGen.pdgId == 6 and lastcopy:
+                        topPt=iGen.pt;foundt=True;tops.append(iGen);
+                    if iGen.pdgId == -6 and lastcopy:
+                        AtopPt=iGen.pt;foundtbar=True;tops.append(iGen);
+                    else: continue
+            if len(tops)==2 and foundt and foundtbar:
+                topsf=(math.sqrt(math.exp(0.0615 - 0.0005 * topPt) * math.exp(0.0615 - 0.0005 * AtopPt)))
+        self.out.fillBranch('Top_pTrw',topsf)    
+
         return True
 
 

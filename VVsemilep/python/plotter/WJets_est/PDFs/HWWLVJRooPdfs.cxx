@@ -60,15 +60,15 @@ using namespace Mathelp;
 void HWWLVJRooPdfs(){}
 
 //// Erf*Exp function implementation for W+Jets
-Double_t ErfExpDeco(Double_t x, Double_t c, Double_t offset, Double_t width){
-    if(width<1e-2)width=1e-2;
-    if (c==0)c=-1e-7;
-    if(TMath::Exp(-(x-offset)/(width+c))*(1.+TMath::Erf((x-offset)/(width-c)))==0) return std::numeric_limits<double>::min()*1e50;
-    else if(isnan(TMath::Exp(-(x-offset)/(width+c))*(1.+TMath::Erf((x-offset)/(width-c))))) return std::numeric_limits<double>::max()/1e50;
-    //else if(isnan(TMath::Exp(-(x-offset)/(width+c))*(1.+TMath::Erf((x-offset)/(width-c))))) std::cout<<"NAN"<<std::endl;
-    //else if(TMath::Exp(-(x-offset)/(width+c))*(1.+TMath::Erf((x-offset)/(width-c)))==0) std::cout<<"ZERO"<<std::endl;
-    return TMath::Exp(-(x-offset)/(width+c))*(1.+TMath::Erf((x-offset)/(width-c)))/2. ;
-}
+//Double_t ErfExpDeco(Double_t x, Double_t c, Double_t offset, Double_t width){
+//    if(width<1e-2)width=1e-2;
+//    if (c==0)c=-1e-7;
+//    if(TMath::Exp(-(x-offset)/(width+c))*(1.+TMath::Erf((x-offset)/(width-c)))==0) return std::numeric_limits<double>::min()*1e50;
+//    else if(isnan(TMath::Exp(-(x-offset)/(width+c))*(1.+TMath::Erf((x-offset)/(width-c))))) return std::numeric_limits<double>::max()/1e50;
+//    //else if(isnan(TMath::Exp(-(x-offset)/(width+c))*(1.+TMath::Erf((x-offset)/(width-c))))) std::cout<<"NAN"<<std::endl;
+//    //else if(TMath::Exp(-(x-offset)/(width+c))*(1.+TMath::Erf((x-offset)/(width-c)))==0) std::cout<<"ZERO"<<std::endl;
+//    return TMath::Exp(-(x-offset)/(width+c))*(1.+TMath::Erf((x-offset)/(width-c)))/2. ;
+//}
 
 Double_t ErfExpDeco(Double_t x, Double_t x_min, Double_t x_max, Double_t c, Double_t offset, Double_t width){
     if(width<1e-2)width=1e-2;
