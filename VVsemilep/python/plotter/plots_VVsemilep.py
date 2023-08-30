@@ -29,7 +29,7 @@ fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
 HEM=['puppimetphi','FatJet1_etaphi','eta1','phi1','etaphi1','FatJet1_phi','FatJet1_eta']
 cutflow = ['puppimet1','mWV1_typ0_pmet_boosted','lep1_ptt','FatJet1_pNet_mass','FatJet1_ptt','FatJet1_pNetMD_Wtagscoret']
-aTGC_chk=['aTGC_wt','aTGC_wt_neg','aTGC_wt_pos','aTGC_wt_ratio','aTGC_wt1','aTGC_wt2','test_plot'] #
+aTGC_chk=['aTGC_wt','aTGC_wt_neg','aTGC_wt_pos','aTGC_wt_SM','aTGC_wt1','aTGC_wt2','test_plot'] #
 theWVultimateset=['puppimet','puppimet_1','FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','nBJetMedium30_Recl','nFatJet','FatJet1_pt','puppimetphi','lep1_pt','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','neupzpmet_typ0','nJet30_Recl','lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass']#,'FatJet1_pNetMD_Ztagscore','mWV_typ1_pmet_boosted','mWV_typ2_pmet_boosted','neupzpmet','neupzpmet_typ1','neupzpmet_typ2','neupzpmet_typ3','mt1pmet',','nLepGood','nLepFO',,'FatJet1_pNetMD_Wtagscore_wXbb','sumBoosted',
 
 topCR=theWVultimateset+['sumBoosted','nFatJet']
@@ -169,13 +169,14 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow):
     print "vorsichtig sein!! du hast tagging auswahl im top CR geloschen"
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
-    showratio    = True
+    fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
+    showratio    = True #True
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
     processes_SM =['WW','WZ','data','WJets','tt','singletop','higgs','QCD']
-    processes    = ['aTGC_WW_SM','aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] #'aTGC_WW_SM','aTGC_WZ_SM','aTGC_incl','data'] #,'WW','WZ','WJets','tt','singletop','higgs','QCD']#,TTSEMI'aTGC'] 'tt','tt_mtt1ktoinf','tt_mttp7kto1k','data',if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',['WW','aTGC']#'WW','aTGC','aTGC_incl']#
+    aTGC_samples_study=['aTGC_WW_SM','aTGC_WZ_SM','aTGC_WW_SM_incl','aTGC_WZ','aTGC_WW','WW','WZ']
+    processes    = ['aTGC_WW_SM_incl','WW','WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] #'aTGC_WW_SM','aTGC_WZ_SM','aTGC_incl','data'] #,'WW','WZ','WJets','tt','singletop','higgs','QCD']#,TTSEMI'aTGC'] 'tt','tt_mtt1ktoinf','tt_mttp7kto1k','data',if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',['WW','aTGC']#'WW','aTGC','aTGC_incl']#
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_boosted = ['filters','singlelep','ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','etael1']
     cuts_onelep  = cuts_boosted + ['SR'] 
@@ -189,12 +190,13 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     print processes
     signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
-    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.32  --legendColumns 1 '
+    #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    
+    legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
     ubands  =  ' ' #--showMCError --noStackSig --showSigShape'
-    exclude = ' ' #--xu CMS_vvsl18_pNetscore' 
-    #ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.2 2.8  --plotmode norm --ratioDen WW --ratioNums aTGC_SM,aTGC_incl --ratioYLabel=aTGC/SM' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
 
-    ratio   = ' --showSigShape --noStackSig --showIndivSigs --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75' #  --plotmode norm --ratioDen WW --ratioNums aTGC,aTGC_incl' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
+    exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
+    ratio   = ' ' #--plotmode norm' #--showSigShape --noStackSig --showIndivSigs --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75' #  --plotmode norm --ratioDen WW --ratioNums aTGC,aTGC_incl' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
+
     more = '--plotmode norm' if cutflow else ''
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
@@ -328,12 +330,11 @@ def makesimpleplots(year,useDressed=True):
     ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  1.75'
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
-#<<<<<<< HEAD
-    anything = ' --showRatio --plotmode norm --showMCError --ratioNums aTGC_SM,aTGC_incl --ratioDen WW --ratioYLabel=aTGC/SM'# --showRatio --plotmode nostack --showMCError --ratioNums WW --ratioDen aTGC_SM,aTGC_incl --ratioYLabel=aTGC/SM'#,aTGC',aTGC_SM,aTGC_incl'# --ratioDen WW --ratioYLabel=/SM(e) ' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
-#=======
-    #anything = ' --showRatio   --showMCError --ratioNums aTGC,aTGC_SM,aTGC_incl --ratioDen WW --ratioYLabel=/SM(e) ' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
-#>>>>>>> f0c790df4d30bc573bc2a4dcb7646e461003d655
-    extraopts = ratio + spam + legends +  anything
+
+    #anything = ' --showRatio --plotmode norm --showMCError --ratioNums aTGC_SM,aTGC_incl --ratioDen WW --ratioYLabel=aTGC/SM'# --showRatio --plotmode nostack --showMCError --ratioNums WW --ratioDen aTGC_SM,aTGC_incl --ratioYLabel=aTGC/SM'#,aTGC',aTGC_SM,aTGC_incl'# --ratioDen WW --ratioYLabel=/SM(e) ' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
+    anything = ' --showRatio   --showMCError --ratioNums aTGC,aTGC_SM,aTGC_incl --ratioDen WW --ratioYLabel=/SM(e) ' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
+    extraopts = ratio + spam + legends + anything
+
     makeplots  = ['{}'.format(a)  for a in plotvars]
     applypNetSFs=False
     #    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, applypNetSFs,year, nLep,extraopts,invert,cutflow)
@@ -439,3 +440,6 @@ if __name__ == '__main__':
 # python plots_VVsemilep.py --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv LHE_HT --pf chkHT
 #python plots_VVsemilep.py --alpha --year 2018 --nLep 1 --finalState boosted --pv  mWV1_typ0_pmet_boosted --applylepSFs --lf mu
 #python plots_VVsemilep.py --simple --genD --year 2018
+
+
+#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_pt --applylepSFs --lf mu --year 2018 --dW plots
