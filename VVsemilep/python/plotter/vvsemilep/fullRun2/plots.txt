@@ -3,9 +3,9 @@
 #########################vvsemilep vars 
 
 test_plot : LHEReweightingWeight[0]\:event   :  10000,0,10000 , 1000,0,20  ; XTitle="event" , YTitle="aTGC Zeroth wt"
-aTGC_wt: LHEReweightingWeight : 50,0,2; XTitle="aTGC weight", MoreY=10
-aTGC_wt_ratio: LHEReweightingWeight/LHEReweightingWeight[0] : 100,0,10; XTitle="aTGC wt over zeroth wt", MoreY=10
-aTGC_wt1: LHEReweightingWeight[0] : 50,0,2; XTitle="aTGC first  weight", MoreY=10
+aTGC_wt: LHEReweightingWeight : 50,0,2; XTitle="aTGC weight", MoreY=5
+aTGC_wt_SM: LHEReweightingWeight[62]/genWeight : 30,-1,2; XTitle="LHEReweightingWeight_SM/genWeight", MoreY=2
+aTGC_wt1: LHEReweightingWeight/genWeight : 60,0,3; XTitle="LHEReweightingWeight/genWeight", MoreY=8
 aTGC_wt2: if3( (Selak8Jet_pt[0]>600 && Selak8Jet_pt[0] < 660),LHEReweightingWeight,-999) : 100,0,100; XTitle="aTGC 62 weight", IncludeOverflows=False, MoreY=10
 aTGC_wt_neg: if3(LHEReweightingWeight < 0, LHEReweightingWeight, 1) : 1001,-1000,1; XTitle="aTGC 62 weight", MoreY=10
 aTGC_wt_pos: if3(LHEReweightingWeight > 0, LHEReweightingWeight, 0) : 100,0,10; XTitle="aTGC 62 weight", MoreY=10
@@ -89,6 +89,8 @@ sumBoosted_withXbb : Sum$(( (ak8sDMgt40_particleNetMD_Xbb+ak8sDMgt40_particleNet
 
 nFatJet              : 	 nak8sDMgt40    : [0,1,2,3] ; XTitle='nfatjets' , MoreY=1.5,IncludeOverflows=False,MoreY=1.5
 FatJet1_pt           :   ak8sDMgt40_pt[0]  : 90,200,2000; XTitle="lead. fatjet p_{T} (GeV)", Logy, IncludeOverflows=False , MoreY=30
+tFatJet1_pt           :   ak8sDMgt40_pt[0]  : 90,200,2000; XTitle="lead. fatjet p_{T} (GeV)", Logy, IncludeOverflows=False , MoreY=1.5
+##tFatJet1_pt           :   ak8sDMgt40_pt[0]  : 40,200,1000; XTitle="lead. fatjet p_{T} (GeV)", Logy, IncludeOverflows=False , MoreY=20
 FatJet1_eta          :   ak8sDMgt40_eta[0]  : 24,-2.4,2.4; XTitle="lead. fatjet #eta", IncludeOverflows=False, MoreY=1.85
 FatJet1_phi          :   ak8sDMgt40_phi[0]  : 24,-3.2,3.2; XTitle="lead. fatjet #phi", IncludeOverflows=False, MoreY=1.85
 FatJet1_pNet_mass    :   ak8sDMgt40_particleNet_mass[0] : 20,0,200; XTitle="lead. ak8 pNet_mass", Logy, IncludeOverflows=False,MoreY=10
