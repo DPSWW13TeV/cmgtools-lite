@@ -385,37 +385,37 @@ WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   = kreator.makeMCComponent('WpZT
 WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf.files   = [os.path.join(basepath_eos,"WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x))]
 
 
-WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600 = kreator.makeMCComponent("WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 3.781)
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600 = kreator.makeMCComponent("WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 2.042)
 
 WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600.files   = [os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x))]
 
-WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800 = kreator.makeMCComponent("WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 6.633e-01)
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800 = kreator.makeMCComponent("WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 3.493e-01)
 
 WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800.files   = [os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x))]
 
-WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf = kreator.makeMCComponent("WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",7.500e-01) 
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf = kreator.makeMCComponent("WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.758e-01) 
 
 WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf.files   = [os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x))]
 
-WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600 = kreator.makeMCComponent("WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.603) 
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600 = kreator.makeMCComponent("WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",2.042) 
 
 WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600.files   = [os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x))]
 
-WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800 = kreator.makeMCComponent("WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",6.633e-01)
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800 = kreator.makeMCComponent("WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.493e-01)
 
 WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800.files   = [os.path.join(basepath_eos,"WmWpToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmWpToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmWpToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x))]
 
-WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf = kreator.makeMCComponent("WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",7.500e-01) 
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf = kreator.makeMCComponent("WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.758e-01) 
 
 WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf.files   = [os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x))]
 
 
-WpWm_aTGCmWV150to600 = kreator.makeMCComponent("WpWm_aTGCmWV150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 3.603)
-WpWm_aTGCmWV600to800 = kreator.makeMCComponent("WpWm_aTGCmWV600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",6.633e-01)
-WpWm_aTGCmWV800toInf = kreator.makeMCComponent("WpWm_aTGCmWV800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",7.500e-01)
-WmWp_aTGCmWV150to600 = kreator.makeMCComponent("WmWp_aTGCmWV150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.781)
-WmWp_aTGCmWV600to800 = kreator.makeMCComponent("WmWp_aTGCmWV600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",6.633e-01)
-WmWp_aTGCmWV800toInf = kreator.makeMCComponent("WmWp_aTGCmWV800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 7.500e-01)
+WpWm_aTGCmWV150to600 = kreator.makeMCComponent("WpWm_aTGCmWV150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 2.042)
+WpWm_aTGCmWV600to800 = kreator.makeMCComponent("WpWm_aTGCmWV600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.493e-01)
+WpWm_aTGCmWV800toInf = kreator.makeMCComponent("WpWm_aTGCmWV800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.758e-01)
+WmWp_aTGCmWV150to600 = kreator.makeMCComponent("WmWp_aTGCmWV150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",2.042)
+WmWp_aTGCmWV600to800 = kreator.makeMCComponent("WmWp_aTGCmWV600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.493e-01)
+WmWp_aTGCmWV800toInf = kreator.makeMCComponent("WmWp_aTGCmWV800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 3.758e-01)
 
 
 

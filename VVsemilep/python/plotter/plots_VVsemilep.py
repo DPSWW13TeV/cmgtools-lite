@@ -168,14 +168,15 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow):
     print "vorsichtig sein!! du hast tagging auswahl im top CR geloschen"
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
-    showratio    = True #True
+    fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
+    showratio    = True
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes_SM =['WW','WZ','data','WJets','tt','singletop','higgs','QCD']
+    processes    = ['WV','data','WJets','tt','singletop','higgs','QCD']
     aTGC_samples_study=['aTGC_WW_SM','aTGC_WZ_SM','aTGC_WW_SM_incl','aTGC_WZ','aTGC_WW','WW','WZ']
-    processes    = ['aTGC_WW_SM_incl','WW','WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] #'aTGC_WW_SM','aTGC_WZ_SM','aTGC_incl','data'] #,'WW','WZ','WJets','tt','singletop','higgs','QCD']#,TTSEMI'aTGC'] 'tt','tt_mtt1ktoinf','tt_mttp7kto1k','data',if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',['WW','aTGC']#'WW','aTGC','aTGC_incl']#
+    #processes    = ['aTGC_WW_SM_incl','WW','WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] #'aTGC_WW_SM','aTGC_WZ_SM','aTGC_incl','data'] #,'WW','WZ','WJets','tt','singletop','higgs','QCD']#,TTSEMI'aTGC'] 'tt','tt_mtt1ktoinf','tt_mttp7kto1k','data',if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',['WW','aTGC']#'WW','aTGC','aTGC_incl']#
+    #processes =['aTGC_WW_cwww','aTGC_WW_cw','aTGC_WW_cb','aTGC_WW_SM','WW']
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_boosted = ['filters','singlelep','ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','etael1']
     cuts_onelep  = cuts_boosted + ['SR'] 
@@ -189,12 +190,13 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     print processes
     signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
-    #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    
-    legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
+    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    
+    legends_1col = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
     ubands  =  ' ' #--showMCError --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
-    ratio   = ' ' #--plotmode norm' #--showSigShape --noStackSig --showIndivSigs --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75' #  --plotmode norm --ratioDen WW --ratioNums aTGC,aTGC_incl' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
-    more = '--plotmode norm' if cutflow else ''
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75' #  --plotmode norm --ratioDen WW --ratioNums aTGC,aTGC_incl' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
+    #' --showSigShape --noStackSig --showIndivSigs 
+    more = ' --plotmode norm' if cutflow else ''
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
     ##amif cutflow: showratio =False; processes.remove('data')
