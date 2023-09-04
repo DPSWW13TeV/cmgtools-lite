@@ -92,13 +92,13 @@ CMS_vvsl18_trigger_ee      : $PromptFromMC : .*2los.* : templateSymm; Normalize=
 CMS_vvsl18_trigger_em      : $PromptFromMC : .*2los.* : templateSymm; Normalize=False, AddWeight='ttH_2lss_ifflav(LepGood1_pdgId\,LepGood2_pdgId\,1.0\,1.01\,1.0)', year="2018"
 CMS_vvsl18_trigger_mm      : $PromptFromMC : .*2los.* : templateSymm; Normalize=False, AddWeight='ttH_2lss_ifflav(LepGood1_pdgId\,LepGood2_pdgId\,1.0\,1.0\,1.01)', year="2018"
 
-CMS_vvsl18_pNetscore      : $PNET : .*el.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8pNMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
-CMS_vvsl18_pNetscore      : $PNET : .*mu.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8pNMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
-CMS_vvsl18_pNetscore      : $PNET : .*onelep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8pNMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
+CMS_vvsl18_pNetscore      : $PNET : .*el.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
+CMS_vvsl18_pNetscore      : $PNET : .*mu.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
+CMS_vvsl18_pNetscore      : $PNET : .*onelep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
 
-CMS_vvsl18_pNetscore      : WJetsSR : .*el.*     : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8pNMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
-CMS_vvsl18_pNetscore      : WJetsSR : .*mu.*     : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8pNMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
-CMS_vvsl18_pNetscore      : WJetsSR : .*onelep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8pNMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
+CMS_vvsl18_pNetscore      : WJetsSR : .*el.*     : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
+CMS_vvsl18_pNetscore      : WJetsSR : .*mu.*     : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
+CMS_vvsl18_pNetscore      : WJetsSR : .*onelep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt40_pt[0]\,2018\,0\,1.0\,1)', year="2018"
 
 
 CMS_vvsl18_trigger_1l      :  $PromptFromMC : .*el.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(LepGood1_pdgId\,LepGood1_pt\,LepGood1_pdgId\,LepGood1_pt\,1\,2018\,0\,1)', year="2018"
