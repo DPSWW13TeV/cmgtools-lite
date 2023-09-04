@@ -2419,6 +2419,10 @@ objName ==objName_before ):
                         totEventWeight = treeIn.evt_wt #if "data" in label else 1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*lumis[self.year]/treeIn.sumw #*treeIn.Selak8Jet_pNetWtagSF[0]
                     elif "WJets" in label:
                         totEventWeight=1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*lumis[self.year]/treeIn.sumw
+                    elif 'WW' in label:
+                        totEventWeight=1000*50.90*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
+                    elif "WZ" in label:
+                        totEventWeight=1000*21.82*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
                     else: totEventWeight=1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
                     #totEventWeight = totEventWeight #if "WJets" in label else totEventWeight*treeIn.Selak8Jet_pNetWtagSF[0] 
                     tmp_scale_to_lumi = 1.0 if "data" in label else 1000*treeIn.genwt*treeIn.xsec*lumis[self.year]/treeIn.sumw

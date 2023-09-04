@@ -6,8 +6,9 @@ echo 'i am in this directory'
 echo $PWD
 
 cd ${1}
+source /cvmfs/cms.cern.ch/cmsset_default.sh
 echo "i am in this directory ${PWD}"
-eval $(scramv1 runtime -sh);
+eval `scram runtime -sh`
 
 echo "i am in this directory ${PWD} and making this plot ${5}"
 

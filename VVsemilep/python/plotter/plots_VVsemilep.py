@@ -29,7 +29,9 @@ eventvars   = ['nVert']
 HEM=['puppimetphi','FatJet1_etaphi','eta1','phi1','etaphi1','FatJet1_phi','FatJet1_eta']
 cutflow = ['puppimet1','mWV1_typ0_pmet_boosted','lep1_ptt','FatJet1_pNet_mass','FatJet1_ptt','FatJet1_pNetMD_Wtagscoret']
 aTGC_chk=['aTGC_wt','aTGC_wt_neg','aTGC_wt_pos','aTGC_wt_SM','aTGC_wt1','aTGC_wt2','test_plot'] #
-theWVultimateset=['puppimet','puppimet_1','FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','nBJetMedium30_Recl','nFatJet','FatJet1_pt','puppimetphi','lep1_pt','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','neupzpmet_typ0','nJet30_Recl','lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass']#,'FatJet1_pNetMD_Ztagscore','mWV_typ1_pmet_boosted','mWV_typ2_pmet_boosted','neupzpmet','neupzpmet_typ1','neupzpmet_typ2','neupzpmet_typ3','mt1pmet',','nLepGood','nLepFO',,'FatJet1_pNetMD_Wtagscore_wXbb','sumBoosted',
+#theWVultimateset=['puppimet','puppimet_1','FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','nBJetMedium30_Recl','nFatJet','FatJet1_pt','puppimetphi','lep1_pt','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','neupzpmet_typ0','nJet30_Recl','lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass']#,'FatJet1_pNetMD_Ztagscore','mWV_typ1_pmet_boosted','mWV_typ2_pmet_boosted','neupzpmet','neupzpmet_typ1','neupzpmet_typ2','neupzpmet_typ3','mt1pmet',','nLepGood','nLepFO',,'FatJet1_pNetMD_Wtagscore_wXbb','sumBoosted',
+theWVultimateset=['puppimet','FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
+
 
 topCR=theWVultimateset+['sumBoosted','nFatJet']
 ak4jetvars = ['nBJetLoose30_Recl,','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt']#'htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1']#'Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl',','htJet25j_Recl','mhtJet25_Recl',
@@ -173,8 +175,8 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['WV','data','WJets','tt','singletop','higgs','QCD']
-    aTGC_samples_study=['aTGC_WW_SM','aTGC_WZ_SM','aTGC_WW_SM_incl','aTGC_WZ','aTGC_WW','WW','WZ']
+    processes   = ['WV','data','WJets','tt','singletop','higgs','QCD']
+    #processes    = ['aTGC_WW_SM','aTGC_WZ_SM','aTGC_WW_SM_incl','aTGC_WZ','aTGC_WW','WW','WZ','aTGC_WW_cwww','aTGC_WW_cw','aTGC_WW_cb']
     #processes    = ['aTGC_WW_SM_incl','WW','WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] #'aTGC_WW_SM','aTGC_WZ_SM','aTGC_incl','data'] #,'WW','WZ','WJets','tt','singletop','higgs','QCD']#,TTSEMI'aTGC'] 'tt','tt_mtt1ktoinf','tt_mttp7kto1k','data',if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',['WW','aTGC']#'WW','aTGC','aTGC_incl']#
     #processes =['aTGC_WW_cwww','aTGC_WW_cw','aTGC_WW_cb','aTGC_WW_SM','WW']
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
@@ -192,7 +194,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    
     legends_1col = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
-    ubands  =  ' ' #--showMCError --noStackSig --showSigShape'
+    ubands  =  ' --showMCError' # --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
     ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75' #  --plotmode norm --ratioDen WW --ratioNums aTGC,aTGC_incl' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
     #' --showSigShape --noStackSig --showIndivSigs 
@@ -200,17 +202,20 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
     ##amif cutflow: showratio =False; processes.remove('data')
-    if blinded:
+    if blinded and 'data' in processes:
         showratio   = False
         fsyst=''
         processes.remove('data')
     for pR in selection:
+        if "SR" in pR and 'data' in processes:  
+            processes.remove('data')
+            showratio   = False
+            fsyst=''
         applypNetSFs=False if 'wjCR' in pR else True
         exclude = ' --xu CMS_vvsl18_pNetscore' if 'wjCR' not in pR else  ' '
         signal= if3(pR == 'SR',if3(nLep > 1,'--sp ZV','--sp aTGC_WW --sp aTGC_WZ'), if3('top' in pR, ' --sp tt --sp singletop', ' --sp WJets'))
         for LF in lepflav:
             lepSel= if3(LF == 'mu','muOnly',if3(LF == 'el','elOnly','trigger')) if not 'wjest' in pR else '1'
-
             for FS in finalState:
                 binName = '{lep}{jet}'.format(lep=if3(nLep > 1,'2los',flavors[LF]),jet=FS)
                 print 'running plots for %s'%binName
@@ -219,9 +224,8 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 targetdir = eos+'{yr}/{pR}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+'cutflow' if cutflow else '' + postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR)
                 enable=[]
                 enable=cuts_WJest if 'wjest' in pR else if3(pR == 'SR',if3(nLep > 1,cuts_2los,cuts_onelep),if3(pR=='topCR',cuts_topCR,if3(pR=='wjCR',cuts_wjCR,cuts_inclB)))
-                if "wjCR" or "topCR" not in pR:  ##for the check
-                    enable.append(lepSel); 
-                    enable.append(FS); 
+                enable.append(lepSel); 
+                if "wjCR" not in pR:    enable.append(FS); 
                 makeplots  = ['{}'.format(a)  for a in plotvars]
                 print makeplots
                 anything = "  --binname %s "%binName #--showIndivSigs

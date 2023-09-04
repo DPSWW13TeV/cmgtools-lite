@@ -351,7 +351,7 @@ float HEMhandle(int year, float phi1, float eta1, float phi2, float eta2, int pd
   
   vetofj = (year>2017 && eta1 < HEM_eta_max && eta1 > HEM_eta_min && phi1 < HEM_phi_max && phi1 > HEM_phi_min) ? true : false;
   vetoel = (abs(pdgId) == 11 && year>2017 && eta2 > -2.5 && eta2 < -1.479 && phi2 < HEM_phi_max && phi2 > HEM_phi_min) ? true : false;
-  vetoHEM = vetofj||vetoel;
+  vetoHEM = vetofj || vetoel;
   if (vetoHEM){
     if (isData) {
       if(run > 319077){ 	weight=0;      }

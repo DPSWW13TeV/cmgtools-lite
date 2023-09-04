@@ -349,6 +349,7 @@ WZTo1L1Nu2Q           = kreator.makeMCComponent("WZTo1L1Nu2Q","/WZTo1L1Nu2Q_4f_T
 WWTo1L1Nu2Q           = kreator.makeMCComponent("WWTo1L1Nu2Q","/WWTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",5.090e+01,fracNegWeights=2.011e-01)
 
 
+##aTGC samples have xsec values prior to madspin step hence BRs need to be used  
 basepath_eos="/eos/cms/store/group/phys_smp/ec/anmehta/Combined/"
 
 WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX   = kreator.makeMCComponent('WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.957e+01)
@@ -383,6 +384,8 @@ WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800.files   = [os.path.join(basepath_
 WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   = kreator.makeMCComponent('WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",2.199e-01)
 
 WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf.files   = [os.path.join(basepath_eos,"WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x))]
+
+
 
 
 WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600 = kreator.makeMCComponent("WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 2.042)
@@ -424,7 +427,7 @@ WmWp_aTGCmWV800toInf = kreator.makeMCComponent("WmWp_aTGCmWV800toInf","/WZTo1L1N
 
 
 basepath_private = "/eos/cms/store/group/phys_smp/anmehta/WZToLNuQQ01j_5f_amcatnloFxFx_nanov9UL2018/"
-WZToLNuQQ01j_5f_amcatnloFxFx    = kreator.makeMCComponent("WZToLNuQQ01j_5f_amcatnloFxFx","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
+WZToLNuQQ01j_5f_amcatnloFxFx    = kreator.makeMCComponent("WZToLNuQQ01j_5f_amcatnloFxFx","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 18.403, fracNegWeights=2.049e-01)
 WZToLNuQQ01j_5f_amcatnloFxFx.files   = [basepath_private+x for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x))]
 
 
