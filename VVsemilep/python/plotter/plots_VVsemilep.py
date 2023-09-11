@@ -168,7 +168,7 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 ##################
-def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow):
+def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,fitCR):
     print "vorsichtig sein!! du hast tagging auswahl im top CR geloschen"
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
     fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
@@ -209,8 +209,10 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         fsyst=''
         processes.remove('data')
     for pR in selection:
-        if 'top' in pR:
+        if 'top' in pR and fitCR:
             fittodata.append('tt');#fittodata.append('singletop');
+        if 'wj' in pR and fitCR:
+            fittodata.append('WJets');#fittodata.append('singletop');
         if "SR" in pR and 'data' in processes:  
             processes.remove('data')
             showratio   = False
@@ -338,38 +340,6 @@ def makesimpleplots(year,useDressed=True):
 
     runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs,applypNetSFs, year, nLep,extraopts,invert,cutFlow)
 ######################################
-def makelepIdEffplots(lepflav='mu'):
-    trees       = "/eos/cms/store/cmst3/group/dpsww/Effchk/"
-    MCfriends   = []
-    Datafriends = []
-    friends     = []
-    targetdir   = '/eos/user/a/anmehta/www/VVsemilep/2018/{date}_effchk/'.format(date=date)
-    fmca        = 'vvsemilep/fullRun2/mca-includes/mca-mc.txt' #mca-semilep-gen.txt'
-    fsyst       = ''
-    fplots      = 'vvsemilep/fullRun2/plots.txt'
-    fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep_effChk.txt' 
-    bareNano    = True
-    cutFlow     = False
-    processes   = ['dy']
-    disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
-    showratio=False
-    applylepSFs=False
-    nLep=2
-    plotvars   = ['deltaR_mumu','eff', 'deltaR_elel']
-
-    disable   = []; enable=[]
-    ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  1.75'
-    spam    = ' --topSpamSize 1.0 --noCms '
-    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
-    anything = ' --showRatio   --showMCError --ratioNums aTGC,aTGC_SM,aTGC_incl --ratioDen WW --ratioYLabel=/SM(e) ' 
-    extraopts = ratio + spam + legends + anything
-    makeplots  = ['{}'.format(a)  for a in plotvars]
-    applypNetSFs=False
-
-    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs,applypNetSFs, year, nLep,extraopts,invert,cutFlow)
-
-
-#################################################################################
 def testTreesforWJest(year):
     #baseDir = '/eos/cms/store/cmst3/group/dpsww/testWJ_htbinned/'
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
@@ -430,7 +400,7 @@ if __name__ == '__main__':
     parser.add_option('--genD', dest='genDressed', action='store_true' , default=False , help='use dressed leptons for gen lvl plots')
     parser.add_option('--sel',dest='sel', action='append', default=[], help='make plots with SR/ttbarCR/incl')
     parser.add_option('--dCF',dest='dCF', action='store_true', default=False , help='cutflow with MC & plot shapes w/o uncert')
-
+    parser.add_option('--fCR',dest='fCR', action='store_true', default=False , help='fit to data in the CR')
     (opts, args) = parser.parse_args()
 
     global date, postfix
@@ -444,7 +414,7 @@ if __name__ == '__main__':
     if opts.results:
         print 'will make {here} {pt} for {bin}' .format(here=opts.doWhat,bin=opts.finalState,pt=(opts.plotvar if 'plots' in opts.doWhat else ''))
         #makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars):
-        makeResults(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.sel,opts.postfix,opts.plotvar,opts.dCF)
+        makeResults(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.sel,opts.postfix,opts.plotvar,opts.dCF,opts.fCR)
     if opts.alpha:
         alphaRatio(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.applylepSFs,opts.postfix,opts.plotvar)
     if opts.WJest:
