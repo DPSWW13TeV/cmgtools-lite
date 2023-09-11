@@ -21,10 +21,10 @@ from ROOT import TGaxis, TPaveText, TLatex, TString, TFile,TLine, TLegend, TCanv
 
 parser        = OptionParser()
 parser.add_option('-r', '--readtrees', action='store_true', dest='readtrees', default=False, help='recreate aTGC histograms')
-parser.add_option('-p', '--plots', action='store_true', dest='Make_plots', default=False, help='make plots')
+parser.add_option('-p', '--plots', action='store_false', dest='Make_plots', default=True, help='make plots')
 parser.add_option('--savep', action='store_false', dest='savep', default=True, help='save plots')
 parser.add_option('-b', action='store_false', dest='batch', default=True, help='batch mode')
-parser.add_option('-c', '--ch', dest='chan', default='mu', help='channel, el, mu or elmu')
+parser.add_option('-c', '--ch', dest='chan', default='elmu', help='channel, el, mu or elmu')
 parser.add_option('-y', '--yr', dest='year', default='2018', help='year to run on, 2016, 2016APV, 2017 or 2018')
 parser.add_option('--noatgcint', action='store_true', dest='noatgcint', default=False, help='set atgc-interference coefficients to zero')
 parser.add_option('--printatgc', action='store_true', default=False, help='print atgc-interference contribution')

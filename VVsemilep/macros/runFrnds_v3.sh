@@ -68,11 +68,11 @@ npdf)
 
 fjtagged)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}2_ak8Vtagged  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root " #--de .*Run.* "
+	basecmd="${BCORE}2_ak8Vtagged_sdm45  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root --de .*Run.* "
 	;;
 
 fjtaggeddata)
-	basecmd="${BCORE}2_ak8Vtagged  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
+	basecmd="${BCORE}2_ak8Vtagged_sdm45  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
 	;;
 
 recl_allvars)

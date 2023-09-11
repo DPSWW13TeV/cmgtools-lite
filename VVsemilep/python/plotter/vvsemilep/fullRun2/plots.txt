@@ -241,6 +241,10 @@ ptZV      : pt_4(LepGood1_pt,LepGood1_phi,LepGood2_pt,LepGood2_phi,JetSel1_pt,Je
 
 
 
+eff : Sum$(Muon_highPtId == 2 && Muon_pt > 20 && abs(Muon_eta) < 2.4)/Sum$(Muon_pt > 20 && abs(Muon_eta) < 2.4) 
+
+deltaR_mumu :  deltaR(Muon_eta[0],Muon_phi[0],Muon_eta[1],Muon_phi[1])   : 92,0,5.0; XTitle="dRjl [#mum]", MoreY=1.5, IncludeOverflows=False
+deltaR_elel :  deltaR(Electron_eta[0],Electron_phi[0],Electron_eta[1],Electron_phi[1])   : 92,0,5.0; XTitle="dRjl [#mum]", MoreY=1.5, IncludeOverflows=False
 
 
 dR  :  deltaR(LepGood1_eta,LepGood1_phi,JetSel1_eta,JetSel1_phi)   : 92,0,5.0; XTitle="dRjl [#mum]", MoreY=1.5, IncludeOverflows=False
