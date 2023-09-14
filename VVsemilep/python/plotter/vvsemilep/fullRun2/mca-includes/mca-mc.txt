@@ -1,14 +1,14 @@
 ZV : ZZTo2Q2L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=46, Label="ZV (SM)"
 ZV : WZTo2Q2L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=46, Label="ZV (SM)"
 
-WV : WZToLNuQQ01j_5f_amcatnloFxFx : 21.82: 1 ; FillColor=30, Label="WV (SM)"
+WV : WZTo1L1Nu2Q : 10.71: 1 ; FillColor=30, Label="WV (SM)"
 WV : WWTo1L1Nu2Q : 5.090e+01 : 1 ; FillColor=30, Label="WV (SM)"
 
-WZ_4f : WZTo1L1Nu2Q : 10.71  : 1 ; FillColor=30, Label="WZ_4f",SkipMe=True
+WZ : WZTo1L1Nu2Q : 10.71  : 1 ; FillColor=ROOT.kTeal-7, Label="WZ_4f",SkipMe=True
 
 
 WW : WWTo1L1Nu2Q : 49.997 : 1 ; FillColor=ROOT.kRed+1, Label="WW SM (excl.)"
-WZ : WZToLNuQQ01j_5f_amcatnloFxFx : 21.82 : 1 ; FillColor=ROOT.kTeal-7, Label="WZ SM (excl.)"
+WZ_5f : WZToLNuQQ01j_5f_amcatnloFxFx : 21.82 : 1 ; FillColor=ROOT.kTeal-7, Label="WZ SM (excl.)",SkipMe=True
 
 aTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : 0.107*2.15/genWeight      : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
 aTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : 0.105*3.493e-01/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed

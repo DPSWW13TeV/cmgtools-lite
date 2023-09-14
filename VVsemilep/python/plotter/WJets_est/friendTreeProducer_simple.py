@@ -4,17 +4,17 @@ from glob import glob
 #from  printnEvt import printnEvt
 #fN=sys.argv[1]
 year=sys.argv[1]
-frnds="0_wjest_sDM_all/"
+frnds="0_wjest_newCuts/"
 eospath="/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/"
 #files=[]
-outname="1_wjest_sDM_all"
+outname="1_wjest_newCuts"
 outdir=os.path.join(eospath,year,outname)
 
 if not os.path.isdir(outdir):
      os.system("mkdir -p "+outdir)
 
 
-more=["WWTo1L1Nu2Q","WZToLNuQQ01j_5f_amcatnloFxFx"]
+more=["WWTo1L1Nu2Q","WZToLNuQQ01j_5f_amcatnloFxFx","WZTo1L1Nu2Q"]
 top=['TTSemi_pow']
 #top=['TTSemi_pow_part0','TTSemi_pow_part2','TTSemi_pow_part4','TTSemi_pow_part6','TTSemi_pow_part8','TTSemi_pow_part1','TTSemi_pow_part3','TTSemi_pow_part5','TTSemi_pow_part7','TTSemi_pow_part9']#'TT_mtt1ktoinf','TT_mttp7kto1k']
 
@@ -25,7 +25,7 @@ ww_atgc=['WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_4f','WmWpToLmNujj_01j_aTGC_4f_NLO_FX
 'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800','WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf']
 wz_atgc=['WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f','WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f','WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f',
 'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f','WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f','WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f']
-samples= ww_atgc+wz_atgc #top #stop +wjets+top+stop+more
+samples= ww_atgc+wz_atgc+top +stop +wjets+more
 
 def printnEvt(fN,yr):
     files=[] 

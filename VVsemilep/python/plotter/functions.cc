@@ -130,7 +130,9 @@ double METz_calc_run2(float pt1, float eta1, float phi1,int pdgId1,float met, fl
 double METz_calc(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi,int type=0){
   //complex roots-> pick the real part
   //if real roots
-  //type 0,1,2,3
+  //types 0,1,2,3
+  //types:00,01, 10,11,20,21, 30,31
+  
   // type0: pick the one closest to pz of muon  unless pznu is > 300 then pick the most central root 
   //typ1: pick the one closest to pz of muon 
   //typ2: pick the most central root

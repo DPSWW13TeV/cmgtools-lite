@@ -133,7 +133,7 @@ class vvsemilep_TreeForWJestimation(Module):
         nFO = getattr(event,"nLepFO_Recl")
         chosen = getattr(event,"iLepFO_Recl")
         leps = [all_leps[chosen[i]] for i in xrange(nFO)]
-        jets = [j for j in Collection(event,"ak8%sMgt40"%self.mvar)]
+        jets = [j for j in Collection(event,"ak8%sMgt45"%self.mvar)]
         
         if len(leps) < self.lepMultiplicity: return False
         if len(jets) < 1: return False

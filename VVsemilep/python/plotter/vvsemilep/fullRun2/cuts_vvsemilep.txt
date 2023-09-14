@@ -1,8 +1,5 @@
 alwaystrue: 1
 
-##amtopCRgen      : Sum$(Genalltops_status==22) ==2 ; Disable=True
-##amtopCRgenM     : Sum$(abs(LHEPart_pdgId) < 6) > 2 ; Disable=True
-##amsinglelep     : nGenDressedLepton == 1 ; Disable=True
 
 filters: Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
 dileptrg: Trigger_2l ;           Disable=True
@@ -12,37 +9,37 @@ ll          : abs(LepGood1_pdgId*LepGood2_pdgId) == 143 || abs(LepGood1_pdgId*Le
 cleanup: minMllAFAS > 12 ;           Disable=True
 
 trigger     : Trigger_1m || Trigger_1e ;           Disable=True
-singlelep   : (nLepFO == 1 && nLepTight==1 &&  LepGood1_pt>50 && LepGood1_isLepTight && (Trigger_1m || Trigger_1e) );           Disable=True 
-muOnly      : Trigger_1m && abs(LepGood1_pdgId) == 13 && PuppiMET_pt > 40;           Disable=True
-elOnly      : Trigger_1e && abs(LepGood1_pdgId) == 11 && PuppiMET_pt > 110 ;           Disable=True
-onelep      : if3(abs(LepGood1_pdgId) == 13, (Trigger_1m && abs(LepGood1_pdgId) == 13 && PuppiMET_pt > 40), (Trigger_1e && abs(LepGood1_pdgId) == 11 && PuppiMET_pt > 110)) ;           Disable=True
+singlelep   : (nLepFO == 1 && nLepTight==1 &&  LepGood1_pt>50 && PuppiMET_pt > 110 && LepGood1_isLepTight && (Trigger_1m || Trigger_1e) );           Disable=True 
+muOnly      : Trigger_1m && abs(LepGood1_pdgId) == 13 ;           Disable=True
+elOnly      : Trigger_1e && abs(LepGood1_pdgId) == 11  ;           Disable=True
+onelep      : if3(abs(LepGood1_pdgId) == 13, (Trigger_1m && abs(LepGood1_pdgId) == 13 && PuppiMET_pt > 110), (Trigger_1e && abs(LepGood1_pdgId) == 11 && PuppiMET_pt > 110)) ;           Disable=True
 etael1      : (abs(LepGood1_pdgId) == 13 || (abs(LepGood1_eta) < 1.442 || abs(LepGood1_eta) > 1.556 ));  Disable=True
 etael2      : (abs(LepGood2_pdgId) == 13 || (abs(LepGood2_eta) < 1.442 || abs(LepGood2_eta) > 1.556 ));  Disable=True
 
-blinded : $DATA{ak8sDMgt40_msoftdrop[0] < 65 || ak8sDMgt40_msoftdrop[0] > 105} $MC{1};    Disable=True
+blinded : $DATA{ak8sDMgt45_msoftdrop[0] < 65 || ak8sDMgt45_msoftdrop[0] > 105} $MC{1};    Disable=True
 
 
 ##blinded : $DATA{BDTG_DPS_TLCR_raw_withpt< 0.4 && BDTG_DPS_WZ_amc_raw_withpt < 0.4} $MC{1} 
-SR    : nBJetMedium30_Recl == 0 && (ak8sDMgt40_msoftdrop[0] >= 65 && ak8sDMgt40_msoftdrop[0] <= 105);  Disable=True
+SR    : nBJetMedium30_Recl == 0 && (ak8sDMgt45_msoftdrop[0] >= 65 && ak8sDMgt45_msoftdrop[0] <= 105);  Disable=True
 bVeto : nBJetMedium30_Recl == 0  ;           Disable=True
-inclB : nak8sDMgt40 > 0 ; Disable=True
-topCR : (nBJetMedium30_Recl > 0 && nak8sDMgt40 > 0 && ak8sDMgt40_msoftdrop[0] < 150) ;           Disable=True
+inclB : nak8sDMgt45 > 0 ; Disable=True
+topCR : (nBJetMedium30_Recl > 0 && nak8sDMgt45 > 0 && ak8sDMgt45_msoftdrop[0] < 150) ;           Disable=True
 
 resolved: Sum$(JetSel_Recl_pt > 30) >= 2 && nFatJetSel == 0 ;    Disable=True
 
 
-wjCR : nBJetMedium30_Recl == 0 && (ak8sDMgt40_msoftdrop[0] < 65 || (ak8sDMgt40_msoftdrop[0] > 105 && ak8sDMgt40_msoftdrop[0] < 150)) ;    Disable=True 
+wjCR : nBJetMedium30_Recl == 0 && (ak8sDMgt45_msoftdrop[0] < 65 || (ak8sDMgt45_msoftdrop[0] > 105 && ak8sDMgt45_msoftdrop[0] < 150)) ;    Disable=True 
 
 
-boosted: (ak8sDMgt40_particleNetMD_Xcc[0]+ak8sDMgt40_particleNetMD_Xqq[0])/(ak8sDMgt40_particleNetMD_Xcc[0]+ak8sDMgt40_particleNetMD_Xqq[0]+ak8sDMgt40_particleNetMD_QCD[0]) > 0.85; Disable=True
+boosted: (ak8sDMgt45_particleNetMD_Xcc[0]+ak8sDMgt45_particleNetMD_Xqq[0])/(ak8sDMgt45_particleNetMD_Xcc[0]+ak8sDMgt45_particleNetMD_Xqq[0]+ak8sDMgt45_particleNetMD_QCD[0]) > 0.85; Disable=True
 
-dRfjlep : deltaR(ak8sDMgt40_eta[0],ak8sDMgt40_phi[0],LepGood1_eta,LepGood1_phi) > 1.6 ; Disable=True
-dphifjlep : abs(deltaPhi(LepGood1_phi,ak8sDMgt40_phi[0])) > 2.0 ; Disable=True
-dphifjmet : abs(deltaPhi(ak8sDMgt40_phi[0],PuppiMET_phi)) > 2.0 ; Disable=True
+dRfjlep : deltaR(ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],LepGood1_eta,LepGood1_phi) > 1.6 ; Disable=True
+dphifjlep : abs(deltaPhi(LepGood1_phi,ak8sDMgt45_phi[0])) > 2.0 ; Disable=True
+dphifjmet : abs(deltaPhi(ak8sDMgt45_phi[0],PuppiMET_phi)) > 2.0 ; Disable=True
 
 ptWlep: pt_2(LepGood1_pt,LepGood1_phi,PuppiMET_pt,PuppiMET_phi) > 200 ; Disable=True
 
-mWVtyp0pmet : if3(abs(LepGood1_pdgId) == 13, mass_WV_mu(ak8sDMgt40_pt[0],ak8sDMgt40_eta[0],ak8sDMgt40_phi[0],ak8sDMgt40_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0),mass_WV_el(ak8sDMgt40_pt[0],ak8sDMgt40_eta[0],ak8sDMgt40_phi[0],ak8sDMgt40_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0) ) > 900 ;           Disable=True
+mWVtyp0pmet : if3(abs(LepGood1_pdgId) == 13, mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0),mass_WV_el(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0) ) > 950 ;           Disable=True
 
 
 
@@ -60,10 +57,13 @@ TightChargeMuon: (abs(LepGood1_pdgId)!=13 || LepGood1_tightCharge>=1) && (abs(Le
 
 ptll : ptll(LepGood1_pt, LepGood1_eta, LepGood1_phi, LepGood1_pdgId, LepGood2_pt, LepGood2_eta, LepGood2_phi, LepGood2_pdgId) > 100; Disable=True 
 
-#HEM : $DATA{(HEMhandle(year,ak8sDMgt40_phi[0],ak8sDMgt40_eta[0],LepGood1_phi, LepGood1_eta, LepGood1_pdgId,run,1))} $MC{(HEMhandle(year,ak8sDMgt40_phi[0],ak8sDMgt40_eta[0],LepGood1_phi, LepGood1_eta, LepGood1_pdgId,run,0))}
+#HEM : $DATA{(HEMhandle(year,ak8sDMgt45_phi[0],ak8sDMgt45_eta[0],LepGood1_phi, LepGood1_eta, LepGood1_pdgId,run,1))} $MC{(HEMhandle(year,ak8sDMgt45_phi[0],ak8sDMgt45_eta[0],LepGood1_phi, LepGood1_eta, LepGood1_pdgId,run,0))}
 
-#HEM : $DATA{(HEMhandle(year,ak8sDMgt40_phi[0],ak8sDMgt40_eta[0],LepGood1_phi, LepGood1_eta, LepGood1_pdgId,run,1))} $MC{1}
+#HEM : $DATA{(HEMhandle(year,ak8sDMgt45_phi[0],ak8sDMgt45_eta[0],LepGood1_phi, LepGood1_eta, LepGood1_pdgId,run,1))} $MC{1}
 
-#HEM : (HEMhandle(year,ak8sDMgt40_phi[0],ak8sDMgt40_eta[0],LepGood1_phi, LepGood1_eta, LepGood1_pdgId,run,1))
+#HEM : (HEMhandle(year,ak8sDMgt45_phi[0],ak8sDMgt45_eta[0],LepGood1_phi, LepGood1_eta, LepGood1_pdgId,run,1))
 
-#WJEST : dR_fjlep > 1.6 && dphi_fjlep > 2.0 && dphi_fjmet > 2.0 && pTWlep > 200 && Selak8Jet_pNetWtagscore[0] > 0.85 && mWV > 900 && abs(Lep1_pdgId) == 13 && nBJetMedium30 == 0 && mWV < 4500 && Selak8Jet_particleNet_mass[0] > 40 && Selak8Jet_particleNet_mass[0] < 150 ;Disable=True
+#WJEST : dR_fjlep > 1.6 && dphi_fjlep > 2.0 && dphi_fjmet > 2.0 && pTWlep > 200 && Selak8Jet_pNetWtagscore[0] > 0.85 && mWV > 950 && abs(Lep1_pdgId) == 13 && nBJetMedium30 == 0 && mWV < 4500 && Selak8Jet_particleNet_mass[0] > 50 && Selak8Jet_particleNet_mass[0] < 150 ;Disable=True
+##amtopCRgen      : Sum$(Genalltops_status==22) ==2 ; Disable=True
+##amtopCRgenM     : Sum$(abs(LHEPart_pdgId) < 6) > 2 ; Disable=True
+##amsinglelep     : nGenDressedLepton == 1 ; Disable=True

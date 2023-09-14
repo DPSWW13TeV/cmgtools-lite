@@ -58,18 +58,10 @@ wjets=['WJetsToLNu_HT100to200','WJetsToLNu_HT200to400','WJetsToLNu_HT400to600','
 
 data=[
 #'data']
-'DoubleMuon_Run2018A_UL18',  
-'DoubleMuon_Run2018B_UL18',  
-'DoubleMuon_Run2018C_UL18',  
-'DoubleMuon_Run2018D_UL18',  
 'EGamma_Run2018A_UL18',    
 'EGamma_Run2018B_UL18',    
 'EGamma_Run2018C_UL18',    
 'EGamma_Run2018D_UL18',      
-'MuonEG_Run2018A_UL18',
-'MuonEG_Run2018B_UL18',
-'MuonEG_Run2018C_UL18',
-'MuonEG_Run2018D_UL18',
 'SingleMuon_Run2018A_UL18',
 'SingleMuon_Run2018B_UL18',
 'SingleMuon_Run2018C_UL18',
@@ -190,8 +182,8 @@ class doFit_wj_and_wlvj:
             self.file_Directory=os.path.join(self.year,"0_wjest_comp") 
             self.file1_Directory=os.path.join(self.year,"1_wjest_comp") 
         else: 
-            self.file_Directory=os.path.join(self.year,"0_wjest_sDM_toppTrwt") #0_wjest_sDM") 
-            self.file1_Directory=os.path.join(self.year,"1_wjest_sDM") 
+            self.file_Directory=os.path.join(self.year,"0_wjest_newCuts") #0_wjest_sDM") 
+            self.file1_Directory=os.path.join(self.year,"1_wjest_newCuts") 
 
         self.samples={
             'WJets':[wjets],
@@ -199,7 +191,8 @@ class doFit_wj_and_wlvj:
             'TTbar':[top],
             'STop':[stop],
             "WW":[["WWTo1L1Nu2Q"],3393645436],
-            "WZ":[["WZToLNuQQ01j_5f_amcatnloFxFx"],41724242]}#stop 24011170135.9
+            "WZ":["WZTo1L1Nu2Q"]}
+            #"WZ":[["WZToLNuQQ01j_5f_amcatnloFxFx"],41724242]}#stop 24011170135.9
         
         self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.5,'WPD':-1}
 
@@ -2421,8 +2414,8 @@ objName ==objName_before ):
                         totEventWeight=1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*lumis[self.year]/treeIn.sumw
                     elif 'WW' in label:
                         totEventWeight=1000*50.90*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
-                    elif "WZ" in label:
-                        totEventWeight=1000*21.82*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
+                    #elif "WZ" in label:
+                    #    totEventWeight=1000*21.82*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
                     else: totEventWeight=1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
                     #totEventWeight = totEventWeight #if "WJets" in label else totEventWeight*treeIn.Selak8Jet_pNetWtagSF[0] 
                     tmp_scale_to_lumi = 1.0 if "data" in label else 1000*treeIn.genwt*treeIn.xsec*lumis[self.year]/treeIn.sumw
@@ -2435,7 +2428,7 @@ objName ==objName_before ):
                     ptWlep=treeIn.pTWlep > 200
                     boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore >= self.PNS and treeIn.mWV > rrv_mass_lvj.getMin() and treeIn.mWV<rrv_mass_lvj.getMax() and tmp_jet_mass < 150 and tmp_jet_mass > rrv_mass_j.getMin()
                     self.isGoodEvent = 0;   
-                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.nBJetMedium30 == 0 and  boosted_sel: # and treeIn.pmet > 100:
+                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.Lep1_pt > 50 and treeIn.nBJetMedium30 == 0 and  boosted_sel and treeIn.pmet > 110:
                         self.isGoodEvent = 1;  
                     if self.isGoodEvent == 1:
                         tmp_event_weight=totEventWeight 
