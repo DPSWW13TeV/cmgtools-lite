@@ -3,66 +3,8 @@ from CMGTools.RootTools.samples.ComponentCreator import ComponentCreator
 kreator = ComponentCreator()
 import os 
 
-# # QCD_Pt
-# QCD_Pt80to120 = kreator.makeMCComponent("QCD_Pt80to120", "/QCD_Pt_80to120_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 2.345e+06*1.17805)
-# QCD_Pt120to170 = kreator.makeMCComponent("QCD_Pt120to170", "/QCD_Pt_120to170_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 407800*1.15522)
-# QCD_Pt170to300 = kreator.makeMCComponent("QCD_Pt170to300", "/QCD_Pt_170to300_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 103400*1.1342)
-# QCD_Pt300to470 = kreator.makeMCComponent("QCD_Pt300to470",  "/QCD_Pt_300to470_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 6838*1.14405)
-# QCD_Pt470to600 = kreator.makeMCComponent("QCD_Pt470to600",  "/QCD_Pt_470to600_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 551.1*1.17619)
-# QCD_Pt470to600_ext1 = kreator.makeMCComponent("QCD_Pt470to600_ext1",  "/QCD_Pt_470to600_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16_ext1-v1/NANOAODSIM", "CMS", ".*root", 551.1*1.17619)
-# QCD_Pt600to800 = kreator.makeMCComponent("QCD_Pt600to800", "/QCD_Pt_600to800_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 156.4*1.19501)
-# QCD_Pt800to1000 = kreator.makeMCComponent("QCD_Pt800to1000", "/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16_ext1-v1/NANOAODSIM", "CMS", ".*root", 32.293)
-# QCD_Pt1000to1400 = kreator.makeMCComponent("QCD_Pt1000to1400", "/QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 7.466*1.26149)
-# QCD_Pt1400to1800 = kreator.makeMCComponent("QCD_Pt1400to1800", "/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 0.6481*1.30019)
-# QCD_Pt1400to1800_ext1 = kreator.makeMCComponent("QCD_Pt1400to1800_ext1", "/QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16_ext1-v1/NANOAODSIM", "CMS", ".*root", 0.6481*1.30019)
-# QCD_Pt1800to2400 = kreator.makeMCComponent("QCD_Pt1800to2400", "/QCD_Pt_1800to2400_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 0.08741*1.31499)
-# QCD_Pt1800to2400_ext1 = kreator.makeMCComponent("QCD_Pt1800to2400_ext1", "/QCD_Pt_1800to2400_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16_ext1-v1/NANOAODSIM", "CMS", ".*root", 0.08741*1.31499)
-# QCD_Pt2400to3200 = kreator.makeMCComponent("QCD_Pt2400to3200", "/QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 0.00522*1.30839)
-# QCD_Pt2400to3200_ext1 = kreator.makeMCComponent("QCD_Pt2400to3200_ext1", "/QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16_ext1-v1/NANOAODSIM", "CMS", ".*root", 0.00522*1.30839)
-# QCD_Pt3200toInf = kreator.makeMCComponent("QCD_Pt3200toInf", "/QCD_Pt_3200toInf_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 0.0001349*1.22643)
-# QCD_Pt3200toInf_ext2 = kreator.makeMCComponent("QCD_Pt3200toInf_ext2", "/QCD_Pt_3200toInf_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16_ext2-v1/NANOAODSIM", "CMS", ".*root", 0.0001349*1.22643)
-
-# QCDPt = [
-#     QCD_Pt80to120,
-#     QCD_Pt120to170,
-#     QCD_Pt170to300,
-#     QCD_Pt300to470,
-#     QCD_Pt470to600,
-#     QCD_Pt470to600_ext1,
-#     QCD_Pt600to800,
-#     QCD_Pt800to1000,
-#     QCD_Pt1000to1400,
-#     QCD_Pt1400to1800,
-#     QCD_Pt1400to1800_ext1,
-#     QCD_Pt1800to2400,
-#     QCD_Pt1800to2400_ext1,
-#     QCD_Pt2400to3200,
-#     QCD_Pt2400to3200_ext1,
-#     QCD_Pt3200toInf,
-#     QCD_Pt3200toInf_ext2
-# ]
 
 
-# # QCD HT bins (cross sections from McM)
-# QCD_HT100to200 = kreator.makeMCComponent("QCD_HT100to200", "/QCD_HT100to200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 2.463e+07*1.13073)
-# QCD_HT200to300 = kreator.makeMCComponent("QCD_HT200to300", "/QCD_HT200to300_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 1.553e+06*1.1056)
-# QCD_HT300to500 = kreator.makeMCComponent("QCD_HT300to500", "/QCD_HT300to500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 347500*1.01094)
-# QCD_HT500to700 = kreator.makeMCComponent("QCD_HT500to700", "/QCD_HT500to700_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 29930*1.0568)
-# QCD_HT700to1000 = kreator.makeMCComponent("QCD_HT700to1000", "/QCD_HT700to1000_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 6370*1.06782)
-# QCD_HT1000to1500 = kreator.makeMCComponent("QCD_HT1000to1500", "/QCD_HT1000to1500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 1100*1.09636)
-# QCD_HT1500to2000 = kreator.makeMCComponent("QCD_HT1500to2000", "/QCD_HT1500to2000_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 98.71)
-# QCD_HT2000toInf = kreator.makeMCComponent("QCD_HT2000toInf", "/QCD_HT2000toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 20.2)
-
-# QCDHT = [
-#     QCD_HT100to200,
-#     QCD_HT200to300,
-#     QCD_HT300to500,
-#     QCD_HT500to700,
-#     QCD_HT700to1000,
-#     QCD_HT1000to1500,
-#     QCD_HT1500to2000,
-#     QCD_HT2000toInf,
-# ]
 
 # # QCD enriched (cross sections form genXSecAna)
 
@@ -209,14 +151,12 @@ Ws = [
 DYJetsToLL_M50 = kreator.makeMCComponent("DYJetsToLL_M50", "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM", "CMS", ".*root", 1921.8*3, fracNegWeights=0.16)
 
 DYJetsToLL_M50_LO =  kreator.makeMCComponent("DYJetsToLL_M50_LO", "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 1921.8*3)
-#DYJetsToLL_M50_LO_ext =  kreator.makeMCComponent("DYJetsToLL_M50_LO_ext", "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1_ext1-v1/NANOAODSIM", "CMS", ".*root", 1921.8*3)
 DYJetsToLL_M10to50_LO =  kreator.makeMCComponent("DYJetsToLL_M10to50_LO", "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 15810)
 
 
 DYJets = [
     DYJetsToLL_M50,
     DYJetsToLL_M50_LO,
-    #DYJetsToLL_M50_LO_ext,
     DYJetsToLL_M10to50_LO,
 ]
 
@@ -333,6 +273,12 @@ WGToLNuG = kreator.makeMCComponent("WGToLNuG", "/WGToLNuG_TuneCP5_13TeV-madgraph
 ZGTo2LG =  kreator.makeMCComponent("ZGTo2LG", "/ZGToLLG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 55.78)
 
 
+basepath_private = "/eos/cms/store/group/phys_smp/anmehta/WZToLNuQQ01j_5f_amcatnloFxFx_nanov9UL2018/"
+WZToLNuQQ01j_5f_amcatnloFxFx    = kreator.makeMCComponent("WZToLNuQQ01j_5f_amcatnloFxFx","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 18.403, fracNegWeights=2.049e-01)
+WZToLNuQQ01j_5f_amcatnloFxFx.files   = [basepath_private+x for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x))]
+
+
+
 GluGluToContinToZZTo4e      =  kreator.makeMCComponent("GluGluToContinToZZTo4e", "/GluGluToContinToZZTo4e_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM",  "CMS", ".*root", 0.00159*1.7) # generator cross section times 1.7 k-factor (SMP-19-001, AN-2019/004)
 GluGluToContinToZZTo4mu     =  kreator.makeMCComponent("GluGluToContinToZZTo4mu", "/GluGluToContinToZZTo4mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM",  "CMS", ".*root", 0.00159*1.7) # generator cross section times 1.7 k-factor (SMP-19-001, AN-2019/004)
 GluGluToContinToZZTo4tau    =  kreator.makeMCComponent("GluGluToContinToZZTo4tau", "/GluGluToContinToZZTo4tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM",  "CMS", ".*root", 0.00159*1.7) # generator cross section times 1.7 k-factor (SMP-19-001, AN-2019/004)
@@ -351,87 +297,33 @@ WWTo1L1Nu2Q           = kreator.makeMCComponent("WWTo1L1Nu2Q","/WWTo1L1Nu2Q_4f_T
 
 
 ##aTGC samples have xsec values prior to madspin step hence BRs need to be used  
+#basepath_eos="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_Sep2023/"
+
 basepath_eos="/eos/cms/store/group/phys_smp/ec/anmehta/Combined/"
-
-WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX   = kreator.makeMCComponent('WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.957e+01)
-
-WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX.files   = [os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_hadded",x))]
-
-WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX   = kreator.makeMCComponent('WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.927e+01)
-
-WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX.files   = [os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_hadded",x))]
+#https://pdg.lbl.gov/2019/listings/rpp2019-list-w-boson.pdf
+#https://pdg.lbl.gov/2018/listings/rpp2018-list-z-boson.pdf
+zhad_bf=0.69911
+whad_bf=0.6741
 
 
 
-WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   = kreator.makeMCComponent('WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",5.401e-01)
-
-WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600.files   = [os.path.join(basepath_eos,"WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-150to600_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x))]
-
-WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   = kreator.makeMCComponent('WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",8.544e-02)
-
-WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800.files   = [os.path.join(basepath_eos,"WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-600to800_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x))]
-
-WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   = kreator.makeMCComponent('WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",9.101e-02)
-
-WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf.files   = [os.path.join(basepath_eos,"WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x))]
-
-WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   = kreator.makeMCComponent('WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",8.658e-01)
-
-WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600.files   = [os.path.join(basepath_eos,"WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-150to600_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x))]
-
-WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   = kreator.makeMCComponent('WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",1.561e-01)  
-WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800.files   = [os.path.join(basepath_eos,"WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-600to800_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x))]
-
-WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   = kreator.makeMCComponent('WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f',"/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",2.199e-01)
-
-WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf.files   = [os.path.join(basepath_eos,"WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x))]
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600=kreator.makeMCComponentSimple('WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600',"/WZToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,5.401e-01*0.69911,prefix='root://xrootd-cms.infn.it/')
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800=kreator.makeMCComponentSimple('WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800',"/WZToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,8.544e-02*0.69911,prefix='root://xrootd-cms.infn.it/')
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf=kreator.makeMCComponentSimple('WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf',"/WZToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,9.101e-02*0.69911,prefix='root://xrootd-cms.infn.it/')
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600=kreator.makeMCComponentSimple('WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600',"/WZToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,8.658e-01*0.69911,prefix='root://xrootd-cms.infn.it/')
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800=kreator.makeMCComponentSimple('WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800',"/WZToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,1.561e-01*0.69911,prefix='root://xrootd-cms.infn.it/')
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf=kreator.makeMCComponentSimple('WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf',"/WZToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,2.199e-01*0.69911,prefix='root://xrootd-cms.infn.it/')
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600=kreator.makeMCComponentSimple('WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600',"/WWToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,2.109*0.6741,prefix='root://xrootd-cms.infn.it/')
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800=kreator.makeMCComponentSimple('WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800',"/WWToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,3.568e-01*0.6741,prefix='root://xrootd-cms.infn.it/')
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf=kreator.makeMCComponentSimple('WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf',"/WWToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,3.806e-01*0.6741,prefix='root://xrootd-cms.infn.it/')
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600=kreator.makeMCComponentSimple('WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600',"/WWToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,2.014e+00*0.6741,prefix='root://xrootd-cms.infn.it/')
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800=kreator.makeMCComponentSimple('WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800',"/WWToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,3.467e-01*0.6741,prefix='root://xrootd-cms.infn.it/')
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf=kreator.makeMCComponentSimple('WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf',"/WWToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,3.713e-01*0.6741,prefix='root://xrootd-cms.infn.it/')
 
 
 
 
-WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600 = kreator.makeMCComponent("WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 2.042)
-
-WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600.files   = [os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x))]
-
-WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800 = kreator.makeMCComponent("WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 3.493e-01)
-
-WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800.files   = [os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x))]
-
-WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf = kreator.makeMCComponent("WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.758e-01) 
-
-WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf.files   = [os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x))]
-
-WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600 = kreator.makeMCComponent("WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",2.042) 
-
-WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600.files   = [os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX_hadded",x))]
-
-WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800 = kreator.makeMCComponent("WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.493e-01)
-
-WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800.files   = [os.path.join(basepath_eos,"WmWpToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WmWpToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WmWpToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX_hadded",x))]
-
-WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf = kreator.makeMCComponent("WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.758e-01) 
-
-WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf.files   = [os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x) for x in os.listdir(os.path.join(basepath_eos,"WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded")) if os.path.isfile(os.path.join(basepath_eos, "WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX_hadded",x))]
-
-
-WpWm_aTGCmWV150to600 = kreator.makeMCComponent("WpWm_aTGCmWV150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 2.042)
-WpWm_aTGCmWV600to800 = kreator.makeMCComponent("WpWm_aTGCmWV600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.493e-01)
-WpWm_aTGCmWV800toInf = kreator.makeMCComponent("WpWm_aTGCmWV800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.758e-01)
-WmWp_aTGCmWV150to600 = kreator.makeMCComponent("WmWp_aTGCmWV150to600","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",2.042)
-WmWp_aTGCmWV600to800 = kreator.makeMCComponent("WmWp_aTGCmWV600to800","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root",3.493e-01)
-WmWp_aTGCmWV800toInf = kreator.makeMCComponent("WmWp_aTGCmWV800toInf","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 3.758e-01)
-
-
-
-
-
-
-
-basepath_private = "/eos/cms/store/group/phys_smp/anmehta/WZToLNuQQ01j_5f_amcatnloFxFx_nanov9UL2018/"
-WZToLNuQQ01j_5f_amcatnloFxFx    = kreator.makeMCComponent("WZToLNuQQ01j_5f_amcatnloFxFx","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 18.403, fracNegWeights=2.049e-01)
-WZToLNuQQ01j_5f_amcatnloFxFx.files   = [basepath_private+x for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x))]
-
-
+#WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-800toInf=kreator.makeMCComponentSimple("WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-800toInf","dummy_nanoAODSIM",basepath_eos,xsec,'root://xrootd-cms.infn.it/')
 
 
 DiBosons = [
@@ -468,8 +360,8 @@ DiBosons = [
     WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600,
     WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800,
     WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf,
-    WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX,
-    WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX,
+#    WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX,
+ #   WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX,
   
 ]
 

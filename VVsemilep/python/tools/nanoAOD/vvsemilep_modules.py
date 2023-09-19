@@ -134,7 +134,7 @@ recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
                                                            FOTauSel = foTauSel,
                                                            tightTauSel = tightTauSel,
                                                            selectJet =    lambda jet: jet.pt > conf["jetptcut"] and abs(jet.eta) < conf["jeteta"] and jet.jetId > 0, # pt and eta cuts are (hard)coded in the step2 
-                                                           selectFatJet = lambda fatjet: fatjet.pt > conf["fatjetptcut"] and abs(fatjet.eta) < conf["jeteta"] and fatjet.msoftdrop > conf["fatjetmsdcut"], 
+                                                           selectFatJet = lambda fatjet: fatjet.pt > conf["fatjetptcut"] and abs(fatjet.eta) < conf["jeteta"], # and fatjet.msoftdrop > conf["fatjetmsdcut"], 
                                                            coneptdef =    lambda lep: conept_TTH(lep),
 )
 recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",

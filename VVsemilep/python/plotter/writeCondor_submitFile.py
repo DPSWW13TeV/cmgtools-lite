@@ -14,7 +14,7 @@ Error      = jobs/log_$(ProcId).error
 +JobFlavour = "tomorrow"
 \n\n'''.format(here=os.environ['PWD']))
 pf="mWVchk"
-for dW in ["SR","topCR","wjCR"]: #"SR","topCR","wjCR"]:#"wjCR","SR","topCR"]: #topCR","wjCR","SR"]: #," inclB"]: #,"topCR"]: #,"SR"]:
+for dW in ["SR"]: #,"topCR","wjCR"]: #"SR","topCR","wjCR"]:#"wjCR","SR","topCR"]: #topCR","wjCR","SR"]: #," inclB"]: #,"topCR"]: #,"SR"]:
     for nl in ["1"]: #"1,2".split(","):
         for cat in ["boosted"]: #,"resolved"]: #.split(","):
             for yr in ["2018"]: #2016,2017,2018".split(","):

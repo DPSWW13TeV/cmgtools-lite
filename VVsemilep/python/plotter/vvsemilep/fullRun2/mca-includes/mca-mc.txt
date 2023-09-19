@@ -4,85 +4,47 @@ ZV : WZTo2Q2L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharg
 WV : WZTo1L1Nu2Q : 10.71: 1 ; FillColor=30, Label="WV (SM)"
 WV : WWTo1L1Nu2Q : 5.090e+01 : 1 ; FillColor=30, Label="WV (SM)"
 
-WZ : WZTo1L1Nu2Q : 10.71  : 1 ; FillColor=ROOT.kTeal-7, Label="WZ_4f",SkipMe=True
+WZ : WZTo1L1Nu2Q : 10.71  : 1 ; FillColor=ROOT.kTeal-7, Label="WZ_4f"
 
 
 WW : WWTo1L1Nu2Q : 49.997 : 1 ; FillColor=ROOT.kRed+1, Label="WW SM (excl.)"
 WZ_5f : WZToLNuQQ01j_5f_amcatnloFxFx : 21.82 : 1 ; FillColor=ROOT.kTeal-7, Label="WZ SM (excl.)",SkipMe=True
 
-aTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : 0.107*2.15/genWeight      : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
-aTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : 0.105*3.493e-01/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
-aTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : 0.112*3.758e-01/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
-aTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : 0.107*2.042/genWeight     : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
-aTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : 0.105*3.493e-01/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
-aTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : 0.112*3.758e-01/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
+aTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
+aTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
+aTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
+aTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
+aTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
+aTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
 
-aTGC_WZ+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f: 0.107021994006/genWeight  : 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
-aTGC_WZ+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f: 0.0186866457742/genWeight : 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
-aTGC_WZ+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f: 0.0222316998002/genWeight : 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
-aTGC_WZ+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f: 0.046307507992/genWeight  : 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
-aTGC_WZ+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f: 0.00782425078921/genWeight: 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
-aTGC_WZ+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f: 0.0113748513686/genWeight : 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
-
-
-
-SM_aTGC_WW : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : 0.107*2.15*LHEReweightingWeight[62]/genWeight      : 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
-SM_aTGC_WW : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : 0.105*3.493e-01*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
-SM_aTGC_WW : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : 0.112*3.758e-01*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
-SM_aTGC_WW : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : 0.107*2.042*LHEReweightingWeight[62]/genWeight     : 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
-SM_aTGC_WW : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : 0.105*3.493e-01*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
-SM_aTGC_WW : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : 0.112*3.758e-01*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
-SM_aTGC_WZ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f: 0.107021994006*LHEReweightingWeight[62]/genWeight  : 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
-SM_aTGC_WZ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f: 0.0186866457742*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
-SM_aTGC_WZ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f: 0.0222316998002*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
-SM_aTGC_WZ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f: 0.046307507992*LHEReweightingWeight[62]/genWeight  : 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
-SM_aTGC_WZ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f: 0.00782425078921*LHEReweightingWeight[62]/genWeight: 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
-SM_aTGC_WZ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f: 0.0113748513686*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
+aTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
+aTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
+aTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
+aTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
+aTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
+aTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec/genWeight : 1; LineColor=ROOT.kRed+1, Label="aTGC_WW",LineStyle=ROOT.kDashed
 
 
-##amaTGC_WZ_SM : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f: xsec*0.694 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal+1,LineStyle=ROOT.kDashed, Label="aWZ-SM"
-##amaTGC_WZ_SM : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f: xsec*0.694 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal+1,LineStyle=ROOT.kDashed, Label="aWZ-SM"
-##amaTGC_WZ_SM : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f: xsec*0.694 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal+1,LineStyle=ROOT.kDashed, Label="aWZ-SM"
-##amaTGC_WZ_SM : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f: xsec*0.694 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal+1,LineStyle=ROOT.kDashed, Label="aWZ-SM"
-##amaTGC_WZ_SM : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f: xsec*0.694 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal+1,LineStyle=ROOT.kDashed, Label="aWZ-SM"
-##amaTGC_WZ_SM : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f: xsec*0.694 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal+1,LineStyle=ROOT.kDashed, Label="aWZ-SM"
+aTGC_WZ+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   : xsec/genWeight : 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
+aTGC_WZ+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   : xsec/genWeight : 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
+aTGC_WZ+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   : xsec/genWeight : 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
+aTGC_WZ+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   : xsec/genWeight : 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
+aTGC_WZ+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   : xsec/genWeight : 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
+aTGC_WZ+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   : xsec/genWeight : 1; LineColor=ROOT.kTeal-7, Label="aTGC_WZ",LineStyle=ROOT.kDashed
 
+SM_aTGC_WW : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
+SM_aTGC_WW : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
+SM_aTGC_WW : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
+SM_aTGC_WW : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec*LHERReweightingWeight[62]/genWeight: 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
+SM_aTGC_WW : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
+SM_aTGC_WW : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kAzure+10, Label="aWW_SM",LineStyle=ROOT.kDashed
+SM_aTGC_WZ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   : xsec*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
+SM_aTGC_WZ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   : xsec*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
+SM_aTGC_WZ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   : xsec*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
+SM_aTGC_WZ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   : xsec*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
+SM_aTGC_WZ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   : xsec*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
+SM_aTGC_WZ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   : xsec*LHEReweightingWeight[62]/genWeight : 1; FillColor=ROOT.kOrange, Label="aWZ_SM",LineStyle=ROOT.kDashed
 
-
-##amaTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: 2.042*0.66/genWeight : 1; FillColor=ROOT.kRed+1, Label="aWW"
-##amaTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: 3.493e-01*0.66/genWeight : 1; FillColor=ROOT.kRed+1, Label="aWW"
-##amaTGC_WW+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: 3.758e-01*0.66/genWeight : 1; FillColor=ROOT.kRed+1, Label="aWW"
-##amaTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: 2.042*0.66/genWeight : 1; FillColor=ROOT.kRed+1, Label="aWW"
-##amaTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: 3.493e-01*0.66/genWeight : 1; FillColor=ROOT.kRed+1, Label="aWW"
-##amaTGC_WW+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: 3.758e-01*0.66/genWeight : 1; FillColor=ROOT.kRed+1, Label="aWW"
-
-
-
-
-
-##amaTGC_WW_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: 0.66*2.042     : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-##amaTGC_WW_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: 0.66*3.493e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-##amaTGC_WW_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: 0.66*3.758e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-##amaTGC_WW_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: 0.66*2.042     : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-##amaTGC_WW_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: 0.66*3.493e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-##amaTGC_WW_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: 0.66*3.758e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-
-
-##amaTGC_WW_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: 0.66*2.042     : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-##amaTGC_WW_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: 0.66*3.493e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-##amaTGC_WW_SM : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: 0.66*3.758e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-##amaTGC_WW_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: 0.66*2.042     : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-##amaTGC_WW_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: 0.66*3.493e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-##amaTGC_WW_SM : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: 0.66*3.758e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kTeal-7,FillStyle=3144, Label="aWW-SM"
-
-
-
-WpWm_150to600 : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: 0.66*2.042     : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kBlack
-WpWm_600to800 : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: 0.66*3.493e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kOrange+10
-WpWm_800toInf : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: 0.66*3.758e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kYellow
-WmWp_150to600 : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: 0.66*2.042     : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kPink+4
-WmWp_600to800 : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: 0.66*3.493e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kGreen+2
-WmWp_800toInf : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: 0.66*3.758e-01 : LHEReweightingWeight[62]/genWeight ; FillColor=ROOT.kBlue
 
 
 
@@ -94,39 +56,32 @@ aTGC_WW_SM_incl : WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f: 0.66*xsec : LHEReweighti
 
 
 
-##amaTGC_WZ+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f: xsec*0.694/genWeight : 1; FillColor=ROOT.kRed-9, Label="aWZ"
-##amaTGC_WZ+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f: xsec*0.694/genWeight : 1; FillColor=ROOT.kRed-9, Label="aWZ"
-##amaTGC_WZ+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f: xsec*0.694/genWeight : 1; FillColor=ROOT.kRed-9, Label="aWZ"
-##amaTGC_WZ+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f: xsec*0.694/genWeight : 1; FillColor=ROOT.kRed-9, Label="aWZ"
-##amaTGC_WZ+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f: xsec*0.694/genWeight : 1; FillColor=ROOT.kRed-9, Label="aWZ"
-##amaTGC_WZ+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f: xsec*0.694/genWeight : 1; FillColor=ROOT.kRed-9, Label="aWZ"
-
-
-
 #SM point 0.66*LHEReweightingWeight[62]. starting point 0.66*LHEReweightingWeight[124]
 
 
 
-aTGC_WW_cwww : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec*0.66 : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
-aTGC_WW_cwww : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec*0.66 : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
-aTGC_WW_cwww : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec*0.66 : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
-aTGC_WW_cwww : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec*0.66 : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
-aTGC_WW_cwww : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec*0.66 : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
-aTGC_WW_cwww : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec*0.66 : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
-
-
-aTGC_WW_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec*0.66 : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
-aTGC_WW_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec*0.66 : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
-aTGC_WW_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec*0.66 : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
-aTGC_WW_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec*0.66 : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
-aTGC_WW_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec*0.66 : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
-aTGC_WW_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec*0.66 : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
-aTGC_WW_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec*0.66 : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
-aTGC_WW_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec*0.66 : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
-aTGC_WW_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec*0.66 : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
-aTGC_WW_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec*0.66 : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
-aTGC_WW_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec*0.66 : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
-aTGC_WW_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec*0.66 : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
+#linear term 0.5*(pos-neg)
+#quadterm (pos+neg)/2 -SM
+#SM+linear+quad (interference) = LHEReweightingWeight[X]
+ 
+##amLin_WW_cwww : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
+##amLin_WW_cwww : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
+##amLin_WW_cwww : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
+##amLin_WW_cwww : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
+##amLin_WW_cwww : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
+##amLin_WW_cwww : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec : LHEReweightingWeight[112]/genWeight  ; FillColor=ROOT.kRed+1, Label="aWW_cwww"
+##amLin_WW_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
+##amLin_WW_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
+##amLin_WW_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
+##amLin_WW_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
+##amLin_WW_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
+##amLin_WW_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec : LHEReweightingWeight[72]/genWeight ; FillColor=ROOT.kGreen+4, Label="aWW_cw"
+##amLin_WW_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
+##amLin_WW_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
+##amLin_WW_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
+##amLin_WW_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600: xsec : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
+##amLin_WW_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800: xsec : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
+##amLin_WW_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf: xsec : LHEReweightingWeight[64]/genWeight ; FillColor=ROOT.kBlue+2, Label="aWW_cb"
 
 WJetsNLO : WJetsToLNu_NLO  : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True
 WJetsLO  : WJetsToLNu_LO   : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True

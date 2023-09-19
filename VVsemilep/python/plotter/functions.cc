@@ -107,7 +107,7 @@ float mt2davis(float pt1, float eta1, float phi1, float pt2, float eta2, float p
     return result;
 }
 
-double METz_calc_run2(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi,int type=0){
+double METz_calc_run2(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi,int type){
   //  typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
   //  PtEtaPhiMVector lep(pt1,eta1,phi1,0.0);
   //  PtEtaPhiMVector mv(met,0.,metphi,0.);
@@ -122,12 +122,12 @@ double METz_calc_run2(float pt1, float eta1, float phi1,int pdgId1,float met, fl
     NeutrinoPz_run2.SetMET(mv);
     NeutrinoPz_run2.SetLepton(p4l);
     NeutrinoPz_run2.SetLeptonType(pdgId1);
-    double pz1_type0 = NeutrinoPz_run2.Calculate();
+    double pz1_type0 = NeutrinoPz_run2.Calculate(type);
     //    std::cout<<"and the result is"<<pz1_type0<<std::endl;
     return pz1_type0;
 }
 
-double METz_calc(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi,int type=0){
+double METz_calc(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi,int type){
   //complex roots-> pick the real part
   //if real roots
   //types 0,1,2,3
@@ -149,7 +149,10 @@ double METz_calc(float pt1, float eta1, float phi1,int pdgId1,float met, float m
     NeutrinoPz_run2_M.SetLepton(p4l);
     NeutrinoPz_run2_M.SetLeptonType(pdgId1);
     double pz1_type0 = NeutrinoPz_run2_M.Calculate(type);
-    //    std::cout<<"and the result is"<<pz1_type0<<std::endl;
+    double pz2_type0 = NeutrinoPz_run2_M.Calculate(31);
+    if (abs (pz2_type0-pz1_type0) > 0) {
+	std::cout<<"and the result is"<<pz2_type0-pz1_type0<<std::endl;
+      }
     return pz1_type0;
 }
 

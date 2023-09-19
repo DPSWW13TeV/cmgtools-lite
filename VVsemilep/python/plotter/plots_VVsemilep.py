@@ -198,7 +198,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     #legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
     ubands  =  ' ' #--showMCError --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
-    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75  ' #--plotmode nostack' #--plotmode nostack  --ratioDen WW --ratioNums NewaTGC_WW' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75 --plotmode norm ' #--plotmode nostack' #--plotmode nostack  --ratioDen WW --ratioNums NewaTGC_WW' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
     #' --showSigShape --noStackSig --showIndivSigs 
     more = ' --plotmode norm' if cutflow else ''
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more

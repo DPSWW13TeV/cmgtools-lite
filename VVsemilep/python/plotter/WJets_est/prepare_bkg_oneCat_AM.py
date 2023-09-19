@@ -191,7 +191,7 @@ class doFit_wj_and_wlvj:
             'TTbar':[top],
             'STop':[stop],
             "WW":[["WWTo1L1Nu2Q"],3393645436],
-            "WZ":["WZTo1L1Nu2Q"]}
+            "WZ":[["WZTo1L1Nu2Q"]]}
             #"WZ":[["WZToLNuQQ01j_5f_amcatnloFxFx"],41724242]}#stop 24011170135.9
         
         self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.5,'WPD':-1}
