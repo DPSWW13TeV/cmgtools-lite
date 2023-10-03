@@ -187,6 +187,25 @@ class ComponentCreator(object):
         )
         component.splitFactor = 100
         return component
+    
+    def getFilesSimple(self,  path, name, prefix):
+        import os
+        files=[os.path.join(prefix,path,name,x) for x in os.listdir(os.path.join(path,name)) if os.path.isfile(os.path.join(path,name,x))]
+        return files
+
+    def makeMCComponentSimple(self,name,dataset,path,xSec=1,prefix=''):
+        component = cfg.MCComponent(
+            dataset=dataset,
+            name = name,
+            files = self.getFilesSimple(path, name,prefix),
+            xSection = xSec,
+            nGenEvents = 1,
+            triggers = [],
+            effCorrFactor = 1,
+        )
+        component.splitFactor = 100
+        return component
+
 
     def makeDataComponent(self,name,dataset,user,pattern,json=None,run_range=None,triggers=[],vetoTriggers=[],useAAA=False,jsonFilter=False):
         component = cfg.DataComponent(

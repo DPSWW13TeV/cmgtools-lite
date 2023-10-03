@@ -59,9 +59,9 @@ class vvsemilep_TreeForWJestimation(Module):
     
 
     def calcmassWV(self,l1,fjet,metpt,metphi):
-        from ROOT.heppy import METzCalculator_Run2
+        from ROOT.heppy import METzCalculator
         
-        NeutrinoPz = METzCalculator_Run2()
+        NeutrinoPz = METzCalculator()
         met=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         metV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         lepton1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
@@ -133,7 +133,7 @@ class vvsemilep_TreeForWJestimation(Module):
         nFO = getattr(event,"nLepFO_Recl")
         chosen = getattr(event,"iLepFO_Recl")
         leps = [all_leps[chosen[i]] for i in xrange(nFO)]
-        jets = [j for j in Collection(event,"ak8%sMgt40"%self.mvar)]
+        jets = [j for j in Collection(event,"ak8%sMgt45"%self.mvar)]
         
         if len(leps) < self.lepMultiplicity: return False
         if len(jets) < 1: return False

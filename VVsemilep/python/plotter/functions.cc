@@ -10,7 +10,6 @@
 #include "TH1F.h"
 #include "TFile.h"
 #include "PhysicsTools/Heppy/interface/Davismt2.h"
-#include "PhysicsTools/Heppy/interface/METzCalculator_Run2.h"
 #include "PhysicsTools/Heppy/interface/METzCalculator.h"
 #include "TSystem.h"
 
@@ -107,30 +106,13 @@ float mt2davis(float pt1, float eta1, float phi1, float pt2, float eta2, float p
     return result;
 }
 
-double METz_calc_run2(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi,int type=0){
-  //  typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > PtEtaPhiMVector;
-  //  PtEtaPhiMVector lep(pt1,eta1,phi1,0.0);
-  //  PtEtaPhiMVector mv(met,0.,metphi,0.);
 
-    TLorentzVector p4l(0.,0.,0.,0);
-    p4l.SetPtEtaPhiM(pt1,eta1,phi1,0.0);
-    TLorentzVector mv(0.,0.,0.,0.);
-    mv.SetPtEtaPhiM(met,0.,metphi,0.0);
-    heppy::METzCalculator_Run2 NeutrinoPz_run2;
-    //std::cout<<"check this lepton pt\t"<<p41.Pt()<<"\t"<<p41.E()<<"\t here"<<std::endl;
-    //std::cout<<"check this MET   "<<mv.Pt()<<std::endl;
-    NeutrinoPz_run2.SetMET(mv);
-    NeutrinoPz_run2.SetLepton(p4l);
-    NeutrinoPz_run2.SetLeptonType(pdgId1);
-    double pz1_type0 = NeutrinoPz_run2.Calculate();
-    //    std::cout<<"and the result is"<<pz1_type0<<std::endl;
-    return pz1_type0;
-}
-
-double METz_calc(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi,int type=0){
+double METz_calc(float pt1, float eta1, float phi1,int pdgId1,float met, float metphi,int type){
   //complex roots-> pick the real part
   //if real roots
-  //type 0,1,2,3
+  //types 0,1,2,3
+  //types:00,01, 10,11,20,21, 30,31
+  
   // type0: pick the one closest to pz of muon  unless pznu is > 300 then pick the most central root 
   //typ1: pick the one closest to pz of muon 
   //typ2: pick the most central root
@@ -140,19 +122,17 @@ double METz_calc(float pt1, float eta1, float phi1,int pdgId1,float met, float m
     p4l.SetPtEtaPhiM(pt1,eta1,phi1,m1);
     TLorentzVector mv(0.,0.,0.,0.);
     mv.SetPtEtaPhiM(met,0.,metphi,0.0);
-    heppy::METzCalculator_Run2 NeutrinoPz_run2_M;
+    heppy::METzCalculator NeutrinoPz_M;
     //std::cout<<"check this lepton pt\t"<<p41.Pt()<<"\t"<<p41.E()<<"\t here"<<std::endl;
     //std::cout<<"check this MET   "<<mv.Pt()<<std::endl;
-    NeutrinoPz_run2_M.SetMET(mv);
-    NeutrinoPz_run2_M.SetLepton(p4l);
-    NeutrinoPz_run2_M.SetLeptonType(pdgId1);
-    double pz1_type0 = NeutrinoPz_run2_M.Calculate(type);
-    //    std::cout<<"and the result is"<<pz1_type0<<std::endl;
+    NeutrinoPz_M.SetMET(mv);
+    NeutrinoPz_M.SetLepton(p4l);
+    NeutrinoPz_M.SetLeptonType(pdgId1);
+    double pz1_type0 = NeutrinoPz_M.Calculate(type);
     return pz1_type0;
 }
 
 double mass_WV_el(float jpt,float jeta,float jphi, float jm,float lpt,float leta,float lphi,float met,float metphi, int type){
-  //FIXME: compute neupz first and pass it as an argument ->get rid of pdgId and type args
   float massWV=-999.0;
   TLorentzVector lep(0.,0.,0.,0);
   TLorentzVector jet(0.,0.,0.,0);

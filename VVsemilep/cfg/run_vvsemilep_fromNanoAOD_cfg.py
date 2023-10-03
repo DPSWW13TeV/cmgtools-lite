@@ -75,7 +75,7 @@ if analysis == "main":
         #        "WplusH","ZH","GGH","WminusH"
         #        "WJetsToLNu_.*J","WJetsToLNu_Pt.*"
         #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600"
-        #".*_aTGC_pTW.*"
+        ".*aTGC.*mWV.*"
         #        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600",
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",#problem
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
@@ -84,15 +84,17 @@ if analysis == "main":
         #        "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800"
         #".*_aTGC_pTZ.*"
         #".*aTGC.*"
-        "WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX",
-        "WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX"
+        #"WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX",
+        #"WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX"
      ])
+    ##am removed double el triggers for 2018 
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
-    DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_2e"][theyear] + triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else
+    DatasetsAndTriggers.append( ("EGamma",     triggerGroups_dict["Trigger_1e"][theyear]) if theyear == 2018 else
                                 ("DoubleEG",   triggerGroups_dict["Trigger_2e"][theyear] ) )
     DatasetsAndTriggers.append( ("MuonEG",     triggerGroups_dict["Trigger_em"][theyear] ) )
     DatasetsAndTriggers.append( ("SingleMuon", triggerGroups_dict["Trigger_1m"][theyear]) )
     DatasetsAndTriggers.append( ("SingleElectron", triggerGroups_dict["Trigger_1e"][theyear]) if theyear != 2018 else (None,None) )
+
     # DatasetsAndTriggers.append( ("MET", triggerGroups_dict["Trigger_MET"][theyear]) )
 
 elif analysis == "frqcd":

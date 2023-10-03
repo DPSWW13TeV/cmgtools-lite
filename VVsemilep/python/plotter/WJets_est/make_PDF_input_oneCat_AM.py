@@ -21,10 +21,10 @@ from ROOT import TGaxis, TPaveText, TLatex, TString, TFile,TLine, TLegend, TCanv
 
 parser        = OptionParser()
 parser.add_option('-r', '--readtrees', action='store_true', dest='readtrees', default=False, help='recreate aTGC histograms')
-parser.add_option('-p', '--plots', action='store_true', dest='Make_plots', default=False, help='make plots')
+parser.add_option('-p', '--plots', action='store_false', dest='Make_plots', default=True, help='make plots')
 parser.add_option('--savep', action='store_false', dest='savep', default=True, help='save plots')
 parser.add_option('-b', action='store_false', dest='batch', default=True, help='batch mode')
-parser.add_option('-c', '--ch', dest='chan', default='mu', help='channel, el, mu or elmu')
+parser.add_option('-c', '--ch', dest='chan', default='elmu', help='channel, el, mu or elmu')
 parser.add_option('-y', '--yr', dest='year', default='2018', help='year to run on, 2016, 2016APV, 2017 or 2018')
 parser.add_option('--noatgcint', action='store_true', dest='noatgcint', default=False, help='set atgc-interference coefficients to zero')
 parser.add_option('--printatgc', action='store_true', default=False, help='print atgc-interference contribution')
@@ -80,8 +80,8 @@ class Prepare_workspace_4limit:
             self.pf                     = "_"+pf if len(pf) >0 else ""
             self.channel                = self.ch
             self.nbins                  = (self.binhi-self.binlo)/100
-            self.file_Directory=os.path.join(self.year,"0_wjest_sDM_all") #0_wjest_sDM") 
-            self.file1_Directory=os.path.join(self.year,"1_wjest_sDM_all") 
+            self.file_Directory=os.path.join(self.year,"0_wjest_newCuts") #0_wjest_sDM") 
+            self.file1_Directory=os.path.join(self.year,"1_wjest_newCuts") 
             self.WS                     = RooWorkspace("w")        #final workspace
             self.wtmp                   = RooWorkspace('wtmp')
             
@@ -103,7 +103,7 @@ class Prepare_workspace_4limit:
             self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,self.binlo,int(self.binhi))
 
             ##read workspace containing background pdfs
-            fileInWs                    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,900,int(self.binhi)))
+            fileInWs                    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.binhi)))
             w                           = fileInWs.Get('workspace4limit_')
             self.rrv_mass_lvj           = w.var('rrv_mass_lvj')
             self.rrv_mass_lvj.SetTitle('m_{WV} (GeV)')
@@ -172,8 +172,8 @@ class Prepare_workspace_4limit:
                     dphifjlep=treeIn.dphi_fjlep > 2.0 
                     dphifjmet=treeIn.dphi_fjmet > 2.0 
                     ptWlep=treeIn.pTWlep > 200
-                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore >= self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 40 and  MWW>self.binlo
-                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.nBJetMedium30 == 0 and  boosted_sel:
+                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore >= self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 45 and  MWW>self.binlo
+                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.nBJetMedium30 == 0 and  boosted_sel and treeIn.pmet > 110 and treeIn.Lep1_pt > 50:
 			weight_part =1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw 
 			aTGC        = treeIn.aGC_wt 
 			#all3hists4scale['c_%s_histall3'%WV].Fill(MWW,aTGC[123] * weight_part)
@@ -289,7 +289,7 @@ class Prepare_workspace_4limit:
                 pads[i][0].SetLogy()
                 plots[i].SetTitle('')
                 plots[i].GetYaxis().SetTitle('arbitrary units')
-                #plots[i].GetXaxis().SetRangeUser(900,3500)
+                #plots[i].GetXaxis().SetRangeUser(950,3500)
 
                 plots[i].Draw()
                 ndof        = (self.binhi-self.binlo)/100 - 4
@@ -797,7 +797,7 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label)
 
             #read, rename and write bkg pdfs and bkg rates
             #fileInWs    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_workspace.root'%(self.ch,self.wtagger_label))
-            fileInWs    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,900,int(self.binhi)))
+            fileInWs    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.binhi)))
             w_bkg       = fileInWs.Get('workspace4limit_') 
 
             #path        ='%s/src/CombinedEWKAnalysis/CommonTools/data/anomalousCoupling'%os.environ["CMSSW_BASE"]
@@ -811,7 +811,7 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label)
             self.WS.var('rrv_mass_j').setRange('sb_lo',40,65)
             self.WS.var('rrv_mass_j').setRange('sig',65,105)
             self.WS.var('rrv_mass_j').setRange('sb_hi',105,150)
-            self.WS.var('rrv_mass_lvj').setRange(900,3500)
+            self.WS.var('rrv_mass_lvj').setRange(950,3500)
 
             #bkg-pdfs have the format '[bkg-name]_mlvj_[region]_[ch]' or '[bkg-name]_mj_[region]_[ch]'
 
@@ -872,11 +872,11 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label)
                 output.Close()
                 print 'Write to file ' + output.GetName()
 
-            ##AM commented out datacard wiritng part 
+
             ##create the datacards for all regions
-            #self.Write_datacard(w_bkg,"sb_lo")
-            #self.Write_datacard(w_bkg,"sig")
-            #self.Write_datacard(w_bkg,"sb_hi")
+            self.Write_datacard(w_bkg,"sb_lo")
+            self.Write_datacard(w_bkg,"sig")
+            self.Write_datacard(w_bkg,"sb_hi")
 
             #make some plots
             if options.Make_plots:
@@ -920,17 +920,19 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label)
 
 if __name__ == '__main__':
     if options.chan=='elmu':
-        makeWS_el        = Prepare_workspace_4limit(options.year,'el',900,4500,"")
+        makeWS_el        = Prepare_workspace_4limit(options.year,'el',950,4500,"")
         makeWS_el.Make_input()
-        makeWS_mu        = Prepare_workspace_4limit(options.year,'mu',900,4500,"")
+        makeWS_mu        = Prepare_workspace_4limit(options.year,'mu',950,4500,"")
         makeWS_mu.Make_input()
+        print "@@@@@@@@@@@@@@&&&&&&$$$%%DONE=============================================== and going to combine=========+++++++++++++++="
     else:
-        makeWS        = Prepare_workspace_4limit(options.year,options.chan,900,4500,"")
+        makeWS        = Prepare_workspace_4limit(options.year,options.chan,950,4500,"")
         makeWS.Make_input()
     #combine the created datacards
     output_card_name = 'aC_WWWZ_simfit'
     cmd = 'combineCards.py aC_WWWZ_sig_el.txt aC_WWWZ_sig_mu.txt aC_WWWZ_sb_lo_el.txt aC_WWWZ_sb_lo_mu.txt aC_WWWZ_sb_hi_el.txt aC_WWWZ_sb_hi_mu.txt > %s.txt'%output_card_name
     #cmd = 'combineCards.py aC_WWWZ_sig_mu.txt aC_WWWZ_sb_lo_mu.txt aC_WWWZ_sb_hi_mu.txt > %s.txt'%output_card_name
     print cmd
-    ##amos.system(cmd)
+    os.system(cmd)
     print 'generated Card : %s.txt'%output_card_name
+    print "all done"

@@ -58,18 +58,10 @@ wjets=['WJetsToLNu_HT100to200','WJetsToLNu_HT200to400','WJetsToLNu_HT400to600','
 
 data=[
 #'data']
-'DoubleMuon_Run2018A_UL18',  
-'DoubleMuon_Run2018B_UL18',  
-'DoubleMuon_Run2018C_UL18',  
-'DoubleMuon_Run2018D_UL18',  
 'EGamma_Run2018A_UL18',    
 'EGamma_Run2018B_UL18',    
 'EGamma_Run2018C_UL18',    
 'EGamma_Run2018D_UL18',      
-'MuonEG_Run2018A_UL18',
-'MuonEG_Run2018B_UL18',
-'MuonEG_Run2018C_UL18',
-'MuonEG_Run2018D_UL18',
 'SingleMuon_Run2018A_UL18',
 'SingleMuon_Run2018B_UL18',
 'SingleMuon_Run2018C_UL18',
@@ -94,7 +86,7 @@ parser.add_option('-p', '--pf',action="store",type="string",dest="pf",default=""
 parser.add_option('-b', action='store_true', dest='noX', default=True, help='no X11 windows')
 parser.add_option('--inPath', action="store",type="string",dest="inPath",default="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/")
 parser.add_option('--hi', action='store', dest='mlvj_hi', type='float', default=4500, help='dont change atm!')
-parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=900, help='set lower cut on MWV, mat cause problems')
+parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=950, help='set lower cut on MWV, mat cause problems')
 parser.add_option('-r','--readtrees', action='store_true', dest='read_trees', default=False, help='read data and MC from TTrees, has to be done when range or binning is changed -> takes much longer')
 parser.add_option('--noplots', action='store_true', dest='noplots', default=False, help='dont make any plots')
 
@@ -108,7 +100,7 @@ parser.add_option('--noplots', action='store_true', dest='noplots', default=Fals
 
 class doFit_wj_and_wlvj:
 
-    def __init__(self, year, in_channel, in_mj_min=40, in_mj_max=150, in_mlvj_min=900., in_mlvj_max=options.mlvj_hi, fit_model="Exp", fit_model_alter="ExpN",pf=""):
+    def __init__(self, year, in_channel, in_mj_min=45, in_mj_max=150, in_mlvj_min=950., in_mlvj_max=options.mlvj_hi, fit_model="Exp", fit_model_alter="ExpN",pf=""):
         #tdrstyle.setTDRStyle()
         TGaxis.SetMaxDigits(3)
         
@@ -159,13 +151,13 @@ class doFit_wj_and_wlvj:
 
         ## create the workspace
         self.workspace4fit_ = RooWorkspace("workspace4fit_","workspace4fit_");
-
+        
         getattr(self.workspace4fit_,"import")(rrv_mass_j);
         getattr(self.workspace4fit_,"import")(rrv_mass_lvj);
 
         #prepare workspace for unbin-Limit -> just fo the stuff on which running the limit 
         self.workspace4limit_ = RooWorkspace("workspace4limit_","workspace4limit_");
-
+        self.workspace4limit_.importClassCode("PDFs/HWWLVJRooPdfs_cxx");##am
         #define sidebands
         self.mj_sideband_lo_min = int(in_mj_min);
         self.mj_sideband_lo_max = 65
@@ -190,8 +182,8 @@ class doFit_wj_and_wlvj:
             self.file_Directory=os.path.join(self.year,"0_wjest_comp") 
             self.file1_Directory=os.path.join(self.year,"1_wjest_comp") 
         else: 
-            self.file_Directory=os.path.join(self.year,"0_wjest_sDM_toppTrwt") #0_wjest_sDM") 
-            self.file1_Directory=os.path.join(self.year,"1_wjest_sDM") 
+            self.file_Directory=os.path.join(self.year,"0_wjest_newCuts") #0_wjest_sDM") 
+            self.file1_Directory=os.path.join(self.year,"1_wjest_newCuts") 
 
         self.samples={
             'WJets':[wjets],
@@ -199,7 +191,8 @@ class doFit_wj_and_wlvj:
             'TTbar':[top],
             'STop':[stop],
             "WW":[["WWTo1L1Nu2Q"],3393645436],
-            "WZ":[["WZToLNuQQ01j_5f_amcatnloFxFx"],41724242]}#stop 24011170135.9
+            "WZ":[["WZTo1L1Nu2Q"]]}
+            #"WZ":[["WZToLNuQQ01j_5f_amcatnloFxFx"],41724242]}#stop 24011170135.9
         
         self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.5,'WPD':-1}
 
@@ -240,8 +233,8 @@ class doFit_wj_and_wlvj:
         ## extra text file
         self.file_rlt_txt = self.rlt_DIR+"other_wwlvj_%s_%s.txt"%(self.channel,self.wtagger_label)
         ## workspace for limit
-        self.file_rlt_root = self.rlt_DIR+"wwlvj_%s_%s_%s_%s_workspace.root"%(self.channel,self.wtagger_label,900,int(options.mlvj_hi))
-        self.file_rlt_tmp_root = self.rlt_DIR+"wwlvj_%s_%s_%s_%s_workspace4fit.root"%(self.channel,self.wtagger_label,900,int(options.mlvj_hi))
+        self.file_rlt_root = self.rlt_DIR+"wwlvj_%s_%s_%s_%s_workspace.root"%(self.channel,self.wtagger_label,950,int(options.mlvj_hi))
+        self.file_rlt_tmp_root = self.rlt_DIR+"wwlvj_%s_%s_%s_%s_workspace4fit.root"%(self.channel,self.wtagger_label,950,int(options.mlvj_hi))
         ## datacard for the ubninned limit
         self.file_datacard_unbin = self.rlt_DIR+"wwlvj_%s_%s_unbin.txt"%(self.channel,self.wtagger_label)
         ## workspace for the binned limit
@@ -573,9 +566,9 @@ objName ==objName_before ):
         elif 'STop' in in_file_name:
             pt.AddText("Single top")
         elif 'WW' in in_file_name:
-            pt.AddText("Diboson")
+            pt.AddText("WW")
         elif 'WZ' in in_file_name:
-            pt.AddText("Diboson")
+            pt.AddText("WZ")
         pt.Draw("SAME")
         # Write if signal region blinded
         if 'm_j_prefit' in in_file_name:
@@ -1067,23 +1060,23 @@ objName ==objName_before ):
             
             print "########### 2Gaus for mj fit  ############"
             mean1_tmp      = 8.385e+01; mean1_tmp_err      = 1.63e-01;
-            #mean1_tmp      = 7.3141e+01; mean1_tmp_err      = 1.63e-01; @@@ JEN            
+            #mean1_tmp      = 7.3141e+01; mean1_tmp_err      = 1.63e-01; #@@@ JEN            
             deltamean_tmp  = 6.9129e+00; deltamean_tmp_err  = 1.24e+00;
             sigma1_tmp     = 7.5145e+00; sigma1_tmp_err     = 1.99e-01;
             scalesigma_tmp = 3.6819e+00; scalesigma_tmp_err = 2.11e-01;
             frac_tmp       = 6.7125e-01; frac_tmp_err       = 2.09e-02;
 
-            rrv_mean1_gaus = RooRealVar("rrv_mean1_gaus"+label+"_"+self.channel,"rrv_mean1_gaus"+label+"_"+self.channel,mean1_tmp, mean1_tmp-6, mean1_tmp+6);
-            rrv_sigma1_gaus = RooRealVar("rrv_sigma1_gaus"+label+"_"+self.channel,"rrv_sigma1_gaus"+label+"_"+self.channel,sigma1_tmp, sigma1_tmp-6,sigma1_tmp+6 );
+            rrv_mean1_gaus = RooRealVar("rrv_mean1_gaus"+label+"_"+self.channel,"rrv_mean1_gaus"+label+"_"+self.channel,mean1_tmp, mean1_tmp-4, mean1_tmp+4);
+            rrv_sigma1_gaus = RooRealVar("rrv_sigma1_gaus"+label+"_"+self.channel,"rrv_sigma1_gaus"+label+"_"+self.channel,sigma1_tmp, sigma1_tmp-4,sigma1_tmp+4 );
             gaus1 = RooGaussian("gaus1"+label+"_"+self.channel,"gaus1"+label+"_"+self.channel, rrv_x,rrv_mean1_gaus,rrv_sigma1_gaus);
 
             rrv_deltamean_gaus  = RooRealVar("rrv_deltamean_gaus"+label+"_"+self.channel,"rrv_deltamean_gaus"+label+"_"+self.channel,0.,-8,15);
             rrv_mean2_gaus      = RooFormulaVar("rrv_mean2_gaus"+label+"_"+self.channel,"@0+@1",RooArgList(rrv_mean1_gaus, rrv_deltamean_gaus));
-            rrv_scalesigma_gaus = RooRealVar("rrv_scalesigma_gaus"+label+"_"+self.channel,"rrv_scalesigma_gaus"+label+"_"+self.channel,scalesigma_tmp, scalesigma_tmp-scalesigma_tmp_err*6, scalesigma_tmp+scalesigma_tmp_err*6);
+            rrv_scalesigma_gaus = RooRealVar("rrv_scalesigma_gaus"+label+"_"+self.channel,"rrv_scalesigma_gaus"+label+"_"+self.channel,scalesigma_tmp, scalesigma_tmp-scalesigma_tmp_err*3, scalesigma_tmp+scalesigma_tmp_err*3);
             rrv_sigma2_gaus     = RooFormulaVar("rrv_sigma2_gaus"+label+"_"+self.channel,"@0*@1", RooArgList(rrv_sigma1_gaus,rrv_scalesigma_gaus));
             gaus2 = RooGaussian("gaus2"+label+"_"+self.channel,"gaus2"+label+"_"+self.channel, rrv_x,rrv_mean2_gaus,rrv_sigma2_gaus);
 
-            rrv_frac1         = RooRealVar("rrv_frac1"+label+"_"+self.channel,"rrv_frac1"+label+"_"+self.channel,frac_tmp, frac_tmp-frac_tmp_err*10, frac_tmp+frac_tmp_err*10);
+            rrv_frac1         = RooRealVar("rrv_frac1"+label+"_"+self.channel,"rrv_frac1"+label+"_"+self.channel,frac_tmp, frac_tmp-frac_tmp_err*7, frac_tmp+frac_tmp_err*7);
             gausguas_1         = RooAddPdf("gausguas_1"+label+"_"+self.channel+mass_spectrum,"gausguas_1"+label+"_"+self.channel+mass_spectrum,RooArgList(gaus1,gaus2),RooArgList(rrv_frac1),1)
             
             model_pdf         = gausguas_1.clone("model_pdf"+label+"_"+self.channel+mass_spectrum)
@@ -1098,17 +1091,17 @@ objName ==objName_before ):
             scalesigma_tmp = 4.6819e+00; scalesigma_tmp_err = 2.11e-01;
             frac_tmp       = 6.7125e-01; frac_tmp_err       = 2.09e-02;
 
-            rrv_mean1_gaus = RooRealVar("rrv_mean1_gaus"+label+"_"+self.channel,"rrv_mean1_gaus"+label+"_"+self.channel,mean1_tmp, mean1_tmp-8, mean1_tmp+8);
-            rrv_sigma1_gaus = RooRealVar("rrv_sigma1_gaus"+label+"_"+self.channel,"rrv_sigma1_gaus"+label+"_"+self.channel,sigma1_tmp, sigma1_tmp-6,sigma1_tmp+6 );
+            rrv_mean1_gaus = RooRealVar("rrv_mean1_gaus"+label+"_"+self.channel,"rrv_mean1_gaus"+label+"_"+self.channel,mean1_tmp, mean1_tmp-4, mean1_tmp+4);
+            rrv_sigma1_gaus = RooRealVar("rrv_sigma1_gaus"+label+"_"+self.channel,"rrv_sigma1_gaus"+label+"_"+self.channel,sigma1_tmp, sigma1_tmp-4,sigma1_tmp+4 );
             gaus1 = RooGaussian("gaus1"+label+"_"+self.channel,"gaus1"+label+"_"+self.channel, rrv_x,rrv_mean1_gaus,rrv_sigma1_gaus);
 
             rrv_deltamean_gaus  = RooRealVar("rrv_deltamean_gaus"+label+"_"+self.channel,"rrv_deltamean_gaus"+label+"_"+self.channel,0.,-10,10);
             rrv_mean2_gaus      = RooFormulaVar("rrv_mean2_gaus"+label+"_"+self.channel,"@0+@1",RooArgList(rrv_mean1_gaus, rrv_deltamean_gaus));
-            rrv_scalesigma_gaus = RooRealVar("rrv_scalesigma_gaus"+label+"_"+self.channel,"rrv_scalesigma_gaus"+label+"_"+self.channel,scalesigma_tmp, scalesigma_tmp-scalesigma_tmp_err*6, scalesigma_tmp+scalesigma_tmp_err*6);
+            rrv_scalesigma_gaus = RooRealVar("rrv_scalesigma_gaus"+label+"_"+self.channel,"rrv_scalesigma_gaus"+label+"_"+self.channel,scalesigma_tmp, scalesigma_tmp-scalesigma_tmp_err*3, scalesigma_tmp+scalesigma_tmp_err*3);
             rrv_sigma2_gaus     = RooFormulaVar("rrv_sigma2_gaus"+label+"_"+self.channel,"@0*@1", RooArgList(rrv_sigma1_gaus,rrv_scalesigma_gaus));
             gaus2 = RooGaussian("gaus2"+label+"_"+self.channel,"gaus2"+label+"_"+self.channel, rrv_x,rrv_mean2_gaus,rrv_sigma2_gaus);
 
-            rrv_frac1         = RooRealVar("rrv_frac1"+label+"_"+self.channel,"rrv_frac1"+label+"_"+self.channel,frac_tmp, frac_tmp-frac_tmp_err*10, frac_tmp+frac_tmp_err*10);
+            rrv_frac1         = RooRealVar("rrv_frac1"+label+"_"+self.channel,"rrv_frac1"+label+"_"+self.channel,frac_tmp, frac_tmp-frac_tmp_err*7, frac_tmp+frac_tmp_err*7);
             gausguas_1         = RooAddPdf("gausguas_1"+label+"_"+self.channel+mass_spectrum,"gausguas_1"+label+"_"+self.channel+mass_spectrum,RooArgList(gaus1,gaus2),RooArgList(rrv_frac1),1)
             
             model_pdf         = gausguas_1.clone("model_pdf"+label+"_"+self.channel+mass_spectrum)
@@ -1863,8 +1856,8 @@ objName ==objName_before ):
         rrv_mass_j = self.workspace4fit_.var("rrv_mass_j")
         ## get real data in mj distribution --> mass up and down have only an effect on Wjets shape -> effect on the normalization -> evaluated in the MC and fit data
         rdataset_data_mj_full=self.workspace4fit_.data("rdataset_data_%s_mj"%(self.channel))
-        rdataset_data_mj=rdataset_data_mj_full.reduce("40<rrv_mass_j && rrv_mass_j<65 || 105<rrv_mass_j && rrv_mass_j<150");
-        #rdataset_data_mj=rdataset_data_mj_full.reduce("40<rrv_mass_j && rrv_mass_j<65 || 105<rrv_mass_j && rrv_mass_j<150")
+        rdataset_data_mj=rdataset_data_mj_full.reduce("45<rrv_mass_j && rrv_mass_j<65 || 105<rrv_mass_j && rrv_mass_j<150");
+        #rdataset_data_mj=rdataset_data_mj_full.reduce("45<rrv_mass_j && rrv_mass_j<65 || 105<rrv_mass_j && rrv_mass_j<150")
         ### Fix TTbar, VV and STop
         model_TTbar = self.get_General_mj_Model("_TTbar");
         model_STop  = self.get_General_mj_Model("_STop");
@@ -1965,7 +1958,7 @@ objName ==objName_before ):
         # For blinded signal region use reduced dataset
         rdataset_data_mj_full=self.workspace4fit_.data("rdataset_data_%s_mj"%(self.channel))
         rdataset_data_mj_fullNorm=rdataset_data_mj_full.sumEntries()
-        rdataset_data_mj=rdataset_data_mj_full.reduce("40<rrv_mass_j && rrv_mass_j<65 || 105<rrv_mass_j && rrv_mass_j<150")
+        rdataset_data_mj=rdataset_data_mj_full.reduce("45<rrv_mass_j && rrv_mass_j<65 || 105<rrv_mass_j && rrv_mass_j<150")
 
         ### Fix TTbar, VV and STop creating an Extended Likelihood with norms and shapes
         model_TTbar = self.get_General_mj_Model("_TTbar");
@@ -2062,11 +2055,11 @@ objName ==objName_before ):
         #model_pdf_WJets_mj = self.get_General_mj_Model('_WJets0');
         number_WJets_mj = self.workspace4fit_.var("rrv_number_WJets0_%s_mj"%(self.channel)).clone("rrv_number_WJets0_from_fitting_%s_mj"%(self.channel));
         model_WJets_mj = RooExtendPdf("model_WJets0_from_fitting_%s_mj"%(self.channel),"model_WJets0_from_fitting_%s_mj"%(self.channel),model_pdf_WJets_mj,number_WJets_mj);
-        rrv_mass_j.setRange("sb_lo",40,65);
+        rrv_mass_j.setRange("sb_lo",45,65);
         rrv_mass_j.setRange("sb_hi",105,150);
-        rrv_mass_j.setRange("full",40,150);
+        rrv_mass_j.setRange("full",45,150);
         rdataset_data_mj_fullNorm=rdataset_data_mj_full.sumEntries()
-        rdataset_data_mj_sb=rdataset_data_mj_full.reduce("40<rrv_mass_j && rrv_mass_j<65 || 105<rrv_mass_j && rrv_mass_j<150")
+        rdataset_data_mj_sb=rdataset_data_mj_full.reduce("45<rrv_mass_j && rrv_mass_j<65 || 105<rrv_mass_j && rrv_mass_j<150")
 
         
         ## Total Pdf and fit only in sideband 
@@ -2421,8 +2414,8 @@ objName ==objName_before ):
                         totEventWeight=1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*lumis[self.year]/treeIn.sumw
                     elif 'WW' in label:
                         totEventWeight=1000*50.90*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
-                    elif "WZ" in label:
-                        totEventWeight=1000*21.82*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
+                    #elif "WZ" in label:
+                    #    totEventWeight=1000*21.82*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
                     else: totEventWeight=1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw
                     #totEventWeight = totEventWeight #if "WJets" in label else totEventWeight*treeIn.Selak8Jet_pNetWtagSF[0] 
                     tmp_scale_to_lumi = 1.0 if "data" in label else 1000*treeIn.genwt*treeIn.xsec*lumis[self.year]/treeIn.sumw
@@ -2435,7 +2428,7 @@ objName ==objName_before ):
                     ptWlep=treeIn.pTWlep > 200
                     boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore >= self.PNS and treeIn.mWV > rrv_mass_lvj.getMin() and treeIn.mWV<rrv_mass_lvj.getMax() and tmp_jet_mass < 150 and tmp_jet_mass > rrv_mass_j.getMin()
                     self.isGoodEvent = 0;   
-                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.nBJetMedium30 == 0 and  boosted_sel: # and treeIn.pmet > 100:
+                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.Lep1_pt > 50 and treeIn.nBJetMedium30 == 0 and  boosted_sel and treeIn.pmet > 110:
                         self.isGoodEvent = 1;  
                     if self.isGoodEvent == 1:
                         tmp_event_weight=totEventWeight 
@@ -3084,7 +3077,7 @@ objName ==objName_before ):
     #################################################################################################
 
 ### funtion to run the complete alpha analysis
-def pre_limit_sb_correction(method, year,channel, in_mj_min=40, in_mj_max=150, in_mlvj_min=900, in_mlvj_max=options.mlvj_hi, fit_model="Exp", fit_model_alter="ExpN",pf=""): 
+def pre_limit_sb_correction(method, year,channel, in_mj_min=45, in_mj_max=150, in_mlvj_min=950, in_mlvj_max=options.mlvj_hi, fit_model="Exp", fit_model_alter="ExpN",pf=""): 
 
     print "#################### pre_limit_sb_correction: year %s channel %s, max and min mJ %f-%f, max and min mlvj %f-%f, fit model %s and alternate %s ######################"%(year,channel,in_mj_min,in_mj_max,in_mlvj_min,in_mlvj_max,fit_model,fit_model_alter);
     
@@ -3100,13 +3093,13 @@ def pre_limit_sb_correction(method, year,channel, in_mj_min=40, in_mj_max=150, i
 #### Main Code
 if __name__ == '__main__':
     channel=options.channel;
-    pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"ExpN","Exp",options.pf)
-    #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"ExpTail","Pow2",options.pf)
-    #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Pow2","Exp",options.pf)
-    #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpN",options.pf)
-    #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpTail",options.pf)
-    #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfPow_v1",options.pf)
-    #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfExp_v1",options.pf)
-    #pre_limit_sb_correction("method1",options.year,channel,40,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfPow2_v1",options.pf)
+    pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"ExpN","Exp",options.pf)
+    #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"ExpTail","Pow2",options.pf)
+    #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Pow2","Exp",options.pf)
+    #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpN",options.pf)
+    #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpTail",options.pf)
+    #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfPow_v1",options.pf)
+    #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfExp_v1",options.pf)
+    #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfPow2_v1",options.pf)
     #correct_factor_pdf.plotOn(mplot2, ROOT.RooFit.VisualizeError(rfresult, 1), ROOT.RooFit.FillColor(ROOT.kOrange))
     #correct_factor_pdf.plotOn(mplot2, ROOT.RooFit.VisualizeError(rfresult,1,ROOT.kFALSE), ROOT.RooFit.DrawOption("L"), ROOT.RooFit.LineWidth(2),    ROOT.RooFit.LineColor(ROOT.kRed))

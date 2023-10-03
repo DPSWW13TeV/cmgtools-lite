@@ -18,6 +18,7 @@ conf = dict(
         muIsoloose=0.40,
         muIsotight=0.15,
         fatjetptcut=200,
+        fatjetmsdcut=40,
         jetptcut=25,
         jeteta=2.4
 )
@@ -133,7 +134,7 @@ recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
                                                            FOTauSel = foTauSel,
                                                            tightTauSel = tightTauSel,
                                                            selectJet =    lambda jet: jet.pt > conf["jetptcut"] and abs(jet.eta) < conf["jeteta"] and jet.jetId > 0, # pt and eta cuts are (hard)coded in the step2 
-                                                           selectFatJet = lambda fatjet: fatjet.pt > conf["fatjetptcut"] and abs(fatjet.eta) < conf["jeteta"], 
+                                                           selectFatJet = lambda fatjet: fatjet.pt > conf["fatjetptcut"] and abs(fatjet.eta) < conf["jeteta"], # and fatjet.msoftdrop > conf["fatjetmsdcut"], 
                                                            coneptdef =    lambda lep: conept_TTH(lep),
 )
 recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
@@ -359,7 +360,8 @@ taggedfj_data           = lambda : saveVtaggedJet(isMC = False,massVar='sD')
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import vvsemilep_TreeForWJestimation
 wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1, 
                                                 ['len(leps)  == 1                                         ',
-                                                 '((abs(leps[0].pdgId ==11) and event.Trigger_1e and event.PuppiMET_pt > 110) or ((abs(leps[0].pdgId ==13) and event.Trigger_1m and event.PuppiMET_pt > 40)))',
+                                                 'event.PuppiMET_pt > 110                                 ',
+                                                 '((abs(leps[0].pdgId ==11) and event.Trigger_1e) or ((abs(leps[0].pdgId ==13) and event.Trigger_1m)))',
                                                  'leps[0].pt > 50                                          ',
                                                  'leps[0].isLepTight_Recl == 1                             ',
                                                  'event.nFatJetSel_Recl > 0                                ',
@@ -377,28 +379,6 @@ wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,
 from CMGTools.VVsemilep.tools.nanoAOD.genFriendProducer import genFriendProducer
 whad_info = lambda : genFriendProducer()
 
-# scaleFactorSequence_allVars_2016 = [btagSF2016_dj_allVars,bTagSFs_allvars] 
-# scaleFactorSequence_allVars_2017 = [btagSF2017_dj_allVars,bTagSFs_allvars] 
-# scaleFactorSequence_allVars_2018 = [btagSF2018_dj_allVars,bTagSFs_allvars]
 
-
-
-# instructions to friend trees  code 
-
-# 0_jmeUnc_v1
-# mc only (per year) 
-# jetmetUncertainties2016 
-# jetmetUncertainties2017
-# jetmetUncertainties2018
-
-# 3_recleaner_v0 (recleaner, also containing mc matching and trigger bits) 
-# recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence (MC)
-# recleaner_step1,recleaner_step2_data,triggerSequence (data)
-
-# 4_leptonSFs_v0 (lepton, trigger and btag scale factors, to run after recleaning) 
-# mc only (per year)
-# scaleFactorSequence_2016
-# scaleFactorSequence_2017
-# scaleFactorSequence_2018
-
-# 5_evtVars_v0
+from CMGTools.VVsemilep.tools.nanoAOD.compute_phi_gen_v1 import compute_phi_gen_v1
+phi_gen = lambda : compute_phi_gen_v1()
