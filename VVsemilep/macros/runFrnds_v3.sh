@@ -43,7 +43,7 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence " #--de .*Run.* "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --de .*Run.* "
 	;;
 
 recldata)
@@ -51,7 +51,7 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total " #--dm TTSemi_pow_part.*  "  #--de .*Run.* "
+	basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total --dm .*aTGC.*_v1.* " #--dm TTSemi_pow_part.*  "  #--de .*Run.* "
 	#basecmd="${TBCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total "
 	;;
 
@@ -68,7 +68,7 @@ npdf)
 
 fjtagged)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}2_ak8Vtagged_sdm45  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root --de .*Run.* "
+	basecmd="${BCORE}2_ak8Vtagged_sdm45  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root --dm .*aTGC.*_v1.* " #--de .*Run.* "
 	;;
 
 fjtaggeddata)
@@ -77,11 +77,11 @@ fjtaggeddata)
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}1_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root " #  --de .*Run.* "
+	basecmd="${BCORE}1_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root " #--dm .*aTGC.*_v1.* " #  --de .*Run.* "
 	;;
 
 wjet)		
-	basecmd="${BCORE}0_wjest_newCuts/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/2_ak8Vtagged_sdm45/{cname}_Friend.root "
+	basecmd="${BCORE}0_wjest_newCuts/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/2_ak8Vtagged_sdm45/{cname}_Friend.root --dm .*aTGC.*_v1.* "
 	;;
 
 genInfo)
@@ -90,6 +90,11 @@ genInfo)
 	echo $basecmd
 	;; #-d WWTo1L1Nu2Q -c 1 #--dm .*aTGCmWV.* #--de .*Run.*
     
+phi)
+	echo "computing phi in helicity frame ${BCORE} ${CMGT}"
+	basecmd="${BCORE}phi_var/${CMGT} phi_gen  --de .*Run.* "
+	echo $basecmd
+	;; 
 
 *)
 	echo "enter a valid opt"

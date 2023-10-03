@@ -59,9 +59,9 @@ class vvsemilep_TreeForWJestimation(Module):
     
 
     def calcmassWV(self,l1,fjet,metpt,metphi):
-        from ROOT.heppy import METzCalculator_Run2
+        from ROOT.heppy import METzCalculator
         
-        NeutrinoPz = METzCalculator_Run2()
+        NeutrinoPz = METzCalculator()
         met=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         metV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         lepton1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);

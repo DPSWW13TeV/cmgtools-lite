@@ -151,13 +151,13 @@ class doFit_wj_and_wlvj:
 
         ## create the workspace
         self.workspace4fit_ = RooWorkspace("workspace4fit_","workspace4fit_");
-
+        
         getattr(self.workspace4fit_,"import")(rrv_mass_j);
         getattr(self.workspace4fit_,"import")(rrv_mass_lvj);
 
         #prepare workspace for unbin-Limit -> just fo the stuff on which running the limit 
         self.workspace4limit_ = RooWorkspace("workspace4limit_","workspace4limit_");
-
+        self.workspace4limit_.importClassCode("PDFs/HWWLVJRooPdfs_cxx");##am
         #define sidebands
         self.mj_sideband_lo_min = int(in_mj_min);
         self.mj_sideband_lo_max = 65

@@ -297,9 +297,7 @@ WWTo1L1Nu2Q           = kreator.makeMCComponent("WWTo1L1Nu2Q","/WWTo1L1Nu2Q_4f_T
 
 
 ##aTGC samples have xsec values prior to madspin step hence BRs need to be used  
-#basepath_eos="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_Sep2023/"
-
-basepath_eos="/eos/cms/store/group/phys_smp/ec/anmehta/Combined/"
+basepath_eos="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_Sep2023/"
 #https://pdg.lbl.gov/2019/listings/rpp2019-list-w-boson.pdf
 #https://pdg.lbl.gov/2018/listings/rpp2018-list-z-boson.pdf
 zhad_bf=0.69911

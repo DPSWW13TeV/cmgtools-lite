@@ -1,7 +1,7 @@
 import os,string
 from plots_VVsemilep import *
 
-allvars= mWV #topCR #theWVultimateset #+moreak8jetvars MConly+#newVars+lepvars+WVvars+eventvars 
+allvars= aTGC_chk #bTag_eff #mWV #topCR #theWVultimateset #+moreak8jetvars MConly+#newVars+lepvars+WVvars+eventvars 
 
 tmp_condor = open('jobs/submitFile.condor', 'w')
 tmp_condor.write('''Executable = dummy_plots.sh
@@ -13,7 +13,7 @@ Output     = jobs/log_$(ProcId).out
 Error      = jobs/log_$(ProcId).error
 +JobFlavour = "tomorrow"
 \n\n'''.format(here=os.environ['PWD']))
-pf="mWVchk"
+pf="aTGCeffchk"
 for dW in ["SR"]: #,"topCR","wjCR"]: #"SR","topCR","wjCR"]:#"wjCR","SR","topCR"]: #topCR","wjCR","SR"]: #," inclB"]: #,"topCR"]: #,"SR"]:
     for nl in ["1"]: #"1,2".split(","):
         for cat in ["boosted"]: #,"resolved"]: #.split(","):

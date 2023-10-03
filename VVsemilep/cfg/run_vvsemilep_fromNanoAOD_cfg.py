@@ -75,12 +75,12 @@ if analysis == "main":
         #        "WplusH","ZH","GGH","WminusH"
         #        "WJetsToLNu_.*J","WJetsToLNu_Pt.*"
         #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600"
-        #".*_aTGC_pTW.*"
+        ".*aTGC.*mWV.*"
         #        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600",
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",#problem
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
         #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf"
-        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
+        #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
         #        "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800"
         #".*_aTGC_pTZ.*"
         #".*aTGC.*"

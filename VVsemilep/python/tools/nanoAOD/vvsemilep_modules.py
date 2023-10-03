@@ -379,28 +379,6 @@ wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,
 from CMGTools.VVsemilep.tools.nanoAOD.genFriendProducer import genFriendProducer
 whad_info = lambda : genFriendProducer()
 
-# scaleFactorSequence_allVars_2016 = [btagSF2016_dj_allVars,bTagSFs_allvars] 
-# scaleFactorSequence_allVars_2017 = [btagSF2017_dj_allVars,bTagSFs_allvars] 
-# scaleFactorSequence_allVars_2018 = [btagSF2018_dj_allVars,bTagSFs_allvars]
 
-
-
-# instructions to friend trees  code 
-
-# 0_jmeUnc_v1
-# mc only (per year) 
-# jetmetUncertainties2016 
-# jetmetUncertainties2017
-# jetmetUncertainties2018
-
-# 3_recleaner_v0 (recleaner, also containing mc matching and trigger bits) 
-# recleaner_step1,recleaner_step2_mc,mcMatch_seq,higgsDecay,triggerSequence (MC)
-# recleaner_step1,recleaner_step2_data,triggerSequence (data)
-
-# 4_leptonSFs_v0 (lepton, trigger and btag scale factors, to run after recleaning) 
-# mc only (per year)
-# scaleFactorSequence_2016
-# scaleFactorSequence_2017
-# scaleFactorSequence_2018
-
-# 5_evtVars_v0
+from CMGTools.VVsemilep.tools.nanoAOD.compute_phi_gen_v1 import compute_phi_gen_v1
+phi_gen = lambda : compute_phi_gen_v1()

@@ -29,4 +29,4 @@ def checkfaulty(fname):
 
 for fn in files:
     checkfaulty(fn)
-print "these files are faulty",faultyfiles
+print "faulty files for process %s"%dirname,faultyfiles
