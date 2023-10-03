@@ -2,7 +2,29 @@
 
 #########################vvsemilep vars 
 
-test_plot : LHEReweightingWeight[0]\:event   :  10000,0,10000 , 1000,0,20  ; XTitle="event" , YTitle="aTGC Zeroth wt"
+SeldLep1_pt                : SeldLep1_pt         : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,800,1000,1200]; XTitle="SeldLep1_pt"
+SeldLep1_eta               : SeldLep1_eta        : 10,-2.5,2.5; XTitle="SeldLep1_eta"
+SeldLep1_phi               : SeldLep1_phi        : 16,-3.2,3.2; XTitle="SeldLep1_phi"
+SeldLep1_pdgId             : 0.5*SeldLep1_pdgId/abs(SeldLep1_pdgId)*(abs(SeldLep1_pdgId)-10) : [-2,-1,0,1,2]; XTitle="Leading lepton PDG ID (#mu^{-}/e^{-}/e^{+}/#mu^{+})", XNDdiv=505
+SeldLep1_pt_HF             : SeldLep1_pt_HF      : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,800,1000,1200]; XTitle="SeldLep1_pt_HF"
+SeldLep1_eta_HF            : SeldLep1_eta_HF     : 10,-2.5,2.5; XTitle="SeldLep1_eta_HF"
+SeldLep1_phi_HF            : SeldLep1_phi_HF     : 16,-3.2,3.2; XTitle="SeldLep1_phi_HF"
+nSeldLeps 	           : nSeldLeps           : [0,1,2,3]; XTitle="nSeldLeps", IncludeOverflows=False
+SelGak8Jet1_pt             : SelGak8Jet1_pt      : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,800,1000,1200]; XTitle="SelGak8Jet1_pt"
+SelGak8Jet1_eta            : SelGak8Jet1_eta     : 10,-2.5,2.5; XTitle="SelGak8Jet1_eta"
+SelGak8Jet1_phi            : SelGak8Jet1_phi     : 16,-3.2,3.2; XTitle="SelGak8Jet1_phi"
+SelGak8Jet1_mass           : SelGak8Jet1_mass    : 15,0,150; XTitle="SelGak8Jet1_mass"
+SelGak8Jet1_pt_HF          : SelGak8Jet1_pt_HF   : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,800,1000,1200]; XTitle="SelGak8Jet1_pt_HF
+SelGak8Jet1_eta_HF         : SelGak8Jet1_eta_HF  : 10,-2.5,2.5; XTitle="SelGak8Jet1_eta_HF"
+SelGak8Jet1_phi_HF         : SelGak8Jet1_phi_HF  : 16,-3.2,3.2; XTitle="SelGak8Jet1_phi_HF"                        
+SelGak8Jet1_mass_HF 	   : SelGak8Jet1_mass_HF : 15,0,150; XTitle="SelGak8Jet1_mass_HF"
+nSelGak8Jets 		   : nSelGak8Jets        : [0,1,2,3]; XTitle="nSelGak8Jets", IncludeOverflows=False                            
+neutrino_pt_HF 		   : neutrino_pt_HF      : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,800,1000,1200]; XTitle="neutrino_pt_HF"
+neutrino_phi_HF 	   : neutrino_phi_HF     : 16,-3.2,3.2; XTitle="neutrino_phi_HF"
+
+
+
+
 aTGC_wt: LHEReweightingWeight : 50,0,2; XTitle="aTGC weight", MoreY=5
 aTGC_wt_SM: LHEReweightingWeight[62] : 30,-1,2; XTitle="LHEReweightingWeight_SM/genWeight", MoreY=2
 aTGC_wt1: LHEReweightingWeight/genWeight : 60,0,3; XTitle="LHEReweightingWeight/genWeight", MoreY=8
