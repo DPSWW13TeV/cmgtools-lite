@@ -860,7 +860,7 @@ class PlotMaker:
                     for i in range(1,total.GetNbinsX()+1): 
                         total.GetXaxis().SetBinLabel(i,blist[i-1]) 
                         total.GetYaxis().SetLabelSize(0.04)
-
+                        total.GetXaxis().SetMaxDigits(2);##am
                 if not self._options.emptyStack and stack.GetNhists() == 0:
                     print "ERROR: for %s, all histograms are empty\n " % pspec.name
                     return
@@ -888,6 +888,7 @@ class PlotMaker:
                 total.GetYaxis().SetTitle(pspec.getOption('YTitle',ytitle))
                 total.GetXaxis().SetTitle(pspec.getOption('XTitle',outputName))
                 total.GetXaxis().SetNdivisions(pspec.getOption('XNDiv',510))
+                total.GetXaxis().SetMaxDigits(2);##am
                 if outputDir: outputDir.WriteTObject(stack)
                 # 
                 if not makeCanvas and not self._options.printPlots: return
@@ -1110,7 +1111,7 @@ class PlotMaker:
                                     if p not in pmap: continue
                                     plot = pmap[p]
                                     if "TGraph" in plot.ClassName(): continue
-                                    c1.SetRightMargin(0.20)
+                                    c1.SetRightMargin(0.05)
                                     plot.SetContour(100)
                                     ROOT.gStyle.SetPaintTextFormat(pspec.getOption("PaintTextFormat","g"))
                                     plot.SetMarkerSize(pspec.getOption("MarkerSize",1))
@@ -1126,7 +1127,7 @@ class PlotMaker:
                                     for p in ["signal", "background", "total"]:
                                         if p not in pmap: continue
                                         plot = pmap[p]
-                                        c1.SetRightMargin(0.20)
+                                        c1.SetRightMargin(0.05)
                                         plot.SetContour(100)
                                         plot.Draw(pspec.getOption("PlotMode","COLZ TEXT45"))
                                         pmap["data"].Draw("P SAME")

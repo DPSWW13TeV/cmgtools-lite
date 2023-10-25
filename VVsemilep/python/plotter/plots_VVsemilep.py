@@ -27,9 +27,9 @@ mWV_fxn={
 
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
-MCfriends   = ['1_recl','4_scalefactors','1_jmeUnc','phi_var']#,'ak8VtaggedV1_vars']#,'nnpdf_rms']#,'2_recl_allvars','2_btag_SFs'] #,"postFSRinfo"]
+MCfriends   = ['1_recl','4_scalefactors','1_jmeUnc']#,'phi_var']#,'ak8VtaggedV1_vars']#,'nnpdf_rms']#,'2_recl_allvars','2_btag_SFs'] #,"postFSRinfo"]
 Datafriends = ['1_recl']
-friends     = ['2_ak8Vtagged_sdm45']#'2_ak8Vtagged']
+friends     = ['2_ak8Vtagged_sdm45']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
 fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
@@ -38,7 +38,7 @@ genvars_phi = ['SeldLep1_pt','SeldLep1_eta','SeldLep1_phi','SeldLep1_pdgId','Sel
 HEM=['puppimetphi','FatJet1_etaphi','eta1','phi1','etaphi1','FatJet1_phi','FatJet1_eta']
 
 cutflow    =['puppimet1','mWV1_typ0_pmet_boosted','lep1_ptt','FatJet1_pNet_mass','FatJet1_ptt','FatJet1_pNetMD_Wtagscoret']
-aTGC_chk   =['Genptlepmet','tptleppmet','tmWV_typ0_pmet_boosted','tGenJetAK8_mass','tGenmWV_typ0_pmet_boosted','tFatJet1_pt','tLep1_pt','tFatJet1_sDrop_mass','tGenJetAK8_pt','tptWV_pmet','nBJetLoose30_Recl','nBJetMedium30_Recl']# 'aTGC_wt','aTGC_wt_neg','aTGC_wt_pos','aTGC_wt_SM','aTGC_wt1','aTGC_wt2','test_plot'] #
+aTGC_chk   =['tmWV_typ0_pmet_boosted','tFatJet1_pt','tFatJet1_pt','tLep1_pt'] #'Genptlepmet','tptleppmet','tmWV_typ0_pmet_boosted','tGenJetAK8_mass','tGenmWV_typ0_pmet_boosted','tFatJet1_pt','tLep1_pt','tFatJet1_sDrop_mass','tGenJetAK8_pt','tptWV_pmet','nBJetLoose30_Recl','nBJetMedium30_Recl']# 'aTGC_wt','aTGC_wt_neg','aTGC_wt_pos','aTGC_wt_SM','aTGC_wt1','aTGC_wt2','test_plot'] #
 mWV=['ratio_typ0','ratio_typ1','ratio_typ2','ratio_typ3','mWV_typ0_pmet_boosted','mWV_typ01_pmet_boosted','mWV_typ10_pmet_boosted','mWV_typ11_pmet_boosted','mWV_typ20_pmet_boosted','mWV_typ21_pmet_boosted','mWV_typ30_pmet_boosted','mWV_typ31_pmet_boosted']
 topCR=['mWV_typ0_met_boosted','FatJet1_pt']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20']
@@ -173,7 +173,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     #processes    = ['tt'] #'WW','WZ','data','WJets','tt','singletop']#,'higgs','QCD']#'WV',
     #processes    = ['WW','aTGC_WW','WZ','aTGC_WZ','WJets','tt','singletop','higgs','QCD','data']#'WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] #'aTGC_WW_SM','aTGC_WZ_SM','aTGC_incl','data'] #,'WW','WZ','WJets','tt','singletop','higgs','QCD']#,TTSEMI'aTGC'] 'tt','tt_mtt1ktoinf','tt_mttp7kto1k','data',if nLep ==1 else ['lhefdy']#'ZV','data','lhefdy']##'TTJets','TTSemi','tthighmass'] #'data',['WW','aTGC']#'WW','aTGC','aTGC_incl']#
     
-    processes    = ['sm','higgs','data','tt','singletop','WJets','WZ'] 
+    processes    = ['sm']#,'higgs','data','tt','singletop','WJets','WZ','sm_lin_quad_cwww','pt1sm_lin_quad_cwww','pt5sm_lin_quad_cwww','pt05sm_lin_quad_cwww'] 
     for ops in WCs:
         morePs=['sm_lin_quad_','quad_']
         processes+=[s + ops for s in morePs]
@@ -188,17 +188,12 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
 
-    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    
+    legends = ' --legendFontSize 0.03 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    
     #legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
     ubands  =  ' --showMCError ' #--showMCError --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5 '# --plotmode nostack  --ratioDen WW --ratioNums SM_aTGC_WW,aTGC_WW_SM_incl  --ratioYLabel aTGCtoSM/SM ' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
 
-    #ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.45 1.75' #  --plotmode norm --ratioDen WW --ratioNums aTGC,aTGC_incl' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
-    #' --showSigShape --noStackSig --showIndivSigs 
-    #more = ' --plotmode norm' if cutflow else ''
-
-
-    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5 --plotmode nostack  --ratioDen WW --ratioNums SM_aTGC_WW,aTGC_WW_SM_incl  --ratioYLabel aTGCtoSM/SM ' # --plotmode nostack --ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
 
     more = '' #' --plotmode norm' if cutflow else ''
 
@@ -210,6 +205,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         fsyst=''
         processes.remove('data')
     for pR in selection:
+        #if 'SR' in selection and 'data' in processes: processes.remove('data');showratio   = False;        fsyst=''
         if 'top' in pR and fitCR:            fittodata.append('tt');
         if 'wj' in pR and fitCR:            fittodata.append('WJets');
         applypNetSFs=False if 'wj' in pR else True
@@ -219,10 +215,10 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         for LF in lepflav:
             #lepSel= if3(LF == 'mu','muOnly',if3(LF == 'el','elOnly','trigger')) if not 'wjest' in pR else '1'
             for FS in finalState:
-                binName = '{lep}{jet}'.format(lep=LF,jet=FS)
+                binName = '{lep}{jet}{pR}'.format(lep=LF,jet=FS,pR=pR)
                 print 'running %s for %s'%(doWhat,binName)
                 postfix=('_'+postfix if postfix else '')+('_fittodata' if fitCR else '')+('_'+'cutflow' if cutflow else '')
-                targetcarddir = 'Cards/cards_{date}{pf}_{FS}_{year}'.format(FS=binName,year=year,date=date, pf=postfix )
+                targetcarddir = 'Cards/cards_{date}{pf}_{FS}_{pR}_{year}'.format(FS=binName,pR=pR,year=year,date=date, pf=postfix )
                 print '{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName)
                 targetdir = eos+'{yr}/{pR}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf= postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR)
                 enable=[]
@@ -243,12 +239,13 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     print 'plot settings:  ',extraopts
                     runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, applypNetSFs,year, nLep,extraopts,invert,cutflow)
                 else:
-                    for op in WCs:
-                        mWV_dist=" {here} {binning} ".format(here=mWV_fxn[LF],binning=mWV_binning)
-                        binNamecards=binName+"_"+pR+"_"+op
-                        extraoptscards= ' --binname %s '%binNamecards
-                        #runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses,applyWtsnSFs, applypNetSFs,year,nLep,extraopts = '',invertedcuts = []):
-                        runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,applypNetSFs,year,nLep,extraoptscards,invert)
+                    if "top" in pR: continue
+                    else:
+                        for op in WCs:
+                            mWV_dist=" {here} {binning} ".format(here=mWV_fxn[LF],binning=mWV_binning)
+                            binNamecards=binName+"_"+pR+"_"+op
+                            extraoptscards= ' --binname %s '%binNamecards
+                            runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,applypNetSFs,year,nLep,extraoptscards,invert)
                     ##am        else:
 ##am            enable=[]
 ##am            nlep=3 if binName == '3l' else 4
