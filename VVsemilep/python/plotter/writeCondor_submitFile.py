@@ -13,7 +13,7 @@ Output     = jobs/log_$(ProcId).out
 Error      = jobs/log_$(ProcId).error
 +JobFlavour = "tomorrow"
 \n\n'''.format(here=os.environ['PWD']))
-pf="aTGCeffchk"
+pf="prelimit"
 for dW in ["SR"]: #,"topCR","wjCR"]: #"SR","topCR","wjCR"]:#"wjCR","SR","topCR"]: #topCR","wjCR","SR"]: #," inclB"]: #,"topCR"]: #,"SR"]:
     for nl in ["1"]: #"1,2".split(","):
         for cat in ["boosted"]: #,"resolved"]: #.split(","):
