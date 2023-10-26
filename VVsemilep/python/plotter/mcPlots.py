@@ -870,6 +870,7 @@ class PlotMaker:
                 plotformat = (1200,600) if doWide else (600,600)
                 sf = 20./plotformat[0]
                 ROOT.gStyle.SetPadLeftMargin(600.*0.18/plotformat[0])
+                ROOT.gStyle.SetPadRightMargin(800.*0.065/plotformat[0])
 
                 stack.Draw("GOFF")
                 ytitle = "Events" if not self._options.printBinning else "Events / %s" %(self._options.printBinning)
@@ -1111,7 +1112,7 @@ class PlotMaker:
                                     if p not in pmap: continue
                                     plot = pmap[p]
                                     if "TGraph" in plot.ClassName(): continue
-                                    c1.SetRightMargin(0.05)
+                                    c1.SetRightMargin(0.15)
                                     plot.SetContour(100)
                                     ROOT.gStyle.SetPaintTextFormat(pspec.getOption("PaintTextFormat","g"))
                                     plot.SetMarkerSize(pspec.getOption("MarkerSize",1))
@@ -1127,7 +1128,7 @@ class PlotMaker:
                                     for p in ["signal", "background", "total"]:
                                         if p not in pmap: continue
                                         plot = pmap[p]
-                                        c1.SetRightMargin(0.05)
+                                        c1.SetRightMargin(0.15)
                                         plot.SetContour(100)
                                         plot.Draw(pspec.getOption("PlotMode","COLZ TEXT45"))
                                         pmap["data"].Draw("P SAME")

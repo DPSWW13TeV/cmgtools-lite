@@ -92,7 +92,7 @@ genInfo)
     
 phi)
 	echo "computing phi in helicity frame ${BCORE} ${CMGT}"
-	basecmd="${BCORE}phi_var/${CMGT} phi_gen " # --de .*Run.* "
+	basecmd="${BCORE}phi_var/${CMGT} phi_gen  --de .*Run.* "
 	echo $basecmd
 	;; 
 
