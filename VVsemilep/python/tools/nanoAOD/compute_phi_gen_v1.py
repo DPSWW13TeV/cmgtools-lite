@@ -51,6 +51,8 @@ def computephi(l1,fj,metpt,metphi,typ):
     neutrino=calcmassWV(l1,fj,metpt,metphi,typ,1)
     lep=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
     fjet=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    neu = ROOT.TLorentzVector(0.,0.,0.,0.);
+    neu.SetPtEtaPhiM(neutrino.Pt(),neutrino.Eta(),neutrino.Phi(),0.0);
     lep.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,l1.mass);
     fjet.SetPtEtaPhiM(fj.pt,fj.eta,fj.phi,fj.mass); 
 
@@ -89,7 +91,7 @@ def computephi(l1,fj,metpt,metphi,typ):
     r_charged_lepton= rotator.Inverse()*lep;
     r_neutrino = rotator.Inverse()*neutrino;
     r_fatjet = rotator.Inverse()*fjet;
-    return r_wlep_boson,r_charged_lepton,r_neutrino,r_fatjet
+    return r_wlep_boson,r_charged_lepton,r_neutrino,r_fatjet,neu
     #r_charged_lepton.Phi() ##for leptons (with neg charge) = phi+pI modulo 2pi
 
 class compute_phi_gen_v1(Module):
@@ -122,6 +124,10 @@ class compute_phi_gen_v1(Module):
         self.out.branch('neutrino_eta_HF', 'F')
         self.out.branch('neutrino_phi_HF', 'F')
         self.out.branch('neutrino_mass_HF','F')
+        self.out.branch('neutrino_pt',  'F')
+        self.out.branch('neutrino_eta', 'F')
+        self.out.branch('neutrino_phi', 'F')
+
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         self.out.fillBranch('event',event.event)
@@ -129,31 +135,45 @@ class compute_phi_gen_v1(Module):
         leptons = filter(gooddLeptons, Collection(event,"GenDressedLepton"))
         genmet  = event.GenMET_pt
         genmet_phi = event.GenMET_phi
-        if (genmet < 110 or len(fatJets) < 1 or len(leptons) < 1): return False
         self.out.fillBranch('event_presel',event.event)
         self.out.fillBranch('nSeldLeps',len(leptons))
         self.out.fillBranch('nSelGak8Jets',len(fatJets))
-        r_wlep_boson,r_charged_lepton,r_neutrino,r_fatjet=computephi(leptons[0],fatJets[0],genmet,genmet_phi,0)
+        r_wlep_boson=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        r_charged_lepton=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        r_neutrino=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        r_neu=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        sel_bool= genmet > 110 and  len(fatJets) > 0 and len(leptons) == 1
+        if sel_bool:
+            r_wlep_boson,r_charged_lepton,r_neutrino,r_fatjet,r_neu=computephi(leptons[0],fatJets[0],genmet,genmet_phi,0)
+        #if (genmet < 110 or len(fatJets) < 1 or len(leptons) < 1): return False
+
         for lep in range(self.lepMultiplicity):
             for var in 'pt,eta,phi,pdgId,mass,hasTauAnc'.split(','):
-                self.out.fillBranch('SeldLep%d_%s'%(lep+1,var),getattr(leptons[lep],var))
-            self.out.fillBranch('SeldLep%d_pt_HF'%(lep+1),r_charged_lepton.Pt())
-            self.out.fillBranch('SeldLep%d_eta_HF'%(lep+1),r_charged_lepton.Eta())
-            phi = r_charged_lepton.Phi() if leptons[lep].pdgId < 0 else r_charged_lepton.Phi()+pi
+                self.out.fillBranch('SeldLep%d_%s'%(lep+1,var),getattr(leptons[lep],var) if sel_bool else -999)
+            self.out.fillBranch('SeldLep%d_pt_HF'%(lep+1),r_charged_lepton.Pt() if sel_bool else -999)
+            self.out.fillBranch('SeldLep%d_eta_HF'%(lep+1),r_charged_lepton.Eta() if sel_bool else -999)
+            phi = -999;
+            if sel_bool:
+                phi = r_charged_lepton.Phi() if leptons[lep].pdgId < 0  else r_charged_lepton.Phi()+pi
             if (phi > float(pi)): phi -= float(2*pi);
             elif (phi <= -float(pi)): phi += float(2*pi);
-            self.out.fillBranch('SeldLep%d_phi_HF'%(lep+1),phi)
-            self.out.fillBranch('SeldLep%d_mass_HF'%(lep+1),r_charged_lepton.M())
+            self.out.fillBranch('SeldLep%d_phi_HF'%(lep+1),phi if sel_bool else -999 )
+            self.out.fillBranch('SeldLep%d_mass_HF'%(lep+1),r_charged_lepton.M() if sel_bool else -999)
         for j in range(self.nfjets):
             for var in 'pt,eta,phi,mass,hadronFlavour,partonFlavour'.split(','): 
-                self.out.fillBranch('SelGak8Jet%d_%s'%(j+1,var),getattr(fatJets[j],var))
-            self.out.fillBranch('SelGak8Jet%d_pt_HF'%(j+1),r_fatjet.Pt())
-            self.out.fillBranch('SelGak8Jet%d_eta_HF'%(j+1),r_fatjet.Eta())
-            self.out.fillBranch('SelGak8Jet%d_phi_HF'%(j+1),r_fatjet.Phi())
-            self.out.fillBranch('SelGak8Jet%d_mass_HF'%(j+1),r_fatjet.M())
+                self.out.fillBranch('SelGak8Jet%d_%s'%(j+1,var),getattr(fatJets[j],var) if sel_bool else -999)
+            self.out.fillBranch('SelGak8Jet%d_pt_HF'%(j+1),r_fatjet.Pt() if sel_bool else -999)
+            self.out.fillBranch('SelGak8Jet%d_eta_HF'%(j+1),r_fatjet.Eta() if sel_bool else -999)
+            self.out.fillBranch('SelGak8Jet%d_phi_HF'%(j+1),r_fatjet.Phi() if sel_bool else -999)
+            self.out.fillBranch('SelGak8Jet%d_mass_HF'%(j+1),r_fatjet.M() if sel_bool else -999)
 
-        self.out.fillBranch('neutrino_pt_HF',r_neutrino.Pt())
-        self.out.fillBranch('neutrino_eta_HF',r_neutrino.Eta())
-        self.out.fillBranch('neutrino_phi_HF',r_neutrino.Phi())
-        self.out.fillBranch('neutrino_mass_HF',r_neutrino.M())
+        self.out.fillBranch('neutrino_pt_HF',r_neutrino.Pt() if sel_bool else -999 )
+        self.out.fillBranch('neutrino_eta_HF',r_neutrino.Eta() if sel_bool else -999)
+        self.out.fillBranch('neutrino_phi_HF',r_neutrino.Phi() if sel_bool else -999 )
+        self.out.fillBranch('neutrino_mass_HF',r_neutrino.M() if sel_bool else -999 )
+        self.out.fillBranch('neutrino_pt',r_neu.Pt() if sel_bool else -999 )
+        self.out.fillBranch('neutrino_eta',r_neu.Eta() if sel_bool else -999)
+        self.out.fillBranch('neutrino_phi',r_neu.Phi() if sel_bool else -999 )
+
+
         return True
