@@ -32,7 +32,7 @@ friends     = ['2_ak8Vtagged_sdm45']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
 fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
-genvars_phi = ['SeldLep1_pt','SeldLep1_eta','SeldLep1_phi','SeldLep1_pdgId','SeldLep1_pt_HF','SeldLep1_eta_HF','SeldLep1_phi_HF','nSeldLeps','SelGak8Jet1_pt','SelGak8Jet1_eta','SelGak8Jet1_phi','SelGak8Jet1_mass','SelGak8Jet1_pt_HF','SelGak8Jet1_eta_HF','SelGak8Jet1_phi_HF','SelGak8Jet1_mass_HF','nSelGak8Jets','neutrino_pt_HF','neutrino_phi_HF']    
+genvars_phi = ['SeldLep1_pt']#,'SeldLep1_eta','SeldLep1_phi','SeldLep1_pdgId','SeldLep1_pt_HF','SeldLep1_eta_HF','SeldLep1_phi_HF','nSeldLeps','SelGak8Jet1_pt','SelGak8Jet1_eta','SelGak8Jet1_phi','SelGak8Jet1_mass','SelGak8Jet1_pt_HF','SelGak8Jet1_eta_HF','SelGak8Jet1_phi_HF','SelGak8Jet1_mass_HF','nSelGak8Jets','neutrino_pt_HF','neutrino_phi_HF']    
 
 HEM=['puppimetphi','FatJet1_etaphi','eta1','phi1','etaphi1','FatJet1_phi','FatJet1_eta']
 
@@ -315,22 +315,23 @@ def makesimpleplots(year,useDressed=True):
     fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep_{cf}.txt'.format(cf='gen' if not useDressed else 'dressed' )
     bareNano    = False
     cutFlow     = False
-    processes   = ['sm','sm_lin_quad_cwww']#'WW','aTGC','aTGC_SM','aTGC_incl']##'WJetsToLNu']#'ttmtt1ktoinf','ttmttp7kto1k','ttsemi']#'WJetsToLNu']#'WW','aTGC']#'ttmtt1ktoinf','ttmttp7kto1k','Rwtttsemi']#'ttsemi']
+    processes   = ['WW','sm','sm_lin_quad_cwww']#'WW','aTGC','aTGC_SM','aTGC_incl']##'WJetsToLNu']#'ttmtt1ktoinf','ttmttp7kto1k','ttsemi']#'WJetsToLNu']#'WW','aTGC']#'ttmtt1ktoinf','ttmttp7kto1k','Rwtttsemi']#'ttsemi']
     #'WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT80','WJetsHT60','WJetsHT40','WJetsHT20']
     #cuts_onelep   = ['singlelep']
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
 
-    showratio=False
+    showratio=True
     applylepSFs=False
     nLep=1
     plotvars   = genvars_phi #MConly #dressedLepvars if useDressed else barelepvars 
 
-    disable   = []; enable=['ttbar','nQ']#'WhadpT','mWV','leadfatjet','fatjet','ptWlep','leadlep','etacutl1'] #'ttbar','nQ']
-    enable=['phi_var','ptWlep']
+    disable   = []; 
+    #enable=['ttbar','nQ']#'WhadpT','mWV','leadfatjet','fatjet','ptWlep','leadlep','etacutl1'] #'ttbar','nQ']
+    enable=['phi_var']#,'ptWlep']
     ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  1.75'
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
-    anything = ' --showRatio   --showMCError --ratioNums sm,sm_lin_quad_cwww --ratioDen sm --ratioYLabel=/SM(e) ' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
+    anything = ' --showRatio   --showMCError --ratioNums WW,sm_lin_quad_cwww --ratioDen sm --ratioYLabel=/SM(e) ' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
     extraopts = ratio + spam + legends + anything
     makeplots  = ['{}'.format(a)  for a in plotvars]
     applypNetSFs=False
