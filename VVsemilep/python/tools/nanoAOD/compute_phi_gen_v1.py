@@ -159,26 +159,23 @@ def computephi(l1,fj,metpt,metphi,typ):
     neutrino.Boost(-boost_vec);
     # wv_sys.Boost(-boost_vec)
     # print wv_sys.Pt()
-
-
     c_wlep_boson=ROOT.TLorentzVector(0.,0.,0.,0.);
     c_wlep_boson+=lep
     c_wlep_boson += neutrino
-    print "step 1",c_wlep_boson.Pt(),c_wlep_boson.Phi()
+    #print "step 1",c_wlep_boson.Pt(),c_wlep_boson.Phi(),c_wlep_boson.X(),c_wlep_boson.Y(),c_wlep_boson.Z();
     r_uvec= wv_sys.Vect().Unit(); 
     z_uvec = c_wlep_boson.Vect().Unit();  ##direction of w_lep boson
     y_uvec = z_uvec.Cross(r_uvec).Unit();
     x_uvec = y_uvec.Cross(z_uvec).Unit();
-    print "axes for new cordinate system",y_uvec.Y(),z_uvec.Z(),x_uvec.X(),r_uvec.Mag()
+    #print "axes for new cordinate system",y_uvec.Y(),z_uvec.Z(),x_uvec.X(),r_uvec.Mag()
     rot    = ROOT.TRotation();
     rot.SetXAxis(x_uvec);
     rot.SetYAxis(y_uvec);
     rot.SetZAxis(z_uvec);
     rotator = ROOT.TLorentzRotation(rot);
-    ##am    r_wlep_boson=rotator.Inverse()*c_wlep_boson; ##replace this with -> rotator.Transform(c_wlep_boson); 
     r_wlep_boson=rotator*c_wlep_boson;
-    print "after rotation",r_wlep_boson.Phi(),r_wlep_boson.Pt() 
-    print "rotate back",(rotator.Inverse()*r_wlep_boson).Pt(),(rotator.Inverse()*r_wlep_boson).Phi()
+    #print "after rotation",r_wlep_boson.Phi(),r_wlep_boson.Pt() 
+    #print "rotate back",(rotator.Inverse()*r_wlep_boson).Pt(),(rotator.Inverse()*r_wlep_boson).Phi(),(rotator.Inverse()*r_wlep_boson).X(),(rotator.Inverse()*r_wlep_boson).Y(),(rotator.Inverse()*r_wlep_boson).Z()
     r_charged_lepton= rotator*lep;
     r_neutrino = rotator*neutrino;
     r_fatjet = rotator*fjet;

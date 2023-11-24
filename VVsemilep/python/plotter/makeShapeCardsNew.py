@@ -16,10 +16,11 @@ parser.add_option("--infile", dest="infile", action="store_true", default=False,
 parser.add_option("--savefile", dest="savefile", action="store_true", default=False, help="Save histos to file")
 parser.add_option("--categorize", dest="categ", type="string", nargs=3, default=None, help="Split in categories. Requires 3 arguments: expression, binning, bin labels")
 parser.add_option("--categorize-by-ranges", dest="categ_ranges", type="string", nargs=2, default=None, help="Split in categories according to the signal extraction variables. Requires 2 arguments: binning (in bin numbers), bin labels")
-
 parser.add_option("--regularize", dest="regularize", action="store_true", default=False, help="Regularize templates")
 parser.add_option("--threshold", dest="threshold", type=float, default=0.0, help="Minimum event yield to consider processes")
 parser.add_option("--filter", dest="filter", type="string", default=None, help="File with list of processes to be removed from the datacards")
+parser.add_option("--lf","--lepflav", dest="lepflav", type="string", default="mu", help="which lepton flav to run on, needed to read WJ workspace")
+parser.add_option("--wjD", dest="wjDate", type="string", default="", help="date for WJ workspace to be picked")
 (options, args) = parser.parse_args()
 options.weight = True
 options.final  = True
@@ -194,7 +195,20 @@ for binname, report in allreports.iteritems():
 
   datacard = open(outdir+binname+".txt", "w"); 
   datacard.write("## Datacard for cut file %s\n"%args[1])
-  datacard.write("shapes *        * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % binname)
+  datacard.write("## Event selection: \n")
+  for cutline in str(cuts).split("\n"):  datacard.write("##   %s\n" % cutline)
+  #datacard.write("shapes *        * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % binname) ##AM for all processes except for WJets
+  for p in procs:
+      if "WJ" in p: 
+          continue
+      else:
+          datacard.write("shapes %s       * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % (p,binname)) ##AM for all processes except for WJets
+
+  if options.lepflav in ["el","mu"]:
+      datacard.write("shapes WJets    * WJets_est/Cards/wjest_{dd}/cards_sDM_weighted_{FS}_WPM_950_4500/wwlvj_FS_WPM_950_4500_workspace.root workspace4limit_:WJets_mj_sig_{FS}\n". format(FS=options.lepflav,dd=options.wjDate))
+      datacard.write("shapes WJets    * WJets_est/Cards/wjest_{dd}/cards_sDM_weighted_{FS}_WPM_950_4500/wwlvj_FS_WPM_950_4500_workspace.root workspace4limit_:WJets_mj_sb_hi_{FS}\n".format(FS=options.lepflav,dd=options.wjDate))
+      datacard.write("shapes WJets    * WJets_est/Cards/wjest_{dd}/cards_sDM_weighted_{FS}_WPM_950_4500/wwlvj_FS_WPM_950_4500_workspace.root workspace4limit_:WJets_mj_sb_lo_{FS}\n".format(FS=options.lepflav,dd=options.wjDate))
+  ##am placeholder for WJets shapes
   datacard.write('##----------------------------------\n')
   datacard.write('bin         %s\n' % binname)
   datacard.write('observation %s\n' % allyields['data_obs'])
@@ -202,12 +216,15 @@ for binname, report in allreports.iteritems():
   klen = max([7, len(binname)]+[len(p) for p in procs])
   kpatt = " %%%ds "  % klen
   fpatt = " %%%d.%df " % (klen,3)
+  kpatt_am = " %%%ds " % klen
   npatt = "%%-%ds " % max([len('process')]+map(len,nuisances))
+  rate_str= "-1"
   datacard.write('##----------------------------------\n')
   datacard.write((npatt % 'bin    ')+(" "*6)+(" ".join([kpatt % binname  for p in procs]))+"\n")
   datacard.write((npatt % 'process')+(" "*6)+(" ".join([kpatt % p        for p in procs]))+"\n")
   datacard.write((npatt % 'process')+(" "*6)+(" ".join([kpatt % iproc[p] for p in procs]))+"\n")
-  datacard.write((npatt % 'rate   ')+(" "*6)+(" ".join([fpatt % allyields[p] for p in procs]))+"\n")
+  ##amdatacard.write((npatt % 'rate   ')+(" "*6)+(" ".join([fpatt % allyields[p] for p in procs]))+"\n")
+  datacard.write((npatt % 'rate   ')+(" "*6)+(" ".join([kpatt_am % rate_str for p in procs]))+"\n")
   datacard.write('##----------------------------------\n')
   towrite = [ report[p].raw() for p in procs ] + [ report["data_obs"].raw() ]
   for name in nuisances:

@@ -2,7 +2,7 @@
 
 #########################vvsemilep vars 
 
-SeldLep1_pt                : SeldLep1_pt         :90,200,2000; XTitle="SeldLep1_pt"
+SeldLep1_pt                : SeldLep1_pt         : 50,0,1000; XTitle="SeldLep1_pt"
 SeldLep1_eta               : SeldLep1_eta        : 10,-2.5,2.5; XTitle="SeldLep1_eta"
 SeldLep1_phi               : SeldLep1_phi        : 16,-3.2,3.2; XTitle="SeldLep1_phi"
 SeldLep1_pdgId             : 0.5*SeldLep1_pdgId/abs(SeldLep1_pdgId)*(abs(SeldLep1_pdgId)-10) : [-2,-1,0,1,2]; XTitle="Leading lepton PDG ID (#mu^{-}/e^{-}/e^{+}/#mu^{+})", XNDdiv=505
@@ -22,8 +22,12 @@ nSelGak8Jets 		   : nSelGak8Jets        : [0,1,2,3]; XTitle="nSelGak8Jets", Incl
 neutrino_pt_HF 		   : neutrino_pt_HF      : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,800,1000,1200]; XTitle="neutrino_pt_HF"
 neutrino_phi_HF 	   : neutrino_phi_HF     : 16,-3.2,3.2; XTitle="neutrino_phi_HF"
 
+ttGenmWV_typ0_pmet_boosted : if3(abs(SeldLep1_pdgId) == 13, mass_WV_mu(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0),mass_WV_el(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0) ): [50,   61,   74,   88,   103,  119,  137,  156,  176,197,  220,  244,  270,  296, 325,  354,  386,  419,  453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558]; XTitle="mWV (GeV)", Logy, MoreY=10, IncludeOverflows=False, YTitle="Arbitrary units"
 
 
+#Jet_eta_pt_WPT : if3(JetSel_Recl_btagDeepFlavB > 0.71,   JetSel_Recl_pt\:abs(JetSel_Recl_eta), -99\:-99 ) :  5,0,2.5, 100,20,1000  ; XTitle="abs(#eta) WPT", YTitle="p_{T} WPT"
+lepphi_mWV : mass_WV(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0)\:abs(SeldLep1_phi_HF) :  4,0,3.2, 50,900,4500  ; XTitle="l^abs(#phi) WPT", YTitle="m_{WV}"
+jetphi_mWV : mass_WV(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0)\:abs(SelGak8Jet1_phi_HF) :  4,0,3.2, 50,900,4500  ; XTitle="j^abs(#phi) WPT", YTitle="m_{WV}"
 
 aTGC_wt: LHEReweightingWeight : 50,0,2; XTitle="aTGC weight", MoreY=5
 aTGC_wt_SM: LHEReweightingWeight[62] : 30,-1,2; XTitle="LHEReweightingWeight_SM/genWeight", MoreY=2
@@ -323,6 +327,11 @@ nJet30_Recl        : nJet30_Recl        : [0,1,2,3,4,5] ; XTitle='njets wiht pT 
 ##etaprod_absetamin_mumu       : (LepGood2_eta*LepGood1_eta)\:abs(min(LepGood2_eta,LepGood1_eta)) : 5,0,2.5, 10,-6.25,6.25  ; XTitle="abs(#eta_{l}^{min.})", YTitle="#eta_{1}*#eta_{2} (#mu^{#pm}#mu^{#pm})"
 
 Jet_eta_pt   : JetSel_Recl_pt\:abs(JetSel_Recl_eta) :  3,0,2.5, 50,0,2000  ; XTitle="abs(#eta)", YTitle="p_{T}"
+#Jet_pt_eta   : abs(JetSel_Recl_eta)\:JetSel_Recl_pt : 50,0,2000, 5,0,2.5   ; YTitle="abs(#eta)", XTitle="p_{T}"
+Jet_pt_eta   : abs(JetSel_Recl_eta)\:JetSel_Recl_pt : [20,40,60,80,100,150,200,300,400,500,2000]*[0,1.0,1.8,2.4]   ; YTitle="abs(#eta)", XTitle="p_{T}"
+
+##ptJI90_mvaULPt0975_coarsecomb_nvtx:  LepGood_pt*if3(LepGood_mvaTTHUL>0.975&&(LepGood_mediumId > 0 || abs(LepGood_pdgId) == 11), 1.0, 0.90*(1+LepGood_jetRelIso))\:PV_npvsGood: [0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60]*[10,15,20,32,45,65,100]; XTitle="lepton p_{T}^{corr} (GeV)", SlicesY="conept_%g_%g"
+
 
 Jet_partonFlavour: if3(abs(Jet_partonFlavour)>0,if3(abs(Jet_partonFlavour) == 5,1,0),2) :[-0.5,0.5,1.5,2.5]  ; XTitle='jet flav from parton matching' , xBinLabels="light flav.\,bjets\,unmatched", IncludeOverflows=False, MoreY=1.5
 Jet_hadronFlavour :  if3(JetSel_Recl_hadronFlavour == 0,0,if3(JetSel_Recl_hadronFlavour == 4,1,2)):  [-0.5,0.5,1.5,2.5]  ; XTitle='jet had. flav' , xBinLabels="light flav.\,cjets\,bjets", IncludeOverflows=False, MoreY=1.5
