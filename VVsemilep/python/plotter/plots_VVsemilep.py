@@ -316,7 +316,7 @@ def alphaRatio(year,nLep,lepflav,finalState,applylepSFs,postfix,plotvars):
 def makesimpleplots(year,useDressed=True):
     #baseDir = '/eos/cms/store/cmst3/group/dpsww/testWJ_htbinned/'
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    #MCfriends   = ['phi_var']#2_toppT_rw']#genInfo'] #'2_toppT_rw']
+    MCfriends   = ['phi_var']#2_toppT_rw']#genInfo'] #'2_toppT_rw']
     Datafriends = []
     friends     = []
     targetdir = '/eos/user/a/anmehta/www/VVsemilep/GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') )

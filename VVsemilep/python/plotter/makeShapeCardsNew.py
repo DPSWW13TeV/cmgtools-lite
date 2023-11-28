@@ -199,15 +199,15 @@ for binname, report in allreports.iteritems():
   datacard.write("## Datacard for cut file %s\n"%args[1])
   datacard.write("## Event selection: \n")
   for cutline in str(cuts).split("\n"):  datacard.write("##   %s\n" % cutline)
-  #datacard.write("shapes *        * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % binname) ##AM for all processes except for WJets
-  for p in procs:
-      if "WJ" in p: 
-          continue
-      else:
-          datacard.write("shapes %s       * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % (p,binname)) ##AM for all processes except for WJets
+  datacard.write("shapes *        * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % binname) ##AM for all processes except for WJets
+  ##amfor p in procs:
+  ##am    if "WJ" in p: 
+  ##am        continue
+  ##am    else:
+  ##am        datacard.write("shapes %s       * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % (p,binname)) ##AM for all processes except for WJets
 
   if options.lepflav in ["el","mu"]:
-      datacard.write("shapes WJets    * WJets_est/Cards/wjest_{dd}/cards_sDM_weighted_{FS}_WPM_950_4500/wwlvj_FS_WPM_950_4500_workspace.root workspace4limit_:WJets_mj_{CR}_{FS}\n". format(FS=options.lepflav,dd=options.wjDate,CR=options.sel))
+      datacard.write("shapes WJets    * WJets_est/Cards/{dd}/cards_sDM_weighted_{FS}_WPM_950_4550/wwlvj_{FS}_WPM_950_4550_workspace.root workspace4limit_:WJets_mj_{CR}_{FS}\n". format(FS=options.lepflav,dd=options.wjDate,CR=options.sel))
   ##am placeholder for WJets shapes
   datacard.write('##----------------------------------\n')
   datacard.write('bin         %s\n' % binname)

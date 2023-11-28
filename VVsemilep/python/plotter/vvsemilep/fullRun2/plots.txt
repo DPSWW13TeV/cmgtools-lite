@@ -26,8 +26,8 @@ ttGenmWV_typ0_pmet_boosted : if3(abs(SeldLep1_pdgId) == 13, mass_WV_mu(SelGak8Je
 
 
 #Jet_eta_pt_WPT : if3(JetSel_Recl_btagDeepFlavB > 0.71,   JetSel_Recl_pt\:abs(JetSel_Recl_eta), -99\:-99 ) :  5,0,2.5, 100,20,1000  ; XTitle="abs(#eta) WPT", YTitle="p_{T} WPT"
-lepphi_mWV : mass_WV(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0)\:abs(SeldLep1_phi_HF) :  4,0,3.2, 50,900,4500  ; XTitle="l^abs(#phi) WPT", YTitle="m_{WV}"
-jetphi_mWV : mass_WV(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0)\:abs(SelGak8Jet1_phi_HF) :  4,0,3.2, 50,900,4500  ; XTitle="j^abs(#phi) WPT", YTitle="m_{WV}"
+lepphi_mWV : mass_WV(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0)\:abs(SeldLep1_phi_HF) :  4,0,3.2, 50,900,4550  ; XTitle="abs(#philep) WPT", YTitle="m_{WV}"
+jetphi_mWV : mass_WV(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0)\:abs(SelGak8Jet1_phi_HF) :  [0.1.6,3.2]*[950,1200,1400,1600,4550]  ; XTitle="abs(#phijet) WPT", YTitle="m_{WV}"
 
 aTGC_wt: LHEReweightingWeight : 50,0,2; XTitle="aTGC weight", MoreY=5
 aTGC_wt_SM: LHEReweightingWeight[62] : 30,-1,2; XTitle="LHEReweightingWeight_SM/genWeight", MoreY=2
