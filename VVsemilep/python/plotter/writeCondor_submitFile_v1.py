@@ -12,7 +12,8 @@ environment = "LS_SUBCWD={here}"
 Log        = jobs/{dW}_$(ProcId).log
 Output     = jobs/{dW}_$(ProcId).out
 Error      = jobs/{dW}_$(ProcId).error
-+JobFlavour = "tomorrow"
+requirements = (OpSysAndVer =?= "CentOS7")
++JobFlavour = "workday"
 \n\n'''.format(dW=doWhat,here=os.environ['PWD']))
 pf=""
 

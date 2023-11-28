@@ -21,6 +21,8 @@ parser.add_option("--threshold", dest="threshold", type=float, default=0.0, help
 parser.add_option("--filter", dest="filter", type="string", default=None, help="File with list of processes to be removed from the datacards")
 parser.add_option("--lf","--lepflav", dest="lepflav", type="string", default="mu", help="which lepton flav to run on, needed to read WJ workspace")
 parser.add_option("--wjD", dest="wjDate", type="string", default="", help="date for WJ workspace to be picked")
+parser.add_option("--sel", dest="sel", type="string", default="", help="selection region string")
+
 (options, args) = parser.parse_args()
 options.weight = True
 options.final  = True
@@ -205,9 +207,7 @@ for binname, report in allreports.iteritems():
           datacard.write("shapes %s       * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % (p,binname)) ##AM for all processes except for WJets
 
   if options.lepflav in ["el","mu"]:
-      datacard.write("shapes WJets    * WJets_est/Cards/wjest_{dd}/cards_sDM_weighted_{FS}_WPM_950_4500/wwlvj_FS_WPM_950_4500_workspace.root workspace4limit_:WJets_mj_sig_{FS}\n". format(FS=options.lepflav,dd=options.wjDate))
-      datacard.write("shapes WJets    * WJets_est/Cards/wjest_{dd}/cards_sDM_weighted_{FS}_WPM_950_4500/wwlvj_FS_WPM_950_4500_workspace.root workspace4limit_:WJets_mj_sb_hi_{FS}\n".format(FS=options.lepflav,dd=options.wjDate))
-      datacard.write("shapes WJets    * WJets_est/Cards/wjest_{dd}/cards_sDM_weighted_{FS}_WPM_950_4500/wwlvj_FS_WPM_950_4500_workspace.root workspace4limit_:WJets_mj_sb_lo_{FS}\n".format(FS=options.lepflav,dd=options.wjDate))
+      datacard.write("shapes WJets    * WJets_est/Cards/wjest_{dd}/cards_sDM_weighted_{FS}_WPM_950_4500/wwlvj_FS_WPM_950_4500_workspace.root workspace4limit_:WJets_mj_{CR}_{FS}\n". format(FS=options.lepflav,dd=options.wjDate,CR=options.sel))
   ##am placeholder for WJets shapes
   datacard.write('##----------------------------------\n')
   datacard.write('bin         %s\n' % binname)
