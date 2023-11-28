@@ -86,13 +86,13 @@ wjet)
 
 genInfo)
 	echo "genInfo ${BCORE} ${CMGT}"
-	basecmd="${BCORE}genInfo/${CMGT} whad_info -d Tbar_tWch_incldecays -c 1 " #--de .*Run.*
+	basecmd="${BCORE}genInfo/ ${CMGT} whad_info -d Tbar_tWch_incldecays -c 1 " #--de .*Run.*
 	echo $basecmd
 	;; #-d WWTo1L1Nu2Q -c 1 #--dm .*aTGCmWV.* #--de .*Run.*
     
 phi)
 	echo "computing phi in helicity frame ${BCORE} ${CMGT}"
-	basecmd="${BCORE}phi_var/${CMGT} phi_gen  --de .*Run.* "
+	basecmd="${BCORE}phi_var_v1/ ${CMGT} phi_gen --de .*Run.* " # -d  WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0 " #
 	echo $basecmd
 	;; 
 

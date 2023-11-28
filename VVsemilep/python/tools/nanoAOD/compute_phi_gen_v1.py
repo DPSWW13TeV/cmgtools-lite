@@ -19,6 +19,35 @@ def gooddLeptons(dlep):
     if (dlep.pt > 50): return True
     else: return False
 
+def goodlheparts(lheP):
+    if (lheP.status == 1 and lheP.status !=21): return True
+    else: return False
+
+
+def findW(lhe_parts):
+    foundW=False; q_index=-99;qbar_index=-99; lep_index=-99;neu_index=-99;
+    charge_Whad=0;    charge_Wlep=0;
+    for i in range(len(lhe_parts)):
+        if abs(lhe_parts[i].pdgId) in [11,13,15]:            
+            charge_Wlep=-1*lhe_parts[i].pdgId/abs(lhe_parts[i].pdgId)
+            lep_index=i;
+        elif abs(lhe_parts[i].pdgId) in [12,14,16]:
+            neu_index=i;
+        elif abs(lhe_parts[i].pdgId) < 7: #getting rid of gluons from radiation 
+            charge_i=pdgIds[abs(lhe_parts[i].pdgId)]*abs(lhe_parts[i].pdgId)/lhe_parts[i].pdgId
+            for j in range(i+1,len(lhe_parts)):
+                if (abs(lhe_parts[j].pdgId) > 7 or lhe_parts[i].pdgId == lhe_parts[j].pdgId ): continue
+                charge_j=pdgIds[abs(lhe_parts[j].pdgId)]*abs(lhe_parts[j].pdgId)/lhe_parts[j].pdgId
+                charge_Whad=charge_i+charge_j
+                if (abs(charge_Whad) ==1 and charge_Whad+charge_Wlep==0):
+                    q_index = i if charge_i > 0 else j
+                    qbar_index = i if charge_i < 0 else j
+                else: continue
+        else: conitnue
+    return (lep_index,neu_index,q_index,qbar_index,charge_Wlep,charge_Whad) #first particle is the one with a negatively charged lepton or a quark or a neu 
+
+
+
 def calcmassWV(l1,fjet,metpt,metphi,typ,opt):
     from ROOT.heppy import METzCalculator
     NeutrinoPz = METzCalculator()
@@ -44,6 +73,64 @@ def calcmassWV(l1,fjet,metpt,metphi,typ,opt):
         return massWV
 
 
+##amdef computephi_lheLvl(lheparts,typ):
+##am    (lep_index,neu_index,q_index,qbar_index,charge_Wlep,charge_Whad)=findW(lheparts)
+##am    
+##am    wv_sys = ROOT.TLorentzVector(0.,0.,0.,0.);
+##am    lep    = ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+##am    fjet   = ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+##am    neu    = ROOT.TLorentzVector(0.,0.,0.,0.);
+##am    qbar   = ROOT.TLorentzVector(0.,0.,0.,0.);
+##am    q      = ROOT.TLorentzVector(0.,0.,0.,0.); #right handed quark
+##am    lep_plus=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);#right handed lepton
+##am
+##am    
+##am    neu.SetPtEtaPhiM(lheparts[neu_index].pt,lheparts[neu_index].eta,lheparts[neu_index].phi,0.);
+##am    lep.SetPtEtaPhiM(lheparts[lep_index].pt,lheparts[lep_index].eta,lheparts[lep_index].phi,0.);
+##am    q.SetPtEtaPhiM(lheparts[q_index].pt,lheparts[q_index].eta,lheparts[q_index].phi,0.);
+##am    qbar.SetPtEtaPhiM(lheparts[qbar_index].pt,lheparts[qbar_index].eta,lheparts[qbar_index].phi,0.);
+##am    lep_plus = neu if lheparts[neu_index].pdgId < 0 else lep 
+##am
+##am    lep_c=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+##am    fjet_c=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+##am    lep_c.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,l1.mass);
+##am    fjet_c.SetPtEtaPhiM(fj.pt,fj.eta,fj.phi,fj.mass); 
+##am
+##am    wv_sys+=lep+fjet+neutrino
+##am    wlep=lep+neutrino
+##am    #print wv_sys.Pt();
+##am    boost_vec=wv_sys.BoostVector()
+##am    #print boost_vec.Mag()
+##am    
+##am    fjet.Boost(-boost_vec)
+##am    lep.Boost(-boost_vec); #Make an LT for a passive boost (i.e. object velocity -= in boost direction) 
+##am    neutrino.Boost(-boost_vec);
+##am    # wv_sys.Boost(-boost_vec)
+##am    # print wv_sys.Pt()
+##am
+##am
+##am    c_wlep_boson=ROOT.TLorentzVector(0.,0.,0.,0.);
+##am    c_wlep_boson+=lep
+##am    c_wlep_boson += neutrino
+##am
+##am    r_uvec= wv_sys.Vect().Unit(); 
+##am    z_uvec = c_wlep_boson.Vect().Unit();  ##direction of w_lep boson
+##am    y_uvec = z_uvec.Cross(r_uvec).Unit();
+##am    x_uvec = y_uvec.Cross(z_uvec).Unit();
+##am    print y_uvec,z_uvec,x_uvec,r_uvec
+##am    rot    = ROOT.TRotation();
+##am    rot.SetXAxis(x_uvec);
+##am    rot.SetYAxis(y_uvec);
+##am    rot.SetZAxis(z_uvec);
+##am## do a reverse transformation and see if it gives a unit vector 
+##am    rotator = ROOT.TLorentzRotation(rot); # initialization but we need the transformation here!! replace by rotator = ROOT.TLorentzRotation(); rotator* = rot;
+##am    r_wlep_boson=rotator.Inverse()*c_wlep_boson; ##replace this with -> rotator.Transform(c_wlep_boson); 
+##am    r_charged_lepton= rotator.Inverse()*lep; 
+##am    r_neutrino = rotator.Inverse()*neutrino;
+##am    r_fatjet = rotator.Inverse()*fjet;
+##am    return r_wlep_boson,r_charged_lepton,r_neutrino,r_fatjet,neu
+##am    #r_charged_lepton.Phi() ##for leptons (with neg charge) = phi+pI modulo 2pi
+
 
 def computephi(l1,fj,metpt,metphi,typ):
 
@@ -52,7 +139,7 @@ def computephi(l1,fj,metpt,metphi,typ):
     lep=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
     fjet=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
     neu = ROOT.TLorentzVector(0.,0.,0.,0.);
-    neu.SetPtEtaPhiM(neutrino.Pt(),neutrino.Eta(),neutrino.Phi(),0.0);
+    neu.SetPxPyPzE(metpt*cos(metphi), metpt*sin(metphi),neutrino.Pz(),sqrt(metpt*metpt+neutrino.Pz()*neutrino.Pz()));
     lep.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,l1.mass);
     fjet.SetPtEtaPhiM(fj.pt,fj.eta,fj.phi,fj.mass); 
 
@@ -72,25 +159,26 @@ def computephi(l1,fj,metpt,metphi,typ):
     neutrino.Boost(-boost_vec);
     # wv_sys.Boost(-boost_vec)
     # print wv_sys.Pt()
-
-
     c_wlep_boson=ROOT.TLorentzVector(0.,0.,0.,0.);
     c_wlep_boson+=lep
     c_wlep_boson += neutrino
-
+    #print "step 1",c_wlep_boson.Pt(),c_wlep_boson.Phi(),c_wlep_boson.X(),c_wlep_boson.Y(),c_wlep_boson.Z();
     r_uvec= wv_sys.Vect().Unit(); 
     z_uvec = c_wlep_boson.Vect().Unit();  ##direction of w_lep boson
     y_uvec = z_uvec.Cross(r_uvec).Unit();
     x_uvec = y_uvec.Cross(z_uvec).Unit();
+    #print "axes for new cordinate system",y_uvec.Y(),z_uvec.Z(),x_uvec.X(),r_uvec.Mag()
     rot    = ROOT.TRotation();
     rot.SetXAxis(x_uvec);
     rot.SetYAxis(y_uvec);
     rot.SetZAxis(z_uvec);
     rotator = ROOT.TLorentzRotation(rot);
-    r_wlep_boson=rotator.Inverse()*c_wlep_boson;
-    r_charged_lepton= rotator.Inverse()*lep;
-    r_neutrino = rotator.Inverse()*neutrino;
-    r_fatjet = rotator.Inverse()*fjet;
+    r_wlep_boson=rotator*c_wlep_boson;
+    #print "after rotation",r_wlep_boson.Phi(),r_wlep_boson.Pt() 
+    #print "rotate back",(rotator.Inverse()*r_wlep_boson).Pt(),(rotator.Inverse()*r_wlep_boson).Phi(),(rotator.Inverse()*r_wlep_boson).X(),(rotator.Inverse()*r_wlep_boson).Y(),(rotator.Inverse()*r_wlep_boson).Z()
+    r_charged_lepton= rotator*lep;
+    r_neutrino = rotator*neutrino;
+    r_fatjet = rotator*fjet;
     return r_wlep_boson,r_charged_lepton,r_neutrino,r_fatjet,neu
     #r_charged_lepton.Phi() ##for leptons (with neg charge) = phi+pI modulo 2pi
 
@@ -131,8 +219,9 @@ class compute_phi_gen_v1(Module):
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         self.out.fillBranch('event',event.event)
-        fatJets = filter(goodfatjets, Collection(event,"GenJetAK8"))
-        leptons = filter(gooddLeptons, Collection(event,"GenDressedLepton"))
+        fatJets =  filter(goodfatjets,  Collection(event,"GenJetAK8"))
+        leptons =  filter(gooddLeptons, Collection(event,"GenDressedLepton"))
+        lheparts = filter(goodlheparts, Collection(event,"LHEPart"))
         genmet  = event.GenMET_pt
         genmet_phi = event.GenMET_phi
         self.out.fillBranch('event_presel',event.event)

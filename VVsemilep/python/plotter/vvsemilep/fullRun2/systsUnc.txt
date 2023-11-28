@@ -113,18 +113,14 @@ CMS_vvsl18_trigger_1l      :  $PromptFromMC : .*mu.* : templateSymm; Normalize=F
 
 CMS_vvsl_UnclusteredEn : $PromptFromMC : .*lep.* : templateAsymm;          FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
 
-CMS_vvsl_pmet_UnclusteredEn : $PromptFromMC : .*mu.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
-
-CMS_vvsl_pmet_UnclusteredEn : $PromptFromMC : .*el.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
-
-CMS_vvsl_pmet_JES : $PromptFromMC : .*el.* : templateAsymm;         FakeRates=['vvsemilep/fullRun2/fr-jesUp.txt'\,'vvsemilep/fullRun2/fr-jesDn.txt']
-CMS_vvsl_pmet_JER : $PromptFromMC : .*el.* : templateAsymm;         FakeRates=['vvsemilep/fullRun2/fr-jerUp.txt'\,'vvsemilep/fullRun2/fr-jerDn.txt']
-
-CMS_vvsl_pmet_JES : $PromptFromMC : .*mu.* : templateAsymm;         FakeRates=['vvsemilep/fullRun2/fr-jesUp.txt'\,'vvsemilep/fullRun2/fr-jesDn.txt']
-CMS_vvsl_pmet_JER : $PromptFromMC : .*mu.* : templateAsymm;         FakeRates=['vvsemilep/fullRun2/fr-jerUp.txt'\,'vvsemilep/fullRun2/fr-jerDn.txt']
-
-CMS_vvsl_pmet_JES : $PromptFromMC : .*lep.* : templateAsymm;        FakeRates=['vvsemilep/fullRun2/fr-jesUp.txt'\,'vvsemilep/fullRun2/fr-jesDn.txt']
-CMS_vvsl_pmet_JER : $PromptFromMC : .*lep.* : templateAsymm;        FakeRates=['vvsemilep/fullRun2/fr-jerUp.txt'\,'vvsemilep/fullRun2/fr-jerDn.txt']
+##CMS_vvsl_pmet_UnclusteredEn : $PromptFromMC : .*mu.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
+##CMS_vvsl_pmet_UnclusteredEn : $PromptFromMC : .*el.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
+##CMS_vvsl_pmet_JES : $PromptFromMC : .*el.* : templateAsymm;         FakeRates=['vvsemilep/fullRun2/fr-jesUp.txt'\,'vvsemilep/fullRun2/fr-jesDn.txt']
+##CMS_vvsl_pmet_JER : $PromptFromMC : .*el.* : templateAsymm;         FakeRates=['vvsemilep/fullRun2/fr-jerUp.txt'\,'vvsemilep/fullRun2/fr-jerDn.txt']
+##CMS_vvsl_pmet_JES : $PromptFromMC : .*mu.* : templateAsymm;         FakeRates=['vvsemilep/fullRun2/fr-jesUp.txt'\,'vvsemilep/fullRun2/fr-jesDn.txt']
+##CMS_vvsl_pmet_JER : $PromptFromMC : .*mu.* : templateAsymm;         FakeRates=['vvsemilep/fullRun2/fr-jerUp.txt'\,'vvsemilep/fullRun2/fr-jerDn.txt']
+##CMS_vvsl_pmet_JES : $PromptFromMC : .*lep.* : templateAsymm;        FakeRates=['vvsemilep/fullRun2/fr-jesUp.txt'\,'vvsemilep/fullRun2/fr-jesDn.txt']
+##CMS_vvsl_pmet_JER : $PromptFromMC : .*lep.* : templateAsymm;        FakeRates=['vvsemilep/fullRun2/fr-jerUp.txt'\,'vvsemilep/fullRun2/fr-jerDn.txt']
 
 
 
@@ -132,46 +128,39 @@ CMS_vvsl_pmet_JER : $PromptFromMC : .*lep.* : templateAsymm;        FakeRates=['
 
 
 
-CMS_scale_j_HF               : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesHFUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesHFDown.txt'], 
-CMS_scale_j_BBEC1_2016       : $PromptFromMC : .* : templateAsymm;   FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearDown.txt'] , year="2016"
-CMS_scale_j_BBEC1_2017       : $PromptFromMC : .* : templateAsymm;  FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearDown.txt'],  year="2017"
-CMS_scale_j_BBEC1_2018       : $PromptFromMC : .* : templateAsymm;  FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearDown.txt'], year="2018"
-CMS_scale_j_FlavorQCD        : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesFlavorQCDUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesFlavorQCDDown.txt']
-
-CMS_scale_j_RelativeSample_2016   : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearDown.txt'], year="2016"
-
-
-CMS_scale_j_RelativeSample_2017        : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearDown.txt'], year="2017"
-CMS_scale_j_RelativeSample_2018        : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearDown.txt'], year="2018"
-CMS_scale_j_EC2           : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2Up.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2Down.txt'], 
-CMS_scale_j_HF_2016       : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearDown.txt'], year="2016"
-CMS_scale_j_HF_2017       : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearDown.txt'], year="2017"
-CMS_scale_j_HF_2018       : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearDown.txt'], year="2018"
-CMS_scale_j_RelativeBal   : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesRelativeBalUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesRelativeBalDown.txt']
-CMS_scale_j_Absolute_2016 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearDown.txt'], year="2016"
-CMS_scale_j_Absolute_2017 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearDown.txt'], year="2017"
-CMS_scale_j_Absolute_2018 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearDown.txt'], year="2018"
-CMS_scale_j_BBEC1         : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1Up.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1Down.txt']
-
-CMS_scale_j_EC2_2016      : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearDown.txt'], year="2016"
-CMS_scale_j_EC2_2017      : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearDown.txt'], year="2014"
-CMS_scale_j_EC2_2018      : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearDown.txt'], year="2018"
-CMS_scale_j_Absolute      : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesAbsoluteUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesAbsoluteDown.txt']
-
-
-CMS_res_j_barrel_2016  : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearDown.txt'],year="2016"
-CMS_res_j_barrel_2017  : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearDown.txt'],year="2017"
-CMS_res_j_barrel_2018  : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearDown.txt'], year="2018"
-CMS_res_j_endcap1_2016 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearDown.txt'],year="2016"
-CMS_res_j_endcap1_2017 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearDown.txt'],year="2017"
-CMS_res_j_endcap1_2018 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearDown.txt'],year="2018"
-
-CMS_res_j_endcap2highpt_2016 :  $PromptFromMC : .* :  templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearDown.txt'], year="2016"
-CMS_res_j_endcap2highpt_2017  : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearDown.txt'], year="2017"
-CMS_res_j_endcap2highpt_2018  : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearDown.txt'], year="2018"
-CMS_res_j_endcap2lowpt_2016   : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearDown.txt'], year="2016"
-CMS_res_j_endcap2lowpt_2017   : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearDown.txt'], year="2017"
-CMS_res_j_endcap2lowpt_2018   : $PromptFromMC : .* : templateAsymm;  FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearDown.txt'], year="2018"
+##CMS_scale_j_HF               : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesHFUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesHFDown.txt'], 
+##CMS_scale_j_BBEC1_2016       : $PromptFromMC : .* : templateAsymm;   FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearDown.txt'] , year="2016"
+##CMS_scale_j_BBEC1_2017       : $PromptFromMC : .* : templateAsymm;  FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearDown.txt'],  year="2017"
+##CMS_scale_j_BBEC1_2018       : $PromptFromMC : .* : templateAsymm;  FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1_yearDown.txt'], year="2018"
+##CMS_scale_j_FlavorQCD        : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesFlavorQCDUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesFlavorQCDDown.txt']
+##CMS_scale_j_RelativeSample_2016        : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearDown.txt'], year="2016"
+##CMS_scale_j_RelativeSample_2017        : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearDown.txt'], year="2017"
+##CMS_scale_j_RelativeSample_2018        : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesRelativeSample_yearDown.txt'], year="2018"
+##CMS_scale_j_EC2           : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2Up.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2Down.txt'], 
+##CMS_scale_j_HF_2016       : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearDown.txt'], year="2016"
+##CMS_scale_j_HF_2017       : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearDown.txt'], year="2017"
+##CMS_scale_j_HF_2018       : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesHF_yearDown.txt'], year="2018"
+##CMS_scale_j_RelativeBal   : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesRelativeBalUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesRelativeBalDown.txt']
+##CMS_scale_j_Absolute_2016 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearDown.txt'], year="2016"
+##CMS_scale_j_Absolute_2017 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearDown.txt'], year="2017"
+##CMS_scale_j_Absolute_2018 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearDown.txt'], year="2018"
+##CMS_scale_j_BBEC1         : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1Up.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesBBEC1Down.txt']
+##CMS_scale_j_EC2_2016      : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearDown.txt'], year="2016"
+##CMS_scale_j_EC2_2017      : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearDown.txt'], year="2014"
+##CMS_scale_j_EC2_2018      : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearDown.txt'], year="2018"
+##CMS_scale_j_Absolute      : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesAbsoluteUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesAbsoluteDown.txt']
+##CMS_res_j_barrel_2016  : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearDown.txt'],year="2016"
+##CMS_res_j_barrel_2017  : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearDown.txt'],year="2017"
+##CMS_res_j_barrel_2018  : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_barrel_yearDown.txt'], year="2018"
+##CMS_res_j_endcap1_2016 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearDown.txt'],year="2016"
+##CMS_res_j_endcap1_2017 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearDown.txt'],year="2017"
+##CMS_res_j_endcap1_2018 : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap1_yearDown.txt'],year="2018"
+##CMS_res_j_endcap2highpt_2016 :  $PromptFromMC : .* :  templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearDown.txt'], year="2016"
+##CMS_res_j_endcap2highpt_2017  : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearDown.txt'], year="2017"
+##CMS_res_j_endcap2highpt_2018  : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2highpt_yearDown.txt'], year="2018"
+##CMS_res_j_endcap2lowpt_2016   : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearDown.txt'], year="2016"
+##CMS_res_j_endcap2lowpt_2017   : $PromptFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearDown.txt'], year="2017"
+##CMS_res_j_endcap2lowpt_2018   : $PromptFromMC : .* : templateAsymm;  FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-res_j_endcap2lowpt_yearDown.txt'], year="2018"
 
 ##amCMS_ttHl_btag_LF    : $PromptFromMC : .* : templateAsymm; AddWeights=['btagSFup_lf/btagSF'\,'btagSFdown_lf/btagSF']
 ##amCMS_ttHl_btag_HF    : $PromptFromMC : .* : templateAsymm; AddWeights=['btagSFup_hf/btagSF'\,'btagSFdown_hf/btagSF']
