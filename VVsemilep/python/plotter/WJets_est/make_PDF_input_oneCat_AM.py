@@ -12,8 +12,8 @@ date = datetime.date.today().isoformat()
 #gSystem.Load('%s/lib/slc6_amd64_gcc481/libHiggsAnalysisCombinedLimit.so'%os.environ['CMSSW_BASE'])
 ROOT.gSystem.Load("PDFs/PdfDiagonalizer_cc.so")
 ROOT.gSystem.Load("PDFs/Util_cxx.so")
-ROOT.gSystem.Load("PDFs/hyperg_2F1_c.so")
-ROOT.gSystem.Load("PDFs/HWWLVJRooPdfs_cxx.so")
+#ROOT.gSystem.Load("PDFs/hyperg_2F1_c.so")
+#ROOT.gSystem.Load("PDFs/HWWLVJRooPdfs_cxx.so")
 ROOT.gROOT.SetBatch(True)
 
 from ROOT import TGaxis, TPaveText, TLatex, TString, TFile,TLine, TLegend, TCanvas,  TMath, TText, TPad, RooFit, RooArgSet, RooArgList,  RooAddition, RooProduct, RooConstraintSum, RooCustomizer, RooMinuit,  RooAbsData, RooAbsPdf, RooAbsReal, RooAddPdf, RooWorkspace, RooExtendPdf,RooGaussian, RooDataSet, RooExponential, RooRealVar,RooFormulaVar, RooDataHist, RooHist,RooCategory, RooSimultaneous, RooGenericPdf, RooProdPdf, kTRUE, kFALSE, kGray, kRed, kDashed, kGreen,kAzure, kOrange, kBlack,kBlue,kYellow,kCyan, kMagenta, kWhite,kDot,kDashDotted,kDotted, RooErfExpPdf, RooErfPowExpPdf, RooErfPowPdf, RooErfPow2Pdf, RooExpNPdf, RooAlpha4ExpNPdf, RooExpTailPdf, RooAlpha4ExpTailPdf, Roo2ExpPdf,RooWorkspace,TH1F
@@ -33,13 +33,19 @@ parser.add_option('--inPath', action="store",type="string",dest="inPath",default
 
 (options,args) = parser.parse_args()
 
-ww_atgc=['WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_4f','WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f','WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600',
-'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800','WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf','WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600',
-'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800','WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf']
-wz_atgc=['WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f','WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f','WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f',
-'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f','WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f','WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f']
+ww_atgc=['WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1',
+'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1',
+'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v1',
+'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1',
+'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1',
+'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v1']
 
-
+wz_atgc=['WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1',
+'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1',
+'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v1',
+'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1',
+'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1',
+'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v1']
 ROOT.gStyle.SetOptStat(0);ROOT.gStyle.SetOptTitle(0)
 if options.batch: ROOT.gROOT.SetBatch(True)
 usepNM=False
@@ -82,8 +88,8 @@ class Prepare_workspace_4limit:
             self.nbins                  = (self.binhi-self.binlo)/100
             self.file_Directory=os.path.join(self.year,"0_wjest_newCuts") #0_wjest_sDM") 
             self.file1_Directory=os.path.join(self.year,"1_wjest_newCuts") 
-            self.WS                     = RooWorkspace("w")        #final workspace
-            self.wtmp                   = RooWorkspace('wtmp')
+            self.WS                     = RooWorkspace("w","w_%s_%s"%(self.ch,self.year))        #final workspace
+            self.wtmp                   = RooWorkspace('wtmp',"wtmp_%s_%s"%(self.ch,self.year))
             
             self.fitresults             = []
             ##nuisance parameter to change all slope parameters by certain percentage (bigger for cb in WZ-cateogry)
@@ -177,30 +183,30 @@ class Prepare_workspace_4limit:
 			weight_part =1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw 
 			aTGC        = treeIn.aGC_wt 
 			#all3hists4scale['c_%s_histall3'%WV].Fill(MWW,aTGC[123] * weight_part)
-			hists4scale['c_%s_histall3'%WV].Fill(MWW,aTGC[124]*weight_part)
+			hists4scale['c_%s_histall3'%WV].Fill(MWW,aTGC[124]*weight_part) #all ops set to non zero, same as starting point on the grid
 			#SM
-			hists4scale['c_SM_%s_hist'%WV].Fill(MWW,aTGC[62] * weight_part)
+			hists4scale['c_SM_%s_hist'%WV].Fill(MWW,aTGC[62] * weight_part) #SM point
 			#cwww
-			hists4scale['c_pos_%s_hist_cwww'%WV].Fill(MWW,aTGC[12] * weight_part)
-			hists4scale['c_neg_%s_hist_cwww'%WV].Fill(MWW,aTGC[112] * weight_part)
+			hists4scale['c_pos_%s_hist_cwww'%WV].Fill(MWW,aTGC[12] * weight_part) #cwww3p6
+			hists4scale['c_neg_%s_hist_cwww'%WV].Fill(MWW,aTGC[112] * weight_part) #cwww-3p6
 			#ccw
-			hists4scale['c_pos_%s_hist_ccw'%WV].Fill(MWW,aTGC[72] * weight_part)
-			hists4scale['c_neg_%s_hist_ccw'%WV].Fill(MWW,aTGC[52] * weight_part)
+			hists4scale['c_pos_%s_hist_ccw'%WV].Fill(MWW,aTGC[72] * weight_part) #cw4p50
+			hists4scale['c_neg_%s_hist_ccw'%WV].Fill(MWW,aTGC[52] * weight_part) #cw-4p50
 			#cb
-			hists4scale['c_pos_%s_hist_cb'%WV].Fill(MWW,aTGC[64] * weight_part)
-			hists4scale['c_neg_%s_hist_cb'%WV].Fill(MWW,aTGC[60] * weight_part)
+			hists4scale['c_pos_%s_hist_cb'%WV].Fill(MWW,aTGC[64] * weight_part) #cb20
+			hists4scale['c_neg_%s_hist_cb'%WV].Fill(MWW,aTGC[60] * weight_part) #cbm20
 			#ccw-SM interference
 			hists4scale['c_dif_%s_hist_ccw'%WV].Fill(MWW,(aTGC[72]-aTGC[52]) * weight_part)
 			#cb-SM interference
 			hists4scale['c_dif_%s_hist_cb'%WV].Fill(MWW,(aTGC[64]-aTGC[60]) * weight_part)
 			#cwww+ccw
-			hists4scale['c_cwww_ccw_%s_hist'%WV].Fill(MWW,aTGC[2] * weight_part)
+			hists4scale['c_cwww_ccw_%s_hist'%WV].Fill(MWW,aTGC[122] * weight_part)
 			#ccw+cb
-			hists4scale['c_ccw_cb_%s_hist'%WV].Fill(MWW,aTGC[50] * weight_part)
+			hists4scale['c_ccw_cb_%s_hist'%WV].Fill(MWW,aTGC[74] * weight_part)
 			#cwww-ccw interference
-			hists4scale['c_int_cwww_ccw_%s_hist'%WV].Fill(MWW, ((aTGC[2]-aTGC[100])-(aTGC[12]-aTGC[112])) * weight_part)
+			hists4scale['c_int_cwww_ccw_%s_hist'%WV].Fill(MWW, ((aTGC[122]-aTGC[23])-(aTGC[12]-aTGC[112])) * weight_part)
 			#ccw-cb interference
-			hists4scale['c_int_ccw_cb_%s_hist'%WV].Fill(MWW, ((aTGC[50]-aTGC[70])-(aTGC[52]-aTGC[72])) * weight_part)
+			hists4scale['c_int_ccw_cb_%s_hist'%WV].Fill(MWW, ((aTGC[74]-aTGC[54])-(aTGC[72]-aTGC[52])) * weight_part)
 
 		# Fit exponential to the aTGC-aTGC interference histograms (This is to avoid doing this via gen-level files)
 		hists4scale['c_int_cwww_ccw_%s_hist'%WV].Fit("expo")
@@ -658,15 +664,14 @@ class Prepare_workspace_4limit:
 
         def Write_datacard(self,w,region):
             ### make the card for this channel and plane ID
-            codename    = 'WWWZ_' + region + '_' + self.ch
+            ##amcodename    = 'WWWZ_' + region + '_' + self.ch
+            codename='{ch}_{region}_{year}'.format(ch=self.ch,region=region,year=self.year)
             bkgs_4card  = ['WJets','TTbar','STop']
             Nbkg_int    = len(bkgs_4card)
             uncert_map  = {}
             ##define uncertainties
             #                                              |------------el----------------------||------------mu----------------------|
             #                                                WW   WZ     WJets   TTbar   STop      WW     WZ     WJets   TTbar   STop
-            uncert_map['lumi_13TeV']                    = [1.027,1.027  ,'-'    ,1.027  ,1.027  ,1.027  ,1.027  ,'-'    ,1.027  ,1.027]
-            uncert_map['CMS_eff_vtag_tau21_sf_13TeV']   = [1.120,1.120  ,'-'    ,1.120  ,1.120  ,1.120  ,1.120  ,'-'    ,1.120  ,1.120]
             uncert_map['CMS_eff_b']                     = ['-'  ,1.001  ,'-'    ,1.008  ,'-'    ,'-'     ,'-'   ,'-'    ,1.008  ,'-'  ]
             uncert_map['CMS_scale_e']                   = [1.006,'-'    ,'-'    ,'-'    ,1.005  ,'-'     ,'-'   ,'-'    ,'-'    ,'-'  ]
             uncert_map['CMS_scale_m']                   = ['-'  ,'-'    ,'-'    ,'-'    ,'-'    ,1.017  ,1.014  ,'-'    ,1.016  ,1.019]
@@ -674,19 +679,17 @@ class Prepare_workspace_4limit:
             uncert_map['QCD_scale_VV']                  = [1.060,1.060  ,'-'    ,'-'    ,'-'    ,1.060  ,1.060  ,'-'    ,'-'    ,'-'  ]
             uncert_map['QCD_scale_TTbar']               = ['-'  ,'-'    ,'-'    ,1.190  ,1.020  ,'-'    ,'-'    ,'-'    ,1.190  ,1.019]
             uncert_map['CMS_scale_met']                 = [1.006,1.005  ,'-'    ,1.005  ,1.012  ,1.002  ,1.003  ,'-'    ,1.001  ,1.005]
-            uncert_map['CMS_eff_e']                     = [1.001,1.001  ,'-'    ,1.001  ,1.001  ,'-'    ,'-'    ,'-'    ,'-'    ,'-'  ]
-            uncert_map['CMS_eff_m']                     = ['-'  ,'-'    ,'-'    ,'-'    ,'-'    ,1.039  ,1.038  ,'-'    ,1.032  ,1.036]
             ##FIXME jet energy scale? effects of up/down in different regions ignored atm
-            uncert_map['CMS_scale_j']                   = [1.024,1.017  ,'-'    ,1.028  ,1.016  ,1.023  ,1.016  ,'-'    ,1.026  ,1.006]
+
             bkgs                                        = ['WW','WZ','TTbar','STop']
             NlnN    = len(uncert_map)
 
             card = """\nimax 1  number of channels\njmax {Nbkg_int}  number of backgrounds\nkmax *  number of nuisance parameters (sources of systematical uncertainties)\n-------------""".format(Nbkg_int=Nbkg_int+1)
             for i in range(0,Nbkg_int):
-                card += """\nshapes {bkg_name}\t\t\t\t {codename} {codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,bkg_name=bkgs_4card[i])
-            card += """\nshapes data_obs\t\t\t\t {codename} {codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename)    
-            card += """\nshapes aTGC_WW_{region}_{channel}\t\t {codename} {codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,region=region,channel=self.ch)
-            card += """\nshapes aTGC_WZ_{region}_{channel}\t\t {codename} {codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,region=region,channel=self.ch)
+                card += """\nshapes {bkg_name}\t\t\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,dirName=self.rlt_DIR_name,bkg_name=bkgs_4card[i])
+            card += """\nshapes data_obs\t\t\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,dirName=self.rlt_DIR_name)    
+            card += """\nshapes aTGC_WW_{region}_{channel}\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,region=region,channel=self.ch,dirName=self.rlt_DIR_name)
+            card += """\nshapes aTGC_WZ_{region}_{channel}\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,region=region,channel=self.ch,dirName=self.rlt_DIR_name)
             card += """\n------------\nbin\t\t\t{codename}\nobservation {obs}\n------------\nbin\t\t\t{codename}\t\t""".format(codename=codename,obs=w.data('dataset_2d_%s_%s'%(region,self.ch)).sumEntries())
             for i in range(0,Nbkg_int+1):
                 card += """\t\t{codename}""".format(codename=codename)
@@ -709,26 +712,12 @@ class Prepare_workspace_4limit:
                     card += """{value}\t\t\t""".format(value=uncert_map[uncert][i])
                 card += """\n"""
             
-            card += '''
-normvar_WJets_{ch}  flatParam
-rrv_c_ChiSq_WJets0_{ch}  flatParam
-rrv_n_ExpN_WJets0_sb_{ch}  flatParam
-rrv_c_ExpN_WJets0_sb_{ch}  flatParam
-Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 1.4
-Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 1.4
-Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig2 param 0.0 1.4
-Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig3 param 0.0 1.4
-Deco_TTbar_sb_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 2.0
-Deco_TTbar_sb_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 2.0
-Deco_TTbar_sig_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 2.0
-Deco_TTbar_sig_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 2.0
-slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label)
-
-            print card
-            cardfile = open('aC_%s.txt'%(codename),'w')
+            #print card
+            cardName='%s/aC_%s.txt'%(self.rlt_DIR_name,codename)
+            cardfile = open(cardName,'w')
             cardfile.write(card)
             cardfile.close()
-
+            return cardName
 
         def Transform2lagrangian(N_list,Pdf_list,scale_list):
             #go from EFT parametrization to Lagrangian approach, taken from SI-HEP-2011-17
@@ -874,9 +863,30 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label)
 
 
             ##create the datacards for all regions
-            self.Write_datacard(w_bkg,"sb_lo")
-            self.Write_datacard(w_bkg,"sig")
-            self.Write_datacard(w_bkg,"sb_hi")
+            card_sb_lo=self.Write_datacard(w_bkg,"sb_lo")
+            card_sig=self.Write_datacard(w_bkg,"sig")
+            card_sb_hi=self.Write_datacard(w_bkg,"sb_hi")
+            combineCardName=self.rlt_DIR_name+"/aC_WWWZ_%s.txt"%(self.ch)
+            cmd = 'combineCards.py {sig} {sb_lo} {sb_hi}  > {dC}.txt'.format(sig=card_sig,sb_lo=card_sb_lo,sb_hi=card_sb_hi,dC=combineCardName)
+            print cmd 
+            os.system(cmd)
+            dC=open(combineCardName,'a')
+            dC.write('''            
+normvar_WJets_{ch}  flatParam
+rrv_c_ChiSq_WJets0_{ch}  flatParam
+rrv_n_ExpN_WJets0_sb_{ch}  flatParam
+rrv_c_ExpN_WJets0_sb_{ch}  flatParam
+Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 1.4
+Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 1.4
+Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig2 param 0.0 1.4
+Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig3 param 0.0 1.4
+Deco_TTbar_sb_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 2.0
+Deco_TTbar_sb_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 2.0
+Deco_TTbar_sig_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 2.0
+Deco_TTbar_sig_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 2.0
+slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label))
+
+            dC.close()
 
             #make some plots
             if options.Make_plots:
@@ -915,24 +925,29 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label)
 
                 raw_input(channel)
 
-
+            return combineCardName
 ###run code###
 
 if __name__ == '__main__':
     if options.chan=='elmu':
-        makeWS_el        = Prepare_workspace_4limit(options.year,'el',950,4500,"")
-        makeWS_el.Make_input()
-        makeWS_mu        = Prepare_workspace_4limit(options.year,'mu',950,4500,"")
-        makeWS_mu.Make_input()
-        print "@@@@@@@@@@@@@@&&&&&&$$$%%DONE=============================================== and going to combine=========+++++++++++++++="
+        makeWS_el        = Prepare_workspace_4limit(options.year,'el',950,4550,"")
+        combineCardName_el=makeWS_el.Make_input()
+        makeWS_mu        = Prepare_workspace_4limit(options.year,'mu',950,4550,"")
+        combineCardName_mu=makeWS_mu.Make_input()
+        combine_cards_dir="Cards/%s/"%(date)
+        combineCardName=combine_cards_dir+'/aC_WWWZ_elmu_simfit_%s.txt'%(options.year)
+        cmd='combineCards.py {mu} {el} > {elmu}'.format(mu=combineCardName_mu,el=combineCardName_el,elmu=combineCardName)
+        os.system(cmd)
+
     else:
-        makeWS        = Prepare_workspace_4limit(options.year,options.chan,950,4500,"")
+        makeWS        = Prepare_workspace_4limit(options.year,options.chan,950,4550,"")
         makeWS.Make_input()
     #combine the created datacards
-    output_card_name = 'aC_WWWZ_simfit'
-    cmd = 'combineCards.py aC_WWWZ_sig_el.txt aC_WWWZ_sig_mu.txt aC_WWWZ_sb_lo_el.txt aC_WWWZ_sb_lo_mu.txt aC_WWWZ_sb_hi_el.txt aC_WWWZ_sb_hi_mu.txt > %s.txt'%output_card_name
-    #cmd = 'combineCards.py aC_WWWZ_sig_mu.txt aC_WWWZ_sb_lo_mu.txt aC_WWWZ_sb_hi_mu.txt > %s.txt'%output_card_name
-    print cmd
-    os.system(cmd)
-    print 'generated Card : %s.txt'%output_card_name
+    #output_card_name = '%s/aC_WWWZ_simfit'%self.combine_cards_dir
+    #cmd = 'combineCards.py aC_WWWZ_sig_el.txt aC_WWWZ_sig_mu.txt aC_WWWZ_sb_lo_el.txt aC_WWWZ_sb_lo_mu.txt aC_WWWZ_sb_hi_el.txt aC_WWWZ_sb_hi_mu.txt > %s.txt'%output_card_name
+    #cmd = 'combineCards.py Cards/2023-12-12/cards_sDM_weighted_mu_WPM_950_4550/aC_WWWZ_sig_mu.txt Cards/2023-12-12/cards_sDM_weighted_mu_WPM_950_4550/aC_WWWZ_sb_lo_mu.txt Cards/2023-12-12/cards_sDM_weighted_mu_WPM_950_4550/aC_WWWZ_sb_hi_mu.txt > %s.txt'%output_card_name
+    #print cmd
+    #os.system(cmd)
+    #print 'generated Card : %s.txt'%output_card_name
     print "all done"
+    

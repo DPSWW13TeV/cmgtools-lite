@@ -182,7 +182,7 @@ aTGC_WW_SM_incl : WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f: 0.67*xsec : LHEReweighti
 
 #linear term 0.5*(pos-neg)
 #quadterm (pos+neg)/2 -SM
-#SM-BSM (interference) = pos-neg
+#SM-BSM (interference) = 0.5*(pos-neg)
  
 
 

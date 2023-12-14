@@ -48,7 +48,7 @@ def findW(lhe_parts):
 
 
 
-def calcmassWV(l1,fjet,metpt,metphi,typ,opt):
+def calcmassWV(l1,fjet,metpt,metphi,typ):
     from ROOT.heppy import METzCalculator
     NeutrinoPz = METzCalculator()
     met=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
@@ -66,11 +66,52 @@ def calcmassWV(l1,fjet,metpt,metphi,typ,opt):
     metV.SetPxPyPzE(metpt*cos(metphi), metpt*sin(metphi),nu_pz,sqrt(metpt*metpt+nu_pz*nu_pz));
     mWV=lepton1+fatjet1+metV;
     massWV=mWV.M();
-    if opt == 1: 
-        #print metV.Pz(),metphi,metpt
-        return metV
-    else:
-        return massWV
+    return (metV,massWV)
+
+def computephi(l1,fj,metpt,metphi,neutrino):
+
+    wv_sys = ROOT.TLorentzVector(0.,0.,0.,0.);
+    lep  = ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    fjet = ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    neu  = ROOT.TLorentzVector(0.,0.,0.,0.);
+    neu.SetPxPyPzE(metpt*cos(metphi), metpt*sin(metphi),neutrino.Pz(),sqrt(metpt*metpt+neutrino.Pz()*neutrino.Pz()));
+    lep.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,l1.mass);
+    fjet.SetPtEtaPhiM(fj.pt,fj.eta,fj.phi,fj.mass); 
+
+    wv_sys+=lep+fjet+neutrino
+    wlep=lep+neutrino
+    #print wv_sys.Pt();
+    boost_vec=wv_sys.BoostVector()
+    #print boost_vec.Mag()
+    
+    fjet.Boost(-boost_vec)
+    lep.Boost(-boost_vec); #Make an LT for a passive boost (i.e. object velocity -= in boost direction) 
+    neutrino.Boost(-boost_vec);
+    # wv_sys.Boost(-boost_vec)
+    # print wv_sys.Pt()
+    c_wlep_boson=ROOT.TLorentzVector(0.,0.,0.,0.);
+    c_wlep_boson+=lep
+    c_wlep_boson += neutrino
+    #print "step 1",c_wlep_boson.Pt(),c_wlep_boson.Phi(),c_wlep_boson.X(),c_wlep_boson.Y(),c_wlep_boson.Z();
+    r_uvec= wv_sys.Vect().Unit(); 
+    z_uvec = c_wlep_boson.Vect().Unit();  ##direction of w_lep boson
+    y_uvec = z_uvec.Cross(r_uvec).Unit();
+    x_uvec = y_uvec.Cross(z_uvec).Unit();
+    #print "axes for new cordinate system",y_uvec.Y(),z_uvec.Z(),x_uvec.X(),r_uvec.Mag()
+    rot    = ROOT.TRotation();
+    rot.SetXAxis(x_uvec);
+    rot.SetYAxis(y_uvec);
+    rot.SetZAxis(z_uvec);
+    rotator = ROOT.TLorentzRotation(rot);
+    r_wlep_boson=rotator*c_wlep_boson;
+    #print "after rotation",r_wlep_boson.Phi(),r_wlep_boson.Pt() 
+    #print "rotate back",(rotator.Inverse()*r_wlep_boson).Pt(),(rotator.Inverse()*r_wlep_boson).Phi(),(rotator.Inverse()*r_wlep_boson).X(),(rotator.Inverse()*r_wlep_boson).Y(),(rotator.Inverse()*r_wlep_boson).Z()
+    r_charged_lepton= rotator*lep;
+    r_neutrino = rotator*neutrino;
+    r_fatjet = rotator*fjet;
+    return r_wlep_boson,r_charged_lepton,r_neutrino,r_fatjet
+    #r_charged_lepton.Phi() ##for leptons (with neg charge) = phi+pI modulo 2pi
+
 
 
 ##amdef computephi_lheLvl(lheparts,typ):
@@ -132,61 +173,14 @@ def calcmassWV(l1,fjet,metpt,metphi,typ,opt):
 ##am    #r_charged_lepton.Phi() ##for leptons (with neg charge) = phi+pI modulo 2pi
 
 
-def computephi(l1,fj,metpt,metphi,typ):
 
-    wv_sys = ROOT.TLorentzVector(0.,0.,0.,0.);
-    neutrino=calcmassWV(l1,fj,metpt,metphi,typ,1)
-    lep=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-    fjet=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-    neu = ROOT.TLorentzVector(0.,0.,0.,0.);
-    neu.SetPxPyPzE(metpt*cos(metphi), metpt*sin(metphi),neutrino.Pz(),sqrt(metpt*metpt+neutrino.Pz()*neutrino.Pz()));
-    lep.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,l1.mass);
-    fjet.SetPtEtaPhiM(fj.pt,fj.eta,fj.phi,fj.mass); 
-
-    lep_c=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-    fjet_c=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-    lep_c.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,l1.mass);
-    fjet_c.SetPtEtaPhiM(fj.pt,fj.eta,fj.phi,fj.mass); 
-
-    wv_sys+=lep+fjet+neutrino
-    wlep=lep+neutrino
-    #print wv_sys.Pt();
-    boost_vec=wv_sys.BoostVector()
-    #print boost_vec.Mag()
-    
-    fjet.Boost(-boost_vec)
-    lep.Boost(-boost_vec); #Make an LT for a passive boost (i.e. object velocity -= in boost direction) 
-    neutrino.Boost(-boost_vec);
-    # wv_sys.Boost(-boost_vec)
-    # print wv_sys.Pt()
-    c_wlep_boson=ROOT.TLorentzVector(0.,0.,0.,0.);
-    c_wlep_boson+=lep
-    c_wlep_boson += neutrino
-    #print "step 1",c_wlep_boson.Pt(),c_wlep_boson.Phi(),c_wlep_boson.X(),c_wlep_boson.Y(),c_wlep_boson.Z();
-    r_uvec= wv_sys.Vect().Unit(); 
-    z_uvec = c_wlep_boson.Vect().Unit();  ##direction of w_lep boson
-    y_uvec = z_uvec.Cross(r_uvec).Unit();
-    x_uvec = y_uvec.Cross(z_uvec).Unit();
-    #print "axes for new cordinate system",y_uvec.Y(),z_uvec.Z(),x_uvec.X(),r_uvec.Mag()
-    rot    = ROOT.TRotation();
-    rot.SetXAxis(x_uvec);
-    rot.SetYAxis(y_uvec);
-    rot.SetZAxis(z_uvec);
-    rotator = ROOT.TLorentzRotation(rot);
-    r_wlep_boson=rotator*c_wlep_boson;
-    #print "after rotation",r_wlep_boson.Phi(),r_wlep_boson.Pt() 
-    #print "rotate back",(rotator.Inverse()*r_wlep_boson).Pt(),(rotator.Inverse()*r_wlep_boson).Phi(),(rotator.Inverse()*r_wlep_boson).X(),(rotator.Inverse()*r_wlep_boson).Y(),(rotator.Inverse()*r_wlep_boson).Z()
-    r_charged_lepton= rotator*lep;
-    r_neutrino = rotator*neutrino;
-    r_fatjet = rotator*fjet;
-    return r_wlep_boson,r_charged_lepton,r_neutrino,r_fatjet,neu
-    #r_charged_lepton.Phi() ##for leptons (with neg charge) = phi+pI modulo 2pi
 
 class compute_phi_gen_v1(Module):
     def __init__(self, lepMultiplicity=1,nfjets=1):
         self.label = "" # "" if (label in ["",None]) else ("_"+label)
         self.lepMultiplicity=lepMultiplicity
         self.nfjets=nfjets
+        self.neu_types=[0,01,10,11,20,21,30,31]
         pass
 
     def beginJob(self):
@@ -197,24 +191,27 @@ class compute_phi_gen_v1(Module):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        for var in 'pt,eta,phi,pdgId,mass,hasTauAnc,pt_HF,eta_HF,phi_HF,mass_HF'.split(','):
+        for var in 'pt,eta,phi,pdgId,hasTauAn':
             for l in range(self.lepMultiplicity):
                 self.out.branch('SeldLep%d_%s'%(l+1,var),'F')
+                for nT in self.neu_types:
+                    self.out.branch('SeldLep%d_%s_HF_typ%s'%(l+1,var,str(nT)),'F')
+                
         self.out.branch('nSeldLeps'  ,'I')
-        for var in 'pt,eta,phi,mass,hadronFlavour,partonFlavour,pt_HF,eta_HF,phi_HF,mass_HF'.split(','): 
+        
+        for var in 'pt,eta,phi,mass,hadronFlavour,partonFlavour'.split(','): 
             for j in range(self.nfjets):
                 self.out.branch('SelGak8Jet%d_%s'%(j+1,var),'F')
-        self.out.branch('nSelGak8Jets'  ,'I')
+                for nT in self.neu_types:
+                     self.out.branch('SelGak8Jet%d_%s_HF_typ%s'%(j+1,var,str(nT)),'F')
 
+        self.out.branch('nSelGak8Jets'  ,'I')
         self.out.branch('event', 'L')
         self.out.branch('event_presel', 'L')
-        self.out.branch('neutrino_pt_HF',  'F')
-        self.out.branch('neutrino_eta_HF', 'F')
-        self.out.branch('neutrino_phi_HF', 'F')
-        self.out.branch('neutrino_mass_HF','F')
-        self.out.branch('neutrino_pt',  'F')
-        self.out.branch('neutrino_eta', 'F')
-        self.out.branch('neutrino_phi', 'F')
+        for var in 'pt,eta,phi'.split(','):
+            for  nT in self.neu_types:
+                self.out.branch('neutrino_%s_typ%s'(var,str(nT)), 'F')
+                self.out.branch('neutrino_%s_HF_typ%s'%(var,str(nT)),  'F')
 
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
@@ -227,27 +224,33 @@ class compute_phi_gen_v1(Module):
         self.out.fillBranch('event_presel',event.event)
         self.out.fillBranch('nSeldLeps',len(leptons))
         self.out.fillBranch('nSelGak8Jets',len(fatJets))
+
+
         r_wlep_boson=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         r_charged_lepton=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         r_neutrino=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         r_neu=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         sel_bool= genmet > 110 and  len(fatJets) > 0 and len(leptons) == 1
+        info={}
         if sel_bool:
-            r_wlep_boson,r_charged_lepton,r_neutrino,r_fatjet,r_neu=computephi(leptons[0],fatJets[0],genmet,genmet_phi,0)
-        #if (genmet < 110 or len(fatJets) < 1 or len(leptons) < 1): return False
+            for nT in self.neu_types:
+                neu,mWV =calcmassWV(leptons[0],fatJets[0],genmet,genmet_phi,fjet,metpt,metphi,nT);
+                info[str(nT)]=computephi(leptons[0],fatJets[0],genmet,genmet_phi,neu) ## in the HF frame
+                #r_wlep_boson,r_charged_lepton,r_neutrinotyp0,r_fatjet=
+
 
         for lep in range(self.lepMultiplicity):
-            for var in 'pt,eta,phi,pdgId,mass,hasTauAnc'.split(','):
-                self.out.fillBranch('SeldLep%d_%s'%(lep+1,var),getattr(leptons[lep],var) if sel_bool else -999)
-            self.out.fillBranch('SeldLep%d_pt_HF'%(lep+1),r_charged_lepton.Pt() if sel_bool else -999)
-            self.out.fillBranch('SeldLep%d_eta_HF'%(lep+1),r_charged_lepton.Eta() if sel_bool else -999)
-            phi = -999;
-            if sel_bool:
-                phi = r_charged_lepton.Phi() if leptons[lep].pdgId < 0  else r_charged_lepton.Phi()+pi
-            if (phi > float(pi)): phi -= float(2*pi);
-            elif (phi <= -float(pi)): phi += float(2*pi);
-            self.out.fillBranch('SeldLep%d_phi_HF'%(lep+1),phi if sel_bool else -999 )
-            self.out.fillBranch('SeldLep%d_mass_HF'%(lep+1),r_charged_lepton.M() if sel_bool else -999)
+            for var in 'pt,eta,phi,hasTauAnc'.split(','):
+                self.out.fillBranch('SeldLep%d_%s'%(lep+1,var),getattr(leptons[lep],var) if sel_bool else -999 )
+                for nT in self.neu_types:
+                    for var in 'pt,eta,hasTauAnc'.split(','):
+                    self.out.fillBranch('SeldLep%d_%s_HF_typ%s'%(lep+1,var,nT),info[str(nT)](0).Pt() if sel_bool else -999)
+                    phi = -999;
+                    if sel_bool:
+                        phi = info[str(nT)](0).Phi() if leptons[lep].pdgId < 0  else  info[str(nT)](0).Phi()+pi
+                        if (phi > float(pi)): phi -= float(2*pi);
+                        elif (phi <= -float(pi)): phi += float(2*pi);
+                        self.out.fillBranch('SeldLep%d_phi_HF_typ%s'%(lep+1,nT),phi if sel_bool else -999 )
         for j in range(self.nfjets):
             for var in 'pt,eta,phi,mass,hadronFlavour,partonFlavour'.split(','): 
                 self.out.fillBranch('SelGak8Jet%d_%s'%(j+1,var),getattr(fatJets[j],var) if sel_bool else -999)
@@ -256,10 +259,9 @@ class compute_phi_gen_v1(Module):
             self.out.fillBranch('SelGak8Jet%d_phi_HF'%(j+1),r_fatjet.Phi() if sel_bool else -999)
             self.out.fillBranch('SelGak8Jet%d_mass_HF'%(j+1),r_fatjet.M() if sel_bool else -999)
 
-        self.out.fillBranch('neutrino_pt_HF',r_neutrino.Pt() if sel_bool else -999 )
-        self.out.fillBranch('neutrino_eta_HF',r_neutrino.Eta() if sel_bool else -999)
-        self.out.fillBranch('neutrino_phi_HF',r_neutrino.Phi() if sel_bool else -999 )
-        self.out.fillBranch('neutrino_mass_HF',r_neutrino.M() if sel_bool else -999 )
+        self.out.fillBranch('neutrino_pt_HF',r_neutrinotyp0.Pt() if sel_bool else -999 )
+        self.out.fillBranch('neutrino_eta_HF',r_neutrinotyp0.Eta() if sel_bool else -999)
+        self.out.fillBranch('neutrino_phi_HF',r_neutrinotyp0.Phi() if sel_bool else -999 )
         self.out.fillBranch('neutrino_pt',r_neu.Pt() if sel_bool else -999 )
         self.out.fillBranch('neutrino_eta',r_neu.Eta() if sel_bool else -999)
         self.out.fillBranch('neutrino_phi',r_neu.Phi() if sel_bool else -999 )

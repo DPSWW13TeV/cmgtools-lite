@@ -1,5 +1,5 @@
-#ifndef HiggsAnalysis_CombinedLimit_PdfDiagonalizer_h
-#define HiggsAnalysis_CombinedLimit_PdfDiagonalizer_h
+#ifndef PdfDiagonalizer_h
+#define PdfDiagonalizer_h
 
 class RooWorkspace;
 struct RooFitResult;
