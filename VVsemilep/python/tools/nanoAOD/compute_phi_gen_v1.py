@@ -20,7 +20,7 @@ def gooddLeptons(dlep):
     else: return False
 
 def goodlheparts(lheP):
-    if (lheP.status == 1 and lheP.status !=21): return True
+    if (lheP.status == 1 and lheP.pdgId !=21): return True
     else: return False
 
 
@@ -29,12 +29,12 @@ def findW(lhe_parts):
     charge_Whad=0;    charge_Wlep=0;
     for i in range(len(lhe_parts)):
         if abs(lhe_parts[i].pdgId) in [11,13,15]:            
-            charge_Wlep=-1*lhe_parts[i].pdgId/abs(lhe_parts[i].pdgId)
+            charge_Wlep=-1*lhe_parts[i].pdgId/abs(lhe_parts[i].pdgId) 
             lep_index=i;
         elif abs(lhe_parts[i].pdgId) in [12,14,16]:
             neu_index=i;
         elif abs(lhe_parts[i].pdgId) < 7: #getting rid of gluons from radiation 
-            charge_i=pdgIds[abs(lhe_parts[i].pdgId)]*abs(lhe_parts[i].pdgId)/lhe_parts[i].pdgId
+            charge_i=pdgIds[abs(lhe_parts[i].pdgId)]*abs(lhe_parts[i].pdgId)/lhe_parts[i].pdgId #
             for j in range(i+1,len(lhe_parts)):
                 if (abs(lhe_parts[j].pdgId) > 7 or lhe_parts[i].pdgId == lhe_parts[j].pdgId ): continue
                 charge_j=pdgIds[abs(lhe_parts[j].pdgId)]*abs(lhe_parts[j].pdgId)/lhe_parts[j].pdgId
@@ -114,7 +114,7 @@ def computephi(l1,fj,metpt,metphi,neutrino):
 
 
 
-##amdef computephi_lheLvl(lheparts,typ):
+##amdef computephi_lheLvl(lheparts):
 ##am    (lep_index,neu_index,q_index,qbar_index,charge_Wlep,charge_Whad)=findW(lheparts)
 ##am    
 ##am    wv_sys = ROOT.TLorentzVector(0.,0.,0.,0.);
