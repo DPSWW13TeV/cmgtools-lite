@@ -106,7 +106,7 @@ class Prepare_workspace_4limit:
             if not os.path.isdir(self.plotsDir): os.system("mkdir %s"%self.plotsDir)
             os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
             os.system("cp make_PDF_input_oneCat_AM.py "+self.plotsDir)
-            self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,self.binlo,int(self.binhi))
+            self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,self.binlo,int(self.binhi)) ##AM date
 
             ##read workspace containing background pdfs
             fileInWs                    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.binhi)))
@@ -797,10 +797,10 @@ class Prepare_workspace_4limit:
 
             #import m_pruned and define ranges
             getattr(self.WS,'import')(w_bkg.var('rrv_mass_j'))
-            self.WS.var('rrv_mass_j').setRange('sb_lo',40,65)
+            self.WS.var('rrv_mass_j').setRange('sb_lo',45,65)
             self.WS.var('rrv_mass_j').setRange('sig',65,105)
             self.WS.var('rrv_mass_j').setRange('sb_hi',105,150)
-            self.WS.var('rrv_mass_lvj').setRange(950,3500)
+            self.WS.var('rrv_mass_lvj').setRange(950,4550)
 
             #bkg-pdfs have the format '[bkg-name]_mlvj_[region]_[ch]' or '[bkg-name]_mj_[region]_[ch]'
 
@@ -933,11 +933,11 @@ if __name__ == '__main__':
         makeWS_el        = Prepare_workspace_4limit(options.year,'el',950,4550,"")
         combineCardName_el=makeWS_el.Make_input()
         makeWS_mu        = Prepare_workspace_4limit(options.year,'mu',950,4550,"")
-        combineCardName_mu=makeWS_mu.Make_input()
-        combine_cards_dir="Cards/%s/"%(date)
-        combineCardName=combine_cards_dir+'/aC_WWWZ_elmu_simfit_%s.txt'%(options.year)
-        cmd='combineCards.py {mu} {el} > {elmu}'.format(mu=combineCardName_mu,el=combineCardName_el,elmu=combineCardName)
-        os.system(cmd)
+        #combineCardName_mu=makeWS_mu.Make_input()
+        #combine_cards_dir="Cards/%s/"%(date)
+        #combineCardName=combine_cards_dir+'/aC_WWWZ_elmu_simfit_%s.txt'%(options.year)
+        #cmd='combineCards.py {mu} {el} > {elmu}'.format(mu=combineCardName_mu,el=combineCardName_el,elmu=combineCardName)
+        #os.system(cmd)
 
     else:
         makeWS        = Prepare_workspace_4limit(options.year,options.chan,950,4550,"")

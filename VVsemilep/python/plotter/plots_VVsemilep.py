@@ -172,7 +172,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['sm','WJets','tt','singletop','higgs','QCD','data']#'WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] 
+    processes    = ['sm','data','WJets','tt','singletop','higgs','QCD','data']#'WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] 
     
     for ops in WCs:
         morePs=['sm_lin_quad_','quad_']
@@ -229,7 +229,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 anything = "  --binname %s "%binName #--showIndivSigs #--pseudoData all
                 extraopts+= anything
                 if 'plots' in doWhat:
-                    if len(acP) > 0: extraopts+=''.join(' -E ^'+cut for cut in acP )
+                    if len(acP) > 0: extraopts += ''.join(' -E ^'+cut for cut in acP )
 ##am                    if "SR" in pR and 'data' in processes:  
 ##am                        processes.remove('data')
 ##am                        showratio   = False
@@ -243,28 +243,15 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                         mWV_dist=" {here} {binning} ".format(here=mWV_fxn[LF],binning=mWV_binning)
                         binNamecards=binName+"_"+year
                         extraoptscards= ' --xp higgs --binname %s '%(binNamecards)
-                        if len(acC) > 0:extraoptscards+=''.join(' -E ^'+cut for cut in acC )
+                        if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
                         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,applypNetSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
                     else:
                         for op in WCs:
                             mWV_dist=" {here} {binning} ".format(here=mWV_fxn[LF],binning=mWV_binning)
                             binNamecards=binName+"_"+op+"_"+year
-                            extraoptscards= ' --binname %s '%binNamecards
+                            extraoptscards= '--xp higgs --xp QCD  --binname %s '%(binNamecards)
                             if len(acC) > 0:extraoptscards+=''.join(' -E ^'+cut for cut in acC )
                             runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,applypNetSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
-                    ##am        else:
-##am            enable=[]
-##am            nlep=3 if binName == '3l' else 4
-##am            makeplots= plwzCR if binName == '3l' else plzzCR
-##am            more= '--xp Rares --xp WZ --xp VVV ' if binName == '4l' else ''
-##am            anything = " --binname cr%s%s "%(binName,year)
-##am            ratio   = ' --fixRatioRange  --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.5 2.0 '
-##am            extraoptCRs= anything +more + ratio + spam + legends + ubands
-##am            extraoptsCRcards=anything +more
-##am            if 'plots' in doWhat:
-##am                runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs,year, nlep,extraoptCRs,invert,cutFlow)                
-##am            else:
-##am                runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut, fsyst , binningBDT, enable, disable, processes, scalethem,applylepSFs,year,nlep,extraoptsCRcards,invert)
 
 
 #####################################
@@ -413,7 +400,7 @@ if __name__ == '__main__':
     parser.add_option('--sel',dest='sel', action='append', default=[], help='make plots with SR/ejCR/inclB/topCR/sig/sb_lo/sb_hi')
     parser.add_option('--dCF',dest='dCF', action='store_true', default=False , help='cutflow with MC & plot shapes w/o uncert')
     parser.add_option('--fCR',dest='fCR', action='store_true', default=False , help='fit to data in the CR')
-    parser.add_option('--wjD',dest='wjD', type='string', default="2023-11-22", help='date to pick WJ workspace from')
+    parser.add_option('--wjD',dest='wjD', type='string', default="2023-12-19", help='date to pick WJ workspace from')
     parser.add_option('--WC',dest='WC', type='string' , default=['cwww'], action="append", help='consider terms in EFT Lag. with terms corresponding to this aTGC operator tunred on (for now relevant to make datacards)')
     (opts, args) = parser.parse_args()
 

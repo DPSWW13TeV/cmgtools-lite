@@ -223,7 +223,7 @@ class doFit_wj_and_wlvj:
         os.system("cp prepare_bkg_oneCat_AM.py "+self.plotsDir)
         if not os.path.isdir(os.path.join(self.plotsDir,"other")): os.system("mkdir %s"%(os.path.join(self.plotsDir,"other")))
         os.system("cp ~/public/index.php %s"%self.plotsDir+"/other")
-        self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))
+        self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))##date
 
         if not os.path.isdir(self.rlt_DIR_name):
                 os.system("mkdir -p %s " %self.rlt_DIR_name);
@@ -850,6 +850,9 @@ objName ==objName_before ):
         if in_model_name == "ExpN":
             print "########### ExpN funtion for W+jets mlvj ############"
             if "WJets" in label and "sig" in label:
+                #rrv_c_ExpN = RooRealVar("rrv_c_ExpN"+label+"_"+self.channel,"rrv_c_ExpN"+label+"_"+self.channel,-2e-3,-1e-1,-1e-5);
+                #rrv_n_ExpN = RooRealVar("rrv_n_ExpN"+label+"_"+self.channel,"rrv_n_ExpN"+label+"_"+self.channel, 4e3, -1e4, 1e4);
+ 
                rrv_c_ExpN = RooRealVar("rrv_c_ExpN"+label+"_"+self.channel,"rrv_c_ExpN"+label+"_"+self.channel,-0.00347556,-1e-1,-1e-6);
                rrv_n_ExpN = RooRealVar("rrv_n_ExpN"+label+"_"+self.channel,"rrv_n_ExpN"+label+"_"+self.channel, -173.987, -1e4, 1e5);
             elif "WJets" in label and "sb" in label: 
@@ -903,20 +906,16 @@ objName ==objName_before ):
 
         ## sum of two exponential 
 
-        if in_model_name == "Exp" or in_model_name == "Exp_sr" and  "WJets" in label:
-            print "########### Exp = levelled exp funtion for W+jets mlvj ############"
-            rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.01,-0.1,0.);
-            model_pdf = ROOT.RooExponential("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c_Exp);
- 
-##am        if in_model_name == "Exp" and "sig" in label and "WJets" in label:
-##am            rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.05,-0.15,0); #
-##am            model_pdf = ROOT.RooExponential("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c_Exp);
-##am        if  in_model_name == "Exp" and "sig" not in label and "WJets" in label:
-##am            rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel, -0.01,-0.15,0); #-1e2,1e2) #;-0.15,1e2); #here
-##am            model_pdf = ROOT.RooExponential("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c_Exp);
-
-        if "WJets" not in  label and in_model_name == "Exp":
-            rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.003,-1,0);
+        if in_model_name == "Exp" or in_model_name == "Exp_sr":
+            if "WJets" not in  label:
+                print "########### Exp = exp funtion for W+jets mlvj ############",label
+                rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.003,-1,0);
+            else:
+                if "sig" in label:
+                    rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.05,-0.15,0); #
+                else:
+                    rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel, -0.01,-0.15,0); #-1e2,1e2) #;-0.15,1e2); #here
+                #rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,0.0323819,-0.1,-1e-6); #-0.05,-1,0); #-0.165,0);##valid until -0.15 below this invalid minima
             model_pdf = ROOT.RooExponential("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c_Exp);
 
         
@@ -2567,7 +2566,7 @@ objName ==objName_before ):
         self.prepare_limit("sideband_correction_method1",1,0,0)
 
         ### finale plot and check of the workspace
-        self.read_workspace(1)
+        #self.read_workspace(1)
         ### print all fitresults
         #for results in [self.fitresultsmj,self.fitresultsmlvj,self.fitresultsfinal]:
          #   for i in results:

@@ -19,29 +19,30 @@ $alias : FRData : data_fakes|.*_promptsub
 $alias : FRAll  : data_fakes|.*_promptsub|TT_FR_QCD
 
 ### Uncertainties
+
 # lumi from https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#LumiComb
-lumi_13TeV_2016		: $AllFromMC : .* : normSymm : 1.022; year="2016"
-lumi_13TeV_2017		: $AllFromMC : .* : normSymm : 1.020; year="2017"
-lumi_13TeV_2018		: $AllFromMC : .* : normSymm : 1.015; year="2018"
+lumi_13TeV_2016		: $PromptFromMC : .* : normSymm : 1.022; year="2016"
+lumi_13TeV_2017		: $PromptFromMC : .* : normSymm : 1.020; year="2017"
+lumi_13TeV_2018		: $PromptFromMC : .* : normSymm : 1.015; year="2018"
 
-lumi_13TeV_XY		: $AllFromMC : .* : normSymm : 1.009; year="2016"
-lumi_13TeV_XY		: $AllFromMC : .* : normSymm : 1.008; year="2017"
-lumi_13TeV_XY		: $AllFromMC : .* : normSymm : 1.020; year="2018"
+lumi_13TeV_XY		: $PromptFromMC : .* : normSymm : 1.009; year="2016"
+lumi_13TeV_XY		: $PromptFromMC : .* : normSymm : 1.008; year="2017"
+lumi_13TeV_XY		: $PromptFromMC : .* : normSymm : 1.020; year="2018"
 
-lumi_13TeV_LS		: $AllFromMC : .* : normSymm : 1.003; year="2017"
-lumi_13TeV_LS		: $AllFromMC : .* : normSymm : 1.002; year="2018"
+lumi_13TeV_LS		: $PromptFromMC : .* : normSymm : 1.003; year="2017"
+lumi_13TeV_LS		: $PromptFromMC : .* : normSymm : 1.002; year="2018"
 
-lumi_13TeV_BBD		: $AllFromMC : .* : normSymm : 1.004; year="2016" 
-lumi_13TeV_BBD		: $AllFromMC : .* : normSymm : 1.004; year="2017" 
+lumi_13TeV_BBD		: $PromptFromMC : .* : normSymm : 1.004; year="2016" 
+lumi_13TeV_BBD		: $PromptFromMC : .* : normSymm : 1.004; year="2017" 
 
-lumi_13TeV_DB 		: $AllFromMC : .* : normSymm : 1.005; year="2016"
-lumi_13TeV_DB 		: $AllFromMC : .* : normSymm : 1.005; year="2017" 
+lumi_13TeV_DB 		: $PromptFromMC : .* : normSymm : 1.005; year="2016"
+lumi_13TeV_DB 		: $PromptFromMC : .* : normSymm : 1.005; year="2017" 
 
-lumi_13TeV_BCC 		: $AllFromMC : .* : normSymm : 1.003; year="2017"
-lumi_13TeV_BCC 		: $AllFromMC : .* : normSymm : 1.002; year="2018" 
+lumi_13TeV_BCC 		: $PromptFromMC : .* : normSymm : 1.003; year="2017"
+lumi_13TeV_BCC 		: $PromptFromMC : .* : normSymm : 1.002; year="2018" 
 
-lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.004; year="2016"
-lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.001; year="2017"
+lumi_13TeV_GS 		: $PromptFromMC : .* : normSymm : 1.004; year="2016"
+lumi_13TeV_GS 		: $PromptFromMC : .* : normSymm : 1.001; year="2017"
 
 ## pdf
 #nnpdf : $PromptFromMC :  .* : templateSymm; Normalize=False, AddWeight='nnpdf_rms', year="2018"
@@ -82,36 +83,20 @@ CMS_eff_el : $PromptFromMC : .*lep.* : templateAsymm ; AddWeights=['lepsf_el_up/
 
 
 # trigger efficiencies
-CMS_vvsl16_trigger_ee      : $PromptFromMC : .*el.*  : templateSymm; Normalize=False, AddWeight='ttH_2lss_ifflav(LepGood1_pdgId\,LepGood1_pdgId\,1.02\,1.0\,1.0)', year="2016"
-CMS_vvsl16_trigger_em      : $PromptFromMC : .*lep.* : templateSymm; Normalize=False, AddWeight='ttH_2lss_ifflav(LepGood1_pdgId\,LepGood1_pdgId\,1.0\,1.01\,1.0)', year="2016"
-CMS_vvsl16_trigger_mm      : $PromptFromMC : .*mu.*  : templateSymm; Normalize=False, AddWeight='ttH_2lss_ifflav(LepGood1_pdgId\,LepGood1_pdgId\,1.0\,1.0\,1.01)', year="2016"
 
-CMS_vvsl17_trigger_ee      : $PromptFromMC : .*el.*  : templateSymm; Normalize=False, AddWeight='ttH_2lss_ifflav(LepGood1_pdgId\,LepGood1_pdgId\,1.01\,1.0\,1.0)', year="2017"
-CMS_vvsl17_trigger_em      : $PromptFromMC : .*lep.* : templateSymm; Normalize=False, AddWeight='ttH_2lss_ifflav(LepGood1_pdgId\,LepGood1_pdgId\,1.0\,1.01\,1.0)', year="2017"
-CMS_vvsl17_trigger_mm      : $PromptFromMC : .*mu.*  : templateSymm; Normalize=False, AddWeight='ttH_2lss_ifflav(LepGood1_pdgId\,LepGood1_pdgId\,1.0\,1.0\,1.02)', year="2017"
-	 
-CMS_vvsl18_trigger_ee      : $PromptFromMC : .*el.*  : templateSymm; Normalize=False, AddWeight='ttH_2lss_ifflav(LepGood1_pdgId\,LepGood1_pdgId\,1.01\,1.0\,1.0)', year="2018"
-CMS_vvsl18_trigger_em      : $PromptFromMC : .*lep.* : templateSymm; Normalize=False, AddWeight='ttH_2lss_ifflav(LepGood1_pdgId\,LepGood1_pdgId\,1.0\,1.01\,1.0)', year="2018"
-CMS_vvsl18_trigger_mm      : $PromptFromMC : .*mu.*  : templateSymm; Normalize=False, AddWeight='ttH_2lss_ifflav(LepGood1_pdgId\,LepGood1_pdgId\,1.0\,1.0\,1.01)', year="2018"
 
 CMS_vvsl18_pNetscore      : $PNET : .*el.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
 CMS_vvsl18_pNetscore      : $PNET : .*mu.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
 CMS_vvsl18_pNetscore      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
 
-CMS_vvsl18_pNetscore      : WJetsSR : .*el.*     : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
-CMS_vvsl18_pNetscore      : WJetsSR : .*mu.*     : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
-CMS_vvsl18_pNetscore      : WJetsSR : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
 
 
-CMS_vvsl18_trigger_1l      :  $PromptFromMC : .*el.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(LepGood1_pdgId\,LepGood1_pt\,LepGood1_pdgId\,LepGood1_pt\,1\,2018\,0\,1)', year="2018"
-
-CMS_vvsl18_trigger_1l      :  $PromptFromMC : .*mu.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(LepGood1_pdgId\,LepGood1_pt\,LepGood1_pdgId\,LepGood1_pt\,1\,2018\,0\,1)', year="2018"
-
+CMS_vvsl18_trigger_el      :  $PromptFromMC : .*el.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(LepGood1_pdgId\,LepGood1_pt\,LepGood1_pdgId\,LepGood1_pt\,1\,2018\,0\,1)', year="2018"
+CMS_vvsl18_trigger_mu      :  $PromptFromMC : .*mu.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(LepGood1_pdgId\,LepGood1_pt\,LepGood1_pdgId\,LepGood1_pt\,1\,2018\,0\,1)', year="2018"
 
 
+CMS_vvsl_UnclusteredEn : $PromptFromMC : .* : templateAsymm;          FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
 
-
-CMS_vvsl_UnclusteredEn : $PromptFromMC : .*lep.* : templateAsymm;          FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
 
 ##CMS_vvsl_pmet_UnclusteredEn : $PromptFromMC : .*mu.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
 ##CMS_vvsl_pmet_UnclusteredEn : $PromptFromMC : .*el.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
