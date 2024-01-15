@@ -10,7 +10,6 @@ def _runIt(args):
         pp = PostProcessor(myoutpath,[mysource], postfix='',
                 cut = mycut, 
                 saveSelectionElist = options.elist,
-                fwkJobReport=True,           
                 outputbranchsel = options.branchsel_out, 
                 compression = options.compression,
                 justcount = options.justcount,
@@ -37,7 +36,7 @@ if __name__ == "__main__":
     cut = CutsFile(args[1],options)
     outdir = args[2]
 
-    print "Will write selected trees to "+outdir
+    print("Will write selected trees to "+outdir)
     if not os.path.exists(outdir):
         os.system("mkdir -p "+outdir)
 
@@ -45,16 +44,16 @@ if __name__ == "__main__":
     fname2cuts = defaultdict(set)
     fname2friends = {}
     for proc in mca.listProcesses():
-        print "Process %s" % proc
+        print("Process %s" % proc)
         for tty in mca._allData[proc]:
             if options.skipExisting:
                 if os.path.isfile("%s/%s.root" % (outdir, tty.cname())):
-                    print "\t component %-40s [ skipped as it already exists ]" % tty.cname()
+                    print("\t component %-40s [ skipped as it already exists ]" % tty.cname())
                     continue
                 else:
-                    print "\t component %-40s [ missing %s ]" % (tty.cname(), "%s/%s.root" % (outdir, tty.cname()))
+                    print("\t component %-40s [ missing %s ]" % (tty.cname(), "%s/%s.root" % (outdir, tty.cname())))
             else:
-                print "\t component %-40s" % tty.cname()
+                print("\t component %-40s" % tty.cname())
             if options.pretend: continue
             mysource = tty.fname()
             ttys = [ tty ]
@@ -75,13 +74,13 @@ if __name__ == "__main__":
                     raise RuntimeError("Inconsistent friends between %s and %s" % (friends, fname2friends[mysource]))
             else:
                 fname2friends[mysource] = friends
-    for fname,cuts in fname2cuts.iteritems():
+    for fname,cuts in fname2cuts.items():
         if len(cuts) > 1: mycut = "(" + (")||(".join(cuts)) + ")"
         else:             mycut = cuts.pop()
         src = fname + fname2friends[fname]
         tasks.append((src,outdir,mycut,options))
     if options.jobs == 0: 
-        map(_runIt, tasks)
+        list(map(_runIt, tasks))
     else:
         from multiprocessing import Pool
         Pool(options.jobs).map(_runIt, tasks)
@@ -93,5 +92,5 @@ if __name__ == "__main__":
                 d = D.replace("{P}",P)
                 if not os.path.exists(d): continue
                 os.system("python %s --elist %s %s %s  > /dev/null" % (skimFTrees, options.elist, outdir, d))
-            print "Skimmed %s" % os.path.basename(D)
+            print("Skimmed %s" % os.path.basename(D))
 

@@ -29,7 +29,7 @@ mWV_fxn={
 
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
-MCfriends   = ['phi_var','1_recl','4_scalefactors','1_jmeUnc']#,'phi_var']#,'ak8VtaggedV1_vars']#,'nnpdf_rms']#,'2_recl_allvars','2_btag_SFs'] #,"postFSRinfo"]
+MCfriends   = ['1_recl','4_scalefactors','1_jmeUnc']#,'phi_var']#,'ak8VtaggedV1_vars']#,'nnpdf_rms']#,'2_recl_allvars','2_btag_SFs'] #,"postFSRinfo"]
 Datafriends = ['1_recl']
 friends     = ['2_ak8Vtagged_sdm45']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
@@ -77,7 +77,7 @@ def if3(cond, iftrue, iffalse):
 
 def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses,applyWtsnSFs, applypNetSFs,year,nLep,lepflav,selstr,wj_date,extraopts = '',invertedcuts = []):
     varToFit= '{plotvar} {binning}'.format(plotvar=plotbin.split()[0], binning=plotbin.split()[1])
-    cmd  = ' makeShapeCardsNew.py -f -j 8 -l {lumi} --od {CARDSOUTDIR} --tree NanoAOD --year {YEAR} --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt  --WA prescaleFromSkim {fmca} {fcut} --amc --threshold -1000 --split-factor=-1 --unc {fsyst}  {varName} --lf {lepflav} --wjD {wj_date} --sel {selstr}'.format(lumi=lumis[year],selstr=selstr,CARDSOUTDIR=targetdir, trees=trees, fmca=fmca, fcut=fcut,YEAR=year if year !='all' else '2016APV,2016,2017,2018',fsyst=fsyst,varName=varToFit,wj_date=wj_date,lepflav=lepflav) #--asimov signal #--amc --threshold 0.01 
+    cmd = 'makeShapeCardsNew.py -f -j 8 -l {lumi} --od {CARDSOUTDIR} --tree NanoAOD --year {YEAR} --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt  --WA prescaleFromSkim {fmca} {fcut}  --threshold 0.01 --split-factor=-1 --unc {fsyst}  {varName} --lf {lepflav} --wjD {wj_date} --sel {selstr}'.format(lumi=lumis[year],selstr=selstr,CARDSOUTDIR=targetdir, trees=trees, fmca=fmca, fcut=fcut,YEAR=year if year !='all' else '2016APV,2016,2017,2018',fsyst=fsyst,varName=varToFit,wj_date=wj_date,lepflav=lepflav) #--asimov signal #--amc --threshold 0.01 --amc
     cmd += ''.join(' -P '+Ptree for Ptree in trees)
     cmd += ''.join(' --Fs {P}/'+frnd for frnd in friends)
     cmd += ''.join(' --FMCs {P}/'+frnd for frnd in MCfriends)
@@ -101,18 +101,20 @@ def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
         cmd += ' --unc {fsyst} '.format(fsyst=fsyst)
     if extraopts:
         cmd += ' '+extraopts
-    print '============================================================================================='
-    print 'running: python', cmd
-    print '============================================================================================='
+    print ('=============================================================================================')
+    print ('running: python', cmd)
+    print ('=============================================================================================')
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 #####################################
-def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, applyWtsnSFs,applypNetSFs, year,nLep,extraopts = '', invertedcuts = [],cutFlow=False,bareNano=False):
+def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, applyWtsnSFs,applypNetSFs, year,nLep,extraopts = ' ', invertedcuts = [],cutFlow=False,bareNano=False):
 
-    if bareNano:
-        cmd  = ' mcPlots.py {CF} -j 10 -l {lumi}  --tree NanoAOD  --year {YEAR} --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,lumi=lumis[year],YEAR=year if year!='all' else '2016APV,2016,2017,2018',CF='' if cutFlow else '-f')
-    else:    
-        cmd  = "mcPlots.py {CF}  -j 10 -l {lumi} --tree NanoAOD --year {YEAR}  --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  ".format(lumi=lumis[year],td=targetdir, fmca=fmca, fcut=fcut, fplots=fplots,YEAR=year if year !='all' else '2016APV,2016,2017,2018',CF='' if cutFlow else '-f') # -L ttH-multilepton/functionsTTH.cc
-
+    
+    cmd= ' mcPlots.py  -j 10 -l {lumi}  --tree NanoAOD  --year {YEAR} --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,lumi=lumis[year],YEAR=year if year!='all' else '2016APV,2016,2017,2018')
+    if cutFlow:
+        cmd+=' '.join(' -f')
+    if not bareNano:
+        cmd+=" --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt "
+    
     if len(fsyst) > 0:
         cmd += ' --unc {fsyst} '.format(fsyst=fsyst)
     cmd += ''.join(' -P '+Ptree for Ptree in trees)
@@ -145,7 +147,7 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     else:
         if not bareNano:
             cmd += ''.join(" -W puWeight*L1PreFiringWeight_Nom")
-        else: print' there are bare nanoaods so no scale factors whatsoever are applied'
+        else: print(' there are bare nanoaods so no scale factors whatsoever are applied')
     cmd += ' -o '+targetdir+'/'+'_AND_'.join(plot for plot in plotlist)+'.root'
     if fitdataprocess:
         cmd+= ' --fitData '
@@ -160,23 +162,23 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     if extraopts:
         cmd += " "+extraopts
 
-    print 'running: python', cmd
+    print ('running: python', cmd)
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 ##################
 def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,fitCR,wjDate,WCs,acP,acC):
-    print "vorsichtig sein!! du hast tagging auswahl im top CR geloschen"
+    print ("vorsichtig sein!! du hast tagging auswahl im top CR geloschen")
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
     fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
     showratio    = True 
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['sm','data','WJets','tt','singletop','higgs','QCD','data']#'WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] 
-    
-    for ops in WCs:
-        morePs=['sm_lin_quad_','quad_']
-        processes+=[s + ops for s in morePs]
+    processes    = ['sm','data','WJets'] #,'tt','singletop','higgs','QCD','data']#'WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] 
+    ## commented out the following to run fit in WJ only
+    ##amfor ops in WCs:
+    ##am    morePs=['sm_lin_quad_','quad_']
+    ##am    processes+=[s + ops for s in morePs]
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_boosted = ['ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet']#,'phi_var']
     cuts_cards_opts=['sb_lo','sb_hi','sig']#
@@ -184,7 +186,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     cuts_WJest   = ['WJEST']
     applypNetSFs = False 
 
-    print processes
+    print (processes)
     signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.03 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    
@@ -215,10 +217,10 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
             #lepSel= if3(LF == 'mu','muOnly',if3(LF == 'el','elOnly','trigger')) if not 'wjest' in pR else '1'
             for FS in finalState:
                 binName = '{jet}_{lep}_{pR}'.format(lep=LF,jet=FS,pR=pR)
-                print 'running %s for %s'%(doWhat,binName)
+                print ('running %s for %s'%(doWhat,binName))
                 postfix=('_'+postfix if postfix else '')+('_fittodata' if fitCR else '')+('_'+'cutflow' if cutflow else '')
                 targetcarddir = 'Cards/cards_{date}{pf}_{FS}_{year}'.format(FS=binName,year=year,date=date, pf=postfix )
-                print '{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName)
+                print ('{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName))
                 targetdir = eos+'{yr}/{pR}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf= postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR)
                 enable=[]
                 enable+=cuts_boosted #w/o tagger  cuts_WJest if 'wjest' in pR else if3(pR == 'SR',if3(nLep > 1,cuts_2los,cuts_onelep),if3(pR=='topCR',cuts_topCR,if3(pR=='wjCR',cuts_wjCR,cuts_inclB)))
@@ -235,8 +237,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
 ##am                        showratio   = False
 ##am                        fsyst=''
                     makeplots  = ['{}'.format(a)  for a in plotvars]
-                    print makeplots
-                    print 'plot settings:  ',extraopts
+                    print (makeplots)
                     runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, applypNetSFs,year, nLep,extraopts,invert,cutflow)
                 else:
                     if "top" in pR: 
@@ -249,7 +250,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                         for op in WCs:
                             mWV_dist=" {here} {binning} ".format(here=mWV_fxn[LF],binning=mWV_binning)
                             binNamecards=binName+"_"+op+"_"+year
-                            extraoptscards= '--xp higgs --xp QCD  --binname %s '%(binNamecards)
+                            extraoptscards= '--xp higgs --xp QCD  --sp sm --binname %s '%(binNamecards) ##signal process SM for checks
                             if len(acC) > 0:extraoptscards+=''.join(' -E ^'+cut for cut in acC )
                             runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,applypNetSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
 
@@ -269,7 +270,7 @@ def alphaRatio(year,nLep,lepflav,finalState,applylepSFs,postfix,plotvars):
     cuts_WV      = ['singlelep','trigger','ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','bVeto','etael1']
     applypNetSFs = False
     cutflow      = False
-    print processes
+    print (processes)
     signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.42  --legendColumns 2 '    #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.32  --legendColumns 1 '
@@ -286,24 +287,22 @@ def alphaRatio(year,nLep,lepflav,finalState,applylepSFs,postfix,plotvars):
         lepSel= if3(LF == 'mu','muOnly',if3(LF == 'el','elOnly','trigger'))
         for FS in finalState:
             binName = '{lep}{jet}'.format(lep=if3(nLep > 1,'2los',flavors[LF]),jet=FS)
-            print 'running plots for %s'%binName
-            print '{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName)
+            print ('running plots for %s'%binName)
+            print ('{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName))
             targetdir = eos+'{yr}/alphaRatio/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+'cutflow' if cutflow else '' + postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName)
             enable=[];
             enable=cuts_WV #FS is enabled in the mca as it's CR vs SR. 
             enable.append(lepSel)
             makeplots  = ['{}'.format(a)  for a in plotvars]
-            print makeplots
             anything = "  --binname %s "%binName #--showIndivSigs
             extraopts+= anything
-            print 'plot settings:  ',extraopts
             runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, applypNetSFs,year, nLep,extraopts,invert,cutflow)
 
 ########################################
 def makesimpleplots(year,useDressed=True):
     #baseDir = '/eos/cms/store/cmst3/group/dpsww/testWJ_htbinned/'
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    MCfriends   = ['phi_var']#2_toppT_rw']#genInfo'] #'2_toppT_rw']
+    MCfriends   = ['phi_var_v2']#2_toppT_rw']#genInfo'] #'2_toppT_rw']
     Datafriends = []
     friends     = []
     targetdir = '/eos/user/a/anmehta/www/VVsemilep/GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') )
@@ -313,7 +312,7 @@ def makesimpleplots(year,useDressed=True):
     fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep_{cf}.txt'.format(cf='gen' if not useDressed else 'dressed' )
     bareNano    = False
     cutFlow     = False
-    processes   = ['WV','tt']#plus_sm_lin_quad_cwww','sm']#,'minus_sm_lin_quad_cwww']#'WW','aTGC','aTGC_SM','aTGC_incl']##'WJetsToLNu']#'ttmtt1ktoinf','ttmttp7kto1k','ttsemi']#'WJetsToLNu']#'WW','aTGC']#'ttmtt1ktoinf','ttmttp7kto1k','Rwtttsemi']#'ttsemi']
+    processes   = ['WW']#,'tt']#plus_sm_lin_quad_cwww','sm']#,'minus_sm_lin_quad_cwww']#'WW','aTGC','aTGC_SM','aTGC_incl']##'WJetsToLNu']#'ttmtt1ktoinf','ttmttp7kto1k','ttsemi']#'WJetsToLNu']#'WW','aTGC']#'ttmtt1ktoinf','ttmttp7kto1k','Rwtttsemi']#'ttsemi']
     #'WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT80','WJetsHT60','WJetsHT40','WJetsHT20']
     #cuts_onelep   = ['singlelep']
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
@@ -321,7 +320,7 @@ def makesimpleplots(year,useDressed=True):
     showratio=True
     applylepSFs=False
     nLep=1
-    plotvars   = ['Jet_pt_eta']#genvars_phi #MConly #dressedLepvars if useDressed else barelepvars 
+    plotvars   = ['SeldLep1_pt']#Jet_pt_eta']#genvars_phi #MConly #dressedLepvars if useDressed else barelepvars 
 
     disable   = []; 
     #enable=['ttbar','nQ']#'WhadpT','mWV','leadfatjet','fatjet','ptWlep','leadlep','etacutl1'] #'ttbar','nQ']
@@ -413,7 +412,7 @@ if __name__ == '__main__':
     if opts.date:
         date = opts.date
     if opts.results:
-        print 'will make {here} {pt} for {bin}' .format(here=opts.doWhat,bin=opts.finalState,pt=(opts.plotvar if 'plots' in opts.doWhat else ''))
+        print ('will make {here} {pt} for {bin}' .format(here=opts.doWhat,bin=opts.finalState,pt=(opts.plotvar if 'plots' in opts.doWhat else '')))
         #makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars):
         makeResults(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.sel,opts.postfix,opts.plotvar,opts.dCF,opts.fCR,opts.wjD,opts.WC,opts.acP,opts.acC)
     if opts.alpha:

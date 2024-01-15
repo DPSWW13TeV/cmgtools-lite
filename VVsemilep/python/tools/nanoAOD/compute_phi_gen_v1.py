@@ -16,13 +16,12 @@ def goodfatjets(fjet):
     if (fjet.pt > 200 and abs(fjet.eta) < 2.4 and abs(fjet.partonFlavour) > 0 and abs(fjet.partonFlavour) !=21):return True
     else: return False
 def gooddLeptons(dlep):
-    if (dlep.pt > 50): return True
+    if (dlep.pt > 50 and abs(dlep.eta) < 2.5): return True
     else: return False
 
 
 def goodlheparts(lheP):
     if (lheP.status == 1 and lheP.pdgId !=21 and ( abs(lheP.pdgId) < 7 or abs(lheP.pdgId) in range(11,17) )  ): return True #lepton and jet pT cuts later down the road
-
     else: return False
 
 
@@ -57,12 +56,15 @@ def findW(lhe_parts):
     if q_index>-99 or qbar_index>-99: 
         q.SetPtEtaPhiM(lhe_parts[q_index].pt,lhe_parts[q_index].eta,lhe_parts[q_index].phi,0.);        qbar.SetPtEtaPhiM(lhe_parts[qbar_index].pt,lhe_parts[qbar_index].eta,lhe_parts[qbar_index].phi,0.);
         fatjet=q+qbar
-
-    good_event=  lep_index > -99  and neu_index > -99 and fatjet.Pt() > 200 and abs(fatjet.Eta()) < 2.4 and (charge_Whad+charge_Wlep == 0) 
-    if good_event:
-        return (lhe_parts[lep_index],lhe_parts[neu_index],fatjet,q_index,qbar_index,lep_index,neu_index,good_event) #first particle is the one with a negatively charged lepton or a quark or a neu 
+    else: 
+        q.SetPtEtaPhiM(lhe_parts[0].pt,lhe_parts[0].eta,lhe_parts[0].phi,0.);        qbar.SetPtEtaPhiM(lhe_parts[0].pt,lhe_parts[0].eta,lhe_parts[0].phi,0.);
+        fatjet=q+qbar
+    #print len(lhe_parts),lep_index, neu_index,q_index,qbar_index
+    good_event= q_index > -99 and qbar_index > -99 and  lep_index > -99  and neu_index > -99 and fatjet.Pt() > 200 and abs(fatjet.Eta()) < 2.4
+    if lep_index > -99 and neu_index > -99:
+        return (lhe_parts[lep_index],lhe_parts[neu_index],fatjet,charge_Wlep,charge_Whad,q_index,qbar_index,lep_index,neu_index,good_event) #first particle is the one with a negatively charged lepton or a quark or a neu 
     else:
-        return (-99,-99,-99,-99,-99,-99,-99,good_event)
+        return (lhe_parts[0],lhe_parts[0],fatjet,charge_Wlep,charge_Whad,q_index,qbar_index,lep_index,neu_index,good_event)
 
 
 def calcmassWV(l1,fjet,metpt,metphi,typ):
@@ -132,8 +134,7 @@ def computephi(l1,fj,metpt,metphi,neutrino,useLHE=False):
     r_charged_lepton= rotator*lep;
     r_neutrino = rotator*neu;
     r_fatjet = rotator*fjet;
-    return r_wlep_boson,r_charged_lepton,r_neutrino,r_fatjet
-    #r_charged_lepton.Phi() ##for leptons (with neg charge) = phi+pI modulo 2pi
+    return r_wlep_boson,r_charged_lepton,r_neutrino,r_fatjet    #r_charged_lepton.Phi() ##for leptons (with neg charge) = phi+pI modulo 2pi
 
 
 
@@ -145,12 +146,6 @@ class compute_phi_gen_v1(Module):
         self.label = "" # "" if (label in ["",None]) else ("_"+label)
         self.lepMultiplicity=lepMultiplicity
         self.nfjets=nfjets
-        self.neu_types=[0,01,10,11,20,21,30,31]
-        self.r_lhe_wlep_boson=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        self.r_lhe_charged_lepton=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        self.r_lhe_neutrino=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        self.r_lhe_neu=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-
         pass
 
     def beginJob(self):
@@ -164,25 +159,27 @@ class compute_phi_gen_v1(Module):
         for var in 'pt,eta,phi,pdgId,hasTauAnc'.split(','):
             for l in range(self.lepMultiplicity):
                 self.out.branch('SeldLep%d_%s'%(l+1,var),'F')
-                for nT in self.neu_types:
-                    self.out.branch('SeldLep%d_%s_HF_typ%s'%(l+1,var,nT),'F')
+                self.out.branch('SeldLep%d_%s_HF_typ0'%(l+1,var),'F')
+                self.out.branch('SeldLep%d_%s_HF_typ1'%(l+1,var),'F')
                 
         self.out.branch('nSeldLeps'  ,'I')
         
         for var in 'pt,eta,phi,mass,hadronFlavour,partonFlavour'.split(','): 
             for j in range(self.nfjets):
-                self.out.branch('SelGak8Jet%d_%s'%(j+1,var),'F')
-                for nT in self.neu_types:
-                     self.out.branch('SelGak8Jet%d_%s_HF_typ%s'%(j+1,var,nT),'F')
+                self.out.branch('SelGak8Jet%d_%s'        %(j+1,var),'F')
+                self.out.branch('SelGak8Jet%d_%s_HF_typ0'%(j+1,var),'F')
+                self.out.branch('SelGak8Jet%d_%s_HF_typ1'%(j+1,var),'F')
 
         self.out.branch('nSelGak8Jets'  ,'I')
         self.out.branch('event', 'L')
         self.out.branch('event_presel', 'L')
+        self.out.branch('nSelLHEpart'  ,'I')
+        for var in 'pt,eta'.split(','):
+            self.out.branch('neutrino_%s_typ0'   %(var), 'F')
+            self.out.branch('neutrino_%s_HF_typ0'%(var),  'F')
+            self.out.branch('neutrino_%s_typ1'   %(var), 'F')
+            self.out.branch('neutrino_%s_HF_typ1'%(var),  'F')
 
-        for var in 'pt,eta,phi'.split(','):
-            for  nT in self.neu_types:
-                self.out.branch('neutrino_%s_typ%s'%(var,nT), 'F')
-                self.out.branch('neutrino_%s_HF_typ%s'%(var,nT),  'F')
         for part in 'neu,q,qbar,lep'.split(','):
             for var in 'pt,eta,phi,mass,pdgId'.split(','):
                 self.out.branch('lhe_%s_%s'%(part,var),'F')
@@ -195,76 +192,90 @@ class compute_phi_gen_v1(Module):
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         self.out.fillBranch('event',event.event)
+
         fatJets =  filter(goodfatjets,  Collection(event,"GenJetAK8"))
         leptons =  filter(gooddLeptons, Collection(event,"GenDressedLepton"))
         lheparts = filter(goodlheparts, Collection(event,"LHEPart"))
         genmet  = event.GenMET_pt
         genmet_phi = event.GenMET_phi
+        #print "event number",event.event
         self.out.fillBranch('event_presel',event.event)
         self.out.fillBranch('nSeldLeps',len(leptons))
         self.out.fillBranch('nSelGak8Jets',len(fatJets))
-        lhe_lep,lhe_neu,lhe_fjet,q_index,qbar_index,lep_index,neu_index,sel_bool_lhe=findW(lheparts)
+        lhe_lep,lhe_neu,lhe_fjet,charge_Wlep,charge_Whad,q_index,qbar_index,lep_index,neu_index,sel_bool_lhe=findW(lheparts)
         #print "mass of the fatty",lhe_fjet.M()
-        sel_bool= genmet > 110 and  len(fatJets) > 0 and len(leptons) == 1
+        
+        r_lhe_charged_lepton=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        r_lhe_neutrino=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+        r_lhe_neu=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+
         if sel_bool_lhe:
-            self.r_lhe_wlep_boson,self.r_lhe_charged_lepton,self.r_lhe_neutrino,self.r_lhe_fatjet=computephi(lhe_lep,lhe_fjet,lhe_neu.pt,lhe_neu.phi,lhe_neu,True)
+            r_lhe_wlep_boson,r_lhe_charged_lepton,r_lhe_neutrino,r_lhe_fatjet=computephi(lhe_lep,lhe_fjet,lhe_neu.pt,lhe_neu.phi,lhe_neu,True)
 
         
-        
+        #print "filling starts here"
         for var in 'pt,eta,mass,pdgId,phi'.split(','):
-            self.out.fillBranch('lhe_lep_%s'%(var), getattr(lhe_lep,var) if sel_bool_lhe else -999)
-            self.out.fillBranch('lhe_neu_%s'%(var), getattr(lhe_neu,var) if sel_bool_lhe else -999)
-            self.out.fillBranch('lhe_q_%s'%(var),   getattr(lheparts[int(q_index)],var)   if sel_bool_lhe else -999)
+            #print "filling for the lhe variable",var
+            self.out.fillBranch('lhe_lep_%s' %(var),getattr(lhe_lep,var)  if sel_bool_lhe else -999)
+            self.out.fillBranch('lhe_neu_%s' %(var),getattr(lhe_neu,var)  if sel_bool_lhe else -999)
+            self.out.fillBranch('lhe_q_%s'   %(var),getattr(lheparts[int(q_index)],var)    if sel_bool_lhe else -999)
             self.out.fillBranch('lhe_qbar_%s'%(var),getattr(lheparts[int(qbar_index)],var) if sel_bool_lhe else -999)
-        self.out.fillBranch('lhe_fjet_pt',   lhe_fjet.Pt() if sel_bool_lhe else -999)
+        self.out.fillBranch('lhe_fjet_pt',   lhe_fjet.Pt()  if sel_bool_lhe else -999)
         self.out.fillBranch('lhe_fjet_eta',  lhe_fjet.Eta() if sel_bool_lhe else -999)
         self.out.fillBranch('lhe_fjet_phi',  lhe_fjet.Phi() if sel_bool_lhe else -999)
         self.out.fillBranch('lhe_fjet_mass', lhe_fjet.M()   if sel_bool_lhe else -999)
-
+        
         ##FIXME add same variables in the new frame of refernece for fjet, lep and neu
 
-        self.out.fillBranch('lhe_lep_pt_HF',   self.r_lhe_charged_lepton.Pt()  if sel_bool_lhe else -999)
-        self.out.fillBranch('lhe_lep_eta_HF',  self.r_lhe_charged_lepton.Eta() if sel_bool_lhe else -999)
-        self.out.fillBranch('lhe_lep_phi_HF',  phicorrection(self.r_lhe_charged_lepton.Phi(),lheparts[lep_index].pdgId) if sel_bool_lhe else -999)
-        self.out.fillBranch('lhe_fjet_pt_HF',  self.r_lhe_fatjet.Pt()  if sel_bool_lhe else -999)
-        self.out.fillBranch('lhe_fjet_eta_HF', self.r_lhe_fatjet.Eta() if sel_bool_lhe else -999)
-        self.out.fillBranch('lhe_fjet_phi_HF', phicorrection(self.r_lhe_fatjet.Phi(),lheparts[lep_index].pdgId) if sel_bool_lhe else -999) ## FIXME AM
-        self.out.fillBranch('lhe_fjet_mass_HF',self.r_lhe_fatjet.M()  if sel_bool_lhe else -999) ## FIXME AM
+        self.out.fillBranch('lhe_lep_pt_HF',    r_lhe_charged_lepton.Pt()  if sel_bool_lhe else -999)
+        self.out.fillBranch('lhe_lep_eta_HF',   r_lhe_charged_lepton.Eta() if sel_bool_lhe else -999)
+        self.out.fillBranch('lhe_lep_phi_HF',   phicorrection(r_lhe_charged_lepton.Phi(),lheparts[lep_index].pdgId) if sel_bool_lhe else -999)
+        self.out.fillBranch('lhe_fjet_pt_HF',   r_lhe_fatjet.Pt()  if sel_bool_lhe else -999)
+        self.out.fillBranch('lhe_fjet_eta_HF',  r_lhe_fatjet.Eta() if sel_bool_lhe else -999)
+        self.out.fillBranch('lhe_fjet_phi_HF',  phicorrection(r_lhe_fatjet.Phi(),lheparts[lep_index].pdgId) if sel_bool_lhe else -999) ## FIXME AM
+        self.out.fillBranch('lhe_fjet_mass_HF', r_lhe_fatjet.M() if sel_bool_lhe else -999) ## FIXME AM
 
 
 
-
-
+        #print "and continues"
+        sel_bool=genmet > 110 and  len(fatJets) > 0 and len(leptons) == 1
+        #print "selection",sel_bool,sel_bool_lhe
         info={}
         if sel_bool:
-            for nT in self.neu_types:
-                neu,mWV =calcmassWV(leptons[0],fatJets[0],genmet,genmet_phi,nT);
-                info[str(nT)]=computephi(leptons[0],fatJets[0],genmet,genmet_phi,neu) ## in the HF frame
-                self.out.fillBranch('neutrino_pt_typ%s' %(nT),neu.Pt()  if sel_bool else -999 )
-                self.out.fillBranch('neutrino_eta_typ%s'%(nT),neu.Eta() if sel_bool else -999)
-                self.out.fillBranch('neutrino_phi_typ%s'%(nT),neu.Phi() if sel_bool else -999 )
-
-
-
-        for lep in range(self.lepMultiplicity):
-            for var in 'pt,eta,phi,pdgId,hasTauAnc'.split(','):
-                self.out.fillBranch('SeldLep%d_%s'%(lep+1,var),getattr(leptons[lep],var) if sel_bool else -999 )
-            for nT in self.neu_types:
-                 self.out.fillBranch('SeldLep%d_pt_HF_typ%s' %(lep+1,nT), info[str(nT)][1].Pt()  if sel_bool else -999)
-                 self.out.fillBranch('SeldLep%d_eta_HF_typ%s'%(lep+1,nT), info[str(nT)][1].Eta() if sel_bool else -999)
-                 self.out.fillBranch('SeldLep%d_phi_HF_typ%s'%(lep+1,nT), phicorrection(info[str(nT)][1].Phi(),leptons[lep].pdgId) if sel_bool else -999 )
+            neu,mWV =calcmassWV(leptons[0],fatJets[0],genmet,genmet_phi,00);
+            info['0']=computephi(leptons[0],fatJets[0],genmet,genmet_phi,neu) ## in the HF frame
+            neu1,mWV1 =calcmassWV(leptons[0],fatJets[0],genmet,genmet_phi,01);
+            info['1']=computephi(leptons[0],fatJets[0],genmet,genmet_phi,neu1) ## in the HF frame
+            #print "done"
+        else : info={}
+        for var in 'pt,eta,phi,pdgId,hasTauAnc'.split(','):
+            self.out.fillBranch('SeldLep1_%s'%(var),getattr(leptons[0],var) if sel_bool else -999 )
+        self.out.fillBranch('SeldLep1_pt_HF_typ0',  info['0'][1].Pt() if sel_bool else -999)
+        self.out.fillBranch('SeldLep1_eta_HF_typ0', info['0'][1].Eta() if sel_bool else -999)
+        self.out.fillBranch('SeldLep1_phi_HF_typ0', phicorrection(info['0'][1].Phi(),leptons[0].pdgId) if sel_bool else -999 )
+        self.out.fillBranch('SeldLep1_pt_HF_typ1',  info['1'][1].Pt() if sel_bool else -999)
+        self.out.fillBranch('SeldLep1_eta_HF_typ1', info['1'][1].Eta() if sel_bool else -999)
+        self.out.fillBranch('SeldLep1_phi_HF_typ1', phicorrection(info['1'][1].Phi(),leptons[0].pdgId) if sel_bool else -999 )
+        
         for j in range(self.nfjets):
             for var in 'pt,eta,phi,mass,hadronFlavour,partonFlavour'.split(','):
                 self.out.fillBranch('SelGak8Jet%d_%s'%(j+1,var),getattr(fatJets[j],var) if sel_bool else -999)
-            for nT in self.neu_types:
-                self.out.fillBranch('SelGak8Jet%d_pt_HF_typ%s'  %(j+1,nT), info[str(nT)][3].Pt()  if sel_bool else -999)
-                self.out.fillBranch('SelGak8Jet%d_eta_HF_typ%s' %(j+1,nT), info[str(nT)][3].Eta() if sel_bool else -999)
-                self.out.fillBranch('SelGak8Jet%d_mass_HF_typ%s'%(j+1,nT), info[str(nT)][3].M()   if sel_bool else -999)
-                self.out.fillBranch('SelGak8Jet%d_phi_HF_typ%s' %(j+1,nT), phicorrection(info[str(nT)][3].Phi(),leptons[lep].pdgId) if sel_bool else -999)
-        for nT in self.neu_types:
-            self.out.fillBranch('neutrino_pt_HF_typ%s'%(nT),info[str(nT)][2].Pt()   if sel_bool else -999 )
-            self.out.fillBranch('neutrino_eta_HF_typ%s'%(nT),info[str(nT)][2].Eta() if sel_bool else -999)
-            self.out.fillBranch('neutrino_phi_HF_typ%s'%(nT),phicorrection(info[str(nT)][2].Phi(),leptons[lep].pdgId) if sel_bool else -999 )
+            #print "done filling jet branches in the loop"
+        self.out.fillBranch('SelGak8Jet1_pt_HF_typ1'  ,info['1'][3].Pt() if sel_bool else -999)
+        self.out.fillBranch('SelGak8Jet1_eta_HF_typ1' ,info['1'][3].Eta() if sel_bool else -999)
+        self.out.fillBranch('SelGak8Jet1_mass_HF_typ1',info['1'][3].M() if sel_bool else -999)
+        self.out.fillBranch('SelGak8Jet1_phi_HF_typ1' ,phicorrection(info['1'][3].Phi(),fatJets[0].partonFlavour) if sel_bool else -999)        
+        self.out.fillBranch('SelGak8Jet1_pt_HF_typ0'  ,info['0'][3].Pt() if sel_bool else -999)
+        self.out.fillBranch('SelGak8Jet1_eta_HF_typ0' ,info['0'][3].Eta() if sel_bool else -999)
+        self.out.fillBranch('SelGak8Jet1_mass_HF_typ0',info['0'][3].M() if sel_bool else -999)
+        self.out.fillBranch('SelGak8Jet1_phi_HF_typ0' ,phicorrection(info['0'][3].Phi(),fatJets[0].partonFlavour) if sel_bool else -999)
         
+            #        if sel_bool:        #print "check this",info['1'][2].Pt() ," typ 0 =",info['0'][2].Pt()
+        self.out.fillBranch('neutrino_pt_HF_typ1' ,info['1'][2].Pt() if sel_bool else -999 )
+        self.out.fillBranch('neutrino_eta_HF_typ1',info['1'][2].Eta() if sel_bool else -999)
+        self.out.fillBranch('neutrino_pt_HF_typ0' ,info['0'][2].Pt() if sel_bool else -999 )
+        self.out.fillBranch('neutrino_eta_HF_typ0',info['0'][2].Eta() if sel_bool else -999)
+
+        #print"event filled"
 
         return True

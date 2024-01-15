@@ -328,7 +328,7 @@ class TreeToYield:
         for tf_tree, tf_filename in self._listFriendTrees():
             if not os.path.isfile(tf_filename):
                 tf_filename = tf_filename.replace('/pool/ciencias/','/pool/cienciasrw/')
-                print '[WARNING]: Falling back to ', tf_filename
+                print ('[WARNING]: Falling back to ', tf_filename)
             tf = self._tree.AddFriend(tf_tree, tf_filename),
             self._friends.append(tf)
         self._isInit = True
@@ -361,7 +361,7 @@ class TreeToYield:
                 tftest = ROOT.TFile.Open(fn)
                 ftree  = tftest.Get(tn)
                 if not ftree:
-                    print "Missing friend for %s %s: %s [ tree %s not found ]" % (self._name, self._cname, fn)
+                    print ("Missing friend for %s %s: %s [ tree %s not found ]" % (self._name, self._cname, fn))
                     ok = False
                 tftest.Close()
         return ok
@@ -374,7 +374,7 @@ class TreeToYield:
             if not t: raise RuntimeError, "Cannot find tree %s in file %s\n" % (treeName, self._fname)
             return t
     def getSumW(self,expr="genEventSumw",closeFileAfterwards=True):
-        if self._maintty != None: print "WARNING: getSumW called on a non-main TTY"
+        if self._maintty != None: print ("WARNING: getSumW called on a non-main TTY")
         varNormList = []
         for var in [None] + self.getVariations():
             if var == None: 
@@ -476,10 +476,10 @@ class TreeToYield:
             nfmtL+="%7.1f%%"
             fmtlen+=8
 
-        print "cut".center(clen),"yield".center(fmtlen)
-        print "-"*((fmtlen+1)+clen)
+        print ("cut".center(clen),"yield".center(fmtlen))
+        print ("-"*((fmtlen+1)+clen))
         for i,(cut,(nev,err)) in enumerate(report):
-            print cfmt % cut,
+            print (cfmt % cut, " ")
             den = report[i-1][1][0] if i>0 else 0
             fraction = nev/float(den) if den > 0 else 1
             if self._options.nMinusOne or self._options.nMinusOneInverted: 
@@ -488,8 +488,8 @@ class TreeToYield:
             if self._options.errors:    toPrint+=(err,)
             if self._options.fractions: toPrint+=(fraction*100,)
             if self._weight and nev < 1000: print nfmtS % toPrint,
-            else                          : print nfmtL % toPrint,
-            print ""
+            else                          : print (nfmtL % toPrint, " ")
+            print ("")
     def _getCut(self,cut,noweight=False):
         if self._weight and not noweight:
             if self._isdata: cut = "(%s)     *(%s)*(%s)" % (self._weightString,                    self._scaleFactor, self.adaptExpr(cut,cut=True))
@@ -664,7 +664,7 @@ class TreeToYield:
         eventLoop.endComponent(self)
     def applyCutAndElist(self,cut,elist):
         if self._appliedCut != None and self._appliedCut != cut: 
-            print "WARNING: changing applied cut from %s to %s\n" % (self._appliedCut, cut)
+            print ("WARNING: changing applied cut from %s to %s\n" % (self._appliedCut, cut))
         self._appliedCut = cut
         self._elist = elist
     def cutAndElist(self):

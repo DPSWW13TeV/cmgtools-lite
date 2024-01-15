@@ -70,32 +70,16 @@ CMS_vvsl_pileup : $PromptFromMC : .* : templateAsymm; AddWeights=['puWeightUp/pu
 
 
 # lepton efficiencies
-CMS_eff_mu : $PromptFromMC : .*mu.* : templateAsymm ; AddWeights=['lepsf_mu_up/lepsf'\,'lepsf_mu_dn/lepsf']
-CMS_eff_el : $PromptFromMC : .*el.* : templateAsymm ; AddWeights=['lepsf_el_up/lepsf'\,'lepsf_el_dn/lepsf']   
-CMS_eff_mu : $PromptFromMC : .*lep.* : templateAsymm ; AddWeights=['lepsf_mu_up/lepsf'\,'lepsf_mu_dn/lepsf']
-CMS_eff_el : $PromptFromMC : .*lep.* : templateAsymm ; AddWeights=['lepsf_el_up/lepsf'\,'lepsf_el_dn/lepsf']   
-
-
-
-
-
-
-
-
-# trigger efficiencies
-
-
-CMS_vvsl18_pNetscore      : $PNET : .*el.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
-CMS_vvsl18_pNetscore      : $PNET : .*mu.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
-CMS_vvsl18_pNetscore      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
-
-
-
-CMS_vvsl18_trigger_el      :  $PromptFromMC : .*el.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(LepGood1_pdgId\,LepGood1_pt\,LepGood1_pdgId\,LepGood1_pt\,1\,2018\,0\,1)', year="2018"
-CMS_vvsl18_trigger_mu      :  $PromptFromMC : .*mu.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(LepGood1_pdgId\,LepGood1_pt\,LepGood1_pdgId\,LepGood1_pt\,1\,2018\,0\,1)', year="2018"
-
-
-CMS_vvsl_UnclusteredEn : $PromptFromMC : .* : templateAsymm;          FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
+##amCMS_eff_mu : $PromptFromMC : .*mu.* : templateAsymm ; AddWeights=['lepsf_mu_up/lepsf'\,'lepsf_mu_dn/lepsf']
+##amCMS_eff_el : $PromptFromMC : .*el.* : templateAsymm ; AddWeights=['lepsf_el_up/lepsf'\,'lepsf_el_dn/lepsf']   
+##amCMS_eff_mu : $PromptFromMC : .*lep.* : templateAsymm ; AddWeights=['lepsf_mu_up/lepsf'\,'lepsf_mu_dn/lepsf']
+##amCMS_eff_el : $PromptFromMC : .*lep.* : templateAsymm ; AddWeights=['lepsf_el_up/lepsf'\,'lepsf_el_dn/lepsf']   
+##amCMS_vvsl18_pNetscore      : $PNET : .*el.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
+##amCMS_vvsl18_pNetscore      : $PNET : .*mu.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
+##amCMS_vvsl18_pNetscore      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
+##amCMS_vvsl18_trigger_el      :  $PromptFromMC : .*el.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(LepGood1_pdgId\,LepGood1_pt\,LepGood1_pdgId\,LepGood1_pt\,1\,2018\,0\,1)', year="2018"
+##amCMS_vvsl18_trigger_mu      :  $PromptFromMC : .*mu.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(LepGood1_pdgId\,LepGood1_pt\,LepGood1_pdgId\,LepGood1_pt\,1\,2018\,0\,1)', year="2018"
+##amCMS_vvsl_UnclusteredEn : $PromptFromMC : .* : templateAsymm;          FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
 
 
 ##CMS_vvsl_pmet_UnclusteredEn : $PromptFromMC : .*mu.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']

@@ -774,7 +774,7 @@ objName ==objName_before ):
         param=par.Next()
         while (param): ##am
             paraName=TString(param.GetName())
-            if ( paraName.Contains("rrv_p0_User1_WJets") or paraName.Contains("rrv_shift_ChiSq_WJets") or paraName.Contains("rrv_c_ChiSq_WJets") or paraName.Contains("rrv_b0_Poly3_WJets") or paraName.Contains("rrv_b1_Poly3_WJets") or paraName.Contains("rrv_b2_Poly3_WJets") or paraName.Contains("rrv_b3_Poly3_WJets")):
+            if ( paraName.Contains("rrv_p0_User1_WJets") or paraName.Contains("rrv_c_Exp_WJets0") or paraName.Contains("rrv_shift_ChiSq_WJets") or paraName.Contains("rrv_c_ChiSq_WJets") or paraName.Contains("rrv_b0_Poly3_WJets") or paraName.Contains("rrv_b1_Poly3_WJets") or paraName.Contains("rrv_b2_Poly3_WJets") or paraName.Contains("rrv_b3_Poly3_WJets")):
                      param.setConstant(kFALSE);
                      if verbose :param.Print();
             else:
@@ -937,9 +937,16 @@ objName ==objName_before ):
         if in_model_name == "ChiSqBern" :
             print "########### Chi-square or Bernstein polynomial for mj fit  ############"
             # Chi-square
-            rrv_shift_ChiSq    = RooRealVar("rrv_shift_ChiSq"+label+"_"+self.channel,"rrv_shift_ChiSq"+label+"_"+self.channel,15,5.,25);
-            rrv_c_ChiSq        = RooRealVar("rrv_c_ChiSq"+label+"_"+self.channel,"rrv_c_ChiSq"+label+"_"+self.channel,-0.0228558,-0.026,-0.024); ##ADJUST here
-            model_pdf          = ROOT.RooChiSqPdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_shift_ChiSq,rrv_c_ChiSq);
+            #rrv_shift_ChiSq    = RooRealVar("rrv_shift_ChiSq"+label+"_"+self.channel,"rrv_shift_ChiSq"+label+"_"+self.channel,21.47,5.,35.);
+            #rrv_c_ChiSq        = RooRealVar("rrv_c_ChiSq"+label+"_"+self.channel,"rrv_c_ChiSq"+label+"_"+self.channel,-0.02318,-0.026,-0.020);
+            if self.channel == "mu" :
+                rrv_shift_ChiSq    = RooRealVar("rrv_shift_ChiSq"+label+"_"+self.channel,"rrv_shift_ChiSq"+label+"_"+self.channel,23.79,0.,35);
+                rrv_c_ChiSq        = RooRealVar("rrv_c_ChiSq"+label+"_"+self.channel,"rrv_c_ChiSq"+label+"_"+self.channel,-0.0243,-0.026,-0.020); 
+                model_pdf          = ROOT.RooChiSqPdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_shift_ChiSq,rrv_c_ChiSq);
+            else:
+                rrv_shift_ChiSq    = RooRealVar("rrv_shift_ChiSq"+label+"_"+self.channel,"rrv_shift_ChiSq"+label+"_"+self.channel,20.,25.);
+                rrv_c_ChiSq        = RooRealVar("rrv_c_ChiSq"+label+"_"+self.channel,"rrv_c_ChiSq"+label+"_"+self.channel,-2.0,0); 
+                model_pdf          = ROOT.RooChiSqPdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_shift_ChiSq,rrv_c_ChiSq);
 
         if in_model_name == "Bern" :
             print "########### Chi-square or Bernstein polynomial for mj fit  ############"
@@ -959,9 +966,13 @@ objName ==objName_before ):
 
         if in_model_name == "ErfExp" :
             print "########### Erf*Exp for mj fit  ############"
-            rrv_c_ErfExp      = RooRealVar("rrv_c_ErfExp"+label+"_"+self.channel,"rrv_c_ErfExp"+label+"_"+self.channel,-0.0323819,-0.1,-1e-4);
-            rrv_offset_ErfExp = RooRealVar("rrv_offset_ErfExp"+label+"_"+self.channel,"rrv_offset_ErfExp"+label+"_"+self.channel,65.0,0.,200);
-            rrv_width_ErfExp  = RooRealVar("rrv_width_ErfExp"+label+"_"+self.channel,"rrv_width_ErfExp"+label+"_"+self.channel,34.71,0., 200.);
+            rrv_c_ErfExp      = RooRealVar("rrv_c_ErfExp"+label+"_"+self.channel,"rrv_c_ErfExp"+label+"_"+self.channel,-0.05,-0.1,-1e-4);
+            rrv_offset_ErfExp = RooRealVar("rrv_offset_ErfExp"+label+"_"+self.channel,"rrv_offset_ErfExp"+label+"_"+self.channel,60.,30.,120);
+            rrv_width_ErfExp  = RooRealVar("rrv_width_ErfExp"+label+"_"+self.channel,"rrv_width_ErfExp"+label+"_"+self.channel,30.,10, 60.);
+
+            ##amrrv_c_ErfExp      = RooRealVar("rrv_c_ErfExp"+label+"_"+self.channel,"rrv_c_ErfExp"+label+"_"+self.channel,-0.0323819,-0.1,-1e-4);
+            ##amrrv_offset_ErfExp = RooRealVar("rrv_offset_ErfExp"+label+"_"+self.channel,"rrv_offset_ErfExp"+label+"_"+self.channel,65.0,0.,200);
+            ##amrrv_width_ErfExp  = RooRealVar("rrv_width_ErfExp"+label+"_"+self.channel,"rrv_width_ErfExp"+label+"_"+self.channel,34.71,0., 200.);
             model_pdf         = ROOT.RooErfExpPdf("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c_ErfExp,rrv_offset_ErfExp,rrv_width_ErfExp);
 
         ## different initial values -> for mlvj
@@ -1702,8 +1713,8 @@ objName ==objName_before ):
     def fit_WJetsNorm(self, scaleJetMass = 0): # to get the normalization of WJets in sig
         #->not used anymore, just make the prefit plot
         self.mj_prefit_plot()
-        self.mj_postfit_blinded_SR_plot()
-        self.fit_WJetsNormalization_in_Mj_sb_region();
+        #self.mj_postfit_blinded_SR_plot()
+        #self.fit_WJetsNormalization_in_Mj_sb_region();
     #################################################################################################
     def fit_WJetsNormalization_in_Mj_sb_region(self,label="_WJets0",massscale="tmp"): 
 
@@ -1929,20 +1940,6 @@ objName ==objName_before ):
         self.fitresultsmlvj.append(rfresult_mj)
         getattr(self.workspace4fit_,"import")(model_WJets_mj)
 
-        ## Total numver of event 
-##am        rrv_number_data_mj = RooRealVar("rrv_number_data_%s_mj"%self.channel,"rrv_number_data_%s_mj"%self.channel,
-##am                                         self.workspace4fit_.var("rrv_number_TTbar_%s_mj"%self.channel).getVal()+
-##am                                         self.workspace4fit_.var("rrv_number_STop_%s_mj"%self.channel).getVal()+
-##am                                         self.workspace4fit_.var("rrv_number_WW_%s_mj"%self.channel).getVal()+
-##am                                         self.workspace4fit_.var("rrv_number_WZ_%s_mj"%self.channel).getVal()+
-##am                                         self.workspace4fit_.var("rrv_number_WJets0_from_fitting_%s_mj"%self.channel).getVal());
-##am
-##am        rrv_number_data_mj.setError(TMath.Sqrt(self.workspace4fit_.var("rrv_number_TTbar_%s_mj"%self.channel).getError()**2+
-##am                                               self.workspace4fit_.var("rrv_number_STop_%s_mj"%self.channel).getError()**2+
-##am                                               self.workspace4fit_.var("rrv_number_WW_%s_mj"%self.channel).getError()**2+
-##am                                               self.workspace4fit_.var("rrv_number_WZ_%s_mj"%self.channel).getError()**2+
-##am                                               self.workspace4fit_.var("rrv_number_WJets0_from_fitting_%s_mj"%self.channel).getError()**2));
-        #getattr(self.workspace4fit_,"import")(rrv_number_data_mj);
         
         ## make the final plot
         canv_mj=ROOT.TCanvas("canv_mj", "", 800, 800);canv_mj.cd();
@@ -1955,42 +1952,6 @@ objName ==objName_before ):
         mplot.Draw();canv_mj.Draw();
         canv_mj.SaveAs(self.plotsDir+'/m_j_fitting/mj_%s.png'%(self.channel))
         canv_mj.SaveAs(self.plotsDir+'/m_j_fitting/mj_%s.pdf'%(self.channel))
-##am        rdataset_data_mj_sb.plotOn(mplot, RooFit.Name("data_invisible"), RooFit.MarkerColor(kWhite), RooFit.MarkerSize(0.0001), RooFit.LineColor(kWhite), RooFit.MarkerStyle(kDot), RooFit.DataError(RooAbsData.Poisson), RooFit.XErrorSize(0) )
-##am
-##am        ## plot solid style 
-##am        model_data.plotOn(mplot,RooFit.Name("WZ"), RooFit.Components("model_WJets0_from_fitting_%s_mj,model_STop_%s_mj,model_TTbar_%s_mj,model_WW_%s_mj,model_WZ_%s_mj"%(self.channel,self.channel,self.channel,self.channel,self.channel)),RooFit.DrawOption("F"), RooFit.FillColor(self.color_palet["WZ"]),  RooFit.Range("full"), RooFit.NormRange("sb_lo,sb_hi"));
-##am        model_data.plotOn(mplot,RooFit.Name("WW"), RooFit.Components("model_WJets0_from_fitting_%s_mj,model_STop_%s_mj,model_TTbar_%s_mj,model_WW_%s_mj"%(self.channel,self.channel,self.channel,self.channel)),RooFit.DrawOption("F"), RooFit.FillColor(self.color_palet["WW"]),  RooFit.Range("full"), RooFit.NormRange("sb_lo,sb_hi"));
-##am        model_data.plotOn(mplot,RooFit.Name("TTbar"), RooFit.Components("model_WJets0_from_fitting_%s_mj,model_STop_%s_mj,model_TTbar_%s_mj"%(self.channel,self.channel,self.channel)),RooFit.DrawOption("F"), RooFit.FillColor(self.color_palet["TTbar"]),  RooFit.Range("full"), RooFit.NormRange("sb_lo,sb_hi"));
-##am        model_data.plotOn(mplot,RooFit.Name("STop"), RooFit.Components("model_WJets0_from_fitting_%s_mj,model_STop_%s_mj"%(self.channel,self.channel)),RooFit.DrawOption("F"), RooFit.FillColor(self.color_palet["STop"]),  RooFit.Range("full"), RooFit.NormRange("sb_lo,sb_hi"));
-##am        model_data.plotOn(mplot,RooFit.Name("WJets"), RooFit.Components("model_WJets0_from_fitting_%s_mj"%self.channel),RooFit.DrawOption("F"), RooFit.FillColor(self.color_palet["WJets"]),  RooFit.Range("full"), RooFit.NormRange("sb_lo,sb_hi"));
-##am
-##am            
-##am        ### solid line
-##am
-##am        draw_error_band(rdataset_data_mj_sb, model_data,self.workspace4fit_.var("rrv_number_data_%s_mj"%(self.channel)),rfresult_mj,mplot,self.color_palet["Uncertainty"],"F");
-##am        model_data.plotOn( mplot , RooFit.VLines(), RooFit.Invisible());
-##am        model_data.plotOn( mplot , RooFit.Invisible());
-##am        self.getData_PoissonInterval(rdataset_data_mj_sb,mplot);
-##am        rdataset_data_mj_sb.plotOn(mplot, RooFit.Name("data"), RooFit.MarkerSize(1), RooFit.DataError(RooAbsData.Poisson), RooFit.XErrorSize(0) );
-##am        mplot.GetYaxis().SetRangeUser(1e-2,500)
-##am        ### signal window zone with vertical lines
-##am        lowerLine         = TLine(65,0.,65,mplot.GetMaximum()); lowerLine.SetLineWidth(2); lowerLine.SetLineColor(kBlack); lowerLine.SetLineStyle(7);
-##am        upperLine         = TLine(105,0.,105,mplot.GetMaximum()); upperLine.SetLineWidth(2); upperLine.SetLineColor(kBlack); upperLine.SetLineStyle(7);
-##am        mplot.addObject(lowerLine);
-##am        mplot.addObject(upperLine);
-##am            
-##am        ### legend of the plot
-##am        self.leg = self.legend4Plot(mplot,0,1,0.3,0.,0.,0.,0,0,1);
-##am        self.leg.SetHeader('post-fit')
-##am        mplot.addObject(self.leg);
-##am        nParams_float_in_fitTo = rfresult_mj.floatParsFinal().getSize();
-##am        nBinX = mplot.GetNbinsX();
-##am        ndof  = nBinX-nParams_float_in_fitTo
-##am        print "IMPCHK fit for mj",ndof,nBinX,nParams_float_in_fitTo
-##am        mplot_pull = self.get_pull(rrv_mass_j,mplot);
-##am        parameters_list = model_data.getParameters(rdataset_data_mj_sb);
-##am
-##am        self.draw_canvas_with_pull( rrv_mass_j,rdataset_data_mj_sb,mplot,mplot_pull,ndof,parameters_list,"%s/m_j_fitting/"%(self.plotsDir), "m_j_prefitpost%s"%self.mj_model_name,'',1,0,1)
 
     ################################################################################################
     #################################################################################################
@@ -2283,14 +2244,14 @@ objName ==objName_before ):
                     ptWlep=treeIn.pTWlep > 200
                     boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore >= self.PNS and treeIn.mWV > rrv_mass_lvj.getMin() and treeIn.mWV<rrv_mass_lvj.getMax() and tmp_jet_mass < 150 and tmp_jet_mass > rrv_mass_j.getMin()
                     self.isGoodEvent = 0;   
-                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.Lep1_pt > 50 and treeIn.nBJetMedium30 == 0 and  boosted_sel and treeIn.pmet > 110:
+                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.Lep1_pt > 50  and  boosted_sel and treeIn.pmet > 110 and treeIn.nBJetMedium30 == 0:
                         self.isGoodEvent = 1;  
                     if self.isGoodEvent == 1:
                         tmp_event_weight=totEventWeight 
                         if "data" in label: 
                             tmp_event_weight4fit=  treeIn.evt_wt #treeIn.lepSF*treeIn.evt_wt if "data" not in label else treeIn.evt_wt
                         elif "WJets" in label: 
-                            tmp_event_weight4fit=treeIn.evt_wt*treeIn.lepSF*treeIn.Top_pTrw
+                            tmp_event_weight4fit=treeIn.evt_wt*treeIn.lepSF
                         else:
                             tmp_event_weight4fit=treeIn.evt_wt*treeIn.lepSF*treeIn.Selak8Jet_pNetWtagSF[0]*treeIn.Top_pTrw
                         #tmp_event_weight4fit=  treeIn.evt_wt*treeIn.lepSF if "data" not in label else  #totEventWeight #if "WJets" not in label else treeIn.evt_wt*treeIn.lepSF 
@@ -2521,9 +2482,12 @@ objName ==objName_before ):
             self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","Exp"); #ChiSqBern")#"Exp");
         else:
             if useWts:
-                self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","ChiSqBern")
+                self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","Exp")
+                #self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","ChiSqBern")
             else: self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","Exp")
-        if doalter:        self.fit_mj_single_MC(self.file_WJets_mc,"_WJets1","User1");
+        if doalter:     
+            self.fit_mj_single_MC(self.file_WJets_mc,"_WJets1","User1");
+     
         #### Fit the mlvj in sb_lo, signal region using two different model as done in the mj
         self.fit_mlvj_model_single_MC(self.file_WJets_mc,"_WJets0","_sb",self.MODEL_4_mlvj, 0, 0, 1, 1);
         #self.fit_mlvj_model_single_MC(self.file_WJets_mc,"_WJets0","_sb_lo",self.MODEL_4_mlvj, 0, 0, 1, 1);

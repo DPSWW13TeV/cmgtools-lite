@@ -7,7 +7,7 @@ import random
 import os
 import datetime
 date = datetime.date.today().isoformat()
-
+##../../../../../CombinedEWKAnalysis/CommonTools/python/ACModel.py
 #from prepare_bkg_oneCat_AM import *
 #gSystem.Load('%s/lib/slc6_amd64_gcc481/libHiggsAnalysisCombinedLimit.so'%os.environ['CMSSW_BASE'])
 ROOT.gSystem.Load("PDFs/PdfDiagonalizer_cc.so")
@@ -72,6 +72,9 @@ def mkplotDir(dname):
 WW_aTGC=[]
 WZ_aTGC=[]
 basepath="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/"
+final_cardsdir_name="%s/src/CMGTools/VVsemilep/python/plotter/Cards/" %(os.environ['CMSSW_BASE']); #for future perhaps add year as sub dir 
+if not os.path.isdir(final_cardsdir_name):  os.system("mkdir -p %s"%final_cardsdir_name)
+
 class Prepare_workspace_4limit:
 
         def __init__(self,year,ch,mlvj_lo,mlvj_hi,pf=""):
@@ -99,15 +102,15 @@ class Prepare_workspace_4limit:
             self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.5,'WPD':-1}
             self.wtagger_label        = 'WPM' ##amtagger label
             self.PNS = self.PNSWP[self.wtagger_label]
-            eos='/eos/user/a/anmehta/www/VVsemilep/WJest/%s/aTGC_%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date)
+            eos='/eos/user/a/anmehta/www/VVsemilep/WJest/%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date)
             if not os.path.isdir(eos): os.system("mkdir %s"%eos)
             if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+eos)
-            self.plotsDir = eos+'/plots_%s_%s_%s_%s%s' %(self.channel,self.wtagger_label,self.binlo,int(self.binhi),self.pf)
+            self.plotsDir = eos+'/plots_aTGC_%s_%s_%s_%s_%s%s' %(self.channel,self.wtagger_label,self.binlo,int(self.binhi),"weighted" if useWts else "unweighted",self.pf)
+            #            self.plotsDir = eos+'/plots_%s_%s_%s_%s%s' %(self.channel,self.wtagger_label,self.binlo,int(self.binhi),self.pf)
             if not os.path.isdir(self.plotsDir): os.system("mkdir %s"%self.plotsDir)
             os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
             os.system("cp make_PDF_input_oneCat_AM.py "+self.plotsDir)
             self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,self.binlo,int(self.binhi)) ##AM date
-
             ##read workspace containing background pdfs
             fileInWs                    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.binhi)))
             w                           = fileInWs.Get('workspace4limit_')
@@ -127,7 +130,7 @@ class Prepare_workspace_4limit:
 
         #read trees containing aTGC WW and WZ events and fill them into histograms
         def Read_ATGCtree(self,ch='mu'):
-            print '######### Making histograms for aTGC working points #########'
+            print ('######### Making histograms for aTGC working points #########')
             hists4scale        = {}
             for WV in ['WW','WZ']:
                 #create 3 histograms for each aTGC parameter (positive, negative and positive-negative working point)
@@ -167,7 +170,7 @@ class Prepare_workspace_4limit:
                 treeIn.AddFriend(treeIn1)
                 lumi_tmp         = lumis[self.year]
                 for i in range(treeIn.GetEntries()):
-                    if i%10000==0:                            print str(i) + '/' + str(treeIn.GetEntries())
+                    if i%10000==0:                            print (str(i) + '/' + str(treeIn.GetEntries()))
                     treeIn.GetEntry(i)
                     MWW                = treeIn.mWV
                     #apply cuts
@@ -239,7 +242,7 @@ class Prepare_workspace_4limit:
             fileOut        = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.binlo,self.binhi),'recreate')
             for key in hists4scale:
                 hists4scale[key].Write()
-            print '--------> Written to file ' + fileOut.GetName()
+            print ('--------> Written to file ' + fileOut.GetName())
             fileOut.Close()
         def Make_plots(self,rrv_x,cat,fitres):
             can     = [];can2    = [];      plots   = [];     plots2  = []; pads    = [];
@@ -665,7 +668,7 @@ class Prepare_workspace_4limit:
         def Write_datacard(self,w,region):
             ### make the card for this channel and plane ID
             ##amcodename    = 'WWWZ_' + region + '_' + self.ch
-            codename='{ch}_{region}_{year}'.format(ch=self.ch,region=region,year=self.year)
+            codename='WWWZ_{region}_{ch}_{year}'.format(ch=self.ch,region=region,year=self.year)
             bkgs_4card  = ['WJets','TTbar','STop']
             Nbkg_int    = len(bkgs_4card)
             uncert_map  = {}
@@ -683,13 +686,13 @@ class Prepare_workspace_4limit:
 
             bkgs                                        = ['WW','WZ','TTbar','STop']
             NlnN    = len(uncert_map)
-
+            dirName = os.path.join("../WJets_est",self.rlt_DIR_name)#"since we move everyhting one dir up"
             card = """\nimax 1  number of channels\njmax {Nbkg_int}  number of backgrounds\nkmax *  number of nuisance parameters (sources of systematical uncertainties)\n-------------""".format(Nbkg_int=Nbkg_int+1)
             for i in range(0,Nbkg_int):
-                card += """\nshapes {bkg_name}\t\t\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,dirName=self.rlt_DIR_name,bkg_name=bkgs_4card[i])
-            card += """\nshapes data_obs\t\t\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,dirName=self.rlt_DIR_name)    
-            card += """\nshapes aTGC_WW_{region}_{channel}\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,region=region,channel=self.ch,dirName=self.rlt_DIR_name)
-            card += """\nshapes aTGC_WZ_{region}_{channel}\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,region=region,channel=self.ch,dirName=self.rlt_DIR_name)
+                card += """\nshapes {bkg_name}\t\t\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,dirName=dirName,bkg_name=bkgs_4card[i])
+            card += """\nshapes data_obs\t\t\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,dirName=dirName)    
+            card += """\nshapes aTGC_WW_{region}_{channel}\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,region=region,channel=self.ch,dirName=dirName)
+            card += """\nshapes aTGC_WZ_{region}_{channel}\t\t {codename} {dirName}/{codename}_ws.root\t proc_{codename}:$PROCESS""".format(codename=codename,region=region,channel=self.ch,dirName=dirName)
             card += """\n------------\nbin\t\t\t{codename}\nobservation {obs}\n------------\nbin\t\t\t{codename}\t\t""".format(codename=codename,obs=w.data('dataset_2d_%s_%s'%(region,self.ch)).sumEntries())
             for i in range(0,Nbkg_int+1):
                 card += """\t\t{codename}""".format(codename=codename)
@@ -711,9 +714,20 @@ class Prepare_workspace_4limit:
                         i += 5
                     card += """{value}\t\t\t""".format(value=uncert_map[uncert][i])
                 card += """\n"""
-            
+            card += '''
+normvar_WJets_{ch}  flatParam
+rrv_c_Exp_WJets0_{ch}  flatParam
+rrv_n_ExpN_WJets0_sb_{ch}  flatParam
+rrv_c_ExpN_WJets0_sb_{ch}  flatParam
+Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig0 param 0.0 1.4
+Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig1 param 0.0 1.4
+Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig2 param 0.0 1.4
+Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig3 param 0.0 1.4
+slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
             #print card
-            cardName='%s/aC_%s.txt'%(self.rlt_DIR_name,codename)
+            #cardName='%s/aC_%s.txt'%(self.rlt_DIR_name,codename)
+            cardName='aC_%s_%s.txt'%(codename,date)
+            print ("this is where i am keeping the card",cardName)
             cardfile = open(cardName,'w')
             cardfile.write(card)
             cardfile.close()
@@ -844,7 +858,8 @@ class Prepare_workspace_4limit:
                     self.Import_to_ws(self.WS2,[pdf_atgc_VV_2d,signal_norm_VV],1)
 
                 ##define which parameters are floating (also has to be done in the datacard)
-                self.WS2.var("rrv_c_ChiSq_WJets0_%s"%self.ch).setConstant(kFALSE)
+                ##self.WS2.var("rrv_c_ChiSq_WJets0_%s"%self.ch).setConstant(kFALSE) ##am
+                self.WS2.var("rrv_c_Exp_WJets0_%s"%self.ch).setConstant(kFALSE)
                 self.WS2.var("normvar_WJets_%s"%self.ch).setConstant(kFALSE)
                 if 'sb' in region:
                     self.WS2.var("rrv_c_ExpN_WJets0_sb_%s"%self.ch).setConstant(kFALSE)
@@ -855,38 +870,40 @@ class Prepare_workspace_4limit:
                     self.WS2.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig2"%(self.ch,self.wtagger_label)).setConstant(kTRUE)
                     self.WS2.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig3"%(self.ch,self.wtagger_label)).setConstant(kTRUE)
 
-                output        = TFile(self.rlt_DIR_name+'/WWWZ_%s_%s_ws.root'%(region,self.ch),'recreate')
-                self.WS2.SetName('proc_WWWZ_%s_%s'%(region,self.ch))
+                output        = TFile(self.rlt_DIR_name+'/WWWZ_{region}_{ch}_{year}_ws.root'.format(ch=self.ch,region=region,year=self.year),'recreate')
+                self.WS2.SetName('proc_WWWZ_%s_%s_%s'%(region,self.ch,self.year))
                 self.WS2.Write();
                 output.Close()
-                print 'Write to file ' + output.GetName()
+                print ('Write to file ' + output.GetName())
 
 
             ##create the datacards for all regions
             card_sb_lo=self.Write_datacard(w_bkg,"sb_lo")
             card_sig=self.Write_datacard(w_bkg,"sig")
             card_sb_hi=self.Write_datacard(w_bkg,"sb_hi")
-            combineCardName=self.rlt_DIR_name+"/aC_WWWZ_%s.txt"%(self.ch)
-            cmd = 'combineCards.py {sig} {sb_lo} {sb_hi}  > {dC}.txt'.format(sig=card_sig,sb_lo=card_sb_lo,sb_hi=card_sb_hi,dC=combineCardName)
-            print cmd 
-            os.system(cmd)
-            dC=open(combineCardName,'a')
-            dC.write('''            
-normvar_WJets_{ch}  flatParam
-rrv_c_ChiSq_WJets0_{ch}  flatParam
-rrv_n_ExpN_WJets0_sb_{ch}  flatParam
-rrv_c_ExpN_WJets0_sb_{ch}  flatParam
-Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 1.4
-Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 1.4
-Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig2 param 0.0 1.4
-Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig3 param 0.0 1.4
-Deco_TTbar_sb_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 2.0
-Deco_TTbar_sb_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 2.0
-Deco_TTbar_sig_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 2.0
-Deco_TTbar_sig_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 2.0
-slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label))
+            combineCardName="aC_WWWZ_%s_%s.txt"%(self.ch,date)
+            cmd = 'combineCards.py {sig} {sb_lo} {sb_hi}  > {dC}'.format(sig=card_sig,sb_lo=card_sb_lo,sb_hi=card_sb_hi,dC=combineCardName)
+            #print (cmd)
+            #os.system(cmd)
+            #os.system('mv *txt %s/'%(self.rlt_DIR_name))
+            #os.system('mv %s %s'%(combineCardName,self.rlt_DIR_name))
+#            dC=open(combineCardName,'a')
+#            dC.write('''            
+#normvar_WJets_{ch}  flatParam
+#rrv_c_ChiSq_WJets0_{ch}  flatParam
+#rrv_n_ExpN_WJets0_sb_{ch}  flatParam
+#rrv_c_ExpN_WJets0_sb_{ch}  flatParam
+#Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 1.4
+#Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 1.4
+#Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig2 param 0.0 1.4
+#Deco_WJets0_sim_{ch}_{WP}_mlvj_13TeV_eig3 param 0.0 1.4
+#Deco_TTbar_sb_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 2.0
+#Deco_TTbar_sb_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 2.0
+#Deco_TTbar_sig_{ch}_{WP}_mlvj_13TeV_eig0 param 0.0 2.0
+#Deco_TTbar_sig_{ch}_{WP}_mlvj_13TeV_eig1 param 0.0 2.0
+#slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label))
 
-            dC.close()
+            #dC.close()
 
             #make some plots
             if options.Make_plots:
@@ -900,28 +917,28 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label))
                 self.wtmp.var('cwww').setVal(3.6)
                 self.wtmp.var('ccw').setVal(4.5)
                 self.wtmp.var('cb').setVal(0)
-                print 'cwww and ccw positive:'
+                print ('cwww and ccw positive:')
                 for i in range(8):
                     print N_list.at(i).GetName() + ' : ' + str(N_list.at(i).getVal())
                 self.wtmp.var('cwww').setVal(3.6)
                 self.wtmp.var('ccw').setVal(0)
                 self.wtmp.var('cb').setVal(20)
-                print 'cwww and cb positive:'
+                print ('cwww and cb positive:')
                 for i in range(8):
-                    print N_list.at(i).GetName() + ' : ' + str(N_list.at(i).getVal())
+                    print (N_list.at(i).GetName() + ' : ' + str(N_list.at(i).getVal()))
                 self.wtmp.var('cwww').setVal(0)
                 self.wtmp.var('ccw').setVal(4.5)
                 self.wtmp.var('cb').setVal(20)
-                print 'ccw and cb positive:'
+                print ('ccw and cb positive:')
                 for i in range(8):
-                    print N_list.at(i).GetName() + ' : ' + str(N_list.at(i).getVal())
+                    print (N_list.at(i).GetName() + ' : ' + str(N_list.at(i).getVal()))
 
                 #actual yields
                 for i in range(3):
                     for j in range(3):
                         self.wtmp.var(self.POI[j]).setVal(0)
                     self.wtmp.var(self.POI[i]).setVal(self.PAR_MAX[self.POI[i]])
-                    print channel + ' ' + self.POI[i] + ' : ' + str(w.var('rate_VV').getVal()*normfactor_3d.getVal())
+                    print (channel + ' ' + self.POI[i] + ' : ' + str(w.var('rate_VV').getVal()*normfactor_3d.getVal()))
 
                 raw_input(channel)
 
@@ -929,16 +946,24 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch,WP=self.wtagger_label))
 ###run code###
 
 if __name__ == '__main__':
+
     if options.chan=='elmu':
         makeWS_el        = Prepare_workspace_4limit(options.year,'el',950,4550,"")
         combineCardName_el=makeWS_el.Make_input()
         makeWS_mu        = Prepare_workspace_4limit(options.year,'mu',950,4550,"")
-        #combineCardName_mu=makeWS_mu.Make_input()
+        combineCardName_mu=makeWS_mu.Make_input()
+        output_card_name='aC_WWWZ_simfit'
+        cmd = 'combineCards.py aC_WWWZ_sig_el_{yr}_{dd}.txt aC_WWWZ_sig_mu_{yr}_{dd}.txt aC_WWWZ_sb_lo_el_{yr}_{dd}.txt aC_WWWZ_sb_lo_mu_{yr}_{dd}.txt aC_WWWZ_sb_hi_el_{yr}_{dd}.txt aC_WWWZ_sb_hi_mu_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date)
+        print (cmd)
+        os.system(cmd)
+        os.system('mv *txt %s/'%(final_cardsdir_name))
+
         #combine_cards_dir="Cards/%s/"%(date)
         #combineCardName=combine_cards_dir+'/aC_WWWZ_elmu_simfit_%s.txt'%(options.year)
         #cmd='combineCards.py {mu} {el} > {elmu}'.format(mu=combineCardName_mu,el=combineCardName_el,elmu=combineCardName)
         #os.system(cmd)
-
+        #return True 
+        
     else:
         makeWS        = Prepare_workspace_4limit(options.year,options.chan,950,4550,"")
         makeWS.Make_input()
@@ -949,5 +974,5 @@ if __name__ == '__main__':
     #print cmd
     #os.system(cmd)
     #print 'generated Card : %s.txt'%output_card_name
-    print "all done"
+    #print ("all done")
     

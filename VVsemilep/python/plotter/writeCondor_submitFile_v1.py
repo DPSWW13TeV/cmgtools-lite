@@ -15,7 +15,7 @@ Error      = jobs/{dW}_$(ProcId).error
 requirements = (OpSysAndVer =?= "CentOS7")
 +JobFlavour = "workday"
 \n\n'''.format(dW=doWhat,here=os.environ['PWD']))
-pf=""
+pf="V2"
 
 lepsel={'topCR' : ["onelep"],
         'SR'    : ["mu","el"],

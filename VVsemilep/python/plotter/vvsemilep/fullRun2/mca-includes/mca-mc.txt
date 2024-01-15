@@ -11,12 +11,12 @@ WZ : WZTo1L1Nu2Q : 11.46  : 1 ; FillColor=ROOT.kTeal-7, Label="WZ"
 WW : WWTo1L1Nu2Q : xsec : 1 ; FillColor=30, Label="WW SM" #,SkipMe=True
 WZ_5f : WZToLNuQQ01j_5f_amcatnloFxFx : 21.82 : 1 ; FillColor=ROOT.kTeal-7, Label="WZ SM",SkipMe=True
 
-sm   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
-sm   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
-sm   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
-sm   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
-sm   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
-sm   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
+sm+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
+sm+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
+sm+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
+sm+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
+sm+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
+sm+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowSM",LineStyle=ROOT.kDashed
 
 sm_lin_quad_mixed_cwww_cw_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : 1; LineColor=ROOT.kRed+1, Label="sm_lin_quad_cwww_cw_cb",LineStyle=ROOT.kDashed
 sm_lin_quad_mixed_cwww_cw_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1  : xsec : 1; LineColor=ROOT.kRed+1, Label="sm_lin_quad_cwww_cw_cb",LineStyle=ROOT.kDashed

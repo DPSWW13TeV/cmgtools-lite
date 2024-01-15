@@ -202,7 +202,7 @@ for binname, report in allreports.iteritems():
   datacard.write("## Datacard for cut file %s\n"%args[1])
   datacard.write("## Event selection: \n")
   for cutline in str(cuts).split("\n"):  datacard.write("##   %s\n" % cutline)
-  datacard.write("shapes *        * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % binname) ##AM for all processes except for WJets
+  datacard.write("shapes *        * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % binname)
 
   if options.lepflav in ["el","mu"]:
       datacard.write("shapes WJets    * WJets_est/Cards/{dd}/cards_sDM_weighted_{FS}_WPM_950_4550//WWWZ_{CR}_{FS}_ws.root proc_WWWZ_{CR}_{FS}:WJets_mj_{CR}_{FS}\n". format(FS=options.lepflav,dd=options.wjDate,CR=options.sel))
@@ -217,15 +217,15 @@ for binname, report in allreports.iteritems():
   fpatt = " %%%d.%df " % (klen,3)
   kpatt_am = " %%%ds " % klen
   npatt = "%%-%ds " % max([len('process')]+map(len,nuisances))
-  rate_str= "-1"
+  rate_str= "1" 
   datacard.write('##----------------------------------\n')
   datacard.write((npatt % 'bin    ')+(" "*6)+(" ".join([kpatt % binname  for p in procs]))+"\n")
   datacard.write((npatt % 'process')+(" "*6)+(" ".join([kpatt % p        for p in procs]))+"\n")
   datacard.write((npatt % 'process')+(" "*6)+(" ".join([kpatt % iproc[p] for p in procs]))+"\n")
-  ##amdatacard.write((npatt % 'rate   ')+(" "*6)+(" ".join([fpatt % allyields[p] for p in procs]))+"\n")
-  datacard.write((npatt % 'rate   ')+(" "*6)+(" ".join([kpatt_am % rate_str for p in procs]))+"\n")
+  datacard.write((npatt % 'rate   ')+(" "*6)+(" ".join([fpatt % allyields[p] if 'WJets' not in p else kpatt_am % rate_str for p in procs ]))+"\n")
+  #datacard.write((npatt % 'rate   ')+(" "*6)+(" ".join([kpatt_am % rate_str for p in procs]))+"\n")
   datacard.write('##----------------------------------\n')
-  towrite = [ report[p].raw() for p in procs ] + [ report["data_obs"].raw() ]
+  towrite = [ report[p].raw() for p in procs if "WJ" not in p] + [ report["data_obs"].raw() ] ##AM
   for name in nuisances:
     (kind,effmap,effshape) = systs[name]
     datacard.write(('%s %5s' % (npatt % name,kind)) + " ".join([kpatt % effmap[p]  for p in procs]) +"\n")

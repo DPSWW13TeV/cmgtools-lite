@@ -1,7 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os, re, types, sys, subprocess
 from collections import defaultdict
-import random 
 
 ## Need to catch upfront if it's run with -t NanoAOD, even before parsing other options
 def _getarg(opts,default):
@@ -12,7 +11,7 @@ def _getarg(opts,default):
     return default
 if _getarg(("-t","--tree"),"NanoAOD") == "NanoAOD":
     isNano = True
-    print "Will use the nanoAOD postprocessor"
+    print("Will use the nanoAOD postprocessor")
     # catch attempt of instantiating older modules"
     class Module:
         def __init__(self,*args,**kwargs):
@@ -20,10 +19,10 @@ if _getarg(("-t","--tree"),"NanoAOD") == "NanoAOD":
 else:
     isNano = False
     if "--tra2" in sys.argv:
-        print "Will use the CMGTools new version of treeReAnalyzer"
+        print("Will use the CMGTools new version of treeReAnalyzer")
         from CMGTools.TTHAnalysis.treeReAnalyzer2 import Module, EventLoop, Booker, PyTree
     else:
-        print "Will use the CMGTools version of treeReAnalyzer"
+        print("Will use the CMGTools version of treeReAnalyzer")
         from CMGTools.TTHAnalysis.treeReAnalyzer import Module, EventLoop, Booker, PyTree
 
 from glob import glob
@@ -44,14 +43,14 @@ class VariableProducer(Module):
         self.t = PyTree(self.book("TTree","t","t"))
         self.branches = {}
         for name,mod in self._modules:
-            print name
-            print mod.listBranches()
+            print(name)
+            print(mod.listBranches())
             if hasattr(mod,'setOutputTree'):
                 mod.setOutputTree(self.t)
             for B in mod.listBranches():
                 # don't add the same branch twice
                 if B in self.branches:
-                    print "Will not add branch %s twice" % (B,)
+                    print("Will not add branch %s twice" % (B,))
                     continue
                 self.branches[B] = True
                 if type(B) == tuple:
@@ -69,7 +68,7 @@ class VariableProducer(Module):
     def analyze(self,event):
         for name,mod in self._modules:
             keyvals = mod(event)
-            for B,V in keyvals.iteritems():
+            for B,V in keyvals.items():
                 setattr(self.t, B, V)
                 setattr(event,  B, V)
         self.t.fill()
@@ -105,7 +104,6 @@ parser.add_option("--bk",   dest="bookkeeping",  action="store_true", default=Fa
 parser.add_option("--tra2",  dest="useTRAv2", action="store_true", default=False, help="Use the new version of treeReAnalyzer");
 parser.add_option("-t", "--tree", dest="tree", default='NanoAOD', help="Pattern for tree name");
 # input friends
-parser.add_option("--full",      action="store_true", default=False, help="Dont get friends, copy the full tree");
 parser.add_option("-F", "--add-friend",    dest="friendTrees",  action="append", default=[], nargs=2, help="Add a friend tree (treename, filename). Can use {name}, {cname} patterns in the treename")
 parser.add_option("--FMC", "--add-friend-mc",    dest="friendTreesMC",  action="append", default=[], nargs=2, help="Add a friend tree (treename, filename) to MC only. Can use {name}, {cname} patterns in the treename")
 parser.add_option("--FD", "--add-friend-data",    dest="friendTreesData",  action="append", default=[], nargs=2, help="Add a friend tree (treename, filename) to data trees only. Can use {name}, {cname} patterns in the treename")
@@ -113,7 +111,7 @@ parser.add_option("--name",   dest="name",     type="string", default="Friender"
 # options that are different between old CMGTools and nanoAOD-tools
 if isNano: # new nanoAOD-tools options
     # importing of modules
-    parser.add_option("-I", "--import", dest="imports",  type="string", default=[], action="append", nargs=2, help="Import modules (python package, comma-separated list of ");
+    parser.add_option("-I", "--import", dest="imports",  type="string", default=[], action="append", nargs=2, help="Import modules (python3 package, comma-separated list of ");
     # output file name pattern
     #parser.add_option("-o", "--outPattern",   dest="outPattern",     type="string", default="%s_Friend", help="Pattern string for output file name"); # not really configurable due to postprocessor limitations
     parser.add_option("-z", "--compression",  dest="compression", type="string", default=("ZLIB:3"), help="Compression: none, or (algo):(level) ")
@@ -136,14 +134,14 @@ if not isNano:
             import_module(mod)
             obj = sys.modules[mod]
             for (name,x) in obj.MODULES:
-                print "Loaded %s from %s " % (name, mod)
+                print("Loaded %s from %s " % (name, mod))
                 MODULES.append((name,x))
 
     if options.listModules:
-        print "List of modules"
+        print("List of modules")
         for (n,x) in MODULES:
             if type(x) == types.FunctionType: x = x()
-            print "   '%s': %s" % (n,x)
+            print("   '%s': %s" % (n,x))
         exit()
 
     if options.modules != []:
@@ -154,26 +152,26 @@ if not isNano:
                     found = True
                     break
         if not found: 
-            print "ERROR: no modules selected\n - selection was %s\n - list of modules is %s\n" % (
-                        sorted(options.modules), sorted(_[0] for _ in MODULES))
+            print("ERROR: no modules selected\n - selection was %s\n - list of modules is %s\n" % (
+                        sorted(options.modules), sorted(_[0] for _ in MODULES)))
             exit()
 
 if "{P}" in args[1]: args[1] = args[1].replace("{P}",args[0])
 if len(args) != 2:
-    print args
-    print "Usage: program <TREE_DIR> <OUT>"
+    print(args)
+    print("Usage: program <TREE_DIR> <OUT>")
     exit()
 if not os.path.isdir(args[0]):
-    print "Error. Input directory {input} does not exist".format(input=args[0])
+    print("Error. Input directory {input} does not exist".format(input=args[0]))
     exit()
 if not os.path.isdir(args[1]):
     tempOut = args[1].replace('/pool/ciencias/','/pool/cienciasrw/')
     os.system("mkdir -p "+tempOut)
     if not os.path.isdir(args[1]):
-        print "Could not create output directory"
+        print("Could not create output directory")
         exit()
 if len(options.chunks) != 0 and len(options.datasets) != 1:
-    print "must specify a single dataset with -d if using -c to select chunks"
+    print("must specify a single dataset with -d if using -c to select chunks")
     exit()
 
 if isNano:
@@ -185,7 +183,9 @@ chunks_with_subs = defaultdict(set)
 if options.checkchunks:
     npass, nfail = 0,0
     lsls = subprocess.check_output(["ls", "-l", args[1]])
-    for line in sorted(lsls.split("\n")):
+    print(lsls.split(b"\n"))
+    for line in sorted(lsls.split(b"\n")):
+        line=str(line)
         if (options.outPattern % "") not in line: continue
         fields = line.split()
         size = int(fields[4])
@@ -202,23 +202,23 @@ if options.checkchunks:
             continue
         if good: npass += 1
         else: nfail += 1
-    print "Found %d good chunks, %d bad chunks" % (npass, nfail)
+    print("Found %d good chunks, %d bad chunks" % (npass, nfail))
     if options.fineSplit:
         allsubs = set(range(options.fineSplit))
         if not os.path.isdir(args[1]+"/subchunks"):
             os.system("mkdir -p "+args[1]+"/subchunks")
-        for sample, chunks in chunks_with_subs.iteritems():
+        for sample, chunks in chunks_with_subs.items():
             for chunk in chunks:
                 if done_subchunks[(sample,chunk)] == allsubs:
-                    print "%s chunk %s has all the fine splits -> doing the hadd " % (sample, chunk),
+                    print("%s chunk %s has all the fine splits -> doing the hadd " % (sample, chunk))
                     target = "%s.chunk%d.root" % (options.outPattern % sample, chunk)
                     inputs = [ "%s.chunk%d.sub%d.root" % (options.outPattern % sample, chunk, sub) for sub in range(options.fineSplit) ]
                     try:
                         haddout = subprocess.check_output(["hadd", "-f", target]+inputs, cwd=args[1])
                         subprocess.check_output(["mv", "-v" ]+inputs+["subchunks/"], cwd=args[1])
-                        print " OK"
+                        print(" OK")
                     except subprocess.CalledProcessError:
-                        print "ERROR"; print haddout
+                        print("ERROR"); print(haddout)
 if options.checkrunning:
     nrunning = 0
     if options.queue == "condor":
@@ -242,25 +242,22 @@ if options.checkrunning:
             chunks_with_subs[name].add(chunk)
         else:
             done_chunks[m.group(1)].add(int(m.group(2)))
-    print "Found %d chunks running" % (nrunning)
+    print("Found %d chunks running" % (nrunning))
 if options.checkaliens:
     pattern = re.compile( (options.outPattern % "(\\w+)") + r"\.root")
     for fname in glob(args[1] + "/" + (options.outPattern % "*") + ".root"):
         m = re.match(pattern, os.path.basename(fname))
         if not m: 
-            print "Extra alien friend found? %s" % fname
+            print("Extra alien friend found? %s" % fname)
             continue
         totest = args[0] + "/" + m.group(1) + (".root" if isNano else "")
         if not os.path.exists(totest):
-            print "Alien friend found? %s with no %s" % (fname, totest)
+            print("Alien friend found? %s with no %s" % (fname, totest))
             continue
-
 jobs = []
-
 for D in sorted(glob(args[0]+"/*")):
-    if "1_" in D: continue
+    if D.split('/')[-1].startswith('1_'): continue
     if isNano:
-        ##amprint 'gets here'
         treename = "Events"
         if os.path.isfile(D) and D.endswith(".root"):
             fname = D
@@ -297,7 +294,7 @@ for D in sorted(glob(args[0]+"/*")):
         f = ROOT.TFile.Open(fname)
         t = f.Get(treename)
         if not t:
-            print "Corrupted ",fname
+            print("Corrupted ",fname)
             continue
         entries = t.GetEntries()
         if options.justtrivial and entries > 0: continue
@@ -308,36 +305,33 @@ for D in sorted(glob(args[0]+"/*")):
                 f2 = ROOT.TFile.Open(fout)
                 if (not f2) or f2.IsZombie() or f2.TestBit(ROOT.TFile.kRecovered): 
                     if f2: f2.Close()
-                    if not options.quiet: print "Component %s has to be remade, output tree is invalid or corrupted" % (short, entries, t2.GetEntries())
+                    if not options.quiet: print("Component %s has to be remade, output tree is invalid or corrupted" % (short, entries, t2.GetEntries()))
                 else:
                     t2 = f2.Get("Friends" if isNano else (options.treeDir+"/t"))
-                    if not t2: 
-                        if not options.quiet: print "Component %s has to be remade, there's no friend tree" % (short)
-                    elif t2.GetEntries() != entries:
-                        if not options.quiet: print "Component %s has to be remade, mismatching number of entries (%d vs %d)" % (short, entries, t2.GetEntries())
+                    if t2.GetEntries() != entries:
+                        if not options.quiet: print("Component %s has to be remade, mismatching number of entries (%d vs %d)" % (short, entries, t2.GetEntries()))
                         f2.Close()
                     else:
-                        if not options.quiet: print "Component %s exists already and has matching number of entries (%d)" % (short, entries)
+                        if not options.quiet: print("Component %s exists already and has matching number of entries (%d)" % (short, entries))
                         continue
         chunk = options.chunkSize
         if entries < chunk:
-            if not options.quiet: print "  ",os.path.basename(D),("  DATA" if data else "  MC")," single chunk (%d events)" % entries
+            if not options.quiet: print("  ",os.path.basename(D),("  DATA" if data else "  MC")," single chunk (%d events)" % entries)
             if 1 in done_chunks[short]: continue
             if options.queue == "condor":
                 jobs.append((short,data,1))
             else:
-                ##amjobs.append((short,fname,"%s/%s.root" % (args[1],options.outPattern%short),data,(0,entries),-1,None))
-                jobs.append((short,fname,"%s/%s.root" % (args[1],options.outPattern%short),data,(0,entries),-1,None,options.full))
+                jobs.append((short,fname,"%s/%s.root" % (args[1],options.outPattern%short),data,(0,entries),-1,None))
         else:
             nchunk = int(ceil(entries/float(chunk)))
-            if not options.quiet: print "  ",os.path.basename(D),("  DATA" if data else "  MC")," %d chunks (%d events)" % (nchunk, entries)
+            if not options.quiet: print("  ",os.path.basename(D),("  DATA" if data else "  MC")," %d chunks (%d events)" % (nchunk, entries))
             if options.queue == "condor":
                 if options.checkchunks:
-                    for i in xrange(nchunk):
+                    for i in range(nchunk):
                         if i in done_chunks[short]: continue
                         if options.fineSplit:
                             if i in chunks_with_subs[short]:
-                                for ifs in xrange(options.fineSplit):
+                                for ifs in range(options.fineSplit):
                                     if ifs in done_subchunks[(short,i)]: continue
                                     jobs.append((short,data,i,ifs))
                             else:
@@ -347,28 +341,26 @@ for D in sorted(glob(args[0]+"/*")):
                 else:
                     jobs.append((short,data,nchunk))
                 continue
-            for i in xrange(nchunk):
+            for i in range(nchunk):
                 if i in done_chunks[short]: continue
                 if options.chunks != []:
                     if i not in options.chunks: continue
                 if not options.fineSplit:
                     r = (int(i*chunk),min(int((i+1)*chunk),entries))
-                    ##amjobs.append((short,fname,"%s/%s.chunk%d.root" % (args[1],options.outPattern%short,i),data,r,i,None))
-                    jobs.append((short,fname,"%s/%s.chunk%d.root" % (args[1],options.outPattern%short,i),data,r,i,None, options.full))
+                    jobs.append((short,fname,"%s/%s.chunk%d.root" % (args[1],options.outPattern%short,i),data,r,i,None))
                 else:
                     ev_per_fs = int(ceil(chunk/float(options.fineSplit)))
-                    for ifs in xrange(options.fineSplit):
+                    for ifs in range(options.fineSplit):
                         if i in chunks_with_subs[short] and ifs in done_subchunks[(short,i)]: continue
                         if options.subChunk != None and ifs != options.subChunk: continue
                         r = (i*chunk + ifs*ev_per_fs, min(i*chunk + min((ifs+1)*ev_per_fs, chunk),entries))
-                        ##amjobs.append((short,fname,"%s/%s.chunk%d.sub%d.root" % (args[1],options.outPattern%short,i,ifs),data,r,i,(ifs,options.fineSplit)))
-                        jobs.append((short,fname,"%s/%s.chunk%d.sub%d.root" % (args[1],options.outPattern%short,i,ifs),data,r,i,(ifs,options.fineSplit), options.full))
-print "\n"
+                        jobs.append((short,fname,"%s/%s.chunk%d.sub%d.root" % (args[1],options.outPattern%short,i,ifs),data,r,i,(ifs,options.fineSplit)))
+print("\n")
 njobs = len(jobs)
 if options.queue == "condor": 
     if options.checkchunks and options.fineSplit: njobs = sum(((options.fineSplit if r[-1] == -1 else 1) for r in jobs),0)
     elif not options.checkchunks: njobs = sum((r[-1] for r in jobs),0)
-print "I have %d task(s) to process" % njobs
+print("I have %d task(s) to process" % njobs)
 if options.justcount: sys.exit()
 if options.queue == "condor":
     subfile = open(options.subfile, "w")
@@ -385,9 +377,8 @@ Universe   = vanilla
 Error      = {logdir}/err.$(cluster).$(Dataset).$({chunk})
 Output     = {logdir}/out.$(cluster).$(Dataset).$({chunk})
 Log        = {logdir}/log.$(cluster).$(Dataset).$({chunk})
-use_x509userproxy = True
+use_x509userproxy = true
 getenv = True
-requirements = (OpSysAndVer =?= "CentOS7")
 request_memory = 2000
 +MaxRuntime = {maxruntime}
 {accounting_group}
@@ -416,18 +407,18 @@ if options.queue:
         runner = options.runner
         super  = "bsub -q {queue}".format(queue = options.queue)
 
-    basecmd = "{dir}/{runner} {dir} {cmssw} python {self} -j 0 -N {chunkSize}  -t {tree} {data} {output}".format(
+    basecmd = "{dir}/{runner} {dir} {cmssw} python3 {self} -j 0 -N {chunkSize}  -t {tree} {data} {output}".format(
                 dir = os.getcwd(), runner=runner, cmssw = os.environ['CMSSW_BASE'],
                 self=sys.argv[0], chunkSize=options.chunkSize,
                 tree=options.tree, data=args[0], output=theoutput)
     if not isNano: basecmd += " -T %s " % options.treeDir
 
     if options.queue == "cp3":
-        basecmd = "python {dir}/{self} -j 0 -N {chunkSize} -t {tree} {data} {output}".format(
+        basecmd = "python3 {dir}/{self} -j 0 -N {chunkSize} -t {tree} {data} {output}".format(
                 dir = os.getcwd(), runner=runner, cmssw = os.environ['CMSSW_BASE'],
                 self=sys.argv[0], chunkSize=options.chunkSize,
                 tree=options.tree, data=args[0], output=theoutput)
-        if not isNano: basecmd = "python {dir}/{self} -j 0 -N {chunkSize} -T {tdir} -t {tree} {data} {output}".format(
+        if not isNano: basecmd = "python3 {dir}/{self} -j 0 -N {chunkSize} -T {tdir} -t {tree} {data} {output}".format(
                 dir = os.getcwd(), runner=runner, cmssw = os.environ['CMSSW_BASE'],
                 self=sys.argv[0], chunkSize=options.chunkSize, tdir=options.treeDir,
                 tree=options.tree, data=args[0], output=theoutput)
@@ -474,17 +465,14 @@ if options.queue:
           for (name, data, nchunks) in jobs:
             subfile.write("Queue {njobs} Dataset in {name}\n".format(name=name, njobs=nchunks))
       subfile.close()
-      print "Saved condor submit file to %s" % options.subfile
+      print("Saved condor submit file to %s" % options.subfile)
       if not options.pretend:
          os.system("condor_submit "+options.subfile)
     else:
-      random.shuffle(jobs)
-      ##amfor (name,fin,fout,data,range,chunk,fs) in jobs:
-      for (name,fin,fout,data,range,chunk,fs, full) in jobs:
+      for (name,fin,fout,data,range,chunk,fs) in jobs:
         if chunk != -1:
             if options.logdir: writelog = "-o {logdir}/{data}_{chunk}.out -e {logdir}/{data}_{chunk}.err".format(logdir=logdir, data=name, chunk=chunk)
-            ##amcmd = "{super} {writelog} {base} -d {data} -c {chunk} {post}".format(super=super, writelog=writelog, base=basecmd, data=name, chunk=chunk, post=friendPost)
-            cmd = "{super} {writelog} {base} -d {data} -c {chunk} {post}".format(super=super, writelog=writelog, base=basecmd, data=name, chunk=chunk, post=friendPost) + (" --full" if full else "")
+            cmd = "{super} {writelog} {base} -d {data} -c {chunk} {post}".format(super=super, writelog=writelog, base=basecmd, data=name, chunk=chunk, post=friendPost)
             if options.queue == "batch" and options.env != "oviedo":
                 cmd = "echo \"{base} -d {data} -c {chunk} {post}\" | {super} {writelog}".format(super=super, writelog=writelog, base=basecmd, data=name, chunk=chunk, post=friendPost)
             elif options.env == "oviedo":
@@ -503,14 +491,14 @@ wait
 
 """.format(cmd=dacmd))
                 subfile.close()
-                print "Saved slurm submit file to %s" % full_subfile
+                print("Saved slurm submit file to %s" % full_subfile)
                 cmd = "{super} {subfile}".format(super=super, subfile=full_subfile)
             if fs:
                 cmd += " --fineSplit %d --subChunk %d" % (fs[1], fs[0])
         else:
             if options.logdir: writelog = "-o {logdir}/{data}.out -e {logdir}/{data}.err".format(logdir=logdir, data=name)
-            ##amcmd = "{super} {writelog} {base} -d {data} {post}".format(super=super, writelog=writelog, base=basecmd, data=name, chunk=chunk, post=friendPost)
-            cmd = "{super} {writelog} {base} -d {data} {post}".format(super=super, writelog=writelog, base=basecmd, data=name, chunk=chunk, post=friendPost)  + (" --full" if full else "")
+            cmd = "{super} {writelog} {base} -d {data} {post}".format(super=super, writelog=writelog, base=basecmd, data=name, chunk=chunk, post=friendPost)
+
             if options.queue == "batch" and options.env != "oviedo":
                 cmd = "echo \"{base} -d {data} {post}\" | {super} {writelog}".format(super=super, writelog=writelog, base=basecmd, data=name, chunk=chunk, post=friendPost)
             elif options.env == "oviedo":
@@ -528,9 +516,9 @@ wait
 
 """.format(cmd=dacmd))
                 subfile.close()
-                print "Saved slurm submit file to %s" % full_subfile
+                print("Saved slurm submit file to %s" % full_subfile)
                 cmd = "{super} {subfile}".format(super=super, subfile=full_subfile)
-        print cmd
+        print(cmd)
         if not options.pretend:
             os.system(cmd)
 
@@ -549,12 +537,12 @@ def _runIt(myargs):
             try:
                 tmpdir = os.environ['TMPDIR'] if 'TMPDIR' in os.environ else "/tmp"
                 tmpfile =  "%s/%s" % (tmpdir, os.path.basename(fin))
-                print "xrdcp %s %s" % (fin, tmpfile)
+                print("xrdcp %s %s" % (fin, tmpfile))
                 os.system("xrdcp %s %s" % (fin, tmpfile))
                 if os.path.exists(tmpfile):
                     fin = tmpfile
                     fetchedfile = fin
-                    print "success :-)"
+                    print("success :-)")
             except:
                 pass
         fb = ROOT.TFile.Open(fin)
@@ -567,9 +555,9 @@ def _runIt(myargs):
         os.environ["DebugLevel"]="0"
     else:
         fb = ROOT.TFile.Open(fin)
-        print fb
+        print(fb)
 
-    print "getting tree.."
+    print("getting tree..")
     tb = fb.Get(options.tree)
 
     if not tb: tb = fb.Get("tree") # new trees
@@ -583,9 +571,9 @@ def _runIt(myargs):
         friends_.append(tf) # to make sure pyroot does not delete them
     nev = tb.GetEntries()
     if options.pretend:
-        print "==== pretending to run %s (%d entries, %s) ====" % (name, nev, fout)
+        print("==== pretending to run %s (%d entries, %s) ====" % (name, nev, fout))
         return (name,(nev,0))
-    print "==== %s starting (%d entries) ====" % (name, nev)
+    print("==== %s starting (%d entries) ====" % (name, nev))
     booker = Booker(fout)
     modulesToRun = MODULES
     if options.modules != []:
@@ -596,14 +584,14 @@ def _runIt(myargs):
                     toRun[m] = True
         modulesToRun = [ (m,v) for (m,v) in MODULES if m in toRun ]
     el = EventLoop([ VariableProducer(options.treeDir,booker,modulesToRun), ])
-    el.loop([tb], eventRange=xrange(range))
+    el.loop([tb], eventRange=range(range))
     booker.done()
     fb.Close()
     time = timer.RealTime()
     nev = el._doneEvents
-    print "=== %s done (%d entries, %.0f s, %.0f e/s) ====" % ( name, nev, time,(nev/time) )
+    print("=== %s done (%d entries, %.0f s, %.0f e/s) ====" % ( name, nev, time,(nev/time) ))
     if fetchedfile and os.path.exists(fetchedfile):
-        print 'Cleaning up: removing %s'%fetchedfile
+        print('Cleaning up: removing %s'%fetchedfile)
         os.system("rm %s"%fetchedfile)
     if options.bookkeeping:
         if not os.path.exists(fout[:fout.rfind("/")] + "/cmd"): os.system("mkdir -p " + fout[:fout.rfind("/")] + "/cmd")
@@ -614,34 +602,31 @@ def _runIt(myargs):
     return (name,(nev,time))
 
 def _runItNano(myargs):
-    ##am(name,fin,ofout,data,range,chunk,fineSplit) = myargs
-    (name,fin,ofout,data,range,chunk,fineSplit, full) = myargs
+    (name,fin,ofout,data,range,chunk,fineSplit) = myargs
     timer = ROOT.TStopwatch()
     inpsibatch= 'SLURMD_NODENAME' in os.environ and 't3wn' in os.environ['SLURMD_NODENAME'] and ofout.startswith('/pnfs/psi.ch/')
     if inpsibatch:
         ofout = '/scratch/'+ofout
     command = ["nano_postproc.py", "--friend", os.path.dirname(ofout), "--postfix", os.path.basename(ofout)[len(name):-len(".root")] ]
-    if full :
-        command.remove( "--friend")
     for i in options.imports:  command += [ "-I", i[0], i[1] ]
     command += [ "-z", options.compression ]
     fin = fin
     friends = options.friendTrees[:] + (options.friendTreesData if data else options.friendTreesMC)
     for tf_tree,tf_file in friends:
-        if tf_tree not in ("Friends", "Events"): print "Unsupported friend tree name %s" % tf_tree
+        if tf_tree not in ("Friends", "Events"): print("Unsupported friend tree name %s" % tf_tree)
         fin += ",%s" % tf_file.format(name=name, cname=name, P=args[0])
     command += [ fin, "--first-entry", str(range[0]), "-N", str(range[1] - range[0]) ]
     if options.pretend:
-        print "==== pretending to run %s (%d entries starting from %d, %s) ====" % (name, range[1] - range[0], range[0], ofout)
-        print "# ", "  ".join(command)
+        print("==== pretending to run %s (%d entries starting from %d, %s) ====" % (name, range[1] - range[0], range[0], ofout))
+        print("# ", "  ".join(command))
         return (name,(range[1] - range[0],0))
-    print "==== %s starting (%d entries starting from %d, %s) ====" % (name, range[1] - range[0], range[0], ofout)
-    print "  ".join(command)
+    print("==== %s starting (%d entries starting from %d, %s) ====" % (name, range[1] - range[0], range[0], ofout))
+    print("  ".join(command))
     subprocess.call(command)
     time = timer.RealTime()
-    print "=== %s done (%d entries starting from %d, %.0f s, %.0f e/s, %s) ====" % ( name, range[1] - range[0], range[0], time, (range[1] - range[0]/time), ofout )
+    print("=== %s done (%d entries starting from %d, %.0f s, %.0f e/s, %s) ====" % ( name, range[1] - range[0], range[0], time, (range[1] - range[0]/time), ofout ))
     if inpsibatch:
-        print "=== Now transfering to pnfs ==="
+        print("=== Now transfering to pnfs ===")
         os.system('''
         for try in `seq 1 3`; do
         echo "Stageout try $try"
@@ -674,11 +659,11 @@ if options.jobs > 0:
     pool = Pool(options.jobs)
     ret  = dict(pool.map(_run, jobs)) if options.jobs > 0 else dict([_run(j) for j in jobs])
 else:
-    ret = dict(map(_run, jobs))
+    ret = dict(list(map(_run, jobs)))
 fulltime = maintimer.RealTime()
-totev   = sum([ev   for (ev,time) in ret.itervalues()])
-tottime = sum([time for (ev,time) in ret.itervalues()])
-print "Done %d tasks in %.1f min (%d entries, %.1f min)" % (len(jobs),fulltime/60.,totev,tottime/60.)
+totev   = sum([ev   for (ev,time) in ret.values()])
+tottime = sum([time for (ev,time) in ret.values()])
+print("Done %d tasks in %.1f min (%d entries, %.1f min)" % (len(jobs),fulltime/60.,totev,tottime/60.))
 
 
 
