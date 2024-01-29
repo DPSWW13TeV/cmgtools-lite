@@ -380,6 +380,7 @@ Log        = {logdir}/log.$(cluster).$(Dataset).$({chunk})
 use_x509userproxy = true
 getenv = True
 request_memory = 2000
+requirements = (OpSysAndVer =?= "CentOS7")
 +MaxRuntime = {maxruntime}
 {accounting_group}
 """.format(runner = options.runner, logdir = logdir, maxruntime = options.maxruntime * 60, chunk = chunk,

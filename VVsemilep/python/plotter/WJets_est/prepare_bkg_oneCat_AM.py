@@ -31,7 +31,7 @@ ROOT.gSystem.Load("PDFs/Util_cxx.so")
 #ROOT.gSystem.Load("PDFs/hyperg_2F1_c.so")
 #ROOT.gSystem.Load("PDFs/HWWLVJRooPdfs_cxx.so")
 tmphold=[]
-from ROOT import draw_error_band, draw_error_band_extendPdf, draw_error_band_Decor, draw_error_band_shape_Decor, RooErfExpPdf, RooAlpha, RooAlpha4ErfPowPdf,  PdfDiagonalizer,  RooUser1Pdf,  RooAnaExpNPdf, RooExpNPdf, RooAlpha4ExpNPdf, RooExpTailPdf, RooAlpha4ExpTailPdf, Roo2ExpPdf, RooAlpha42ExpPdf, RooAlphaExp, RooChiSqPdf, RooPowPdf  #\RooErfExpDecoPdf, RooPoly3Pdf, RooChiSqPdf, RooPowPdf,RooPow2Pdf,RooAlpha4ErfPow2Pdf,RooErfPowPdf,RooAlphaExp
+from ROOT import draw_error_band, draw_error_band_extendPdf, draw_error_band_Decor, draw_error_band_shape_Decor, RooErfExpPdf, RooAlpha, RooAlpha4ErfPowPdf,  PdfDiagonalizer,  RooUser1Pdf,  RooAnaExpNPdf, RooExpNPdf, RooAlpha4ExpNPdf, RooExpTailPdf, RooAlpha4ExpTailPdf, Roo2ExpPdf, RooAlpha42ExpPdf, RooAlphaExp, RooChiSqPdf, RooPowPdf,RooPow2Pdf  #\RooErfExpDecoPdf, RooPoly3Pdf, RooChiSqPdf, RooAlpha4ErfPow2Pdf,RooErfPowPdf,RooAlphaExp
 
 
 saveFiles=[]
@@ -907,15 +907,15 @@ objName ==objName_before ):
         ## sum of two exponential 
 
         if in_model_name == "Exp" or in_model_name == "Exp_sr":
-            if "WJets" not in  label:
+            if "WJets" not in label:
                 print "########### Exp = exp funtion for W+jets mlvj ############",label
                 rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.003,-1,0);
             else:
-                if "sig" in label:
-                    rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.05,-0.15,0); #
+                if "sig" in label: #works for muons signal and sb
+                    rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,-0.05,-0.1,0); #
                 else:
-                    rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel, -0.01,-0.15,0); #-1e2,1e2) #;-0.15,1e2); #here
-                #rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel,0.0323819,-0.1,-1e-6); #-0.05,-1,0); #-0.165,0);##valid until -0.15 below this invalid minima
+                    rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel, -0.005,-0.1,0);
+                    #rrv_c_Exp = RooRealVar("rrv_c_Exp"+label+"_"+self.channel,"rrv_c_Exp"+label+"_"+self.channel, -0.003,-0.1,0); #-1e2,1e2) #;-0.15,1e2); #here
             model_pdf = ROOT.RooExponential("model_pdf"+label+"_"+self.channel+mass_spectrum,"model_pdf"+label+"_"+self.channel+mass_spectrum,rrv_x,rrv_c_Exp);
 
         
@@ -2417,8 +2417,6 @@ objName ==objName_before ):
         self.get_mj_and_mlvj_dataset(self.file_STop_mc,"_STop")
         self.fit_mj_single_MC(self.file_STop_mc,"_STop","ExpGaus");
         self.fit_mlvj_model_single_MC(self.file_STop_mc,"_STop","_sb","Exp", 0, 0, 1);
-        #self.fit_mlvj_model_single_MC(self.file_STop_mc,"_STop","_sb_lo","Exp", 0, 0, 1);
-        #self.fit_mlvj_model_single_MC(self.file_STop_mc,"_STop","_sb_hi","Exp", 0, 0, 1);
         self.fit_mlvj_model_single_MC(self.file_STop_mc,"_STop","_sig","Exp", 0, 0, 1);
         print "________________________________________________________________________"
 
@@ -2432,8 +2430,6 @@ objName ==objName_before ):
         self.get_mj_and_mlvj_dataset(self.file_WW_mc,"_WW")
         self.fit_mj_single_MC(self.file_WW_mc,"_WW","2GausWW");       
         self.fit_mlvj_model_single_MC(self.file_WW_mc,"_WW","_sb","Exp", 0, 0, 1);
-        #self.fit_mlvj_model_single_MC(self.file_WW_mc,"_WW","_sb_lo","Exp", 0, 0, 1);
-        #self.fit_mlvj_model_single_MC(self.file_WW_mc,"_WW","_sb_hi","Exp", 0, 0, 1);
         self.fit_mlvj_model_single_MC(self.file_WW_mc,"_WW","_sig",self.MODEL_4_mlvj, 0, 0, 1);
         print "________________________________________________________________________"
 
@@ -2447,8 +2443,6 @@ objName ==objName_before ):
         self.get_mj_and_mlvj_dataset(self.file_WZ_mc,"_WZ")
         self.fit_mj_single_MC(self.file_WZ_mc,"_WZ","2GausWZ");       
         self.fit_mlvj_model_single_MC(self.file_WZ_mc,"_WZ","_sb","Exp", 0, 0, 1);
-        #self.fit_mlvj_model_single_MC(self.file_WZ_mc,"_WZ","_sb_lo","Exp", 0, 0, 1);
-        #self.fit_mlvj_model_single_MC(self.file_WZ_mc,"_WZ","_sb_hi","Exp", 0, 0, 1);
         self.fit_mlvj_model_single_MC(self.file_WZ_mc,"_WZ","_sig","Exp", 0, 0, 1);
 
         print "________________done done done________________________________________________________"   
@@ -2463,8 +2457,6 @@ objName ==objName_before ):
         self.get_mj_and_mlvj_dataset(self.file_TTbar_mc,"_TTbar")# to get the shape of m_lvj
         self.fit_mj_single_MC(self.file_TTbar_mc,"_TTbar","2Gaus_ErfExp");
         self.fit_mlvj_model_single_MC(self.file_TTbar_mc,"_TTbar","_sb","ExpTail",1);
-        #self.fit_mlvj_model_single_MC(self.file_TTbar_mc,"_TTbar","_sb_lo","ExpTail",1);
-        #self.fit_mlvj_model_single_MC(self.file_TTbar_mc,"_TTbar","_sb_hi","ExpTail",1);
         self.fit_mlvj_model_single_MC(self.file_TTbar_mc,"_TTbar","_sig","ExpTail",1, 0, 1);
         print "________________________________________________________________________"
 
@@ -2483,21 +2475,17 @@ objName ==objName_before ):
         else:
             if useWts:
                 self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","Exp")
-                #self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","ChiSqBern")
+                self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","ChiSqBern")
             else: self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","Exp")
         if doalter:     
             self.fit_mj_single_MC(self.file_WJets_mc,"_WJets1","User1");
      
         #### Fit the mlvj in sb_lo, signal region using two different model as done in the mj
         self.fit_mlvj_model_single_MC(self.file_WJets_mc,"_WJets0","_sb",self.MODEL_4_mlvj, 0, 0, 1, 1);
-        #self.fit_mlvj_model_single_MC(self.file_WJets_mc,"_WJets0","_sb_lo",self.MODEL_4_mlvj, 0, 0, 1, 1);
-        #self.fit_mlvj_model_single_MC(self.file_WJets_mc,"_WJets0","_sb_hi",self.MODEL_4_mlvj, 0, 0, 1, 1);
         self.fit_mlvj_model_single_MC(self.file_WJets_mc,"_WJets0","_sig",self.MODEL_4_mlvj, 0, 0, 1, 1);
         if doalter:
             self.fit_mlvj_model_single_MC(self.file_WJets_mc,"_WJets1","_sb",self.MODEL_4_mlvj_alter, 0, 0, 1, 1);
             self.fit_mlvj_model_single_MC(self.file_WJets_mc,"_WJets1","_sig",self.MODEL_4_mlvj_alter, 0, 0, 1, 1);
-            #self.fit_mlvj_model_single_MC(self.file_WJets_mc,"_WJets1","_sb_lo",self.MODEL_4_mlvj_alter, 0, 0, 1, 1);
-            #self.fit_mlvj_model_single_MC(self.file_WJets_mc,"_WJets1","_sb_hi",self.MODEL_4_mlvj_alter, 0, 0, 1, 1);
     
         print "________________________________________________________________________"
 
@@ -2527,7 +2515,7 @@ objName ==objName_before ):
         self.fit_mlvj_in_Mj_sideband("_WJets0","_sb",self.MODEL_4_mlvj,1)
         #if doalter:        self.fit_mlvj_in_Mj_sideband("_WJets1","_sb",self.MODEL_4_mlvj_alter,1)
         ### Prepare the workspace and datacards     
-        self.prepare_limit("sideband_correction_method1",1,0,0)
+        self.prepare_limit("sideband_correction_method1",0,0,0)
 
         ### finale plot and check of the workspace
         #self.read_workspace(1)
@@ -2922,9 +2910,9 @@ def pre_limit_sb_correction(method, year,channel, in_mj_min=45, in_mj_max=150, i
 #### Main Code
 if __name__ == '__main__':
     channel=options.channel;
-    pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"ExpN","Exp",options.pf)
+    pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpN",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"ExpTail","Exp",options.pf)
-    #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Pow2","Exp",options.pf)
+    #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Pow","Pow2",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpN",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpTail",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfPow_v1",options.pf)
