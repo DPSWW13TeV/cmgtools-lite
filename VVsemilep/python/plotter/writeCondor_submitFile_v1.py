@@ -32,7 +32,7 @@ for sel in ["sig","topCR","sig","sb_lo","sb_hi"]: #"wjCR"]:
                         tmp_condor.write('arguments  = {cmssw} {yr} {cat} {sel} {lf} {op} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,op='',sel=sel,lf=lep,pf=pf ) )
                         tmp_condor.write('queue 1\n\n')
                     else:
-                        for op in ['cwww']:
+                        for op in ['cwww','ccw','cb']:
                             tmp_condor.write('arguments  = {cmssw} {yr} {cat} {sel} {lf} {op} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,op=op,sel=sel,lf=lep,pf=pf ) )
                             tmp_condor.write('queue 1\n\n')
 

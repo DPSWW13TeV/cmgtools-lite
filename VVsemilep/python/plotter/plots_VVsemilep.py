@@ -105,13 +105,13 @@ def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     print ('running: python', cmd)
     print ('=============================================================================================')
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
+
 #####################################
 def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, applyWtsnSFs,applypNetSFs, year,nLep,extraopts = ' ', invertedcuts = [],cutFlow=False,bareNano=False):
-
     
     cmd= ' mcPlots.py  -j 10 -l {lumi}  --tree NanoAOD  --year {YEAR} --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,lumi=lumis[year],YEAR=year if year!='all' else '2016APV,2016,2017,2018')
-    if cutFlow:
-        cmd+=' '.join(' -f')
+    if not cutFlow:
+        cmd+=''.join(' -f')
     if not bareNano:
         cmd+=" --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt "
     
@@ -166,19 +166,19 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 ##################
-def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,fitCR,wjDate,WCs,acP,acC):
+def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,fitCR,WCs,acP,acC,wjDate):
     print ("vorsichtig sein!! du hast tagging auswahl im top CR geloschen")
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
-    showratio    = True 
+    fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
+    showratio    = False #True 
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['sm','data','WJets'] #,'tt','singletop','higgs','QCD','data']#'WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] 
+    processes    = ['sm']#,'data','WJets'] #,'tt','singletop','higgs','QCD','data']#'WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] 
     ## commented out the following to run fit in WJ only
-    ##amfor ops in WCs:
-    ##am    morePs=['sm_lin_quad_','quad_']
-    ##am    processes+=[s + ops for s in morePs]
+    for ops in WCs:
+        morePs=['sm_lin_quad_','quad_']
+        processes+=[s + ops for s in morePs]
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_boosted = ['ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet']#,'phi_var']
     cuts_cards_opts=['sb_lo','sb_hi','sig']#
@@ -193,7 +193,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     #legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
     ubands  =  ' ' #--showMCError --showIndivSigs --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
-    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5  --ratioNums sm,sm_lin_quad_cwww,aTGC_WW_SM_incl --ratioDen WW --ratioYLabel=aTGC/SM --plotmode nostack' # --ratioDen WJets --ratioNums sm_lin_quad_cwww,Mpt5sm_lin_quad_cwww  --ratioYLabel aTGC/WJets  --plotmode nostack ' #--ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --plotmode norm ' #--maxRatioRange 0.25 2.5 ' # --ratioNums sm,sm_lin_quad_cwww,quad_cwww --ratioDen WW --ratioYLabel=aTGC/SM ' # --ratioDen WJets --ratioNums sm_lin_quad_cwww,Mpt5sm_lin_quad_cwww  --ratioYLabel aTGC/WJets  --plotmode nostack ' #--ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
 
     more = '' # --plotmode norm' if cutflow else ''
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
@@ -212,7 +212,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         applypNetSFs=False if 'wj' in pR else True
         exclude = ' --xu CMS_vvsl18_pNetscore' if 'wjCR' not in pR else  ' '
         #signal= if3(pR == 'SR',if3(nLep > 1,'--sp ZV','--sp aTGC_WW --sp aTGC_WZ'), if3('top' in pR, ' --sp tt --sp singletop', ' --sp WJets'))
-        signal= if3(pR == 'SR' or pR == 'sig',if3(nLep > 1,'--sp ZV','--sp .*cw.* --sp .*cb.*'), if3('top' in pR, ' --sp tt ', ' --sp WJets'))
+        signal= if3(pR == 'SR' or pR == 'sig',if3(nLep > 1,'--sp ZV','--sp .*ccw.* --sp .*cb.*'), if3('top' in pR, ' --sp tt ', ' --sp WJets'))
         for LF in lepflav:
             #lepSel= if3(LF == 'mu','muOnly',if3(LF == 'el','elOnly','trigger')) if not 'wjest' in pR else '1'
             for FS in finalState:
@@ -238,7 +238,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
 ##am                        fsyst=''
                     makeplots  = ['{}'.format(a)  for a in plotvars]
                     print (makeplots)
-                    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, applypNetSFs,year, nLep,extraopts,invert,cutflow)
+                    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata, makeplots, showratio, applylepSFs, applypNetSFs, year, nLep,extraopts,invert,cutflow)
                 else:
                     if "top" in pR: 
                         mWV_dist=" {here} {binning} ".format(here=mWV_fxn[LF],binning=mWV_binning)
@@ -414,7 +414,7 @@ if __name__ == '__main__':
     if opts.results:
         print ('will make {here} {pt} for {bin}' .format(here=opts.doWhat,bin=opts.finalState,pt=(opts.plotvar if 'plots' in opts.doWhat else '')))
         #makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars):
-        makeResults(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.sel,opts.postfix,opts.plotvar,opts.dCF,opts.fCR,opts.wjD,opts.WC,opts.acP,opts.acC)
+        makeResults(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.sel,opts.postfix,opts.plotvar,opts.dCF,opts.fCR,opts.WC,opts.acP,opts.acC,opts.wjD)
     if opts.alpha:
         alphaRatio(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.applylepSFs,opts.postfix,opts.plotvar)
     if opts.WJest:
@@ -440,7 +440,7 @@ if __name__ == '__main__':
 #python plots_VVsemilep.py --simple --genD --year 2018
 
 
-#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_pt --applylepSFs --lf mu --year 2018 --dW plots
+#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_pt --lf mu --year 2018 --dW plots --applylepSFs --WC cwww --WC ccw --WC cb
 
 # python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_pt --pv tFatJet1_pt --pv tGenJetAK8_mass --pv tGenJetAK8_pt --pv tGenmWV_typ0_pmet_boosted --pv tmWV_typ0_pmet_boosted --lf onelep --year 2018 --dW plots --dCF --applylepSFs
 #python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf onelep --year 2018 --dW plots
