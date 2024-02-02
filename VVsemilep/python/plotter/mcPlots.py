@@ -54,9 +54,9 @@ class PlotFile:
             field = [f.strip().replace(";",":") for f in line.replace("::",";;").replace("\\:",";").split(':')]
             if len(field) == 1 and field[0] == "*":
                 if len(self._plots): raise RuntimeError, "PlotFile defaults ('*') can be specified only before all plots"
-                print "Setting the following defaults for all plots: "
+                print ("Setting the following defaults for all plots: ")
                 for k,v in extra.iteritems():
-                    print "\t%s: %r" % (k,v)
+                    print ("\t%s: %r" % (k,v))
                     defaults[k] = v
                 continue
             else:
@@ -117,7 +117,7 @@ def getDataPoissonErrors(h, drawZeroBins=False, drawXbars=False):
 def PrintHisto(h):
     if not h:
         return
-    print h.GetName()
+    print (h.GetName())
     c=[]
     if "TH1" in h.ClassName():
         for i in xrange(h.GetNbinsX()):
@@ -127,8 +127,8 @@ def PrintHisto(h):
             for j in xrange(h.GetNbinsY()):
                 c.append((h.GetBinContent(i+1,j+1),h.GetBinError(i+1,j+1)))
     else:
-        print 'not th1 or th2'
-    print c
+        print ('not th1 or th2')
+    print (c)
 
 def doSpam(text,x1,y1,x2,y2,align=12,fill=False,textSize=0.033,_noDelete={}):
     cmsprel = ROOT.TPaveText(x1,y1,x2,y2,"NDC");
@@ -311,7 +311,7 @@ def doNormFit(pspec,pmap,mca,saveScales=False):
                         break
             if hdata.GetBinContent(b) > 0: hdata.SetBinContent(b, 0)
         if hdata.killbins: 
-            print "WARNING: data has been modified to avoid non-zero observations for zero expectations in some bins"
+            print ("WARNING: data has been modified to avoid non-zero observations for zero expectations in some bins")
     # create the nuisances
     nuisances = hmc.getVariationList()
     nuisanceList = ROOT.RooArgList()
@@ -361,7 +361,7 @@ def doNormFit(pspec,pmap,mca,saveScales=False):
            sf    = pmap[p].Integral()/norm0
            sferr = pmap[p].integralSystError()/norm0
            fitlog.append("Process %s scaled by %.3f +/- %.3f [ rel: %.3f ]" % (p,sf,sferr,sferr/sf if sf else 0))
-           if saveScales: print fitlog[-1]
+           if saveScales: print (fitlog[-1])
         # no need to recompute totals as they are also roofitized
     fitlog.append("")
     if pois:
@@ -549,9 +549,9 @@ def doStatTests(total,data,test,legendCorner):
         chi2p += (oi-ei)**2 / ei
         chi2gq += (oi-ei)**2 /(ei+dei**2)
         #chi2lp +=
-    print "\tc2p  %.4f (%6.2f/%3d)" % (ROOT.TMath.Prob(chi2p,  nb), chi2p,  nb)
-    print "\tc2l  %.4f (%6.2f/%3d)" % (ROOT.TMath.Prob(chi2l,  nb), chi2l,  nb)
-    print "\tc2qg %.4f (%6.2f/%3d)" % (ROOT.TMath.Prob(chi2gq, nb), chi2gq, nb)
+    print ("\tc2p  %.4f (%6.2f/%3d)" % (ROOT.TMath.Prob(chi2p,  nb), chi2p,  nb))
+    print ("\tc2l  %.4f (%6.2f/%3d)" % (ROOT.TMath.Prob(chi2l,  nb), chi2l,  nb))
+    print ("\tc2qg %.4f (%6.2f/%3d)" % (ROOT.TMath.Prob(chi2gq, nb), chi2gq, nb))
     #print "\tc2lp %.4f (%6.2f/%3d)" % (ROOT.TMath.Prob(chi2lp, nb), chi2lp, nb)
     chi2s = { "chi2l":chi2l, "chi2p":chi2p, "chi2gq":chi2gq, "chi2lp":chi2lp }
     if test in chi2s:
@@ -659,7 +659,7 @@ class PlotMaker:
                 sets.append((cnsafe,cn,cv))
         elist = (self._options.elist == True) or (self._options.elist == 'auto' and len(plots.plots()) > 2)
         for subname, title, cut in sets:
-            print "cut set: ",title
+            print ("cut set: ",title)
             if elist: mca.applyCut(cut)
             dir = self._dir
             if subname:
@@ -674,7 +674,7 @@ class PlotMaker:
                 if not matchspec: raise RuntimeError, "Error: plot %s not found" % self._options.preFitData
                 pspecs = matchspec + [ p for p in pspecs if p.name != self._options.preFitData ]
             for pspec in pspecs:
-                print "    plot: ",pspec.name
+                print ("    plot: ",pspec.name)
                 pmap = mca.getPlots(pspec,cut,makeSummary=True,closeTreeAfter=True)
                 #
                 # blinding policy
@@ -821,14 +821,14 @@ class PlotMaker:
                         #if plot.Integral() == 0:
                         #    print 'Warning: plotting histo %s with zero integral, there might be problems in the following'%p
                         if plot.Integral() < 0:
-                            print 'Warning: plotting histo %s with negative integral (%f), the stack plot will probably be incorrect.'%(p,plot.Integral())
+                            print ('Warning: plotting histo %s with negative integral (%f), the stack plot will probably be incorrect.'%(p,plot.Integral()))
                         if 'TH1' in plot.ClassName():
                             for b in xrange(1,plot.GetNbinsX()+1):
-                                if plot.GetBinContent(b)<0: print 'Warning: histo %s has bin %d with negative content (%f), the stack plot will probably be incorrect.'%(p,b,plot.GetBinContent(b))
+                                if plot.GetBinContent(b)<0: print ('Warning: histo %s has bin %d with negative content (%f), the stack plot will probably be incorrect.'%(p,b,plot.GetBinContent(b)))
                         elif 'TH2' in plot.ClassName():
                             for b1 in xrange(1,plot.GetNbinsX()+1):
                                 for b2 in xrange(1,plot.GetNbinsY()+1):
-                                    if plot.GetBinContent(b1,b2)<0: print 'Warning: histo %s has bin %d,%d with negative content (%f), the stack plot will probably be incorrect.'%(p,b1,b2,plot.GetBinContent(b1,b2))
+                                    if plot.GetBinContent(b1,b2)<0: print ('Warning: histo %s has bin %d,%d with negative content (%f), the stack plot will probably be incorrect.'%(p,b1,b2,plot.GetBinContent(b1,b2)))
 #                        if plot.Integral() <= 0: continue
                         if mca.isSignal(p): plot.Scale(options.signalPlotScale)
                         if mca.isSignal(p) and options.noStackSig == True: 
@@ -862,7 +862,7 @@ class PlotMaker:
                         total.GetYaxis().SetLabelSize(0.04)
                         total.GetXaxis().SetMaxDigits(2);##am
                 if not self._options.emptyStack and stack.GetNhists() == 0:
-                    print "ERROR: for %s, all histograms are empty\n " % pspec.name
+                    print ("ERROR: for %s, all histograms are empty\n " % pspec.name)
                     return
 
                 # define aspect ratio
@@ -1019,7 +1019,7 @@ class PlotMaker:
                     if "TH1" in new.ClassName():
                         for b in xrange(1,new.GetNbinsX()+1):
                             if abs(new.GetBinContent(b) - ref.GetBinContent(b)) > options.toleranceForDiff*ref.GetBinContent(b):
-                                print "Plot: difference found in %s, bin %d" % (outputName, b)
+                                print ("Plot: difference found in %s, bin %d" % (outputName, b))
                                 p1.SetFillColor(ROOT.kYellow-10)
                                 if p2: p2.SetFillColor(ROOT.kYellow-10)
                                 break
@@ -1231,7 +1231,7 @@ if __name__ == "__main__":
         os.system("mkdir -p "+os.path.dirname(outname))
         if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/g/gpetrucc/php/index.php "+os.path.dirname(outname))
         elif os.path.exists("/pool/ciencias/"): os.system("cp /pool/ciencias/HeppyTrees/RA7/additionalReferenceCode/index.php "+os.path.dirname(outname))
-    print "Will save plots to ",outname
+    print ("Will save plots to ",outname)
     fcmd = open(re.sub("\.root$","",outname)+"_command.txt","w")
     fcmd.write("%s\n\n" % " ".join(sys.argv))
     fcmd.write("%s\n%s\n" % (args,options))

@@ -8,7 +8,7 @@ if "/mcCorrections_cc.so" not in ROOT.gSystem.GetLibraries():
     ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/VVsemilep/python/plotter/mcCorrections.cc+" % os.environ['CMSSW_BASE']);
 
 class SimpleCorrection:
-    def __init__(self,find,replace,procMatch=None,componentMatch=None,onlyForCuts=False,alsoData=False, year=None, noInMC=False):
+    def __init__(self,find,replace,procMatch=None,componentMatch=None,onlyForCuts=False,alsoData=False, year=None):
         self._find    = re.compile(find)
         self._replace = replace
         self._procMatch = re.compile(procMatch) if procMatch else None
@@ -16,10 +16,8 @@ class SimpleCorrection:
         self._onlyForCuts = onlyForCuts
         self.alsoData = alsoData
         self.year = year
-        self.noInMC = noInMC
     def __call__(self,expr,process,component,iscut,isdata, year):
         if isdata and not self.alsoData: return expr
-        if not isdata and self.noInMC: return expr
         if self.year is not None and type(self.year)!=type(year): 
             raise RuntimeError("Year in mcc and process are not of the same type, comparison will always fail")
         if self.year and self.year != year: return expr
@@ -36,7 +34,7 @@ class MCCorrections:
         for line in infile:
             if re.match("\s*#.*", line): continue
             while line.strip()[-1] == "\\":
-                line = line.strip()[:-1] + infile.next()
+                line = line.strip()[:-1] + next(infile)
             line = re.sub("#.*","",line)
             extra = {}
             if ";" in line:
@@ -53,8 +51,7 @@ class MCCorrections:
                                     componentMatch=(extra['Component'] if 'Component' in extra else None),
                                     onlyForCuts=('OnlyForCuts' in extra),
                                     alsoData=('AlsoData' in extra), 
-                                    year=(extra['year'] if 'year' in extra else None),
-                                    noInMC=('noInMC' in extra)))
+                                    year=(extra['year'] if 'year' in extra else None)) )
     def __call__(self,expr,process,component,iscut,isdata,year):
         ret = expr
         for c in self._corrections:
@@ -66,19 +63,19 @@ class MCCorrections:
         return "MCCorrections('%s')" % self._file
 
 def printcorrections(myglob):
-    print 'summary of MC corrections'
-    print myglob
+    print('summary of MC corrections')
+    print(myglob)
     def myprint(x):
-        print '%s -> %s   --- data=%s'%(x._find.pattern,x._replace,x.alsoData)
+        print('%s -> %s   --- data=%s'%(x._find.pattern,x._replace,x.alsoData))
     for c in myglob:
         if isinstance(c,MCCorrections):
-            print str(c)
-            print len(c._corrections)
+            print(str(c))
+            print(len(c._corrections))
             for corr in c._corrections:
                 myprint(corr)
         elif isinstance(c,SimpleCorrection):
             myprint(c)
-        else: raise RuntimeError, "Unknown object in corrections list"
+        else: raise RuntimeError("Unknown object in corrections list")
     
 _corrections = []; _corrections_init = []
 def loadMCCorrections(options):

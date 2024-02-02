@@ -387,6 +387,7 @@ Output     = {logdir}/out.$(cluster).$(Dataset).$({chunk})
 Log        = {logdir}/log.$(cluster).$(Dataset).$({chunk})
 use_x509userproxy = True
 getenv = True
+requirements = (OpSysAndVer =?= "CentOS7")
 request_memory = 2000
 +MaxRuntime = {maxruntime}
 {accounting_group}

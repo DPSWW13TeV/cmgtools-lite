@@ -20,7 +20,7 @@ echo $runWhat,$year,$runWhere
 ################### following should not be changed
 localTrees='local_dir_NAME/'  
 Trees='NanoTrees_v9_vvsemilep_06012023/'
-nEvt=120000
+nEvt=120000 ##AM use it :P 
 Parent=${baseDir}/${Trees}/${year}
 BCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ${Parent}/";
 TBCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ";
@@ -77,7 +77,7 @@ fjtaggeddata)
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}1_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root " #--dm .*aTGC.*_v1.* " #  --de .*Run.* "
+	basecmd="${BCORE}1_recl_allvarsTT/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0 " #--dm .*aTGC.*_v1.* " #  --de .*Run.* "
 	;;
 
 wjet)		
@@ -92,7 +92,7 @@ genInfo)
     
 phi)
 	echo "computing phi in helicity frame ${BCORE} ${CMGT}"
-	basecmd="${BCORE}phi_var_v1/ ${CMGT} phi_gen --de .*Run.* " # -d  WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0 " #
+	basecmd="${BCORE}phi_var_v2/ ${CMGT} phi_gen --de .*Run.* " # d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0 " # 
 	echo $basecmd
 	;; 
 
