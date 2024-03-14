@@ -477,7 +477,7 @@ nBJetMedium40 :  nBJetMedium40 : [0,1,2,3,4,5] ; XTitle='nbjetsmed40' , MoreY=1.
 
 phi1 : LepGood1_phi : 20,-3.2,3.2; XTitle="#phi^{lep.}",  MoreY=1.75
 eta1 : LepGood1_eta : 20,-2.5,2.5; XTitle="#eta^{lep.}",  MoreY=1.75
-etaphi1 : LepGood1_phi\:LepGood1_eta : 20,-2.5,2.5, 20,-3.2,3.2;  XTitle="#phi^{lep.}" , YTitle="#eta^{lep.}"
-FatJet1_etaphi : ak8sDMgt45_phi[0]_phi\:ak8sDMgt45_eta[0] : 20,-2.4,2.4,20,-3.2,3.2;  XTitle="#phi^{ak8}" , YTitle="#eta^{ak8}"
+etaphi1 : LepGood1_phi\:LepGood1_eta : 20,-2.5,2.5, 20,-3.2,3.2;  YTitle="#phi^{lep.}" , XTitle="#eta^{lep.}"
+FatJet1_etaphi : ak8sDMgt45_phi[0]_phi\:ak8sDMgt45_eta[0] : 20,-2.4,2.4, 20,-3.2,3.2;  YTitle="#phi^{ak8}" , XTitle="#eta^{ak8}"
 
 ##amBDTG_fakes_wzamc_raw_mumu           : BDTG_DPS_WZ_amc_raw_withpt\:BDTG_DPS_TLCR_raw_withpt    :  20,-1.0,1.0 , 20,-1.0,1.0  ; XTitle="BDTG_fakes(#mu^{#pm}#mu^{#pm})" , YTitle="BDTG_WZ(#mu^{#pm}#mu^{#pm})"

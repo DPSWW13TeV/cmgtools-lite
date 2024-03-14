@@ -14,6 +14,7 @@ eval $(scramv1 runtime -sh);
 ##amcd /eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/2018
 ##am#echo "i am in this directory ${PWD}"
 
+#python checkfaulty_nAODfiles.py ${1}
 python runhaddNano.py ${1}
 #if [[ $# -eq 3 ]]; then
 #haddnano.py ${1} ${2} ${3}

@@ -1,3 +1,4 @@
+###tight selection and pT cut on leptons
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 import ROOT 
@@ -35,6 +36,9 @@ class vvsemilep_TreeForWJestimation(Module):
         self.out.branch('pmet'       ,'F')
         self.out.branch('pmet_phi'   ,'F')
         self.out.branch('evt_wt'       ,'F') #pu*prefiring*prescale*hem
+        self.out.branch('pu_prefiring_wt'       ,'F') #pu*prefiring*prescale*hem
+        self.out.branch('hem_wt'       ,'F') #pu*prefiring*prescale*hem
+        self.out.branch('prescale_wt'       ,'F') #pu*prefiring*prescale*hem
         self.out.branch('genwt'   ,'F')
         #self.out.branch('genSumw'   ,'F')
         self.out.branch('xsec'   ,'F')
@@ -137,7 +141,6 @@ class vvsemilep_TreeForWJestimation(Module):
         
         if len(leps) < self.lepMultiplicity: return False
         if len(jets) < 1: return False
-        
         for sel in self.selection: 
             if not eval(sel): return False
         self.out.fillBranch('event_presel',event.event)
@@ -184,6 +187,9 @@ class vvsemilep_TreeForWJestimation(Module):
         #print hemwt,event.prescaleFromSkim,event.L1PreFiringWeight_Nom,event.puWeight
         eventWt=hemwt * (event.prescaleFromSkim if isData else event.L1PreFiringWeight_Nom*event.puWeight*event.prescaleFromSkim)
         self.out.fillBranch('evt_wt',eventWt) #pu*prefiring*prescale*hem
+        self.out.fillBranch('hem_wt',hemwt) #pu*prefiring*prescale*hem
+        self.out.fillBranch('pu_prefiring_wt',1.0 if isData else event.L1PreFiringWeight_Nom*event.puWeight)
+        self.out.fillBranch('prescale_wt',event.prescaleFromSkim)
         self.out.fillBranch('genwt',event.genWeight if not isData else 1.0  )
         #self.out.fillBranch('genSumw',event.genEventSumw if not isData else 1.0   )
         self.out.fillBranch('xsec',event.xsec if not isData else 1.0  )

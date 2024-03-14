@@ -4,10 +4,10 @@ from glob import glob
 #from  printnEvt import printnEvt
 #fN=sys.argv[1]
 year=sys.argv[1]
-frnds="0_wjest_newCuts/"
+frnds="0_wjest_newCuts_v1/"
 eospath="/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/"
 #files=[]
-outname="1_wjest_newCuts"
+outname="1_wjest_newCuts_v1"
 outdir=os.path.join(eospath,year,outname)
 
 if not os.path.isdir(outdir):
@@ -39,7 +39,18 @@ atgc=[
    'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1',
    'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v1',
 ]
-samples= atgc #+top +stop +wjets+more
+
+atgc_v1=[
+     'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2',
+     'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_part0_v2',
+     'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2',
+     'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2',
+     'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2',
+     'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_part0_v2',
+     'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2',
+     'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2']
+
+samples= atgc_v1 #atgc +top +stop +wjets+more
 
 def printnEvt(fN,yr):
     files=[] 
@@ -84,6 +95,6 @@ for proc in samples:
 
 
 
-#hadd /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/data_Friend.root /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/*UL18_Friend.root
+
 #hadd /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/TTSemi_pow_Friend.root /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/TTSemi_pow_part*root
 #mv /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/TTSemi_pow_part* /eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023//2018//0_wjest/chunks/

@@ -108,7 +108,10 @@ def haddNano(odir, idirs, firstTime=True):
 
     if firstTime:
         files = []
+        print "dirs",idirs
         for chunk in idirs:
+            print "chunk",chunk
+            found = False
             if os.path.isdir(chunk):
                 found = False
                 for fname in os.listdir(chunk):
@@ -220,6 +223,7 @@ def haddChunks(idir, removeDestDir=False, cleanUp=False, ignoreDirs=None, maxSiz
                 for odir, cchunks in tasks:
                     tot_size=0; elements=[]  
                     for i,chunk in enumerate(cchunks):
+                        found = False
                         ich=''
                         if os.path.isdir(chunk):
                             found = False

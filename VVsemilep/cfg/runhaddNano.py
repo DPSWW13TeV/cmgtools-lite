@@ -2,9 +2,9 @@ import os,sys
 import subprocess
 
 
-eospath="/eos/cms/store/group/phys_smp/ec/anmehta"
-indir="aTGCSep2023" #/eos/cms/store/cmst3/group/dpsww/"
-odir= "Combined_Sep2023"
+eospath="/eos/cms/store/group/phys_smp/ec/anmehta/"
+indir="Feb2024" #/eos/cms/store/cmst3/group/dpsww/"
+odir= "Combined_March2024"
 samples=[]
 sample=sys.argv[1]
 samples.append(sample)

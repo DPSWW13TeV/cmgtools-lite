@@ -1,22 +1,23 @@
 Executable = dummy_hadd.sh
 use_x509userproxy = true
-Log        = logs/log_running_$(ProcId)_all.log
-Output     = logs/log_running_$(ProcId)_all.out
-Error      = logs/log_running_$(ProcId)_all.error
-+JobFlavour = "longlunch"
+Log        = logs/log_hadd_$(ProcId)_all.log
+Output     = logs/log_hadd_$(ProcId)_all.out
+Error      = logs/log_hadd_$(ProcId)_all.error
++JobFlavour = "workday"
 getenv = True
+
+
+
 
 arguments=WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX
 queue
-arguments=WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX
-queue
-arguments=WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX
-queue
-arguments=WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX
-queue
-arguments=WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX
-queue
-arguments=WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX
-queue 
+#arguments=WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX
+#queue
+#arguments=WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX
+#queue
+#arguments=WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX
+#queue
+#arguments=WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX
+#queue 
 
 
