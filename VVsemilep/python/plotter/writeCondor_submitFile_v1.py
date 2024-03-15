@@ -1,7 +1,7 @@
 import os,string,sys
 from plots_VVsemilep import *
 
-allvars= HEM +theWVultimateset #bTag_eff #mWV #topCR #theWVultimateset #+moreak8jetvars MConly+#newVars+lepvars+WVvars+eventvars 
+allvars= theWVultimateset #HEM + #bTag_eff #mWV #topCR #theWVultimateset #+moreak8jetvars MConly+#newVars+lepvars+WVvars+eventvars 
 doWhat=sys.argv[1] #cards or plots
 fName='submitFile_%s.condor'%doWhat
 tmp_condor = open('jobs/%s'%fName, 'w')
@@ -28,7 +28,7 @@ lepsel={'topCR' : ["onelep"],
 }
 
 ops=['c3w','ccw','cb','']
-for sel in ["SB"]: #"inclB","sig"]: #,"sb_lo","sb_hi"]:  #"wjCR","topCR",]:
+for sel in ["SB","sig"]: #"inclB","sig"]: #,"sb_lo","sb_hi"]:  #"wjCR","topCR",]:
    for cat in ["boosted"]: #,"resolved"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
            for lep in lepsel[sel]:

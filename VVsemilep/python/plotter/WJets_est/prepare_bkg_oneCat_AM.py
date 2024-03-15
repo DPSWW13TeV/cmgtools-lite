@@ -73,18 +73,26 @@ top=['TTSemi_pow']##TT_mtt1ktoinf','TT_mttp7kto1k','TTSemi_pow']
 stop=['T_sch','T_tWch_incldecays','Tbar_tWch_noFullyHad','T_tch','Tbar_tch']
 
 ww_atgc=['WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1',
-'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1',
-'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v1',
 'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1',
-'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1',
-'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v1']
+'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2',
+'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2',
+'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2',
+'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2',
+
+
+]
 
 wz_atgc=['WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1',
 'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1',
-'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v1',
+'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2',
+'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2',
 'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1',
-'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1',
-'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v1']
+'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1']
+
+
+
+#'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_part0_v2',
+#'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_part0_v2',
 
 basepath="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/"
 

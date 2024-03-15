@@ -8,7 +8,7 @@ import random
 import os
 import datetime
 date = datetime.date.today().isoformat()
-
+import CMS_lumi, tdrstyle
 ROOT.gSystem.Load("PDFs/PdfDiagonalizer_cc.so")
 ROOT.gSystem.Load("PDFs/Util_cxx.so")
 ROOT.gStyle.SetOptStat(0)
@@ -291,6 +291,11 @@ class Prepare_workspace_4limit:
                 p2      = rrv_x.frame(self.binlo,self.binhi)
                 c       = TCanvas(cat+'_'+self.POI[i]+'-',self.POI[i]+'-',600,600)
                 c.cd()
+                CMS_lumi.lumi_13TeV = "%s fb^{-1}" %str(lumis[self.year])
+                CMS_lumi.writeExtraText = True;                       CMS_lumi.extraText = "Preliminary"
+                H_ref = 600;        W_ref = 600;        W = W_ref;       H  = H_ref
+                T = 0.12*H_ref;       B = 0.12*H_ref;       L = 0.12*W_ref;       R = 0.01*W_ref
+                
                 pad1        = TPad(cat+'pad1_%s'%self.POI[i],cat+'pad1_%s'%self.POI[i],0.,0.3,1.,1.)  
                 pad2        = TPad(cat+'pad2_%s'%self.POI[i],cat+'pad2_%s'%self.POI[i],0.,0.02,1.,0.3)
                 c2          = TCanvas(cat+self.POI[i]+'+',self.POI[i]+'+',600,600)
@@ -304,6 +309,8 @@ class Prepare_workspace_4limit:
                 can[i].cd();
                 t2a = drawSLatex(0.1,0.90,"#bf{CMS} Preliminary",0.05);
                 t3a = drawSLatex(0.665,0.90,"%f fb^{#minus1} (13 TeV)"%(lumis[self.year]),0.05);
+                #CMS_lumi.CMS_lumi(pads[i][0], 4, 11,0.075);
+                pads[i][0].Update()
                 pads[i][0].Draw();                pads[i][1].Draw()
                 t2a.Draw();t3a.Draw();
                 pads[i][0].SetLeftMargin(0.1);    pads[i][1].SetLeftMargin(0.1)
@@ -311,17 +318,19 @@ class Prepare_workspace_4limit:
 
                 for j in range(3):
                     self.wtmp.var(self.POI[j]).setVal(0)
-                self.wtmp.data('SMdatahist_%s'%cat).plotOn(plots[i],RooFit.MarkerColor(kBlack),RooFit.LineColor(kBlack),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('SMdata'))
+                self.wtmp.data('SMdatahist_%s'%cat).plotOn(plots[i],RooFit.MarkerColor(kBlack),RooFit.LineColor(kBlack),RooFit.LineStyle(kDashed),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('SMdata'))
                 normvalSM        = norm.getVal() * self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
                 self.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots[i],RooFit.LineColor(kBlack),RooFit.Normalization(normvalSM, RooAbsReal.NumEvent),RooFit.Name('SMmodel'))
-                self.wtmp.data('neg_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(kBlue),RooFit.LineColor(kBlue),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('atgcdata'))
+                #self.wtmp.data('neg_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(kBlue),RooFit.LineColor(kBlue),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('atgcdata'))
 
                 print "value of the  poi",self.wtmp.var(self.POI[i]).getVal();
                 self.wtmp.var(self.POI[i]).setVal(-self.PAR_MAX[self.POI[i]])
                 print "value of the  poi after subt",self.wtmp.var(self.POI[i]).getVal();
                 normvalneg = norm.getVal() * self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
-                self.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots[i],RooFit.LineColor(kBlue),RooFit.Normalization(normvalneg, RooAbsReal.NumEvent),RooFit.Name('atgcmodel'))
+                #self.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots[i],RooFit.LineColor(kBlue),RooFit.Normalization(normvalneg, RooAbsReal.NumEvent),RooFit.Name('atgcmodel'))
                 #                    print "this info we nned: category \t",cat,"\t poi\t",self.POI[i],"\t channel \t",channel,"\t ch\t",self.ch
+
+
                 pullhist_q=None;pullhist_l=None
                 
                 linStr=self.POI[i]+'_'+cat+'_lin'
@@ -330,32 +339,20 @@ class Prepare_workspace_4limit:
                     lin_Norm=self.wtmp.var('norm_sm_lin_quad_%s_%s'%(self.POI[i],channel))
                     print "linear term \t", self.POI[i],"\t", channel,"\t",lin_Norm.getVal(),"\t",self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
                     self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(ROOT.kAzure+10),RooFit.LineColor(ROOT.kAzure+10),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('linData'))
-                    self.wtmp.pdf('%s_sm_lin_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kAzure+10),RooFit.Normalization(lin_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('linModel'))
+                    self.wtmp.pdf('%s_sm_lin_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kAzure+10),RooFit.LineStyle(kDashed),RooFit.Normalization(lin_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('linModel'))
                     pullhist_l= plots[i].pullHist('linData','linModel')
                 if quadStr not in vetoPlots:
                     quad_Norm=self.wtmp.var('norm_quad_%s_%s'%(self.POI[i],channel))
                     print "quad term \t", self.POI[i],"\t", channel,"\t",quad_Norm.getVal(),"\t",self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
                     self.wtmp.data('quad_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(ROOT.kPink-2),RooFit.LineColor(ROOT.kPink-2),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('quadData'))
-                    self.wtmp.pdf('%s_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kPink-2),RooFit.Normalization(quad_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('quadModel'))
+                    self.wtmp.pdf('%s_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kPink-2),RooFit.LineStyle(kDashed),RooFit.Normalization(quad_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('quadModel'))
                     pullhist_q= plots[i].pullHist('quadData','quadModel')
 
-                pullhist = plots[i].pullHist('atgcdata','atgcmodel')
+                #pullhist = plots[i].pullHist('atgcdata','atgcmodel')
 
-                plotmax        = 1e6
-                if self.ch == 'el':
-                    plotmin = 1e-4
-                    if cat == 'WZ': 
-                        plotmin = 3e-4
-                elif self.ch == 'mu':
-                    plotmin = 1e-3
-                    if cat == 'WZ':
-                        plotmin = 1e-4
-                        #plotmax = 1000
-                if cat == 'WV':
-                    plotmin = 1e-2
-                    plotmax = 1.5e2
+                plotmax        = 1e6; plotmin = 1e-3
                 plots[i].GetYaxis().SetRangeUser(plotmin,plotmax)
-                pads[i][0].cd();pads[i][0].SetBottomMargin(0.018);pads[i][0].SetTopMargin(0.1);
+                pads[i][0].cd();pads[i][0].SetBottomMargin(0.03);pads[i][0].SetTopMargin(0.1);
                 pads[i][0].SetLogy()
                 plots[i].SetTitle('')
                 plots[i].GetYaxis().SetTitle('Events')
@@ -372,8 +369,8 @@ class Prepare_workspace_4limit:
                 leg.SetFillStyle(0); leg.SetTextSize(0.035);
                 leg.AddEntry(plots[i].findObject('SMdata'),'SM (MC)','le')
                 leg.AddEntry(plots[i].findObject('SMmodel'),'SM (exp)','l')
-                leg.AddEntry(plots[i].findObject('atgcdata'),'MC '+parlatex[i]+'='+str(-self.PAR_MAX[self.POI[i]])+' TeV^{-2}','le')
-                leg.AddEntry(plots[i].findObject('atgcmodel'),'signal model '+parlatex[i]+'='+str(-self.PAR_MAX[self.POI[i]])+' TeV^{-2}','l')
+                #leg.AddEntry(plots[i].findObject('atgcdata'),'MC '+parlatex[i]+'='+str(-self.PAR_MAX[self.POI[i]])+' TeV^{-2}','le')
+                #leg.AddEntry(plots[i].findObject('atgcmodel'),'signal model '+parlatex[i]+'='+str(-self.PAR_MAX[self.POI[i]])+' TeV^{-2}','l')
                 if quadStr not in vetoPlots:  
                     leg.AddEntry(plots[i].findObject('quadData'),'quad. MC '+parlatex[i]+'='+str(-self.PAR_MAX[self.POI[i]])+' TeV^{-2}','le')
                     leg.AddEntry(plots[i].findObject('quadModel'),'quad. model '+parlatex[i]+'='+str(-self.PAR_MAX[self.POI[i]])+' TeV^{-2}','l')
@@ -384,8 +381,8 @@ class Prepare_workspace_4limit:
 
                 leg.Draw()
                 leg.Print()
-                
-                pads[i][1].cd();                pads[i][1].SetTopMargin(0.001);  pads[i][1].SetBottomMargin(0.3)##HERE
+
+                pads[i][1].cd();                pads[i][1].SetTopMargin(0.03);  pads[i][1].SetBottomMargin(0.3)##HERE
                 ratio_style = ROOT.TH1D('ratio_style','ratio_style',(self.binhi-self.binlo)/100,self.binlo,self.binhi)
                 ratio_style.SetMarkerStyle(21)
                 ratio_style.SetLineColor(kBlack);ratio_style.SetLineWidth(1);
@@ -395,13 +392,15 @@ class Prepare_workspace_4limit:
                 ratio_style.GetYaxis().SetTitle('#frac{MC-Fit}{error}')
                 ratio_style.GetYaxis().SetLabelSize(0.095)
                 ratio_style.GetYaxis().SetTitleSize(0.1)
-                ratio_style.GetYaxis().SetTitleOffset(0.45)
+                ratio_style.GetYaxis().SetTitleOffset(0.425)
+                #ratio_style.GetXaxis().SetLabelOffset(0.425)
+                #ratio_style.GetYaxis().SetLabelOffset(0.425)
                 ratio_style.GetXaxis().SetLabelSize(0.095)
                 ratio_style.GetXaxis().SetTitleSize(0.1)
                 ratio_style.GetXaxis().SetTitle("m_{WV} (GeV)");
                 ratio_style.Draw("")
-                pullhist.SetLineColor(kBlue);pullhist.SetLineWidth(1);
-                pullhist.Draw("SAME E1")
+                #pullhist.SetLineColor(kBlue);pullhist.SetLineWidth(1);
+                #pullhist.Draw("SAME E1")
                 if (pullhist_q) is not None: 
                     pullhist_q.Draw("SAME E1");  
                     pullhist_q.SetLineColor(ROOT.kPink-2);pullhist_q.SetLineWidth(1);

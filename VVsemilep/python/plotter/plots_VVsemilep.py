@@ -45,7 +45,7 @@ mWV=['ratio_typ0','ratio_typ1','ratio_typ2','ratio_typ3','mWV_typ0_pmet_boosted'
 topCR=['mWV_typ0_met_boosted','FatJet1_pt']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
 theWVfullset=['FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt', 'puppimet','lep1_pt']#,'puppimet_1','nBJetMedium30_Recl','nFatJet','puppimetphi','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','neupzpmet_typ0','nJet30_Recl','lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass''mt1pmet','nLepGood','nLepFO','sumBoosted']+mWV
-theWVultimateset=['mWV_typ0_pmet_boosted','FatJet1_sDrop_mass'] #puppimet','FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
+theWVultimateset=['mWV_typ0_pmet_boosted','FatJet1_sDrop_mass','puppimet']#,'FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
 
 
 ak4jetvars = ['nBJetLoose30_Recl,','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt','htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1','Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl','htJet25j_Recl','mhtJet25_Recl']
@@ -169,12 +169,12 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,fitCR,WCs,acP,acC,wjDate):
     print ("vorsichtig sein!! du hast tagging auswahl im top CR geloschen")
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
+    fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
     showratio    = False #True 
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['WJets','tt','singletop','higgs','QCD','data','WW_sm','WZ_sm']#'SM_WW1','SM_WZ1','SM_WW2','SM_WZ2','WZ_sm1','WZ_sm2','WZ_sm3','WZ_sm4','WZ_sm5','WZ_sm6','WW_sm1','WW_sm2','WW_sm3','WW_sm4','WW_sm5','WW_sm6']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_cb','WZ_quad_c3w','WZ_sm_lin_quad_cb','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','WW_sm_lin_quad_c3w']#,'data','WJets'] #,'tt','singletop','higgs','QCD','data']#'WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] 'Fiveflav_WZminus','Fiveflav_WZplus',
+    processes    = ['WJets','tt','singletop','higgs','QCD','data','WW_sm','WZ_sm','SM_WW1','SM_WZ1','SM_WW2','SM_WZ2']#,'WZ_sm1','WZ_sm2','WZ_sm3','WZ_sm4','WZ_sm5','WZ_sm6','WW_sm1','WW_sm2','WW_sm3','WW_sm4','WW_sm5','WW_sm6']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_cb','WZ_quad_c3w','WZ_sm_lin_quad_cb','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','WW_sm_lin_quad_c3w']#,'data','WJets'] #,'tt','singletop','higgs','QCD','data']#'WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] 'Fiveflav_WZminus','Fiveflav_WZplus',
     ## commented out the following to run fit in WJ only
     ##amfor ops in WCs:
     ##am    morePs=['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
@@ -195,7 +195,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
     ratio   = ' --ratioYNDiv 505 --fixRatioRange' #--maxRatioRange 0.25 2.5 ' # --ratioNums sm,sm_lin_quad_cwww,quad_cwww --ratioDen WW --ratioYLabel=aTGC/SM ' # --ratioDen WJets --ratioNums sm_lin_quad_cwww,Mpt5sm_lin_quad_cwww  --ratioYLabel aTGC/WJets  --plotmode nostack ' #--ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
 
-    more = '' # --plotmode norm' if cutflow else ''
+    more = '--uf' # --plotmode norm' if cutflow else ''
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
     if doWhat == "plots" and ('SR' in selection or "sig" in selection):
