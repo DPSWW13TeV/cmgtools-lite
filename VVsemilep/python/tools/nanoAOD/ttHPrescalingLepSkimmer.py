@@ -73,7 +73,7 @@ class ttHPrescalingLepSkimmer( Module ):
                     toBePrescaled = False
 
         if self.minMET > 0:
-            if event.MET_pt > self.minMET:
+            if event.PuppiMET_pt > self.minMET:
                 toBePrescaled = False
         if not toBePrescaled:
             self.wrappedOutputTree.fillBranch(self.label, 1)

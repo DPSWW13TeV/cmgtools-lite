@@ -1,13 +1,14 @@
 import re, os, sys
 from CMGTools.RootTools.samples.configTools import printSummary, mergeExtensions, doTestN, configureSplittingFromTime, cropToLumi
 from CMGTools.RootTools.samples.autoAAAconfig import autoAAA
-from PhysicsTools.HeppyCore.framework.heppy_loop import getHeppyOption
+from PhysicsTools.HeppyCore.framework.heppy_loop import getHeppyOption 
 
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 from CMGTools.RootTools.samples.ComponentCreator import ComponentCreator
 kreator = ComponentCreator()
+
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
@@ -17,7 +18,19 @@ preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","both")
 selectComponents = getHeppyOption("selectComponents","MC")
 #selectComponents = getHeppyOption("selectComponents","DATA")
-test = getHeppyOption("test","") #"testam")
+test = getHeppyOption("test","") #testam")
+##amprint 'year                   ',getHeppyOption("year")
+##amprint 'analysis               ',getHeppyOption("analysis")
+##amprint 'selectComponents       ',getHeppyOption("selectComponents")
+##amprint 'imposePreselectionCut  ',getHeppyOption("imposePreselectionCut")
+##amprint 'applyTriggers          ',getHeppyOption("applyTriggers")
+##amprint 'justSummary            ',getHeppyOption("justSummary")
+##amprint 'test                   ',getHeppyOption("test")
+##amprint 'autoAAAverbose         ',getHeppyOption("autoAAAverbose")
+##amprint 'checkNumOfFilesPerJob  ',getHeppyOption("checkNumOfFilesPerJob")
+##amprint 'mergeExtensionsVerbose ',getHeppyOption("mergeExtensionsVerbose")
+##amprint 'setCompFiles           ',getHeppyOption("setCompFiles")
+##amprint 'cropToLumi             ',getHeppyOption("cropToLumi")
 
 if year == '2018':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL18NanoAODv9 import samples as mcSamples_
@@ -33,10 +46,11 @@ elif year == '2016APV':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL16APVNanoAODv9 import samples as mcSamples_
     from CMGTools.RootTools.samples.samples_13TeV_DATA2016APV_NanoAOD import dataSamples_UL16APV as allData
 
-autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
+autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cms-xrd-global.cern.ch/")
+#autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="xrootd-cms.infn.it") # must be done before mergeExtensions
 #autoAAA(mcSamples_+allData, quiet=not(getHeppyOption("verboseAAA",False)), redirectorAAA="cms-xrd-global.cern.ch/",site="T2_CH_CSCS")
 mcSamples_, _ = mergeExtensions(mcSamples_)
-
+#print mcSamples_
 # Triggers
 if year == '2018':
     from CMGTools.RootTools.samples.triggers_13TeV_DATA2018 import all_triggers as triggers
@@ -53,19 +67,7 @@ DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
-        # diboson
-        #"ZZTo2Q2L",   "WZTo2Q2L",        "WZTo1L1Nu2Q",
-        #"WWTo1L1Nu2Q",
-        #"WJets.*",
-        #   "WJetsToLNu_HT70To100",
-        #"DYJetsToLL_M50", 
-        #"DYJetsToLL_M50_LO",
-        #"WZToLNuQQ01j_5f_amcatnloFxFx",
-        #"DYJetsToLL_M10to50_LO",
-        #  "DYJets.*",
-        #"TTJets",   
-        #"TTSemi_pow",        "TT_mtt.*",
-        #"T_sch" , "T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
+        #"T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
         ##am        # conversions
         #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
         ##am        #  # triboson
@@ -75,17 +77,44 @@ if analysis == "main":
         #        "WplusH","ZH","GGH","WminusH"
         #        "WJetsToLNu_.*J","WJetsToLNu_Pt.*"
         #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600"
-        ".*aTGC.*mWV.*"
+        #".*aTGC.*mWV.*",
         #        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600",
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",#problem
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
         #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf"
-        #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
-        #        "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800"
+        #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
+
+        #     "WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
+        #      "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
+        #       "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
+        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
+        #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
+        #        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf", 
+
+#        "WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
+#        "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
+#        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
+#        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
+#        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
+#        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
         #".*_aTGC_pTZ.*"
         #".*aTGC.*"
         #"WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX",
         #"WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX"
+        # diboson
+        #"ZZTo2Q2L", 
+        #        "WZTo2Q2L" #, #       "WZTo1L1Nu2Q",
+        #        "WWTo1L1Nu2Q",
+        #"WJets.*",
+        #   "WJetsToLNu_HT70To100",
+        #"DYJetsToLL_M50", 
+        #"DYJetsToLL_M50_LO",
+        #"WZToLNuQQ01j_5f_amcatnloFxFx",
+        #"DYJetsToLL_M10to50_LO",
+        #  "DYJets.*",
+        #"TTJets",   
+        #"TTSemi_pow",        "TT_mtt.*",
+
      ])
     ##am removed double el triggers for 2018 
     DatasetsAndTriggers.append( ("DoubleMuon", triggerGroups_dict["Trigger_2m"][theyear] ) )
@@ -158,7 +187,7 @@ def setFilesPerJob(comps,filesperjob):
 
 if analysis == "main":
     print 'nothing to crop'
-    #cropToLumi(byCompName(selectedComponents,["TTJets"]),50.)
+    cropToLumi(byCompName(selectedComponents,["TTJets"]),59.)
     #cropToLumi(byCompName(selectedComponents,["DYJetsToLL_M50_LO"]),50.)
     #cropToLumi(byCompName(selectedComponents,["DYJetsToLL_LHEFilterPtZ0to50","]),50.)
     #cropToLumi(byCompName(selectedComponents,["DYJetsToLL_LHEFilterPtZ50to100""]),50.)
@@ -202,6 +231,7 @@ POSTPROCESSOR = PostProcessor(None, [], modules = modules,
         branchsel = branchsel_in, outputbranchsel = branchsel_out, compression = compression)
 
 test = getHeppyOption("test")
+
 if test == "94X-MC":
     json="/work/sesanche/FRs/CMSSW_10_4_0/src/CMGTools/TTHAnalysis/data/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt"
     TTLep_pow = kreator.makeDataComponent("SingleElectron_Run2017C_14Dec2018", "/SingleElectron/Run2017C-Nano14Dec2018-v1/NANOAOD", "CMS", ".*root", json)
@@ -223,22 +253,22 @@ elif test == "94X-MC-miniAOD":
     from CMGTools.Production.nanoAODPreprocessor import nanoAODPreprocessor
     TTLep_pow.preprocessor = nanoAODPreprocessor("/afs/cern.ch/work/g/gpetrucc/ttH/CMSSW_10_4_0/src/nanov4_NANO_cfg.py")
     selectedComponents = [TTLep_pow]
-elif test == "102X-MC":
-    TTLep_pow = kreator.makeMCComponent("TTLep_pow", "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 831.76*((3*0.108)**2), useAAA=True )
-    TTLep_pow.files = TTLep_pow.files[:1]
-    selectedComponents = [TTLep_pow]
+##amelif test == "102X-MC":
+##am    TTLep_pow = kreator.makeMCComponent("TTLep_pow", "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS", ".*root", 831.76*((3*0.108)**2), useAAA=True )
+##am/eos/cms/store/cmst3/group/dpsww/WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600/WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_part1.root    TTLep_pow.files = TTLep_pow.files[:1]
+##am    selectedComponents = [TTLep_pow]
 
-elif test == "testam":
-    WZTo1L1Nu2Q           = kreator.makeMCComponent("WZTo1L1Nu2Q","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
-
-    WZTo1L1Nu2Q.files = WZTo1L1Nu2Q.files['/eos/cms/store/cmst3/group/dpsww/WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600/WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_part1.root']
-    selectedComponents = [WZTo1L1Nu2Q]
-    modules = vvsemilep_sequence_step1
-    cut = vvsemilep_skim_cut
-    compression = "ZLIB:3" #"LZ4:4" #"LZMA:9"
-    branchsel_in = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_in.txt"
-    branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_out.txt"
-    selectedComponents =[WZTo1L1Nu2Q]
+##amelif test == "testam":
+##am    WZTo1L1Nu2Q           = kreator.makeMCComponent("WZTo1L1Nu2Q","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
+##am
+##am    WZTo1L1Nu2Q.files = WZTo1L1Nu2Q.files['/eos/cms/store/cmst3/group/dpsww/WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600/WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_part1.root']
+##am    selectedComponents = [WZTo1L1Nu2Q]
+##am    modules = vvsemilep_sequence_step1
+##am    cut = vvsemilep_skim_cut
+##am    compression = "ZLIB:3" #"LZ4:4" #"LZMA:9"
+##am    branchsel_in = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_in.txt"
+##am    branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_out.txt"
+##am    selectedComponents =[WZTo1L1Nu2Q]
 
 elif test == "94X-data":
     json = 'Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'

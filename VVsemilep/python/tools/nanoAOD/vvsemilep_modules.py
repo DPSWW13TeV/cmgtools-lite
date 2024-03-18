@@ -28,7 +28,7 @@ nElLoose = "Sum$(Electron_pt > {looselepPt} && Electron_sip3d < {sip3dloose}  &&
 nMuLoose = "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose})".format(**conf)
 nMuTight = "Sum$(Muon_pt > {tightlepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsotight})".format(**conf)
 nJetLoose = "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < {jeteta}  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0) )".format(**conf)
-
+##MET CUT can be added to the preskim selection
 vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
                       "{nMuTight} + {nElTight} >= 1 &&" + 
                       "{nMuTight} + {nElTight} < 3 &&" +
@@ -65,7 +65,7 @@ lepSkim = ttHPrescalingLepSkimmer(5,
                 minLeptons = 1, requireOppSignPair = True,
                 jetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) <  conf["jeteta"] and j.jetId > 0, 
                 fatjetSel = lambda f : f.pt > conf["fatjetptcut"] and abs(f.eta) < conf["jeteta"],  ##not all samples have fatjets
-                minJets = 4, minMET = 70, minFatJets = 1)
+                minJets = 4, minMET = 50, minFatJets = 1)
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger import collectionMerger
 lepMerge = collectionMerger(input = ["Electron","Muon"], 
                             output = "LepGood", 
@@ -359,21 +359,21 @@ taggedfj_data           = lambda : saveVtaggedJet(isMC = False,massVar='sD')
 
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import vvsemilep_TreeForWJestimation
 wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1, 
-                                                ['len(leps)  == 1                                         ',
+                                                 ['event.nLepFO_Recl  ==1                                         ',
                                                  'event.PuppiMET_pt > 110                                 ',
-                                                 '((abs(leps[0].pdgId ==11) and event.Trigger_1e) or ((abs(leps[0].pdgId ==13) and event.Trigger_1m)))',
-                                                 'leps[0].pt > 50                                          ',
-                                                 'leps[0].isLepTight_Recl == 1                             ',
+                                                 '(event.Trigger_1e or  event.Trigger_1m)',
+                                                 'event.LepGood_pt[event.iLepFO_Recl[0]] > 50                                          ',
+                                                 'event.LepGood_isLepTight_Recl[event.iLepFO_Recl[0]] == 1                             ',
                                                  'event.nFatJetSel_Recl > 0                                ',
                                                  'event.nLepTight_Recl == 1                                ',
-                                                'event.Flag_goodVertices ==1                              ',
-                                                'event.Flag_globalSuperTightHalo2016Filter ==1            ',
-                                                'event.Flag_HBHENoiseFilter ==1                           ',
-                                                'event.Flag_HBHENoiseIsoFilter ==1                        ',
-                                                'event.Flag_EcalDeadCellTriggerPrimitiveFilter ==1        ',
-                                                'event.Flag_BadPFMuonFilter ==1                           ',
-                                                '(event.year == 2016 or event.Flag_ecalBadCalibFilter)     ', 
-                                                '(event.run ==1 or event.Flag_eeBadScFilter)         '
+                                                 'event.Flag_goodVertices ==1                              ',
+                                                 'event.Flag_globalSuperTightHalo2016Filter ==1            ',
+                                                 'event.Flag_HBHENoiseFilter ==1                           ',
+                                                 'event.Flag_HBHENoiseIsoFilter ==1                        ',
+                                                 'event.Flag_EcalDeadCellTriggerPrimitiveFilter ==1        ',
+                                                 'event.Flag_BadPFMuonFilter ==1                           ',
+                                                 '(event.year == 2016 or event.Flag_ecalBadCalibFilter)     ', 
+                                                 '(event.run ==1 or event.Flag_eeBadScFilter)         '
 ])
 
 from CMGTools.VVsemilep.tools.nanoAOD.genFriendProducer import genFriendProducer

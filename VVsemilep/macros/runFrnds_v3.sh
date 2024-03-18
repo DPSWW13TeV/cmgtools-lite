@@ -20,7 +20,7 @@ echo $runWhat,$year,$runWhere
 ################### following should not be changed
 localTrees='local_dir_NAME/'  
 Trees='NanoTrees_v9_vvsemilep_06012023/'
-nEvt=120000 ##AM use it :P 
+nEvt=120000 
 Parent=${baseDir}/${Trees}/${year}
 BCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ${Parent}/";
 TBCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ";
@@ -43,7 +43,7 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --de .*Run.* "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence "  #--dm .*v2.* " #--de .*Run.*  "
 	;;
 
 recldata)
@@ -51,8 +51,7 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total --dm .*aTGC.*_v1.* " #--dm TTSemi_pow_part.*  "  #--de .*Run.* "
-	#basecmd="${TBCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total "
+	basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total --de .*Run.* "  #--dm .*v2.* " #--dm TTSemi_pow_part.*  "  #--de .*Run.* "
 	;;
 
 top)
@@ -68,7 +67,7 @@ npdf)
 
 fjtagged)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}2_ak8Vtagged_sdm45  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root --dm .*aTGC.*_v1.* " #--de .*Run.* "
+	basecmd="${BCORE}2_ak8Vtagged_sdm45  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2 " #--dm .*v2.* " #--dm .*aTGC.*_v1.* " #--de .*Run.* "
 	;;
 
 fjtaggeddata)
@@ -77,11 +76,12 @@ fjtaggeddata)
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}1_recl_allvarsTT/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0 " #--dm .*aTGC.*_v1.* " #  --de .*Run.* "
+	basecmd="${BCORE}1_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2 " #--dm .*v2.* " 
+	#-d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0 " #--dm .*aTGC.*_v1.* " #  --de .*Run.* "
 	;;
 
 wjet)		
-	basecmd="${BCORE}0_wjest_newCuts/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/2_ak8Vtagged_sdm45/{cname}_Friend.root --dm .*aTGC.*_v1.* "
+	basecmd="${BCORE}0_wjest_newCuts_v1/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/2_ak8Vtagged_sdm45/{cname}_Friend.root -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2 " #--dm .*v2.* " # -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0" # --dm .*aTGC.*_v1.* "
 	;;
 
 genInfo)
@@ -92,7 +92,7 @@ genInfo)
     
 phi)
 	echo "computing phi in helicity frame ${BCORE} ${CMGT}"
-	basecmd="${BCORE}phi_var_v2/ ${CMGT} phi_gen --de .*Run.* " # d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0 " # 
+	basecmd="${BCORE}phi_var_v2/ ${CMGT} phi_gen -d WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2 -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_part0_v2 " #--dm .*v2.* " #--de .*Run.* " # d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0 " # 
 	echo $basecmd
 	;; 
 
@@ -130,3 +130,4 @@ fi
 ##am	else 
 
 
+# . runFrnds_v3.sh recl_allvars 2018 condor 

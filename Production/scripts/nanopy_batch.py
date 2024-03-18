@@ -32,13 +32,15 @@ cp -rv Loop/* $LS_SUBCWD
 if [ $? -ne 0 ]; then
    echo 'ERROR: problem copying job directory back'
 else
-   echo 'job directory copy succeeded'
+   echo 'job directory copy succeeded nanopy'
+   ls -lrt  Loop/  
+   rm $LS_SUBCWD/*root 
 fi"""
 
    if remoteDir=='':
       cpCmd=dirCopy
    elif  remoteDir.startswith("root://eoscms.cern.ch//eos/cms/store/") or remoteDir.startswith("root://eosuser.cern.ch//eos/user/"):
-       cpCmd="""echo '==== sending root files to remote dir ===='
+       cpCmd="""echo '==== sending root files to remote dir nanopyB===='
 echo
 export LD_LIBRARY_PATH=/usr/lib64:$LD_LIBRARY_PATH # 
 for f in Loop/*.root
@@ -47,11 +49,12 @@ do
    ff="${{ff}}_`basename $f | cut -d . -f 1`"
    echo $f
    echo $ff
+   echo {addr}/{srm}/${{ff}}_{idx}.root > `pwd`/$f.url
    export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
    source $VO_CMS_SW_DIR/cmsset_default.sh
    {eosenv}
    for try in `seq 1 3`; do
-      echo "Stageout try $try"
+      echo "Stageout try AM $try"
       echo "eos mkdir {srm}"
       eos mkdir {srm}
       echo "eos cp `pwd`/$f {srm}/${{ff}}_{idx}.root"
@@ -60,7 +63,7 @@ do
          echo "ERROR: remote copy failed for file $ff"
          continue
       fi
-      echo "remote copy succeeded"
+      echo "remote copy succeeded nanoB"
       remsize=$(eos find --size {srm}/${{ff}}_{idx}.root | cut -d= -f3) 
       locsize=$(cat `pwd`/$f | wc -c)
       ok=$(($remsize==$locsize))
@@ -70,8 +73,7 @@ do
          continue
       fi
       echo "everything ok"
-      rm $f
-      echo {addr}/{srm}/${{ff}}_{idx}.root > $f.url
+      echo {addr}/{srm}/${{ff}}_{idx}.root > `pwd`/$f.url 
       break
    done
 done
@@ -103,8 +105,6 @@ env | sort
 echo
 echo '==== running ===='
 nanopy.py --single Loop pycfg.py config.pck --options=options.json
-echo
-echo '==== sending the files back ===='
 echo
 rm Loop/cmsswPreProcessing.root 2> /dev/null
 {copy}
@@ -166,3 +166,4 @@ if __name__ == '__main__':
     batchManager.PrepareJobs( listOfValues, listOfNames )
     waitingTime = 0.1
     batchManager.SubmitJobs( waitingTime )
+#         rm -r `pwd`/$f

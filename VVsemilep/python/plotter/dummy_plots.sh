@@ -12,11 +12,11 @@ eval `scram runtime -sh`
 
 echo "i am in this directory ${PWD} and making this plot ${5}"
 
-#python runDPS.py --results --dW plots --year ${2} --finalState ${3}  --applylepSFs --runblind  --splitCharge
-if [[ $# -eq 8 ]]; then
-    python plots_VVsemilep.py --results --dW plots --year ${2} --nLep ${3} --finalState ${4} --pv ${5}   --sel ${6} --lf ${7} --WC ${8} --applylepSFs  #--dCF ##--applylepSFs ##--runblind --dCF
+
+if [[ $# -eq 6 ]]; then
+    python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --applylepSFs  --pf UF #--dCF ## ##--runblind 
 else
-    python plots_VVsemilep.py --results --dW plots --year ${2} --nLep ${3} --finalState ${4} --pv ${5}   --sel ${6} --lf ${7} --WC ${8} --pf ${9} --applylepSFs #--dCF   ##--applylepSFs   --runblind --dCF
+    python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --WC ${8} --applylepSFs  ##--runblind --dCF
 fi
 
 #python runDPS.py --asym --dW plots --year ${2} --finalState ${3}  --applylepSFs  --pf asym_chk 
