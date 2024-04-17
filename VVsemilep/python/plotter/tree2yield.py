@@ -491,7 +491,7 @@ class TreeToYield:
             else                          : print (nfmtL % toPrint, " ")
             print ("")
     def _getCut(self,cut,noweight=False):
-        if self._weight and not noweight:
+        if self._weight and not noweight:            
             if self._isdata: cut = "(%s)     *(%s)*(%s)" % (self._weightString,                    self._scaleFactor, self.adaptExpr(cut,cut=True))
             else:            cut = "(%s)*(%s)*(%s)*(%s)" % (self._weightString,self._options.lumi, self._scaleFactor, self.adaptExpr(cut,cut=True))
         else: 

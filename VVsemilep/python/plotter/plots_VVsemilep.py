@@ -27,11 +27,12 @@ mWV_fxn={
     
 }
 
+wspc =['ak8_mass','mWV_reco','FatJet1_sDrop_mass']
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
-MCfriends   = ['1_recl','4_scalefactors','1_jmeUnc']#,'phi_var']#,'ak8VtaggedV1_vars']#,'nnpdf_rms']#,'2_recl_allvars','2_btag_SFs'] #,"postFSRinfo"]
+MCfriends   = ['1_recl']#,'4_scalefactors','2_recl_allvars','2_jmeUnc']#,'1_jmeUnc']#,'phi_var']#,'ak8VtaggedV1_vars']#,'nnpdf_rms']#,'2_recl_allvars','2_btag_SFs'] #,"postFSRinfo"]
 Datafriends = ['1_recl']
-friends     = ['2_ak8Vtagged_sdm45']
+friends     = ['3_ak8Vtagged_sdm45','test']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
 fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
@@ -44,8 +45,8 @@ aTGC_chk   =['tmWV_typ0_pmet_boosted','tFatJet1_pt','tFatJet1_pt','tLep1_pt'] #'
 mWV=['ratio_typ0','ratio_typ1','ratio_typ2','ratio_typ3','mWV_typ0_pmet_boosted','mWV_typ01_pmet_boosted','mWV_typ10_pmet_boosted','mWV_typ11_pmet_boosted','mWV_typ20_pmet_boosted','mWV_typ21_pmet_boosted','mWV_typ30_pmet_boosted','mWV_typ31_pmet_boosted']
 topCR=['mWV_typ0_met_boosted','FatJet1_pt']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
-theWVfullset=['FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt', 'puppimet','lep1_pt']#,'puppimet_1','nBJetMedium30_Recl','nFatJet','puppimetphi','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','neupzpmet_typ0','nJet30_Recl','lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass''mt1pmet','nLepGood','nLepFO','sumBoosted']+mWV
-theWVultimateset=['mWV_typ0_pmet_boosted','FatJet1_sDrop_mass','puppimet']#,'FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
+theWVfullset=['FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt', 'puppimetphi','lep1_pt']#,'puppimet_1','nBJetMedium30_Recl','nFatJet','puppimet','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','neupzpmet_typ0','nJet30_Recl','lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass''mt1pmet','nLepGood','nLepFO','sumBoosted']+mWV
+theWVultimateset=['mWV_typ0_pmet_boosted','FatJet1_sDrop_mass']#,'puppimet','FatJet1_pNet_mass']#'puppimetphi']#,'FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
 
 
 ak4jetvars = ['nBJetLoose30_Recl,','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt','htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1','Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl','htJet25j_Recl','mhtJet25_Recl']
@@ -134,9 +135,12 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
         if(nLep == 1): 
             if applypNetSFs:
                 #cmd +=''.join(" -W evt_wt*lepsf ")
-                cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
+                #cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
+                cmd +=''.join(" -W evt_wt*lepSF" ) #*Selak8Jet1_pNetWtagSF -> applied to all but WJ MC in the mca file
             else:
-                cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
+                #cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
+                cmd +=''.join(" -W evt_wt*lepSF" )
+
         else: 
             if applypNetSFs:
                 cmd+=" '-W L1PreFiringWeight_Nom*puWeight*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)*lepsf*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_pt[iLepFO_Recl[1]],2,year,suberaId) ' "
@@ -170,36 +174,37 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     print ("vorsichtig sein!! du hast tagging auswahl im top CR geloschen")
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
     fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
-    showratio    = False #True 
+    showratio    = False
     fplots       = 'vvsemilep/fullRun2/plots.txt'
-    fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
+    fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #cuts_vvsemilep.txt'
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['WJets','tt','singletop','higgs','QCD','data','WW_sm','WZ_sm','SM_WW1','SM_WZ1','SM_WW2','SM_WZ2']#,'WZ_sm1','WZ_sm2','WZ_sm3','WZ_sm4','WZ_sm5','WZ_sm6','WW_sm1','WW_sm2','WW_sm3','WW_sm4','WW_sm5','WW_sm6']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_cb','WZ_quad_c3w','WZ_sm_lin_quad_cb','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','WW_sm_lin_quad_c3w']#,'data','WJets'] #,'tt','singletop','higgs','QCD','data']#'WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] 'Fiveflav_WZminus','Fiveflav_WZplus',
+    processes    = ['WJets','tt','singletop','QCD','data','WW_sm','WZ_sm','WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb'] #,'WW_sm_lin_quad_c3w']#,'WZ_sm_lin_quad_c3w','WZ_quad_cb','WZ_sm_lin_quad_cb',# 'WW_sm_lin_quad_2p25_cw','WW_quad_2p25_cw','WW_sm_lin_quad_cw','WW_sm_lin_quad_1p8_c3w','WW_quad_1p8_c3w','WW_sm_lin_quad_c3w',#,'WZ_sm_lin_quad_2p25_cw','RWZ_sm_lin_quad_2p25_cw','WZ_quad2p25_cw']#,'SM_WW','SM_WW1','SM_WZ1','SM_WW2','SM_WZ2']#,'WZ_sm1','WZ_sm2','WZ_sm3','WZ_sm4','WZ_sm5','WZ_sm6','WW_sm1','WW_sm2','WW_sm3','WW_sm4','WW_sm5','WW_sm6']#,'higgs',
     ## commented out the following to run fit in WJ only
-    ##amfor ops in WCs:
-    ##am    morePs=['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
-    ##am    processes+=[s + ops for s in morePs]
+    WCs=['cW','c3w','cb']
+#    for ops in WCs:
+#        morePs=['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
+#        processes+=[s + ops for s in morePs]
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
-    cuts_boosted = ['ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet']#,'phi_var']
+    cuts_boosted = ['ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','Mjuppercut','Mwvuppercut']
     cuts_cards_opts=['sb_lo','sb_hi','sig']#
     cuts_btagEff = ['btagSR','bpartonFlav','Loosebtag','Medbtag','Tightbtag'] ##here for reference ['lightpartonFlav','cpartonFlav']
-    cuts_WJest   = ['WJEST']
+    cuts_WJest   = ['cuts_wjest']
     applypNetSFs = False 
 
     print (processes)
     signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
-    legends = ' --legendFontSize 0.03 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    
+    legends = ' --legendFontSize 0.03 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 ' 
     #legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
-    ubands  =  ' ' #--showMCError --showIndivSigs --noStackSig --showSigShape'
+    ubands  =  ' --showMCError --showIndivSigs --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
-    ratio   = ' --ratioYNDiv 505 --fixRatioRange' #--maxRatioRange 0.25 2.5 ' # --ratioNums sm,sm_lin_quad_cwww,quad_cwww --ratioDen WW --ratioYLabel=aTGC/SM ' # --ratioDen WJets --ratioNums sm_lin_quad_cwww,Mpt5sm_lin_quad_cwww  --ratioYLabel aTGC/WJets  --plotmode nostack ' #--ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5 '#   --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' #
 
-    more = '--uf' # --plotmode norm' if cutflow else ''
+    more = '' # --plotmode norm' if cutflow else ''
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
-    if doWhat == "plots" and ('SR' in selection or "sig" in selection):
-        blinded=True
+    #if doWhat == "plots" and ('SR' in selection or "sig" in selection):
+    #    blinded=True
     if blinded and 'data' in processes:
         showratio   = False
         fsyst=''
@@ -220,7 +225,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 print ('{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName))
                 targetdir = eos+'{yr}/{pR}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf= postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR)
                 enable=[]
-                enable+=cuts_boosted 
+                enable+= cuts_boosted #cuts_WJest # 
                 enable.append(LF); 
                 enable.append(pR)
                 #enable+=cuts_btagEff
@@ -443,3 +448,5 @@ if __name__ == '__main__':
 # python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_pt --pv tFatJet1_pt --pv tGenJetAK8_mass --pv tGenJetAK8_pt --pv tGenmWV_typ0_pmet_boosted --pv tmWV_typ0_pmet_boosted --lf onelep --year 2018 --dW plots --dCF --applylepSFs
 #python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf onelep --year 2018 --dW plots
 #python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf mu --year 2018 --dW cards
+
+#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_sDrop_mass --lf mu --year 2018 --dW plots  --applylepSFs

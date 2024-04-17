@@ -14,8 +14,9 @@ def if3(cond, iftrue, iffalse):
     return iftrue if cond else iffalse
 
 class vvsemilep_TreeForWJestimation(Module):
-    def __init__(self, lepMultiplicity, selection,mvar='sD'):
+    def __init__(self, lepMultiplicity, fjetMultiplicity, selection,mvar='sD'):
         self.lepMultiplicity=lepMultiplicity
+        self.fjetMultiplicity=fjetMultiplicity
         self.selection=selection
         self.mvar=mvar
         pass
@@ -25,10 +26,12 @@ class vvsemilep_TreeForWJestimation(Module):
             for l in range(self.lepMultiplicity):
                 self.out.branch('Lep%d_%s'%(l+1,var),'F')
         
-        self.out.branch('nSelak8Jets'  ,'I')
-        for var in 'pt,eta,phi,mass,particleNetMD_Xqq,msoftdrop,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetZtagscore,pNetWtagSF'.split(','): #msoftdrop,particleNet_mass,
-            self.out.branch('Selak8Jet_%s'%var, 'F', 10, 'nSelak8Jets')
 
+        for var in 'pt,eta,phi,mass,particleNetMD_Xqq,msoftdrop,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetWtagSF'.split(','): #msoftdrop,particleNet_mass,
+            for j in range(self.fjetMultiplicity):
+                self.out.branch('Selak8Jet%d_%s'%(j+1,var), 'F')
+        for nsel in self.selection:
+            self.out.branch('event_sel%d'%self.selection.index(nsel), 'L')
         self.out.branch('event', 'L')
         self.out.branch("Top_pTrw","F")
         self.out.branch('event_presel', 'L')
@@ -40,11 +43,11 @@ class vvsemilep_TreeForWJestimation(Module):
         self.out.branch('hem_wt'       ,'F') #pu*prefiring*prescale*hem
         self.out.branch('prescale_wt'       ,'F') #pu*prefiring*prescale*hem
         self.out.branch('genwt'   ,'F')
+        self.out.branch('event_sel', 'O')
         #self.out.branch('genSumw'   ,'F')
         self.out.branch('xsec'   ,'F')
         self.out.branch('lepSF'   ,'F') 
         self.out.branch('mWV',"F")
-        self.out.branch('trigger2l','I')
         self.out.branch('trigger1e','I')
         self.out.branch('trigger1m','I')
 
@@ -138,64 +141,67 @@ class vvsemilep_TreeForWJestimation(Module):
         chosen = getattr(event,"iLepFO_Recl")
         leps = [all_leps[chosen[i]] for i in xrange(nFO)]
         jets = [j for j in Collection(event,"ak8%sMgt45"%self.mvar)]
-        
-        if len(leps) < self.lepMultiplicity: return False
-        if len(jets) < 1: return False
-        for sel in self.selection: 
-            if not eval(sel): return False
-        self.out.fillBranch('event_presel',event.event)
+        self.out.fillBranch('event_presel',event.event)        
+        tot_sel=False;sel=False
+
+        for isel in self.selection:
+            if eval(isel):
+                sel=True
+                #print 'passed %s'%isel
+                self.out.fillBranch('event_sel%d'%self.selection.index(isel),1)        
+            else: 
+                sel=False
+                self.out.fillBranch('event_sel%d'%self.selection.index(isel),0)        
+                #print 'failed ',isel,event.event
+                break;
+        tot_sel= sel and len(leps) > 0 and  len(jets) > 0
+        self.out.fillBranch('event_sel',tot_sel)        
+        #if tot_sel: print "finally ",tot_sel,event.event
         for lep in range(self.lepMultiplicity):
             for var in 'pt,eta,phi,pdgId'.split(','):
-                self.out.fillBranch('Lep%d_%s'%(lep+1,var), getattr(leps[lep],var))
-        for var in 'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore#,msoftdrop particleNet_mass,
-            jetVar=[]
-            for j in jets:
-                jetVar.append(getattr(j,var))
-
-            self.out.fillBranch('Selak8Jet_%s'%var, jetVar)
-        pNetZscore=[];        pNetWscore=[];pnetsf=[];
-        for j in jets:
-            score=(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xqq'))/(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xqq')+getattr(j,'particleNetMD_QCD'))
-            pNetWscore.append(score)
-            score=(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xbb')+getattr(j,'particleNetMD_Xqq'))/(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xqq')+getattr(j,'particleNetMD_QCD')+getattr(j,'particleNetMD_Xbb'))
-            pNetZscore.append(score)
-            pnetsf.append(self.pNetSFMD_WvsQCD(j.pt,event.year,event.suberaId) if not isData else 1.0)
-
-        self.out.fillBranch('Selak8Jet_pNetWtagSF',pnetsf)
-        self.out.fillBranch('Selak8Jet_pNetWtagscore', pNetWscore)
-        self.out.fillBranch('Selak8Jet_pNetZtagscore', pNetZscore)
-        self.out.fillBranch('mWV',self.calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi))
-        self.out.fillBranch('pmet',event.PuppiMET_pt)
-        self.out.fillBranch('pmet_phi',event.PuppiMET_phi)
-        self.out.fillBranch('trigger2l',event.Trigger_2l)
-        self.out.fillBranch('trigger1e',event.Trigger_1e)
-        self.out.fillBranch('trigger1m',event.Trigger_1m)
-        self.out.fillBranch('nBJetMedium30',event.nBJetMedium30_Recl)
-
-        self.out.fillBranch('dR_fjlep',deltaR(leps[0].eta,leps[0].phi,jets[0].eta,jets[0].phi))
-        self.out.fillBranch('dphi_fjlep',abs(deltaPhi(leps[0].phi,jets[0].phi)))
-        self.out.fillBranch('dphi_fjmet',abs(deltaPhi(event.PuppiMET_phi,jets[0].phi)))
+                self.out.fillBranch('Lep%d_%s'%(lep+1,var), getattr(leps[lep],var) if tot_sel else -999.0)
+        for jet in range(self.fjetMultiplicity): 
+            for var in 'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore#,msoftdrop particleNet_mass,
+                self.out.fillBranch('Selak8Jet%d_%s'%(jet+1,var), getattr(jets[jet],var) if tot_sel else -999.0)
+            pNetWscore=0.0;pnetsf=1.0;
+            if tot_sel:
+                pNetWscore=(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq'))/(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq')+getattr(jets[jet],'particleNetMD_QCD'))
+                pnetsf=self.pNetSFMD_WvsQCD(getattr(jets[jet],'pt'),event.year,event.suberaId) if not isData else 1.0
+            self.out.fillBranch('Selak8Jet%d_pNetWtagSF'%(jet+1),pnetsf)
+            self.out.fillBranch('Selak8Jet%d_pNetWtagscore'%(jet+1), pNetWscore)
+                
+        self.out.fillBranch('mWV',self.calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi) if tot_sel else -999.0)
+        self.out.fillBranch('pmet',event.PuppiMET_pt if tot_sel else -999.0)
+        self.out.fillBranch('pmet_phi',event.PuppiMET_phi if tot_sel else -999.0)
+        self.out.fillBranch('trigger1e',event.Trigger_1e if tot_sel else 0)
+        self.out.fillBranch('trigger1m',event.Trigger_1m if tot_sel else 0)
+        self.out.fillBranch('nBJetMedium30',event.nBJetMedium30_Recl if tot_sel else 999)
+                
+        self.out.fillBranch('dR_fjlep',deltaR(leps[0].eta,leps[0].phi,jets[0].eta,jets[0].phi) if tot_sel else -999.0)
+        self.out.fillBranch('dphi_fjlep',abs(deltaPhi(leps[0].phi,jets[0].phi)) if tot_sel else -999.0 )
+        self.out.fillBranch('dphi_fjmet',abs(deltaPhi(event.PuppiMET_phi,jets[0].phi)) if tot_sel else -999.0 )
         pmet=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         lep1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
         lmet=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        pmet.SetPtEtaPhiM(event.PuppiMET_pt,0.,event.PuppiMET_phi,0.);
-        lep1.SetPtEtaPhiM(leps[0].pt,leps[0].eta,leps[0].phi,leps[0].mass);
+        if tot_sel:
+            pmet.SetPtEtaPhiM(event.PuppiMET_pt,0.,event.PuppiMET_phi,0.);
+            lep1.SetPtEtaPhiM(leps[0].pt,leps[0].eta,leps[0].phi,0.); #leps[0].mass);
         lmet=pmet+lep1
-        self.out.fillBranch('pTWlep',lmet.Pt())
-
-        hemwt=self.HEM(event.year,leps[0],jets[0],event.run,isData)
+        self.out.fillBranch('pTWlep',lmet.Pt() if tot_sel else -999.0 )
+        
+        hemwt=self.HEM(event.year,leps[0],jets[0],event.run,isData) if tot_sel else 0.0
         #print hemwt,event.prescaleFromSkim,event.L1PreFiringWeight_Nom,event.puWeight
         eventWt=hemwt * (event.prescaleFromSkim if isData else event.L1PreFiringWeight_Nom*event.puWeight*event.prescaleFromSkim)
-        self.out.fillBranch('evt_wt',eventWt) #pu*prefiring*prescale*hem
-        self.out.fillBranch('hem_wt',hemwt) #pu*prefiring*prescale*hem
+        self.out.fillBranch('evt_wt',eventWt if tot_sel else 0 ) #pu*prefiring*prescale*hem
+        self.out.fillBranch('hem_wt',hemwt if tot_sel else 0.0 ) #pu*prefiring*prescale*hem
         self.out.fillBranch('pu_prefiring_wt',1.0 if isData else event.L1PreFiringWeight_Nom*event.puWeight)
-        self.out.fillBranch('prescale_wt',event.prescaleFromSkim)
+        self.out.fillBranch('prescale_wt',event.prescaleFromSkim if tot_sel else -999.0 )
         self.out.fillBranch('genwt',event.genWeight if not isData else 1.0  )
         #self.out.fillBranch('genSumw',event.genEventSumw if not isData else 1.0   )
-        self.out.fillBranch('xsec',event.xsec if not isData else 1.0  )
-        self.out.fillBranch('lepSF',event.lepsf if not isData else 1.0  ) 
-        max_n=event.nLHEReweightingWeight if hasattr(event,"nLHEReweightingWeight") else 150 
-        self.out.fillBranch('naGC_wt', event.nLHEReweightingWeight if hasattr(event,"nLHEReweightingWeight") else max_n)
+        self.out.fillBranch('xsec',event.xsec if not isData and  tot_sel else 1.0  )
+        self.out.fillBranch('lepSF',event.lepsf if not isData and tot_sel else 1.0  ) 
+        max_n=event.nLHEReweightingWeight if hasattr(event,"nLHEReweightingWeight") and tot_sel else 150 
+        self.out.fillBranch('naGC_wt', event.nLHEReweightingWeight if hasattr(event,"nLHEReweightingWeight") and tot_sel else max_n)
         tmp=[1.0]*max_n
         if hasattr(event,"nLHEReweightingWeight"):            
             for j in range(max_n):
@@ -215,10 +221,10 @@ class vvsemilep_TreeForWJestimation(Module):
                         topPt=iGen.pt;foundt=True;tops.append(iGen);
                     if iGen.pdgId == -6 and lastcopy:
                         AtopPt=iGen.pt;foundtbar=True;tops.append(iGen);
-                    else: continue
-            if len(tops)==2 and foundt and foundtbar:
-                topsf=(math.sqrt(math.exp(0.0615 - 0.0005 * topPt) * math.exp(0.0615 - 0.0005 * AtopPt)))
-        self.out.fillBranch('Top_pTrw',topsf)    
+                else: continue
+                if len(tops)==2 and foundt and foundtbar:
+                    topsf=(math.sqrt(math.exp(0.0615 - 0.0005 * topPt) * math.exp(0.0615 - 0.0005 * AtopPt)))
+        self.out.fillBranch('Top_pTrw',topsf if tot_sel else -999.0 )    
 
         return True
 

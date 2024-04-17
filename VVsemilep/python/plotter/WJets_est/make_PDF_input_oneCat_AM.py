@@ -16,6 +16,7 @@ ROOT.gStyle.SetOptTitle(0)
 ROOT.gROOT.SetBatch(True)
 ROOT.gStyle.SetTextFont(42)
 
+from prepare_bkg_oneCat_AM import *
 vetoPlots=['cwww_WW_lin','cwww_WZ_lin','cb_WZ_lin','cb_WZ_quad']
 
 
@@ -38,36 +39,11 @@ parser.add_option('--inPath', action="store",type="string",dest="inPath",default
 
 (options,args) = parser.parse_args()
 
-ww_atgc=['WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1',
-'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1',
-'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v1',
-'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1',
-'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1',
-'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v1']
-
-wz_atgc=['WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1',
-'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1',
-'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v1',
-'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1',
-'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1',
-'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v1']
 
 
 usepNM=False
 useWts=True
-lumis = {
-    '2016APV': 19.5,
-    '2016': 16.8,
-    '2017': 41.5,
-    '2018': 59.8,
-    #    'all' : '19.5,16.8,41.5,59.8',
-}
-flavors = {
-    'el': 'el',
-    'mu': 'mu',
-    'onelep': 'lep',
-}
-#'proc': [flist],#nevt}
+
 def mkplotDir(dname):
     if not os.path.isdir(dname): os.system("mkdir %s"%eos)
     if "www" in dname:
@@ -107,14 +83,15 @@ class Prepare_workspace_4limit:
             self.pf                     = "_"+pf if len(pf) >0 else ""
             self.channel                = self.ch
             self.nbins                  = (self.binhi-self.binlo)/100
-            self.file_Directory=os.path.join(self.year,"0_wjest_newCuts") #0_wjest_sDM") 
-            self.file1_Directory=os.path.join(self.year,"1_wjest_newCuts") 
+            self.file_Directory         = os.path.join(self.year,trees_b)
+            self.file1_Directory        = os.path.join(self.year,trees_r)
+
             self.WS                     = RooWorkspace("w","w_%s_%s"%(self.ch,self.year))        #final workspace
             self.wtmp                   = RooWorkspace('wtmp',"wtmp_%s_%s"%(self.ch,self.year))
             
             self.fitresults             = []
             ##nuisance parameter to change all slope parameters by certain percentage (bigger for cb in WZ-cateogry)
-            self.eps                    = RooRealVar('slope_nuis','slope_nuis',1,0,2)
+            self.eps                    = RooRealVar('slope_nuis','slope_nuis',2,0,4)
             self.eps.setConstant(kTRUE)
             self.eps4cbWZ               = RooFormulaVar('rel_slope_nuis4cbWZ','rel_slope_nuis4cbWZ','1+3.0*(@0-1)',RooArgList(self.eps))
             self.eps4cbWW               = RooFormulaVar('rel_slope_nuis4cbWW','rel_slope_nuis4cbWW','1+3.0*(@0-1)',RooArgList(self.eps))
@@ -161,7 +138,6 @@ class Prepare_workspace_4limit:
                     hists4scale['c_sm_lin_quad_%s_hist_%s'%(WV,para)].Sumw2(kTRUE)
                     hists4scale['c_quad_%s_hist_%s'%(WV,para)]=TH1F('c_quad_%s_hist_%s'%(WV,para),'c_quad_%s_hist_%s'%(WV,para),self.nbins,self.binlo,self.binhi); hists4scale['c_quad_%s_hist_%s'%(WV,para)].Sumw2(kTRUE)
 
-
                 #add histograms for SM and all aTGC parameters unequal to zero
                 hists4scale['c_sm_%s_hist'%WV]                  = TH1F('c_sm_%s_hist'%WV,'c_sm_%s_hist'%WV,self.nbins,self.binlo,self.binhi);                
                 hists4scale['c_%s_histall3'%WV]                 = TH1F('c_%s_histall3'%WV,'c_%s_histall3'%WV,self.nbins,self.binlo,self.binhi);
@@ -198,15 +174,15 @@ class Prepare_workspace_4limit:
                     MWW                = treeIn.mWV
                     #apply cuts
                     #using whole mj-range (sideband and signal region)
-                    tmp_jet_mass=treeIn.Selak8Jet_particleNet_mass[0] if usepNM else treeIn.Selak8Jet_msoftdrop[0]
-                    tmp_jet_pNetscore=treeIn.Selak8Jet_pNetWtagscore[0] 
+                    tmp_jet_mass=treeIn.Selak8Jet1_particleNet_mass if usepNM else treeIn.Selak8Jet1_msoftdrop
+                    tmp_jet_pNetscore=treeIn.Selak8Jet1_pNetWtagscore
                     dRfjlep=treeIn.dR_fjlep > 1.6 
                     dphifjlep=treeIn.dphi_fjlep > 2.0 
                     dphifjmet=treeIn.dphi_fjmet > 2.0 
                     ptWlep=treeIn.pTWlep > 200
                     boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore >= self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 45 and  MWW>self.binlo
                     if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.nBJetMedium30 == 0 and  boosted_sel and treeIn.pmet > 110 and treeIn.Lep1_pt > 50:
-			weight_part =1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Selak8Jet_pNetWtagSF[0]*lumis[self.year]/treeIn.sumw 
+			weight_part =1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Selak8Jet1_pNetWtagSF*lumis[self.year]/treeIn.sumw 
 			aTGC        = treeIn.aGC_wt 
 			#all3hists4scale['c_%s_histall3'%WV].Fill(MWW,aTGC[123] * weight_part)
 			hists4scale['c_%s_histall3'%WV].Fill(MWW,aTGC[124]*weight_part) #all ops set to non zero, same as starting point on the grid
@@ -322,10 +298,7 @@ class Prepare_workspace_4limit:
                 normvalSM        = norm.getVal() * self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
                 self.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots[i],RooFit.LineColor(kBlack),RooFit.Normalization(normvalSM, RooAbsReal.NumEvent),RooFit.Name('SMmodel'))
                 #self.wtmp.data('neg_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(kBlue),RooFit.LineColor(kBlue),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('atgcdata'))
-
-                print "value of the  poi",self.wtmp.var(self.POI[i]).getVal();
                 self.wtmp.var(self.POI[i]).setVal(-self.PAR_MAX[self.POI[i]])
-                print "value of the  poi after subt",self.wtmp.var(self.POI[i]).getVal();
                 normvalneg = norm.getVal() * self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
                 #self.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots[i],RooFit.LineColor(kBlue),RooFit.Normalization(normvalneg, RooAbsReal.NumEvent),RooFit.Name('atgcmodel'))
                 #                    print "this info we nned: category \t",cat,"\t poi\t",self.POI[i],"\t channel \t",channel,"\t ch\t",self.ch
@@ -338,14 +311,15 @@ class Prepare_workspace_4limit:
                 if linStr not in vetoPlots:
                     lin_Norm=self.wtmp.var('norm_sm_lin_quad_%s_%s'%(self.POI[i],channel))
                     print "linear term \t", self.POI[i],"\t", channel,"\t",lin_Norm.getVal(),"\t",self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
-                    self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(ROOT.kAzure+10),RooFit.LineColor(ROOT.kAzure+10),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('linData'))
-                    self.wtmp.pdf('%s_sm_lin_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kAzure+10),RooFit.LineStyle(kDashed),RooFit.Normalization(lin_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('linModel'))
+                    self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(ROOT.kAzure+10),RooFit.MarkerSize(0.75),RooFit.LineColor(ROOT.kAzure+10),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('P0E1'),RooFit.Name('linData'))
+                    self.wtmp.pdf('%s_sm_lin_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kAzure+7),RooFit.LineStyle(kDotted),RooFit.Normalization(lin_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('linModel'))
                     pullhist_l= plots[i].pullHist('linData','linModel')
                 if quadStr not in vetoPlots:
                     quad_Norm=self.wtmp.var('norm_quad_%s_%s'%(self.POI[i],channel))
                     print "quad term \t", self.POI[i],"\t", channel,"\t",quad_Norm.getVal(),"\t",self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
-                    self.wtmp.data('quad_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(ROOT.kPink-2),RooFit.LineColor(ROOT.kPink-2),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('quadData'))
                     self.wtmp.pdf('%s_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kPink-2),RooFit.LineStyle(kDashed),RooFit.Normalization(quad_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('quadModel'))
+                    self.wtmp.data('quad_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(ROOT.kPink-7),RooFit.MarkerSize(0.75),RooFit.LineColor(ROOT.kPink-7),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('P0E1'),RooFit.Name('quadData'))
+
                     pullhist_q= plots[i].pullHist('quadData','quadModel')
 
                 #pullhist = plots[i].pullHist('atgcdata','atgcmodel')
@@ -402,12 +376,12 @@ class Prepare_workspace_4limit:
                 #pullhist.SetLineColor(kBlue);pullhist.SetLineWidth(1);
                 #pullhist.Draw("SAME E1")
                 if (pullhist_q) is not None: 
-                    pullhist_q.Draw("SAME E1");  
+                    pullhist_q.Draw("SAME P0E1");  
                     pullhist_q.SetLineColor(ROOT.kPink-2);pullhist_q.SetLineWidth(1);
                     pullhist_q.SetMarkerColor(ROOT.kPink-2);
                 if (pullhist_l) is not None: 
                     pullhist_l.SetLineColor(ROOT.kAzure+10);pullhist_l.SetLineWidth(1);pullhist_l.SetMarkerColor(ROOT.kAzure+10);
-                    pullhist_l.Draw("SAME E1")
+                    pullhist_l.Draw("SAME P0E1")
                 can[i].Update()
                 if options.savep:
                     can[i].SaveAs(self.plotsDir+'/%s_neg_%s.pdf'%(self.POI[i],channel))
@@ -620,18 +594,17 @@ class Prepare_workspace_4limit:
                     a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
                     a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.0001,-0.1,0.)
                     a3          = RooFormulaVar('a_lin_nuis_%s'%s_name,'a_lin_nuis_%s'%s_name,'@0*@1',RooArgList(a3_4fit,self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
-                    #cPdf_quad   = RooExponential('Pdf_quad_%s'%s_name,'Pdf_quad_%s'%s_name,rrv_x,a2)
                     cPdf_quad   = RooExponential('%s_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a2)
 
                 else:
-		    #N_lin       = RooRealVar('N_lin_%s'%s_name,'N_lin_%s'%s_name, 0 )
+		    #N_lin      = RooRealVar('N_lin_%s'%s_name,'N_lin_%s'%s_name, 0 )
                     N_lin       = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,(N_pos_tmp-N_neg_tmp)/2)
-                    a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.001,-0.01,0.)
+                    a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.001,-0.01,0.1)
                     a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps))
-                    a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.001,-0.01,0.)
+                    a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.001,-0.01,0.1)
                     a3          = RooFormulaVar('a_lin_nuis_%s'%s_name,'a_lin_nuis_%s'%s_name,'@0*@1',RooArgList(a3_4fit,self.eps))
                     cPdf_quad   = RooErfExpPdf('%s_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a2,self.wtmp.var('Erf_offset_%s'%s_name),self.wtmp.var('Erf_width_%s'%s_name))
-
+                
 
                 a2_4fit.setConstant(kTRUE)
                 a3_4fit.setConstant(kTRUE)

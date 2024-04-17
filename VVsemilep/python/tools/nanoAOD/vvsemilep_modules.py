@@ -122,7 +122,9 @@ def smoothBFlav(jetpt,ptmin,ptmax,year, subera,scale_loose=1.0):
     return x*wploose[year-2016][subera]*scale_loose + (1-x)*wpmedium[year-2016][subera]
 
 
-jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] + ['jer%d'%j for j in range(6)]
+#jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] + ['jer%d'%j for j in range(6)]
+jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] 
+
 
 from CMGTools.VVsemilep.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning
 from CMGTools.VVsemilep.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
@@ -146,7 +148,6 @@ recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="R
                                                                         btagM_thr=99,
                                                                         isMC = True,
                                                                         variations= jevariations,
-                                                                        
 )
 
 recleaner_step2_mc = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
@@ -206,20 +207,20 @@ rms_val = lambda : npdf_rms()
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import createJMECorrector
 
 
-jetmetUncertainties2016APVAll = createJMECorrector(dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=True, applyHEMfix=True)
-jetmetUncertainties2016All = createJMECorrector(dataYear='UL2016', jesUncert="Merged", splitJER=True, applyHEMfix=True)
-jetmetUncertainties2017All = createJMECorrector(dataYear='UL2017', jesUncert="Merged", splitJER=True, applyHEMfix=True)
-jetmetUncertainties2018All = createJMECorrector(dataYear='UL2018', jesUncert="Merged", splitJER=True, applyHEMfix=True)
+jetmetUncertainties2016APVAll = createJMECorrector(dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
+jetmetUncertainties2016All = createJMECorrector(dataYear='UL2016', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
+jetmetUncertainties2017All = createJMECorrector(dataYear='UL2017', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
+jetmetUncertainties2018All = createJMECorrector(dataYear='UL2018', jesUncert="Merged", splitJER=False, applyHEMfix=True)
 
 jetmetUncertainties2016APVTotal = createJMECorrector(dataYear='UL2016_preVFP', jesUncert="Total", applyHEMfix=True)
 jetmetUncertainties2016Total = createJMECorrector(dataYear='UL2016', jesUncert="Total", applyHEMfix=True)
 jetmetUncertainties2017Total = createJMECorrector(dataYear='UL2017', jesUncert="Total", applyHEMfix=True)
 jetmetUncertainties2018Total = createJMECorrector(dataYear='UL2018', jesUncert="Total", applyHEMfix=True)
 
-fatjetmetUncertainties2016APVAll = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=True, applyHEMfix=True)
-fatjetmetUncertainties2016All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Merged", splitJER=True, applyHEMfix=True)
-fatjetmetUncertainties2017All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Merged", splitJER=True, applyHEMfix=True)
-fatjetmetUncertainties2018All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2018', jesUncert="Merged", splitJER=True, applyHEMfix=True)
+fatjetmetUncertainties2016APVAll = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
+fatjetmetUncertainties2016All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
+fatjetmetUncertainties2017All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
+fatjetmetUncertainties2018All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2018', jesUncert="Merged", splitJER=False, applyHEMfix=True)
 
 fatjetmetUncertainties2016APVTotal = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Total", applyHEMfix=True)
 fatjetmetUncertainties2016Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Total", applyHEMfix=True)
@@ -358,9 +359,10 @@ taggedfj_data           = lambda : saveVtaggedJet(isMC = False,massVar='sD')
 
 
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import vvsemilep_TreeForWJestimation
-wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1, 
-                                                 ['event.nLepFO_Recl  ==1                                         ',
+wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,1,
+                                                 ['event.nLepFO_Recl  == 1                                         ',
                                                  'event.PuppiMET_pt > 110                                 ',
+                                                  'event.nBJetMedium30_Recl == 0', 
                                                  '(event.Trigger_1e or  event.Trigger_1m)',
                                                  'event.LepGood_pt[event.iLepFO_Recl[0]] > 50                                          ',
                                                  'event.LepGood_isLepTight_Recl[event.iLepFO_Recl[0]] == 1                             ',

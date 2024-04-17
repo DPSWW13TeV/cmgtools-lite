@@ -4,12 +4,17 @@ ZV : WZTo2Q2L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharg
 WV : WZTo1L1Nu2Q : 10.71: 1 ; FillColor=30, Label="WV (SM)"
 WV : WWTo1L1Nu2Q : 5.090e+01 : 1 ; FillColor=30, Label="WV (SM)"
 
-SM_WZ1 : WZTo1L1Nu2Q : 11.46  : LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ plus"
-SM_WZ2 : WZTo1L1Nu2Q : 11.46  : LepGood1_charge < 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ plus"
+#SM_WZ1 : WZTo1L1Nu2Q : 11.46  : LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ plus"
+#SM_WZ2 : WZTo1L1Nu2Q : 11.46  : LepGood1_charge < 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ minus"
+
 ##https://github.com/raggleton/aTGCsAnalysis/blob/472a635fba97990c6f0a899557424d0589a81061/Common/test/addWeightSamples.cpp#L37
 
-SM_WW1    : WWTo1L1Nu2Q : xsec : LepGood1_charge > 0 ; FillColor=30, Label="WW SM plus" #,SkipMe=True
-SM_WW2    : WWTo1L1Nu2Q : xsec : LepGood1_charge < 0 ; FillColor=30, Label="WW SM minus" #,SkipMe=True
+#SM_WW   : WWTo1L1Nu2Q : xsec : LepGood1_charge > 0 ; FillColor=30, Label="WW SM plus" ,SkipMe=True
+#SM_WW   : WWTo1L1Nu2Q : xsec : LepGood1_charge < 0 ; FillColor=30, Label="WW SM minus",SkipMe=True
+
+SM_WW   : WWTo1L1Nu2Q : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=30, Label="WW SM" 
+SM_WZ : WZTo1L1Nu2Q : 11.46  : 1; FillColor=ROOT.kTeal-7, Label="SM WZ"
+
 
 Fiveflav_WZplus  : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="WZ SM5FP" #,SkipMe=True
 Fiveflav_WZminus : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge < 0 ; FillColor=ROOT.kTeal-7, Label="WZ SM 5fM"#,SkipMe=True
@@ -25,146 +30,177 @@ Fiveflav_WZminus : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge < 0 
 
 
 
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM ",LineStyle=ROOT.kDashed
 
 
 
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62]; LineColor=ROOT.kTeal-7,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDashed
 
 
-##amWW_sm1   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#plus}W^{\#minus} SM 150",LineStyle=ROOT.kDashed
-##amWW_sm2   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#plus}W^{\#minus} SM 600",LineStyle=ROOT.kDashed
-##amWW_sm3   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#plus}W^{\#minus} SM 800",LineStyle=ROOT.kDashed
-##amWW_sm4   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#minus}W^{\#plus} SM 150",LineStyle=ROOT.kDashed
-##amWW_sm5   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#minus}W^{\#plus} SM 600",LineStyle=ROOT.kDashed
-##amWW_sm6   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#minus}W^{\#plus} SM 800",LineStyle=ROOT.kDashed
-##amWZ_sm1 : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#plus}Z SM150",LineStyle=ROOT.kDashed
-##amWZ_sm2 : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#plus}Z SM600",LineStyle=ROOT.kDashed
-##amWZ_sm3 : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#plus}Z SM800",LineStyle=ROOT.kDashed
-##amWZ_sm4 : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#minus}Z SM150",LineStyle=ROOT.kDashed
-##amWZ_sm5 : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#minus}Z SM600",LineStyle=ROOT.kDashed
-##amWZ_sm6 : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#minus}Z SM800",LineStyle=ROOT.kDashed
+##amWW_sm1   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#plus}W^{\#minus} SM 150",LineStyle=ROOT.kDashed
+##amWW_sm2   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#plus}W^{\#minus} SM 600",LineStyle=ROOT.kDashed
+##amWW_sm3   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#plus}W^{\#minus} SM 800",LineStyle=ROOT.kDashed
+##amWW_sm4   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#minus}W^{\#plus} SM 150",LineStyle=ROOT.kDashed
+##amWW_sm5   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#minus}W^{\#plus} SM 600",LineStyle=ROOT.kDashed
+##amWW_sm6   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#minus}W^{\#plus} SM 800",LineStyle=ROOT.kDashed
+##amWZ_sm1 : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#plus}Z SM150",LineStyle=ROOT.kDashed
+##amWZ_sm2 : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#plus}Z SM600",LineStyle=ROOT.kDashed
+##amWZ_sm3 : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#plus}Z SM800",LineStyle=ROOT.kDashed
+##amWZ_sm4 : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#minus}Z SM150",LineStyle=ROOT.kDashed
+##amWZ_sm5 : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#minus}Z SM600",LineStyle=ROOT.kDashed
+##amWZ_sm6 : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*Selak8Jet1_pNetWtagSF*LHEReweightingWeight[62] : 1; LineColor=ROOT.kTeal-7, Label="aTGC\#rightarrowW^{\#minus}Z SM800",LineStyle=ROOT.kDashed
 
 
-WZ_quad_c3w : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_c3w : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_c3w : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_c3w : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_c3w : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_c3w : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}",LineStyle=ROOT.kDashed
 
-WZ_quad_cw : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_cw : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_cw : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_cw : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_cw : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_cw : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}",LineStyle=ROOT.kDashed
 
-WZ_quad_cb : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_cb : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_cb : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_cb : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_cb : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-WZ_quad_cb : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
-
-
-WZ_sm_lin_quad_cb : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1    :  xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cb : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1    :  xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cb : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2    :  xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cb : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1    :  xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cb : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1    :  xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cb : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2    :  xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
-
-WZ_sm_lin_quad_c3w : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_c3w : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_c3w : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_c3w : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_c3w : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_c3w : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
-
-WZ_sm_lin_quad_cw : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cw : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cw : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cw : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cw : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cw : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
+WZ_quad_cb+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_cb+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_cb+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_cb+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_cb+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
+WZ_quad_cb+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(Q.)=20 TeV^{\#minus2}",LineStyle=ROOT.kDashed
 
 
+WZ_sm_lin_quad_cb+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1    :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_cb+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1    :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_cb+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2    :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_cb+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1    :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_cb+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1    :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_cb+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2    :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{B}(I.)",LineStyle=ROOT.kDashed
+
+WZ_sm_lin_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
+
+WZ_sm_lin_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
 
 
-WW_sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)" 
-WW_sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
-WW_sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
-WW_sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
-WW_sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
-WW_sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
-WW_sm_lin_quad_cw   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
-WW_sm_lin_quad_cw   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
-WW_sm_lin_quad_cw   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
-WW_sm_lin_quad_cw   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
-WW_sm_lin_quad_cw   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
-WW_sm_lin_quad_cw   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
-WW_sm_lin_quad_cb   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
-WW_sm_lin_quad_cb   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
-WW_sm_lin_quad_cb   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
-WW_sm_lin_quad_cb   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
-WW_sm_lin_quad_cb   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
-WW_sm_lin_quad_cb   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
-   
-WW_plus_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}" 
-WW_plus_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}"
-WW_plus_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}"
-WW_plus_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}"
-WW_plus_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}"
-WW_plus_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}"
-WW_minus_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}" 
-WW_minus_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}"
-WW_minus_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}"
-WW_minus_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}"
-WW_minus_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}"
-WW_minus_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}"
+WZ_sm_lin_quad_2p25_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_2p25_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_2p25_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_2p25_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_2p25_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.)",LineStyle=ROOT.kDashed
+WZ_sm_lin_quad_2p25_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.)",LineStyle=ROOT.kDashed
 
-WW_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-WW_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-WW_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-WW_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-WW_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-WW_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-WW_quad_cw   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
-WW_quad_cw   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
-WW_quad_cw   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
-WW_quad_cw   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
-WW_quad_cw   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
-WW_quad_cw   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
-WW_quad_cb   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
-WW_quad_cb   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
-WW_quad_cb   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
-WW_quad_cb   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
-WW_quad_cb   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
-WW_quad_cb   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
+
+WZ_quad2p25_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]+LHEReweightingWeight[67]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(Q.)",LineStyle=ROOT.kDotted
+WZ_quad2p25_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]+LHEReweightingWeight[67]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(Q.)",LineStyle=ROOT.kDotted
+WZ_quad2p25_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]+LHEReweightingWeight[67]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(Q.)",LineStyle=ROOT.kDotted
+WZ_quad2p25_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]+LHEReweightingWeight[67]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(Q.)",LineStyle=ROOT.kDotted
+WZ_quad2p25_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]+LHEReweightingWeight[67]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(Q.)",LineStyle=ROOT.kDotted
+WZ_quad2p25_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]+LHEReweightingWeight[67]-2*LHEReweightingWeight[62]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(Q.)",LineStyle=ROOT.kDotted
+
+
+
+RWZ_sm_lin_quad_2p25_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]-LHEReweightingWeight[57]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.R)",LineStyle=ROOT.kDashed
+RWZ_sm_lin_quad_2p25_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]-LHEReweightingWeight[57]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.R)",LineStyle=ROOT.kDashed
+RWZ_sm_lin_quad_2p25_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]-LHEReweightingWeight[57]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.R)",LineStyle=ROOT.kDashed
+RWZ_sm_lin_quad_2p25_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]-LHEReweightingWeight[57]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.R)",LineStyle=ROOT.kDashed
+RWZ_sm_lin_quad_2p25_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]-LHEReweightingWeight[57]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.R)",LineStyle=ROOT.kDashed
+RWZ_sm_lin_quad_2p25_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]-LHEReweightingWeight[57]) ; LineColor=ROOT.kTeal-7, Label="WZ c_{W}=2p25(I.R)",LineStyle=ROOT.kDashed
 
 
 
 
+WW_sm_lin_quad_1p8_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[37]-LHEReweightingWeight[87])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}=1.8(I.)" 
+WW_sm_lin_quad_1p8_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[37]-LHEReweightingWeight[87])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}=1.8(I.)"
+WW_sm_lin_quad_1p8_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[37]-LHEReweightingWeight[87])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}=1.8(I.)"
+WW_sm_lin_quad_1p8_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[37]-LHEReweightingWeight[87])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}=1.8(I.)"
+WW_sm_lin_quad_1p8_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[37]-LHEReweightingWeight[87])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}=1.8(I.)"
+WW_sm_lin_quad_1p8_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[37]-LHEReweightingWeight[87])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}=1.8(I.)"
+
+WW_quad_1p8_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[87]+LHEReweightingWeight[37]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=1.8 TeV^{\#minus2}"
+WW_quad_1p8_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[87]+LHEReweightingWeight[37]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=1.8 TeV^{\#minus2}"
+WW_quad_1p8_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[87]+LHEReweightingWeight[37]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=1.8 TeV^{\#minus2}"
+WW_quad_1p8_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[87]+LHEReweightingWeight[37]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=1.8 TeV^{\#minus2}"
+WW_quad_1p8_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[87]+LHEReweightingWeight[37]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=1.8 TeV^{\#minus2}"
+WW_quad_1p8_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[87]+LHEReweightingWeight[37]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=1.8 TeV^{\#minus2}"
 
 
 
-sm_lin_quad_mixed_c3w_cw_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
-sm_lin_quad_mixed_c3w_cw_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
-sm_lin_quad_mixed_c3w_cw_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
-sm_lin_quad_mixed_c3w_cw_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
-sm_lin_quad_mixed_c3w_cw_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
-sm_lin_quad_mixed_c3w_cw_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
+WW_sm_lin_quad_2p25_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67])  ; FillColor=ROOT.kOrange+7,   Label="WW c_{W}=2.25(I.)" 
+WW_sm_lin_quad_2p25_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67])  ; FillColor=ROOT.kOrange+7,   Label="WW c_{W}=2.25(I.)"
+WW_sm_lin_quad_2p25_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67])  ; FillColor=ROOT.kOrange+7,   Label="WW c_{W}=2.25(I.)"
+WW_sm_lin_quad_2p25_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67])  ; FillColor=ROOT.kOrange+7,   Label="WW c_{W}=2.25(I.)"
+WW_sm_lin_quad_2p25_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67])  ; FillColor=ROOT.kOrange+7,   Label="WW c_{W}=2.25(I.)"
+WW_sm_lin_quad_2p25_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[57]-LHEReweightingWeight[67])  ; FillColor=ROOT.kOrange+7,   Label="WW c_{W}=2.25(I.)"
+
+WW_quad_2p25_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]+LHEReweightingWeight[57]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kOrange+7,   LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)=2.25 TeV^{\#minus2}"
+WW_quad_2p25_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]+LHEReweightingWeight[57]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kOrange+7,   LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)=2.25 TeV^{\#minus2}"
+WW_quad_2p25_cw : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]+LHEReweightingWeight[57]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kOrange+7,   LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)=2.25 TeV^{\#minus2}"
+WW_quad_2p25_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]+LHEReweightingWeight[57]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kOrange+7,   LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)=2.25 TeV^{\#minus2}"
+WW_quad_2p25_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]+LHEReweightingWeight[57]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kOrange+7,   LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)=2.25 TeV^{\#minus2}"
+WW_quad_2p25_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[67]+LHEReweightingWeight[57]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kOrange+7,   LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)=2.25 TeV^{\#minus2}"
+
+
+
+WW_sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)" 
+WW_sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
+WW_sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
+WW_sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
+WW_sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
+WW_sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
+WW_sm_lin_quad_cw+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
+WW_sm_lin_quad_cw+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
+WW_sm_lin_quad_cw+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
+WW_sm_lin_quad_cw+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
+WW_sm_lin_quad_cw+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
+WW_sm_lin_quad_cw+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52])   ; FillColor=ROOT.kGreen+4, Label="WW c_{W}(I.)"
+WW_sm_lin_quad_cb+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
+WW_sm_lin_quad_cb+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
+WW_sm_lin_quad_cb+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
+WW_sm_lin_quad_cb+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
+WW_sm_lin_quad_cb+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
+WW_sm_lin_quad_cb+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]-LHEReweightingWeight[60])   ; FillColor=ROOT.kBlue+2,  Label="WW c_{B}(I.)"
+WW_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
+WW_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
+WW_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
+WW_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
+WW_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
+WW_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62])  ; FillColor=ROOT.kRed+1,   LineStyle=ROOT.kDashed, Label="WW c_{3W}(Q.)=3.6 TeV^{\#minus2}"
+
+WW_quad_cw+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
+WW_quad_cw+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
+WW_quad_cw+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
+WW_quad_cw+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
+WW_quad_cw+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
+WW_quad_cw+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kGreen+4, LineStyle=ROOT.kDashed, Label="WW c_{W}(Q.)"
+WW_quad_cb+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
+WW_quad_cb+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
+WW_quad_cb+   : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
+WW_quad_cb+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
+WW_quad_cb+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
+WW_quad_cb+   : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*(LHEReweightingWeight[64]+LHEReweightingWeight[60]-2*LHEReweightingWeight[62])   ; FillColor=ROOT.kBlue+2,  LineStyle=ROOT.kDashed, Label="WW c_{B}(Q.)"
 
 
 
@@ -175,9 +211,30 @@ sm_lin_quad_mixed_c3w_cw_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2
 
 
 
-aTGC_WW_SM_incl : WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f+WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_4f: 0.67*xsec : LHEReweightingWeight[62] ; FillColor=ROOT.kOrange, Label="aTGC(i)\#rightarrowSM"
+
+
+
+
+
+sm_lin_quad_mixed_c3w_cw_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*Selak8Jet1_pNetWtagSF : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
+sm_lin_quad_mixed_c3w_cw_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*Selak8Jet1_pNetWtagSF : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
+sm_lin_quad_mixed_c3w_cw_cb : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*Selak8Jet1_pNetWtagSF : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
+sm_lin_quad_mixed_c3w_cw_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*Selak8Jet1_pNetWtagSF : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
+sm_lin_quad_mixed_c3w_cw_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*Selak8Jet1_pNetWtagSF : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
+sm_lin_quad_mixed_c3w_cw_cb : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*Selak8Jet1_pNetWtagSF : 1; LineColor=ROOT.kYellow+2, Label="sm_lin_quad_c3w_cw_cb",LineStyle=ROOT.kDashed,SkipMe=True
+
+
+
+
+
+
+
+
+
+
+aTGC_WW_SM_incl : WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f+WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_4f: 0.67*xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62] ; FillColor=ROOT.kOrange, Label="aTGC(i)\#rightarrowSM"
  ##,genSumWeightName="LHEReweightingSumw[62]*genEventSumw" #,LineStyle=3,SkipMe=True
-aTGC_WW_SM_incl : WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f: 0.67*xsec : LHEReweightingWeight[62] ; FillColor=ROOT.kOrange, Label="aTGC(i)\#rightarrowSM" 
+aTGC_WW_SM_incl : WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f: 0.67*xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[62] ; FillColor=ROOT.kOrange, Label="aTGC(i)\#rightarrowSM" 
 ##,genSumWeightName="LHEReweightingSumw[62]*genEventSumw"#,LineStyle=3,SkipMe=True
 
 
@@ -201,17 +258,17 @@ aTGC_WW_SM_incl : WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f: 0.67*xsec : LHEReweighti
 
 
 
-WJetsNLO : WJetsToLNu_NLO  : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True
-WJetsLO  : WJetsToLNu_LO   : xsec : 1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True
+WJetsNLO : WJetsToLNu_NLO  : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True
+WJetsLO  : WJetsToLNu_LO   : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kAzure+1, Label="W+jets",SkipMe=True
 
 testHT : WJetsToLNu_HT70to100    : 1271*1.21 : 1 ; FillColor=ROOT.kAzure+1, Label="WJ_htb"
 
 #higgs
 
-higgs : WplusH  : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
-higgs : WminusH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
-higgs : ZH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
-higgs : GGH : xsec : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
+higgs : WplusH  : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
+higgs : WminusH : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
+higgs : ZH : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
+higgs : GGH : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
 
 ##taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py
 WJets : WJetsToLNu_HT70to100     : 1271*1.21    : 1 ; FillColor=ROOT.kAzure+1,   Label="W+jets"
@@ -224,7 +281,7 @@ WJets : WJetsToLNu_HT1200to2500  : 1.156*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   
 WJets : WJetsToLNu_HT2500toInf   : 0.02623*1.21 : 1 ; FillColor=ROOT.kAzure+1,   Label="W+jets"
 
 
-#xsec frm xsec db: https://cms-gen-dev.cern.ch/xsdb/?columns=63314112&currentPage=1&pageSize=10&searchQuery=process_name%3DWJetsToLNu_Pt%2A%20
+#xsec*Selak8Jet1_pNetWtagSF frm xsec*Selak8Jet1_pNetWtagSF db: https://cms-gen-dev.cern.ch/xsdb/?columns=63314112&currentPage=1&pageSize=10&searchQuery=process_name%3DWJetsToLNu_Pt%2A%20
 
 #WJetsToLNu: WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1+WJetsToLNu_Pt100To250_part3+WJetsToLNu_Pt100To250_part4+WJetsToLNu_Pt100To250_part5+WJetsToLNu_Pt100To250_part6+WJetsToLNu_Pt100To250_part7+WJetsToLNu_Pt100To250_part8+WJetsToLNu_Pt100To250_part9+WJetsToLNu_Pt100To250_part10+WJetsToLNu_Pt100To250_part11+WJetsToLNu_Pt100To250_part12 : 779.1 : : 1 ; FillColor=ROOT.kPink,   Label="Wj_ptbinned"
 
@@ -243,103 +300,121 @@ WJets : WJetsToLNu_HT2500toInf   : 0.02623*1.21 : 1 ; FillColor=ROOT.kAzure+1,  
 
 
 
-pt1sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: 0.1*xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
-pt1sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: 0.1*xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
-pt1sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: 0.1*xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
-pt1sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: 0.1*xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
-pt1sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: 0.1*xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
-pt1sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: 0.1*xsec : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
+pt1sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: 0.1*xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
+pt1sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: 0.1*xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
+pt1sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: 0.1*xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
+pt1sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: 0.1*xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
+pt1sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: 0.1*xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
+pt1sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: 0.1*xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kPink-9,   Label="c3w= 0.36 TeV^{\#minus2}", LineStyle=ROOT.kDotted
 
 
 
 
 
-pt5sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed 
-pt5sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed
-pt5sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed
-pt5sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed
-pt5sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed
-pt5sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed
+pt5sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed 
+pt5sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed
+pt5sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed
+pt5sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed
+pt5sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed
+pt5sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.5*LHEReweightingWeight[112]  ; FillColor=ROOT.kBlue+1,   Label="c3w=0.5*3.6 TeV^{\#minus2}",  LineStyle=ROOT.kDashed
 
 
-Mpt5sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}" 
-Mpt5sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}"
-Mpt5sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}"
-Mpt5sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}"
-Mpt5sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}"
-Mpt5sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}"
+Mpt5sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}" 
+Mpt5sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}"
+Mpt5sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}"
+Mpt5sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}"
+Mpt5sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}"
+Mpt5sm_lin_quad_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[87]  ; FillColor=ROOT.kBlue+1,   Label="c3w=1.8 TeV^{\#minus2}"
 
 
-pt05sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed 
-pt05sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed
-pt05sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed
-pt05sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed
-pt05sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed
-pt05sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed
-
-
-
-
-
-
+pt05sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed 
+pt05sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed
+pt05sm_lin_quad_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed
+pt05sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed
+pt05sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed
+pt05sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : 0.05*LHEReweightingWeight[112]  ; FillColor=ROOT.kRed+1,   Label="sm_lin_quad_c3wpt05", LineStyle=ROOT.kDashed
 
 
 
 
 
 
-QCD : QCD_Pt15to20_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt20to30_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt30to50_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt50to80_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt80to120_EMEnriched  :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt120to170_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt170to300_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt300toInf_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt20to30_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt80to120_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt15to20_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt170to250_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-#QCD : QCD_Pt20to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt250toInf_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt30to80_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
 
 
 
 
 
-#TTSEMI : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; F#illColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
 
-tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : 1 ; FillColor=ROOT.kViolet+7, Label="t\#bart",FriendsSimple="{P}/2_toppT_rw/"
+QCD : QCD_Pt15to20_EMEnriched   :  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt20to30_EMEnriched   :  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt30to50_EMEnriched   :  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt50to80_EMEnriched   :  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt80to120_EMEnriched  :  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt120to170_EMEnriched :  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt170to300_EMEnriched :  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt300toInf_EMEnriched :  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt1000toInf_Mu5   	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt120to170_Mu5  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt15to20_Mu5  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt170to300_Mu5  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt20to30_Mu5  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt300to470_Mu5  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt30to50_Mu5  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt470to600_Mu5  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt50to80_Mu5  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt600to800_Mu5  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt800to1000_Mu5  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt80to120_Mu5  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt15to20_bcToE  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt170to250_bcToE  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+#QCD : QCD_Pt20to30_bcToE  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt250toInf_bcToE  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt30to80_bcToE  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt80to170_bcToE  	:  xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
 
 
-##tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<700) ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
+
+
+
+#TTSEMI : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec*Selak8Jet1_pNetWtagSF  : Top_pTrw ; F#illColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
+
+tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec*Selak8Jet1_pNetWtagSF  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="t\#bart"
+
+##tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec*Selak8Jet1_pNetWtagSF  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="t\#bart",FriendsSimple="{P}/2_toppT_rw/"
+
+
+##tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec*Selak8Jet1_pNetWtagSF  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<700) ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
 #Top_pTrw
 
 
-tt : TT_mtt1ktoinf: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
-tt : TT_mttp7kto1k: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
+tt : TT_mtt1ktoinf: xsec*Selak8Jet1_pNetWtagSF : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
+tt : TT_mttp7kto1k: xsec*Selak8Jet1_pNetWtagSF : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
 
 
-singletop   : T_sch: xsec      : xsec  : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : Tbar_tch   : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : T_tch            : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : T_tWch_noFullyHad    : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : Tbar_tWch_noFullyHad : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top" #, years="2018"
+singletop   : T_sch: xsec*Selak8Jet1_pNetWtagSF          : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
+singletop   : Tbar_tch             : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
+singletop   : T_tch                : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
+singletop   : T_tWch_noFullyHad    : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
+singletop   : Tbar_tWch_noFullyHad : xsec*Selak8Jet1_pNetWtagSF : 1 ; FillColor=ROOT.kGray+1, Label="Single top" #, years="2018"
 
 
 
 
 
 ##,genSumWeightName="LHEReweightingSumw[62]*genEventSumw"
+
+
+   
+WW_plus_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}" 
+WW_plus_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}"
+WW_plus_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}"
+WW_plus_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}"
+WW_plus_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}"
+WW_plus_c3w+ : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[112]  ; FillColor=ROOT.kYellow,   Label="c_{3W}=3.6 TeV^{\#minus2}"
+WW_minus_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}" 
+WW_minus_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}"
+WW_minus_c3w : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}"
+WW_minus_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}"
+WW_minus_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}"
+WW_minus_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*Selak8Jet1_pNetWtagSF : LHEReweightingWeight[12]  ; FillColor=ROOT.kGreen+2,   Label="c_{3W}=\#minus3.6 TeV^{\#minus2}"
+

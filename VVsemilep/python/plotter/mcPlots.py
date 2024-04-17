@@ -569,7 +569,7 @@ def doStatTests(total,data,test,legendCorner):
 
 
 legend_ = None;
-def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-2,cutoffSignals=False,mcStyle="F",legWidth=0.18,legBorder=True,signalPlotScale=None,totalError=None,header="",doWide=False,columns=1):
+def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=5,cutoffSignals=False,mcStyle="F",legWidth=0.18,legBorder=True,signalPlotScale=None,totalError=None,header="",doWide=False,columns=1):
         if (corner == None): return
         total = sum([x.Integral() for x in pmap.itervalues()])
         sigEntries = []; bgEntries = []
@@ -860,7 +860,8 @@ class PlotMaker:
                     for i in range(1,total.GetNbinsX()+1): 
                         total.GetXaxis().SetBinLabel(i,blist[i-1]) 
                         total.GetYaxis().SetLabelSize(0.04)
-                        total.GetXaxis().SetMaxDigits(2);##am
+                        if pspec.hasOption('MaxDigi'): 
+                            total.GetXaxis().SetMaxDigits(2);##am
                 if not self._options.emptyStack and stack.GetNhists() == 0:
                     print ("ERROR: for %s, all histograms are empty\n " % pspec.name)
                     return
@@ -889,7 +890,8 @@ class PlotMaker:
                 total.GetYaxis().SetTitle(pspec.getOption('YTitle',ytitle))
                 total.GetXaxis().SetTitle(pspec.getOption('XTitle',outputName))
                 total.GetXaxis().SetNdivisions(pspec.getOption('XNDiv',510))
-                total.GetXaxis().SetMaxDigits(2);##am
+                if pspec.hasOption('MaxDigi'): 
+                    total.GetXaxis().SetMaxDigits(2);##am
                 if outputDir: outputDir.WriteTObject(stack)
                 # 
                 if not makeCanvas and not self._options.printPlots: return

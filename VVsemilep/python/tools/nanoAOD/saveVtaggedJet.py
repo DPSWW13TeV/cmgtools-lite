@@ -11,7 +11,7 @@ from copy import deepcopy
 class saveVtaggedJet(Module):
     def __init__(self,isMC,massVar='sD',jecs=[]):
         self.isMC=isMC
-        self.jecs=jecs 
+        self.jecs=[] #jecs 
         self.shift=["Up","Down"] 
         self.vars=["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","msoftdrop","deepTag_WvsQCD","tau1","tau2","hadronFlavour","muonIdx3SJ","electronIdx3SJ","nBHadrons","nCHadrons"] if self.isMC else ["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2","msoftdrop"]
         if self.isMC: self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
@@ -47,11 +47,11 @@ class saveVtaggedJet(Module):
 
 
     def analyze(self, event):
-        #all_fjets = [l for l in Collection(event,"FatJet")]
-        #nfj = getattr(event,"nFatJetSel_Recl")
-        #chosen = getattr(event,"iFatJetSel_Recl")
-        #fjets = [all_fjets[chosen[i]] for i in xrange(nfj)]
-        fjets=[f for f in Collection(event,"FatJetSel_Recl")] #FatJetSel_Recl_pt
+        all_fjets = [l for l in Collection(event,"FatJet")]
+        nfj = getattr(event,"nFatJetSel_Recl")
+        chosen = getattr(event,"iFatJetSel_Recl")
+        fjets = [all_fjets[chosen[i]] for i in xrange(nfj)]
+        #fjets=[f for f in Collection(event,"FatJetSel_Recl")] #FatJetSel_Recl_pt
         jindex=[]
         jindex_WPL=[];jindex_zWPL=[];
         jindex_WPM=[];jindex_zWPM=[];
@@ -86,7 +86,7 @@ class saveVtaggedJet(Module):
             pNetScore_ztag=(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_Xbb)/(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_QCD+iJet.particleNetMD_Xbb) ##FIXME add Xbb for Z
             #pNetScore1=(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq)/(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_QCD) 
             #print pNetScore,pNetScore1,iJet.particleNetMD_Xbb
-            if (pNetScore_wtag > self.WPL):
+            if (pNetScore_wtag > self.WPT):
                 jindex_WPT.append(index)
             if (pNetScore_wtag > self.WPM):
                 jindex_WPM.append(index)
@@ -96,7 +96,7 @@ class saveVtaggedJet(Module):
                 jindex_zWPT.append(index)
             if (pNetScore_ztag > self.WPM):
                 jindex_zWPM.append(index)
-            if (pNetScore_ztag > self.WPL):
+            if (pNetScore_ztag > self.WPT):
                 jindex_zWPL.append(index)
 
 
