@@ -4,8 +4,8 @@ from glob import glob
 
 #fN=sys.argv[1]
 year=sys.argv[1]
-#frnds_dir=sys.argv[2]
-frnds_dir="test"
+frnds_dir=sys.argv[2]
+#frnds_dir="3_ak8Vtagged_sdm45"
 eospath="/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/"
 
 basepath=os.path.join(eospath,year)

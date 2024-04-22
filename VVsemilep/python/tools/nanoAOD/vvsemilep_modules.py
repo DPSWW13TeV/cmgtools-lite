@@ -355,8 +355,7 @@ scaleFactorSequence_2018    = [btagSF2018_dj,bTagSFs]
 
 from CMGTools.VVsemilep.tools.nanoAOD.saveVtaggedJet import saveVtaggedJet
 taggedfj           = lambda : saveVtaggedJet(isMC = True, massVar='sD',jecs = jevariations)
-taggedfj_data           = lambda : saveVtaggedJet(isMC = False,massVar='sD')
-
+taggedfj_data      = lambda : saveVtaggedJet(isMC = False,massVar='sD')
 
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import vvsemilep_TreeForWJestimation
 wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,1,
@@ -377,6 +376,28 @@ wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,1,
                                                  '(event.year == 2016 or event.Flag_ecalBadCalibFilter)     ', 
                                                  '(event.run ==1 or event.Flag_eeBadScFilter)         '
 ])
+
+
+from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import input_WJestimation
+input_wjest = lambda  : input_WJestimation(1,1,
+                                                 ['event.nLepFO_Recl  == 1                                         ',
+                                                 'event.PuppiMET_pt > 110                                 ',
+                                                  'event.nBJetMedium30_Recl == 0', 
+                                                 '(event.Trigger_1e or  event.Trigger_1m)',
+                                                 'event.LepGood_pt[event.iLepFO_Recl[0]] > 50                                          ',
+                                                 'event.LepGood_isLepTight_Recl[event.iLepFO_Recl[0]] == 1                             ',
+                                                 'event.nFatJetSel_Recl > 0                                ',
+                                                 'event.nLepTight_Recl == 1                                ',
+                                                 'event.Flag_goodVertices ==1                              ',
+                                                 'event.Flag_globalSuperTightHalo2016Filter ==1            ',
+                                                 'event.Flag_HBHENoiseFilter ==1                           ',
+                                                 'event.Flag_HBHENoiseIsoFilter ==1                        ',
+                                                 'event.Flag_EcalDeadCellTriggerPrimitiveFilter ==1        ',
+                                                 'event.Flag_BadPFMuonFilter ==1                           ',
+                                                 '(event.year == 2016 or event.Flag_ecalBadCalibFilter)     ', 
+                                                 '(event.run ==1 or event.Flag_eeBadScFilter)         '
+])
+
 
 from CMGTools.VVsemilep.tools.nanoAOD.genFriendProducer import genFriendProducer
 whad_info = lambda : genFriendProducer()

@@ -1,3 +1,4 @@
+###FIXME : add leptight variables
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 import ROOT as r 
@@ -33,7 +34,6 @@ class saveVtaggedJet(Module):
         self.out.branch('nak8Ztagged_WPT'  ,'I')
         for var in self.vars:
             self.out.branch('ak8%sMgt45_%s'%(self.massVar,var), "F", lenVar="nak8%sMgt45"%self.massVar)
-
             for WP in ["L","M","T"]:
                 self.out.branch('ak8Wtagged_WP%s_%s'%(WP,var), "F", lenVar="nak8Wtagged_WP"+WP)
                 self.out.branch('ak8Ztagged_WP%s_%s'%(WP,var), "F", lenVar="nak8Ztagged_WP"+WP)

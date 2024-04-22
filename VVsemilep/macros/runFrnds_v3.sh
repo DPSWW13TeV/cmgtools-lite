@@ -58,12 +58,12 @@ jme)
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root --de .*Run.*  "
+	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root " #--de .*Run.*  "
 	;;
 
 fjtagged)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8Vtagged_sdm45  ${CMGT} taggedfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root -d TTSemi_pow_part7 " #--de .*Run.* "
+	basecmd="${BCORE}3_ak8Vtagged_sdm45  ${CMGT} taggedfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root " #-d TTSemi_pow_part7 " #--de .*Run.* "
 	;;
 
 fjtaggeddata)
@@ -71,10 +71,12 @@ fjtaggeddata)
 	;;
 
 wjet)		
-	basecmd="${BCORE}/0_wjest  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Vtagged_sdm45/{cname}_Friend.root "
+	basecmd="${BCORE}/0_wjest_v1  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Vtagged_sdm45/{cname}_Friend.root "
 	;;
 
-
+skim_wjet)		
+	basecmd="${BCORE}/wjest_skim  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Vtagged_sdm45/{cname}_Friend.root "
+	;;
 
 top)
 	echo "top pT reweighting "

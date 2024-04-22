@@ -3,7 +3,7 @@
 #########################vvsemilep vars 
 
 ak8_mass           : Selak8Jet1_msoftdrop : 21, 45,150 ; XTitle="sdmass"
-mWV_reco           : mWV : 36,950,4550  ; XTitle="mWV"
+mWV_reco           : mWV : 36,950,4550  ; XTitle="mWV", Logy, MoreY=10
 test       : mWV_dumy : 36,950,4550  ; XTitle="mWV"
 SeldLep1_pt                : SeldLep1_pt         : 50,0,1000; XTitle="SeldLep1_pt"
 SeldLep1_eta               : SeldLep1_eta        : 10,-2.5,2.5; XTitle="SeldLep1_eta"

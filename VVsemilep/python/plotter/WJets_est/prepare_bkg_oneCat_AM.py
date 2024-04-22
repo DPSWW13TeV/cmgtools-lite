@@ -14,7 +14,7 @@ date = datetime.date.today().isoformat()
 
 verbose_num=True
 verbose=False
-doalter=True
+doalter=True 
 usepNM=False
 useWts=True
 from ROOT import TGaxis, TPaveText, TLatex, TString, TFile,TLine, TLegend, TCanvas,  TMath, TText, TPad, RooFit, RooArgSet, RooArgList,  RooAddition, RooProduct, RooConstraintSum, RooCustomizer, RooMinuit,  RooAbsData, RooAbsPdf, RooAbsReal, RooAddPdf, RooWorkspace, RooExtendPdf,RooGaussian, RooDataSet, RooExponential, RooRealVar,RooFormulaVar, RooDataHist, RooHist,RooCategory, RooSimultaneous, RooGenericPdf, RooProdPdf, kTRUE, kFALSE, kGray, kRed, kDashed, kGreen,kAzure, kOrange, kBlack,kBlue,kYellow,kCyan, kMagenta, kWhite,kDot,kDashDotted,kDotted
@@ -37,6 +37,7 @@ from ROOT import draw_error_band, draw_error_band_extendPdf, draw_error_band_Dec
 
 #trees_b="0_wjest_newCuts_v1"
 #trees_r="1_wjest_newCuts_v1"
+
 trees_b="0_test"
 trees_r="1_test"
 
@@ -107,7 +108,7 @@ parser = OptionParser()
 
 parser.add_option('-c', '--channel',action="store",type="string",dest="channel",default="el")
 parser.add_option('-y', '--year',action="store",type="string",dest="year",default="2018")
-parser.add_option('-p', '--pf',action="store",type="string",dest="pf",default="")
+parser.add_option( '--pf',action="store",type="string",dest="pf",default="")
 parser.add_option('-b', action='store_true', dest='noX', default=True, help='no X11 windows')
 parser.add_option('--inPath', action="store",type="string",dest="inPath",default="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/")
 parser.add_option('--hi', action='store', dest='mlvj_hi', type='float', default=4550, help='dont change atm!')
@@ -245,13 +246,14 @@ class doFit_wj_and_wlvj:
         eos='/eos/user/a/anmehta/www/VVsemilep/WJest/%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date)
         if not os.path.isdir(eos): os.system("mkdir %s"%eos)
         if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+eos)
-        self.plotsDir = eos+'/plots_%s_%s_%s_%s_%s%s' %(self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi),"weighted" if useWts else "unweighted",self.pf)
+        extra_str="%s%s"%("weighted" if useWts else "unweighted",self.pf)
+        self.plotsDir = eos+'/plots_%s_%s_%s_%s_%s' %(self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi),extra_str)
         if not os.path.isdir(self.plotsDir): os.system("mkdir %s"%self.plotsDir)
         os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
         os.system("cp prepare_bkg_oneCat_AM.py "+self.plotsDir)
         if not os.path.isdir(os.path.join(self.plotsDir,"other")): os.system("mkdir %s"%(os.path.join(self.plotsDir,"other")))
         os.system("cp ~/public/index.php %s"%self.plotsDir+"/other")
-        self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))##date
+        self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',extra_str,self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))##date
 
         if not os.path.isdir(self.rlt_DIR_name):
                 os.system("mkdir -p %s " %self.rlt_DIR_name);
@@ -1122,17 +1124,17 @@ objName ==objName_before ):
             #scalesigma_tmp = 4.12531; scalesigma_tmp_err = 0.411357;
             #frac_tmp       = 0.834936; frac_tmp_err       = 0.0135629;
 
-            rrv_mean1_gaus = RooRealVar("rrv_mean1_gaus"+label+"_"+self.channel,"rrv_mean1_gaus"+label+"_"+self.channel,mean1_tmp, mean1_tmp-3, mean1_tmp+3);
-            rrv_sigma1_gaus = RooRealVar("rrv_sigma1_gaus"+label+"_"+self.channel,"rrv_sigma1_gaus"+label+"_"+self.channel,sigma1_tmp, sigma1_tmp-3,sigma1_tmp+3 );
+            rrv_mean1_gaus = RooRealVar("rrv_mean1_gaus"+label+"_"+self.channel,"rrv_mean1_gaus"+label+"_"+self.channel,mean1_tmp, mean1_tmp-4, mean1_tmp+4);
+            rrv_sigma1_gaus = RooRealVar("rrv_sigma1_gaus"+label+"_"+self.channel,"rrv_sigma1_gaus"+label+"_"+self.channel,sigma1_tmp, sigma1_tmp-4,sigma1_tmp+4 );
             gaus1 = RooGaussian("gaus1"+label+"_"+self.channel,"gaus1"+label+"_"+self.channel, rrv_x,rrv_mean1_gaus,rrv_sigma1_gaus);
 
-            rrv_deltamean_gaus  = RooRealVar("rrv_deltamean_gaus"+label+"_"+self.channel,"rrv_deltamean_gaus"+label+"_"+self.channel,0.,-8,10);
+            rrv_deltamean_gaus  = RooRealVar("rrv_deltamean_gaus"+label+"_"+self.channel,"rrv_deltamean_gaus"+label+"_"+self.channel,0.,-8,15);
             rrv_mean2_gaus      = RooFormulaVar("rrv_mean2_gaus"+label+"_"+self.channel,"@0+@1",RooArgList(rrv_mean1_gaus, rrv_deltamean_gaus));
             rrv_scalesigma_gaus = RooRealVar("rrv_scalesigma_gaus"+label+"_"+self.channel,"rrv_scalesigma_gaus"+label+"_"+self.channel,scalesigma_tmp, scalesigma_tmp-scalesigma_tmp_err*3, scalesigma_tmp+scalesigma_tmp_err*3);
             rrv_sigma2_gaus     = RooFormulaVar("rrv_sigma2_gaus"+label+"_"+self.channel,"@0*@1", RooArgList(rrv_sigma1_gaus,rrv_scalesigma_gaus));
             gaus2 = RooGaussian("gaus2"+label+"_"+self.channel,"gaus2"+label+"_"+self.channel, rrv_x,rrv_mean2_gaus,rrv_sigma2_gaus);
 
-            rrv_frac1         = RooRealVar("rrv_frac1"+label+"_"+self.channel,"rrv_frac1"+label+"_"+self.channel,frac_tmp, frac_tmp-frac_tmp_err*5, frac_tmp+frac_tmp_err*5);
+            rrv_frac1         = RooRealVar("rrv_frac1"+label+"_"+self.channel,"rrv_frac1"+label+"_"+self.channel,frac_tmp, frac_tmp-frac_tmp_err*7, frac_tmp+frac_tmp_err*7);
             gausguas_1         = RooAddPdf("gausguas_1"+label+"_"+self.channel+mass_spectrum,"gausguas_1"+label+"_"+self.channel+mass_spectrum,RooArgList(gaus1,gaus2),RooArgList(rrv_frac1),1)
             model_pdf         = gausguas_1.clone("model_pdf"+label+"_"+self.channel+mass_spectrum)
         #2Gaus for WZ

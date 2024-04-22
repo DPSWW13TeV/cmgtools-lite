@@ -1,7 +1,7 @@
 import os,string,sys
 from plots_VVsemilep import *
 
-allvars= wspc #theWVultimateset #HEM + #bTag_eff #mWV #topCR #theWVultimateset #+moreak8jetvars MConly+#newVars+lepvars+WVvars+eventvars 
+allvars= theWVultimateset # wspc # HEM + #bTag_eff #mWV #topCR #theWVultimateset #+moreak8jetvars MConly+#newVars+lepvars+WVvars+eventvars 
 doWhat=sys.argv[1] #cards or plots
 fName='submitFile_%s.condor'%doWhat
 tmp_condor = open('jobs/%s'%fName, 'w')
