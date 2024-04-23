@@ -38,8 +38,8 @@ from ROOT import draw_error_band, draw_error_band_extendPdf, draw_error_band_Dec
 #trees_b="0_wjest_newCuts_v1"
 #trees_r="1_wjest_newCuts_v1"
 
-trees_b="0_test"
-trees_r="1_test"
+trees_b="1_wjest_v1"
+trees_r="2_wjest_v1"
 
 
 saveFiles=[]
@@ -804,7 +804,7 @@ objName ==objName_before ):
         param=par.Next()
         while (param): ##am
             paraName=TString(param.GetName())
-            if ( paraName.Contains("rrv_p0_User1_WJets") or paraName.Contains("rrv_c_Exp_WJets0") or paraName.Contains("rrv_shift_ChiSq_WJets") or paraName.Contains("rrv_c_ChiSq_WJets") or paraName.Contains("rrv_b0_Poly3_WJets") or paraName.Contains("rrv_b1_Poly3_WJets") or paraName.Contains("rrv_b2_Poly3_WJets") or paraName.Contains("rrv_b3_Poly3_WJets")):
+            if ( paraName.Contains("rrv_p0_User1_WJets") or paraName.Contains("rrv_c_ExpN_WJets0") or paraName.Contains("rrv_shift_ChiSq_WJets") or paraName.Contains("rrv_c_ChiSq_WJets") or paraName.Contains("rrv_b0_Poly3_WJets") or paraName.Contains("rrv_b1_Poly3_WJets") or paraName.Contains("rrv_b2_Poly3_WJets") or paraName.Contains("rrv_b3_Poly3_WJets") or paraName.Contains("rrv_c_Exp_WJets0")):
                      param.setConstant(kFALSE);
                      if verbose :param.Print();
             else:
@@ -1111,30 +1111,30 @@ objName ==objName_before ):
         if in_model_name == "2GausWW":
             
             print "########### 2Gaus for mj fit  ############"
-            mean1_tmp      = 8.385e+01; mean1_tmp_err      = 1.63e-01; #8.085e+01 from 8.385e+01
-            mean1_tmp      = 8.185e+01; mean1_tmp_err      = 1.63e-01; #@@@ JEN            
-            deltamean_tmp  = 6.9129e+00; deltamean_tmp_err  = 1.24e+00;
-            sigma1_tmp     = 7.5145e+00; sigma1_tmp_err     = 1.99e-01;
-            scalesigma_tmp = 3.6819e+00; scalesigma_tmp_err = 2.11e-01;
-            frac_tmp       = 6.7125e-01; frac_tmp_err       = 2.09e-02;
+            #mean1_tmp      = 8.385e+01; mean1_tmp_err      = 1.63e-01; #8.085e+01 from 8.385e+01
+            #mean1_tmp      = 8.185e+01; mean1_tmp_err      = 1.63e-01; #@@@ JEN            
+            #deltamean_tmp  = 6.9129e+00; deltamean_tmp_err  = 1.24e+00;
+            #sigma1_tmp     = 7.5145e+00; sigma1_tmp_err     = 1.99e-01;
+            #scalesigma_tmp = 3.6819e+00; scalesigma_tmp_err = 2.11e-01;
+            #frac_tmp       = 6.7125e-01; frac_tmp_err       = 2.09e-02;
 
-            #mean1_tmp      = 86.9222; mean1_tmp_err      = 0.0930146; #@@@ JEN            
-            #deltamean_tmp  = 4.24618; deltamean_tmp_err  = 1.0962;
-            #sigma1_tmp     = 8.27304; sigma1_tmp_err     = 0.12259;
-            #scalesigma_tmp = 4.12531; scalesigma_tmp_err = 0.411357;
-            #frac_tmp       = 0.834936; frac_tmp_err       = 0.0135629;
+            mean1_tmp      = 86.9222; mean1_tmp_err      = 0.0930146; #@@@ JEN            
+            deltamean_tmp  = 4.24618; deltamean_tmp_err  = 1.0962;
+            sigma1_tmp     = 8.27304; sigma1_tmp_err     = 0.12259;
+            scalesigma_tmp = 4.12531; scalesigma_tmp_err = 0.411357;
+            frac_tmp       = 0.834936; frac_tmp_err       = 0.0135629;
 
-            rrv_mean1_gaus = RooRealVar("rrv_mean1_gaus"+label+"_"+self.channel,"rrv_mean1_gaus"+label+"_"+self.channel,mean1_tmp, mean1_tmp-4, mean1_tmp+4);
-            rrv_sigma1_gaus = RooRealVar("rrv_sigma1_gaus"+label+"_"+self.channel,"rrv_sigma1_gaus"+label+"_"+self.channel,sigma1_tmp, sigma1_tmp-4,sigma1_tmp+4 );
+            rrv_mean1_gaus = RooRealVar("rrv_mean1_gaus"+label+"_"+self.channel,"rrv_mean1_gaus"+label+"_"+self.channel,mean1_tmp, mean1_tmp-6, mean1_tmp+6);
+            rrv_sigma1_gaus = RooRealVar("rrv_sigma1_gaus"+label+"_"+self.channel,"rrv_sigma1_gaus"+label+"_"+self.channel,sigma1_tmp, sigma1_tmp-6,sigma1_tmp+6 );
             gaus1 = RooGaussian("gaus1"+label+"_"+self.channel,"gaus1"+label+"_"+self.channel, rrv_x,rrv_mean1_gaus,rrv_sigma1_gaus);
 
-            rrv_deltamean_gaus  = RooRealVar("rrv_deltamean_gaus"+label+"_"+self.channel,"rrv_deltamean_gaus"+label+"_"+self.channel,0.,-8,15);
+            rrv_deltamean_gaus  = RooRealVar("rrv_deltamean_gaus"+label+"_"+self.channel,"rrv_deltamean_gaus"+label+"_"+self.channel,0.,-8,10);
             rrv_mean2_gaus      = RooFormulaVar("rrv_mean2_gaus"+label+"_"+self.channel,"@0+@1",RooArgList(rrv_mean1_gaus, rrv_deltamean_gaus));
-            rrv_scalesigma_gaus = RooRealVar("rrv_scalesigma_gaus"+label+"_"+self.channel,"rrv_scalesigma_gaus"+label+"_"+self.channel,scalesigma_tmp, scalesigma_tmp-scalesigma_tmp_err*3, scalesigma_tmp+scalesigma_tmp_err*3);
+            rrv_scalesigma_gaus = RooRealVar("rrv_scalesigma_gaus"+label+"_"+self.channel,"rrv_scalesigma_gaus"+label+"_"+self.channel,scalesigma_tmp, scalesigma_tmp-scalesigma_tmp_err*8, scalesigma_tmp+scalesigma_tmp_err*8);
             rrv_sigma2_gaus     = RooFormulaVar("rrv_sigma2_gaus"+label+"_"+self.channel,"@0*@1", RooArgList(rrv_sigma1_gaus,rrv_scalesigma_gaus));
             gaus2 = RooGaussian("gaus2"+label+"_"+self.channel,"gaus2"+label+"_"+self.channel, rrv_x,rrv_mean2_gaus,rrv_sigma2_gaus);
 
-            rrv_frac1         = RooRealVar("rrv_frac1"+label+"_"+self.channel,"rrv_frac1"+label+"_"+self.channel,frac_tmp, frac_tmp-frac_tmp_err*7, frac_tmp+frac_tmp_err*7);
+            rrv_frac1         = RooRealVar("rrv_frac1"+label+"_"+self.channel,"rrv_frac1"+label+"_"+self.channel,frac_tmp, frac_tmp-frac_tmp_err*9, frac_tmp+frac_tmp_err*9);
             gausguas_1         = RooAddPdf("gausguas_1"+label+"_"+self.channel+mass_spectrum,"gausguas_1"+label+"_"+self.channel+mass_spectrum,RooArgList(gaus1,gaus2),RooArgList(rrv_frac1),1)
             model_pdf         = gausguas_1.clone("model_pdf"+label+"_"+self.channel+mass_spectrum)
         #2Gaus for WZ
@@ -2271,7 +2271,7 @@ objName ==objName_before ):
                     if verbose_num and  i==0: print "IMPCHK xsec %f for sample %s"%(treeIn.xsec,label)
                     #print label,"da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum event weight",tmp_scale_to_lumi
                     tmp_jet_mass=treeIn.Selak8Jet1_particleNet_mass if usepNM else treeIn.Selak8Jet1_msoftdrop
-                    tmp_jet_pNetscore=treeIn.Selak8Jet1_pNetWtagscore 
+                    tmp_jet_pNetscore=treeIn.Selak8Jet1_pNetWtagscore
                     dRfjlep=treeIn.dR_fjlep > 1.6 
                     dphifjlep=treeIn.dphi_fjlep > 2.0 
                     dphifjmet=treeIn.dphi_fjmet > 2.0 
@@ -2304,7 +2304,7 @@ objName ==objName_before ):
                         rdataset_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight )
                         rdataset4fit_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight4fit )
                         #sideband lo only
-                        if (tmp_jet_mass >= self.mj_sideband_lo_min and tmp_jet_mass < self.mj_sideband_lo_max): # and tmp_jet_pNetscore < 0.4):
+                        if (tmp_jet_mass > self.mj_sideband_lo_min and tmp_jet_mass < self.mj_sideband_lo_max): # and tmp_jet_pNetscore < 0.4):
                             rdataset_sb_lo_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight );
                             rdataset4fit_sb_lo_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight4fit );
                             rdataset_sb_mlvj.add( RooArgSet( rrv_mass_lvj ), tmp_event_weight );
@@ -2336,7 +2336,7 @@ objName ==objName_before ):
 
                         #mj spectrum, cut out data in signal region if needed
                         #datasets for simultaneaous fit in combine                          ##sideband lo ##am only FOLLOWING IS DATA
-                        if tmp_jet_mass>= self.mj_sideband_lo_min and tmp_jet_mass < self.mj_sideband_lo_max:
+                        if tmp_jet_mass> self.mj_sideband_lo_min and tmp_jet_mass < self.mj_sideband_lo_max:
                             rrv_mass_j_sb_lo.setVal(tmp_jet_mass)
                             dataset_mj_sb_lo.add(RooArgSet(rrv_mass_j_sb_lo,rrv_mass_lvj), 1)
                           ##sideband hi
@@ -2362,8 +2362,8 @@ objName ==objName_before ):
                 rrv_number_dataset_AllRange_mlvj=RooRealVar("rrv_number_dataset_AllRange"+label+tmpstr,"rrv_number_dataset_AllRange"+label+tmpstr,rdataset_sig_mlvj.sumEntries()+rdataset_sb_mlvj.sumEntries());
 
  
-                print "IMPCHK Input NEvents rdataset_mj   label: %s ,  sig: %f , sb: %f"%(label,rdataset_mj.sumEntries()-rdataset_sb_mj.sumEntries(),rdataset_sb_mj.sumEntries())
-                #print "IMPCHK Input NEvents rdataset_mlvj label: %s ,  sig: %f , sb: %f"%(label,rdataset_sig_mlvj.sumEntries(),rdataset_sb_lo_mlvj.sumEntries()+rdataset_sb_hi_mlvj.sumEntries())
+                print "NEvents mj   label: %s ,  sig: %f , sb: %f"%(label,rdataset_mj.sumEntries()-rdataset_sb_mj.sumEntries(),rdataset_sb_mj.sumEntries())
+                print "NEvents mlvj label: %s ,  sig: %f , sb: %f, sb_lo: %f, sb_hi: %f"%(label,rdataset4fit_sig_mlvj.sumEntries(),rdataset_sb_mlvj.sumEntries(),rdataset4fit_sb_lo_mlvj.sumEntries(),rdataset4fit_sb_hi_mlvj.sumEntries())
 
 
                 getattr(self.workspace4fit_,"import")(rrv_number_dataset_sig_mlvj)

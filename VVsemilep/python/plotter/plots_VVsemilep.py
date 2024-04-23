@@ -27,10 +27,10 @@ mWV_fxn={
     
 }
 
-wspc        = ['ak8_mass','mWV_reco'] #'FatJet1_sDrop_mass']
+wspc        = ['ak8_mass','mWV_reco']
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
-MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc']
+MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors']#,'2_jmeUnc']
 Datafriends = ['1_recl']
 friends     = ['0_wjest_v1','3_ak8Vtagged_sdm45']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
@@ -46,7 +46,7 @@ mWV=['ratio_typ0','ratio_typ1','ratio_typ2','ratio_typ3','mWV_typ0_pmet_boosted'
 topCR=['mWV_typ0_met_boosted','FatJet1_pt']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
 theWVfullset=['FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt', 'puppimetphi','lep1_pt']#,'puppimet_1','nBJetMedium30_Recl','nFatJet','puppimet','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','neupzpmet_typ0','nJet30_Recl','lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass''mt1pmet','nLepGood','nLepFO','sumBoosted']+mWV
-theWVultimateset=['FatJet1_sDrop_mass','puppimetphi','mWV_typ0_pmet_boosted']#,'puppimet','FatJet1_pNet_mass']#'puppimetphi']#,'FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
+theWVultimateset=['FatJet1_sDrop_mass','puppimetphi','mWV_typ0_pmet_boosted','mWV_reco']#,'puppimet','FatJet1_pNet_mass']#'puppimetphi']#,'FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
 
 
 ak4jetvars = ['nBJetLoose30_Recl,','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt','htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1','Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl','htJet25j_Recl','mhtJet25_Recl']
@@ -117,7 +117,7 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
         if doWJtypeplots:
             cmd+=" --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --WA evt_wt " #--mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt "
         else: 
-            cmd+=" --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt "
+            cmd+=" --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim " #--mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt "
     if len(fsyst) > 0:
         cmd += ' --unc {fsyst} '.format(fsyst=fsyst)
     cmd += ''.join(' -P '+Ptree for Ptree in trees)

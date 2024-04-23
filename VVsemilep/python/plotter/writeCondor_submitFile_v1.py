@@ -28,7 +28,7 @@ lepsel={'topCR' : ["onelep"],
 }
 
 ops=['c3w','ccw','cb','']
-for sel in ["SB","SR"]: #"inclB","sig"]: #,"sb_lo","sb_hi"]:  #"wjCR","topCR",]:
+for sel in ['sb_lo','sb_hi',"SB","SR"]: #"inclB","sig"]: #,"sb_lo","sb_hi"]:  #"wjCR","topCR",]:
    for cat in ["boosted"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
            for lep in ["mu","el"]: #lepsel[sel]:

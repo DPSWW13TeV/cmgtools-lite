@@ -105,7 +105,7 @@ class Prepare_workspace_4limit:
             if not os.path.isdir(self.plotsDir): os.system("mkdir %s"%self.plotsDir)
             os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
             os.system("cp make_PDF_input_oneCat_AM.py "+self.plotsDir)
-            self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,self.binlo,int(self.binhi)) ##AM date
+            self.rlt_DIR_name="Cards/%s/cards_%s_%s_newfrnds_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,self.binlo,int(self.binhi)) ##AM date
             ##read workspace containing background pdfs
             fileInWs                    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.binhi)))
             w                           = fileInWs.Get('workspace4limit_')
@@ -180,8 +180,9 @@ class Prepare_workspace_4limit:
                     dphifjlep=treeIn.dphi_fjlep > 2.0 
                     dphifjmet=treeIn.dphi_fjmet > 2.0 
                     ptWlep=treeIn.pTWlep > 200
-                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore >= self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 45 and  MWW>self.binlo
-                    if (abs(treeIn.Lep1_pdgId) == 13 if self.channel == "mu" else 11 )  and treeIn.nBJetMedium30 == 0 and  boosted_sel and treeIn.pmet > 110 and treeIn.Lep1_pt > 50:
+                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 45 and  MWW>self.binlo
+                    if (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m if self.channel == "mu" else  abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )  and treeIn.Lep1_pt > 50  and  boosted_sel and treeIn.pmet > 110 and treeIn.nBJetMedium30 == 0:
+
 			weight_part =1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Selak8Jet1_pNetWtagSF*lumis[self.year]/treeIn.sumw 
 			aTGC        = treeIn.aGC_wt 
 			#all3hists4scale['c_%s_histall3'%WV].Fill(MWW,aTGC[123] * weight_part)
@@ -855,7 +856,7 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
             self.WS.var('rrv_mass_j').setRange('sb_lo',45,65)
             self.WS.var('rrv_mass_j').setRange('sig',65,105)
             self.WS.var('rrv_mass_j').setRange('sb_hi',105,150)
-            self.WS.var('rrv_mass_lvj').setRange(950,4500)
+            self.WS.var('rrv_mass_lvj').setRange(950,4550)
             #bkg-pdfs have the format '[bkg-name]_mlvj_[region]_[ch]' or '[bkg-name]_mj_[region]_[ch]'
 
             rrv_mass_j   = w_bkg.var("rrv_mass_j")#with correct wts
@@ -936,8 +937,8 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                     
 
                 ##define which parameters are floating (also has to be done in the datacard)
-                ##self.WS2.var("rrv_c_ChiSq_WJets0_%s"%self.ch).setConstant(kFALSE) ##am
-                self.WS2.var("rrv_c_Exp_WJets0_%s"%self.ch).setConstant(kFALSE)
+                #self.WS2.var("rrv_c_ChiSq_WJets0_%s"%self.ch).setConstant(kFALSE) ##am
+                self.WS2.var("rrv_c_ExpN_WJets0_%s"%self.ch).setConstant(kFALSE)
                 self.WS2.var("normvar_WJets_%s"%self.ch).setConstant(kFALSE)
                 if 'sb' in region:
                     self.WS2.var("rrv_c_ExpN_WJets0_sb_%s"%self.ch).setConstant(kFALSE)
@@ -1026,9 +1027,9 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
 if __name__ == '__main__':
 
     if options.chan=='elmu':
-        makeWS_el        = Prepare_workspace_4limit(options.year,'el',950,4500,"")
+        makeWS_el        = Prepare_workspace_4limit(options.year,'el',950,4550,"")
         combineCardName_el=makeWS_el.Make_input()
-        makeWS_mu        = Prepare_workspace_4limit(options.year,'mu',950,4500,"")
+        makeWS_mu        = Prepare_workspace_4limit(options.year,'mu',950,4550,"")
         combineCardName_mu=makeWS_mu.Make_input()
         output_card_name='aC_WWWZ_simfit'
         cmd = 'combineCards.py aC_WWWZ_sig_el_{yr}_{dd}.txt aC_WWWZ_sig_mu_{yr}_{dd}.txt aC_WWWZ_sb_lo_el_{yr}_{dd}.txt aC_WWWZ_sb_lo_mu_{yr}_{dd}.txt aC_WWWZ_sb_hi_el_{yr}_{dd}.txt aC_WWWZ_sb_hi_mu_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date)
@@ -1043,7 +1044,7 @@ if __name__ == '__main__':
         #return True 
         
     else:
-        makeWS        = Prepare_workspace_4limit(options.year,options.chan,950,4500,"")
+        makeWS        = Prepare_workspace_4limit(options.year,options.chan,950,4550,"")
         makeWS.Make_input()
     #combine the created datacards
     #output_card_name = '%s/aC_WWWZ_simfit'%self.combine_cards_dir
