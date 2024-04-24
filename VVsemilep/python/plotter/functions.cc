@@ -353,7 +353,7 @@ float HEMhandle(int year, float phi1, float eta1, float phi2, float eta2, int pd
     vetoHEM = vetofj || vetoel;
     if (vetoHEM){
       if (isData) {
-	if(run > 319077){ 	weight=0;      
+	if(run >= 319077){ 	weight=0;      
 	}
 	else{ weight=1.0;}    }//isdata
       else{      weight=0.35;    }//for MC

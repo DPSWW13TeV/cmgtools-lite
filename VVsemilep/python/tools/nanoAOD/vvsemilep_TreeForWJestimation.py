@@ -36,7 +36,8 @@ class vvsemilep_TreeForWJestimation(Module):
         self.out.branch('pmet'       ,'F')
         self.out.branch('pmet_phi'   ,'F')
         self.out.branch('evt_wt'       ,'F') #pu*prefiring*prescale*hem
-        self.out.branch('pu_prefiring_wt'       ,'F') #pu*prefiring*prescale*hem
+        self.out.branch('pu_wt'       ,'F') #pu
+        self.out.branch('prefiring_wt'       ,'F') #prefiring
         self.out.branch('hem_wt'       ,'F') #pu*prefiring*prescale*hem
         self.out.branch('prescale_wt'       ,'F') #pu*prefiring*prescale*hem
         self.out.branch('genwt'   ,'F')
@@ -116,6 +117,7 @@ class vvsemilep_TreeForWJestimation(Module):
         HEM_eta_min =  -3.2;  HEM_eta_max = -1.3;
         HEM_phi_min= -1.57;  HEM_phi_max= -0.87;
         weight=1.0;  
+        if run > 1: isData=True;
         if year==2018:
             vetoHEM=False;vetofj=False;vetoel=False;
             vetofj = (jet.eta < HEM_eta_max and jet.eta > HEM_eta_min and jet.phi < HEM_phi_max and jet.phi > HEM_phi_min)
@@ -123,7 +125,7 @@ class vvsemilep_TreeForWJestimation(Module):
             vetoHEM = vetofj or vetoel;
             if (vetoHEM):
                 if (isData):
-                    if(run > 319077): 	weight=0;    
+                    if(run >= 319077): 	weight=0;    
                     else:	weight=1.0;
                 else:      weight=0.35; 
             else:	weight=1.0; 
@@ -188,7 +190,8 @@ class vvsemilep_TreeForWJestimation(Module):
         eventWt=hemwt * (event.prescaleFromSkim if isData else event.L1PreFiringWeight_Nom*event.puWeight*event.prescaleFromSkim)
         self.out.fillBranch('evt_wt',eventWt) #pu*prefiring*prescale*hem
         self.out.fillBranch('hem_wt',hemwt) #pu*prefiring*prescale*hem
-        self.out.fillBranch('pu_prefiring_wt',1.0 if isData else event.L1PreFiringWeight_Nom*event.puWeight)
+        self.out.fillBranch('pu_wt',1.0 if isData else event.puWeight)
+        self.out.fillBranch('prefiring_wt', event.L1PreFiringWeight_Nom)
         self.out.fillBranch('prescale_wt',event.prescaleFromSkim)
         self.out.fillBranch('genwt',event.genWeight if not isData else 1.0  )
         #self.out.fillBranch('genSumw',event.genEventSumw if not isData else 1.0   )

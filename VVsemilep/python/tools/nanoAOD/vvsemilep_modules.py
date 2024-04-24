@@ -358,7 +358,7 @@ taggedfj           = lambda : saveVtaggedJet(isMC = True, massVar='sD',jecs = je
 taggedfj_data      = lambda : saveVtaggedJet(isMC = False,massVar='sD')
 
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import vvsemilep_TreeForWJestimation
-wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,1,
+wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,
                                                  ['event.nLepFO_Recl  == 1                                         ',
                                                  'event.PuppiMET_pt > 110                                 ',
                                                   'event.nBJetMedium30_Recl == 0', 
