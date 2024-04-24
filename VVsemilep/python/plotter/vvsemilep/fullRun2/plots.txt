@@ -5,6 +5,11 @@
 ak8_mass           : Selak8Jet1_msoftdrop : 21, 45,150 ; XTitle="sdmass"
 mWV_reco           : mWV : 36,950,4550  ; XTitle="mWV", Logy, MoreY=10
 test       : mWV_dumy : 36,950,4550  ; XTitle="mWV"
+
+ttmWV_typ0_pmet_boosted : mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0): 36,950,4550; XTitle="mWV", MoreY=10,Logy, MaxDigi,IncludeOverflows=False
+
+
+
 SeldLep1_pt                : SeldLep1_pt         : 50,0,1000; XTitle="SeldLep1_pt"
 SeldLep1_eta               : SeldLep1_eta        : 10,-2.5,2.5; XTitle="SeldLep1_eta"
 SeldLep1_phi               : SeldLep1_phi        : 16,-3.2,3.2; XTitle="SeldLep1_phi"
@@ -356,8 +361,8 @@ FatJet1_pNetMD_Wtagscoret    : (ak8sDMgt45_particleNetMD_Xcc[0]+ak8sDMgt45_parti
 
 
 puppimet         :            PuppiMET_pt     : 45,100,2000 ; XTitle="p_{T}^{miss} (GeV)",MoreY=25, MaxDigi, Logy
-puppimet_1       :            PuppiMET_pt     : [20,50,60,70,80,100,120,140,160,200,250,300,400,500,600,800,1000,2000] ; XTitle="p_{T}^{miss} (GeV)",MoreY=25, Logy
 puppimetphi      :            PuppiMET_phi    : 32,-3.2,3.2 ; XTitle="p_{T}^{miss} (#phi)",MoreY=1.85
+pmet_phi	 : 	      pmet_phi	      : 32,-3.2,3.2 ; XTitle="p_{T}^{miss} (#phi)",MoreY=1.85
 met              :            MET_pt          : 20,0,200 ; XTitle="p_{T}^{miss} (GeV)",MoreY=1.85
 metphi           :            MET_phi         : 32,-3.2,3.2 ; XTitle="p_{T}^{miss} (#phi)",MoreY=1.85
 nVert  	         :  	      PV_npvsGood     : 50,0,50; XTitle="n_{vertices}", MoreY=1.5

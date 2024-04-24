@@ -378,7 +378,7 @@ wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,1,
 ])
 
 
-from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import input_WJestimation
+from CMGTools.VVsemilep.tools.nanoAOD.input_WJestimation import input_WJestimation
 input_wjest = lambda  : input_WJestimation(1,1,
                                                  ['event.nLepFO_Recl  == 1                                         ',
                                                  'event.PuppiMET_pt > 110                                 ',

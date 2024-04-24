@@ -71,7 +71,7 @@ fjtaggeddata)
 	;;
 
 wjet)		
-	basecmd="${BCORE}/0_wjest_v1  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Vtagged_sdm45/{cname}_Friend.root "
+	basecmd="${BCORE}/0_wjest_v2  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Vtagged_sdm45/{cname}_Friend.root "
 	;;
 
 skim_wjet)		
