@@ -134,6 +134,7 @@ class doFit_wj_and_wlvj:
         RooAbsPdf.defaultIntegratorConfig().setEpsAbs(1e-9) ;
         self.year=year
         self.pf="_"+pf if len(pf) >0 else ""
+        self.pf+="_withSkim" if options.useSkim else ""
         ###to save all fitresults
         self.fitresultsmj        = []
         self.fitresultsmlvj        = []
@@ -2473,7 +2474,7 @@ objName ==objName_before ):
         self.get_mj_and_mlvj_dataset(self.file_WW_mc,"_WW")
         self.fit_mj_single_MC(self.file_WW_mc,"_WW","2GausWW");       
         self.fit_mlvj_model_single_MC(self.file_WW_mc,"_WW","_sb","ExpN", 0, 0, 1);
-        self.fit_mlvj_model_single_MC(self.file_WW_mc,"_WW","_sig",self.MODEL_4_mlvj, 0, 0, 1);
+        self.fit_mlvj_model_single_MC(self.file_WW_mc,"_WW","_sig","ExpN", 0, 0, 1);
         print "________________________________________________________________________"
 
     #################################################################################################
