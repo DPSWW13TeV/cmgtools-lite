@@ -36,6 +36,7 @@ parser.add_option('--noatgcint', action='store_true', dest='noatgcint', default=
 parser.add_option('--printatgc', action='store_true', default=False, help='print atgc-interference contribution')
 parser.add_option('--atgc', action='store_true', dest='atgc', default=False, help='use anomalous coupling parametrization instead of EFT')
 parser.add_option('--inPath', action="store",type="string",dest="inPath",default="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/")
+parser.add_option('--uS', action='store_true', dest='useSkim', default=False, help='use skimmed trees or friends')
 
 (options,args) = parser.parse_args()
 
@@ -105,7 +106,9 @@ class Prepare_workspace_4limit:
             if not os.path.isdir(self.plotsDir): os.system("mkdir %s"%self.plotsDir)
             os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
             os.system("cp make_PDF_input_oneCat_AM.py "+self.plotsDir)
-            self.rlt_DIR_name="Cards/%s/cards_%s_%s_newfrnds_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,self.binlo,int(self.binhi)) ##AM date
+            self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,self.binlo,int(self.binhi)) ##AM date
+            #            self.rlt_DIR_name="Cards/%s/cards_%s_%s_newfrnds_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,self.binlo,int(self.binhi)) ##AM date
+
             ##read workspace containing background pdfs
             fileInWs                    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.binhi)))
             w                           = fileInWs.Get('workspace4limit_')
@@ -174,6 +177,9 @@ class Prepare_workspace_4limit:
                     MWW                = treeIn.mWV
                     #apply cuts
                     #using whole mj-range (sideband and signal region)
+                    #tmp_jet_mass=treeIn.Selak8Jet1_particleNet_mass if usepNM else treeIn.Selak8Jet1_msoftdrop
+                    #tmp_jet_pNetscore=treeIn.Selak8Jet1_pNetWtagscore
+
                     tmp_jet_mass=treeIn.Selak8Jet1_particleNet_mass if usepNM else treeIn.Selak8Jet1_msoftdrop
                     tmp_jet_pNetscore=treeIn.Selak8Jet1_pNetWtagscore
                     dRfjlep=treeIn.dR_fjlep > 1.6 
@@ -183,6 +189,7 @@ class Prepare_workspace_4limit:
                     boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 45 and  MWW>self.binlo
                     if (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m if self.channel == "mu" else  abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )  and treeIn.Lep1_pt > 50  and  boosted_sel and treeIn.pmet > 110 and treeIn.nBJetMedium30 == 0:
 
+			#weight_part =1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Selak8Jet1_pNetWtagSF*lumis[self.year]/treeIn.sumw 
 			weight_part =1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Selak8Jet1_pNetWtagSF*lumis[self.year]/treeIn.sumw 
 			aTGC        = treeIn.aGC_wt 
 			#all3hists4scale['c_%s_histall3'%WV].Fill(MWW,aTGC[123] * weight_part)
@@ -817,9 +824,9 @@ class Prepare_workspace_4limit:
             datacard.write('''
 normvar_WJets_{ch}  flatParam
 
-rrv_c_ExpN_WJets0_{ch}  flatParam
-rrv_c_ExpN_WJets0_sb_{ch}  flatParam
-rrv_n_ExpN_WJets0_sb_{ch}  flatParam
+rrv_c_Exp_WJets0_{ch}  flatParam
+rrv_c_Exp_WJets0_sb_{ch}  flatParam
+rrv_n_Exp_WJets0_sb_{ch}  flatParam
 Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig0 param 0.0 1.4
 Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig1 param 0.0 1.4
 Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig2 param 0.0 1.4
@@ -937,12 +944,13 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                     
 
                 ##define which parameters are floating (also has to be done in the datacard)
-                #self.WS2.var("rrv_c_ChiSq_WJets0_%s"%self.ch).setConstant(kFALSE) ##am
-                self.WS2.var("rrv_c_ExpN_WJets0_%s"%self.ch).setConstant(kFALSE)
+                print "this is missing piece of crap==============","rrv_c_Exp_WJets0_%s"%self.ch
+                self.WS2.var("rrv_c_ChiSq_WJets0_%s"%self.ch).setConstant(kFALSE) ##am
+                #self.WS2.var("rrv_c_Exp_WJets0_%s"%self.ch).setConstant(kFALSE)
                 self.WS2.var("normvar_WJets_%s"%self.ch).setConstant(kFALSE)
                 if 'sb' in region:
-                    self.WS2.var("rrv_c_ExpN_WJets0_sb_%s"%self.ch).setConstant(kFALSE)
-                    self.WS2.var("rrv_n_ExpN_WJets0_sb_%s"%self.ch).setConstant(kFALSE)
+                    self.WS2.var("rrv_c_Exp_WJets0_sb_%s"%self.ch).setConstant(kFALSE)
+                    self.WS2.var("rrv_n_Exp_WJets0_sb_%s"%self.ch).setConstant(kFALSE)
                 else:
                     self.WS2.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig0"%(self.ch,self.wtagger_label)).setConstant(kTRUE)
                     self.WS2.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig1"%(self.ch,self.wtagger_label)).setConstant(kTRUE)

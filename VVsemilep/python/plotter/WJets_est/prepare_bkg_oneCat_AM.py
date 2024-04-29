@@ -37,11 +37,6 @@ from ROOT import draw_error_band, draw_error_band_extendPdf, draw_error_band_Dec
 
 #trees_b="0_wjest_newCuts_v1"
 #trees_r="1_wjest_newCuts_v1"
-
-trees_b="1_wjest_v1"
-trees_r="2_wjest_v1"
-
-
 saveFiles=[]
 lumis = {
     '2016APV': 19.5,
@@ -115,12 +110,17 @@ parser.add_option('--hi', action='store', dest='mlvj_hi', type='float', default=
 parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=950, help='set lower cut on MWV, mat cause problems')
 parser.add_option('-r','--readtrees', action='store_true', dest='read_trees', default=False, help='read data and MC from TTrees, has to be done when range or binning is changed -> takes much longer')
 parser.add_option('--noplots', action='store_true', dest='noplots', default=False, help='dont make any plots')
-
+parser.add_option('--uS', action='store_true', dest='useSkim', default=False, help='use skimmed trees or friends')
 
 (options, args) = parser.parse_args()
 
 
+trees_b="0_wjest_v2_copy"
+trees_r="0_wjest_v2_copy_addOns"
 
+if options.useSkim:
+    trees_b="wjest_skim"
+    trees_r="wjest_skim_addOns"
 
 
 
@@ -2270,6 +2270,7 @@ objName ==objName_before ):
                     treeIn.GetEntry(i);
                     if verbose_num and  i==0: print "IMPCHK xsec %f for sample %s"%(treeIn.xsec,label)
                     #print label,"da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum event weight",tmp_scale_to_lumi
+                    
                     tmp_jet_mass=treeIn.Selak8Jet1_particleNet_mass if usepNM else treeIn.Selak8Jet1_msoftdrop
                     tmp_jet_pNetscore=treeIn.Selak8Jet1_pNetWtagscore
                     dRfjlep=treeIn.dR_fjlep > 1.6 
@@ -2952,11 +2953,11 @@ def pre_limit_sb_correction(method, year,channel, in_mj_min=45, in_mj_max=150, i
 #### Main Code
 if __name__ == '__main__':
     channel=options.channel;
-    #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpN",options.pf)
+    pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpN",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"ExpTail","Exp",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Pow","Pow2",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ExpN",options.pf)
-    pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"ExpN","Exp",options.pf)
+    #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"ExpN","Exp",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfPow_v1",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfExp_v1",options.pf)
     #pre_limit_sb_correction("method1",options.year,channel,45,150,options.mlvj_lo,options.mlvj_hi,"Exp","ErfPow2_v1",options.pf)

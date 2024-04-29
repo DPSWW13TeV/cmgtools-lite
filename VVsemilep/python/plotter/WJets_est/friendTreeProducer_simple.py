@@ -4,10 +4,10 @@ from glob import glob
 #from  printnEvt import printnEvt
 #fN=sys.argv[1]
 year=sys.argv[1]
-frnds="1_wjest_v1/" #0_wjest_newCuts_v1/"
+frnds="0_wjest_v2_copy" #0_wjest_newCuts_v1/"
 eospath="/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/"
 #files=[]
-outname="2_wjest_v1" #1_wjest_newCuts_v1"
+outname=frnds+"_addOns" 
 outdir=os.path.join(eospath,year,outname)
 
 if not os.path.isdir(outdir):
@@ -42,7 +42,7 @@ atgc=['WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1',
 
 
 
-samples=top+more  #atgc +stop +wjets+more #+
+samples=top+atgc +stop +wjets+more
 
 def printnEvt(fN,yr):
     files=[] 
@@ -71,7 +71,7 @@ for proc in samples:
     weight=printnEvt(fN=proc,yr=year)
     #now clone friends tree and add a new branch to it
     fbase=os.path.join(eospath,year,frnds)
-    fIn=ROOT.TFile.Open(fbase+proc+"_Friend.root")
+    fIn=ROOT.TFile.Open(fbase+"/"+proc+"_Friend.root")
     ttree=fIn.Get('Friends')
     fOut=ROOT.TFile(outdir+"/"+proc+"_Friend.root","RECREATE")
     newtree = ROOT.TTree("Friends","new friends tree");

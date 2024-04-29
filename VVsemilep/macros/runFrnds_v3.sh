@@ -63,19 +63,19 @@ recl_allvars)
 
 fjtagged)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8Vtagged_sdm45  ${CMGT} taggedfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root " #-d TTSemi_pow_part7 " #--de .*Run.* "
+	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --de .*Run.* "
 	;;
 
 fjtaggeddata)
-	basecmd="${BCORE}3_ak8Vtagged_sdm45  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
+	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
 	;;
 
 wjet)		
-	basecmd="${BCORE}/0_wjest_v2  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Vtagged_sdm45/{cname}_Friend.root "
+	basecmd="${BCORE}/0_wjest_v2  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Wtagged_sdm45to150/{cname}_Friend.root "
 	;;
 
 skim_wjet)		
-	basecmd="${BCORE}/wjest_skim  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Vtagged_sdm45/{cname}_Friend.root "
+	basecmd="${BCORE}/wjest_skim  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Wtagged_sdm45to150/{cname}_Friend.root "
 	;;
 
 top)

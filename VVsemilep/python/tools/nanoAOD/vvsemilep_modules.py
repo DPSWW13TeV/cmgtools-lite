@@ -358,7 +358,7 @@ taggedfj           = lambda : saveVtaggedJet(isMC = True, massVar='sD',jecs = je
 taggedfj_data      = lambda : saveVtaggedJet(isMC = False,massVar='sD')
 
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import vvsemilep_TreeForWJestimation
-wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,
+wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,1,
                                                  ['event.nLepFO_Recl  == 1                                         ',
                                                  'event.PuppiMET_pt > 110                                 ',
                                                   'event.nBJetMedium30_Recl == 0', 
@@ -374,7 +374,8 @@ wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,
                                                  'event.Flag_EcalDeadCellTriggerPrimitiveFilter ==1        ',
                                                  'event.Flag_BadPFMuonFilter ==1                           ',
                                                  '(event.year == 2016 or event.Flag_ecalBadCalibFilter)     ', 
-                                                 '(event.run ==1 or event.Flag_eeBadScFilter)         '
+                                                 '(event.run ==1 or event.Flag_eeBadScFilter)         ',
+                                                  'event.Flag_BadPFMuonDzFilter == 1'
 ])
 
 
@@ -395,7 +396,9 @@ input_wjest = lambda  : input_WJestimation(1,1,
                                                  'event.Flag_EcalDeadCellTriggerPrimitiveFilter ==1        ',
                                                  'event.Flag_BadPFMuonFilter ==1                           ',
                                                  '(event.year == 2016 or event.Flag_ecalBadCalibFilter)     ', 
-                                                 '(event.run ==1 or event.Flag_eeBadScFilter)         '
+                                                 '(event.run ==1 or event.Flag_eeBadScFilter)         ',
+                                                  'event.Flag_BadPFMuonDzFilter == 1'
+
 ])
 
 

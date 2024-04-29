@@ -15,7 +15,7 @@ echo "i am in this directory ${PWD} and making this plot ${5}"
 
 if [[ $# -eq 6 ]]; then
     #python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --applylepSFs --doWJ --pf FC ##--dCF ##--runblind 
-    python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --applylepSFs  --pf FC ##--dCF 
+    python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --applylepSFs --pf sdMlt150 ## --doWJ --dCF 
 else
     python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --WC ${8} --applylepSFs  ##--runblind --dCF
 fi
