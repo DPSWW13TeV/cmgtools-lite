@@ -1,6 +1,3 @@
-ZV : ZZTo2Q2L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=46, Label="ZV (SM)"
-ZV : WZTo2Q2L : xsec : LepGood1_isMatchRightCharge && LepGood2_isMatchRightCharge ;  FillColor=46, Label="ZV (SM)"
-
 WV : WZTo1L1Nu2Q : 10.71: 1 ; FillColor=30, Label="WV (SM)"
 WV : WWTo1L1Nu2Q : 5.090e+01 : 1 ; FillColor=30, Label="WV (SM)"
 
@@ -15,20 +12,13 @@ WV : WWTo1L1Nu2Q : 5.090e+01 : 1 ; FillColor=30, Label="WV (SM)"
 #SM_WW   : WWTo1L1Nu2Q : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LepGood1_charge < 0 ; FillColor=30, Label="WW SM minus",SkipMe=True
 
 SM_WW   : WWTo1L1Nu2Q : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)   : 1 ; FillColor=30, Label="WW SM" 
-SM_WZ   : WZTo1L1Nu2Q : 11.46*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)  : 1 ; FillColor=ROOT.kTeal-7, Label="SM WZ"
+SM_WZ   : WZTo1L1Nu2Q : 11.46*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)  : 1 ; FillColor=ROOT.kTeal-7, Label="WZ SM"
 
 
 Fiveflav_WZplus  : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="WZ SM5FP" #,SkipMe=True
 Fiveflav_WZminus : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge < 0 ; FillColor=ROOT.kTeal-7, Label="WZ SM 5fM"#,SkipMe=True
 
 
-## part0_v2 and _v2 should be used
-#WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2
-#WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2
-#WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2
-#WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_part0_v2+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_part1_v2
-#WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2
-#WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2
 
 
 

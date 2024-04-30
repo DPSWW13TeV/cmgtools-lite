@@ -148,7 +148,7 @@ class doFit_wj_and_wlvj:
         print "########################################################################################"
         print "######## define class: binning, variables, cuts, files and nuissance parameters ########"
         print "########################################################################################"
-
+        print "input trees used are",trees_b
         ### Set the mj binning for plots
         self.BinWidth_mj=5.;
 
