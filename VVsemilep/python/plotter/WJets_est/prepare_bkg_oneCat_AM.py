@@ -12,7 +12,7 @@ from array import array
 import datetime
 date = datetime.date.today().isoformat()
 
-verbose_num=True
+verbose_num=False
 verbose=False
 doalter=True 
 usepNM=False
@@ -22,7 +22,7 @@ from ROOT import TGaxis, TPaveText, TLatex, TString, TFile,TLine, TLegend, TCanv
 #ROOT.gErrorIgnoreLevel = ROOT.kWarning #kInfo
 ROOT.RooMsgService.instance().setGlobalKillBelow(RooFit.FATAL) #https://root-forum.cern.ch/t/suppressing-info-messages/14642/6
 
-print "this is the value",verbose_num
+#print "this is the value",verbose_num
 
 ROOT.gStyle.SetOptTitle(0)
 ROOT.gROOT.SetBatch(True)
@@ -309,7 +309,7 @@ class doFit_wj_and_wlvj:
       
     ### in order to make the legend
     def legend4Plot(self, plot, left=1, isFill=1, x_offset_low=0.,y_offset_low=0.,x_offset_high =0., y_offset_high =0., TwoCoulum =1., isalpha=False, ismj=False,firstentry=''):
-        print "############### draw the legend ########################"
+        #        print "############### draw the legend ########################"
         if left==-1:
             theLeg = TLegend(0.65+x_offset_low, 0.58+y_offset_low, 0.93+x_offset_low, 0.87+y_offset_low, "", "NDC");
             #theLeg.SetName("theLegend");
@@ -2228,7 +2228,7 @@ objName ==objName_before ):
                 rrv_mass_j_sb_hi.setRange(self.mj_sideband_hi_min,self.mj_sideband_hi_max)
                 rrv_mass_j_sb_hi.setBins((self.mj_sideband_hi_max-self.mj_sideband_hi_min)/5)
                 rrv_mass_j_sig.setRange(self.mj_signal_min,self.mj_signal_max)
-                rrv_mass_j_sig.setBins((self.mj_signal_max-self.mj_signal_min)/5)
+                rrv_mass_j_sig.setBins(int((self.mj_signal_max-self.mj_signal_min)/self.BinWidth_mj))
 
                 nbins_mlvj=int((rrv_mass_lvj.getMax()-rrv_mass_lvj.getMin())/self.BinWidth_mlvj);
                 rrv_mass_lvj.setBins(nbins_mlvj);
@@ -2265,26 +2265,27 @@ objName ==objName_before ):
                 data_category.defineType("sig");
                 combData     = RooDataSet("combData"+label+"_"+self.channel,"combData"+label+"_"+self.channel,RooArgSet(rrv_mass_lvj, data_category, rrv_weight),RooFit.WeightVar(rrv_weight) );
                 combData4fit = RooDataSet("combData4fit"+label+"_"+self.channel,"combData4fit"+label+"_"+self.channel,RooArgSet(rrv_mass_lvj, data_category, rrv_weight),RooFit.WeightVar(rrv_weight) );
-                print "###### N entries: ", treeIn.GetEntries()
+                print "IMPCHK N entries: ", treeIn.GetEntries(),"\t",label,"\t",self.channel
                 for i in range(treeIn.GetEntries()):
-                    if i % 100000 == 0: print "iEntry: ",i
+                    if i % 1000000 == 0: print "iEntry: ",i
                     treeIn.GetEntry(i);
-                    if verbose_num and  i==0: print "IMPCHK xsec %f for sample %s"%(treeIn.xsec,label)
+                    #if verbose_num and  i==0: print "IMPCHK xsec %f for sample %s"%(treeIn.xsec,label)
                     #print label,"da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum da-dum-da-dum event weight",tmp_scale_to_lumi
-                    
+                    tmp_event_weight4fit=0.0;totEventWeight=0.0;
                     tmp_jet_mass=treeIn.Selak8Jet1_particleNet_mass if usepNM else treeIn.Selak8Jet1_msoftdrop
                     tmp_jet_pNetscore=treeIn.Selak8Jet1_pNetWtagscore
                     dRfjlep=treeIn.dR_fjlep > 1.6 
                     dphifjlep=treeIn.dphi_fjlep > 2.0 
                     dphifjmet=treeIn.dphi_fjmet > 2.0 
                     ptWlep=treeIn.pTWlep > 200
-                    
-                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and treeIn.mWV > rrv_mass_lvj.getMin() and treeIn.mWV < rrv_mass_lvj.getMax() and tmp_jet_mass < 150 and tmp_jet_mass > rrv_mass_j.getMin()
+                    boosted_sel=False;                    lep_sel=False;
+                    lep_sel= treeIn.Lep1_pt > 50  and treeIn.nLepTight == 1 and treeIn.nLepFO==1 and treeIn.Lep1_tightId == 1;
+                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and treeIn.mWV > rrv_mass_lvj.getMin() and treeIn.mWV < rrv_mass_lvj.getMax() and tmp_jet_mass < 150 and tmp_jet_mass > rrv_mass_j.getMin() and treeIn.nFj > 0 and treeIn.pmet > 110 and treeIn.nBJetMedium30 == 0;
                     self.isGoodEvent = 0; 
-                    if (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m if self.channel == "mu" else  abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )  and treeIn.Lep1_pt > 50  and  boosted_sel and treeIn.pmet > 110 and treeIn.nBJetMedium30 == 0:
-                        self.isGoodEvent = 1;  
-                    totEventWeight=1.0
+                    if (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m if self.channel == "mu" else  abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )  and  boosted_sel and lep_sel:
+                        self.isGoodEvent = 1;                          tmp_event_weight4fit=1.0;                        totEventWeight=1.0
                     if self.isGoodEvent == 1:
+                        print "IMPCHK event number passing the selection \t ",treeIn.event_presel
                         evtWt=treeIn.evt_wt #treeIn.pu_prefiring_wt*treeIn.prescale_wt*treeIn.hem_wt #evt_wt=pu*prefiring*prescale*hem
                         if "data" in label:
                             totEventWeight = evtWt #treeIn.prescale_wt #
@@ -2301,6 +2302,7 @@ objName ==objName_before ):
                         tmp_event_weight=totEventWeight 
 
                         if useWts: tmp_event_weight4fit = totEventWeight;
+                            
                         rrv_mass_lvj.setVal(treeIn.mWV); ###passing mWV in rrv
                         rrv_mass_j.setVal( tmp_jet_mass );##passing mjet in rrv
                         rdataset_mj.add( RooArgSet( rrv_mass_j ), tmp_event_weight )
@@ -2365,7 +2367,7 @@ objName ==objName_before ):
 
  
                 print "NEvents mj   label: %s ,  sig: %f , sb: %f"%(label,rdataset_mj.sumEntries()-rdataset_sb_mj.sumEntries(),rdataset_sb_mj.sumEntries())
-                print "NEvents mlvj label: %s ,  sig: %f , sb: %f, sb_lo: %f, sb_hi: %f"%(label,rdataset4fit_sig_mlvj.sumEntries(),rdataset_sb_mlvj.sumEntries(),rdataset4fit_sb_lo_mlvj.sumEntries(),rdataset4fit_sb_hi_mlvj.sumEntries())
+                #print "NEvents mlvj label: %s ,  sig: %f , sb: %f, sb_lo: %f, sb_hi: %f"%(label,rdataset4fit_sig_mlvj.sumEntries(),rdataset_sb_mlvj.sumEntries(),rdataset4fit_sb_lo_mlvj.sumEntries(),rdataset4fit_sb_hi_mlvj.sumEntries())
 
 
                 getattr(self.workspace4fit_,"import")(rrv_number_dataset_sig_mlvj)

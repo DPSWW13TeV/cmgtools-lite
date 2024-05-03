@@ -46,7 +46,7 @@ mWV=['ratio_typ0','ratio_typ1','ratio_typ2','ratio_typ3','mWV_typ0_pmet_boosted'
 topCR=['mWV_typ0_met_boosted','FatJet1_pt']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
 theWVfullset=['FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt', 'puppimetphi','lep1_pt']#,'puppimet_1','nBJetMedium30_Recl','nFatJet','puppimet','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','neupzpmet_typ0','nJet30_Recl','lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass''mt1pmet','nLepGood','nLepFO','sumBoosted']+mWV
-theWVultimateset=['mWV_typ0_pmet_boosted','mWV_reco','pmet_phi','ak8_mass','FatJet1_sDrop_mass','puppimetphi']#,'mWV_typ0_pmet_boosted']#,'mWV_reco','ttmWV_typ0_pmet_boosted','pmet_phi']#,'puppimet','FatJet1_pNet_mass']#'puppimetphi']#,'FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
+theWVultimateset=['mWV_typ0_pmet_boosted']#,'mWV_reco','pmet_phi','ak8_mass','FatJet1_sDrop_mass','puppimetphi']#,'mWV_typ0_pmet_boosted']#,'mWV_reco','ttmWV_typ0_pmet_boosted','pmet_phi']#,'puppimet','FatJet1_pNet_mass']#'puppimetphi']#,'FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
 
 
 ak4jetvars = ['nBJetLoose30_Recl,','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt','htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1','Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl','htJet25j_Recl','mhtJet25_Recl']
@@ -185,7 +185,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     spam    = ' --topSpamSize 1.0 --noCms '
     #legends = ' --legendFontSize 0.03 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 ' 
     legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
-    ubands  =  '  --showMCError ' # --showIndivSigs --noStackSig --showSigShape'
+    ubands  =  '  --uf  --showMCError ' # --showIndivSigs --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
     ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5 '#   --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' #
 
@@ -320,40 +320,6 @@ def makesimpleplots(year,useDressed=True):
 
     runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, year, nLep,extraopts,invert,cutFlow)
 ######################################
-def testTreesforWJest(year):
-    #baseDir = '/eos/cms/store/cmst3/group/dpsww/testWJ_htbinned/'
-    trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    #MCfriends   = []
-    #Datafriends = []
-    #friends     = ['testAM']
-    targetdir   = '/eos/user/a/anmehta/www/VVsemilep/WJest/{year}/plots_{date}/'.format(year=year,date=date)
-    fmca        = 'vvsemilep/fullRun2/mca-includes/mca-mc.txt' #mca-semilep-gen.txt'
-    fsyst       = ''
-    fplots      = 'vvsemilep/fullRun2/plots.txt'
-    fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
-    bareNano    = False
-    cutFlow     = False
-    processes   = ['WJets','WW','WZ','singletop','tt','data']
-    #cuts_onelep   = ['singlelep']
-    disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
-    showratio=False
-    applylepSFs=False
-    nLep=1
-    plotvars   = wjest #dressedLepvars if useDressed else barelepvars 
-
-    disable   = []; enable=['testwjCR']
-    ratio     = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  1.75'
-    spam      = ' --topSpamSize 1.0 --noCms '
-    legends   = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
-    anything  = ' --plotmode norm  --showMCError' # --ratioNums aTGC,aTGC_SM,aTGC_incl --ratioDen WW --ratioYLabel=/SM(e) ' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
-    extraopts = ratio + spam + legends +  anything
-    makeplots  = ['{}'.format(a)  for a in plotvars]
-
-
-
-    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs,year, nLep,extraopts,invert,cutFlow)
-
-##############################################################################################
 
 
 
@@ -401,8 +367,6 @@ if __name__ == '__main__':
         makeResults(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.sel,opts.postfix,plotV,opts.dCF,opts.WJest,opts.fCR,opts.WC,opts.acP,opts.acC,opts.wjD)
     if opts.alpha:
         alphaRatio(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.applylepSFs,opts.postfix,opts.plotvar)
-    if opts.WJest:
-        testTreesforWJest(opts.year)
     if opts.simple:
         makesimpleplots(opts.year,opts.genDressed)
         #    if opts.fid:

@@ -14,10 +14,10 @@ echo "i am in this directory ${PWD} and making this plot ${5}"
 
 
 if [[ $# -eq 6 ]]; then
-    python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --applylepSFs --pf FC #--doWJ --pf FC ##--dCF ##--runblind 
-    python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --applylepSFs  --doWJ --pf FC #--pf sdMlt150--dCF 
+    #python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --applylepSFs #--pf FC #--doWJ --pf FC ##--dCF ##--runblind 
+    python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --applylepSFs  --doWJ --pf withHEMwt #--pf sdMlt150--dCF 
 else
-    python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --WC ${8} --applylepSFs  ##--runblind --dCF
+    python plots_VVsemilep.py --results --dW plots --year ${2} --nLep 1 --finalState ${3} --pv ${6}  --sel ${4} --lf ${5} --WC ${8} --applylepSFs  --pf withHEMwt ##--runblind --dCF
 fi
 
 #python runDPS.py --asym --dW plots --year ${2} --finalState ${3}  --applylepSFs  --pf asym_chk 
