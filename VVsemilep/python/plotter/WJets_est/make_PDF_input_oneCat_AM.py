@@ -32,12 +32,14 @@ parser.add_option('--savep', action='store_false', dest='savep', default=True, h
 parser.add_option('-v', action='store_true', dest='verbose', default=False, help='print model outputs etc.')
 parser.add_option('-c', '--ch', dest='chan', default='elmu', help='channel, el, mu or elmu')
 parser.add_option('-y', '--yr', dest='year', default='2018', help='year to run on, 2016, 2016APV, 2017 or 2018')
+parser.add_option('--pf', dest='pf', default='', help='pf to be used with (root) inputs and (root) outputs ')
 parser.add_option('--noatgcint', action='store_true', dest='noatgcint', default=False, help='set atgc-interference coefficients to zero')
 parser.add_option('--printatgc', action='store_true', default=False, help='print atgc-interference contribution')
 parser.add_option('--atgc', action='store_true', dest='atgc', default=False, help='use anomalous coupling parametrization instead of EFT')
 parser.add_option('--inPath', action="store",type="string",dest="inPath",default="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/")
 parser.add_option('--uS', action='store_true', dest='useSkim', default=False, help='use skimmed trees or friends')
-
+parser.add_option('--hi', action='store', dest='mlvj_hi', type='float', default=4550, help='dont change atm!')
+parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=950, help='set lower cut on MWV, mat cause problems')
 (options,args) = parser.parse_args()
 
 
@@ -72,18 +74,18 @@ if not os.path.isdir(final_cardsdir_name):  os.system("mkdir -p %s"%final_cardsd
 
 class Prepare_workspace_4limit:
 
-        def __init__(self,year,ch,mlvj_lo,mlvj_hi,pf=""):
+        def __init__(self,year,ch): #,mlvj_lo,mlvj_hi,pf=""):
             
             self.POI                    = ['cwww','cw','cb']
             self.PAR_TITLES             = {'cwww' : '#frac{c_{WWW}}{#Lambda^{2}}', 'cw' : '#frac{c_{W}}{#Lambda^{2}}', 'cb' : '#frac{c_{B}}{#Lambda^{2}}'}#latex titles 
             self.PAR_MAX                = {'cwww' : 3.6, 'cw' : 4.5, 'cb' : 20}#atgc points
             self.ch                     = ch
-            self.binlo                  = mlvj_lo                #lower bound on invariant mass
-            self.binhi                  = mlvj_hi                #upper bound
-            self.year                   = year
-            self.pf                     = "_"+pf if len(pf) >0 else ""
+            self.mlvj_lo                = options.mlvj_lo                #lower bound on invariant mass
+            self.mlvj_hi                = options.mlvj_hi                #upper bound
+            self.year                   = options.year
+            self.pf                     = "_"+options.pf if len(options.pf) >0 else ""
             self.channel                = self.ch
-            self.nbins                  = (self.binhi-self.binlo)/100
+            self.nbins                  = (self.mlvj_hi-self.mlvj_lo)/100
             self.file_Directory         = os.path.join(self.year,trees_b)
             self.file1_Directory        = os.path.join(self.year,trees_r)
 
@@ -102,19 +104,19 @@ class Prepare_workspace_4limit:
             eos='/eos/user/a/anmehta/www/VVsemilep/WJest/%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date)
             if not os.path.isdir(eos): os.system("mkdir %s"%eos)
             if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+eos)
-            self.plotsDir = eos+'/plots_aTGC_%s_%s_%s_%s_%s%s' %(self.channel,self.wtagger_label,self.binlo,int(self.binhi),"weighted" if useWts else "unweighted",self.pf)
+            extra_str="%s%s"%("weighted" if useWts else "unweighted",self.pf)
+            self.plotsDir = eos+'/plots_aTGC_%s_%s_%s_%s_%s' %(self.channel,self.wtagger_label,self.mlvj_lo,int(self.mlvj_hi),extra_str)
             if not os.path.isdir(self.plotsDir): os.system("mkdir %s"%self.plotsDir)
             os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
             os.system("cp make_PDF_input_oneCat_AM.py "+self.plotsDir)
-            self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,self.binlo,int(self.binhi)) ##AM date
-            #            self.rlt_DIR_name="Cards/%s/cards_%s_%s_newfrnds_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',"weighted" if useWts else "unweighted",self.channel,self.wtagger_label,self.binlo,int(self.binhi)) ##AM date
+            self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',extra_str,self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))##date
 
             ##read workspace containing background pdfs
-            fileInWs                    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.binhi)))
+            fileInWs                    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.mlvj_hi)))
             w                           = fileInWs.Get('workspace4limit_')
             self.rrv_mass_lvj           = w.var('rrv_mass_lvj')
             self.rrv_mass_lvj.SetTitle('m_{WV}')
-            self.rrv_mass_lvj.setRange(self.binlo,self.binhi)
+            self.rrv_mass_lvj.setRange(self.mlvj_lo,self.mlvj_hi)
             self.rrv_mass_j             = w.var('rrv_mass_j')
 
             #names of bkg contributions and regions
@@ -133,29 +135,29 @@ class Prepare_workspace_4limit:
             for WV in ['WW','WZ']:
                 #create 3 histograms for each aTGC parameter (positive, negative and positive-negative working point)
                 for para in self.POI:
-                    hists4scale['c_pos_%s_hist_%s'%(WV,para)] = TH1F('c_pos_%s_hist_%s'%(WV,para),'c_pos_%s_hist_%s'%(WV,para),self.nbins,self.binlo,self.binhi);
-                    hists4scale['c_neg_%s_hist_%s'%(WV,para)] = TH1F('c_neg_%s_hist_%s'%(WV,para),'c_neg_%s_hist_%s'%(WV,para),self.nbins,self.binlo,self.binhi);
-                    hists4scale['c_sm_lin_quad_%s_hist_%s'%(WV,para)] = TH1F('c_sm_lin_quad_%s_hist_%s'%(WV,para),'c_sm_lin_quad_%s_hist_%s'%(WV,para),self.nbins,self.binlo,self.binhi);
+                    hists4scale['c_pos_%s_hist_%s'%(WV,para)] = TH1F('c_pos_%s_hist_%s'%(WV,para),'c_pos_%s_hist_%s'%(WV,para),self.nbins,self.mlvj_lo,self.mlvj_hi);
+                    hists4scale['c_neg_%s_hist_%s'%(WV,para)] = TH1F('c_neg_%s_hist_%s'%(WV,para),'c_neg_%s_hist_%s'%(WV,para),self.nbins,self.mlvj_lo,self.mlvj_hi);
+                    hists4scale['c_sm_lin_quad_%s_hist_%s'%(WV,para)] = TH1F('c_sm_lin_quad_%s_hist_%s'%(WV,para),'c_sm_lin_quad_%s_hist_%s'%(WV,para),self.nbins,self.mlvj_lo,self.mlvj_hi);
                     hists4scale['c_pos_%s_hist_%s'%(WV,para)].Sumw2(kTRUE)
                     hists4scale['c_neg_%s_hist_%s'%(WV,para)].Sumw2(kTRUE)
                     hists4scale['c_sm_lin_quad_%s_hist_%s'%(WV,para)].Sumw2(kTRUE)
-                    hists4scale['c_quad_%s_hist_%s'%(WV,para)]=TH1F('c_quad_%s_hist_%s'%(WV,para),'c_quad_%s_hist_%s'%(WV,para),self.nbins,self.binlo,self.binhi); hists4scale['c_quad_%s_hist_%s'%(WV,para)].Sumw2(kTRUE)
+                    hists4scale['c_quad_%s_hist_%s'%(WV,para)]=TH1F('c_quad_%s_hist_%s'%(WV,para),'c_quad_%s_hist_%s'%(WV,para),self.nbins,self.mlvj_lo,self.mlvj_hi); hists4scale['c_quad_%s_hist_%s'%(WV,para)].Sumw2(kTRUE)
 
                 #add histograms for SM and all aTGC parameters unequal to zero
-                hists4scale['c_sm_%s_hist'%WV]                  = TH1F('c_sm_%s_hist'%WV,'c_sm_%s_hist'%WV,self.nbins,self.binlo,self.binhi);                
-                hists4scale['c_%s_histall3'%WV]                 = TH1F('c_%s_histall3'%WV,'c_%s_histall3'%WV,self.nbins,self.binlo,self.binhi);
+                hists4scale['c_sm_%s_hist'%WV]                  = TH1F('c_sm_%s_hist'%WV,'c_sm_%s_hist'%WV,self.nbins,self.mlvj_lo,self.mlvj_hi);                
+                hists4scale['c_%s_histall3'%WV]                 = TH1F('c_%s_histall3'%WV,'c_%s_histall3'%WV,self.nbins,self.mlvj_lo,self.mlvj_hi);
                 hists4scale['c_sm_%s_hist'%WV].Sumw2(kTRUE)
                 hists4scale['c_%s_histall3'%WV].Sumw2(kTRUE)
 
 		# Add histograms for two aTGC parameters positive
-		hists4scale['c_cwww_cw_%s_hist'%WV]=TH1F('c_cwww_cw_%s_hist'%WV,'c_cwww_cw_%s_hist'%WV,self.nbins,self.binlo,self.binhi);
-		hists4scale['c_cw_cb_%s_hist'%WV]=TH1F('c_cw_cb_%s_hist'%WV,'c_cw_cb_%s_hist'%WV,self.nbins,self.binlo,self.binhi);
+		hists4scale['c_cwww_cw_%s_hist'%WV]=TH1F('c_cwww_cw_%s_hist'%WV,'c_cwww_cw_%s_hist'%WV,self.nbins,self.mlvj_lo,self.mlvj_hi);
+		hists4scale['c_cw_cb_%s_hist'%WV]=TH1F('c_cw_cb_%s_hist'%WV,'c_cw_cb_%s_hist'%WV,self.nbins,self.mlvj_lo,self.mlvj_hi);
 		hists4scale['c_cwww_cw_%s_hist'%WV].Sumw2(kTRUE)
 		hists4scale['c_cw_cb_%s_hist'%WV].Sumw2(kTRUE)
 
 		# Add histograms for aTGC-aTGC interference terms
-		hists4scale['c_int_cwww_cw_%s_hist'%WV]=TH1F('c_int_cwww_cw_%s_hist'%WV,'c_int_cwww_cw_%s_hist'%WV,self.nbins,self.binlo,self.binhi);
-		hists4scale['c_int_cw_cb_%s_hist'%WV]=TH1F('c_int_cw_cb_%s_hist'%WV,'c_int_cw_cb_%s_hist'%WV,self.nbins,self.binlo,self.binhi);
+		hists4scale['c_int_cwww_cw_%s_hist'%WV]=TH1F('c_int_cwww_cw_%s_hist'%WV,'c_int_cwww_cw_%s_hist'%WV,self.nbins,self.mlvj_lo,self.mlvj_hi);
+		hists4scale['c_int_cw_cb_%s_hist'%WV]=TH1F('c_int_cw_cb_%s_hist'%WV,'c_int_cw_cb_%s_hist'%WV,self.nbins,self.mlvj_lo,self.mlvj_hi);
 		hists4scale['c_int_cwww_cw_%s_hist'%WV].Sumw2(kTRUE)
 		hists4scale['c_int_cw_cb_%s_hist'%WV].Sumw2(kTRUE)
 
@@ -186,7 +188,7 @@ class Prepare_workspace_4limit:
                     dphifjlep=treeIn.dphi_fjlep > 2.0 
                     dphifjmet=treeIn.dphi_fjmet > 2.0 
                     ptWlep=treeIn.pTWlep > 200
-                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 45 and  MWW>self.binlo
+                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 45 and  MWW>self.mlvj_lo
                     if (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m if self.channel == "mu" else  abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )  and treeIn.Lep1_pt > 50  and  boosted_sel and treeIn.pmet > 110 and treeIn.nBJetMedium30 == 0:
 
 			#weight_part =1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Selak8Jet1_pNetWtagSF*lumis[self.year]/treeIn.sumw 
@@ -260,7 +262,7 @@ class Prepare_workspace_4limit:
 		self.Import_to_ws(self.wtmp, [N3645,N4520,N36,N36_,N45,N45_,N20,N20_,N_sm_lin_quad_cb,N_sm_lin_quad_cwww,N_sm_lin_quad_cw,N_quad_cb,N_quad_cwww,N_quad_cw])
 
             #write histograms to file
-            fileOut        = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.binlo,self.binhi),'recreate')
+            fileOut        = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.mlvj_lo,self.mlvj_hi),'recreate')
             for key in hists4scale:
                 hists4scale[key].Write()
             print ('--------> Written to file ' + fileOut.GetName())
@@ -270,9 +272,9 @@ class Prepare_workspace_4limit:
             can     = [];can2    = [];      plots   = [];     plots2  = []; pads    = [];
             channel = self.ch+'_'+cat
             for i in range(3):
-                rrv_x.setRange(self.binlo,self.binhi)
-                p       = rrv_x.frame(self.binlo,self.binhi)
-                p2      = rrv_x.frame(self.binlo,self.binhi)
+                rrv_x.setRange(self.mlvj_lo,self.mlvj_hi)
+                p       = rrv_x.frame(self.mlvj_lo,self.mlvj_hi)
+                p2      = rrv_x.frame(self.mlvj_lo,self.mlvj_hi)
                 c       = TCanvas(cat+'_'+self.POI[i]+'-',self.POI[i]+'-',600,600)
                 c.cd()
                 CMS_lumi.lumi_13TeV = "%s fb^{-1}" %str(lumis[self.year])
@@ -342,7 +344,7 @@ class Prepare_workspace_4limit:
                 plots[i].GetXaxis().SetLabelOffset(99999)
 
                 plots[i].Draw()
-                ndof        = (self.binhi-self.binlo)/100 - 4
+                ndof        = (self.mlvj_hi-self.mlvj_lo)/100 - 4
                 plots[i].Print()
                 
                 parlatex        = ['#frac{c_{WWW}}{#Lambda^{2}}','#frac{c_{W}}{#Lambda^{2}}','#frac{c_{B}}{#Lambda^{2}}']
@@ -365,7 +367,7 @@ class Prepare_workspace_4limit:
                 leg.Print()
 
                 pads[i][1].cd();                pads[i][1].SetTopMargin(0.03);  pads[i][1].SetBottomMargin(0.3)##HERE
-                ratio_style = ROOT.TH1D('ratio_style','ratio_style',(self.binhi-self.binlo)/100,self.binlo,self.binhi)
+                ratio_style = ROOT.TH1D('ratio_style','ratio_style',(self.mlvj_hi-self.mlvj_lo)/100,self.mlvj_lo,self.mlvj_hi)
                 ratio_style.SetMarkerStyle(21)
                 ratio_style.SetLineColor(kBlack);ratio_style.SetLineWidth(1);
                 ratio_style.SetMaximum(3)
@@ -465,8 +467,8 @@ class Prepare_workspace_4limit:
             cb.setConstant(kTRUE);
    
             #get SM and other histograms and make RooDataHists
-            fileInHist      = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.binlo,self.binhi))
-            rrv_x.setRange(self.binlo,self.binhi)
+            fileInHist      = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.mlvj_lo,self.mlvj_hi))
+            rrv_x.setRange(self.mlvj_lo,self.mlvj_hi)
             SMdatahist       = RooDataHist('SMdatahist_%s'     %sample,'SMdatahist_%s'     %sample,RooArgList(rrv_x),fileInHist.Get('c_sm_%s_hist'%sample))
 	    cwwwPosDataHist  = RooDataHist('cwwwPosDataHist_%s'%sample,'cwwwPosDataHist_%s'%sample,RooArgList(rrv_x),fileInHist.Get('c_pos_%s_hist_cwww'%sample))
 	    cwwwNegDataHist  = RooDataHist('cwwwNegDataHist_%s'%sample,'cwwwNegDataHist_%s'%sample,RooArgList(rrv_x),fileInHist.Get('c_neg_%s_hist_cwww'%sample))
@@ -535,8 +537,8 @@ class Prepare_workspace_4limit:
                 
             for i in range(len(self.POI)):
                 s_name          = self.POI[i] + '_' + channel #added to parameter names
-                fileInHist      = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.binlo,self.binhi))
-                rrv_x.setRange(self.binlo,self.binhi)                
+                fileInHist      = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.mlvj_lo,self.mlvj_hi))
+                rrv_x.setRange(self.mlvj_lo,self.mlvj_hi)                
                 pos_datahist            = RooDataHist('pos_datahist_%s_%s'%(sample,self.POI[i]),'pos_datahist_%s_%s'%(sample,self.POI[i]),RooArgList(rrv_x),fileInHist.Get('c_pos_%s_hist_%s'%(sample,self.POI[i])))
                 neg_datahist            = RooDataHist('neg_datahist_%s_%s'%(sample,self.POI[i]),'neg_datahist_%s_%s'%(sample,self.POI[i]),RooArgList(rrv_x),fileInHist.Get('c_neg_%s_hist_%s'%(sample,self.POI[i])))
                 sm_lin_quad_datahist    = RooDataHist('sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i]),'sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i]),RooArgList(rrv_x),fileInHist.Get('c_sm_lin_quad_%s_hist_%s'%(sample,self.POI[i])))
@@ -851,7 +853,7 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
             self.Make_signal_pdf(self.rrv_mass_lvj,'WZ')
 
             #read, rename and write bkg pdfs and bkg rates
-            fileInWs    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.binhi)))
+            fileInWs    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,int(self.mlvj_lo),int(self.mlvj_hi)))
             w_bkg       = fileInWs.Get('workspace4limit_') 
 
             for bkg in ['WJets','TTbar','STop','WW','WZ']:
@@ -1035,9 +1037,9 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
 if __name__ == '__main__':
 
     if options.chan=='elmu':
-        makeWS_el        = Prepare_workspace_4limit(options.year,'el',950,4550,"")
+        makeWS_el        = Prepare_workspace_4limit(options.year,'el')#,950,4550,options.pf)
         combineCardName_el=makeWS_el.Make_input()
-        makeWS_mu        = Prepare_workspace_4limit(options.year,'mu',950,4550,"")
+        makeWS_mu        = Prepare_workspace_4limit(options.year,'mu')#,950,4550,options.pf)
         combineCardName_mu=makeWS_mu.Make_input()
         output_card_name='aC_WWWZ_simfit'
         cmd = 'combineCards.py aC_WWWZ_sig_el_{yr}_{dd}.txt aC_WWWZ_sig_mu_{yr}_{dd}.txt aC_WWWZ_sb_lo_el_{yr}_{dd}.txt aC_WWWZ_sb_lo_mu_{yr}_{dd}.txt aC_WWWZ_sb_hi_el_{yr}_{dd}.txt aC_WWWZ_sb_hi_mu_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date)
