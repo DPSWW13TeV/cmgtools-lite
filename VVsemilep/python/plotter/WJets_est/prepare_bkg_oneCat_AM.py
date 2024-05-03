@@ -2265,7 +2265,7 @@ objName ==objName_before ):
                 data_category.defineType("sig");
                 combData     = RooDataSet("combData"+label+"_"+self.channel,"combData"+label+"_"+self.channel,RooArgSet(rrv_mass_lvj, data_category, rrv_weight),RooFit.WeightVar(rrv_weight) );
                 combData4fit = RooDataSet("combData4fit"+label+"_"+self.channel,"combData4fit"+label+"_"+self.channel,RooArgSet(rrv_mass_lvj, data_category, rrv_weight),RooFit.WeightVar(rrv_weight) );
-                print "IMPCHK N entries: ", treeIn.GetEntries(),"\t",label,"\t",self.channel
+                #                print "IMPCHK N entries: ", treeIn.GetEntries(),"\t",label,"\t",self.channel
                 for i in range(treeIn.GetEntries()):
                     if i % 1000000 == 0: print "iEntry: ",i
                     treeIn.GetEntry(i);
@@ -2285,7 +2285,7 @@ objName ==objName_before ):
                     if (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m if self.channel == "mu" else  abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )  and  boosted_sel and lep_sel:
                         self.isGoodEvent = 1;                          tmp_event_weight4fit=1.0;                        totEventWeight=1.0
                     if self.isGoodEvent == 1:
-                        print "IMPCHK event number passing the selection \t ",treeIn.event_presel
+                        print "IMPCHK event number for \t",label,"\tpassing the selection\t",treeIn.event_presel
                         evtWt=treeIn.evt_wt #treeIn.pu_prefiring_wt*treeIn.prescale_wt*treeIn.hem_wt #evt_wt=pu*prefiring*prescale*hem
                         if "data" in label:
                             totEventWeight = evtWt #treeIn.prescale_wt #
