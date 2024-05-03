@@ -185,7 +185,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     spam    = ' --topSpamSize 1.0 --noCms '
     #legends = ' --legendFontSize 0.03 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 ' 
     legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
-    ubands  =  '  --uf  --showMCError ' # --showIndivSigs --noStackSig --showSigShape'
+    ubands  =  '    --showMCError ' # --showIndivSigs --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
     ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5 '#   --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' #
 
@@ -395,4 +395,4 @@ if __name__ == '__main__':
 #python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf mu --year 2018 --dW cards
 
 #python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_sDrop_mass --lf mu --year 2018 --dW plots  --applylepSFs
-#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv test --lf mu --year 2018 --dW plots  --applylepSFs
+#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv debugsel --lf mu --year 2018 --dW plots  --applylepSFs

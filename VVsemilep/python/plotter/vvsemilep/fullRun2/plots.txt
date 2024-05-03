@@ -4,7 +4,7 @@
 
 ak8_mass           : Selak8Jet1_msoftdrop : 21, 45,150 ; XTitle="sdmass"
 mWV_reco           : mWV : 36,950,4550  ; XTitle="mWV", Logy, MoreY=10
-test       : mWV_dumy : 36,950,4550  ; XTitle="mWV"
+debugsel       : mWV_dumy : 36,950,4550  ; XTitle="mWV"
 
 ttmWV_typ0_pmet_boosted : mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0): 36,950,4550; XTitle="mWV", MoreY=10,Logy, MaxDigi,IncludeOverflows=False
 
