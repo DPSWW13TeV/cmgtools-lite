@@ -166,7 +166,7 @@ class vvsemilep_TreeForWJestimation(Module):
             pNetWscore=0.0;pnetsf=1.0;
             pNetWscore=(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq'))/(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq')+getattr(jets[jet],'particleNetMD_QCD'))
             #print "event \t",event.event,"\t pNetWscore \t",pNetWscore
-            pnetsf=self.pNetSFMD_WvsQCD(j.pt,event.year,event.suberaId) if not isData else 1.0
+            pnetsf=self.pNetSFMD_WvsQCD(getattr(jets[jet],"pt"),event.year,event.suberaId) if not isData else 1.0
             self.out.fillBranch('Selak8Jet%d_pNetWtagSF'%(jet+1),pnetsf)
             self.out.fillBranch('Selak8Jet%d_pNetWtagscore'%(jet+1), pNetWscore)
 

@@ -591,12 +591,13 @@ class Prepare_workspace_4limit:
                 N_pos_tmp         = pos_datahist.sumEntries()
                 N_neg_tmp         = neg_datahist.sumEntries()
                 N_quad            = RooRealVar('N_quad_%s'%s_name,'N_quad_%s'%s_name, ((N_pos_tmp+N_neg_tmp)/2)-N_SM.getVal())# if  not (self.POI[i]=='cb'  and sample=='WZ') else 0)
+                N_lin             = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,((N_pos_tmp+N_neg_tmp)/2)-N_SM.getVal()) 
                 #scaleshape is the relative change to SM
                 print "$$$$$$$$$$$$$$$$$thats the sname",s_name
                 scaleshape       = RooFormulaVar('scaleshape_%s'%s_name,'scaleshape_%s'%s_name, '(@0*@2+@1*@2**2)', RooArgList(par1,par2,self.wtmp.var(self.POI[i])))
                 #FIXME only very few atgc events for cb in WZ sample, fit doesn't work yet -> different parametrization, starting values+ranges or leave out completely
                 if  self.POI[i]=='cb': #  and sample=='WZ': #so cb for WW is also modeled using exponential
-                    N_lin       = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,(N_pos_tmp-N_neg_tmp)/2) ##0 
+                    #N_lin       = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,(N_pos_tmp-N_neg_tmp)/2) ##0 
                     a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.1,-2,0.)
                     a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
                     a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.0001,-0.1,0.)
@@ -605,7 +606,7 @@ class Prepare_workspace_4limit:
 
                 else:
 		    #N_lin      = RooRealVar('N_lin_%s'%s_name,'N_lin_%s'%s_name, 0 )
-                    N_lin       = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,(N_pos_tmp-N_neg_tmp)/2)
+                    #N_lin       = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,(N_pos_tmp-N_neg_tmp)/2)
                     a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.001,-0.01,0.1)
                     a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps))
                     a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.001,-0.01,0.1)
@@ -1046,7 +1047,8 @@ if __name__ == '__main__':
         #return True 
         
     else:
-        makeWS        = Prepare_workspace_4limit(options.year,options.chan,950,4550,"")
+        
+        makeWS        = Prepare_workspace_4limit(options.year,options.chan)
         makeWS.Make_input()
     #combine the created datacards
     #output_card_name = '%s/aC_WWWZ_simfit'%self.combine_cards_dir

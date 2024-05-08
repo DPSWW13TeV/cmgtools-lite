@@ -22,9 +22,9 @@ localTrees='local_dir_NAME/'
 Trees='NanoTrees_v9_vvsemilep_06012023/'
 nEvt=120000 
 Parent=${baseDir}/${Trees}/${year}
-BCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ${Parent}/";
+BCORE="python prepareEventVariablesFriendTree.py -a group_u_CMST3.all -t NanoAOD ${Parent} ${Parent}/";
 TBCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ";
-CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
+CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules ";
 
 
 ###################################################
