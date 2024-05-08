@@ -14,7 +14,7 @@ def if3(cond, iftrue, iffalse):
     return iftrue if cond else iffalse
 
 class vvsemilep_TreeForWJestimation(Module):
-    def __init__(self, lepMultiplicity, fjetMultiplicity, selection,mvar='sD'):
+    def __init__(self,lepMultiplicity, fjetMultiplicity, selection,mvar='sD'):
         self.lepMultiplicity=lepMultiplicity
         self.fjetMultiplicity=fjetMultiplicity
         self.fjetMultiplicity=fjetMultiplicity
@@ -164,7 +164,8 @@ class vvsemilep_TreeForWJestimation(Module):
             for var in 'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore#,msoftdrop particleNet_mass,
                 self.out.fillBranch('Selak8Jet%d_%s'%(jet+1,var), getattr(jets[jet],var))
             pNetWscore=0.0;pnetsf=1.0;
-            pNetWscore=(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xqq'))/(getattr(j,'particleNetMD_Xcc')+getattr(j,'particleNetMD_Xqq')+getattr(j,'particleNetMD_QCD'))
+            pNetWscore=(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq'))/(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq')+getattr(jets[jet],'particleNetMD_QCD'))
+            #print "event \t",event.event,"\t pNetWscore \t",pNetWscore
             pnetsf=self.pNetSFMD_WvsQCD(j.pt,event.year,event.suberaId) if not isData else 1.0
             self.out.fillBranch('Selak8Jet%d_pNetWtagSF'%(jet+1),pnetsf)
             self.out.fillBranch('Selak8Jet%d_pNetWtagscore'%(jet+1), pNetWscore)

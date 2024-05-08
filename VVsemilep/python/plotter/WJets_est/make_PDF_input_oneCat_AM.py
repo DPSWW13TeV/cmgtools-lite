@@ -1,20 +1,19 @@
-##mWV model is now Exp for WJ
-import ROOT
-from array import array
-from optparse import OptionParser
-from ConfigParser import SafeConfigParser
-import math as math
-import random
-import os
-import datetime
-date = datetime.date.today().isoformat()
-import CMS_lumi, tdrstyle
-ROOT.gSystem.Load("PDFs/PdfDiagonalizer_cc.so")
-ROOT.gSystem.Load("PDFs/Util_cxx.so")
-ROOT.gStyle.SetOptStat(0)
-ROOT.gStyle.SetOptTitle(0)
-ROOT.gROOT.SetBatch(True)
-ROOT.gStyle.SetTextFont(42)
+#import ROOT
+#from array import array
+#from optparse import OptionParser
+#from ConfigParser import SafeConfigParser
+#import math as math
+#import random
+#import os
+##import datetime
+##date = "2024-05-03" #datetime.date.today().isoformat()
+#import CMS_lumi, tdrstyle
+#ROOT.gSystem.Load("PDFs/PdfDiagonalizer_cc.so")
+#ROOT.gSystem.Load("PDFs/Util_cxx.so")
+#ROOT.gStyle.SetOptStat(0)
+#ROOT.gStyle.SetOptTitle(0)
+#ROOT.gROOT.SetBatch(True)
+#ROOT.gStyle.SetTextFont(42)
 
 from prepare_bkg_oneCat_AM import *
 vetoPlots=['cwww_WW_lin','cwww_WZ_lin','cb_WZ_lin','cb_WZ_quad']
@@ -26,20 +25,17 @@ from ROOT import TGaxis, TPaveText, TLatex, TString, TFile,TLine, TLegend, TCanv
 ROOT.RooMsgService.instance().setGlobalKillBelow(RooFit.FATAL)
 
 parser        = OptionParser()
-parser.add_option('-r', '--readtrees', action='store_true', dest='readtrees', default=False, help='recreate aTGC histograms')
+
 parser.add_option('-p', '--plots', action='store_false', dest='Make_plots', default=True, help='make plots')
-parser.add_option('--savep', action='store_false', dest='savep', default=True, help='save plots')
 parser.add_option('-v', action='store_true', dest='verbose', default=False, help='print model outputs etc.')
 parser.add_option('-c', '--ch', dest='chan', default='elmu', help='channel, el, mu or elmu')
 parser.add_option('-y', '--yr', dest='year', default='2018', help='year to run on, 2016, 2016APV, 2017 or 2018')
 parser.add_option('--pf', dest='pf', default='', help='pf to be used with (root) inputs and (root) outputs ')
-parser.add_option('--noatgcint', action='store_true', dest='noatgcint', default=False, help='set atgc-interference coefficients to zero')
 parser.add_option('--printatgc', action='store_true', default=False, help='print atgc-interference contribution')
-parser.add_option('--atgc', action='store_true', dest='atgc', default=False, help='use anomalous coupling parametrization instead of EFT')
-parser.add_option('--inPath', action="store",type="string",dest="inPath",default="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/")
 parser.add_option('--uS', action='store_true', dest='useSkim', default=False, help='use skimmed trees or friends')
 parser.add_option('--hi', action='store', dest='mlvj_hi', type='float', default=4550, help='dont change atm!')
 parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=950, help='set lower cut on MWV, mat cause problems')
+parser.add_option('--inPath', action="store",type="string",dest="inPath",default="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/")
 (options,args) = parser.parse_args()
 
 
@@ -84,6 +80,7 @@ class Prepare_workspace_4limit:
             self.mlvj_hi                = options.mlvj_hi                #upper bound
             self.year                   = options.year
             self.pf                     = "_"+options.pf if len(options.pf) >0 else ""
+            self.pf+="_withSkim" if options.useSkim else ""
             self.channel                = self.ch
             self.nbins                  = (self.mlvj_hi-self.mlvj_lo)/100
             self.file_Directory         = os.path.join(self.year,trees_b)
@@ -293,12 +290,9 @@ class Prepare_workspace_4limit:
 
             for i in range(3):
                 can[i].cd();
-                t2a = drawSLatex(0.1,0.90,"#bf{CMS} Preliminary",0.05);
-                t3a = drawSLatex(0.665,0.90,"%f fb^{#minus1} (13 TeV)"%(lumis[self.year]),0.05);
                 #CMS_lumi.CMS_lumi(pads[i][0], 4, 11,0.075);
                 pads[i][0].Update()
                 pads[i][0].Draw();                pads[i][1].Draw()
-                t2a.Draw();t3a.Draw();
                 pads[i][0].SetLeftMargin(0.1);    pads[i][1].SetLeftMargin(0.1)
                 norm = self.wtmp.function('normfactor_3d_%s'%channel)
 
@@ -342,7 +336,13 @@ class Prepare_workspace_4limit:
                 plots[i].GetYaxis().SetTitle('Events')
                 plots[i].GetYaxis().SetTitleSize(0.04);plots[i].GetYaxis().SetLabelSize(0.035);
                 plots[i].GetXaxis().SetLabelOffset(99999)
-
+                txt = ROOT.TText(2, 100, "Signal")
+                txt.SetTextSize(0.04)
+                txt.SetTextColor(ROOT.kRed)
+                #t2a = drawSLatex(0.1,0.90,"#bf{CMS} Preliminary",0.05);
+                #t3a = drawSLatex(0.665,0.90,"%f fb^{#minus1} (13 TeV)"%(lumis[self.year]),0.05);
+                #t2a.Draw();t3a.Draw();
+                plots[i].addObject(txt)
                 plots[i].Draw()
                 ndof        = (self.mlvj_hi-self.mlvj_lo)/100 - 4
                 plots[i].Print()
@@ -393,9 +393,8 @@ class Prepare_workspace_4limit:
                     pullhist_l.SetLineColor(ROOT.kAzure+10);pullhist_l.SetLineWidth(1);pullhist_l.SetMarkerColor(ROOT.kAzure+10);
                     pullhist_l.Draw("SAME P0E1")
                 can[i].Update()
-                if options.savep:
-                    can[i].SaveAs(self.plotsDir+'/%s_neg_%s.pdf'%(self.POI[i],channel))
-                    can[i].SaveAs(self.plotsDir+'/%s_neg_%s.png'%(self.POI[i],channel))
+                can[i].SaveAs(self.plotsDir+'/%s_neg_%s.pdf'%(self.POI[i],channel))
+                can[i].SaveAs(self.plotsDir+'/%s_neg_%s.png'%(self.POI[i],channel))
                 
 
                 for j in range(3):
@@ -441,9 +440,8 @@ class Prepare_workspace_4limit:
                 pullhist2.Draw("E1")
 
                 can2[i].Update()
-                if options.savep:
-                    can2[i].SaveAs(self.plotsDir+'/%s_pos_%s.pdf'%(self.POI[i],channel))
-                    can2[i].SaveAs(self.plotsDir+'/%s_pos_%s.png'%(self.POI[i],channel))
+                can2[i].SaveAs(self.plotsDir+'/%s_pos_%s.pdf'%(self.POI[i],channel))
+                can2[i].SaveAs(self.plotsDir+'/%s_pos_%s.png'%(self.POI[i],channel))
                     
 
 
@@ -457,7 +455,6 @@ class Prepare_workspace_4limit:
                     getattr(workspace,'import')(item)
 
         def Make_signal_pdf(self,rrv_x,sample):
-            
             channel        = self.ch+'_'+sample                #needed for variables that differ for WW and WZ
             cwww     = RooRealVar('cwww','cwww',0,-36,36);
             cw       = RooRealVar('cw','cw',0,-45,45);
@@ -641,11 +638,6 @@ class Prepare_workspace_4limit:
             Pdf_cwww_cw    = RooExponential('Pdf_cwww_cw_%s'%channel,'Pdf_cwww_cw_%s'%channel,rrv_x,a5)
             Pdf_cw_cb      = RooExponential('Pdf_cw_cb_%s'%channel,'Pdf_cw_cb_%s'%channel,rrv_x,a7)
 
-            if options.noatgcint:
-                cf = 0
-            else:
-                # cf was used originally for scaling MC to gen level interference terms, not needed anymore for that, hence set to 1
-                cf = 1
 
             # Get other coefficients
             NSM         = N_SM.getVal()
@@ -665,11 +657,11 @@ class Prepare_workspace_4limit:
             N__quad_cwww         = N_quad_cwww.getVal()        
 
             print "ylds\t",channel,"\t SM\t",NSM,"\tc3W(I)",N__sm_lin_quad_cwww,"\tc3W(Q)\t",N__quad_cwww,"\tcw(I)",N__sm_lin_quad_cw,"\tcW(Q)\t",N__quad_cw,"\tcb(Q)\t",N__quad_cb,"\t cb(I)\t",N__sm_lin_quad_cb
-            ##define final coefficients, scaled by cf
+ 
             N_cwww_cw      = RooRealVar('N_cwww_cw_%s'%channel,'N_cwww_cw_%s'%channel,\
-                                            cf*((N3645+NSM)-(N36+N45)))
+                                            ((N3645+NSM)-(N36+N45)))
             N_cw_cb        = RooRealVar('N_cw_cb_%s'%channel,'N_cw_cb_%s'%channel,\
-                                            cf*((N4520+NSM)-(N45+N20)))
+                                            ((N4520+NSM)-(N45+N20)))
             #self.wtmp.function('N_lin_%s_%s'%(self.POI[1],channel)),
             paralist.add(RooArgList(self.wtmp.function('N_quad_%s_%s'%(self.POI[0],channel)),self.wtmp.var('cwww'),\
                                     self.wtmp.function('N_quad_%s_%s'%(self.POI[1],channel)),self.wtmp.function('N_sm_lin_quad_%s_%s'%(self.POI[1],channel)),self.wtmp.var('cw'),\
@@ -845,8 +837,8 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
         def Make_input(self):
 
             #prepare variables, parameters and temporary workspace
-            if options.readtrees:
-                self.Read_ATGCtree(self.ch)
+            #if options.readtrees:
+            self.Read_ATGCtree(self.ch)
             
             #make and fit signal pdf for WW and WZ
             self.Make_signal_pdf(self.rrv_mass_lvj,'WW')

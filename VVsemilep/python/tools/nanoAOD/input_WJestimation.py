@@ -178,6 +178,7 @@ class input_WJestimation(Module):
             if tot_sel:
                 pNetWscore=(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq'))/(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq')+getattr(jets[jet],'particleNetMD_QCD'))
                 pnetsf=self.pNetSFMD_WvsQCD(getattr(jets[jet],'pt'),event.year,event.suberaId) if not isData else 1.0
+            #print "event \t",event.event,"\t pNetWscore \t",pNetWscore
             self.out.fillBranch('Selak8Jet%d_pNetWtagSF'%(jet+1),pnetsf)
             self.out.fillBranch('Selak8Jet%d_pNetWtagscore'%(jet+1), pNetWscore)
                 
