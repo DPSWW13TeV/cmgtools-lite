@@ -26,18 +26,21 @@ ww_atgc=['WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_4f','WmWpToLmNujj_01j_aTGC_4f_NLO_FX
 wz_atgc=['WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f','WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f','WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f',
 'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_4f','WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_4f','WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_4f']
 
-atgc=['WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1',
-'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1',
+atgc=[
 'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1',
+'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1',
+'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1',
 'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1',
+'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2',
+'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2',
 'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1',
 'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1',
+'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2',
+'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2'
 'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2',
 'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2',
-'WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2',
-'WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2',
-'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2',
-'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2']
+
+]
 
 
 

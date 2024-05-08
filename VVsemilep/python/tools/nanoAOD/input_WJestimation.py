@@ -160,7 +160,7 @@ class input_WJestimation(Module):
                 self.out.fillBranch('event_sel%d'%self.selection.index(isel),0)        
                 #print 'failed ',isel,event.event
                 break;
-        tot_sel= sel and len(leps) == 1 and  len(jets) > 0
+        tot_sel=sel and len(leps) == self.lepMultiplicity  and  len(jets) > 0
         self.out.fillBranch('event_sel',tot_sel)        
         self.out.fillBranch('nFj',event.nFatJetSel_Recl)
         self.out.fillBranch('nLep',len(leps))
