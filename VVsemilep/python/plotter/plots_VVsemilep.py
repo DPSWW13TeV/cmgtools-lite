@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import optparse, subprocess, ROOT, datetime, math, array, copy, os, re, sys
 import numpy as np
-eos='/eos/user/a/anmehta/www/VVsemilep/' ##save plots here
+#eos='/eos/user/a/anmehta/www/VVsemilep/' ##save plots here
+eos='/eos/user/c/ckomjati/www/'
 afs_am=os.getcwd()+'/'
 lumis = {
     '2016APV': '19.5',
@@ -183,13 +184,17 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     print (processes)
     signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
+
     #legends = ' --legendFontSize 0.03 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 ' 
     legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
     ubands  =  '    --showMCError ' # --showIndivSigs --noStackSig --showSigShape'
+
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
     ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5 '#   --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' #
 
+
     more = '' # --plotmode norm' if cutflow else ''
+
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
     #if doWhat == "plots" and ('SR' in selection or "sig" in selection):
@@ -291,7 +296,8 @@ def makesimpleplots(year,useDressed=True):
     MCfriends   = ['phi_var_v2']#2_toppT_rw']#genInfo'] #'2_toppT_rw']
     Datafriends = []
     friends     = []
-    targetdir = '/eos/user/a/anmehta/www/VVsemilep/GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') )
+    #targetdir = '/eos/user/a/anmehta/www/VVsemilep/GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') )
+    targetdir = '/eos/user/c/ckomjati/www/GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') )
     fmca        = 'vvsemilep/fullRun2/mca-includes/mca-mc.txt' #mca-semilep-gen.txt'
     fsyst       = ''
     fplots      = 'vvsemilep/fullRun2/plots.txt'
@@ -314,8 +320,14 @@ def makesimpleplots(year,useDressed=True):
     ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  2.15'
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
-    anything = ' --plotmode norm' #--showRatio  --ratioNums plus_sm_lin_quad_cwww --ratioDen minus_sm_lin_quad_cwww --ratioYLabel=plus/minus --plotmode nostack' #sm,sm_lin_quad_cwww,aTGC_WW_SM_incl --ratioDen WW  #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
+
+
+    anything = ' --showRatio   --showMCError --ratioNums WW,sm_lin_quad_cwww --ratioDen sm --ratioYLabel=/SM(e) ' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
+
+    #anything = ' --plotmode norm' #--showRatio  --ratioNums plus_sm_lin_quad_cwww --ratioDen minus_sm_lin_quad_cwww --ratioYLabel=plus/minus --plotmode nostack' #sm,sm_lin_quad_cwww,aTGC_WW_SM_incl --ratioDen WW  #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
+
     extraopts = ratio + spam + legends + anything
+
     makeplots  = ['{}'.format(a)  for a in plotvars]
 
     runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, year, nLep,extraopts,invert,cutFlow)

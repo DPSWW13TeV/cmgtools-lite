@@ -155,10 +155,6 @@ aTGC_WW_SM_incl : WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f: 0.67*xsec*pNetSFMD_WvsQC
 ##,genSumWeightName="LHEReweightingSumw[62]*genEventSumw"#,LineStyle=3,SkipMe=True
 
 
-
-
-
-
 #SM point 0.66*LHEReweightingWeight[62]. starting point 0.66*LHEReweightingWeight[124]
 
 
