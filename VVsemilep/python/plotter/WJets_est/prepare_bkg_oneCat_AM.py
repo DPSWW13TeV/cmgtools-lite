@@ -2941,7 +2941,7 @@ objName ==objName_before ):
 ### funtion to run the complete alpha analysis
 def pre_limit_sb_correction(method, year,ch, in_mj_min=45, in_mj_max=150, in_mlvj_min=950, in_mlvj_max=options.mlvj_hi, fit_model="Exp", fit_model_alter="ExpN",pf=""): 
 
-    print "#################### pre_limit_sb_correction: year %s channel %s, max and min mJ %f-%f, max and min mlvj %f-%f, fit model %s and alternate %s ######################"%(year,channel,in_mj_min,in_mj_max,in_mlvj_min,in_mlvj_max,fit_model,fit_model_alter);
+    print "#################### pre_limit_sb_correction: year %s channel %s, max and min mJ %f-%f, max and min mlvj %f-%f, fit model %s and alternate %s ######################"%(year,ch,in_mj_min,in_mj_max,in_mlvj_min,in_mlvj_max,fit_model,fit_model_alter);
     
     boostedW_fitter=doFit_wj_and_wlvj(year,ch,in_mj_min,in_mj_max,in_mlvj_min,in_mlvj_max,fit_model,fit_model_alter,pf);
     getattr(boostedW_fitter,"analysis_sideband_correction_%s"%(method) )();

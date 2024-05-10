@@ -2,9 +2,8 @@ import os,sys, re, ROOT,optparse
 from array import array
 from glob import glob
 #from  printnEvt import printnEvt
-#fN=sys.argv[1]
 year=sys.argv[1]
-frnds="0_wjest_v2_copy" #0_wjest_newCuts_v1/"
+frnds=sys.argv[2] #"wjest_skim" #0_wjest_v2_copy" #0_wjest_newCuts_v1/"
 eospath="/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/"
 #files=[]
 outname=frnds+"_addOns" 
@@ -45,7 +44,7 @@ atgc=[
 
 
 
-samples=top+atgc +stop +wjets+more
+samples=top + atgc +stop +wjets+more
 
 def printnEvt(fN,yr):
     files=[] 
