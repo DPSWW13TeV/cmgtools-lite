@@ -1,3 +1,4 @@
+###FIXME : add leptight variables
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 import ROOT as r 
@@ -11,7 +12,8 @@ from copy import deepcopy
 class saveVtaggedJet(Module):
     def __init__(self,isMC,massVar='sD',jecs=[]):
         self.isMC=isMC
-        self.jecs=jecs 
+        self.jecs=jecs
+        print jecs
         self.shift=["Up","Down"] 
         self.vars=["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","msoftdrop","deepTag_WvsQCD","tau1","tau2","hadronFlavour","muonIdx3SJ","electronIdx3SJ","nBHadrons","nCHadrons"] if self.isMC else ["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2","msoftdrop"]
         if self.isMC: self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
@@ -28,15 +30,11 @@ class saveVtaggedJet(Module):
         self.out.branch('nak8Wtagged_WPT'  ,'I')
         #self.out.branch('nak8pNMgt45'  ,'I')
         self.out.branch('nak8%sMgt45'%self.massVar  ,'I')
-        self.out.branch('nak8Ztagged_WPL'  ,'I')
-        self.out.branch('nak8Ztagged_WPM'  ,'I')
-        self.out.branch('nak8Ztagged_WPT'  ,'I')
         for var in self.vars:
             self.out.branch('ak8%sMgt45_%s'%(self.massVar,var), "F", lenVar="nak8%sMgt45"%self.massVar)
-
             for WP in ["L","M","T"]:
                 self.out.branch('ak8Wtagged_WP%s_%s'%(WP,var), "F", lenVar="nak8Wtagged_WP"+WP)
-                self.out.branch('ak8Ztagged_WP%s_%s'%(WP,var), "F", lenVar="nak8Ztagged_WP"+WP)
+
 
     def beginJob(self):
         pass
@@ -52,20 +50,11 @@ class saveVtaggedJet(Module):
         #chosen = getattr(event,"iFatJetSel_Recl")
         #fjets = [all_fjets[chosen[i]] for i in xrange(nfj)]
         fjets=[f for f in Collection(event,"FatJetSel_Recl")] #FatJetSel_Recl_pt
-        jindex=[]
-        jindex_WPL=[];jindex_zWPL=[];
-        jindex_WPM=[];jindex_zWPM=[];
-        jindex_WPT=[];jindex_zWPT=[];
-        ret={}
-        retL={}
-        retM={}
-        retT={}
-        retzL={}
-        retzM={}
-        retzT={}
+        jindex=[];        jindex_WPL=[];        jindex_WPM=[];        jindex_WPT=[];
+        ret={};        retL={};        retM={};        retT={}
 
 
-        ## three working point of tagging; three set of jets
+        ## three working point of tagging;
 
         for V in self.vars:
             ret['ak8%sMgt45_%s'%(self.massVar,V)]       = [getattr(j,V) for j in fjets]
@@ -73,40 +62,27 @@ class saveVtaggedJet(Module):
             retL['ak8Wtagged_WPL_%s'%V]  = [getattr(j,V) for j in fjets]
             retM['ak8Wtagged_WPM_%s'%V]  = [getattr(j,V) for j in fjets]
             retT['ak8Wtagged_WPT_%s'%V]  = [getattr(j,V) for j in fjets]
-            retzL['ak8Ztagged_WPL_%s'%V] = [getattr(j,V) for j in fjets]
-            retzM['ak8Ztagged_WPM_%s'%V] = [getattr(j,V) for j in fjets]
-            retzT['ak8Ztagged_WPT_%s'%V] = [getattr(j,V) for j in fjets]
 
 
         for index,iJet in enumerate(fjets):
             selcut=iJet.particleNet_mass > 45 if self.massVar == "pN" else iJet.msoftdrop  > 45
-            if not selcut: continue
+            selcutB=iJet.particleNet_mass < 150 if self.massVar == "pN" else iJet.msoftdrop  < 150
+            if not (selcut and selcutB): continue
             jindex.append(index)
             pNetScore_wtag=(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq)/(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_QCD) ##FIXME add Xbb for Z
-            pNetScore_ztag=(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_Xbb)/(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_QCD+iJet.particleNetMD_Xbb) ##FIXME add Xbb for Z
-            #pNetScore1=(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq)/(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_QCD) 
             #print pNetScore,pNetScore1,iJet.particleNetMD_Xbb
-            if (pNetScore_wtag > self.WPL):
+            if (pNetScore_wtag > self.WPT):
                 jindex_WPT.append(index)
             if (pNetScore_wtag > self.WPM):
                 jindex_WPM.append(index)
             if (pNetScore_wtag > self.WPL):
                 jindex_WPL.append(index)
-            if (pNetScore_ztag > self.WPL):
-                jindex_zWPT.append(index)
-            if (pNetScore_ztag > self.WPM):
-                jindex_zWPM.append(index)
-            if (pNetScore_ztag > self.WPL):
-                jindex_zWPL.append(index)
 
 
         self.out.fillBranch('nak8%sMgt45'%self.massVar,len(jindex))
         self.out.fillBranch('nak8Wtagged_WPL',len(jindex_WPL))
         self.out.fillBranch('nak8Wtagged_WPM',len(jindex_WPM))
         self.out.fillBranch('nak8Wtagged_WPT',len(jindex_WPT))
-        self.out.fillBranch('nak8Ztagged_WPL',len(jindex_zWPL))
-        self.out.fillBranch('nak8Ztagged_WPM',len(jindex_zWPM))
-        self.out.fillBranch('nak8Ztagged_WPT',len(jindex_zWPT))
 
         #print len(jindex_WPL),len(jindex_WPM),len(jindex_WPT)
         for V in self.vars:
@@ -114,8 +90,5 @@ class saveVtaggedJet(Module):
             self.out.fillBranch("ak8Wtagged_WPL_%s"%V, [ retL['ak8Wtagged_WPL_%s'%V][j] for j in jindex_WPL])
             self.out.fillBranch("ak8Wtagged_WPM_%s"%V, [ retM['ak8Wtagged_WPM_%s'%V][j] for j in jindex_WPM])
             self.out.fillBranch("ak8Wtagged_WPT_%s"%V, [ retT['ak8Wtagged_WPT_%s'%V][j] for j in jindex_WPT])
-            self.out.fillBranch("ak8Ztagged_WPL_%s"%V, [ retzL['ak8Ztagged_WPL_%s'%V][j] for j in jindex_zWPL])
-            self.out.fillBranch("ak8Ztagged_WPM_%s"%V, [ retzM['ak8Ztagged_WPM_%s'%V][j] for j in jindex_zWPM])
-            self.out.fillBranch("ak8Ztagged_WPT_%s"%V, [ retzT['ak8Ztagged_WPT_%s'%V][j] for j in jindex_zWPT])
 
         return True 

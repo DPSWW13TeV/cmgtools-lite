@@ -1,0 +1,23 @@
+Executable = dummy_bkgest.sh
+use_x509userproxy = true
+getenv      = True                                                                                                              
+environment = "LS_SUBCWD=/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est"
+Log        = jobs/Nbkg_$(cluster)_$(ProcId)_skim.log
+Output     = jobs/Nbkg_$(cluster)_$(ProcId)_skim.out
+Error      = jobs/Nbkg_$(cluster)_$(ProcId)_skim.error
+requirements = (OpSysAndVer =?= "CentOS7")
++JobFlavour = "workday"
+
+
+#arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py el frnd
+#queue 
+#arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py mu frnd
+#queue 
+
+arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py el skim uS
+queue 
+arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py mu skim uS
+queue 
+
+
+

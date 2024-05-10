@@ -22,9 +22,9 @@ localTrees='local_dir_NAME/'
 Trees='NanoTrees_v9_vvsemilep_06012023/'
 nEvt=120000 
 Parent=${baseDir}/${Trees}/${year}
-BCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ${Parent}/";
+BCORE="python prepareEventVariablesFriendTree.py -a group_u_CMST3.all -t NanoAOD ${Parent} ${Parent}/";
 TBCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ";
-CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules";
+CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules ";
 
 
 ###################################################
@@ -43,7 +43,7 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence "  #--dm .*v2.* " #--de .*Run.*  "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --de .*Run.* " 
 	;;
 
 recldata)
@@ -51,7 +51,31 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}1_jmeUnc/ ${CMGT} jetmetUncertainties${year}All,jetmetUncertainties${year}Total,fatjetmetUncertainties${year}All,fatjetmetUncertainties${year}Total --de .*Run.* "  #--dm .*v2.* " #--dm TTSemi_pow_part.*  "  #--de .*Run.* "
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All  --de .*Run.* "
+
+	;;
+
+
+recl_allvars)
+	echo 'i assume you have already got jme frnds'
+	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root " #--de .*Run.*  "
+	;;
+
+fjtagged)
+	echo "fjtagged + vars"
+	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --de .*Run.* "
+	;;
+
+fjtaggeddata)
+	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
+	;;
+
+wjet)		
+	basecmd="${BCORE}/0_wjest_v2  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Wtagged_sdm45to150/{cname}_Friend.root "
+	;;
+
+skim_wjet)		
+	basecmd="${BCORE}/wjest_skim  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Wtagged_sdm45to150/{cname}_Friend.root "
 	;;
 
 top)
@@ -65,34 +89,15 @@ npdf)
 	;;
 
 
-fjtagged)
-	echo "fjtagged + vars"
-	basecmd="${BCORE}2_ak8Vtagged_sdm45  ${CMGT} taggedfj -F Friends ${Parent}/1_recl_allvars/{cname}_Friend.root -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2 " #--dm .*v2.* " #--dm .*aTGC.*_v1.* " #--de .*Run.* "
-	;;
-
-fjtaggeddata)
-	basecmd="${BCORE}2_ak8Vtagged_sdm45  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
-	;;
-
-recl_allvars)
-	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}1_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/1_jmeUnc/{cname}_Friend.root -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2 " #--dm .*v2.* " 
-	#-d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0 " #--dm .*aTGC.*_v1.* " #  --de .*Run.* "
-	;;
-
-wjet)		
-	basecmd="${BCORE}0_wjest_newCuts_v1/  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/2_ak8Vtagged_sdm45/{cname}_Friend.root -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2 " #--dm .*v2.* " # -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0" # --dm .*aTGC.*_v1.* "
-	;;
-
 genInfo)
 	echo "genInfo ${BCORE} ${CMGT}"
-	basecmd="${BCORE}genInfo/ ${CMGT} whad_info -d Tbar_tWch_incldecays -c 1 " #--de .*Run.*
+	basecmd="${BCORE}genInfo/ ${CMGT} whad_info --de .*Run.* "
 	echo $basecmd
-	;; #-d WWTo1L1Nu2Q -c 1 #--dm .*aTGCmWV.* #--de .*Run.*
+	;; 
     
 phi)
 	echo "computing phi in helicity frame ${BCORE} ${CMGT}"
-	basecmd="${BCORE}phi_var_v2/ ${CMGT} phi_gen -d WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2 -d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_part0_v2 " #--dm .*v2.* " #--de .*Run.* " # d WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v1 -c 0 " # 
+	basecmd="${BCORE}phi_var_v2/ ${CMGT} phi_gen --de .*Run.* " 
 	echo $basecmd
 	;; 
 
@@ -131,3 +136,4 @@ fi
 
 
 # . runFrnds_v3.sh recl_allvars 2018 condor 
+

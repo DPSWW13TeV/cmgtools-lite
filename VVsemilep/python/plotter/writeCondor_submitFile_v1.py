@@ -1,7 +1,7 @@
 import os,string,sys
 from plots_VVsemilep import *
 
-allvars= theWVultimateset #HEM + #bTag_eff #mWV #topCR #theWVultimateset #+moreak8jetvars MConly+#newVars+lepvars+WVvars+eventvars 
+allvars= theWVultimateset # wspc # HEM + #bTag_eff #mWV #topCR #theWVultimateset #+moreak8jetvars MConly+#newVars+lepvars+WVvars+eventvars 
 doWhat=sys.argv[1] #cards or plots
 fName='submitFile_%s.condor'%doWhat
 tmp_condor = open('jobs/%s'%fName, 'w')
@@ -9,9 +9,9 @@ tmp_condor.write('''Executable = dummy_{dW}.sh
 use_x509userproxy = true
 getenv      = True                                                                                                              
 environment = "LS_SUBCWD={here}"
-Log        = jobs/{dW}_$(ProcId).log
-Output     = jobs/{dW}_$(ProcId).out
-Error      = jobs/{dW}_$(ProcId).error
+Log        = jobs/Wspc{dW}_$(ProcId).log
+Output     = jobs/Wspc{dW}_$(ProcId).out
+Error      = jobs/Wspc{dW}_$(ProcId).error
 requirements = (OpSysAndVer =?= "CentOS7")
 +JobFlavour = "workday"
 \n\n'''.format(dW=doWhat,here=os.environ['PWD']))
@@ -28,10 +28,10 @@ lepsel={'topCR' : ["onelep"],
 }
 
 ops=['c3w','ccw','cb','']
-for sel in ["SB","sig"]: #"inclB","sig"]: #,"sb_lo","sb_hi"]:  #"wjCR","topCR",]:
-   for cat in ["boosted"]: #,"resolved"]: 
+for sel in ["SB","SR"]: #"inclB","sig"]: #,"sb_lo","sb_hi"]:  #"wjCR","topCR",]:
+   for cat in ["boosted"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
-           for lep in lepsel[sel]:
+           for lep in ["mu","el"]: #lepsel[sel]:
               if 'plots' in  doWhat:
                  for iVar in allvars:
                     tmp_condor.write('arguments  = {cmssw} {yr} {cat} {sel} {lf} {iVar} {pf} \n'.format(iVar=iVar,cmssw=os.environ['PWD'],cat=cat,yr=yr,sel=sel,lf=lep,pf=pf ) )

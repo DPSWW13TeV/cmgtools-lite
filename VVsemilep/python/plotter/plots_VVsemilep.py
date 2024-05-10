@@ -28,11 +28,12 @@ mWV_fxn={
     
 }
 
+wspc        = ['ak8_mass','mWV_reco']
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
-MCfriends   = ['1_recl','4_scalefactors','1_jmeUnc']#,'phi_var']#,'ak8VtaggedV1_vars']#,'nnpdf_rms']#,'2_recl_allvars','2_btag_SFs'] #,"postFSRinfo"]
+MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc']
 Datafriends = ['1_recl']
-friends     = ['2_ak8Vtagged_sdm45']
+friends     = ['3_ak8Wtagged_sdm45to150','0_wjest_v2']#,'3_ak8Vtagged_sdm45']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
 fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
@@ -45,8 +46,8 @@ aTGC_chk   =['tmWV_typ0_pmet_boosted','tFatJet1_pt','tFatJet1_pt','tLep1_pt'] #'
 mWV=['ratio_typ0','ratio_typ1','ratio_typ2','ratio_typ3','mWV_typ0_pmet_boosted','mWV_typ01_pmet_boosted','mWV_typ10_pmet_boosted','mWV_typ11_pmet_boosted','mWV_typ20_pmet_boosted','mWV_typ21_pmet_boosted','mWV_typ30_pmet_boosted','mWV_typ31_pmet_boosted']
 topCR=['mWV_typ0_met_boosted','FatJet1_pt']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
-theWVfullset=['FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt', 'puppimet','lep1_pt']#,'puppimet_1','nBJetMedium30_Recl','nFatJet','puppimetphi','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','neupzpmet_typ0','nJet30_Recl','lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass''mt1pmet','nLepGood','nLepFO','sumBoosted']+mWV
-theWVultimateset=['mWV_typ0_pmet_boosted','FatJet1_sDrop_mass','puppimet']#,'FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
+theWVfullset=['FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt', 'puppimetphi','lep1_pt']#,'puppimet_1','nBJetMedium30_Recl','nFatJet','puppimet','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','neupzpmet_typ0','nJet30_Recl','lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass''mt1pmet','nLepGood','nLepFO','sumBoosted']+mWV
+theWVultimateset=['mWV_typ0_pmet_boosted']#,'mWV_reco','pmet_phi','ak8_mass','FatJet1_sDrop_mass','puppimetphi']#,'mWV_typ0_pmet_boosted']#,'mWV_reco','ttmWV_typ0_pmet_boosted','pmet_phi']#,'puppimet','FatJet1_pNet_mass']#'puppimetphi']#,'FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
 
 
 ak4jetvars = ['nBJetLoose30_Recl,','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt','htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1','Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl','htJet25j_Recl','mhtJet25_Recl']
@@ -76,7 +77,7 @@ def if3(cond, iftrue, iffalse):
 
 #####################
 
-def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses,applyWtsnSFs, applypNetSFs,year,nLep,lepflav,selstr,wj_date,extraopts = '',invertedcuts = []):
+def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses,applyWtsnSFs, year,nLep,lepflav,selstr,wj_date,extraopts = '',invertedcuts = []):
     varToFit= '{plotvar} {binning}'.format(plotvar=plotbin.split()[0], binning=plotbin.split()[1])
     cmd = 'makeShapeCardsNew.py -f -j 8 -l {lumi} --od {CARDSOUTDIR} --tree NanoAOD --year {YEAR} --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt  --WA prescaleFromSkim {fmca} {fcut}  --threshold 0.01 --split-factor=-1 --unc {fsyst}  {varName} --lf {lepflav} --wjD {wj_date} --sel {selstr}'.format(lumi=lumis[year],selstr=selstr,CARDSOUTDIR=targetdir, trees=trees, fmca=fmca, fcut=fcut,YEAR=year if year !='all' else '2016APV,2016,2017,2018',fsyst=fsyst,varName=varToFit,wj_date=wj_date,lepflav=lepflav) #--asimov signal #--amc --threshold 0.01 --amc
     cmd += ''.join(' -P '+Ptree for Ptree in trees)
@@ -89,10 +90,7 @@ def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     if invertedcuts:
         cmd += ''.join(' -I ^'+cut for cut in invertedcuts )
     if applyWtsnSFs:
-        if applypNetSFs:
-            cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" ) #btagSF
-        else:
-            cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
+        cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
     else:
         cmd += ''.join(" -W puWeight*L1PreFiringWeight_Nom")
     if scaleprocesses:
@@ -108,14 +106,16 @@ def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 #####################################
-def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, applyWtsnSFs,applypNetSFs, year,nLep,extraopts = ' ', invertedcuts = [],cutFlow=False,bareNano=False):
+def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, applyWtsnSFs, year,nLep,extraopts = ' ', invertedcuts = [],cutFlow=False,bareNano=False,doWJtypeplots=False):
     
     cmd= ' mcPlots.py  -j 10 -l {lumi}  --tree NanoAOD  --year {YEAR} --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,lumi=lumis[year],YEAR=year if year!='all' else '2016APV,2016,2017,2018')
     if not cutFlow:
         cmd+=''.join(' -f')
     if not bareNano:
-        cmd+=" --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt "
-    
+        if doWJtypeplots:
+            cmd+=" --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --WA evt_wt --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt "
+        else: 
+            cmd+=" --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --WA prescaleFromSkim  --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt "
     if len(fsyst) > 0:
         cmd += ' --unc {fsyst} '.format(fsyst=fsyst)
     cmd += ''.join(' -P '+Ptree for Ptree in trees)
@@ -132,19 +132,11 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     cmd += ' -p '+','.join(processes)
 
     if applyWtsnSFs and not bareNano:
-        if(nLep == 1): 
-            if applypNetSFs:
-                #cmd +=''.join(" -W evt_wt*lepsf ")
-                cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
-            else:
-                cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf *triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
-        else: 
-            if applypNetSFs:
-                cmd+=" '-W L1PreFiringWeight_Nom*puWeight*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)*lepsf*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_pt[iLepFO_Recl[1]],2,year,suberaId) ' "
-            else:
-                cmd+=" '-W L1PreFiringWeight_Nom*puWeight*lepsf*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[1]], LepGood_pt[iLepFO_Recl[1]],2,year,suberaId) ' "
-                
-
+        if doWJtypeplots:
+            cmd +=''.join(" -W lepSF" ) 
+        else:
+            cmd+=" -W L1PreFiringWeight_Nom*puWeight*lepsf"
+            #cmd +=''.join(" -W L1PreFiringWeight_Nom*puWeight*lepsf" ) # *pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) ") #*triggerSF_ttH(LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], LepGood_pdgId[iLepFO_Recl[0]], LepGood_pt[iLepFO_Recl[0]], 1,year, suberaId)" )
     else:
         if not bareNano:
             cmd += ''.join(" -W puWeight*L1PreFiringWeight_Nom")
@@ -167,51 +159,49 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 ##################
-def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,fitCR,WCs,acP,acC,wjDate):
+def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,doWJ,fitCR,WCs,acP,acC,wjDate):
     print ("vorsichtig sein!! du hast tagging auswahl im top CR geloschen")
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
     fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
-    showratio    = False #True 
+    showratio    = True
     fplots       = 'vvsemilep/fullRun2/plots.txt'
-    fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
-    fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
-    processes    = ['WJets','tt','singletop','higgs','QCD','data','WW_sm','WZ_sm','SM_WW1','SM_WZ1','SM_WW2','SM_WZ2']#,'WZ_sm1','WZ_sm2','WZ_sm3','WZ_sm4','WZ_sm5','WZ_sm6','WW_sm1','WW_sm2','WW_sm3','WW_sm4','WW_sm5','WW_sm6']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_cb','WZ_quad_c3w','WZ_sm_lin_quad_cb','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','WW_sm_lin_quad_c3w']#,'data','WJets'] #,'tt','singletop','higgs','QCD','data']#'WpWm_150to600','WpWm_600to800','WpWm_800toInf','WmWp_150to600','WmWp_600to800','WmWp_800toInf']#'aTGC_WW_SM','WZ','aTGC_WZ_SM',,'aTGC_WW','WW','aTGC_WW_SM_incl']#,'aTGC_WZ','data'] 'Fiveflav_WZminus','Fiveflav_WZplus',
-    ## commented out the following to run fit in WJ only
-    ##amfor ops in WCs:
-    ##am    morePs=['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
-    ##am    processes+=[s + ops for s in morePs]
+    fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
+    fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
+    processes    = ['WJets','tt','higgs','singletop','QCD','data','WW_sm','WZ_sm']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','SM_WW','SM_WZ'] 
+    #,'WW_sm_lin_quad_c3w']#,'WZ_sm_lin_quad_c3w','WZ_quad_cb','WZ_sm_lin_quad_cb',# 'WW_sm_lin_quad_2p25_cw','WW_quad_2p25_cw','WW_sm_lin_quad_cw','WW_sm_lin_quad_1p8_c3w','WW_quad_1p8_c3w','WW_sm_lin_quad_c3w',#,'WZ_sm_lin_quad_2p25_cw','RWZ_sm_lin_quad_2p25_cw','WZ_quad2p25_cw']#,'SM_WW','SM_WW1','SM_WZ1','SM_WW2','SM_WZ2']#,'WZ_sm1','WZ_sm2','WZ_sm3','WZ_sm4','WZ_sm5','WZ_sm6','WW_sm1','WW_sm2','WW_sm3','WW_sm4','WW_sm5','WW_sm6']
+
+    WCs=['cW','c3w','cb']
+#    for ops in WCs:
+#        morePs=['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
+#        processes+=[s + ops for s in morePs]
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
-    cuts_boosted = ['ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet']#,'phi_var']
+    cuts_boosted = ['ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','Mjuppercut','Mwvuppercut']
     cuts_cards_opts=['sb_lo','sb_hi','sig']#
     cuts_btagEff = ['btagSR','bpartonFlav','Loosebtag','Medbtag','Tightbtag'] ##here for reference ['lightpartonFlav','cpartonFlav']
-    cuts_WJest   = ['WJEST']
-    applypNetSFs = False 
+    cuts_WJest   = ['cuts_wjest']
 
+    bareNano    = False
     print (processes)
     signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
 
-    legends = ' --legendFontSize 0.03 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '    
-    #legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
-    ubands  =  ' ' #--showMCError --showIndivSigs --noStackSig --showSigShape'
+    #legends = ' --legendFontSize 0.03 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 ' 
+    legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
+    ubands  =  '    --showMCError ' # --showIndivSigs --noStackSig --showSigShape'
+
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
-    ratio   = ' --ratioYNDiv 505 --fixRatioRange' #--maxRatioRange 0.25 2.5 ' # --ratioNums sm,sm_lin_quad_cwww,quad_cwww --ratioDen WW --ratioYLabel=aTGC/SM ' # --ratioDen WJets --ratioNums sm_lin_quad_cwww,Mpt5sm_lin_quad_cwww  --ratioYLabel aTGC/WJets  --plotmode nostack ' #--ratioNums DPSWW_newsim,DPSWW_hw --ratioDen DPSWW ' #-1 3 --plotmode norm --ratioDen DPSWW --ratioNums WZ' #  --plotmode norm --ratioDen DPSWW --ratioNums DPSWW_newsim,DPSWW_hg --ratioYLabel=hw,ns/py8.'
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5 '#   --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' #
 
 
-    more = '--uf' # --plotmode norm' if cutflow else ''
+    more = '' # --plotmode norm' if cutflow else ''
 
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
-    if doWhat == "plots" and ('SR' in selection or "sig" in selection):
-        blinded=True
-    if blinded and 'data' in processes:
-        showratio   = False
-        fsyst=''
-        processes.remove('data')
+    #if doWhat == "plots" and ('SR' in selection or "sig" in selection):
+    #    blinded=True
     for pR in selection:
         if 'top' in pR and fitCR:            fittodata.append('tt');
         if 'wj' in pR and fitCR:            fittodata.append('WJets');
-        applypNetSFs=False if 'wj' in pR else True
         exclude = ' --xu CMS_vvsl18_pNetscore' if 'wjCR' not in pR else  ' '
         #signal= if3(pR == 'SR',if3(nLep > 1,'--sp ZV','--sp aTGC_WW --sp aTGC_WZ'), if3('top' in pR, ' --sp tt --sp singletop', ' --sp WJets'))
         signal= if3(pR == 'SR' or pR == 'sig',if3(nLep > 1,'--sp ZV','--sp .*ccw.* --sp .*cb.*'), if3('top' in pR, ' --sp tt ', ' --sp WJets'))
@@ -220,11 +210,12 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 binName = '{jet}_{lep}_{pR}'.format(lep=LF,jet=FS,pR=pR)
                 print ('running %s for %s'%(doWhat,binName))
                 postfix=('_'+postfix if postfix else '')+('_fittodata' if fitCR else '')+('_'+'cutflow' if cutflow else '')
+                postfix=postfix+('_doWJ' if doWJ else '')
                 targetcarddir = 'Cards/cards_{date}{pf}_{FS}_{year}'.format(FS=binName,year=year,date=date, pf=postfix )
                 print ('{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName))
                 targetdir = eos+'{yr}/{pR}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf= postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR)
                 enable=[]
-                enable+=cuts_boosted 
+                enable+= cuts_boosted #cuts_WJest # 
                 enable.append(LF); 
                 enable.append(pR)
                 #enable+=cuts_btagEff
@@ -233,27 +224,27 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 extraopts+= anything
                 if 'plots' in doWhat:
                     if len(acP) > 0: extraopts += ''.join(' -E ^'+cut for cut in acP )
-                    if "SR" in pR and 'data' in processes:  
+                    if "SR" in pR and 'data' in processes and blinded :  
                         processes.remove('data')
                         showratio   = False
                         fsyst=''
                     makeplots  = ['{}'.format(a)  for a in plotvars]
                     print (makeplots)
-                    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata, makeplots, showratio, applylepSFs, applypNetSFs, year, nLep,extraopts,invert,cutflow)
+                    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata, makeplots, showratio, applylepSFs, year, nLep,extraopts,invert,cutflow,bareNano,doWJ)
                 else:
                     if "top" in pR: 
                         mWV_dist=" {here} {binning} ".format(here=mWV_fxn[LF],binning=mWV_binning)
                         binNamecards=binName+"_"+year
                         extraoptscards= ' --xp higgs --binname %s '%(binNamecards)
                         if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
-                        runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,applypNetSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
+                        runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
                     else:
                         for op in WCs:
                             mWV_dist=" {here} {binning} ".format(here=mWV_fxn[LF],binning=mWV_binning)
                             binNamecards=binName+"_"+op+"_"+year
                             extraoptscards= '--xp higgs --xp QCD  --sp sm --binname %s '%(binNamecards) ##signal process SM for checks
                             if len(acC) > 0:extraoptscards+=''.join(' -E ^'+cut for cut in acC )
-                            runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,applypNetSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
+                            runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
 
 
 #####################################
@@ -269,7 +260,6 @@ def alphaRatio(year,nLep,lepflav,finalState,applylepSFs,postfix,plotvars):
     fmca         = 'vvsemilep/fullRun2/mca-includes/mca-alphaR.txt'
     processes    = ['WJetsCR','WJetsSR']
     cuts_WV      = ['singlelep','trigger','ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','bVeto','etael1']
-    applypNetSFs = False
     cutflow      = False
     print (processes)
     signal  = ''
@@ -297,7 +287,7 @@ def alphaRatio(year,nLep,lepflav,finalState,applylepSFs,postfix,plotvars):
             makeplots  = ['{}'.format(a)  for a in plotvars]
             anything = "  --binname %s "%binName #--showIndivSigs
             extraopts+= anything
-            runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, applypNetSFs,year, nLep,extraopts,invert,cutflow)
+            runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, year, nLep,extraopts,invert,cutflow)
 
 ########################################
 def makesimpleplots(year,useDressed=True):
@@ -339,45 +329,9 @@ def makesimpleplots(year,useDressed=True):
     extraopts = ratio + spam + legends + anything
 
     makeplots  = ['{}'.format(a)  for a in plotvars]
-    applypNetSFs=False
-    #    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, applypNetSFs,year, nLep,extraopts,invert,cutflow)
 
-    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs,applypNetSFs, year, nLep,extraopts,invert,cutFlow)
+    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, year, nLep,extraopts,invert,cutFlow)
 ######################################
-def testTreesforWJest(year):
-    #baseDir = '/eos/cms/store/cmst3/group/dpsww/testWJ_htbinned/'
-    trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    #MCfriends   = []
-    #Datafriends = []
-    #friends     = ['testAM']
-    targetdir   = '/eos/user/a/anmehta/www/VVsemilep/WJest/{year}/plots_{date}/'.format(year=year,date=date)
-    fmca        = 'vvsemilep/fullRun2/mca-includes/mca-mc.txt' #mca-semilep-gen.txt'
-    fsyst       = ''
-    fplots      = 'vvsemilep/fullRun2/plots.txt'
-    fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep.txt'
-    bareNano    = False
-    cutFlow     = False
-    processes   = ['WJets','WW','WZ','singletop','tt','data']
-    #cuts_onelep   = ['singlelep']
-    disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
-    showratio=False
-    applylepSFs=False
-    nLep=1
-    plotvars   = wjest #dressedLepvars if useDressed else barelepvars 
-
-    disable   = []; enable=['testwjCR']
-    ratio     = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  1.75'
-    spam      = ' --topSpamSize 1.0 --noCms '
-    legends   = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
-    anything  = ' --plotmode norm  --showMCError' # --ratioNums aTGC,aTGC_SM,aTGC_incl --ratioDen WW --ratioYLabel=/SM(e) ' #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
-    extraopts = ratio + spam + legends +  anything
-    makeplots  = ['{}'.format(a)  for a in plotvars]
-    applypNetSFs=False
-
-
-    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs,applypNetSFs, year, nLep,extraopts,invert,cutFlow)
-
-##############################################################################################
 
 
 
@@ -398,10 +352,9 @@ if __name__ == '__main__':
     parser.add_option('--acC',type='string' , default=[], action="append", help='additional cuts for the cards')
     parser.add_option('--alpha' , dest='alpha', action='store_true' , default=False , help='compute alpha Ratio')
     parser.add_option('--simple', dest='simple', action='store_true' , default=False , help='make simple plots ')
-    parser.add_option('--WJest', dest='WJest', action='store_true' , default=False , help='make plots for wjest ')
+    parser.add_option('--doWJ', dest='WJest', action='store_true' , default=False , help='make plots for wjest ')
     parser.add_option('--postFSR',dest='postFSR',action='store_true', default=True , help='use postFSR')
     parser.add_option('--applylepSFs',dest='applylepSFs', action='store_true', default=False, help='apply lep id/iso SFs')
-    #    parser.add_option('--applypNetSFs',dest='applypNetSFs', action='store_true', default=False, help='apply pNet SFs')
     parser.add_option('--runblind', dest='blinded', action='store_true' , default=False , help='make plots without datat points')
     parser.add_option('--genD', dest='genDressed', action='store_true' , default=False , help='use dressed leptons for gen lvl plots')
     parser.add_option('--sel',dest='sel', action='append', default=[], help='make plots with SR/ejCR/inclB/topCR/sig/sb_lo/sb_hi')
@@ -423,11 +376,9 @@ if __name__ == '__main__':
         print ('will make {here} {pt} for {bin}' .format(here=opts.doWhat,bin=opts.finalState,pt=(opts.plotvar if 'plots' in opts.doWhat else '')))
         #makeResults(year,nLep,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars):
         plotV=opts.plotvar if 'plots' in opts.doWhat else 'mWV_typ0_met_boosted'
-        makeResults(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.sel,opts.postfix,plotV,opts.dCF,opts.fCR,opts.WC,opts.acP,opts.acC,opts.wjD)
+        makeResults(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.sel,opts.postfix,plotV,opts.dCF,opts.WJest,opts.fCR,opts.WC,opts.acP,opts.acC,opts.wjD)
     if opts.alpha:
         alphaRatio(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.applylepSFs,opts.postfix,opts.plotvar)
-    if opts.WJest:
-        testTreesforWJest(opts.year)
     if opts.simple:
         makesimpleplots(opts.year,opts.genDressed)
         #    if opts.fid:
@@ -454,3 +405,6 @@ if __name__ == '__main__':
 # python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_pt --pv tFatJet1_pt --pv tGenJetAK8_mass --pv tGenJetAK8_pt --pv tGenmWV_typ0_pmet_boosted --pv tmWV_typ0_pmet_boosted --lf onelep --year 2018 --dW plots --dCF --applylepSFs
 #python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf onelep --year 2018 --dW plots
 #python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf mu --year 2018 --dW cards
+
+#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_sDrop_mass --lf mu --year 2018 --dW plots  --applylepSFs
+#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv debugsel --lf mu --year 2018 --dW plots  --applylepSFs

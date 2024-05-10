@@ -324,6 +324,7 @@ class MCAnalysis:
                         is_w = 0;
                         total_w += counters['All Events']
                         scale = "(%s)" % field[2]
+
                     if len(field) == 4: scale += "*("+field[3]+")"
                     for p0,s in options.processesToScale:
                         for p in p0.split(","):
