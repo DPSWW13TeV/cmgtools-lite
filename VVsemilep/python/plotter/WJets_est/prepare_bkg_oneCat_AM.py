@@ -2282,7 +2282,9 @@ objName ==objName_before ):
                     lep_sel= treeIn.Lep1_pt > 50  and treeIn.nLepTight == 1 and treeIn.nLepFO==1 and treeIn.Lep1_tightId == 1;
                     boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and treeIn.mWV > rrv_mass_lvj.getMin() and treeIn.mWV < rrv_mass_lvj.getMax() and tmp_jet_mass < 150 and tmp_jet_mass > rrv_mass_j.getMin() and treeIn.nFj > 0 and treeIn.pmet > 110 and treeIn.nBJetMedium30 == 0;
                     self.isGoodEvent = 0; 
-                    if (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m if self.ch == "mu" else  abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )  and  boosted_sel and lep_sel:
+                    lep_flav= (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m) if self.ch == "mu" else (abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )
+                    #if (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m if self.ch == "mu" else  abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )  and  boosted_sel and lep_sel:
+                    if lep_flav and  boosted_sel and lep_sel:
                         self.isGoodEvent = 1;                          tmp_event_weight4fit=1.0;                        totEventWeight=1.0
                     if self.isGoodEvent == 1:
                         evtWt=treeIn.evt_wt #treeIn.pu_prefiring_wt*treeIn.prescale_wt*treeIn.hem_wt #evt_wt=pu*prefiring*prescale*hem

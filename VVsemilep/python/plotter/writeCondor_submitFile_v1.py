@@ -13,6 +13,7 @@ Log        = jobs/Wspc{dW}_$(ProcId).log
 Output     = jobs/Wspc{dW}_$(ProcId).out
 Error      = jobs/Wspc{dW}_$(ProcId).error
 requirements = (OpSysAndVer =?= "CentOS7")
++AccountingGroup = "group_u_CMST3.all"
 +JobFlavour = "workday"
 \n\n'''.format(dW=doWhat,here=os.environ['PWD']))
 pf=""
