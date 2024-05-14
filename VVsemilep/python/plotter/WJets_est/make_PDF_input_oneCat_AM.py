@@ -185,6 +185,8 @@ class Prepare_workspace_4limit:
                     dphifjlep=treeIn.dphi_fjlep > 2.0 
                     dphifjmet=treeIn.dphi_fjmet > 2.0 
                     ptWlep=treeIn.pTWlep > 200
+                    boosted_sel=False;                    lep_sel=False;
+                    lep_sel= treeIn.Lep1_pt > 50  and treeIn.nLepTight == 1 and treeIn.nLepFO==1 and treeIn.Lep1_tightId == 1;
                     boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 45 and  MWW>self.mlvj_lo
                     lep_flav= (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m) if self.ch == "mu" else (abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )
                     if lep_flav and  boosted_sel and lep_sel:
