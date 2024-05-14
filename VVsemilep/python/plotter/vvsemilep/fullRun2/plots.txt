@@ -2,8 +2,8 @@
 
 #########################vvsemilep vars 
 
-ak8_mass           : Selak8Jet1_msoftdrop : 21, 45,150 ; XTitle="sdmass"
-mWV_reco           : mWV : 36,950,4550  ; XTitle="mWV", Logy, MoreY=10
+ak8_mass           : Selak8Jet1_msoftdrop : 21, 45,150 ; XTitle="m_{SD}^{jet} (GeV)"
+mWV_reco           : mWV : 36,950,4550  ; XTitle="m_{WV} (GeV)", Logy, MoreY=10
 debugsel       : mWV_dumy : 36,950,4550  ; XTitle="mWV"
 
 ttmWV_typ0_pmet_boosted : mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0): 36,950,4550; XTitle="mWV", MoreY=10,Logy, MaxDigi,IncludeOverflows=False
@@ -18,10 +18,10 @@ SeldLep1_pt_HF             : SeldLep1_pt_HF      : [50,60,70,80,100,120,140,160,
 SeldLep1_eta_HF            : SeldLep1_eta_HF     : 10,-2.5,2.5; XTitle="SeldLep1_eta_HF"
 SeldLep1_phi_HF            : SeldLep1_phi_HF     : 16,-3.2,3.2; XTitle="SeldLep1_phi_HF"
 nSeldLeps 	           : nSeldLeps           : [0,1,2,3]; XTitle="nSeldLeps", IncludeOverflows=False
-SelGak8Jet1_pt             : SelGak8Jet1_pt      : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,800,1000,1200]; XTitle="SelGak8Jet1_pt"
+SelGak8Jet1_pt             : SelGak8Jet1_pt      : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,800,1000,1200]; XTitle="p_{T}^{jet} (GeV)"
 SelGak8Jet1_eta            : SelGak8Jet1_eta     : 10,-2.5,2.5; XTitle="SelGak8Jet1_eta"
 SelGak8Jet1_phi            : SelGak8Jet1_phi     : 16,-3.2,3.2; XTitle="SelGak8Jet1_phi"
-SelGak8Jet1_mass           : SelGak8Jet1_mass    : 21, 45,150; XTitle="SelGak8Jet1_mass"
+SelGak8Jet1_mass           : SelGak8Jet1_mass    : 21, 45,150; XTitle="m_{SD}^{jet} (GeV)"
 SelGak8Jet1_pt_HF          : SelGak8Jet1_pt_HF   : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,800,1000,1200]; XTitle="SelGak8Jet1_pt_HF"
 SelGak8Jet1_eta_HF         : SelGak8Jet1_eta_HF  : 10,-2.5,2.5; XTitle="SelGak8Jet1_eta_HF"
 SelGak8Jet1_phi_HF         : SelGak8Jet1_phi_HF  : 16,-3.2,3.2; XTitle="SelGak8Jet1_phi_HF"                        
@@ -30,7 +30,7 @@ nSelGak8Jets 		   : nSelGak8Jets        : [0,1,2,3]; XTitle="nSelGak8Jets", Incl
 neutrino_pt_HF 		   : neutrino_pt_HF      : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,800,1000,1200]; XTitle="neutrino_pt_HF"
 neutrino_phi_HF 	   : neutrino_phi_HF     : 16,-3.2,3.2; XTitle="neutrino_phi_HF"
 
-ttGenmWV_typ0_pmet_boosted : if3(abs(SeldLep1_pdgId) == 13, mass_WV_mu(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0),mass_WV_el(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0) ): [50,   61,   74,   88,   103,  119,  137,  156,  176,197,  220,  244,  270,  296, 325,  354,  386,  419,  453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="mWV (GeV)", Logy, MoreY=10, IncludeOverflows=False, YTitle="Arbitrary units"
+ttGenmWV_typ0_pmet_boosted : if3(abs(SeldLep1_pdgId) == 13, mass_WV_mu(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0),mass_WV_el(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0) ): [50,   61,   74,   88,   103,  119,  137,  156,  176,197,  220,  244,  270,  296, 325,  354,  386,  419,  453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="m_{WV} (GeV)", Logy, MoreY=10, IncludeOverflows=False, YTitle="Arbitrary units"
 
 
 #Jet_eta_pt_WPT : if3(JetSel_Recl_btagDeepFlavB > 0.71,   JetSel_Recl_pt\:abs(JetSel_Recl_eta), -99\:-99 ) :  5,0,2.5, 100,20,1000  ; XTitle="abs(#eta) WPT", YTitle="p_{T} WPT"
@@ -50,9 +50,9 @@ Lep1_pt : Lep1_pt : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350
 Lep1_eta : Lep1_eta : 25,-2.5,2.5; XTitle="Leading lepton #eta", IncludeOverflows=False, MoreY=10
 nSelak8Jets : nSelak8Jets : : [0,1,2,3,4,5,6,7]; XTitle="nSelJetsAK8", IncludeOverflows=False, MoreY=10
 nBJetMedium30 : nBJetMedium30 :  : [0,1,2,3,4,5,6,7]; XTitle="nBJetMedium30", IncludeOverflows=False, MoreY=10
-Selak8Jet_pt : Selak8Jet_pt[0] : 90,200,2000; XTitle="lead. fatjet p_{T} (GeV)", Logy, IncludeOverflows=False , MoreY=20
+Selak8Jet_pt : Selak8Jet_pt[0] : 90,200,2000; XTitle="lead. fatjet p_{T}^{jet} (GeV)", Logy, IncludeOverflows=False , MoreY=20
 Selak8Jet_eta : Selak8Jet_eta[0]: 24,-2.4,2.4; XTitle="lead. fatjet #eta", IncludeOverflows=False, MoreY=10
-Selak8Jet_mass : Selak8Jet_mass[0]: 21, 45,150; XTitle="lead. ak8 mass", Logy, IncludeOverflows=False,MoreY=20
+Selak8Jet_mass : Selak8Jet_mass[0]: 21, 45,150; XTitle="m_{SD}^{jet} (GeV)"", Logy, IncludeOverflows=False,MoreY=20
 Selak8Jet_particleNet_mass : Selak8Jet_particleNet_mass[0] : 20,0,200; XTitle="lead. ak8 pNet_mass", Logy, IncludeOverflows=False,MoreY=10
 Selak8Jet_pNetWtagscore : Selak8Jet_pNetWtagscore[0]  : 10,0,1; XTitle="pNetMD(#frac{Xcc+Xqq}{Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=10
 Selak8Jet_pNetZtagscore : Selak8Jet_pNetZtagscore[0] : 10,0,1; XTitle="pNetMD(#frac{Xcc+Xqq+Xbb}{Xbb+Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=10
@@ -110,10 +110,10 @@ tptleppmet  : pt_2(LepGood1_pt,LepGood1_phi,PuppiMET_pt,PuppiMET_phi) : 50,0,100
 Genptlepfj : pt_2(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenJetAK8_pt[0],GenJetAK8_phi[0]) : 50,0,2000; XTitle="pTlepfj", Logy, IncludeOverflows=False, MoreY=10, YTitle="Arbitrary units"
 Genmlepfj : mass_2(GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenDressedLepton_pdgId[0],GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0]) : 50,0,2000; XTitle="mlepfj", Logy, IncludeOverflows=False, MoreY=10, YTitle="Arbitrary units"
 
-GenmWV_typ0_pmet_boosted : if3(abs(GenDressedLepton_pdgId[0]) == 13, mass_WV_mu(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0),mass_WV_el(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0) ): [50,   61,   74,   88,   103,  119,  137,  156,  176,197,  220,  244,  270,  296, 325,  354,  386,  419,  453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="mWV (GeV)", Logy, MoreY=10, IncludeOverflows=False, YTitle="Arbitrary units"
+GenmWV_typ0_pmet_boosted : if3(abs(GenDressedLepton_pdgId[0]) == 13, mass_WV_mu(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0),mass_WV_el(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0) ): [50,   61,   74,   88,   103,  119,  137,  156,  176,197,  220,  244,  270,  296, 325,  354,  386,  419,  453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="m_{WV} (GeV)", Logy, MoreY=10, IncludeOverflows=False, YTitle="Arbitrary units"
 
 
-tGenmWV_typ0_pmet_boosted : if3(abs(GenDressedLepton_pdgId[0]) == 13, mass_WV_mu(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0),mass_WV_el(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0) ): [50, 137,  156, 176,197,  220,  325, 453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="mWV (GeV)", Logy, IncludeOverflows=False
+tGenmWV_typ0_pmet_boosted : if3(abs(GenDressedLepton_pdgId[0]) == 13, mass_WV_mu(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0),mass_WV_el(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0) ): [50, 137,  156, 176,197,  220,  325, 453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="m_{WV} (GeV)", Logy, IncludeOverflows=False
 
 tmWV_typ0_pmet_boosted : if3(abs(LepGood1_pdgId) == 13, mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0),mass_WV_el(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0) ): [50, 137,  156, 176,197,  220,  325, 453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="mWV", Logy, IncludeOverflows=False
 
@@ -138,14 +138,14 @@ sumBoosted_withXbb : Sum$(( (ak8sDMgt45_particleNetMD_Xbb+ak8sDMgt45_particleNet
 
 
 nFatJet              : 	 nak8sDMgt45    : [0,1,2,3] ; XTitle='nfatjets' , MoreY=1.5,IncludeOverflows=False,MoreY=1.5
-FatJet1_pt           :   ak8sDMgt45_pt[0]  : 90,200,2000; XTitle="lead. fatjet p_{T} (GeV)", Logy, IncludeOverflows=False , MoreY=30
+FatJet1_pt           :   ak8sDMgt45_pt[0]  : 90,200,2000; XTitle="p_{T}^{jet} (GeV)", Logy, IncludeOverflows=False , MoreY=30
 
-##tFatJet1_pt        :   ak8sDMgt45_pt[0]  : 40,200,1000; XTitle="lead. fatjet p_{T} (GeV)", Logy IncludeOverflows=False , MoreY=20
+##tFatJet1_pt        :   ak8sDMgt45_pt[0]  : 40,200,1000; XTitle="p_{T}^{jet} (GeV)", Logy IncludeOverflows=False , MoreY=20
 FatJet1_eta          :   ak8sDMgt45_eta[0]  : 24,-2.4,2.4; XTitle="lead. fatjet #eta", IncludeOverflows=False, MoreY=1.85
 FatJet1_phi          :   ak8sDMgt45_phi[0]  : 24,-3.2,3.2; XTitle="lead. fatjet #phi", IncludeOverflows=False, MoreY=1.85
 FatJet1_pNet_mass    :   ak8sDMgt45_particleNet_mass[0] : 20,0,200; XTitle="lead. ak8 pNet_mass", IncludeOverflows=False,MoreY=1.5
-FatJet1_sDrop_mass   :   ak8sDMgt45_msoftdrop[0]        : 20,0,200; XTitle="lead. ak8 sDrop_mass", IncludeOverflows=False, MoreY=1.5
-FatJet1_mass         :   ak8sDMgt45_mass[0]             : 20,0,200; XTitle="lead. ak8 mass", Logy, IncludeOverflows=False,MoreY=20
+FatJet1_sDrop_mass   :   ak8sDMgt45_msoftdrop[0]        : 20,0,200; XTitle=""m_{SD}^{jet} (GeV)"", IncludeOverflows=False, MoreY=1.5
+FatJet1_mass         :   ak8sDMgt45_mass[0]             : 20,0,200; XTitle="m^{jet} (GeV)", Logy, IncludeOverflows=False,MoreY=20
 
 
 FatJet1_area                : ak8sDMgt45_area[0]         : 80,1,3; XTitle="ak8 area",        IncludeOverflows=False
@@ -206,7 +206,7 @@ ratio_typ2 : if3(abs(LepGood1_pdgId) == 13, mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt
 ratio_typ3 : if3(abs(LepGood1_pdgId) == 13, mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,31)/mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,30),mass_WV_el(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,31)/mass_WV_el(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,30) ): 200,-4,4; XTitle="mWV_ratiotyp3", IncludeOverflows=False
 
 
-mWV_typ0_pmet_boosted : mass_WV(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0): [890,944,1000,1058,1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="mWV", MoreY=10,Logy, MaxDigi,IncludeOverflows=False
+mWV_typ0_pmet_boosted : mass_WV(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0): [890,944,1000,1058,1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="m_{WV} (GeV)", MoreY=10,Logy, MaxDigi,IncludeOverflows=False
 
 mWV_typ01_pmet_boosted : mass_WV(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,01): [890,944,1000,1058,1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="mWV_type0_other",MoreY=10, Logy,IncludeOverflows=False
 
@@ -353,7 +353,7 @@ Jet_eta_pt_WPT : if3(JetSel_Recl_btagDeepFlavB > 0.71,   JetSel_Recl_pt\:abs(Jet
 
 
 
-mWV1_typ0_pmet_boosted : if3(abs(LepGood1_pdgId) == 13, mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0),mass_WV_el(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0) ): [890,944,1000,1058., 1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558, 3704, 3854, 4010, 4171, 4337, 4509]; XTitle="mWV (GeV)", Logy, MoreY=10, IncludeOverflows=False, YTitle="Arbitrary units",
+mWV1_typ0_pmet_boosted : if3(abs(LepGood1_pdgId) == 13, mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0),mass_WV_el(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0) ): [890,944,1000,1058., 1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558, 3704, 3854, 4010, 4171, 4337, 4509]; XTitle="m_{WV} (GeV)", Logy, MoreY=10, IncludeOverflows=False, YTitle="Arbitrary units",
 puppimet1         :            PuppiMET_pt     : 100,0,2000 ; XTitle="p_{T}^{miss} (GeV)",MoreY=1.2
 lep1_ptt:         LepGood1_pt          : 100,0,1000; XTitle="Leading lepton p_{T} (GeV)",IncludeOverflows=False ,  MaxDigi, MoreY=1.2
 FatJet1_ptt       :   ak8sDMgt45_pt[0]  : 90,100,1000; XTitle="lead. fatjet p_{T} (GeV)", IncludeOverflows=False ,  MaxDigi, MoreY=1.2
