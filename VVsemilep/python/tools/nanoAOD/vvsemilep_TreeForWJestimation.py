@@ -161,15 +161,13 @@ class vvsemilep_TreeForWJestimation(Module):
                 self.out.fillBranch('Lep%d_%s'%(lep+1,var), getattr(leps[lep],var))
             self.out.fillBranch('Lep%d_tightId'%(lep+1), getattr(leps[lep],"isLepTight_Recl"))
         for jet in range(self.fjetMultiplicity):
-            for var in 'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore#,msoftdrop particleNet_mass,
+            for var in 'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore'.split(','): #,pNetWtagscore#,msoftdrop particleNet_mass,
                 self.out.fillBranch('Selak8Jet%d_%s'%(jet+1,var), getattr(jets[jet],var))
             pNetWscore=0.0;pnetsf=1.0;
-            pNetWscore=(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq'))/(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq')+getattr(jets[jet],'particleNetMD_QCD'))
             #print "event \t",event.event,"\t pNetWscore \t",pNetWscore
             pnetsf=self.pNetSFMD_WvsQCD(getattr(jets[jet],"pt"),event.year,event.suberaId) if not isData else 1.0
             self.out.fillBranch('Selak8Jet%d_pNetWtagSF'%(jet+1),pnetsf)
-            self.out.fillBranch('Selak8Jet%d_pNetWtagscore'%(jet+1), pNetWscore)
-
+            #print event.event, getattr(jets[jet],'pt'),getattr(jets[jet],'eta'),getattr(jets[jet],'msoftdrop') 
         self.out.fillBranch('mWV',self.calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi))
         self.out.fillBranch('pmet',event.PuppiMET_pt)
         self.out.fillBranch('pmet_phi',event.PuppiMET_phi)

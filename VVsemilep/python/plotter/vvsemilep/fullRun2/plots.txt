@@ -3,7 +3,7 @@
 #########################vvsemilep vars 
 
 ak8_mass           : Selak8Jet1_msoftdrop : 21, 45,150 ; XTitle="m_{SD}^{jet} (GeV)"
-mWV_reco           : mWV : 36,950,4550  ; XTitle="m_{WV} (GeV)", Logy, MoreY=10
+mWV           : mWV : 36,950,4550  ; XTitle="m_{WV} (GeV)", Logy, MoreY=10
 debugsel       : mWV_dumy : 36,950,4550  ; XTitle="mWV"
 
 ttmWV_typ0_pmet_boosted : mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0): 36,950,4550; XTitle="mWV", MoreY=10,Logy, MaxDigi,IncludeOverflows=False
@@ -44,21 +44,20 @@ aTGC_wt2: if3( (Selak8Jet_pt[0]>600 && Selak8Jet_pt[0] < 660),LHEReweightingWeig
 aTGC_wt_neg: if3(LHEReweightingWeight < 0, LHEReweightingWeight, 1) : 1001,-1000,1; XTitle="aTGC 62 weight", MoreY=10
 aTGC_wt_pos: if3(LHEReweightingWeight > 0, LHEReweightingWeight, 0) : 100,0,10; XTitle="aTGC 62 weight", MoreY=10
 
-##Lep1_pt : Lep1_pt : 100,40,1000; XTitle="Leading lepton p_{T} (GeV)",IncludeOverflows=False ,Logy, MoreY=10
 
 Lep1_pt : Lep1_pt : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,1000]; XTitle="Leading lepton p_{T} (GeV)",IncludeOverflows=False ,Logy, MoreY=10
 Lep1_eta : Lep1_eta : 25,-2.5,2.5; XTitle="Leading lepton #eta", IncludeOverflows=False, MoreY=10
 nSelak8Jets : nSelak8Jets : : [0,1,2,3,4,5,6,7]; XTitle="nSelJetsAK8", IncludeOverflows=False, MoreY=10
 nBJetMedium30 : nBJetMedium30 :  : [0,1,2,3,4,5,6,7]; XTitle="nBJetMedium30", IncludeOverflows=False, MoreY=10
-Selak8Jet_pt : Selak8Jet_pt[0] : 90,200,2000; XTitle="lead. fatjet p_{T}^{jet} (GeV)", Logy, IncludeOverflows=False , MoreY=20
-Selak8Jet_eta : Selak8Jet_eta[0]: 24,-2.4,2.4; XTitle="lead. fatjet #eta", IncludeOverflows=False, MoreY=10
-Selak8Jet_mass : Selak8Jet_mass[0]: 21, 45,150; XTitle="m_{SD}^{jet} (GeV)"", Logy, IncludeOverflows=False,MoreY=20
-Selak8Jet_particleNet_mass : Selak8Jet_particleNet_mass[0] : 20,0,200; XTitle="lead. ak8 pNet_mass", Logy, IncludeOverflows=False,MoreY=10
-Selak8Jet_pNetWtagscore : Selak8Jet_pNetWtagscore[0]  : 10,0,1; XTitle="pNetMD(#frac{Xcc+Xqq}{Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=10
-Selak8Jet_pNetZtagscore : Selak8Jet_pNetZtagscore[0] : 10,0,1; XTitle="pNetMD(#frac{Xcc+Xqq+Xbb}{Xbb+Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=10
+Selak8Jet1_pt : Selak8Jet1_pt : 90,200,2000; XTitle="lead. fatjet p_{T}^{jet} (GeV)", Logy, IncludeOverflows=False , MoreY=20
+Selak8Jet1_eta : Selak8Jet1_eta: 24,-2.4,2.4; XTitle="lead. fatjet #eta", IncludeOverflows=False, MoreY=10
+Selak8Jet1_mass : Selak8Jet1_mass: 21, 45,150; XTitle="m_{SD}^{jet} (GeV)"", Logy, IncludeOverflows=False,MoreY=20
+Selak8Jet1_pNetWtagscore : Selak8Jet1_pNetWtagscore  : 10,0,1; XTitle="pNetMD(#frac{Xcc+Xqq}{Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=10
+
 pmet : pmet :  100,0,2000 ; XTitle="p_{T}^{miss} (GeV)",MoreY=25, Logy
 pmet_phi : pmet_phi : 32,-3.2,3.2 ; XTitle="p_{T}^{miss} (#phi)" ##,MoreY=10
-mWV : mWV : [50,   61,   74,   88,   103,  119,  137,  156,  176,197,  220,  244,  270,  296, 325,  354,  386,  419,  453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="mWV (GeV)", Logy, MoreY=10, IncludeOverflows=False, YTitle="Arbitrary units"
+
+mWV_vBins : mWV : [50,   61,   74,   88,   103,  119,  137,  156,  176,197,  220,  244,  270,  296, 325,  354,  386,  419,  453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="m_{WV} (GeV)", Logy, MoreY=10, IncludeOverflows=False, YTitle="Arbitrary units"
 
 
 
@@ -96,8 +95,6 @@ nGenJetAK8: Sum$(GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4)	: [0,1,2,3,4,5,
 GenJetAK8_pt : if3((GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4),GenJetAK8_pt,-999): 50,0,2000; XTitle="Genak8jet p_{T} (GeV)", Logy, IncludeOverflows=False , MoreY=5, YTitle="Arbitrary units"
 GenJetAK8_mass : if3((GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4 && GenJetAK8_mass > 40),GenJetAK8_mass,-999): 30,0,500; XTitle="Genak8jet mass (GeV)", Logy, IncludeOverflows=False , MoreY=10, YTitle="Arbitrary units"
 
-tGenJetAK8_pt : GenJetAK8_pt: 50,0,2000; XTitle="Genak8jet p_{T} (GeV)", Logy,YMin=10
-tGenJetAK8_mass : GenJetAK8_mass: 15,0,150; XTitle="Genak8jet mass (GeV)", Logy,YMin=10
 
 
 GenMET : GenMET_pt : 50,0,2000 ; XTitle="Gen. p_{T}^{miss} (GeV)",MoreY=10, Logy, YTitle="Arbitrary units"
@@ -117,9 +114,9 @@ tGenmWV_typ0_pmet_boosted : if3(abs(GenDressedLepton_pdgId[0]) == 13, mass_WV_mu
 
 tmWV_typ0_pmet_boosted : if3(abs(LepGood1_pdgId) == 13, mass_WV_mu(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0),mass_WV_el(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0) ): [50, 137,  156, 176,197,  220,  325, 453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="mWV", Logy, IncludeOverflows=False
 
-tFatJet1_pt           :   ak8sDMgt45_pt[0]  : [0,200,250,300,350,400,450,500,550,600,650,700,800,900,1000,1200,2000]; XTitle="lead. fatjet p_{T} (GeV)", Logy, IncludeOverflows=False  #, MoreY=10
+FatJet1_pt_vBins           :   ak8sDMgt45_pt[0]  : [0,200,250,300,350,400,450,500,550,600,650,700,800,900,1000,1200,2000]; XTitle="lead. fatjet p_{T} (GeV)", Logy, IncludeOverflows=False  #, MoreY=10
 
-tLep1_pt : LepGood1_pt : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,1000,2000]; XTitle="Leading lepton p_{T} (GeV)",IncludeOverflows=False ,Logy, MoreY=10
+Lep1_pt_vBins : LepGood1_pt : [50,60,70,80,100,120,140,160,180,200,220,240,260,280,300,350,400,450,500,600,700,1000,2000]; XTitle="Leading lepton p_{T} (GeV)",IncludeOverflows=False ,Logy, MoreY=10
 tFatJet1_sDrop_mass   :   ak8sDMgt45_msoftdrop[0]  : 14,20,160; XTitle="lead. ak8 sDrop_mass", Logy,IncludeOverflows=False
 
 #mttbar : Mass_2(Gentops_pt[0],Gentops_eta[0],Gentops_phi[0],Gentops_mass[0],Gentops_pt[1],Gentops_eta[1],Gentops_phi[1],Gentops_mass[1]): 200,500,2500; XTitle="m_{t#bart} (GeV)", IncludeOverflows=False, Logy, MoreY=10
@@ -140,7 +137,7 @@ sumBoosted_withXbb : Sum$(( (ak8sDMgt45_particleNetMD_Xbb+ak8sDMgt45_particleNet
 nFatJet              : 	 nak8sDMgt45    : [0,1,2,3] ; XTitle='nfatjets' , MoreY=1.5,IncludeOverflows=False,MoreY=1.5
 FatJet1_pt           :   ak8sDMgt45_pt[0]  : 90,200,2000; XTitle="p_{T}^{jet} (GeV)", Logy, IncludeOverflows=False , MoreY=30
 
-##tFatJet1_pt        :   ak8sDMgt45_pt[0]  : 40,200,1000; XTitle="p_{T}^{jet} (GeV)", Logy IncludeOverflows=False , MoreY=20
+
 FatJet1_eta          :   ak8sDMgt45_eta[0]  : 24,-2.4,2.4; XTitle="lead. fatjet #eta", IncludeOverflows=False, MoreY=1.85
 FatJet1_phi          :   ak8sDMgt45_phi[0]  : 24,-3.2,3.2; XTitle="lead. fatjet #phi", IncludeOverflows=False, MoreY=1.85
 FatJet1_pNet_mass    :   ak8sDMgt45_particleNet_mass[0] : 20,0,200; XTitle="lead. ak8 pNet_mass", IncludeOverflows=False,MoreY=1.5

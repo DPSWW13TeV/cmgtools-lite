@@ -70,12 +70,22 @@ fjtaggeddata)
 	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
 	;;
 
+goodfj)
+	echo "fjtagged + vars"
+	basecmd="${BCORE}3_ak8_sdm45to150  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root  --de .*Run.* "
+	;;
+
+goodfjdata)
+	basecmd="${BCORE}3_ak8_sdm45to150  ${CMGT} goodfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
+	;;
+
+
 wjet)		
-	basecmd="${BCORE}/0_wjest_v2  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Wtagged_sdm45to150/{cname}_Friend.root "
+	basecmd="${BCORE}/0_wjest_v2  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45to150/{cname}_Friend.root " #-d SingleMuon_Run2018D_UL18 -c 0 -N 5000"
 	;;
 
 skim_wjet)		
-	basecmd="${BCORE}/wjest_skim  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Wtagged_sdm45to150/{cname}_Friend.root "
+	basecmd="${BCORE}/wjest_skim_revsel  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45to150/{cname}_Friend.root " #-d SingleMuon_Run2018D_UL18 -c 0 -N 5000"
 	;;
 
 top)

@@ -35,16 +35,13 @@ atgc=[
 'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1',
 'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1',
 'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2',
-'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2'
+'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2',
 'WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2',
 'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2',
-
 ]
 
 
-
-
-samples=top + atgc +stop +wjets+more
+samples=atgc#top + atgc +stop +wjets+more
 
 def printnEvt(fN,yr):
     files=[] 
@@ -52,20 +49,21 @@ def printnEvt(fN,yr):
     basepath="/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/"+yr+"/"
     for x in glob(basepath+"/*.root"):
         proc=os.path.basename(x)[:-len(".root")]
+        #print x
         if re.match(fN+".*", proc):
-             print "for this",proc,x
+             print "for this",proc,"considering this files for wts calc",x
              files.append(x)
+        else : continue
     for sf in files:
         print sf
         fIn=ROOT.TFile.Open(sf)
         ttree=fIn.Get('Runs')
         for ev in ttree:
             sumw+=ev.genEventSumw
-    #print fN,int(sumw)
-    fIn.Close()
+            #print fN,int(sumw)
+        fIn.Close()
     print "sample and number of events",fN,int(sumw)
     return int(sumw)
-
 
 
 

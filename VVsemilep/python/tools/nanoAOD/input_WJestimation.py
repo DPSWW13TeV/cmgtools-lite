@@ -30,8 +30,6 @@ class input_WJestimation(Module):
         for var in 'pt,eta,phi,mass,particleNetMD_Xqq,msoftdrop,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetWtagSF'.split(','): #msoftdrop,particleNet_mass,
             for j in range(self.fjetMultiplicity):
                 self.out.branch('Selak8Jet%d_%s'%(j+1,var), 'F')
-        for nsel in self.selection:
-            self.out.branch('event_sel%d'%self.selection.index(nsel), 'L')
         self.out.branch('event', 'L')
         self.out.branch('nFj','I')
         self.out.branch('nLep','I')
@@ -148,19 +146,14 @@ class input_WJestimation(Module):
         leps = [all_leps[chosen[i]] for i in xrange(nFO)]
         jets = [j for j in Collection(event,"ak8%sMgt45"%self.mvar)]
         self.out.fillBranch('event_presel',event.event)        
-        tot_sel=False;sel=False
-
+        tot_sel=False;sel_i=False
         for isel in self.selection:
             if eval(isel):
-                sel=True
-                #print 'passed %s'%isel
-                self.out.fillBranch('event_sel%d'%self.selection.index(isel),1)        
+                sel_i=True
             else: 
-                sel=False
-                self.out.fillBranch('event_sel%d'%self.selection.index(isel),0)        
-                #print 'failed ',isel,event.event
+                sel_i=False;
                 break;
-        tot_sel=sel and len(leps) == self.lepMultiplicity  and  len(jets) > 0
+        tot_sel= sel_i and len(leps) == self.lepMultiplicity  and  len(jets) > 0
         self.out.fillBranch('event_sel',tot_sel)        
         self.out.fillBranch('nFj',event.nFatJetSel_Recl)
         self.out.fillBranch('nLep',len(leps))
@@ -172,15 +165,14 @@ class input_WJestimation(Module):
                 self.out.fillBranch('Lep%d_%s'%(lep+1,var), getattr(leps[lep],var) if tot_sel else -999.0)
             self.out.fillBranch('Lep%d_tightId'%(lep+1), getattr(leps[lep],"isLepTight_Recl") if tot_sel else 0)
         for jet in range(self.fjetMultiplicity): 
-            for var in 'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore#,msoftdrop particleNet_mass,
+            for var in 'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore'.split(','): #,pNetWtagscore#,msoftdrop particleNet_mass,
                 self.out.fillBranch('Selak8Jet%d_%s'%(jet+1,var), getattr(jets[jet],var) if tot_sel else -999.0)
-            pNetWscore=0.0;pnetsf=1.0;
+            if tot_sel:print event.event,getattr(jets[jet],"pt"),getattr(jets[jet],"eta"),getattr(jets[jet],"msoftdrop")
+            pnetsf=1.0;
             if tot_sel:
-                pNetWscore=(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq'))/(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq')+getattr(jets[jet],'particleNetMD_QCD'))
                 pnetsf=self.pNetSFMD_WvsQCD(getattr(jets[jet],'pt'),event.year,event.suberaId) if not isData else 1.0
             #print "event \t",event.event,"\t pNetWscore \t",pNetWscore
             self.out.fillBranch('Selak8Jet%d_pNetWtagSF'%(jet+1),pnetsf)
-            self.out.fillBranch('Selak8Jet%d_pNetWtagscore'%(jet+1), pNetWscore)
                 
         self.out.fillBranch('mWV',self.calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi) if tot_sel else -999.0)
         self.out.fillBranch('pmet',event.PuppiMET_pt if tot_sel else -999.0)

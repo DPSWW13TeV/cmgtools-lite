@@ -184,8 +184,6 @@ testHT : WJetsToLNu_HT70to100    : 1271*1.21 : 1 ; FillColor=ROOT.kAzure+1, Labe
 
 higgs : WplusH  : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
 higgs : WminusH : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
-higgs : ZH : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
-higgs : GGH : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 1 ; FillColor=ROOT.kYellow, Label="VH+ggH",
 
 ##taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py
 WJets : WJetsToLNu_HT70to100     : 1271*1.21    : 1 ; FillColor=ROOT.kAzure+1,   Label="W+jets"

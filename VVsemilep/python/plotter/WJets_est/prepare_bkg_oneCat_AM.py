@@ -116,11 +116,11 @@ parser.add_option('--uS', action='store_true', dest='useSkim', default=False, he
 
 
 trees_b="0_wjest_v2_copy"
-trees_r="0_wjest_v2_copy_addOns"
 
 if options.useSkim:
-    trees_b="wjest_skim"
-    trees_r="wjest_skim_addOns"
+    trees_b="wjest_skim_revsel" #wjest_skim"
+
+trees_r=trees_b+"_addOns"
 
 
 
