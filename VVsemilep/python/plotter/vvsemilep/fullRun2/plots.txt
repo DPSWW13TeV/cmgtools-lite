@@ -51,7 +51,7 @@ nSelak8Jets : nSelak8Jets : : [0,1,2,3,4,5,6,7]; XTitle="nSelJetsAK8", IncludeOv
 nBJetMedium30 : nBJetMedium30 :  : [0,1,2,3,4,5,6,7]; XTitle="nBJetMedium30", IncludeOverflows=False, MoreY=10
 Selak8Jet1_pt : Selak8Jet1_pt : 90,200,2000; XTitle="lead. fatjet p_{T}^{jet} (GeV)", Logy, IncludeOverflows=False , MoreY=20
 Selak8Jet1_eta : Selak8Jet1_eta: 24,-2.4,2.4; XTitle="lead. fatjet #eta", IncludeOverflows=False, MoreY=10
-Selak8Jet1_mass : Selak8Jet1_mass: 21, 45,150; XTitle="m_{SD}^{jet} (GeV)"", Logy, IncludeOverflows=False,MoreY=20
+Selak8Jet1_mass : Selak8Jet1_mass: 21, 45,150; XTitle="m_{SD}^{jet} (GeV)", Logy, IncludeOverflows=False,MoreY=20
 Selak8Jet1_pNetWtagscore : Selak8Jet1_pNetWtagscore  : 10,0,1; XTitle="pNetMD(#frac{Xcc+Xqq}{Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=10
 
 pmet : pmet :  100,0,2000 ; XTitle="p_{T}^{miss} (GeV)",MoreY=25, Logy
@@ -141,7 +141,7 @@ FatJet1_pt           :   ak8sDMgt45_pt[0]  : 90,200,2000; XTitle="p_{T}^{jet} (G
 FatJet1_eta          :   ak8sDMgt45_eta[0]  : 24,-2.4,2.4; XTitle="lead. fatjet #eta", IncludeOverflows=False, MoreY=1.85
 FatJet1_phi          :   ak8sDMgt45_phi[0]  : 24,-3.2,3.2; XTitle="lead. fatjet #phi", IncludeOverflows=False, MoreY=1.85
 FatJet1_pNet_mass    :   ak8sDMgt45_particleNet_mass[0] : 20,0,200; XTitle="lead. ak8 pNet_mass", IncludeOverflows=False,MoreY=1.5
-FatJet1_sDrop_mass   :   ak8sDMgt45_msoftdrop[0]        : 20,0,200; XTitle=""m_{SD}^{jet} (GeV)"", IncludeOverflows=False, MoreY=1.5
+FatJet1_sDrop_mass   :   ak8sDMgt45_msoftdrop[0]        : 20,0,200; XTitle="m_{SD}^{jet} (GeV)", IncludeOverflows=False, MoreY=1.5
 FatJet1_mass         :   ak8sDMgt45_mass[0]             : 20,0,200; XTitle="m^{jet} (GeV)", Logy, IncludeOverflows=False,MoreY=20
 
 
