@@ -169,10 +169,12 @@ FatJet1_particleNet_ZvsQCD  : ak8sDMgt45_particleNet_ZvsQCD[0]   : 10,0,1; XTitl
 #(Xcc+Xqq)/(Xcc+Xqq+QCD)
 
 
+FatJet1_pNetMD_Wtagscore    : ak8sDMgt45_pNetWtagscore[0]  : 10,0,1; XTitle=" pNetMD(#frac{Xcc+Xqq}{Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=1.85
 
-FatJet1_pNetMD_Wtagscore    : (ak8sDMgt45_particleNetMD_Xcc[0]+ak8sDMgt45_particleNetMD_Xqq[0])/(ak8sDMgt45_particleNetMD_Xcc[0]+ak8sDMgt45_particleNetMD_Xqq[0]+ak8sDMgt45_particleNetMD_QCD[0])  : 10,0,1; XTitle=" pNetMD(#frac{Xcc+Xqq}{Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=1.85
 
-FatJet1_pNetMD_Ztagscore    : (ak8sDMgt45_particleNetMD_Xcc[0]+ak8sDMgt45_particleNetMD_Xbb[0]+ak8sDMgt45_particleNetMD_Xqq[0])/(ak8sDMgt45_particleNetMD_Xcc[0]+ak8sDMgt45_particleNetMD_Xqq[0]+ak8sDMgt45_particleNetMD_QCD[0]+ak8sDMgt45_particleNetMD_Xbb[0])  : 10,0,1; XTitle="pNetMD(#frac{Xcc+Xqq+Xbb}{Xbb+Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=1.85
+##FatJet1_pNetMD_Wtagscore    : (ak8sDMgt45_particleNetMD_Xcc[0]+ak8sDMgt45_particleNetMD_Xqq[0])/(ak8sDMgt45_particleNetMD_Xcc[0]+ak8sDMgt45_particleNetMD_Xqq[0]+ak8sDMgt45_particleNetMD_QCD[0])  : 10,0,1; XTitle=" pNetMD(#frac{Xcc+Xqq}{Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=1.85
+
+
 
 
 
