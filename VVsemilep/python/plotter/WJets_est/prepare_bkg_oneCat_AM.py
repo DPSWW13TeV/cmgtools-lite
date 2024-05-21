@@ -118,7 +118,7 @@ parser.add_option('--uS', action='store_true', dest='useSkim', default=False, he
 trees_b="0_wjest_v2_copy"
 
 if options.useSkim:
-    trees_b="wjest_skim" #wjest_skim"
+    trees_b="wjest_skim" 
 
 trees_r=trees_b+"_addOns"
 
@@ -2279,10 +2279,11 @@ objName ==objName_before ):
                     dphifjmet=treeIn.dphi_fjmet > 2.0 
                     ptWlep=treeIn.pTWlep > 200
                     boosted_sel=False;                    lep_sel=False;
-                    lep_sel= treeIn.Lep1_pt > 50  and treeIn.nLepTight == 1 and treeIn.nLepFO==1 and treeIn.Lep1_tightId == 1;
+                    lep_sel= treeIn.Lep1_pt > 50  and treeIn.nLepTight == 1 and treeIn.nLepFO==1 and treeIn.Lep1_tightId == 1 and ( (abs(treeIn.Lep1_pdgId) == 13 or  (abs(treeIn.Lep1_eta) < 1.442 or abs(treeIn.Lep1_eta) > 1.556)))
                     boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and treeIn.mWV > rrv_mass_lvj.getMin() and treeIn.mWV < rrv_mass_lvj.getMax() and tmp_jet_mass < 150 and tmp_jet_mass > rrv_mass_j.getMin() and treeIn.nFj > 0 and treeIn.pmet > 110 and treeIn.nBJetMedium30 == 0;
                     self.isGoodEvent = 0; 
                     lep_flav= (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m) if self.ch == "mu" else (abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )
+                    
                     #if (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m if self.ch == "mu" else  abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )  and  boosted_sel and lep_sel:
                     if lep_flav and  boosted_sel and lep_sel:
                         self.isGoodEvent = 1;                          tmp_event_weight4fit=1.0;                        totEventWeight=1.0

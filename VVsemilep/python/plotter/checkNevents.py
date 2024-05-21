@@ -16,7 +16,7 @@ for x in glob(basepath+"/*.root"):
     proc=os.path.basename(x)[:-len(".root")]
     #print proc 
     fIn=ROOT.TFile.Open(x)
-    print x
+    #print x
     n_p=fIn.Get("Events").GetEntries();
     #n_p=fIn.Get("Friends").GetEntries();
     frndpath=os.path.join(basepath,frnds_dir) #"/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/2018/wjest_skim/" #
@@ -27,7 +27,7 @@ for x in glob(basepath+"/*.root"):
         n_f=fIn.Get("Friends").GetEntries();
         fIn.Close()
         if n_p != n_f:
-            print n_p,n_f,frnd_file
+            print "Np",n_p,"Nf",n_f,"frnd file",frnd_file
             faultyfrnds.append(frnd_file)
         else: continue
 

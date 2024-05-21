@@ -81,11 +81,11 @@ goodfjdata)
 
 
 wjet)		
-	basecmd="${BCORE}/0_wjest_v2  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45to150/{cname}_Friend.root " #-d SingleMuon_Run2018D_UL18 -c 0 -N 5000"
+	basecmd="${BCORE}/0_wjest_v2  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45to150/{cname}_Friend.root -d SingleMuon_Run2018D_UL18 -c 0 -N 5000"
 	;;
 
 skim_wjet)		
-	basecmd="${BCORE}/wjest_skim_revsel  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45to150/{cname}_Friend.root " #-d SingleMuon_Run2018D_UL18 -c 0 -N 5000"
+	basecmd="${BCORE}/wjest_skim_revsel  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45to150/{cname}_Friend.root -d SingleMuon_Run2018D_UL18 -c 0 -N 5000"
 	;;
 
 top)

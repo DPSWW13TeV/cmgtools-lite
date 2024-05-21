@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import optparse, subprocess, ROOT, datetime, math, array, copy, os, re, sys
 import numpy as np
-eos='/eos/user/a/anmehta/www/VVsemilep/' ##save plots here
-afs_am=os.getcwd()+'/'
+#eos='/eos/user/a/anmehta/www/VVsemilep/' ##save plots here
 lumis = {
     '2016APV': '19.5',
     '2016': '16.8',
@@ -27,7 +26,7 @@ mWV_fxn={
     
 }
 
-wspc        = ['ak8_mass','mWV']
+wspc        = ['ak8_mass','mWV','pmet_phi']
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
 MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc']
@@ -50,7 +49,7 @@ topCR=['mWV_typ0_met_boosted','FatJet1_pt']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
 
 theWVfullset=['FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt', 'puppimetphi','lep1_pt']#,'puppimet_1','nBJetMedium30_Recl','nFatJet','puppimet','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','neupzpmet_typ0','nJet30_Recl','lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass''mt1pmet','nLepGood','nLepFO','sumBoosted']+mWV
-theWVultimateset=['mWV_typ0_pmet_boosted']#,'mWV_reco','pmet_phi','ak8_mass','FatJet1_sDrop_mass','puppimetphi']#,'mWV_typ0_pmet_boosted']#,'mWV_reco','ttmWV_typ0_pmet_boosted','pmet_phi']#,'puppimet','FatJet1_pNet_mass']#'puppimetphi']#,'FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
+theWVultimateset=['mWV_typ0_pmet_boosted','puppimetphi']#,'mWV_reco','pmet_phi','ak8_mass','FatJet1_sDrop_mass','puppimetphi']#,'mWV_typ0_pmet_boosted']#,'mWV_reco','ttmWV_typ0_pmet_boosted','pmet_phi']#,'puppimet','FatJet1_pNet_mass']#'puppimetphi']#,'FatJet1_sDrop_mass','mWV_typ0_pmet_boosted','FatJet1_pt','puppimetphi','lep1_pt','ptWV_pmet','FatJet1_pNet_mass']
 
 
 ak4jetvars = ['nBJetLoose30_Recl,','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt','htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1','Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl','htJet25j_Recl','mhtJet25_Recl']
@@ -161,11 +160,11 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     print ("vorsichtig sein!! du hast tagging auswahl im top CR geloschen")
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
     fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
-    showratio    = True
+    showratio    = False #True
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
-    processes    = ['WJets','tt','higgs','singletop','QCD','data','WW_sm','WZ_sm']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','SM_WW','SM_WZ'] 
+    processes    = ['WW_sm']#'WJets','tt','singletop','Others','data','WW_sm','WZ_sm']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','SM_WW','SM_WZ'] 
     #,'WW_sm_lin_quad_c3w']#,'WZ_sm_lin_quad_c3w','WZ_quad_cb','WZ_sm_lin_quad_cb',# 'WW_sm_lin_quad_2p25_cw','WW_quad_2p25_cw','WW_sm_lin_quad_cw','WW_sm_lin_quad_1p8_c3w','WW_quad_1p8_c3w','WW_sm_lin_quad_c3w',#,'WZ_sm_lin_quad_2p25_cw','RWZ_sm_lin_quad_2p25_cw','WZ_quad2p25_cw']#,'SM_WW','SM_WW1','SM_WZ1','SM_WW2','SM_WZ2']#,'WZ_sm1','WZ_sm2','WZ_sm3','WZ_sm4','WZ_sm5','WZ_sm6','WW_sm1','WW_sm2','WW_sm3','WW_sm4','WW_sm5','WW_sm6']
 
     WCs=['cW','c3w','cb']
@@ -207,7 +206,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 postfix=postfix+('_doWJ' if doWJ else '')
                 targetcarddir = 'Cards/cards_{date}{pf}_{FS}_{year}'.format(FS=binName,year=year,date=date, pf=postfix )
                 print ('{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName))
-                targetdir = eos+'{yr}/{pR}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf= postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR)
+                targetdir = os.path.join(eos,'{yr}/{pR}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf= postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR))
                 enable=[]
                 enable+= cuts_boosted #cuts_WJest # 
                 enable.append(LF); 
@@ -229,14 +228,14 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     if "top" in pR: 
                         mWV_dist=" {here} {binning} ".format(here=mWV_fxn[LF],binning=mWV_binning)
                         binNamecards=binName+"_"+year
-                        extraoptscards= ' --xp higgs --binname %s '%(binNamecards)
+                        extraoptscards= ' --xp Others --binname %s '%(binNamecards)
                         if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
                         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
                     else:
                         for op in WCs:
                             mWV_dist=" {here} {binning} ".format(here=mWV_fxn[LF],binning=mWV_binning)
                             binNamecards=binName+"_"+op+"_"+year
-                            extraoptscards= '--xp higgs --xp QCD  --sp sm --binname %s '%(binNamecards) ##signal process SM for checks
+                            extraoptscards= '--xp Others  --sp sm --binname %s '%(binNamecards) ##signal process SM for checks
                             if len(acC) > 0:extraoptscards+=''.join(' -E ^'+cut for cut in acC )
                             runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
 
@@ -349,14 +348,15 @@ if __name__ == '__main__':
     parser.add_option('--fCR',dest='fCR', action='store_true', default=False , help='fit to data in the CR')
     parser.add_option('--wjD',dest='wjD', type='string', default="2023-12-19", help='date to pick WJ workspace from')
     parser.add_option('--WC',dest='WC', type='string' , default=['c3w'], action="append", help='consider terms in EFT Lag. corresponding to this aTGC operator tunred on c3W/cb/cw (for now relevant to make datacards)')
+    parser.add_option('--pD',dest='plotsDir', type='string', default=os.getcwd(),help='save plots here')# "/eos/user/a/anmehta/www/VVsemilep/", 
     (opts, args) = parser.parse_args()
 
-    global date, postfix
+    global date, postfix,eos 
     postfix = opts.postfix
     year= opts.year
     #print type(postfix)
     date = datetime.date.today().isoformat()
-
+    eos = opts.plotsDir 
     if opts.date:
         date = opts.date
     if opts.results:
@@ -372,26 +372,26 @@ if __name__ == '__main__':
         #       makeResultsFiducial(opts.year,opts.finalState,opts.splitCharge)
 
 
-# python plots_VVsemilep.py --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv FatJet1_pt --pv FatJet1_mass --pv FatJet1_particleNet_mass  --pf nom --sel wjCR --applylepSFs --lf onelep
-# python plots_VVsemilep.py --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv FatJet1_pt --pf nom --sel SR --applylepSFs --lf mu 
-# python plots_VVsemilep.py --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv phi1 --sel wjCR --applylepSFs --lf el 
-# python plots_VVsemilep.py --results --dW plots --year 2016 --nLep 1 #--finalState 3l --applylepSFs
-# python plots_VVsemilep.py --results --dW plots --year all --finalState ll --nlep 2 #  --applylepSFs
-# python plots_VVsemilep.py --results --dW plots --year all --finalState ll --nlep 1 #  --applylepSFs
-# python plots_VVsemilep.py --results --dW cards --year 2016 --finalState elmu --finalState mumu --applylepSFs 
-# python plots_VVsemilep.py --results --dW cards --year 2016 --finalState 3l m3l --applylepSFs
-# python plots_VVsemilep.py --results --dW cards --year 2016 --finalState 4l m4l --applylepSFs
-#python plots_VVsemilep.py --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv dRfjj 
-# python plots_VVsemilep.py --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv LHE_HT --pf chkHT
-#python plots_VVsemilep.py --alpha --year 2018 --nLep 1 --finalState boosted --pv  mWV1_typ0_pmet_boosted --applylepSFs --lf mu
-#python plots_VVsemilep.py --simple --genD --year 2018
+# python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv FatJet1_pt --pv FatJet1_mass --pv FatJet1_particleNet_mass  --pf nom --sel wjCR --applylepSFs --lf onelep
+# python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv FatJet1_pt --pf nom --sel SR --applylepSFs --lf mu 
+# python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv phi1 --sel wjCR --applylepSFs --lf el 
+# python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW plots --year 2016 --nLep 1 #--finalState 3l --applylepSFs
+# python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW plots --year all --finalState ll --nlep 2 #  --applylepSFs
+# python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW plots --year all --finalState ll --nlep 1 #  --applylepSFs
+# python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW cards --year 2016 --finalState elmu --finalState mumu --applylepSFs 
+# python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW cards --year 2016 --finalState 3l m3l --applylepSFs
+# python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW cards --year 2016 --finalState 4l m4l --applylepSFs
+#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv dRfjj 
+# python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv LHE_HT --pf chkHT
+#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --alpha --year 2018 --nLep 1 --finalState boosted --pv  mWV1_typ0_pmet_boosted --applylepSFs --lf mu
+#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --simple --genD --year 2018
 
 
-#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv mWV1_typ0_pmet_boosted  --lf mu --lf el --year 2018 --dW plots --applylepSFs --WC cwww --WC ccw --WC cb
+#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv mWV1_typ0_pmet_boosted  --lf mu --lf el --year 2018 --dW plots --applylepSFs --WC cwww --WC ccw --WC cb
 
-# python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_pt --pv FatJet1_pt_vBins --pv tGenJetAK8_pt --pv tGenmWV_typ0_pmet_boosted --pv tmWV_typ0_pmet_boosted --lf onelep --year 2018 --dW plots --dCF --applylepSFs
-#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf onelep --year 2018 --dW plots
-#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf mu --year 2018 --dW cards
+# python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_pt --pv FatJet1_pt_vBins --pv tGenJetAK8_pt --pv tGenmWV_typ0_pmet_boosted --pv tmWV_typ0_pmet_boosted --lf onelep --year 2018 --dW plots --dCF --applylepSFs
+#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf onelep --year 2018 --dW plots
+#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf mu --year 2018 --dW cards
 
-#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_sDrop_mass --lf mu --year 2018 --dW plots  --applylepSFs
-#python plots_VVsemilep.py --results --finalState boosted --nLep 1 --sel SR --pv debugsel --lf mu --year 2018 --dW plots  --applylepSFs
+#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_sDrop_mass --lf mu --year 2018 --dW plots  --applylepSFs
+#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv debugsel --lf mu --year 2018 --dW plots  --applylepSFs

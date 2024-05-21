@@ -186,7 +186,7 @@ class Prepare_workspace_4limit:
                     dphifjmet=treeIn.dphi_fjmet > 2.0 
                     ptWlep=treeIn.pTWlep > 200
                     boosted_sel=False;                    lep_sel=False;
-                    lep_sel= treeIn.Lep1_pt > 50  and treeIn.nLepTight == 1 and treeIn.nLepFO==1 and treeIn.Lep1_tightId == 1;
+                    lep_sel= treeIn.Lep1_pt > 50  and treeIn.nLepTight == 1 and treeIn.nLepFO==1 and treeIn.Lep1_tightId == 1 and ( (abs(treeIn.Lep1_pdgId) == 13 or (abs(treeIn.Lep1_eta) < 1.442 or abs(treeIn.Lep1_eta) > 1.556 )) );
                     boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 45 and  MWW>self.mlvj_lo
                     lep_flav= (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m) if self.ch == "mu" else (abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )
                     if lep_flav and  boosted_sel and lep_sel:
@@ -519,11 +519,13 @@ class Prepare_workspace_4limit:
             
             #define parameter ranges for error function
 
-            if self.ch=='mu':
+            if self.ch=='el':
                 Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,1500.)
                 Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1500.,1000.,2000.)
                 Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,1500.,1000.,2000.)
-            elif self.ch=='el':
+
+            elif self.ch=='mu':
+
                 Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,7500.)
                 Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1500.,500.,2000.)
                 Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,1500.,500.,2000.)

@@ -41,7 +41,7 @@ atgc=[
 ]
 
 
-samples=atgc#top + atgc +stop +wjets+more
+samples=top + atgc +stop +wjets+more
 
 def printnEvt(fN,yr):
     files=[] 

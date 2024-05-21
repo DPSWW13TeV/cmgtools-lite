@@ -361,49 +361,31 @@ from CMGTools.VVsemilep.tools.nanoAOD.saveGoodak8Jet import saveGoodak8Jet
 goodfj           = lambda : saveGoodak8Jet(isMC = True, massVar='sD',jecs = jevariations)
 goodfj_data           = lambda : saveGoodak8Jet(isMC = False,massVar='sD')
 
+event_sel=  ['event.nLepFO_Recl == 1                                 ',
+            'event.PuppiMET_pt > 110                                 ',
+            'event.nBJetMedium30_Recl == 0                           ', 
+            '(event.Trigger_1e or  event.Trigger_1m)                 ',
+            'event.LepGood_pt[event.iLepFO_Recl[0]] > 50             ',
+            'event.LepGood_isLepTight_Recl[event.iLepFO_Recl[0]] == 1',
+            'event.nFatJetSel_Recl > 0                               ',
+            'event.nLepTight_Recl == 1                               ',
+            'event.Flag_goodVertices                                 ',
+            'event.Flag_globalSuperTightHalo2016Filter               ',
+            'event.Flag_HBHENoiseFilter                              ',
+            'event.Flag_HBHENoiseIsoFilter                           ',
+            'event.Flag_EcalDeadCellTriggerPrimitiveFilter           ',
+            'event.Flag_BadPFMuonFilter                              ',
+            'event.year == 2016 or event.Flag_ecalBadCalibFilter     ', 
+            'event.run ==1 or event.Flag_eeBadScFilter               ',
+            'event.Flag_BadPFMuonDzFilter                             '
+]
 
 from CMGTools.VVsemilep.tools.nanoAOD.input_WJestimation import input_WJestimation
-input_wjest = lambda  : input_WJestimation(1,1,
-                                                 ['event.nLepFO_Recl == 1                                 ',
-                                                 'event.PuppiMET_pt > 110                                 ',
-                                                 'event.nBJetMedium30_Recl == 0                           ', 
-                                                 '(event.Trigger_1e or  event.Trigger_1m)                 ',
-                                                 'event.LepGood_pt[event.iLepFO_Recl[0]] > 50             ',
-                                                 'event.LepGood_isLepTight_Recl[event.iLepFO_Recl[0]] == 1',
-                                                 'event.nFatJetSel_Recl > 0                               ',
-                                                 'event.nLepTight_Recl == 1                               ',
-                                                 'event.Flag_goodVertices                                 ',
-                                                 'event.Flag_globalSuperTightHalo2016Filter               ',
-                                                 'event.Flag_HBHENoiseFilter                              ',
-                                                 'event.Flag_HBHENoiseIsoFilter                           ',
-                                                 'event.Flag_EcalDeadCellTriggerPrimitiveFilter           ',
-                                                 'event.Flag_BadPFMuonFilter                              ',
-                                                 'event.year == 2016 or event.Flag_ecalBadCalibFilter     ', 
-                                                 'event.run ==1 or event.Flag_eeBadScFilter               ',
-                                                 'event.Flag_BadPFMuonDzFilter                             '
-])
+input_wjest = lambda  : input_WJestimation(1,1, event_sel)
 
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import vvsemilep_TreeForWJestimation
-wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,1,
-                                                 ['event.nLepFO_Recl == 1                                 ',
-                                                 'event.PuppiMET_pt > 110                                 ',
-                                                 'event.nBJetMedium30_Recl == 0                           ', 
-                                                 '(event.Trigger_1e or  event.Trigger_1m)                 ',
-                                                 'event.LepGood_pt[event.iLepFO_Recl[0]] > 50             ',
-                                                 'event.LepGood_isLepTight_Recl[event.iLepFO_Recl[0]] == 1',
-                                                 'event.nFatJetSel_Recl > 0                               ',
-                                                 'event.nLepTight_Recl == 1                               ',
-                                                 'event.Flag_goodVertices                                 ',
-                                                 'event.Flag_globalSuperTightHalo2016Filter               ',
-                                                 'event.Flag_HBHENoiseFilter                              ',
-                                                 'event.Flag_HBHENoiseIsoFilter                           ',
-                                                 'event.Flag_EcalDeadCellTriggerPrimitiveFilter           ',
-                                                 'event.Flag_BadPFMuonFilter                              ',
-                                                 'event.year == 2016 or event.Flag_ecalBadCalibFilter     ', 
-                                                 'event.run ==1 or event.Flag_eeBadScFilter               ',
-                                                 'event.Flag_BadPFMuonDzFilter                             '
+wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,1,event_sel)
 
-])
 
 
 from CMGTools.VVsemilep.tools.nanoAOD.genFriendProducer import genFriendProducer

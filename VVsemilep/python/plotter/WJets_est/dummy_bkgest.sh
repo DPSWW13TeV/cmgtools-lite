@@ -12,8 +12,8 @@ eval `scram runtime -sh`
 
 echo "i am in this directory ${PWD} and making this plot ${5}"
 
-if [[ $# -eq 4 ]]; then
-    python ${2} -b -r -c ${3}  --pf ${4} #--uS
+if [[ $# -eq 3 ]]; then
+    python ${2} -b -r -c ${3}  #--pf ${4} #--uS
 else
-    python ${2} -b -r -c ${3}  --pf ${4} --uS
+    python ${2} -b -r -c ${3}  --uS #--pf ${4} --uS
 fi

@@ -13,6 +13,79 @@ from copy import deepcopy
 def if3(cond, iftrue, iffalse):
     return iftrue if cond else iffalse
 
+
+def calcmassWV(l1,fjet,metpt,metphi):
+    from ROOT.heppy import METzCalculator
+        
+    NeutrinoPz = METzCalculator()
+    met=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    metV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    lepton1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    fatjet1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    mWV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    met.SetPtEtaPhiM(metpt,0.,metphi,0.);
+    lepton1.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,0);
+    fatjet1.SetPtEtaPhiM(fjet.pt,fjet.eta,fjet.phi,fjet.msoftdrop); #particleNet_mass);
+    NeutrinoPz.SetMET(met);
+    NeutrinoPz.SetLepton(lepton1);
+    NeutrinoPz.SetLeptonType(l1.pdgId);
+    nu_pz=NeutrinoPz.Calculate(0)
+    metV.SetPxPyPzE(metpt*cos(metphi), metpt*sin(metphi),nu_pz,sqrt(metpt*metpt+nu_pz*nu_pz));
+    mWV=lepton1+fatjet1+metV;
+    massWV=mWV.M();
+    return massWV
+
+def pNetSFMD_WvsQCD(pt,year,suberaid,WP=1.0,var=0):
+        yearString= str(year)+if3(year == 2016 and suberaid == 0,"APV","")
+        if (yearString == "2018"):
+            if(pt >= 200 and pt < 300):
+                return if3(WP == 0.5,0.81*(1 + var*0.03),if3(WP == 1.0,0.87*(1 + var*0.02),if3(var > 0,0.92*(1 + var*0.03),0.92*(1 + var*0.02))))
+            elif(pt >= 300 and pt < 400):
+                return if3(WP == 0.5,0.81*(1 + var*0.02),if3(WP == 1.0,0.86*(1 + var*0.02),0.92*(1 + var*0.02)))
+            else:
+                return if3(WP == 0.5,0.77*(1 + var*0.04), if3(WP == 1.0,0.82*(1 + var*0.04),0.87*(1 + var*0.04)))
+        elif (yearString == "2017"):
+            if(pt >= 200 and pt < 300):
+                return if3(WP == 0.5,0.85*(1 + var*0.03),if3(WP == 1.0,0.91*(1 + var*0.02),0.96*(1 + var*0.03)))
+            elif(pt >= 300 and pt < 400):
+                return if3(WP == 0.5,0.85*(1 + var*0.03),if3(WP == 1.0,0.90*(1 + var*0.02),if3(var > 0,0.95*(1 + var*0.03),0.95*(1 + var*0.02))))
+            else: return if3(WP == 0.5,0.86*(1 + var*0.05),if3(WP == 1.0,if3(var > 0, 0.89*(1 + var*0.05),0.89*(1 + var*0.04)),0.98*(1 + var*0.05)))
+        elif (yearString == "2016APV"):
+            if(pt >= 200 and pt < 300):
+                return if3(WP == 0.5,0.85*(1 + var*0.03),if3(WP == 1.0,0.90*(1 + var*0.03),0.90*(1 + var*0.02)))
+            elif(pt >= 300 and pt < 400):
+                return if3(WP == 0.5,0.86*(1 + var*0.04),if3(WP == 1.0,0.87*(1 + var*0.04),0.94*(1 + var*0.04)))
+            else:
+                return if3(WP == 0.5,0.86*(1 + var*0.08),if3(WP == 1.0,if3(var > 0,0.92*(1 + var*0.08),0.92*(1 + var*0.07)),0.94*(1 + var*0.07)))
+        else:
+            if(pt >= 200 and pt < 300):
+                return if3(WP == 0.5,0.85*(1 + var*0.04),if3(WP == 1.0,if3(var > 0,0.89*(1 + var*0.04),0.89*(1 + var*0.03)),0.95*(1 + var*0.04)))
+            elif(pt >= 300 and pt < 400):
+                return if3(WP == 0.5,0.83*(1 + var*0.04),if3(WP == 1.0,0.86*(1 + var*0.04),0.91*(1 + var*0.04)))
+            else: return if3(WP == 0.5,if3(var > 0,0.69*(1 + var*0.07),0.69*(1 + var*0.06)),if3(WP == 1.0,0.73*(1 + var*0.07),0.84*(1 + var*0.07)))
+
+def HEM(year,lep,jet,run,isData):
+    HEM_eta_min =  -3.2;  HEM_eta_max = -1.3;
+    HEM_phi_min= -1.57;  HEM_phi_max= -0.87;
+    weight=1.0;  
+    if run > 1: isData=True;
+    if year==2018:
+        vetoHEM=False;vetofj=False;vetoel=False;
+        vetofj = (jet.eta < HEM_eta_max and jet.eta > HEM_eta_min and jet.phi < HEM_phi_max and jet.phi > HEM_phi_min)
+        vetoel = (abs(lep.pdgId) == 11 and lep.eta > -2.5 and lep.eta < -1.479 and lep.phi < HEM_phi_max and lep.phi > HEM_phi_min)
+        vetoHEM = vetofj or vetoel;
+        if (vetoHEM):
+            if (isData):
+                if(run >= 319077): 	weight=0;    
+                else:	weight=1.0;
+            else:      weight=0.35; 
+        else:	weight=1.0; 
+    else: weight=1.0
+    return weight;
+
+
+
+
 class vvsemilep_TreeForWJestimation(Module):
     def __init__(self,lepMultiplicity, fjetMultiplicity, selection,mvar='sD'):
         self.lepMultiplicity=lepMultiplicity
@@ -68,75 +141,6 @@ class vvsemilep_TreeForWJestimation(Module):
         pass
     
 
-    def calcmassWV(self,l1,fjet,metpt,metphi):
-        from ROOT.heppy import METzCalculator
-        
-        NeutrinoPz = METzCalculator()
-        met=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        metV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        lepton1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        fatjet1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        mWV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        met.SetPtEtaPhiM(metpt,0.,metphi,0.);
-        lepton1.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,l1.mass);
-        fatjet1.SetPtEtaPhiM(fjet.pt,fjet.eta,fjet.phi,fjet.msoftdrop); #particleNet_mass);
-        NeutrinoPz.SetMET(met);
-        NeutrinoPz.SetLepton(lepton1);
-        NeutrinoPz.SetLeptonType(l1.pdgId);
-        nu_pz=NeutrinoPz.Calculate(0)
-        metV.SetPxPyPzE(metpt*cos(metphi), metpt*sin(metphi),nu_pz,sqrt(metpt*metpt+nu_pz*nu_pz));
-        mWV=lepton1+fatjet1+metV;
-        massWV=mWV.M();
-        return massWV
-
-    def pNetSFMD_WvsQCD(self,pt,year,suberaid,WP=1.0,var=0):
-        yearString= str(year)+if3(year == 2016 and suberaid == 0,"APV","")
-        if (yearString == "2018"):
-            if(pt >= 200 and pt < 300):
-                return if3(WP == 0.5,0.81*(1 + var*0.03),if3(WP == 1.0,0.87*(1 + var*0.02),if3(var > 0,0.92*(1 + var*0.03),0.92*(1 + var*0.02))))
-            elif(pt >= 300 and pt < 400):
-                return if3(WP == 0.5,0.81*(1 + var*0.02),if3(WP == 1.0,0.86*(1 + var*0.02),0.92*(1 + var*0.02)))
-            else:
-                return if3(WP == 0.5,0.77*(1 + var*0.04), if3(WP == 1.0,0.82*(1 + var*0.04),0.87*(1 + var*0.04)))
-        elif (yearString == "2017"):
-            if(pt >= 200 and pt < 300):
-                return if3(WP == 0.5,0.85*(1 + var*0.03),if3(WP == 1.0,0.91*(1 + var*0.02),0.96*(1 + var*0.03)))
-            elif(pt >= 300 and pt < 400):
-                return if3(WP == 0.5,0.85*(1 + var*0.03),if3(WP == 1.0,0.90*(1 + var*0.02),if3(var > 0,0.95*(1 + var*0.03),0.95*(1 + var*0.02))))
-            else: return if3(WP == 0.5,0.86*(1 + var*0.05),if3(WP == 1.0,if3(var > 0, 0.89*(1 + var*0.05),0.89*(1 + var*0.04)),0.98*(1 + var*0.05)))
-        elif (yearString == "2016APV"):
-            if(pt >= 200 and pt < 300):
-                return if3(WP == 0.5,0.85*(1 + var*0.03),if3(WP == 1.0,0.90*(1 + var*0.03),0.90*(1 + var*0.02)))
-            elif(pt >= 300 and pt < 400):
-                return if3(WP == 0.5,0.86*(1 + var*0.04),if3(WP == 1.0,0.87*(1 + var*0.04),0.94*(1 + var*0.04)))
-            else:
-                return if3(WP == 0.5,0.86*(1 + var*0.08),if3(WP == 1.0,if3(var > 0,0.92*(1 + var*0.08),0.92*(1 + var*0.07)),0.94*(1 + var*0.07)))
-        else:
-            if(pt >= 200 and pt < 300):
-                return if3(WP == 0.5,0.85*(1 + var*0.04),if3(WP == 1.0,if3(var > 0,0.89*(1 + var*0.04),0.89*(1 + var*0.03)),0.95*(1 + var*0.04)))
-            elif(pt >= 300 and pt < 400):
-                return if3(WP == 0.5,0.83*(1 + var*0.04),if3(WP == 1.0,0.86*(1 + var*0.04),0.91*(1 + var*0.04)))
-            else: return if3(WP == 0.5,if3(var > 0,0.69*(1 + var*0.07),0.69*(1 + var*0.06)),if3(WP == 1.0,0.73*(1 + var*0.07),0.84*(1 + var*0.07)))
-
-    def HEM(self,year,lep,jet,run,isData):
-        HEM_eta_min =  -3.2;  HEM_eta_max = -1.3;
-        HEM_phi_min= -1.57;  HEM_phi_max= -0.87;
-        weight=1.0;  
-        if run > 1: isData=True;
-        if year==2018:
-            vetoHEM=False;vetofj=False;vetoel=False;
-            vetofj = (jet.eta < HEM_eta_max and jet.eta > HEM_eta_min and jet.phi < HEM_phi_max and jet.phi > HEM_phi_min)
-            vetoel = (abs(lep.pdgId) == 11 and lep.eta > -2.5 and lep.eta < -1.479 and lep.phi < HEM_phi_max and lep.phi > HEM_phi_min)
-            vetoHEM = vetofj or vetoel;
-            if (vetoHEM):
-                if (isData):
-                    if(run >= 319077): 	weight=0;    
-                    else:	weight=1.0;
-                else:      weight=0.35; 
-            else:	weight=1.0; 
-        else: weight=1.0
-        return weight;
-
     def analyze(self, event):
         isData = (event.run > 1) or not hasattr(event,"GenDressedLepton_pt")
         self.out.fillBranch('event',event.event)
@@ -165,10 +169,10 @@ class vvsemilep_TreeForWJestimation(Module):
                 self.out.fillBranch('Selak8Jet%d_%s'%(jet+1,var), getattr(jets[jet],var))
             pNetWscore=0.0;pnetsf=1.0;
             #print "event \t",event.event,"\t pNetWscore \t",pNetWscore
-            pnetsf=self.pNetSFMD_WvsQCD(getattr(jets[jet],"pt"),event.year,event.suberaId) if not isData else 1.0
+            pnetsf=pNetSFMD_WvsQCD(getattr(jets[jet],"pt"),event.year,event.suberaId) if not isData else 1.0
             self.out.fillBranch('Selak8Jet%d_pNetWtagSF'%(jet+1),pnetsf)
             #print event.event, getattr(jets[jet],'pt'),getattr(jets[jet],'eta'),getattr(jets[jet],'msoftdrop') 
-        self.out.fillBranch('mWV',self.calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi))
+        self.out.fillBranch('mWV',calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi))
         self.out.fillBranch('pmet',event.PuppiMET_pt)
         self.out.fillBranch('pmet_phi',event.PuppiMET_phi)
         self.out.fillBranch('trigger1e',event.Trigger_1e)
@@ -186,7 +190,7 @@ class vvsemilep_TreeForWJestimation(Module):
         lmet=pmet+lep1
         self.out.fillBranch('pTWlep',lmet.Pt())
 
-        hemwt=self.HEM(event.year,leps[0],jets[0],event.run,isData)
+        hemwt=HEM(event.year,leps[0],jets[0],event.run,isData)
         #print hemwt,event.prescaleFromSkim,event.L1PreFiringWeight_Nom,event.puWeight
         eventWt=hemwt * (event.prescaleFromSkim if isData else event.L1PreFiringWeight_Nom*event.puWeight*event.prescaleFromSkim)
         self.out.fillBranch('evt_wt',eventWt) #pu*prefiring*prescale*hem
