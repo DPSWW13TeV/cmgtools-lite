@@ -29,9 +29,9 @@ mWV_fxn={
 wspc        = ['ak8_mass','mWV','pmet_phi']
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
-MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc']
+MCfriends   = ['1_recl','2_recl_allvars']#,'4_scalefactors','2_jmeUnc']
 Datafriends = ['1_recl']
-friends     = ['3_ak8_sdm45','0_wjest_v3']#'3_ak8_sdm45to150','0_wjest_v2']#'3_ak8Vtagged_sdm45']#
+friends     = ['3_ak8_sdm45'] #,'0_wjest_v3']#'3_ak8_sdm45to150','0_wjest_v2']#'3_ak8Vtagged_sdm45']#
 fplots      = 'vvsemilep/fullRun2/plots.txt'
 fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
@@ -164,7 +164,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
-    processes    = ['WJets','tt','singletop','Others','data','WW_sm','WZ_sm','WW_SMEFT_sm','WZ_SMEFT_sm']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','SM_WW','SM_WZ'] 
+    processes    = ['WZ_SMEFT_sm']#'WW_sm','SM_WW','WJets','tt','singletop','Others','data','WW_sm','WZ_sm','WW_SMEFT_sm','WZ_SMEFT_sm']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','SM_WW','SM_WZ'] 
 
 
     WCs=['cW','c3w','cb']
@@ -273,7 +273,7 @@ def alphaRatio(year,nLep,lepflav,finalState,applylepSFs,postfix,plotvars):
             binName = '{lep}{jet}'.format(lep=if3(nLep > 1,'2los',flavors[LF]),jet=FS)
             print ('running plots for %s'%binName)
             print ('{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName))
-            targetdir = eos+'{yr}/alphaRatio/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+'cutflow' if cutflow else '' + postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName)
+            targetdir = os.path.join(eos,'{yr}/alphaRatio/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=('_'+'cutflow' if cutflow else '' + postfix if postfix else ''),sf='_withoutSFs' if not applylepSFs else '',bN=binName))
             enable=[];
             enable=cuts_WV #FS is enabled in the mca as it's CR vs SR. 
             enable.append(lepSel)
@@ -286,17 +286,17 @@ def alphaRatio(year,nLep,lepflav,finalState,applylepSFs,postfix,plotvars):
 def makesimpleplots(year,useDressed=True):
     #baseDir = '/eos/cms/store/cmst3/group/dpsww/testWJ_htbinned/'
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    MCfriends   = ['phi_var_v2']#2_toppT_rw']#genInfo'] #'2_toppT_rw']
+    MCfriends   = [] #'phi_var_v2']#2_toppT_rw']#genInfo'] #'2_toppT_rw']
     Datafriends = []
     friends     = []
-    targetdir = '/eos/user/a/anmehta/www/VVsemilep/GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') )
-    fmca        = 'vvsemilep/fullRun2/mca-includes/mca-mc.txt' #mca-semilep-gen.txt'
+    targetdir = os.path.join(eos,'/GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') ))
+    fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt' #mca-semilep-gen.txt'
     fsyst       = ''
     fplots      = 'vvsemilep/fullRun2/plots.txt'
     fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep_{cf}.txt'.format(cf='gen' if not useDressed else 'dressed' )
     bareNano    = False
     cutFlow     = False
-    processes   = ['WW']#,'tt']#plus_sm_lin_quad_cwww','sm']#,'minus_sm_lin_quad_cwww']#'WW','aTGC','aTGC_SM','aTGC_incl']##'WJetsToLNu']#'ttmtt1ktoinf','ttmttp7kto1k','ttsemi']#'WJetsToLNu']#'WW','aTGC']#'ttmtt1ktoinf','ttmttp7kto1k','Rwtttsemi']#'ttsemi']
+    processes   = ['WW_sm','SM_WW','WW_SMEFT_LO']#,'tt']#plus_sm_lin_quad_cwww','sm']#,'minus_sm_lin_quad_cwww']#'WW','aTGC','aTGC_SM','aTGC_incl']##'WJetsToLNu']#'ttmtt1ktoinf','ttmttp7kto1k','ttsemi']#'WJetsToLNu']#'WW','aTGC']#'ttmtt1ktoinf','ttmttp7kto1k','Rwtttsemi']#'ttsemi']
     #'WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT80','WJetsHT60','WJetsHT40','WJetsHT20']
     #cuts_onelep   = ['singlelep']
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
@@ -304,7 +304,7 @@ def makesimpleplots(year,useDressed=True):
     showratio=True
     applylepSFs=False
     nLep=1
-    plotvars   = ['SeldLep1_pt']#Jet_pt_eta']#genvars_phi #MConly #dressedLepvars if useDressed else barelepvars 
+    plotvars   = ['mWV_typ0_pmet_boosted']#Jet_pt_eta']#genvars_phi #MConly #dressedLepvars if useDressed else barelepvars 
 
     disable   = []; 
     #enable=['ttbar','nQ']#'WhadpT','mWV','leadfatjet','fatjet','ptWlep','leadlep','etacutl1'] #'ttbar','nQ']
@@ -312,7 +312,7 @@ def makesimpleplots(year,useDressed=True):
     ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  2.15'
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
-    anything = ' --plotmode norm' #--showRatio  --ratioNums plus_sm_lin_quad_cwww --ratioDen minus_sm_lin_quad_cwww --ratioYLabel=plus/minus --plotmode nostack' #sm,sm_lin_quad_cwww,aTGC_WW_SM_incl --ratioDen WW  #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
+    anything = '  --showRatio  --ratioNums WW_sm,WW_SMEFT_LO --ratioDen SM_WW   --ratioYLabel=aTGC,SMEFT/SM --plotmode nostack' #sm,sm_lin_quad_cwww,aTGC_WW_SM_incl --ratioDen WW  #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' # --plotmode norm' # --plotmode nostack' # rm --neg  --uf' #  --ratioDen pdf13 --ratioNums pdf14,pdf5,pdf17,pdf18 --ratioYLabel=var/nom' 
     extraopts = ratio + spam + legends + anything
     makeplots  = ['{}'.format(a)  for a in plotvars]
 
