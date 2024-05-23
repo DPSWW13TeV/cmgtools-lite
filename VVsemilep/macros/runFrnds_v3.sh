@@ -43,7 +43,7 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --de .*Run.* " 
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --dm .*SMEFT.* " ##--de .*Run.* " 
 	;;
 
 recldata)
@@ -51,14 +51,14 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All  --de .*Run.* "
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All --dm .*SMEFT.* " # --de .*Run.* "
 
 	;;
 
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root " #--de .*Run.*  "
+	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root --dm .*SMEFT.* " #--de .*Run.*  "
 	;;
 
 fjtagged)
@@ -72,20 +72,20 @@ fjtaggeddata)
 
 goodfj)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8_sdm45to150  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root  --de .*Run.* "
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root  --dm .*SMEFT.* " #--de .*Run.* "
 	;;
 
 goodfjdata)
-	basecmd="${BCORE}3_ak8_sdm45to150  ${CMGT} goodfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
 	;;
 
 
 wjet)		
-	basecmd="${BCORE}/0_wjest_v2  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45to150/{cname}_Friend.root -d SingleMuon_Run2018D_UL18 -c 0 -N 5000"
+	basecmd="${BCORE}/0_wjest_v3  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --dm .*SMEFT.* "
 	;;
 
 skim_wjet)		
-	basecmd="${BCORE}/wjest_skim_revsel  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45to150/{cname}_Friend.root -d SingleMuon_Run2018D_UL18 -c 0 -N 5000"
+	basecmd="${BCORE}/wjest_skim_v1  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root " #--dm .*SMEFT.* "
 	;;
 
 top)
@@ -107,7 +107,7 @@ genInfo)
     
 phi)
 	echo "computing phi in helicity frame ${BCORE} ${CMGT}"
-	basecmd="${BCORE}phi_var_v2/ ${CMGT} phi_gen --de .*Run.* " 
+	basecmd="${BCORE}phi_var_v2/ ${CMGT} phi_gen --dm .*SMEFT.* " #--de .*Run.* " 
 	echo $basecmd
 	;; 
 

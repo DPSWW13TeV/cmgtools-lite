@@ -83,11 +83,11 @@ if analysis == "main":
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
         #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf"
         #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
-
+        ".*SMEFT_LO.*",
         #     "WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
         #      "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
         #       "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
-        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
+        #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
         #        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf", 
 

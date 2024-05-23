@@ -1,5 +1,5 @@
 # vim: syntax=sh
 incl_data : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-data.txt" 
 incl_wj : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-wj.txt" 
-incl_all : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-mc.txt" ,AddWeight="Selak8Jet1_pNetWtagSF"
+incl_all : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-mc.txt",AddWeight="Selak8Jet1_pNetWtagSF"
 

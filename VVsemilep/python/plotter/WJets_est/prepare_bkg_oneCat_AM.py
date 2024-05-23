@@ -115,10 +115,10 @@ parser.add_option('--uS', action='store_true', dest='useSkim', default=False, he
 (options, args) = parser.parse_args()
 
 
-trees_b="0_wjest_v2_copy"
+trees_b="0_wjest_v3_copy"
 
 if options.useSkim:
-    trees_b="wjest_skim" 
+    trees_b="wjest_skim_v1" 
 
 trees_r=trees_b+"_addOns"
 

@@ -31,20 +31,20 @@ baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
 MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc']
 Datafriends = ['1_recl']
-friends     = ['3_ak8_sdm45to150','0_wjest_v2']
+friends     = ['3_ak8_sdm45','0_wjest_v3']#'3_ak8_sdm45to150','0_wjest_v2']#'3_ak8Vtagged_sdm45']#
 fplots      = 'vvsemilep/fullRun2/plots.txt'
 fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
-genvars_phi = ['jetphi_mWV','lephi_mWV']#SeldLep1_pt','SelGak8Jet1_pt','SelGak8Jet1_mass','ttGenmWV_typ0_pmet_boosted']#,'SeldLep1_eta','SeldLep1_phi','SeldLep1_pdgId','SeldLep1_pt_HF','SeldLep1_eta_HF','SeldLep1_phi_HF','nSeldLeps','SelGak8Jet1_pt','SelGak8Jet1_eta','SelGak8Jet1_phi','SelGak8Jet1_mass','SelGak8Jet1_pt_HF','SelGak8Jet1_eta_HF','SelGak8Jet1_phi_HF','SelGak8Jet1_mass_HF','nSelGak8Jets','neutrino_pt_HF','neutrino_phi_HF']    
+genvars_phi = ['jetphi_mWV','lephi_mWV','SeldLep1_pt','SelGak8Jet1_pt','SelGak8Jet1_mass','ttGenmWV_typ0_pmet_boosted','SeldLep1_eta','SeldLep1_phi','SeldLep1_pdgId','SeldLep1_pt_HF','SeldLep1_eta_HF','SeldLep1_phi_HF','nSeldLeps','SelGak8Jet1_pt','SelGak8Jet1_eta','SelGak8Jet1_phi','SelGak8Jet1_mass','SelGak8Jet1_pt_HF','SelGak8Jet1_eta_HF','SelGak8Jet1_phi_HF','SelGak8Jet1_mass_HF','nSelGak8Jets','neutrino_pt_HF','neutrino_phi_HF']    
 
 HEM=['puppimetphi','etaphi1','FatJet1_phi','FatJet1_eta']#'FatJet1_etaphi','eta1','phi1',,
 
-cutflow    =['puppimet1','mWV1_typ0_pmet_boosted','lep1_ptt','FatJet1_pNet_mass','FatJet1_ptt','FatJet1_pNetMD_Wtagscoret']
+cutflow    =['puppimet1','mWV_typ0_pmet_boosted','lep1_ptt','FatJet1_pNet_mass','FatJet1_ptt','FatJet1_pNetMD_Wtagscoret']
 aTGC_chk   =['tmWV_typ0_pmet_boosted','FatJet1_pt_vBins','FatJet1_pt_vBins','Lep1_pt_vBins'] #'Genptlepmet','tptleppmet','tmWV_typ0_pmet_boosted','tGenmWV_typ0_pmet_boosted','FatJet1_pt_vBins','tFatJet1_sDrop_mass',,'tptWV_pmet','nBJetLoose30_Recl','nBJetMedium30_Recl']# 'aTGC_wt','aTGC_wt_neg','aTGC_wt_pos','aTGC_wt_SM','aTGC_wt1','aTGC_wt2','test_plot'] #
 
 mWV=['ratio_typ0','ratio_typ1','ratio_typ2','ratio_typ3','mWV_typ0_pmet_boosted','mWV_typ01_pmet_boosted','mWV_typ10_pmet_boosted','mWV_typ11_pmet_boosted','mWV_typ20_pmet_boosted','mWV_typ21_pmet_boosted','mWV_typ30_pmet_boosted','mWV_typ31_pmet_boosted']
 
-topCR=['mWV_typ0_met_boosted','FatJet1_pt']
+topCR=['mWV_typ0_met_boosted','FatJet1_pt','FatJet1_sDrop_mass']
 
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
 
@@ -61,7 +61,7 @@ moreak8jetvars = ['dphifjmet','dphifjlep','dRfjlep','nFatJet_wtagged','FatJet1_t
 
 lepvars     = ['nLepGood','lep1_pt','lep1_hpt','puppimet','ptleppmet']
 
-moreWVvars=['ptWV_met','neupz','neupz_typ0','neupz_typ1','neupz_typ2','neupz_typ3','dphil1met','mt1','met','ptlepfj','mlepfj','dphifjlep','dphifjmet','mWV_typ0_met_boosted','mWV_typ1_met_boosted','mWV_typ2_met_boosted','mWV_typ3_met_boosted','metphi','dRfjlep','ptlepmet']
+moreWVvars=['ptWV_met','neupz','neupz_typ0','neupz_typ1','neupz_typ2','neupz_typ3','dphil1met','mt1','met','ptlepfj','mlepfj','dphifjlep','dphifjmet','mWV_typ0_met_boosted','mWV_typ1_met_boosted','mWV_typ2_met_boosted','mWV_typ3_met_boosted','metphi','dRfjlep','ptlepmet','event_id']
 
 
 wjest =['Lep1_pt','Lep1_eta','nSelak8Jets','nBJetMedium30','Selak8Jet1_pt','Selak8Jet1_eta','Selak8Jet1_pNetWtagscore','Selak8Jet1_pNetZtagscore','nBJetMedium30','pmet','pmet_phi','mWV_vBin']
@@ -157,15 +157,15 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
 ##################
 def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,doWJ,fitCR,WCs,acP,acC,wjDate):
-    print ("vorsichtig sein!! du hast tagging auswahl im top CR geloschen")
+    #    print ("vorsichtig sein!! du hast tagging auswahl im top CR geloschen")
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
     fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
-    showratio    = False #True
+    showratio    = True
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
-    processes    = ['WW_sm']#'WJets','tt','singletop','Others','data','WW_sm','WZ_sm']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','SM_WW','SM_WZ'] 
-    #,'WW_sm_lin_quad_c3w']#,'WZ_sm_lin_quad_c3w','WZ_quad_cb','WZ_sm_lin_quad_cb',# 'WW_sm_lin_quad_2p25_cw','WW_quad_2p25_cw','WW_sm_lin_quad_cw','WW_sm_lin_quad_1p8_c3w','WW_quad_1p8_c3w','WW_sm_lin_quad_c3w',#,'WZ_sm_lin_quad_2p25_cw','RWZ_sm_lin_quad_2p25_cw','WZ_quad2p25_cw']#,'SM_WW','SM_WW1','SM_WZ1','SM_WW2','SM_WZ2']#,'WZ_sm1','WZ_sm2','WZ_sm3','WZ_sm4','WZ_sm5','WZ_sm6','WW_sm1','WW_sm2','WW_sm3','WW_sm4','WW_sm5','WW_sm6']
+    processes    = ['WJets','tt','singletop','Others','data','WW_sm','WZ_sm','WW_SMEFT_sm','WZ_SMEFT_sm']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','SM_WW','SM_WZ'] 
+
 
     WCs=['cW','c3w','cb']
 #    for ops in WCs:
@@ -182,7 +182,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
     #legends = ' --legendFontSize 0.03 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 ' 
-    legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
+    legends = ' --perBin  --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
     ubands  =  '    --showMCError ' # --showIndivSigs --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
     ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5 '#   --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' #
@@ -193,8 +193,8 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     #if doWhat == "plots" and ('SR' in selection or "sig" in selection):
     #    blinded=True
     for pR in selection:
-        if 'top' in pR and fitCR:            fittodata.append('tt');
-        if 'wj' in pR and fitCR:            fittodata.append('WJets');
+        if 'top' in pR and fitCR:         fittodata.append('tt');
+        if 'wj' in pR and fitCR:          fittodata.append('WJets');
         exclude = ' --xu CMS_vvsl18_pNetscore' if 'wjCR' not in pR else  ' '
         #signal= if3(pR == 'SR',if3(nLep > 1,'--sp ZV','--sp aTGC_WW --sp aTGC_WZ'), if3('top' in pR, ' --sp tt --sp singletop', ' --sp WJets'))
         signal= if3(pR == 'SR' or pR == 'sig',if3(nLep > 1,'--sp ZV','--sp .*ccw.* --sp .*cb.*'), if3('top' in pR, ' --sp tt ', ' --sp WJets'))
@@ -383,11 +383,11 @@ if __name__ == '__main__':
 # python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW cards --year 2016 --finalState 4l m4l --applylepSFs
 #python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv dRfjj 
 # python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --dW plots --year 2018 --nLep 1 --finalState boosted --pv LHE_HT --pf chkHT
-#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --alpha --year 2018 --nLep 1 --finalState boosted --pv  mWV1_typ0_pmet_boosted --applylepSFs --lf mu
+#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --alpha --year 2018 --nLep 1 --finalState boosted --pv  mWV_typ0_pmet_boosted --applylepSFs --lf mu
 #python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --simple --genD --year 2018
 
 
-#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv mWV1_typ0_pmet_boosted  --lf mu --lf el --year 2018 --dW plots --applylepSFs --WC cwww --WC ccw --WC cb
+#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv mWV_typ0_pmet_boosted  --lf mu --lf el --year 2018 --dW plots --applylepSFs --WC cwww --WC ccw --WC cb
 
 # python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_pt --pv FatJet1_pt_vBins --pv tGenJetAK8_pt --pv tGenmWV_typ0_pmet_boosted --pv tmWV_typ0_pmet_boosted --lf onelep --year 2018 --dW plots --dCF --applylepSFs
 #python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf onelep --year 2018 --dW plots

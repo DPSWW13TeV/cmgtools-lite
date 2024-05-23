@@ -14,10 +14,10 @@ queue
 arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py mu 
 queue 
 
-arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py el uS
-queue 
-arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py mu uS
-queue 
+#arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py el uS
+#queue 
+#arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py mu uS
+#queue 
 
 
 

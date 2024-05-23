@@ -1,15 +1,15 @@
 WV : WZTo1L1Nu2Q : 10.71: 1 ; FillColor=30, Label="WV (SM)"  ,SkipMe=True
 WV : WWTo1L1Nu2Q : 5.090e+01 : 1 ; FillColor=30, Label="WV (SM)" ,SkipMe=True
 
-#SM_WZ1 : WZTo1L1Nu2Q : 11.46  : LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ plus"
-#SM_WZ2 : WZTo1L1Nu2Q : 11.46  : LepGood1_charge < 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ minus"
+SM_WZ_plus   : WZTo1L1Nu2Q : 11.46  : LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ plus",SkipMe=True
+SM_WZ_minus  : WZTo1L1Nu2Q : 11.46  : LepGood1_charge < 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ minus",SkipMe=True
+SM_WW_plus   : WWTo1L1Nu2Q : xsec : LepGood1_charge > 0 ; FillColor=30, Label="WW SM plus" ,SkipMe=True
+SM_WW_minus  : WWTo1L1Nu2Q : xsec : LepGood1_charge < 0 ; FillColor=30, Label="WW SM minus",SkipMe=True
+
 
 ##https://github.com/raggleton/aTGCsAnalysis/blob/472a635fba97990c6f0a899557424d0589a81061/Common/test/addWeightSamples.cpp#L37
 #pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)
-#Selak8Jet1_pNetWtagSF
 
-#SM_WW   : WWTo1L1Nu2Q : xsec : LepGood1_charge > 0 ; FillColor=30, Label="WW SM plus" ,SkipMe=True
-#SM_WW   : WWTo1L1Nu2Q : xsec : LepGood1_charge < 0 ; FillColor=30, Label="WW SM minus",SkipMe=True
 
 SM_WW   : WWTo1L1Nu2Q : xsec   : 1 ; FillColor=30, Label="WW SM" 
 SM_WZ   : WZTo1L1Nu2Q : 11.46  : 1 ; FillColor=ROOT.kTeal-7, Label="WZ SM"
@@ -35,6 +35,12 @@ WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweight
 WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
 WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
 WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
+
+
+WW_SMEFT_sm :   WmWpToLmNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kAzure-3,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM",LineStyle=ROOT.kDotted
+WW_SMEFT_sm :   WpWmToLpNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kAzure-3,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM",LineStyle=ROOT.kDotted
+WZ_SMEFT_sm :   WpZToLpNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kAzure-9,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted
+WZ_SMEFT_sm :   WmZToLmNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kAzure-9,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted
 
 
 
@@ -220,6 +226,7 @@ pt05sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec :
 
 
 
+tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="t\#bart", FriendsSimple="{P}/2_toppT_rw/"
 
 
 
@@ -254,19 +261,17 @@ Others : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="othe
 
 
 
-#TTSEMI : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; F#illColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
 
 
-
-tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="t\#bart",FriendsSimple="{P}/2_toppT_rw/"
+#tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="t\#bart", FriendsSimple="{P}/2_toppT_rw/"
 
 
 ##tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<700) ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
 #Top_pTrw
 
 
-tt : TT_mtt1ktoinf: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
-tt : TT_mttp7kto1k: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
+highmass_tt : TT_mtt1ktoinf: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
+highmass_tt : TT_mttp7kto1k: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
 
 
 singletop   : T_sch                : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"

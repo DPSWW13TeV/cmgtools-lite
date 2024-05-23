@@ -47,11 +47,11 @@ class saveGoodak8Jet(Module):
 
         pNetScore_wtag=[];
         for index,iJet in enumerate(fjets):
-            selcut=iJet.particleNet_mass > 45 if self.massVar == "pN" else iJet.msoftdrop  > 45
-            selcutB=iJet.particleNet_mass < 150 if self.massVar == "pN" else iJet.msoftdrop  < 150
+            selcut  = iJet.particleNet_mass > 45 if self.massVar == "pN" else iJet.msoftdrop  > 45
+            #selcutB = iJet.particleNet_mass < 150 if self.massVar == "pN" else iJet.msoftdrop  < 150
             pnetscore=0.0;
             pnetscore=(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq)/(iJet.particleNetMD_Xcc+iJet.particleNetMD_Xqq+iJet.particleNetMD_QCD)
-            if not (selcut and selcutB): continue
+            if not (selcut): continue
             jindex.append(index)
             pNetScore_wtag.append(pnetscore)
             #print pNetScore,pNetScore1,iJet.particleNetMD_Xbb

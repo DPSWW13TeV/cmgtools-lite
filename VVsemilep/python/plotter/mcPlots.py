@@ -154,13 +154,13 @@ def doTinyCmsPrelim(textLeft="_default_",textRight="_default_",hasExpo=False,tex
     elif lumi > 3.54e-2: lumitext = "%.0f pb^{-1}" % (lumi*1000)
     elif lumi > 3.54e-3: lumitext = "%.1f pb^{-1}" % (lumi*1000)
     else               : lumitext = "%.2f pb^{-1}" % (lumi*1000)
-    lumitext = "%.1f fb^{-1}" % float(lumi)
+    lumitext = "%.1f fb^{#minus1}" % float(lumi)
     textLeft = textLeft.replace("%(lumi)",lumitext)
     textRight = textRight.replace("%(lumi)",lumitext)
     if textLeft not in ['', None]:
         doSpam(textLeft, (.28 if hasExpo else 0.07 if doWide else .16)+xoffs, .955, .60+xoffs, .995, align=12, textSize=textSize)
     if textRight not in ['', None]:
-        doSpam(textRight,(0.5 if doWide else .58)+xoffs, .955, .98+xoffs, .995, align=32, textSize=textSize)
+        doSpam(textRight,(0.5 if doWide else .53)+xoffs, .955, .98+xoffs, .995, align=32, textSize=textSize)
 
 def reMax(hist,hist2,islog,factorLin=1.3,factorLog=2.0,doWide=False):
     if  hist.ClassName() == 'THStack':
@@ -393,9 +393,9 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
             # do this first
             total.GetXaxis().SetLabelOffset(999) ## send them away
             total.GetXaxis().SetTitleOffset(999) ## in outer space
-            total.GetYaxis().SetTitleSize(0.06)
+            total.GetYaxis().SetTitleSize(0.05)
             total.GetYaxis().SetTitleOffset(0.75 if doWide else 1.48)
-            total.GetYaxis().SetLabelSize(0.05)
+            total.GetYaxis().SetLabelSize(0.045)
             total.GetYaxis().SetLabelOffset(0.007)
             # then we can overwrite total with background
             numkey = 'signal'
@@ -472,14 +472,14 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     rmax = float(pspec.getOption("RMax",rmax))
     unity.GetYaxis().SetRangeUser(rmin,rmax);
     unity.GetXaxis().SetTitleFont(42)
-    unity.GetXaxis().SetTitleSize(0.14)
+    unity.GetXaxis().SetTitleSize(0.13)
     unity.GetXaxis().SetTitleOffset(1.0)
     unity.GetXaxis().SetLabelFont(42)
     unity.GetXaxis().SetLabelSize(0.1)
     unity.GetXaxis().SetLabelOffset(0.015)
     unity.GetYaxis().SetNdivisions(yndiv)
     unity.GetYaxis().SetTitleFont(42)
-    unity.GetYaxis().SetTitleSize(0.14)
+    unity.GetYaxis().SetTitleSize(0.13)
     offset = 0.32 if doWide else 0.62
     unity.GetYaxis().SetTitleOffset(offset)
     unity.GetYaxis().SetLabelFont(42)
@@ -489,9 +489,9 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     unity.GetYaxis().SetTitle(ylabel)
     total.GetXaxis().SetLabelOffset(999) ## send them away
     total.GetXaxis().SetTitleOffset(999) ## in outer space
-    total.GetYaxis().SetTitleSize(0.06)
+    total.GetYaxis().SetTitleSize(0.05)
     total.GetYaxis().SetTitleOffset(0.75 if doWide else 1.48)
-    total.GetYaxis().SetLabelSize(0.05)
+    total.GetYaxis().SetLabelSize(0.04)
     total.GetYaxis().SetLabelOffset(0.007)
     binlabels = pspec.getOption("xBinLabels","")
     if binlabels != "" and len(binlabels.split(",")) == unity.GetNbinsX():
@@ -876,16 +876,16 @@ class PlotMaker:
                 stack.Draw("GOFF")
                 ytitle = "Events" if not self._options.printBinning else "Events / %s" %(self._options.printBinning)
                 total.GetXaxis().SetTitleFont(42)
-                total.GetXaxis().SetTitleSize(0.05)
+                total.GetXaxis().SetTitleSize(0.045)
                 total.GetXaxis().SetTitleOffset(1.1)
                 total.GetXaxis().SetLabelFont(42)
-                total.GetXaxis().SetLabelSize(0.04)
+                total.GetXaxis().SetLabelSize(0.035)
                 total.GetXaxis().SetLabelOffset(0.007)
                 total.GetYaxis().SetTitleFont(42)
-                total.GetYaxis().SetTitleSize(0.05)
+                total.GetYaxis().SetTitleSize(0.045)
                 total.GetYaxis().SetTitleOffset(0.9 if doWide else 2.0)
                 total.GetYaxis().SetLabelFont(42)
-                total.GetYaxis().SetLabelSize(0.04)
+                total.GetYaxis().SetLabelSize(0.035)
                 total.GetYaxis().SetLabelOffset(0.007)
                 total.GetYaxis().SetTitle(pspec.getOption('YTitle',ytitle))
                 total.GetXaxis().SetTitle(pspec.getOption('XTitle',outputName))
