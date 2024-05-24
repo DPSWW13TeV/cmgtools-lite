@@ -40,8 +40,11 @@ atgc=[
 'WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2',
 ]
 
-
-samples=top + atgc +stop +wjets+more
+smeft=['WpZToLpNujj_SMEFT_LO',
+'WpWmToLpNujj_SMEFT_LO',
+'WmWpToLmNujj_SMEFT_LO',
+'WmZToLmNujj_SMEFT_LO']
+samples=smeft #+top + atgc +stop +wjets+more
 
 def printnEvt(fN,yr):
     files=[] 

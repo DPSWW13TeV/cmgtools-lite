@@ -29,9 +29,9 @@ mWV_fxn={
 wspc        = ['ak8_mass','mWV','pmet_phi']
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
-MCfriends   = ['1_recl','2_recl_allvars']#,'4_scalefactors','2_jmeUnc']
+MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc']
 Datafriends = ['1_recl']
-friends     = ['3_ak8_sdm45'] #,'0_wjest_v3']#'3_ak8_sdm45to150','0_wjest_v2']#'3_ak8Vtagged_sdm45']#
+friends     = ['3_ak8_sdm45','0_wjest_v3']#'3_ak8_sdm45to150','0_wjest_v2']#'3_ak8Vtagged_sdm45']#
 fplots      = 'vvsemilep/fullRun2/plots.txt'
 fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
@@ -164,7 +164,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
-    processes    = ['WZ_SMEFT_sm']#'WW_sm','SM_WW','WJets','tt','singletop','Others','data','WW_sm','WZ_sm','WW_SMEFT_sm','WZ_SMEFT_sm']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','SM_WW','SM_WZ'] 
+    processes    = ['WW_SMEFT_sm','WW_sm','SM_WW']#,'WJets','tt','singletop','Others','data','WW_sm','WZ_sm','WW_SMEFT_sm','WZ_SMEFT_sm']#,'WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb','SM_WW','SM_WZ'] 
 
 
     WCs=['cW','c3w','cb']
@@ -185,7 +185,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     legends = ' --perBin  --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
     ubands  =  '    --showMCError ' # --showIndivSigs --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
-    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5 '#   --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' #
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5   --ratioNums WW_SMEFT_sm,WW_sm   --ratioDen SM_WW --ratioYLabel=aTGC/SM  --plotmode nostack ' # --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' #
 
     more = '' # --plotmode norm' if cutflow else ''
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
@@ -393,5 +393,5 @@ if __name__ == '__main__':
 #python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf onelep --year 2018 --dW plots
 #python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv Jet_pt_eta --lf mu --year 2018 --dW cards
 
-#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_sDrop_mass --lf mu --year 2018 --dW plots  --applylepSFs
+#python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv FatJet1_sDrop_mass --pv mWV_typ0_pmet_boosted --lf mu --year 2018 --dW plots  --applylepSFs
 #python plots_VVsemilep.py --pD /eos/user/a/anmehta/www/VVsemilep/ --results --finalState boosted --nLep 1 --sel SR --pv debugsel --lf mu --year 2018 --dW plots  --applylepSFs
