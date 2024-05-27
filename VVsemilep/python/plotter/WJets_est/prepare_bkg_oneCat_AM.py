@@ -111,6 +111,8 @@ parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=
 parser.add_option('-r','--readtrees', action='store_true', dest='read_trees', default=False, help='read data and MC from TTrees, has to be done when range or binning is changed -> takes much longer')
 parser.add_option('--noplots', action='store_true', dest='noplots', default=False, help='dont make any plots')
 parser.add_option('--uS', action='store_true', dest='useSkim', default=False, help='use skimmed trees or friends')
+parser.add_option('--pD',dest='plotsDir', type='string', default=os.getcwd(),help='save plots here')# "/eos/user/a/anmehta/www/VVsemilep/WJest", 
+
 
 (options, args) = parser.parse_args()
 
@@ -244,7 +246,7 @@ class doFit_wj_and_wlvj:
         self.wtagger_label        = 'WPM' ##amtagger label
         self.PNS = self.PNSWP[self.wtagger_label]
 
-        eos='/eos/user/a/anmehta/www/VVsemilep/WJest/%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date)
+        eos=os.path.join(options.plotsDir,'%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date))
         if not os.path.isdir(eos): os.system("mkdir %s"%eos)
         if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+eos)
         extra_str="%s%s"%("weighted" if useWts else "unweighted",self.pf)

@@ -9,14 +9,14 @@ requirements = (OpSysAndVer =?= "CentOS7")
 +JobFlavour = "workday"
 
 
-arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py el 
+arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  el 
 queue 
-arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py mu 
+arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  mu 
 queue 
 
-arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py el uS
+arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  el uS
 queue 
-arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py mu uS
+arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  mu uS
 queue 
 
 

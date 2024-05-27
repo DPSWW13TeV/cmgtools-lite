@@ -36,6 +36,7 @@ parser.add_option('--uS', action='store_true', dest='useSkim', default=False, he
 parser.add_option('--hi', action='store', dest='mlvj_hi', type='float', default=4550, help='dont change atm!')
 parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=950, help='set lower cut on MWV, mat cause problems')
 parser.add_option('--inPath', action="store",type="string",dest="inPath",default="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/")
+parser.add_option('--pD',dest='plotsDir', type='string', default=os.getcwd(),help='save plots here')# "/eos/user/a/anmehta/www/VVsemilep/WJest", 
 (options,args) = parser.parse_args()
 
 
@@ -98,7 +99,7 @@ class Prepare_workspace_4limit:
             self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.5,'WPD':-1}
             self.wtagger_label        = 'WPM' 
             self.PNS = self.PNSWP[self.wtagger_label]
-            eos='/eos/user/a/anmehta/www/VVsemilep/WJest/%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date)
+            eos=os.path.join(options.plotsDir,'%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date))
             if not os.path.isdir(eos): os.system("mkdir %s"%eos)
             if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+eos)
             extra_str="%s%s"%("weighted" if useWts else "unweighted",self.pf)
@@ -400,51 +401,51 @@ class Prepare_workspace_4limit:
                 can[i].SaveAs(self.plotsDir+'/%s_neg_%s.png'%(self.POI[i],channel))
                 
 
-                for j in range(3):
-                        self.wtmp.var(self.POI[j]).setVal(0)
-                self.wtmp.data('SMdatahist_%s'%cat).plotOn(plots2[i],RooFit.MarkerColor(kBlack),RooFit.LineColor(kBlack),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'))
-                self.wtmp.data('pos_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots2[i],RooFit.MarkerColor(kBlue),RooFit.LineColor(kBlue),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'))
-
-                self.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots2[i],RooFit.LineColor(kBlack),RooFit.Normalization(normvalSM, RooAbsReal.NumEvent))
-                self.wtmp.var(self.POI[i]).setVal(self.PAR_MAX[self.POI[i]])
-                normvalpos = norm.getVal() * self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
-
-                self.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots2[i],RooFit.LineColor(kBlue),RooFit.Normalization(normvalpos, RooAbsReal.NumEvent))
-                
-                self.wtmp.data('pos_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots2[i],RooFit.MarkerColor(kBlue),RooFit.LineColor(kBlue),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E'))
-
-                plots2[i].GetYaxis().SetRangeUser(plotmin,plotmax);
-                plots2[i].GetYaxis().SetTitle('Events')
-                plots2[i].GetXaxis().SetLabelOffset(99); plots2[i].GetXaxis().SetTitleOffset(999);plots2[i].GetXaxis().SetLabelSize(0.0001);plots2[i].GetXaxis().SetTitleSize(0.0001);
-                can2[i].cd()
-                pads[i][2].Draw()
-                pads[i][3].Draw()
-                pads[i][2].SetLeftMargin(0.1)
-                pads[i][3].SetLeftMargin(0.1)
-                plots2[i].SetTitle('')
-                pads[i][2].SetLogy()
-                pads[i][2].cd()
-                plots2[i].Draw()
-		leg2        = TLegend(0.11,0.2,0.4,0.6)
-                leg2.SetFillStyle(0)
-                leg2.SetBorderSize(0)
-                leg2.AddEntry(plots[i].findObject('SMdata'),'MC '+parlatex[i]+'=0 TeV^{-2}','le')
-                leg2.AddEntry(plots[i].findObject('SMmodel'),'signal model '+parlatex[i]+'=0 TeV^{-2}','l')
-                leg2.AddEntry(plots[i].findObject('atgcdata'),'MC '+parlatex[i]+'='+str(+self.PAR_MAX[self.POI[i]])+' TeV^{-2}','le')
-                leg2.AddEntry(plots[i].findObject('atgcmodel'),'signal model '+parlatex[i]+'='+str(+self.PAR_MAX[self.POI[i]])+' TeV^{-2}','l')
-		leg2.Draw()
-		leg2.Print()
-                pullhist2 = plots2[i].pullHist('h_pos_datahist_%s_%s'%(cat,self.POI[i]),'aTGC_model_%s_Norm[rrv_mass_lvj]'%channel)
-                pads[i][3].cd()
-                pads[i][3].SetTopMargin(0.0005);pads[i][3].SetBottomMargin(0.3);
-                ratio_style.Draw("")
-                ratio_style.GetXaxis().SetTitle("m_{WV} (GeV)");
-                pullhist2.SetLineColor(kBlue);  pullhist2.SetLineWidth(1);
-                pullhist2.Draw("E1")
-
-                can2[i].Update()
-                can2[i].SaveAs(self.plotsDir+'/%s_pos_%s.pdf'%(self.POI[i],channel))
-                can2[i].SaveAs(self.plotsDir+'/%s_pos_%s.png'%(self.POI[i],channel))
+                ##amfor j in range(3):
+                ##am        self.wtmp.var(self.POI[j]).setVal(0)
+                ##amself.wtmp.data('SMdatahist_%s'%cat).plotOn(plots2[i],RooFit.MarkerColor(kBlack),RooFit.LineColor(kBlack),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'))
+                ##amself.wtmp.data('pos_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots2[i],RooFit.MarkerColor(kBlue),RooFit.LineColor(kBlue),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'))
+                ##am
+                ##amself.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots2[i],RooFit.LineColor(kBlack),RooFit.Normalization(normvalSM, RooAbsReal.NumEvent))
+                ##amself.wtmp.var(self.POI[i]).setVal(self.PAR_MAX[self.POI[i]])
+                ##amnormvalpos = norm.getVal() * self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
+                ##am
+                ##amself.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots2[i],RooFit.LineColor(kBlue),RooFit.Normalization(normvalpos, RooAbsReal.NumEvent))
+                ##am
+                ##amself.wtmp.data('pos_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots2[i],RooFit.MarkerColor(kBlue),RooFit.LineColor(kBlue),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E'))
+                ##am
+                ##amplots2[i].GetYaxis().SetRangeUser(plotmin,plotmax);
+                ##amplots2[i].GetYaxis().SetTitle('Events')
+                ##amplots2[i].GetXaxis().SetLabelOffset(99); plots2[i].GetXaxis().SetTitleOffset(999);plots2[i].GetXaxis().SetLabelSize(0.0001);plots2[i].GetXaxis().SetTitleSize(0.0001);
+                ##amcan2[i].cd()
+                ##ampads[i][2].Draw()
+                ##ampads[i][3].Draw()
+                ##ampads[i][2].SetLeftMargin(0.1)
+                ##ampads[i][3].SetLeftMargin(0.1)
+                ##amplots2[i].SetTitle('')
+                ##ampads[i][2].SetLogy()
+                ##ampads[i][2].cd()
+                ##amplots2[i].Draw()
+		##amleg2        = TLegend(0.11,0.2,0.4,0.6)
+                ##amleg2.SetFillStyle(0)
+                ##amleg2.SetBorderSize(0)
+                ##amleg2.AddEntry(plots[i].findObject('SMdata'),'MC '+parlatex[i]+'=0 TeV^{-2}','le')
+                ##amleg2.AddEntry(plots[i].findObject('SMmodel'),'signal model '+parlatex[i]+'=0 TeV^{-2}','l')
+                ##amleg2.AddEntry(plots[i].findObject('atgcdata'),'MC '+parlatex[i]+'='+str(+self.PAR_MAX[self.POI[i]])+' TeV^{-2}','le')
+                ##amleg2.AddEntry(plots[i].findObject('atgcmodel'),'signal model '+parlatex[i]+'='+str(+self.PAR_MAX[self.POI[i]])+' TeV^{-2}','l')
+		##amleg2.Draw()
+		##amleg2.Print()
+                ##ampullhist2 = plots2[i].pullHist('h_pos_datahist_%s_%s'%(cat,self.POI[i]),'aTGC_model_%s_Norm[rrv_mass_lvj]'%channel)
+                ##ampads[i][3].cd()
+                ##ampads[i][3].SetTopMargin(0.0005);pads[i][3].SetBottomMargin(0.3);
+                ##amratio_style.Draw("")
+                ##amratio_style.GetXaxis().SetTitle("m_{WV} (GeV)");
+                ##ampullhist2.SetLineColor(kBlue);  pullhist2.SetLineWidth(1);
+                ##ampullhist2.Draw("E1")
+                ##am
+                ##amcan2[i].Update()
+                ##amcan2[i].SaveAs(self.plotsDir+'/%s_pos_%s.pdf'%(self.POI[i],channel))
+                ##amcan2[i].SaveAs(self.plotsDir+'/%s_pos_%s.png'%(self.POI[i],channel))
                     
 
 
