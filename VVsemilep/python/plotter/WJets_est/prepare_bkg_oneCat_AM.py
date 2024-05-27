@@ -2299,7 +2299,7 @@ objName ==objName_before ):
                             totEventWeight=1000*treeIn.xsec*treeIn.genwt*evtWt*treeIn.lepSF*treeIn.Selak8Jet1_pNetWtagSF*lumis[self.year]/treeIn.sumw
                         elif label == "_WW" or label == "_WZ":
                              totEventWeight=1000*treeIn.xsec*treeIn.aGC_wt[62]*treeIn.genwt*evtWt*treeIn.lepSF*treeIn.Selak8Jet1_pNetWtagSF*lumis[self.year]/treeIn.sumw
-                        print "IMPCHK event number for \t",label,"\t passing the selection\t",treeIn.event_presel,"\t eventweight \t",totEventWeight
+                        if verbose_num: print "IMPCHK event number for \t",label,"\t passing the selection\t",treeIn.event_presel,"\t eventweight \t",totEventWeight
                         tmp_scale_to_lumi = totEventWeight #1.0 if "data" in label else 1000*treeIn.genwt*treeIn.xsec*lumis[self.year]/treeIn.sumw
                         tmp_event_weight=totEventWeight 
 
