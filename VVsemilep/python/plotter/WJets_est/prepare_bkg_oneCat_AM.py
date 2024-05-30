@@ -111,7 +111,7 @@ parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=
 parser.add_option('-r','--readtrees', action='store_true', dest='read_trees', default=False, help='read data and MC from TTrees, has to be done when range or binning is changed -> takes much longer')
 parser.add_option('--noplots', action='store_true', dest='noplots', default=False, help='dont make any plots')
 parser.add_option('--uS', action='store_true', dest='useSkim', default=False, help='use skimmed trees or friends')
-parser.add_option('--pD',dest='plotsDir', type='string', default=os.getcwd(),help='save plots here')# "/eos/user/a/anmehta/www/VVsemilep/WJest", 
+parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/a/anmehta/www/VVsemilep/WJest" if os.environ['USER'] == "anmehta" else os.getcwd() ,help='save plots here')
 
 
 (options, args) = parser.parse_args()
@@ -257,9 +257,7 @@ class doFit_wj_and_wlvj:
         if not os.path.isdir(os.path.join(self.plotsDir,"other")): os.system("mkdir %s"%(os.path.join(self.plotsDir,"other")))
         os.system("cp ~/public/index.php %s"%self.plotsDir+"/other")
         self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',extra_str,self.ch,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))##date
-
-        if not os.path.isdir(self.rlt_DIR_name):
-                os.system("mkdir -p %s " %self.rlt_DIR_name);
+        if not os.path.isdir(self.rlt_DIR_name):                os.system("mkdir -p %s " %self.rlt_DIR_name);
         self.rlt_DIR=self.rlt_DIR_name
         if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
         #result files: The event number, parameters and error write into a txt file. The dataset and pdfs write into a root file

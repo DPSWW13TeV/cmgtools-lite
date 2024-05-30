@@ -1,7 +1,7 @@
 import os,string,sys
 from plots_VVsemilep import *
 
-allvars=  theWVultimateset #+wspc # HEM + #bTag_eff #mWV #topCR #theWVultimateset #+moreak8jetvars MConly+#newVars+lepvars+WVvars+eventvars 
+allvars=  theWVultimateset 
 doWhat=sys.argv[1] #cards or plots
 fName='submitFile_%s.condor'%doWhat
 tmp_condor = open('jobs/%s'%fName, 'w')
@@ -16,8 +16,10 @@ requirements = (OpSysAndVer =?= "CentOS7")
 +AccountingGroup = "group_u_CMST3.all"
 +JobFlavour = "workday"
 \n\n'''.format(dW=doWhat,here=os.environ['PWD']))
-pf=""
+if os.environ['USER'] in ['anmehta', 'vmilosev']:
+   tmp_condor.write('+AccountingGroup = "group_u_CMST3.all"\n\n\n')
 
+pf=""
 lepsel={'topCR' : ["onelep"],
         'inclB' : ["mu","el"],
         'SR'    : ["mu","el"],
@@ -27,7 +29,6 @@ lepsel={'topCR' : ["onelep"],
         'SB'    : ["mu","el"],
 
 }
-
 ops=['c3w','ccw','cb','']
 for sel in ["SB","SR"]: #"SB","SR"]: #"inclB","sig"]: #,"sb_lo","sb_hi"]:  #"wjCR","topCR",]:
    for cat in ["boosted"]: 

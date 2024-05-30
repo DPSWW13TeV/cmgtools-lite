@@ -19,7 +19,7 @@ parser.add_option('--uS', action='store_true', dest='useSkim', default=False, he
 parser.add_option('--hi', action='store', dest='mlvj_hi', type='float', default=4550, help='dont change atm!')
 parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=950, help='set lower cut on MWV, mat cause problems')
 parser.add_option('--inPath', action="store",type="string",dest="inPath",default="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/")
-parser.add_option('--pD',dest='plotsDir', type='string', default=os.getcwd(),help='save plots here')# "/eos/user/a/anmehta/www/VVsemilep/WJest", 
+parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/a/anmehta/www/VVsemilep/WJest" if os.environ['USER'] == "anmehta" else os.getcwd() ,help='save plots here')
 (options,args) = parser.parse_args()
 
 
@@ -62,7 +62,7 @@ class Prepare_workspace_4limit:
             self.mlvj_hi                = options.mlvj_hi                #upper bound
             self.year                   = options.year
             self.pf                     = "_"+options.pf if len(options.pf) >0 else ""
-            self.pf+="_withSkim" if options.useSkim else ""
+            self.pf+= "_withSkim" if options.useSkim else ""
             self.channel                = self.ch
             self.nbins                  = (self.mlvj_hi-self.mlvj_lo)/100
             self.file_Directory         = os.path.join(self.year,trees_b)
@@ -76,19 +76,19 @@ class Prepare_workspace_4limit:
             self.eps.setConstant(kTRUE)
             self.eps4cbWZ               = RooFormulaVar('rel_slope_nuis4cbWZ','rel_slope_nuis4cbWZ','1+3.0*(@0-1)',RooArgList(self.eps))
             self.eps4cbWW               = RooFormulaVar('rel_slope_nuis4cbWW','rel_slope_nuis4cbWW','1+3.0*(@0-1)',RooArgList(self.eps))
-            self.PNSWP={'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.5,'WPD':-1}
-            self.wtagger_label        = 'WPM' 
-            self.PNS = self.PNSWP[self.wtagger_label]
+            self.PNSWP                  = {'WPL':0.64,'WPM':0.85,'WPT':0.91,'WPU':0.5,'WPD':-1}
+            self.wtagger_label          = 'WPM' 
+            self.PNS                    = self.PNSWP[self.wtagger_label]
             eos=os.path.join(options.plotsDir,'%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date))
-            if not os.path.isdir(eos): os.system("mkdir %s"%eos)
+            if not os.path.isdir(eos): os.system("mkdir -p %s"%eos)
             if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+eos)
             extra_str="%s%s"%("weighted" if useWts else "unweighted",self.pf)
-            self.plotsDir = eos+'/plots_aTGC_%s_%s_%s_%s_%s' %(self.channel,self.wtagger_label,self.mlvj_lo,int(self.mlvj_hi),extra_str)
-            if not os.path.isdir(self.plotsDir): os.system("mkdir %s"%self.plotsDir)
+            self.plotsDir = os.path.join(eos,'plots_aTGC_%s_%s_%s_%s_%s' %(self.channel,self.wtagger_label,self.mlvj_lo,int(self.mlvj_hi),extra_str))
+            if not os.path.isdir(self.plotsDir): os.system("mkdir -p %s"%self.plotsDir)
             os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
             os.system("cp make_PDF_input_oneCat_AM.py "+self.plotsDir)
             self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',extra_str,self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))##date
-
+            if not os.path.isdir(self.rlt_DIR_name): os.system("mkdir -p  %s"%self.rlt_DIR_name)
             ##read workspace containing background pdfs
             fileInWs                    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.mlvj_hi)))
             w                           = fileInWs.Get('workspace4limit_')
@@ -103,8 +103,8 @@ class Prepare_workspace_4limit:
             self.samples={
                     'WW':[ww_atgc],
                     'WZ':[wz_atgc]}
-            self.file_WW_aTGC_mc              = "WW_aTGC"
-            self.file_WZ_aTGC_mc              = "WZ_aTGC"
+            #self.file_WW_aTGC_mc              = "WW_aTGC"
+            #self.file_WZ_aTGC_mc              = "WZ_aTGC"
 
         #read trees containing aTGC WW and WZ events and fill them into histograms
         def Read_ATGCtree(self,ch='mu'):
