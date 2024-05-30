@@ -37,11 +37,26 @@ WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweight
 WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
 
 
-WW_SMEFT_sm :   WmWpToLmNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kAzure-3,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM",LineStyle=ROOT.kDotted
-WW_SMEFT_sm :   WpWmToLpNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kAzure-3,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM",LineStyle=ROOT.kDotted
-WZ_SMEFT_sm :   WpZToLpNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kAzure-9,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted
-WZ_SMEFT_sm :   WmZToLmNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kAzure-9,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted
+WW_SMEFT_sm :   WmWpToLmNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]*LHEWeight_originalXWGTUP; FillColor=ROOT.kTeal-7,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM",LineStyle=ROOT.kDotted
+WW_SMEFT_sm :   WpWmToLpNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]*LHEWeight_originalXWGTUP; FillColor=ROOT.kTeal-7,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM",LineStyle=ROOT.kDotted
+WZ_SMEFT_sm :   WpZToLpNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]*LHEWeight_originalXWGTUP; FillColor=ROOT.kTeal-7,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted
+WZ_SMEFT_sm :   WmZToLmNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]*LHEWeight_originalXWGTUP; FillColor=ROOT.kTeal-7,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted
 
+
+WW_SMEFT_cW :   WmWpToLmNujj_SMEFT_LO : xsec : LHEReweightingWeight[2]*LHEWeight_originalXWGTUP; FillColor=ROOT.kAzure-3,   Label="W^{\#pm}W^{\#mp} c_{W}",LineStyle=ROOT.kDotted
+WW_SMEFT_cW :   WpWmToLpNujj_SMEFT_LO : xsec : LHEReweightingWeight[2]*LHEWeight_originalXWGTUP; FillColor=ROOT.kAzure-3,   Label="W^{\#pm}W^{\#mp} c_{W}",LineStyle=ROOT.kDotted
+WZ_SMEFT_cW :   WpZToLpNujj_SMEFT_LO  : xsec : LHEReweightingWeight[2]*LHEWeight_originalXWGTUP; FillColor=ROOT.kAzure-9,   Label="W^{\#pm}Z c_{W}"       ,LineStyle=ROOT.kDotted
+WZ_SMEFT_cW :   WmZToLmNujj_SMEFT_LO  : xsec : LHEReweightingWeight[2]*LHEWeight_originalXWGTUP; FillColor=ROOT.kAzure-9,   Label="W^{\#pm}Z c_{W}"       ,LineStyle=ROOT.kDotted
+
+WW_SMEFT_lin_cW+ :   WmWpToLmNujj_SMEFT_LO : xsec : 0.5*(LHEReweightingWeight[2]-LHEReweightingWeight[1])*LHEWeight_originalXWGTUP; FillColor=ROOT.kPink+8,   Label="W^{\#pm}W^{\#mp} c_{W}",LineStyle=ROOT.kDotted
+WW_SMEFT_lin_cW+ :   WpWmToLpNujj_SMEFT_LO : xsec : 0.5*(LHEReweightingWeight[2]-LHEReweightingWeight[1])*LHEWeight_originalXWGTUP; FillColor=ROOT.kPink+8,   Label="W^{\#pm}W^{\#mp} c_{W}",LineStyle=ROOT.kDotted
+WZ_SMEFT_lin_cW+ :   WpZToLpNujj_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[2]-LHEReweightingWeight[1])*LHEWeight_originalXWGTUP; FillColor=ROOT.kOrange+1,   Label="W^{\#pm}Z c_{W}"       ,LineStyle=ROOT.kDotted
+WZ_SMEFT_lin_cW+ :   WmZToLmNujj_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[2]-LHEReweightingWeight[1])*LHEWeight_originalXWGTUP; FillColor=ROOT.kOrange+1,   Label="W^{\#pm}Z c_{W}"       ,LineStyle=ROOT.kDotted
+
+WW_SMEFT_quad_cW+ :   WmWpToLmNujj_SMEFT_LO : xsec : (0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0])*LHEWeight_originalXWGTUP; FillColor=ROOT.kYellow-7,   Label="W^{\#pm}W^{\#mp} c_{W}",LineStyle=ROOT.kDotted
+WW_SMEFT_quad_cW+ :   WpWmToLpNujj_SMEFT_LO : xsec : (0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0])*LHEWeight_originalXWGTUP; FillColor=ROOT.kYellow-7,   Label="W^{\#pm}W^{\#mp} c_{W}",LineStyle=ROOT.kDotted
+WZ_SMEFT_quad_cW+ :   WpZToLpNujj_SMEFT_LO  : xsec : (0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0])*LHEWeight_originalXWGTUP; FillColor=ROOT.kRed-7,   Label="W^{\#pm}Z c_{W}"       ,LineStyle=ROOT.kDotted
+WZ_SMEFT_quad_cW+ :   WmZToLmNujj_SMEFT_LO  : xsec : (0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0])*LHEWeight_originalXWGTUP; FillColor=ROOT.kRed-7,   Label="W^{\#pm}Z c_{W}"       ,LineStyle=ROOT.kDotted
 
 
 

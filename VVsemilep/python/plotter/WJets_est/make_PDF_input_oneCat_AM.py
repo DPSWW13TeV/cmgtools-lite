@@ -1,26 +1,9 @@
-#import ROOT
-#from array import array
-#from optparse import OptionParser
-#from ConfigParser import SafeConfigParser
-#import math as math
-#import random
-#import os
-##import datetime
-##date = "2024-05-03" #datetime.date.today().isoformat()
-#import CMS_lumi, tdrstyle
-#ROOT.gSystem.Load("PDFs/PdfDiagonalizer_cc.so")
-#ROOT.gSystem.Load("PDFs/Util_cxx.so")
-#ROOT.gStyle.SetOptStat(0)
-#ROOT.gStyle.SetOptTitle(0)
-#ROOT.gROOT.SetBatch(True)
-#ROOT.gStyle.SetTextFont(42)
-
 from prepare_bkg_oneCat_AM import *
 vetoPlots=['cwww_WW_lin','cwww_WZ_lin','cb_WZ_lin','cb_WZ_quad']
 
+from ROOT import TH1F 
 
-
-from ROOT import TGaxis, TPaveText, TLatex, TString, TFile,TLine, TLegend, TCanvas,  TMath, TText, TPad, RooFit, RooArgSet, RooArgList,  RooAddition, RooProduct, RooConstraintSum, RooCustomizer, RooMinuit,  RooAbsData, RooAbsPdf, RooAbsReal, RooAddPdf, RooWorkspace, RooExtendPdf,RooGaussian, RooDataSet, RooExponential, RooRealVar,RooFormulaVar, RooDataHist, RooHist,RooCategory, RooSimultaneous, RooGenericPdf, RooProdPdf, kTRUE, kFALSE, kGray, kRed, kDashed, kGreen,kAzure, kOrange, kBlack,kBlue,kYellow,kCyan, kMagenta, kWhite,kDot,kDashDotted,kDotted, RooErfExpPdf, RooErfPowExpPdf, RooErfPowPdf, RooErfPow2Pdf, RooExpNPdf, RooAlpha4ExpNPdf, RooExpTailPdf, RooAlpha4ExpTailPdf, Roo2ExpPdf,RooWorkspace,TH1F
+#TGaxis, TPaveText, TLatex, TString, TFile,TLine, TLegend, TCanvas,  TMath, TText, TPad, RooFit, RooArgSet, RooArgList,  RooAddition, RooProduct, RooConstraintSum, RooCustomizer, RooMinuit,  RooAbsData, RooAbsPdf, RooAbsReal, RooAddPdf, RooWorkspace, RooExtendPdf,RooGaussian, RooDataSet, RooExponential, RooRealVar,RooFormulaVar, RooDataHist, RooHist,RooCategory, RooSimultaneous, RooGenericPdf, RooProdPdf, kTRUE, kFALSE, kGray, kRed, kDashed, kGreen,kAzure, kOrange, kBlack,kBlue,kYellow,kCyan, kMagenta, kWhite,kDot,kDashDotted,kDotted, RooErfExpPdf, RooErfPowExpPdf, RooErfPowPdf, RooErfPow2Pdf, RooExpNPdf, RooAlpha4ExpNPdf, RooExpTailPdf, RooAlpha4ExpTailPdf, Roo2ExpPdf,RooWorkspace,TH1F
 
 ROOT.RooMsgService.instance().setGlobalKillBelow(RooFit.FATAL)
 
@@ -63,15 +46,13 @@ def drawSLatex(xpos,ypos,text,size):
     return latex
 
 
-WW_aTGC=[]
-WZ_aTGC=[]
-basepath="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/"
+
 final_cardsdir_name="%s/src/CMGTools/VVsemilep/python/plotter/Cards/" %(os.environ['CMSSW_BASE']); #for future perhaps add year as sub dir 
 if not os.path.isdir(final_cardsdir_name):  os.system("mkdir -p %s"%final_cardsdir_name)
 
 class Prepare_workspace_4limit:
 
-        def __init__(self,year,ch): #,mlvj_lo,mlvj_hi,pf=""):
+        def __init__(self,year,ch):
             
             self.POI                    = ['cwww','cw','cb']
             self.PAR_TITLES             = {'cwww' : '#frac{c_{WWW}}{#Lambda^{2}}', 'cw' : '#frac{c_{W}}{#Lambda^{2}}', 'cb' : '#frac{c_{B}}{#Lambda^{2}}'}#latex titles 
@@ -86,13 +67,12 @@ class Prepare_workspace_4limit:
             self.nbins                  = (self.mlvj_hi-self.mlvj_lo)/100
             self.file_Directory         = os.path.join(self.year,trees_b)
             self.file1_Directory        = os.path.join(self.year,trees_r)
-
             self.WS                     = RooWorkspace("w","w_%s_%s"%(self.ch,self.year))        #final workspace
             self.wtmp                   = RooWorkspace('wtmp',"wtmp_%s_%s"%(self.ch,self.year))
             
             self.fitresults             = []
             ##nuisance parameter to change all slope parameters by certain percentage (bigger for cb in WZ-cateogry)
-            self.eps                    = RooRealVar('slope_nuis','slope_nuis',2,0,4)
+            self.eps                    = if3(self.ch == "el", RooRealVar('slope_nuis','slope_nuis',3,0,6), RooRealVar('slope_nuis','slope_nuis',2,0,4))
             self.eps.setConstant(kTRUE)
             self.eps4cbWZ               = RooFormulaVar('rel_slope_nuis4cbWZ','rel_slope_nuis4cbWZ','1+3.0*(@0-1)',RooArgList(self.eps))
             self.eps4cbWW               = RooFormulaVar('rel_slope_nuis4cbWW','rel_slope_nuis4cbWW','1+3.0*(@0-1)',RooArgList(self.eps))
@@ -122,7 +102,7 @@ class Prepare_workspace_4limit:
             self.regions     = ['sig','sb_lo','sb_hi']
             self.samples={
                     'WW':[ww_atgc],
-                    'WZ':[wz_atgc]}#stop 24011170135.9
+                    'WZ':[wz_atgc]}
             self.file_WW_aTGC_mc              = "WW_aTGC"
             self.file_WZ_aTGC_mc              = "WZ_aTGC"
 
@@ -172,14 +152,9 @@ class Prepare_workspace_4limit:
                 treeIn.AddFriend(treeIn1)
                 lumi_tmp         = lumis[self.year]
                 for i in range(treeIn.GetEntries()):
-                    if i%50000==0:                            print (str(i) + '/' + str(treeIn.GetEntries()))
+                    if i%500000==0:                            print (str(i) + '/' + str(treeIn.GetEntries()))
                     treeIn.GetEntry(i)
                     MWW                = treeIn.mWV
-                    #apply cuts
-                    #using whole mj-range (sideband and signal region)
-                    #tmp_jet_mass=treeIn.Selak8Jet1_particleNet_mass if usepNM else treeIn.Selak8Jet1_msoftdrop
-                    #tmp_jet_pNetscore=treeIn.Selak8Jet1_pNetWtagscore
-
                     tmp_jet_mass=treeIn.Selak8Jet1_particleNet_mass if usepNM else treeIn.Selak8Jet1_msoftdrop
                     tmp_jet_pNetscore=treeIn.Selak8Jet1_pNetWtagscore
                     dRfjlep=treeIn.dR_fjlep > 1.6 
@@ -188,11 +163,9 @@ class Prepare_workspace_4limit:
                     ptWlep=treeIn.pTWlep > 200
                     boosted_sel=False;                    lep_sel=False;
                     lep_sel= treeIn.Lep1_pt > 50  and treeIn.nLepTight == 1 and treeIn.nLepFO==1 and treeIn.Lep1_tightId == 1 and ( (abs(treeIn.Lep1_pdgId) == 13 or (abs(treeIn.Lep1_eta) < 1.442 or abs(treeIn.Lep1_eta) > 1.556 )) );
-                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 45 and  MWW>self.mlvj_lo
+                    boosted_sel=dRfjlep and dphifjlep and dphifjmet and ptWlep and tmp_jet_pNetscore > self.PNS and tmp_jet_mass < 150 and tmp_jet_mass > 45 and MWW > self.mlvj_lo
                     lep_flav= (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m) if self.ch == "mu" else (abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )
                     if lep_flav and  boosted_sel and lep_sel:
-                        #                    if (abs(treeIn.Lep1_pdgId) == 13 and treeIn.trigger1m if self.channel == "mu" else  abs(treeIn.Lep1_pdgId) == 11 and treeIn.trigger1e )  and treeIn.Lep1_pt > 50  and  boosted_sel and treeIn.pmet > 110 and treeIn.nBJetMedium30 == 0:
-			#weight_part =1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Selak8Jet1_pNetWtagSF*lumis[self.year]/treeIn.sumw 
 			weight_part =1000*treeIn.xsec*treeIn.genwt*treeIn.evt_wt*treeIn.lepSF*treeIn.Selak8Jet1_pNetWtagSF*lumis[self.year]/treeIn.sumw 
 			aTGC        = treeIn.aGC_wt 
 			#all3hists4scale['c_%s_histall3'%WV].Fill(MWW,aTGC[123] * weight_part)
@@ -270,7 +243,7 @@ class Prepare_workspace_4limit:
             fileOut.Close()
 
         def Make_plots(self,rrv_x,cat,fitres):
-            can     = [];can2    = [];      plots   = [];     plots2  = []; pads    = [];
+            can     = [];can2    = [];      plots   = [];     plots2  = []; pads    = []; dummy_list=[]
             channel = self.ch+'_'+cat
             for i in range(3):
                 rrv_x.setRange(self.mlvj_lo,self.mlvj_hi)
@@ -282,7 +255,6 @@ class Prepare_workspace_4limit:
                 CMS_lumi.writeExtraText = True;                       CMS_lumi.extraText = "Preliminary"
                 H_ref = 600;        W_ref = 600;        W = W_ref;       H  = H_ref
                 T = 0.12*H_ref;       B = 0.12*H_ref;       L = 0.12*W_ref;       R = 0.01*W_ref
-                
                 pad1        = TPad(cat+'pad1_%s'%self.POI[i],cat+'pad1_%s'%self.POI[i],0.,0.3,1.,1.)  
                 pad2        = TPad(cat+'pad2_%s'%self.POI[i],cat+'pad2_%s'%self.POI[i],0.,0.02,1.,0.3)
                 c2          = TCanvas(cat+self.POI[i]+'+',self.POI[i]+'+',600,600)
@@ -291,7 +263,7 @@ class Prepare_workspace_4limit:
                 pad4        = TPad(cat+'pad4_%s'%self.POI[i],cat+'pad4_%s'%self.POI[i],0.,0.02,1.,0.3)
                 p2pads      = [pad1,pad2,pad3,pad4]
                 can.append(c); can2.append(c2);  plots.append(p);        plots2.append(p2);                pads.append(p2pads)
-
+                dummy_list.append(can);dummy_list.append(can2),dummy_list.append(plots);dummy_list.append(plots2);dummy_list.append(pads);
             for i in range(3):
                 can[i].cd();
                 #CMS_lumi.CMS_lumi(pads[i][0], 4, 11,0.075);
@@ -313,7 +285,6 @@ class Prepare_workspace_4limit:
 
 
                 pullhist_q=None;pullhist_l=None
-                
                 linStr=self.POI[i]+'_'+cat+'_lin'
                 quadStr=self.POI[i]+'_'+cat+'_quad'
                 if linStr not in vetoPlots:
@@ -349,8 +320,7 @@ class Prepare_workspace_4limit:
                 plots[i].addObject(txt)
                 plots[i].Draw()
                 ndof        = (self.mlvj_hi-self.mlvj_lo)/100 - 4
-                plots[i].Print()
-                
+                #plots[i].Print()
                 parlatex        = ['#frac{c_{WWW}}{#Lambda^{2}}','#frac{c_{W}}{#Lambda^{2}}','#frac{c_{B}}{#Lambda^{2}}']
                 leg        = TLegend(0.11,0.5,0.85,0.85)
                 leg.SetFillStyle(0);leg.SetTextFont(42);                leg.SetBorderSize(0);leg.SetNColumns(2);
@@ -368,10 +338,11 @@ class Prepare_workspace_4limit:
 
 
                 leg.Draw()
-                leg.Print()
+                #leg.Print()
 
                 pads[i][1].cd();                pads[i][1].SetTopMargin(0.03);  pads[i][1].SetBottomMargin(0.3)##HERE
-                ratio_style = ROOT.TH1D('ratio_style','ratio_style',(self.mlvj_hi-self.mlvj_lo)/100,self.mlvj_lo,self.mlvj_hi)
+                if ROOT.gROOT.FindObject("dummy") != None: ROOT.gROOT.FindObject("dummy").Delete()
+                ratio_style = ROOT.TH1D('dummy','dummy',(self.mlvj_hi-self.mlvj_lo)/100,self.mlvj_lo,self.mlvj_hi)
                 ratio_style.SetMarkerStyle(21)
                 ratio_style.SetLineColor(kBlack);ratio_style.SetLineWidth(1);
                 ratio_style.SetMaximum(3)
@@ -381,14 +352,10 @@ class Prepare_workspace_4limit:
                 ratio_style.GetYaxis().SetLabelSize(0.095)
                 ratio_style.GetYaxis().SetTitleSize(0.1)
                 ratio_style.GetYaxis().SetTitleOffset(0.425)
-                #ratio_style.GetXaxis().SetLabelOffset(0.425)
-                #ratio_style.GetYaxis().SetLabelOffset(0.425)
                 ratio_style.GetXaxis().SetLabelSize(0.095)
                 ratio_style.GetXaxis().SetTitleSize(0.1)
                 ratio_style.GetXaxis().SetTitle("m_{WV} (GeV)");
                 ratio_style.Draw("")
-                #pullhist.SetLineColor(kBlue);pullhist.SetLineWidth(1);
-                #pullhist.Draw("SAME E1")
                 if (pullhist_q) is not None: 
                     pullhist_q.Draw("SAME P0E1");  
                     pullhist_q.SetLineColor(ROOT.kPink-2);pullhist_q.SetLineWidth(1);
@@ -399,7 +366,7 @@ class Prepare_workspace_4limit:
                 can[i].Update()
                 can[i].SaveAs(self.plotsDir+'/%s_neg_%s.pdf'%(self.POI[i],channel))
                 can[i].SaveAs(self.plotsDir+'/%s_neg_%s.png'%(self.POI[i],channel))
-                
+                dummy_list.append(can[i]);dummy_list.append(pullhist_l);dummy_list.append(pullhist_q);
 
                 ##amfor j in range(3):
                 ##am        self.wtmp.var(self.POI[j]).setVal(0)
@@ -451,7 +418,7 @@ class Prepare_workspace_4limit:
 
             
         #function to import multiple items from a list into a workspace
-        def Import_to_ws(self,workspace,items,recycle=0):
+        def Import_to_ws(self,workspace,items,recycle=1):
             for item in items:
                 if recycle:
                     getattr(workspace,'import')(item,RooFit.RecycleConflictNodes())
@@ -481,17 +448,17 @@ class Prepare_workspace_4limit:
 	    cwcbDataHist     = RooDataHist('cwcbDataHist_%s'   %sample,'cwcbDataHist_%s'   %sample,RooArgList(rrv_x),fileInHist.Get('c_cw_cb_%s_hist'%sample))
             
             
-            sm_lin_quad_cb_DataHist         = RooDataHist('sm_lin_quad_cb_DataHist_%s'   %sample,'sm_lin_quad_cb_DataHist_%s'   %sample,RooArgList(rrv_x),fileInHist.Get('c_sm_lin_quad_%s_hist_cb'  %sample))
-            sm_lin_quad_cw_DataHist         = RooDataHist('sm_lin_quad_cw_DataHist_%s'   %sample,'sm_lin_quad_cw_DataHist_%s'   %sample,RooArgList(rrv_x),fileInHist.Get('c_sm_lin_quad_%s_hist_cw'  %sample))
-            sm_lin_quad_cwww_DataHist       = RooDataHist('sm_lin_quad_cwww_DataHist_%s' %sample,'sm_lin_quad_cwww_DataHist_%s' %sample,RooArgList(rrv_x),fileInHist.Get('c_sm_lin_quad_%s_hist_cwww'%sample))
-            quad_cb_DataHist                = RooDataHist('quad_cb_DataHist_%s'          %sample,'quad_cb_DataHist_%s'          %sample,RooArgList(rrv_x),fileInHist.Get('c_quad_%s_hist_cb'  %sample))
-            quad_cw_DataHist                = RooDataHist('quad_cw_DataHist_%s'          %sample,'quad_cw_DataHist_%s'          %sample,RooArgList(rrv_x),fileInHist.Get('c_quad_%s_hist_cw'  %sample))
-            quad_cwww_DataHist              = RooDataHist('quad_cwww_DataHist_%s'        %sample,'quad_cwww_DataHist_%s'        %sample,RooArgList(rrv_x),fileInHist.Get('c_quad_%s_hist_cwww'%sample))
+            sm_lin_quad_cb_DataHist     = RooDataHist('sm_lin_quad_cb_DataHist_%s'   %sample,'sm_lin_quad_cb_DataHist_%s'   %sample,RooArgList(rrv_x),fileInHist.Get('c_sm_lin_quad_%s_hist_cb'  %sample))
+            sm_lin_quad_cw_DataHist     = RooDataHist('sm_lin_quad_cw_DataHist_%s'   %sample,'sm_lin_quad_cw_DataHist_%s'   %sample,RooArgList(rrv_x),fileInHist.Get('c_sm_lin_quad_%s_hist_cw'  %sample))
+            sm_lin_quad_cwww_DataHist   = RooDataHist('sm_lin_quad_cwww_DataHist_%s' %sample,'sm_lin_quad_cwww_DataHist_%s' %sample,RooArgList(rrv_x),fileInHist.Get('c_sm_lin_quad_%s_hist_cwww'%sample))
+            quad_cb_DataHist            = RooDataHist('quad_cb_DataHist_%s'          %sample,'quad_cb_DataHist_%s'          %sample,RooArgList(rrv_x),fileInHist.Get('c_quad_%s_hist_cb'  %sample))
+            quad_cw_DataHist            = RooDataHist('quad_cw_DataHist_%s'          %sample,'quad_cw_DataHist_%s'          %sample,RooArgList(rrv_x),fileInHist.Get('c_quad_%s_hist_cw'  %sample))
+            quad_cwww_DataHist          = RooDataHist('quad_cwww_DataHist_%s'        %sample,'quad_cwww_DataHist_%s'        %sample,RooArgList(rrv_x),fileInHist.Get('c_quad_%s_hist_cwww'%sample))
 
             fileInHist.Close()
 
             #make SM pdf, simple exponential
-            a1_4fit         = RooRealVar('a_SM_4fit_%s'%channel,'a_SM_4fit_%s'%channel,-0.005,-0.05,0)
+            a1_4fit         = RooRealVar('a_SM_4fit_%s'%channel,'a_SM_4fit_%s'%channel,-0.05,-0.15,0)
             a1              = RooFormulaVar('a_SM_%s'%channel,'a_SM_%s'%channel,'@0*@1',RooArgList(a1_4fit,self.eps))
             SMPdf           = RooExponential('SMPdf_%s'%channel,'SMPdf_%s'%channel,rrv_x,a1)
             ##actual fit to determine SM shape parameter a1_4fit
@@ -515,25 +482,22 @@ class Prepare_workspace_4limit:
             N_quad_cw            = RooRealVar('N_quad_cw%s'  %channel,'N_quad_cw%s'%channel,  quad_cw_DataHist.sumEntries())
             N_quad_cwww          = RooRealVar('N_quad_cwww%s'%channel,'N_quad_cwww%s'%channel,quad_cwww_DataHist.sumEntries())
 
-
             self.Import_to_ws(self.wtmp,[cwww,cw,cb,self.eps4cbWZ,self.eps4cbWW,SMdatahist,SMdatahist,N_SM,N_sm_lin_quad_cb,N_sm_lin_quad_cw,N_sm_lin_quad_cwww,N_quad_cb,N_quad_cw,N_quad_cwww]) ###only the fitted SM is imported
             
             #define parameter ranges for error function
 
             if self.ch=='el':
                 Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,1500.)
-                Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1500.,1000.,2000.)
-                Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,1500.,1000.,2000.)
-
+                Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1500.,1000.,2000.) #600.,500.,1000.)
+                Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,500.,100.,1500.)
             elif self.ch=='mu':
-
                 Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,7500.)
                 Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1500.,500.,2000.)
                 Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,1500.,500.,2000.)
 
             Erf_offset_cwww         = RooRealVar('Erf_offset_cwww_%s'%channel,'Erf_offset_cwww_%s'%channel,1000.,500.,1500.)
-            Erf_offset_cw           = RooRealVar('Erf_offset_cw_%s'%channel,'Erf_offset_cw_%s'%channel,1500.,500.,2500.)
-            Erf_offset_cb           = RooRealVar('Erf_offset_cb_%s'%channel,'Erf_offset_cb_%s'%channel,1000.,500.,1500.)
+            Erf_offset_cw           = RooRealVar('Erf_offset_cw_%s'%channel,'Erf_offset_cw_%s'%channel,1000.,500.,2500.)
+            Erf_offset_cb           = RooRealVar('Erf_offset_cb_%s'%channel,'Erf_offset_cb_%s'%channel,1000.,500.,2500.)
 
             Erf_offset_cwww.setConstant(kTRUE);Erf_width_cwww.setConstant(kTRUE);Erf_offset_cw.setConstant(kTRUE);Erf_width_cw.setConstant(kTRUE);            Erf_offset_cb.setConstant(kTRUE);            Erf_width_cb.setConstant(kTRUE)
             self.Import_to_ws(self.wtmp,[Erf_width_cwww,Erf_offset_cwww,Erf_width_cw,Erf_offset_cw,Erf_offset_cb,Erf_width_cb])
@@ -573,7 +537,6 @@ class Prepare_workspace_4limit:
 		if sample=='WW':
 		    hist4scale.SetBinContent(1,(negWW.sumEntries())/(SMWW.sumEntries()))
                     hist4scale.SetBinContent(3,(posWW.sumEntries())/(SMWW.sumEntries()))
-                
                     nevt_posWW=posWW.sumEntries()/factor;
                     nevt_negWW=negWW.sumEntries()/factor;
                     norm_lin   = RooRealVar('norm_sm_lin_quad_%s'%s_name,'norm_sm_lin_quad_%s'%s_name,0.5*(nevt_posWW-nevt_negWW)/SMWW.sumEntries())
@@ -597,13 +560,11 @@ class Prepare_workspace_4limit:
                 N_pos_tmp         = pos_datahist.sumEntries()
                 N_neg_tmp         = neg_datahist.sumEntries()
                 N_quad            = RooRealVar('N_quad_%s'%s_name,'N_quad_%s'%s_name, ((N_pos_tmp+N_neg_tmp)/2)-N_SM.getVal())# if  not (self.POI[i]=='cb'  and sample=='WZ') else 0)
-                N_lin             = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,((N_pos_tmp+N_neg_tmp)/2)-N_SM.getVal()) 
+                N_lin             = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,((N_pos_tmp-N_neg_tmp)/2)) 
                 #scaleshape is the relative change to SM
-                print "$$$$$$$$$$$$$$$$$thats the sname",s_name
                 scaleshape       = RooFormulaVar('scaleshape_%s'%s_name,'scaleshape_%s'%s_name, '(@0*@2+@1*@2**2)', RooArgList(par1,par2,self.wtmp.var(self.POI[i])))
                 #FIXME only very few atgc events for cb in WZ sample, fit doesn't work yet -> different parametrization, starting values+ranges or leave out completely
                 if  self.POI[i]=='cb': #  and sample=='WZ': #so cb for WW is also modeled using exponential
-                    #N_lin       = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,(N_pos_tmp-N_neg_tmp)/2) ##0 
                     a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.1,-2,0.)
                     a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
                     a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.0001,-0.1,0.)
@@ -611,8 +572,6 @@ class Prepare_workspace_4limit:
                     cPdf_quad   = RooExponential('%s_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a2)
 
                 else:
-		    #N_lin      = RooRealVar('N_lin_%s'%s_name,'N_lin_%s'%s_name, 0 )
-                    #N_lin       = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,(N_pos_tmp-N_neg_tmp)/2)
                     a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.001,-0.01,0.1)
                     a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps))
                     a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.001,-0.01,0.1)
@@ -623,7 +582,6 @@ class Prepare_workspace_4limit:
                 a2_4fit.setConstant(kTRUE)
                 a3_4fit.setConstant(kTRUE)
                 #PDF for SM interference
-                #cPdf_lin        = RooExponential('Pdf_lin_%s'%s_name,'Pdf_lin_%s'%s_name,rrv_x,a3)
                 cPdf_lin        = RooExponential('%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a3)
                 self.Import_to_ws(self.wtmp,[cPdf_quad,cPdf_lin],1)
                 self.Import_to_ws(self.wtmp,[N_quad,N_lin,scaleshape,norm_lin,norm_quad])
@@ -786,7 +744,7 @@ class Prepare_workspace_4limit:
             binname = '{region}_{ch}'.format(ch=self.ch,region=region)
             codename='WWWZ_{region}_{ch}_{year}'.format(ch=self.ch,region=region,year=self.year)
             cardName_test='aC_%s_%s.txt'%(codename,date)
-            print ("this is where i am keeping the card",cardName_test)
+            #            print ("this is where i am saving the datacard",cardName_test)
             datacard = open(cardName_test,'w')
             datacard.write('##----------------------------------\n')
             datacard.write('bin         %s\n' % binname)            
@@ -824,18 +782,17 @@ class Prepare_workspace_4limit:
             datacard.write('##----------------------------------\n')
             datacard.write('''
 normvar_WJets_{ch}  flatParam
-
 rrv_c_Exp_WJets0_{ch}  flatParam
-rrv_c_Exp_WJets0_sb_{ch}  flatParam
-rrv_n_Exp_WJets0_sb_{ch}  flatParam
+rrv_c_ExpN_WJets0_sb_{ch}  flatParam
+rrv_n_ExpN_WJets0_sb_{ch}  flatParam
 Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig0 param 0.0 1.4
 Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig1 param 0.0 1.4
-Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig2 param 0.0 1.4
-Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig3 param 0.0 1.4
 slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                        )    
             datacard.close()
             return cardName_test
+#Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig2 param 0.0 1.4
+#Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig3 param 0.0 1.4
 
 
         ########################
@@ -844,9 +801,7 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
         def Make_input(self):
 
             #prepare variables, parameters and temporary workspace
-            #if options.readtrees:
             self.Read_ATGCtree(self.ch)
-            
             #make and fit signal pdf for WW and WZ
             self.Make_signal_pdf(self.rrv_mass_lvj,'WW')
             self.Make_signal_pdf(self.rrv_mass_lvj,'WZ')
