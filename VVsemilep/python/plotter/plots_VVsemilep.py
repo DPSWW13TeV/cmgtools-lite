@@ -340,7 +340,9 @@ if __name__ == '__main__':
     parser.add_option('--fCR',dest='fCR', action='store_true', default=False , help='fit to data in the CR')
     parser.add_option('--wjD',dest='wjD', type='string', default="2023-12-19", help='date to pick WJ workspace from')
     parser.add_option('--WC',dest='WC', type='string' , default=['c3w'], action="append", help='consider terms in EFT Lag. corresponding to this aTGC operator tunred on c3W/cb/cw (for now relevant to make datacards)')
-    parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/a/anmehta/www/VVsemilep/" if os.environ['USER'] == "anmehta" else os.getcwd() ,help='save plots here')
+    parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/%s/%s/www/VVsemilep/"%(os.environ['USER'][0],os.environ['USER']),help='save plots here')
+    
+
     (opts, args) = parser.parse_args()
 
     global date, postfix,eos 

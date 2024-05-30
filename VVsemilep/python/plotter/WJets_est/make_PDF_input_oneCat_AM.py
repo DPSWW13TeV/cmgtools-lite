@@ -19,7 +19,7 @@ parser.add_option('--uS', action='store_true', dest='useSkim', default=False, he
 parser.add_option('--hi', action='store', dest='mlvj_hi', type='float', default=4550, help='dont change atm!')
 parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=950, help='set lower cut on MWV, mat cause problems')
 parser.add_option('--inPath', action="store",type="string",dest="inPath",default="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/")
-parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/a/anmehta/www/VVsemilep/WJest" if os.environ['USER'] == "anmehta" else os.getcwd() ,help='save plots here')
+parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/%s/%s/www/VVsemilep/WJest"%(os.environ['USER'][0],os.environ['USER']),help='save plots here')
 (options,args) = parser.parse_args()
 
 
@@ -72,7 +72,7 @@ class Prepare_workspace_4limit:
             
             self.fitresults             = []
             ##nuisance parameter to change all slope parameters by certain percentage (bigger for cb in WZ-cateogry)
-            self.eps                    = if3(self.ch == "el", RooRealVar('slope_nuis','slope_nuis',3,0,6), RooRealVar('slope_nuis','slope_nuis',2,0,4))
+            self.eps                    = if3(self.ch == "el", RooRealVar('slope_nuis','slope_nuis',3,0,6), RooRealVar('slope_nuis','slope_nuis',2,0,4)) ##AM
             self.eps.setConstant(kTRUE)
             self.eps4cbWZ               = RooFormulaVar('rel_slope_nuis4cbWZ','rel_slope_nuis4cbWZ','1+3.0*(@0-1)',RooArgList(self.eps))
             self.eps4cbWW               = RooFormulaVar('rel_slope_nuis4cbWW','rel_slope_nuis4cbWW','1+3.0*(@0-1)',RooArgList(self.eps))
