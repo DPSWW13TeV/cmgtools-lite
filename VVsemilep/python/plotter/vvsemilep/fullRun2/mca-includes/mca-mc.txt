@@ -18,6 +18,20 @@ SM_WZ   : WZTo1L1Nu2Q : 11.46  : 1 ; FillColor=ROOT.kTeal-7, Label="WZ SM"
 Fiveflav_WZplus  : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="WZ SM5FP" ,SkipMe=True
 Fiveflav_WZminus : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge < 0 ; FillColor=ROOT.kTeal-7, Label="WZ SM 5fM",SkipMe=True
 
+WV_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM "
+WV_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM "
+WV_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM "
+WV_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM "
+WV_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM "
+WV_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM "
+WV_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
+WV_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
+WV_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
+WV_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
+WV_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
+WV_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
+
+
 
 
 WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "

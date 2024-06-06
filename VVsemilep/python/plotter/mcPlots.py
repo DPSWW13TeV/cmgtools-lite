@@ -516,7 +516,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     leg0.SetFillColor(0)
     leg0.SetShadowColor(0)
     leg0.SetLineColor(0)
-    leg0.SetTextFont(42)
+    leg0.SetTextFont(42);legend.SetFillStyle(0);
     leg0.SetTextSize(textSize*0.7/0.3)
     leg0.AddEntry(unityErr0, "stat. unc.", "F")
     if showStatTotLegend: leg0.Draw()
@@ -525,7 +525,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     leg1.SetFillColor(0)
     leg1.SetShadowColor(0)
     leg1.SetLineColor(0)
-    leg1.SetTextFont(42)
+    leg1.SetTextFont(42);legend.SetFillStyle(0);
     leg1.SetTextSize(textSize*0.7/0.3)
     leg1.AddEntry(unityErr, "total unc.", "F")
     if showStatTotLegend: leg1.Draw()
@@ -608,7 +608,7 @@ def doLegend(pmap,mca,corner="TR",textSize=0.035,cutoff=1e-2,cutoffSignals=False
             (x1,y1,x2,y2) = (.2, .16 + height, .2+legWidth, .15)
 
         leg = ROOT.TLegend(x1,y1,x2,y2)
-        leg.SetFillColor(0)
+        leg.SetFillColor(0);legend.SetFillStyle(0);
         leg.SetShadowColor(0)
         if header: leg.SetHeader(header.replace("\#", "#"))       
         if not legBorder:
