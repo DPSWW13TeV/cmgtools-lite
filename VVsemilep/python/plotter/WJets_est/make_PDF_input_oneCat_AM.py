@@ -219,7 +219,7 @@ class Prepare_workspace_4limit:
                 N_quad_cwww         = RooRealVar('N_quad_cwww_%s'%WV,'N_quad_cwww_%s'%WV,hists4scale['c_quad_%s_hist_cwww'%WV].Integral())
                 N_quad_cw           = RooRealVar('N_quad_cw_%s'%WV,'N_quad_cw_%s'%WV,hists4scale['c_quad_%s_hist_cw'%WV].Integral())
 
-
+#		self.Import_to_ws(self.wtmp, [N3645,N4520,N36,N36_,N45,N45_,N20,N20_,N_sm_lin_quad_cb,N_sm_lin_quad_cwww,N_sm_lin_quad_cw,N_quad_cb,N_quad_cwww,N_quad_cw])
 		self.Import_to_ws(self.wtmp, [N_sm_lin_quad_cb,N_sm_lin_quad_cwww,N_sm_lin_quad_cw,N_quad_cb,N_quad_cwww,N_quad_cw])
             #write histograms to file
             fileOut        = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.mlvj_lo,self.mlvj_hi),'recreate')
@@ -263,9 +263,11 @@ class Prepare_workspace_4limit:
                 self.wtmp.data('SMdatahist_%s'%cat).plotOn(plots[i],RooFit.MarkerColor(kBlack),RooFit.LineColor(kBlack),RooFit.LineStyle(kDashed),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('SMdata'))
                 normvalSM        = norm.getVal() * self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
                 self.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots[i],RooFit.LineColor(kBlack),RooFit.Normalization(normvalSM, RooAbsReal.NumEvent),RooFit.Name('SMmodel'))
+                #self.wtmp.data('neg_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(kBlue),RooFit.LineColor(kBlue),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('atgcdata'))
                 self.wtmp.var(self.POI[i]).setVal(-self.PAR_MAX[self.POI[i]])
                 normvalneg = norm.getVal() * self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
-                #print "this info we nned: category \t",cat,"\t poi\t",self.POI[i],"\t channel \t",channel,"\t ch\t",self.ch
+                #self.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots[i],RooFit.LineColor(kBlue),RooFit.Normalization(normvalneg, RooAbsReal.NumEvent),RooFit.Name('atgcmodel'))
+                #                    print "this info we nned: category \t",cat,"\t poi\t",self.POI[i],"\t channel \t",channel,"\t ch\t",self.ch
                 pullhist_q=None;pullhist_l=None
                 linStr=self.POI[i]+'_'+cat+'_lin'
                 quadStr=self.POI[i]+'_'+cat+'_quad'
@@ -274,7 +276,6 @@ class Prepare_workspace_4limit:
                     print "linear term \t", self.POI[i],"\t", channel,"\t",lin_Norm.getVal(),"\t",self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
                     self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(ROOT.kAzure+10),RooFit.MarkerSize(0.75),RooFit.LineColor(ROOT.kAzure+10),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('P0E1'),RooFit.Name('linData'))
                     self.wtmp.pdf('%s_sm_lin_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kAzure+7),RooFit.LineStyle(kDotted),RooFit.Normalization(lin_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('linModel'))
-                    
                     pullhist_l= plots[i].pullHist('linData','linModel')
                 if quadStr not in vetoPlots:
                     quad_Norm=self.wtmp.var('norm_quad_%s_%s'%(self.POI[i],channel))
@@ -418,10 +419,10 @@ class Prepare_workspace_4limit:
             N_quad_cw            = RooRealVar('N_quad_cw%s'  %channel,'N_quad_cw%s'%channel,  quad_cw_DataHist.sumEntries())
             N_quad_cwww          = RooRealVar('N_quad_cwww%s'%channel,'N_quad_cwww%s'%channel,quad_cwww_DataHist.sumEntries())
 
-            self.Import_to_ws(self.wtmp,[cwww,cw,cb,SMdatahist,SMdatahist,N_SM,N_sm_lin_quad_cb,N_sm_lin_quad_cw,N_sm_lin_quad_cwww,N_quad_cb,N_quad_cw,N_quad_cwww]) ###only the fitted SM is imported
+            self.Import_to_ws(self.wtmp,[cwww,cw,cb,self.eps4cbWZ,self.eps4cbWW,SMdatahist,SMdatahist,N_SM,N_sm_lin_quad_cb,N_sm_lin_quad_cw,N_sm_lin_quad_cwww,N_quad_cb,N_quad_cw,N_quad_cwww]) ###only the fitted SM is imported
             #define parameter ranges for error function
             if self.ch=='el':
-                Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,7500.)
+                Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,1500.)
                 Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,600.,500.,1000.)
                 Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,500.,100.,1500.)
             elif self.ch=='mu':
@@ -430,8 +431,8 @@ class Prepare_workspace_4limit:
                 Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,1500.,500.,2000.)
 
             Erf_offset_cwww         = RooRealVar('Erf_offset_cwww_%s'%channel,'Erf_offset_cwww_%s'%channel,1000.,500.,1500.)
-            Erf_offset_cw           = RooRealVar('Erf_offset_cw_%s'%channel,'Erf_offset_cw_%s'%channel,1000.,500.,1500.)
-            Erf_offset_cb           = RooRealVar('Erf_offset_cb_%s'%channel,'Erf_offset_cb_%s'%channel,1000.,500.,1500.)
+            Erf_offset_cw           = RooRealVar('Erf_offset_cw_%s'%channel,'Erf_offset_cw_%s'%channel,1000.,500.,2500.)
+            Erf_offset_cb           = RooRealVar('Erf_offset_cb_%s'%channel,'Erf_offset_cb_%s'%channel,1000.,500.,2500.)
 
             Erf_offset_cwww.setConstant(kTRUE);Erf_width_cwww.setConstant(kTRUE);Erf_offset_cw.setConstant(kTRUE);Erf_width_cw.setConstant(kTRUE);       
             Erf_offset_cb.setConstant(kTRUE);            Erf_width_cb.setConstant(kTRUE)
@@ -463,6 +464,8 @@ class Prepare_workspace_4limit:
                 self.Import_to_ws(self.wtmp,[pos_datahist,neg_datahist,sm_lin_quad_datahist,quad_datahist])
                 self.Import_to_ws(self.WS,[pos_datahist,neg_datahist,sm_lin_quad_datahist,quad_datahist])
                 #get scaling parabel from yields
+                #FIXME scaling to the sum of WW and WZ leads to over-estimating WW and under-estimating WZ
+                #FIXME scaling to WW and WZ separately leads to a really high scaling factor for WZ
                 hist4scale = TH1F('hist4scale_%s'%self.POI[i],'hist4scale_%s'%self.POI[i],3,-1.5*self.PAR_MAX[self.POI[i]],1.5*self.PAR_MAX[self.POI[i]])
                 hist4scale.SetBinContent(2,1)
                 factor=if3(self.POI[i] == "cwww",3.6, if3(self.POI[i] == "cb",20,4.5))
@@ -497,30 +500,28 @@ class Prepare_workspace_4limit:
                 #scaleshape is the relative change to SM
                 scaleshape       = RooFormulaVar('scaleshape_%s'%s_name,'scaleshape_%s'%s_name, '(@0*@2+@1*@2**2)', RooArgList(par1,par2,self.wtmp.var(self.POI[i])))
                 #FIXME only very few atgc events for cb in WZ sample, fit doesn't work yet -> different parametrization, starting values+ranges or leave out completely
-                a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.001,-0.05,0)
-                a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps))
-                a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.001,-0.05,0)
-                a3          = RooFormulaVar('a_lin_nuis_%s'%s_name,'a_lin_nuis_%s'%s_name,'@0*@1',RooArgList(a3_4fit,self.eps))
-                cPdf_quad   = RooErfExpPdf('%s_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a2,self.wtmp.var('Erf_offset_%s'%s_name),self.wtmp.var('Erf_width_%s'%s_name))
-                fitres_quad  = cPdf_quad.fitTo(self.wtmp.data('quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
+                if  self.POI[i]=='cK': #  and sample=='WZ': #so cb for WW is also modeled using exponential
+                    a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.1,-2,0.)
+                    a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
+                    a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.0001,-0.1,0.)
+                    a3          = RooFormulaVar('a_lin_nuis_%s'%s_name,'a_lin_nuis_%s'%s_name,'@0*@1',RooArgList(a3_4fit,self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
+                    cPdf_quad   = RooExponential('%s_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a2)
+
+                else:
+                    a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.0011,-0.01,0.1)
+                    a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps))
+                    a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.000725,-0.01,0.1)
+                    a3          = RooFormulaVar('a_lin_nuis_%s'%s_name,'a_lin_nuis_%s'%s_name,'@0*@1',RooArgList(a3_4fit,self.eps))
+                    cPdf_quad   = RooErfExpPdf('%s_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a2,self.wtmp.var('Erf_offset_%s'%s_name),self.wtmp.var('Erf_width_%s'%s_name))
+                
+
                 a2_4fit.setConstant(kTRUE)
                 a3_4fit.setConstant(kTRUE)
-                self.wtmp.var('Erf_offset_%s'%s_name).setConstant(kTRUE)
-                self.wtmp.var('Erf_width_%s'%s_name).setConstant(kTRUE)
                 #PDF for SM interference
                 cPdf_lin        = RooExponential('%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a3)
-                fitres_lin = cPdf_lin.fitTo(self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
-                #a3.setConstant(kTRUE)
-                self.fitresults.append(fitres_quad)
-                self.fitresults.append(fitres_lin)
                 self.Import_to_ws(self.wtmp,[cPdf_quad,cPdf_lin],1)
                 self.Import_to_ws(self.wtmp,[N_quad,N_lin,scaleshape,norm_lin,norm_quad])
                 
-#                fitres_cb_lin       = cPdf_lin.fitTo(sm_lin_quad_cb_DataHist, RooFit.SumW2Error(kTRUE), RooFit.Save(kTRUE))
-#                self.fitresults.append(fitres_cb_lin)
-#                a1_4fit.setConstant(kTRUE)
-
-
             ###make model
             #list of all coefficients
             paralist    = RooArgList(N_SM)
@@ -533,7 +534,7 @@ class Prepare_workspace_4limit:
             a7_tmp.setConstant(kTRUE)
             #apply uncertainty parameter, bigger uncertainty for c_B in WZ
             a5          = RooFormulaVar('a_cwww_cw_nuis_%s'%channel,'a_cwww_cw_nuis_%s'%channel,'@0*@1',RooArgList(a5_tmp,self.eps))
-            a7          = RooFormulaVar('a_cw_cb_nuis_%s'%channel,'a_cw_cb_nuis_%s'%channel,'@0*@1',RooArgList(a7_tmp,self.eps))
+            a7          = RooFormulaVar('a_cw_cb_nuis_%s'%channel,'a_cw_cb_nuis_%s'%channel,'@0*@1',RooArgList(a7_tmp,self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
             
             Pdf_cwww_cw    = RooExponential('Pdf_cwww_cw_%s'%channel,'Pdf_cwww_cw_%s'%channel,rrv_x,a5)
             Pdf_cw_cb      = RooExponential('Pdf_cw_cb_%s'%channel,'Pdf_cw_cb_%s'%channel,rrv_x,a7)
@@ -616,7 +617,7 @@ class Prepare_workspace_4limit:
 
                 #fit SM-interference first
                 ##no SM-interference for cwww; not enough aTGC events for cb in WZ sample
-                if not self.POI[i] in ['cw', 'cwww']: # and not (sample=='WZ' and self.POI[i]=='cb'):
+                if not self.POI[i] == 'cwww' and not (sample=='WZ' and self.POI[i]=='cb'):
                     #set SM and quadratical terms to zero so only the linear term is fitted
                     N_SM_tmp = N_SM.getVal()
                     N_quad_tmp = self.wtmp.var('N_quad_%s'%s_name).getVal()
@@ -627,6 +628,7 @@ class Prepare_workspace_4limit:
                     fitres1                = model.fitTo(self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
                     self.wtmp.var('a_lin_4fit_%s'%s_name).setConstant(kTRUE)
                     self.fitresults.append(fitres1)
+                    
                     N_SM.setVal(N_SM_tmp)
                     self.wtmp.var('N_quad_%s'%s_name).setVal(N_quad_tmp)
 
@@ -830,6 +832,7 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                     
 
                 ##define which parameters are floating (also has to be done in the datacard)
+                print "this is missing piece of crap==============","rrv_c_Exp_WJets0_%s"%self.ch
                 self.WS2.var("rrv_c_ChiSq_WJets0_%s"%self.ch).setConstant(kFALSE) ##am
                 #self.WS2.var("rrv_c_Exp_WJets0_%s"%self.ch).setConstant(kFALSE)
                 self.WS2.var("normvar_WJets_%s"%self.ch).setConstant(kFALSE)
