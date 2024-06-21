@@ -4,20 +4,34 @@ getenv      = True
 Log        = jobs/Nbkg_$(cluster)_$(ProcId).log
 Output     = jobs/Nbkg_$(cluster)_$(ProcId).out
 Error      = jobs/Nbkg_$(cluster)_$(ProcId).error
-requirements = (OpSysAndVer =?= "CentOS7")
+#requirements = (OpSysAndVer =?= "CentOS7")
 +AccountingGroup = "group_u_CMST3.all"
 +JobFlavour = "workday"
+MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"
+
+arguments  = $(wdir)
+
+queue wdir  from  (
+      /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est make_PDF_input_oneCat_AM.py el
+      /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est make_PDF_input_oneCat_AM.py mu	
+)
 
 
-arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  el 
-queue 
-arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  mu 
-queue 
+#queue wdir,psname,lepflav from (
+#      "${PWD}", prepare_bkg_oneCat_AM.py, el,
+#      "${PWD}", prepare_bkg_oneCat_AM.py, mu	
+#)
 
-arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  el uS
-queue 
-arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  mu uS
-queue 
+
+#arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  el 
+#queue 
+#arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  mu 
+#queue 
+
+#arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  el uS
+#queue 
+#arguments  = /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter/WJets_est prepare_bkg_oneCat_AM.py /eos/user/a/anmehta/www/VVsemilep/WJest/  mu uS
+#queue 
 
 
 

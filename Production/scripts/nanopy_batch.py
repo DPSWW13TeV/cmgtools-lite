@@ -55,16 +55,16 @@ do
    {eosenv}
    for try in `seq 1 3`; do
       echo "Stageout try AM $try"
-      echo "eos mkdir {srm}"
-      eos mkdir {srm}
-      echo "eos cp `pwd`/$f {srm}/${{ff}}_{idx}.root"
-      eos cp `pwd`/$f {srm}/${{ff}}_{idx}.root
+      echo "mkdir {srm}"
+      mkdir {srm}
+      echo "cp `pwd`/$f {srm}/${{ff}}_{idx}.root"
+      cp `pwd`/$f {srm}/${{ff}}_{idx}.root
       if [ $? -ne 0 ]; then
          echo "ERROR: remote copy failed for file $ff"
          continue
       fi
       echo "remote copy succeeded nanoB"
-      remsize=$(eos find --size {srm}/${{ff}}_{idx}.root | cut -d= -f3) 
+      remsize=$(find --size {srm}/${{ff}}_{idx}.root | cut -d= -f3) 
       locsize=$(cat `pwd`/$f | wc -c)
       ok=$(($remsize==$locsize))
       if [ $ok -ne 1 ]; then

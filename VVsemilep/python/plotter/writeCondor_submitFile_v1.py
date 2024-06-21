@@ -12,13 +12,15 @@ environment = "LS_SUBCWD={here}"
 Log        = jobs/Wspc{dW}_$(ProcId).log
 Output     = jobs/Wspc{dW}_$(ProcId).out
 Error      = jobs/Wspc{dW}_$(ProcId).error
-requirements = (OpSysAndVer =?= "CentOS7")
+#requirements = (OpSysAndVer =?= "CentOS7")
 +AccountingGroup = "group_u_CMST3.all"
 +JobFlavour = "workday"
-\n\n'''.format(dW=doWhat,here=os.environ['PWD']))
+arguments  = $(info) 
+MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"
+\n'''.format(dW=doWhat,here=os.environ['PWD']))
 if os.environ['USER'] in ['anmehta', 'vmilosev']:
-   tmp_condor.write('+AccountingGroup = "group_u_CMST3.all"\n\n\n')
-
+   tmp_condor.write('+AccountingGroup = "group_u_CMST3.all"\n')
+tmp_condor.write('queue info from ( \n')
 pf=""
 lepsel={'topCR' : ["onelep"],
         'inclB' : ["mu","el"],
@@ -36,17 +38,14 @@ for sel in ["SB","SR"]: #"SB","SR"]: #"inclB","sig"]: #,"sb_lo","sb_hi"]:  #"wjC
            for lep in lepsel[sel]: #["el"]: #"mu","el"]: #
               if 'plots' in  doWhat:
                  for iVar in allvars:
-                    tmp_condor.write('arguments  = {cmssw} {yr} {cat} {sel} {lf} {iVar} {pf} \n'.format(iVar=iVar,cmssw=os.environ['PWD'],cat=cat,yr=yr,sel=sel,lf=lep,pf=pf ) )
-                    tmp_condor.write('queue 1\n\n')
+                    tmp_condor.write('{yr} {cat} {sel} {lf} {iVar} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf) )
               else:
                  if "top" in sel:
-                    tmp_condor.write('arguments  = {cmssw} {yr} {cat} {sel} {lf} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,sel=sel,lf=lep,pf=pf ) )
-                    tmp_condor.write('queue 1\n\n')
+                    tmp_condor.write('{yr} {cat} {sel} {lf} {pf} \n'.format(cat=cat,yr=yr,sel=sel,lf=lep,pf=pf ) )
                     for op in ops: #still needs to be validated
-                       tmp_condor.write('arguments  = {cmssw} {yr} {cat} {sel} {lf} {op} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,op=op,sel=sel,lf=lep,pf=pf ) )
-                       tmp_condor.write('queue 1\n\n')
+                       tmp_condor.write('{yr} {cat} {sel} {lf} {op} {pf} \n'.format(cat=cat,yr=yr,op=op,sel=sel,lf=lep,pf=pf ) )
 
-          
+tmp_condor.write(') \n')
 tmp_condor.close()
 
 print 'condor_submit jobs/%s'%fName

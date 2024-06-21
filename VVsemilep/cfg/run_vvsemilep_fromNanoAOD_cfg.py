@@ -67,9 +67,7 @@ DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
-        #"T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
-        ##am        # conversions
-        #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
+        #"T_tch" #, "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
         ##am        #  # triboson
         #"WWW"
         #"QCD.*"
@@ -82,8 +80,8 @@ if analysis == "main":
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",#problem
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
         #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf"
-        #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
-        ".*SMEFT_LO.*",
+        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
+        #".*SMEFT_LO.*",
         #     "WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
         #      "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
         #       "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",

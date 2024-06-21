@@ -51,7 +51,7 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All   --de .*Run.* " #--dm .*SMEFT.* " #
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All -d WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_testel9 " # --de .*Run.* " #--dm .*SMEFT.* " #
 
 	;;
 

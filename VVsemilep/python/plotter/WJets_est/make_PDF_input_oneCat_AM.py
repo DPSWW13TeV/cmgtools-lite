@@ -1,4 +1,5 @@
 from prepare_bkg_oneCat_AM import *
+
 vetoPlots=['cwww_WW_lin','cwww_WZ_lin','cb_WZ_lin','cb_WZ_quad']
 
 from ROOT import TH1F 
@@ -27,23 +28,9 @@ parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/%s/%
 usepNM=False
 useWts=True
 
-def mkplotDir(dname):
-    if not os.path.isdir(dname): os.system("mkdir %s"%eos)
-    if "www" in dname:
-        os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+dname)    
-    return True
-
 def if3(cond, iftrue, iffalse):
     return iftrue if cond else iffalse
 
-def drawSLatex(xpos,ypos,text,size):
-    latex = ROOT.TLatex()
-    latex.SetNDC()
-    latex.SetTextAlign(12)
-    latex.SetTextSize(size)
-    latex.SetTextFont(42)
-    latex.DrawLatex(xpos,ypos,text)
-    return latex
 
 
 
@@ -72,7 +59,7 @@ class Prepare_workspace_4limit:
             
             self.fitresults             = []
             ##nuisance parameter to change all slope parameters by certain percentage (bigger for cb in WZ-cateogry)
-            self.eps                    = if3(self.ch == "el", RooRealVar('slope_nuis','slope_nuis',2,0,4), RooRealVar('slope_nuis','slope_nuis',2,0,4)) ##AM
+            self.eps                    =  RooRealVar('slope_nuis','slope_nuis',1,0,2)
             self.eps.setConstant(kTRUE)
             self.eps4cbWZ               = RooFormulaVar('rel_slope_nuis4cbWZ','rel_slope_nuis4cbWZ','1+3.0*(@0-1)',RooArgList(self.eps))
             self.eps4cbWW               = RooFormulaVar('rel_slope_nuis4cbWW','rel_slope_nuis4cbWW','1+3.0*(@0-1)',RooArgList(self.eps))
@@ -227,6 +214,14 @@ class Prepare_workspace_4limit:
                 hists4scale[key].Write()
             print ('--------> Written to file ' + fileOut.GetName())
             fileOut.Close()
+        def drawSLatex(self,xpos,ypos,text,size):
+            latex = ROOT.TLatex()
+            latex.SetNDC()
+            latex.SetTextAlign(12)
+            latex.SetTextSize(size)
+            latex.SetTextFont(42)
+            latex.DrawLatex(xpos,ypos,text)
+            return latex
 
         def Make_plots(self,rrv_x,cat,fitres):
             can     = [];can2    = [];      plots   = [];     plots2  = []; pads    = []; dummy_list=[]
@@ -237,6 +232,8 @@ class Prepare_workspace_4limit:
                 p2      = rrv_x.frame(self.mlvj_lo,self.mlvj_hi)
                 c       = TCanvas(cat+'_'+self.POI[i]+'-',self.POI[i]+'-',600,600)
                 c.cd()
+
+
                 CMS_lumi.lumi_13TeV = "%s fb^{-1}" %str(lumis[self.year])
                 CMS_lumi.writeExtraText = True;                       CMS_lumi.extraText = "Preliminary"
                 H_ref = 600;        W_ref = 600;        W = W_ref;       H  = H_ref
@@ -298,9 +295,6 @@ class Prepare_workspace_4limit:
                 txt = ROOT.TText(2, 100, "Signal")
                 txt.SetTextSize(0.04)
                 txt.SetTextColor(ROOT.kRed)
-                #t2a = drawSLatex(0.1,0.90,"#bf{CMS} Preliminary",0.05);
-                #t3a = drawSLatex(0.665,0.90,"%f fb^{#minus1} (13 TeV)"%(lumis[self.year]),0.05);
-                #t2a.Draw();t3a.Draw();
                 plots[i].addObject(txt)
                 plots[i].Draw()
                 ndof        = (self.mlvj_hi-self.mlvj_lo)/100 - 4
@@ -342,10 +336,10 @@ class Prepare_workspace_4limit:
                 ratio_style.Draw("")
                 if (pullhist_q) is not None: 
                     pullhist_q.Draw("SAME P0E1");  
-                    pullhist_q.SetLineColor(ROOT.kPink-2);pullhist_q.SetLineWidth(1);
+                    pullhist_q.SetLineColor(ROOT.kPink-2);pullhist_q.SetLineWidth(1);pullhist_q.SetMarkerStyle(8);  pullhist_q.SetMarkerColor(ROOT.kPink-2);
                     pullhist_q.SetMarkerColor(ROOT.kPink-2);
                 if (pullhist_l) is not None: 
-                    pullhist_l.SetLineColor(ROOT.kAzure+10);pullhist_l.SetLineWidth(1);pullhist_l.SetMarkerColor(ROOT.kAzure+10);
+                    pullhist_l.SetLineColor(ROOT.kAzure+10);pullhist_l.SetLineWidth(1);pullhist_l.SetMarkerStyle(4); pullhist_l.SetMarkerColor(ROOT.kAzure+10);
                     pullhist_l.Draw("SAME P0E1")
                 can[i].Update()
                 can[i].SaveAs(self.plotsDir+'/%s_neg_%s.pdf'%(self.POI[i],channel))
@@ -399,6 +393,7 @@ class Prepare_workspace_4limit:
             a1              = RooFormulaVar('a_SM_%s'%channel,'a_SM_%s'%channel,'@0*@1',RooArgList(a1_4fit,self.eps))
             SMPdf           = RooExponential('SMPdf_%s'%channel,'SMPdf_%s'%channel,rrv_x,a1)
             ##actual fit to determine SM shape parameter a1_4fit
+            print "fitting the SM part"
             fitresSM        = SMPdf.fitTo(SMdatahist, RooFit.SumW2Error(kTRUE), RooFit.Save(kTRUE))
             self.fitresults.append(fitresSM)
             a1_4fit.setConstant(kTRUE)
@@ -424,7 +419,7 @@ class Prepare_workspace_4limit:
             if self.ch=='el':
                 Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,1500.)
                 Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,600.,500.,1000.)
-                Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,500.,100.,1500.)
+                Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,1000.,500.,1500.)
             elif self.ch=='mu':
                 Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,7500.)
                 Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1500.,500.,2000.)
@@ -432,7 +427,7 @@ class Prepare_workspace_4limit:
 
             Erf_offset_cwww         = RooRealVar('Erf_offset_cwww_%s'%channel,'Erf_offset_cwww_%s'%channel,1000.,500.,1500.)
             Erf_offset_cw           = RooRealVar('Erf_offset_cw_%s'%channel,'Erf_offset_cw_%s'%channel,1000.,500.,2500.)
-            Erf_offset_cb           = RooRealVar('Erf_offset_cb_%s'%channel,'Erf_offset_cb_%s'%channel,1000.,500.,2500.)
+            Erf_offset_cb           = RooRealVar('Erf_offset_cb_%s'%channel,'Erf_offset_cb_%s'%channel,1000.,0.,1500.)
 
             Erf_offset_cwww.setConstant(kTRUE);Erf_width_cwww.setConstant(kTRUE);Erf_offset_cw.setConstant(kTRUE);Erf_width_cw.setConstant(kTRUE);       
             Erf_offset_cb.setConstant(kTRUE);            Erf_width_cb.setConstant(kTRUE)
@@ -464,8 +459,7 @@ class Prepare_workspace_4limit:
                 self.Import_to_ws(self.wtmp,[pos_datahist,neg_datahist,sm_lin_quad_datahist,quad_datahist])
                 self.Import_to_ws(self.WS,[pos_datahist,neg_datahist,sm_lin_quad_datahist,quad_datahist])
                 #get scaling parabel from yields
-                #FIXME scaling to the sum of WW and WZ leads to over-estimating WW and under-estimating WZ
-                #FIXME scaling to WW and WZ separately leads to a really high scaling factor for WZ
+
                 hist4scale = TH1F('hist4scale_%s'%self.POI[i],'hist4scale_%s'%self.POI[i],3,-1.5*self.PAR_MAX[self.POI[i]],1.5*self.PAR_MAX[self.POI[i]])
                 hist4scale.SetBinContent(2,1)
                 factor=if3(self.POI[i] == "cwww",3.6, if3(self.POI[i] == "cb",20,4.5))
@@ -485,7 +479,7 @@ class Prepare_workspace_4limit:
                     norm_lin   = RooRealVar('norm_sm_lin_quad_%s'%s_name,'norm_sm_lin_quad_%s'%s_name,0.5*(nevt_posWZ-nevt_negWZ)/SMWZ.sumEntries()/factor)
                     norm_quad  = RooRealVar('norm_quad_%s'%s_name,'norm_quad_%s'%s_name,(0.5*(nevt_posWZ+nevt_negWZ)-SMWZ.sumEntries())/SMWZ.sumEntries()/factor**2 )
 
-                #fit parabel
+                #fit parabola
                 hist4scale.Fit('pol2','0')
                 fitfunc     = hist4scale.GetFunction('pol2')
                 par1        = RooRealVar('par1_%s'%s_name,'par1_%s'%s_name,fitfunc.GetParameter(1));
@@ -499,15 +493,21 @@ class Prepare_workspace_4limit:
                 N_lin             = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,((N_pos_tmp-N_neg_tmp)/2)) 
                 #scaleshape is the relative change to SM
                 scaleshape       = RooFormulaVar('scaleshape_%s'%s_name,'scaleshape_%s'%s_name, '(@0*@2+@1*@2**2)', RooArgList(par1,par2,self.wtmp.var(self.POI[i])))
-                #FIXME only very few atgc events for cb in WZ sample, fit doesn't work yet -> different parametrization, starting values+ranges or leave out completely
+                a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.0012,-0.01,0.1)
+                if self.POI[i] == "cw" and sample=='WW':
+                    a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps))
+                else:
+                    a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
 
-                a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.0011,-0.01,0)
-                a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps))
-                a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.000715,-0.01,0)
-                a3          = RooFormulaVar('a_lin_nuis_%s'%s_name,'a_lin_nuis_%s'%s_name,'@0*@1',RooArgList(a3_4fit,self.eps))
                 cPdf_quad   = RooErfExpPdf('%s_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a2,self.wtmp.var('Erf_offset_%s'%s_name),self.wtmp.var('Erf_width_%s'%s_name))
-                cPdf_lin     = RooExponential('%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a3)
+                a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.000715,-0.001,0.1)
+                a3          = RooFormulaVar('a_lin_nuis_%s'%s_name,'a_lin_nuis_%s'%s_name,'@0*@1',RooArgList(a3_4fit,self.eps))
+                cPdf_lin    = RooExponential('%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a3)
+                print "fitting quad term ----------------------------------------********************************$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+                fitres_quad  = cPdf_quad.fitTo(self.wtmp.data('quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE))
                 fitres_quad  = cPdf_quad.fitTo(self.wtmp.data('quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
+                print "fitting linear term ----------------------------------------********************************$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+                fitres_lin   = cPdf_lin.fitTo(self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE))
                 fitres_lin   = cPdf_lin.fitTo(self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
                 a2_4fit.setConstant(kTRUE)
                 a3_4fit.setConstant(kTRUE)
@@ -629,7 +629,7 @@ class Prepare_workspace_4limit:
 
                 #fit quadratic term
                 self.wtmp.var('a_quad_4fit_%s'%s_name).setConstant(kFALSE)
-                if self.POI[i]!='cb' and sample=='WZ':
+                if self.POI[i]!='cK' and sample=='WZ':
                     self.wtmp.var('Erf_offset_%s'%s_name).setConstant(kFALSE)
                     self.wtmp.var('Erf_width_%s'%s_name).setConstant(kFALSE)
                 fitres2         = model.fitTo(self.wtmp.data('pos_datahist_%s_%s'%(sample,self.POI[i])), RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE))
@@ -803,24 +803,26 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                         signal_quad_norm_VV = RooFormulaVar(pdf_quad_VV_2d.GetName()+'_norm',pdf_quad_VV_2d.GetName()+'_norm','@0*@1',RooArgList(self.wtmp.var('norm_quad_%s_%s_%s'%(ops,self.ch,VV)),norm_VV_reg))
                         self.Import_to_ws(self.WS2,[pdf_sm_lin_quad_VV_2d,pdf_quad_VV_2d,signal_lin_norm_VV,signal_quad_norm_VV],1)
                         
-                        mplot_tmp_AM = rrv_mass_lvj.frame( RooFit.Bins(rrv_mass_lvj.getBins()));
-                        c3_AM=ROOT.TCanvas('c3_%s_%s_%s_%s'%(ops,VV,region,self.ch),'',600,600); #c3_AM.SetLogy();
-                        
+                        c3_AM=ROOT.TCanvas('c3_%s_%s_%s_%s'%(ops,VV,region,self.ch),'',600,600); #c3_AM.SetLogy();                        
+                        mplot_tmp_AM = rrv_mass_lvj.frame(RooFit.Bins(rrv_mass_lvj.getBins()));
+
                         pdf_sm_lin_quad_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("lin"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kOrange));
-                        pdf_quad_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("quad"), RooFit.LineStyle(kDotted),RooFit.LineColor(ROOT.kBlue));
+                        pdf_quad_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("quad"),RooFit.LineColor(ROOT.kBlue));
                         pdf_atgc_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("aTGC"), RooFit.LineStyle(kDotted),RooFit.LineColor(ROOT.kGreen));
+
                         legend = ROOT.TLegend(0.26,0.64,0.82,0.86);
+                        mplot_tmp_AM.addObject(legend);
+
                         legend.SetNColumns(3);legend.SetFillColor(0);legend.SetFillStyle(0); legend.SetShadowColor(0);   legend.SetLineColor(0);
                         legend.SetTextFont(42);        legend.SetBorderSize(0);   legend.SetTextSize(0.04);
                         legend.AddEntry(pdf_quad_mlvj_VV,'quad','l')
                         legend.AddEntry(pdf_sm_lin_quad_mlvj_VV,'lin','l')
                         legend.AddEntry(pdf_atgc_mlvj_VV,'aTGC','l')
-                        #mplot_tmp_AM.addObject(legend);
-                        c3_AM.cd();
+
+                        #c3_AM.cd();
                         mplot_tmp_AM.SetYTitle("PDFs"); mplot_tmp_AM.GetYaxis().SetTitleOffset(1.05);
-                        mplot_tmp_AM.Draw();     
-                        legend.Draw();
-                        c3_AM.Draw();
+                        mplot_tmp_AM.Draw();        c3_AM.Update();        c3_AM.Draw();
+                        #                        mplot_tmp_AM.Draw();     legend.Draw();      c3_AM.Draw();
                         c3_AM.SaveAs(self.plotsDir+'pdfs_%s_%s%s_%s.png'%(ops,self.ch,region,VV))
                         c3_AM.SaveAs(self.plotsDir+'pdfs_%s_%s%s_%s.pdf'%(ops,self.ch,region,VV))
                         
