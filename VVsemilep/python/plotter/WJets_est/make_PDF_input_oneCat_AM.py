@@ -59,7 +59,7 @@ class Prepare_workspace_4limit:
             
             self.fitresults             = []
             ##nuisance parameter to change all slope parameters by certain percentage (bigger for cb in WZ-cateogry)
-            self.eps                    =  RooRealVar('slope_nuis','slope_nuis',3,0,6)
+            self.eps                    =  RooRealVar('slope_nuis','slope_nuis',4,0,8)
             self.eps.setConstant(kTRUE)
             self.eps4cbWZ               = RooFormulaVar('rel_slope_nuis4cbWZ','rel_slope_nuis4cbWZ','1+3.0*(@0-1)',RooArgList(self.eps))
             self.eps4cbWW               = RooFormulaVar('rel_slope_nuis4cbWW','rel_slope_nuis4cbWW','1+3.0*(@0-1)',RooArgList(self.eps))
@@ -94,6 +94,117 @@ class Prepare_workspace_4limit:
             #self.file_WZ_aTGC_mc              = "WZ_aTGC"
 
         #read trees containing aTGC WW and WZ events and fill them into histograms
+        ####################
+        def get_pull(self, rrv_x, mplot_orig):
+
+            #print "############### draw the pull plot ########################"
+            hpull = mplot_orig.pullHist();
+            x = ROOT.Double(0.); y = ROOT.Double(0) ;
+            for ipoint in range(0,hpull.GetN()):
+                hpull.GetPoint(ipoint,x,y);
+                #hpull.SetPoint(ipoint,x,1000)
+                #print x,y
+                if(y == 0):
+                    hpull.SetPoint(ipoint,x,10)
+            tmpObjName=mplot_orig.GetName()+'_pull'
+            if ROOT.gROOT.FindObject(tmpObjName) != None: ROOT.gROOT.FindObject(tmpObjName).Delete()
+            self.gt = ROOT.TH1F(mplot_orig.GetName()+'_pull',mplot_orig.GetName()+'_pull',rrv_x.getBins(),rrv_x.getMin(),rrv_x.getMax());
+            self.gt.SetMinimum(-3.999);        self.gt.SetMaximum(3.999);
+            self.gt.SetDirectory(0);        self.gt.SetStats(0);
+            self.gt.SetLineStyle(0);        self.gt.SetMarkerStyle(20);
+            self.gt.GetXaxis().SetTitle(rrv_x.GetTitle() + " (GeV)");
+            self.gt.GetXaxis().SetLabelFont(42);        self.gt.GetXaxis().SetLabelOffset(0.02);      self.gt.GetXaxis().SetLabelSize(0.10);
+            self.gt.GetXaxis().SetTitleSize(0.11);        self.gt.GetXaxis().SetTitleOffset(1.2);     self.gt.GetXaxis().SetTitleFont(42);        self.gt.GetYaxis().SetTitle("#frac{Data-Fit}{#sigma_{Data}}");
+            self.gt.GetYaxis().CenterTitle(True);        self.gt.GetYaxis().SetNdivisions(205);        self.gt.GetYaxis().SetLabelFont(42);        self.gt.GetYaxis().SetLabelOffset(0.007);
+            self.gt.GetYaxis().SetLabelSize(0.10);        self.gt.GetYaxis().SetTitleSize(0.11);        self.gt.GetYaxis().SetTitleOffset(0.35);        self.gt.GetYaxis().SetTitleFont(42);
+            hpull.SetHistogram(self.gt)
+            return hpull
+
+    #################################################################################################
+    #################################################################################################
+
+    #set uncertainties for data as recommended by the statistics commitee
+
+    ################
+        def legend4Plot(self, plot,isFill=1, x_offset_low=0.,y_offset_low=0.,x_offset_high =0., y_offset_high =0., TwoCoulum =1.,firstentry=''):
+            #        print "############### draw the legend ########################"
+            theLeg = TLegend(0.37+x_offset_low, 0.50+y_offset_low, 0.72+x_offset_high, 0.82+y_offset_high, "", "NDC");            
+            #theLeg.SetName("theLegend");
+            if TwoCoulum :                theLeg.SetNColumns(2);
+
+            
+            theLeg.SetFillColor(0);        theLeg.SetFillStyle(0);        theLeg.SetTextSize(0.04);        theLeg.SetTextFont(42);
+            theLeg.SetBorderSize(0);        theLeg.SetLineColor(0);        theLeg.SetLineWidth(0);        theLeg.SetLineStyle(0);
+            if firstentry: theLeg.AddEntry('NULL',firstentry.split('_')[-1],'');
+            entryCnt = 0;
+            objName_before = "";
+            objName_signal_graviton = "";
+            objNameLeg_signal_graviton = "";        
+            legHeader="e#nu" if   self.ch == 'el' else "#mu#nu";
+            for obj in range(int(plot.numItems()) ):
+                objName = plot.nameOf(obj);
+                #if objName.find("TPave") != -1: continue
+                if objName == "errorband" : objName = "Uncertainty";
+                if not ( ( (plot.getInvisible(objName)) and (not TString(objName).Contains("Uncertainty")) ) or TString(objName).Contains("invisi") or TString(objName).Contains("TLine") or 
+objName ==objName_before ):
+                    theObj = plot.getObject(obj);
+                    objTitle = objName;
+                    drawoption= plot.getDrawOptions(objName).Data()
+                    if drawoption=="P":drawoption="PE"
+                    if TString(objName).Contains("Uncertainty") or TString(objName).Contains("sigma"):  objName_before=objName; continue ;
+                    elif TString(objName).Contains("Graph") :  objName_before=objName; continue ;
+                    elif TString(objName).Contains("Uncertainty"): theLeg.AddEntry(theObj, objTitle,drawoption);  objName_before=objName;
+                    elif TString(objName).Data()=="data" : theLeg.AddEntry(theObj, "Data, W#rightarrow"+legHeader,"PE");  objName_before=objName;                 
+                    else: objName_before=objName; continue ;
+
+            entryCnt = 0;
+            objName_before = "";
+
+                   
+            for obj in range(int(plot.numItems()) ):
+                objName = plot.nameOf(obj);
+                if objName == "errorband" : objName = "Uncertainty";
+                if not ( ( (plot.getInvisible(objName)) and (not TString(objName).Contains("Uncertainty")) ) or TString(objName).Contains("invisi") or TString(objName).Contains("TLine") or 
+objName ==objName_before ):
+                    theObj = plot.getObject(obj);
+                    objTitle = objName;
+                    drawoption= plot.getDrawOptions(objName).Data()
+                    if drawoption=="P":drawoption="PE"
+                    if TString(objName).Contains("Uncertainty") or TString(objName).Contains("sigma"):  objName_before=objName; continue ;
+                    elif TString(objName).Contains("Graph") :  objName_before=objName; continue ;
+                    elif TString(objName).Data()=="WJets" : objName_before=objName;                 
+                    else:  objName_before=objName; continue ;
+
+            entryCnt = 0;
+            objName_before = "";
+            for obj in range(int(plot.numItems()) ):
+                objName = plot.nameOf(obj);
+                if objName.find("TPave") != -1: continue
+                if objName == "errorband" : objName = "Uncertainty";
+                if not ( ( (plot.getInvisible(objName)) and (not TString(objName).Contains("Uncertainty")) ) or TString(objName).Contains("invisi") or TString(objName).Contains("TLine") or 
+objName ==objName_before ):
+                    theObj = plot.getObject(obj);
+                    objTitle = objName;
+                    drawoption= plot.getDrawOptions(objName).Data()
+                    if drawoption=="P":drawoption="PE"
+                    if TString(objName).Contains("Uncertainty") or TString(objName).Contains("sigma"):
+                        theLeg.AddEntry(theObj, objName,"F");
+                    elif TString(objName).Contains("Graph") :
+                        if not (objName_before=="Graph" or objName_before=="Uncertainty"): theLeg.AddEntry(theObj, "Uncertainty","F");
+                    else:
+                        if TString(objName).Data()=="STop" : theLeg.AddEntry(theObj, "Single top","F");
+                        #elif TString(objName).Contains("Uncertainty"): theLeg.AddEntry(theObj, objTitle,drawoption);
+                        elif TString(objName).Data()=="TTbar" : theLeg.AddEntry(theObj, "t#bar{t}","F");
+                        elif TString(objName).Data()=="VV" : theLeg.AddEntry(theObj, "WW/WZ","F");
+                        elif TString(objName).Data()=="data" :  objName_before=objName; entryCnt = entryCnt+1; continue ;
+                        elif TString(objName).Data()=="WJets" : theLeg.AddEntry(theObj, "W+jets","F"); entryCnt = entryCnt+1; continue;
+                        elif TString(objName).Contains("vbfH"): theLeg.AddEntry(theObj, (TString(objName).ReplaceAll("vbfH","qqH")).Data() ,"L");
+                        else : theLeg.AddEntry(theObj, objTitle,drawoption);
+                    entryCnt=entryCnt+1;
+                    objName_before=objName;
+
+            return theLeg;
+##########################
         def Read_ATGCtree(self,ch='mu'):
             print ('######### Making histograms for aTGC working points #########')
             hists4scale        = {}
@@ -184,7 +295,7 @@ class Prepare_workspace_4limit:
 
 
 
-		# Fit exponential to the aTGC-aTGC interference histograms (This is to avoid doing this via gen-level files)
+		print "Fit exponential to the aTGC-aTGC interference histograms"
 		hists4scale['c_int_cwww_cw_%s_hist'%WV].Fit("expo")
 		a5_val=hists4scale['c_int_cwww_cw_%s_hist'%WV].GetFunction("expo").GetParameter(1)
 		hists4scale['c_int_cw_cb_%s_hist'%WV].Fit("expo")
@@ -222,7 +333,24 @@ class Prepare_workspace_4limit:
             latex.SetTextFont(42)
             latex.DrawLatex(xpos,ypos,text)
             return latex
+        def get_canvas(self,cname):
+            CMS_lumi.lumi_13TeV = "%s fb^{-1}" %str(lumis[self.year])
+            CMS_lumi.writeExtraText = True
+            CMS_lumi.extraText = "Preliminary"
+            iPos = 11
+            if( iPos==0 ): CMS_lumi.relPosX = 0.15
+            H_ref = 600;        W_ref = 600;        W = W_ref;       H  = H_ref
+            T = 0.12*H_ref;       B = 0.12*H_ref;       L = 0.12*W_ref;       R = 0.01*W_ref
+            canvas = ROOT.TCanvas(cname,"",W,H)
+            canvas.SetFillColor(0);       canvas.SetBorderMode(0);
+            canvas.SetFrameFillStyle(0);       canvas.SetFrameBorderMode(0);      canvas.SetLeftMargin(0.15);# L/W );
+            canvas.SetRightMargin(0.1);# R/W );
+            #canvas.SetTopMargin(T/H);
+            canvas.SetBottomMargin(0.1);#B/H);
+            canvas.SetTickx();       canvas.SetTicky();
+            return canvas
 
+        
         def Make_plots(self,rrv_x,cat,fitres):
             can     = [];can2    = [];      plots   = [];     plots2  = []; pads    = []; dummy_list=[]
             channel = self.ch+'_'+cat
@@ -230,14 +358,8 @@ class Prepare_workspace_4limit:
                 rrv_x.setRange(self.mlvj_lo,self.mlvj_hi)
                 p       = rrv_x.frame(self.mlvj_lo,self.mlvj_hi)
                 p2      = rrv_x.frame(self.mlvj_lo,self.mlvj_hi)
-                c       = TCanvas(cat+'_'+self.POI[i]+'-',self.POI[i]+'-',600,600)
-                c.cd()
-
-
-                CMS_lumi.lumi_13TeV = "%s fb^{-1}" %str(lumis[self.year])
-                CMS_lumi.writeExtraText = True;                       CMS_lumi.extraText = "Preliminary"
-                H_ref = 600;        W_ref = 600;        W = W_ref;       H  = H_ref
-                T = 0.12*H_ref;       B = 0.12*H_ref;       L = 0.12*W_ref;       R = 0.01*W_ref
+                c       = self.get_canvas(cat+'_'+self.POI[i]+'-');#TCanvas(cat+'_'+self.POI[i]+'-',self.POI[i]+'-',600,600)
+                c.Draw();                c.cd();
                 pad1        = TPad(cat+'pad1_%s'%self.POI[i],cat+'pad1_%s'%self.POI[i],0.,0.3,1.,1.)  
                 pad2        = TPad(cat+'pad2_%s'%self.POI[i],cat+'pad2_%s'%self.POI[i],0.,0.02,1.,0.3)
                 c2          = TCanvas(cat+self.POI[i]+'+',self.POI[i]+'+',600,600)
@@ -257,14 +379,15 @@ class Prepare_workspace_4limit:
 
                 for j in range(3):
                     self.wtmp.var(self.POI[j]).setVal(0)
-                self.wtmp.data('SMdatahist_%s'%cat).plotOn(plots[i],RooFit.MarkerColor(kBlack),RooFit.LineColor(kBlack),RooFit.LineStyle(kDashed),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('SMdata'))
+                #self.wtmp.data('SMdatahist_%s'%cat).plotOn(plots[i],RooFit.MarkerColor(kBlack),RooFit.LineColor(kBlack),RooFit.LineStyle(kDashed),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('SMdata'))
                 normvalSM        = norm.getVal() * self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
-                self.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots[i],RooFit.LineColor(kBlack),RooFit.Normalization(normvalSM, RooAbsReal.NumEvent),RooFit.Name('SMmodel'))
+                ##AMself.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots[i],RooFit.LineColor(kBlack),RooFit.Normalization(normvalSM, RooAbsReal.NumEvent),RooFit.Name('SMmodel'))
                 #self.wtmp.data('neg_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(kBlue),RooFit.LineColor(kBlue),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('E0'),RooFit.Name('atgcdata'))
                 self.wtmp.var(self.POI[i]).setVal(-self.PAR_MAX[self.POI[i]])
                 normvalneg = norm.getVal() * self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
                 #self.wtmp.pdf('aTGC_model_%s'%channel).plotOn(plots[i],RooFit.LineColor(kBlue),RooFit.Normalization(normvalneg, RooAbsReal.NumEvent),RooFit.Name('atgcmodel'))
                 #                    print "this info we nned: category \t",cat,"\t poi\t",self.POI[i],"\t channel \t",channel,"\t ch\t",self.ch
+
                 pullhist_q=None;pullhist_l=None
                 linStr=self.POI[i]+'_'+cat+'_lin'
                 quadStr=self.POI[i]+'_'+cat+'_quad'
@@ -303,8 +426,8 @@ class Prepare_workspace_4limit:
                 leg        = TLegend(0.11,0.5,0.85,0.85)
                 leg.SetFillStyle(0);leg.SetTextFont(42);                leg.SetBorderSize(0);leg.SetNColumns(2);
                 leg.SetFillStyle(0); leg.SetTextSize(0.035);
-                leg.AddEntry(plots[i].findObject('SMdata'),'SM (MC)','le')
-                leg.AddEntry(plots[i].findObject('SMmodel'),'SM (exp)','l')
+                #leg.AddEntry(plots[i].findObject('SMdata'),'SM (MC)','le')
+                #leg.AddEntry(plots[i].findObject('SMmodel'),'SM (exp)','l')
                 #leg.AddEntry(plots[i].findObject('atgcdata'),'MC '+parlatex[i]+'='+str(-self.PAR_MAX[self.POI[i]])+' TeV^{-2}','le')
                 #leg.AddEntry(plots[i].findObject('atgcmodel'),'signal model '+parlatex[i]+'='+str(-self.PAR_MAX[self.POI[i]])+' TeV^{-2}','l')
                 if quadStr not in vetoPlots:  
@@ -395,6 +518,20 @@ class Prepare_workspace_4limit:
             ##actual fit to determine SM shape parameter a1_4fit
             print "fitting the SM part"
             fitresSM        = SMPdf.fitTo(SMdatahist, RooFit.SumW2Error(kTRUE), RooFit.Save(kTRUE))
+            c3_AM=ROOT.TCanvas('can_am_%s'%(channel),'',600,600); #c3_AM.SetLogy();
+            mplot_tmp_am = rrv_x.frame( RooFit.Bins(rrv_x.getBins()));
+            SMdatahist.plotOn( mplot_tmp_am,RooFit.Name("sm"),RooFit.MarkerSize(1), RooFit.DataError(RooAbsData.Poisson), RooFit.XErrorSize(0), RooFit.MarkerColor(1), RooFit.LineColor(1) );
+            #RooFit.MarkerSize(1), RooFit.DataError(RooAbsData.SumW2), RooFit.XErrorSize(0) );
+
+            SMPdf.plotOn(mplot_tmp_am, RooFit.Name("smpdf"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kOrange));
+            self.leg_tmp_AM= self.legend4Plot(mplot_tmp_am,0, 0, 0., 0., -0.1,0,channel);
+
+
+            mplot_tmp_am.addObject(self.leg_tmp_AM);
+            mplot_tmp_am.Draw();        c3_AM.Update();        c3_AM.Draw();
+            c3_AM.SaveAs(self.plotsDir+'/sm_%s.png'%(channel))
+            c3_AM.SaveAs(self.plotsDir+'/sm_%s.pdf'%(channel))
+            
             self.fitresults.append(fitresSM)
             a1_4fit.setConstant(kTRUE)
             #coefficient for SM term and other terms in final signal function
@@ -417,20 +554,18 @@ class Prepare_workspace_4limit:
             self.Import_to_ws(self.wtmp,[cwww,cw,cb,self.eps4cbWZ,self.eps4cbWW,SMdatahist,SMdatahist,N_SM,N_sm_lin_quad_cb,N_sm_lin_quad_cw,N_sm_lin_quad_cwww,N_quad_cb,N_quad_cw,N_quad_cwww]) ###only the fitted SM is imported
             #define parameter ranges for error function
             if self.ch=='el':
-                Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,1500.)
-                Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,600.,500.,1000.)
-                Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,1000.,500.,1500.)
+                Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,1700.)
+                Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1000.,500.,2500.)
+                Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,0.,500.,1500.)
             elif self.ch=='mu':
                 Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,7500.)
                 Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1500.,500.,2000.)
                 Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,1500.,500.,2000.)
-
             Erf_offset_cwww         = RooRealVar('Erf_offset_cwww_%s'%channel,'Erf_offset_cwww_%s'%channel,1000.,500.,1500.)
             Erf_offset_cw           = RooRealVar('Erf_offset_cw_%s'%channel,'Erf_offset_cw_%s'%channel,1000.,500.,2500.)
             Erf_offset_cb           = RooRealVar('Erf_offset_cb_%s'%channel,'Erf_offset_cb_%s'%channel,1000.,0.,1500.)
-
-            Erf_offset_cwww.setConstant(kTRUE);Erf_width_cwww.setConstant(kTRUE);Erf_offset_cw.setConstant(kTRUE);Erf_width_cw.setConstant(kTRUE);       
-            Erf_offset_cb.setConstant(kTRUE);            Erf_width_cb.setConstant(kTRUE)
+            #Erf_offset_cwww.setConstant(kTRUE);Erf_width_cwww.setConstant(kTRUE);Erf_offset_cw.setConstant(kTRUE);Erf_width_cw.setConstant(kTRUE);       
+            #Erf_offset_cb.setConstant(kTRUE);            Erf_width_cb.setConstant(kTRUE)
             self.Import_to_ws(self.wtmp,[Erf_width_cwww,Erf_offset_cwww,Erf_width_cw,Erf_offset_cw,Erf_offset_cb,Erf_width_cb])
                 
             for i in range(len(self.POI)):
@@ -479,7 +614,7 @@ class Prepare_workspace_4limit:
                     norm_lin   = RooRealVar('norm_sm_lin_quad_%s'%s_name,'norm_sm_lin_quad_%s'%s_name,0.5*(nevt_posWZ-nevt_negWZ)/SMWZ.sumEntries()/factor)
                     norm_quad  = RooRealVar('norm_quad_%s'%s_name,'norm_quad_%s'%s_name,(0.5*(nevt_posWZ+nevt_negWZ)-SMWZ.sumEntries())/SMWZ.sumEntries()/factor**2 )
 
-                #fit parabola
+                print"fit parabola"
                 hist4scale.Fit('pol2','0')
                 fitfunc     = hist4scale.GetFunction('pol2')
                 par1        = RooRealVar('par1_%s'%s_name,'par1_%s'%s_name,fitfunc.GetParameter(1));
@@ -493,26 +628,42 @@ class Prepare_workspace_4limit:
                 N_lin             = RooRealVar('N_sm_lin_quad_%s'%s_name,'N_sm_lin_quad_%s'%s_name,((N_pos_tmp-N_neg_tmp)/2)) 
                 #scaleshape is the relative change to SM
                 scaleshape       = RooFormulaVar('scaleshape_%s'%s_name,'scaleshape_%s'%s_name, '(@0*@2+@1*@2**2)', RooArgList(par1,par2,self.wtmp.var(self.POI[i])))
-                a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.0012,-0.01,0.1)
-                if self.POI[i] == "cw" and sample=='WW':
-                    a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps))
-                else:
-                    a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
-
+                a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.00012,-0.01,0) #-0.000173527 for cb #-0.0012 to 0.1
+                #if self.POI[i] == "cw" and sample=='WW':
+                #a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps))
+                #else:
+                a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps)) #self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
                 cPdf_quad   = RooErfExpPdf('%s_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a2,self.wtmp.var('Erf_offset_%s'%s_name),self.wtmp.var('Erf_width_%s'%s_name))
-                a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.00095,-0.005,0.1)
-                a3          = RooFormulaVar('a_lin_nuis_%s'%s_name,'a_lin_nuis_%s'%s_name,'@0*@1',RooArgList(a3_4fit,self.eps))
-                cPdf_lin    = RooExponential('%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a3)
-                print "fitting quad term ----------------------------------------********************************$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-                fitres_quad  = cPdf_quad.fitTo(self.wtmp.data('quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE))
-                fitres_quad  = cPdf_quad.fitTo(self.wtmp.data('quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
-                print "fitting linear term ----------------------------------------********************************$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-                fitres_lin   = cPdf_lin.fitTo(self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE))
-                fitres_lin   = cPdf_lin.fitTo(self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
+                a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.001,-0.01,0) #-2.11422e-04
+                #if sample == "WW" and  self.POI[i] == "cw":
+                #    a3_4fit     = RooRealVar('a_lin_4fit_%s'%s_name,'a_lin_4fit_%s'%s_name,-0.00070842,-0.001,0)
+                    
+
+                a3        = RooFormulaVar('a_lin_nuis_%s'%s_name,'a_lin_nuis_%s'%s_name,'@0*@1',RooArgList(a3_4fit,self.eps))#4cbWZ if sample=='WZ' else self.eps4cbWW))
+                cPdf_lin  = RooExponential('%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a3)
+                #if sample=='WZ' and self.POI[i] == "cb":
+                #    continue
+                #else:
+                linStr=self.POI[i]+'_'+sample+'_lin'
+                quadStr=self.POI[i]+'_'+sample+'_quad'
+                if quadStr not in vetoPlots:
+                    print "fitting quad term ----------------------------------------********************************$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+                    print "check this out for %s"%s_name,cPdf_quad.Print();
+                    fitres_quad  = cPdf_quad.fitTo(self.wtmp.data('quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE))
+                    fitres_quad  = cPdf_quad.fitTo(self.wtmp.data('quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
+                    self.fitresults.append(fitres_quad)
+                    
+                if linStr not in vetoPlots:
+                    print "fitting linear term ----------------------------------------********************************$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+                    fitres_lin   = cPdf_lin.fitTo(self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE))
+                    fitres_lin   = cPdf_lin.fitTo(self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
+                    self.fitresults.append(fitres_lin)                                    
                 a2_4fit.setConstant(kTRUE)
                 a3_4fit.setConstant(kTRUE)
-                self.fitresults.append(fitres_quad)
-                self.fitresults.append(fitres_lin)
+                Erf_offset_cwww.setConstant(kTRUE);Erf_width_cwww.setConstant(kTRUE);
+                Erf_offset_cw.setConstant(kTRUE);Erf_width_cw.setConstant(kTRUE);       
+                Erf_offset_cb.setConstant(kTRUE);            Erf_width_cb.setConstant(kTRUE)
+
                 #PDF for SM interference
                 self.Import_to_ws(self.wtmp,[cPdf_quad,cPdf_lin],1)
                 self.Import_to_ws(self.wtmp,[N_quad,N_lin,scaleshape,norm_lin,norm_quad])
@@ -612,33 +763,35 @@ class Prepare_workspace_4limit:
 
                 #fit SM-interference first
                 ##no SM-interference for cwww; not enough aTGC events for cb in WZ sample
-                if not self.POI[i] == 'cwww' and not (sample=='WZ' and self.POI[i]=='cb'):
-                    #set SM and quadratical terms to zero so only the linear term is fitted
-                    N_SM_tmp = N_SM.getVal()
-                    N_quad_tmp = self.wtmp.var('N_quad_%s'%s_name).getVal()
-                    N_SM.setVal(0)
-                    self.wtmp.var('N_quad_%s'%s_name).setVal(0)
-                    
-                    self.wtmp.var('a_lin_4fit_%s'%s_name).setConstant(kFALSE)
-                    fitres1                = model.fitTo(self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
-                    self.wtmp.var('a_lin_4fit_%s'%s_name).setConstant(kTRUE)
-                    self.fitresults.append(fitres1)
-                    
-                    N_SM.setVal(N_SM_tmp)
-                    self.wtmp.var('N_quad_%s'%s_name).setVal(N_quad_tmp)
+                ##AMif not self.POI[i] == 'cwww' and not (sample=='WZ' and self.POI[i]=='cb'):
+                ##AM    #set SM and quadratical terms to zero so only the linear term is fitted
+                ##AM    N_SM_tmp = N_SM.getVal()
+                ##AM    N_quad_tmp = self.wtmp.var('N_quad_%s'%s_name).getVal()
+                ##AM    N_SM.setVal(0)
+                ##AM    self.wtmp.var('N_quad_%s'%s_name).setVal(0)
+                ##AM    
+                ##AM    ##AMself.wtmp.var('a_lin_4fit_%s'%s_name).setConstant(kFALSE)
+                ##AM    print "fitting atGc with the linear term"
+                ##AM    fitres1                = model.fitTo(self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(sample,self.POI[i])),RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
+                ##AM    ##AMself.wtmp.var('a_lin_4fit_%s'%s_name).setConstant(kTRUE)
+                ##AM    self.fitresults.append(fitres1)
+                ##AM    
+                ##AM    N_SM.setVal(N_SM_tmp)
+                ##AM    self.wtmp.var('N_quad_%s'%s_name).setVal(N_quad_tmp)
 
                 #fit quadratic term
-                self.wtmp.var('a_quad_4fit_%s'%s_name).setConstant(kFALSE)
-                if self.POI[i]!='cK' and sample=='WZ':
-                    self.wtmp.var('Erf_offset_%s'%s_name).setConstant(kFALSE)
-                    self.wtmp.var('Erf_width_%s'%s_name).setConstant(kFALSE)
-                fitres2         = model.fitTo(self.wtmp.data('pos_datahist_%s_%s'%(sample,self.POI[i])), RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE))
-                fitres2         = model.fitTo(self.wtmp.data('pos_datahist_%s_%s'%(sample,self.POI[i])), RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
-                self.wtmp.var('a_quad_4fit_%s'%s_name).setConstant(kTRUE)
-                if self.POI[i]!='cb' and sample=='WZ':
-                    self.wtmp.var('Erf_offset_%s'%s_name).setConstant(kTRUE)
-                    self.wtmp.var('Erf_width_%s'%s_name).setConstant(kTRUE)
-                self.fitresults.append(fitres2)
+                ##AMself.wtmp.var('a_quad_4fit_%s'%s_name).setConstant(kFALSE)
+                ##AMif self.POI[i]='cK' and sample=='WZ':
+                ##AM    self.wtmp.var('Erf_offset_%s'%s_name).setConstant(kFALSE)
+                ##AM    self.wtmp.var('Erf_width_%s'%s_name).setConstant(kFALSE)
+                ##AMprint "fitting atGc with posdatahist"
+                ##AMfitres2         = model.fitTo(self.wtmp.data('pos_datahist_%s_%s'%(sample,self.POI[i])), RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE))
+                ##AMfitres2         = model.fitTo(self.wtmp.data('pos_datahist_%s_%s'%(sample,self.POI[i])), RooFit.Save(kTRUE), RooFit.SumW2Error(kTRUE), RooFit.Minimizer('Minuit2'))
+                ##AMself.wtmp.var('a_quad_4fit_%s'%s_name).setConstant(kTRUE)
+                ##AMif self.POI[i]!='cb' and sample=='WZ':
+                ##AM    self.wtmp.var('Erf_offset_%s'%s_name).setConstant(kTRUE)
+                ##AM    self.wtmp.var('Erf_width_%s'%s_name).setConstant(kTRUE)
+                ##AMself.fitresults.append(fitres2)
                 
             for i in range(3):
                 self.wtmp.var(self.POI[i]).setVal(0)
@@ -806,25 +959,27 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                         c3_AM=ROOT.TCanvas('c3_%s_%s_%s_%s'%(ops,VV,region,self.ch),'',600,600); #c3_AM.SetLogy();                        
                         mplot_tmp_AM = rrv_mass_lvj.frame(RooFit.Bins(rrv_mass_lvj.getBins()));
 
-                        pdf_sm_lin_quad_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("lin"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kOrange));
+                        pdf_sm_lin_quad_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("lin"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kOrange+10));
                         pdf_quad_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("quad"),RooFit.LineColor(ROOT.kBlue));
-                        pdf_atgc_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("aTGC"), RooFit.LineStyle(kDotted),RooFit.LineColor(ROOT.kGreen));
+                        pdf_atgc_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("aTGC"), RooFit.LineStyle(kDotted),RooFit.LineColor(ROOT.kAzure+4));
+                        self.leg_tmp_am= self.legend4Plot(mplot_tmp_AM,0, 0, 0., 0., -0.1,0,str(self.ch+"-"+ops));
+                        mplot_tmp_AM.addObject(self.leg_tmp_am);
 
-                        legend = ROOT.TLegend(0.26,0.64,0.82,0.86);
-                        mplot_tmp_AM.addObject(legend);
-
-                        legend.SetNColumns(3);legend.SetFillColor(0);legend.SetFillStyle(0); legend.SetShadowColor(0);   legend.SetLineColor(0);
-                        legend.SetTextFont(42);        legend.SetBorderSize(0);   legend.SetTextSize(0.04);
-                        legend.AddEntry(pdf_quad_mlvj_VV,'quad','l')
-                        legend.AddEntry(pdf_sm_lin_quad_mlvj_VV,'lin','l')
-                        legend.AddEntry(pdf_atgc_mlvj_VV,'aTGC','l')
+#                        legend = ROOT.TLegend(0.26,0.64,0.82,0.86);
+#                        mplot_tmp_AM.addObject(legend);
+#
+#                        legend.SetNColumns(3);legend.SetFillColor(0);legend.SetFillStyle(0); legend.SetShadowColor(0);   legend.SetLineColor(0);
+#                        legend.SetTextFont(42);        legend.SetBorderSize(0);   legend.SetTextSize(0.04);
+#                        legend.AddEntry(pdf_quad_mlvj_VV,'quad','l')
+#                        legend.AddEntry(pdf_sm_lin_quad_mlvj_VV,'lin','l')
+#                        legend.AddEntry(pdf_atgc_mlvj_VV,'aTGC','l')
 
                         #c3_AM.cd();
                         mplot_tmp_AM.SetYTitle("PDFs"); mplot_tmp_AM.GetYaxis().SetTitleOffset(1.05);
                         mplot_tmp_AM.Draw();        c3_AM.Update();        c3_AM.Draw();
                         #                        mplot_tmp_AM.Draw();     legend.Draw();      c3_AM.Draw();
-                        c3_AM.SaveAs(self.plotsDir+'pdfs_%s_%s%s_%s.png'%(ops,self.ch,region,VV))
-                        c3_AM.SaveAs(self.plotsDir+'pdfs_%s_%s%s_%s.pdf'%(ops,self.ch,region,VV))
+                        c3_AM.SaveAs(self.plotsDir+'/pdfs_%s_%s%s_%s.png'%(ops,self.ch,region,VV))
+                        c3_AM.SaveAs(self.plotsDir+'/pdfs_%s_%s%s_%s.pdf'%(ops,self.ch,region,VV))
                         
                     
 
@@ -855,6 +1010,7 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
             card_sb_hi=self.Write_datacard(w_bkg,"sb_hi")
             combineCardName="aC_WWWZ_%s_%s.txt"%(self.ch,date)
             cmd = 'combineCards.py {sig} {sb_lo} {sb_hi}  > {dC}'.format(sig=card_sig,sb_lo=card_sb_lo,sb_hi=card_sb_hi,dC=combineCardName)
+
             #print (cmd)
             #os.system(cmd)
             #os.system('mv *txt %s/'%(self.rlt_DIR_name))
@@ -919,33 +1075,25 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
 
 if __name__ == '__main__':
 
-    if options.chan=='elmu':
-        makeWS_el        = Prepare_workspace_4limit(options.year,'el')#,950,4550,options.pf)
-        combineCardName_el=makeWS_el.Make_input()
-        makeWS_mu        = Prepare_workspace_4limit(options.year,'mu')#,950,4550,options.pf)
-        combineCardName_mu=makeWS_mu.Make_input()
-        output_card_name='aC_WWWZ_simfit'
-        cmd = 'combineCards.py aC_WWWZ_sig_el_{yr}_{dd}.txt aC_WWWZ_sig_mu_{yr}_{dd}.txt aC_WWWZ_sb_lo_el_{yr}_{dd}.txt aC_WWWZ_sb_lo_mu_{yr}_{dd}.txt aC_WWWZ_sb_hi_el_{yr}_{dd}.txt aC_WWWZ_sb_hi_mu_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date)
-        print (cmd)
-        os.system(cmd)
-        os.system('mv *txt %s/'%(final_cardsdir_name))
+    #if options.chan=='elmu':
+    makeWS_el        = Prepare_workspace_4limit(options.year,'el')
+    combineCardName_el=makeWS_el.Make_input()
+    makeWS_mu        = Prepare_workspace_4limit(options.year,'mu')
+    combineCardName_mu=makeWS_mu.Make_input()
+    output_card_name='aC_WWWZ_simfit'
+    cmd = 'combineCards.py aC_WWWZ_sig_el_{yr}_{dd}.txt aC_WWWZ_sig_mu_{yr}_{dd}.txt aC_WWWZ_sb_lo_el_{yr}_{dd}.txt aC_WWWZ_sb_lo_mu_{yr}_{dd}.txt aC_WWWZ_sb_hi_el_{yr}_{dd}.txt aC_WWWZ_sb_hi_mu_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date)
+    print (cmd)
+    os.system(cmd)
+    os.system('mv *txt %s/'%(final_cardsdir_name))
 
-        #combine_cards_dir="Cards/%s/"%(date)
-        #combineCardName=combine_cards_dir+'/aC_WWWZ_elmu_simfit_%s.txt'%(options.year)
-        #cmd='combineCards.py {mu} {el} > {elmu}'.format(mu=combineCardName_mu,el=combineCardName_el,elmu=combineCardName)
-        #os.system(cmd)
-        #return True 
-        
-    else:
-        
-        makeWS        = Prepare_workspace_4limit(options.year,options.chan)
-        makeWS.Make_input()
-    #combine the created datacards
-    #output_card_name = '%s/aC_WWWZ_simfit'%self.combine_cards_dir
-    #cmd = 'combineCards.py aC_WWWZ_sig_el.txt aC_WWWZ_sig_mu.txt aC_WWWZ_sb_lo_el.txt aC_WWWZ_sb_lo_mu.txt aC_WWWZ_sb_hi_el.txt aC_WWWZ_sb_hi_mu.txt > %s.txt'%output_card_name
-    #cmd = 'combineCards.py Cards/2023-12-12/cards_sDM_weighted_mu_WPM_950_4550/aC_WWWZ_sig_mu.txt Cards/2023-12-12/cards_sDM_weighted_mu_WPM_950_4550/aC_WWWZ_sb_lo_mu.txt Cards/2023-12-12/cards_sDM_weighted_mu_WPM_950_4550/aC_WWWZ_sb_hi_mu.txt > %s.txt'%output_card_name
-    #print cmd
-    #os.system(cmd)
-    #print 'generated Card : %s.txt'%output_card_name
-    #print ("all done")
+    #    #combine_cards_dir="Cards/%s/"%(date)
+    #    #combineCardName=combine_cards_dir+'/aC_WWWZ_elmu_simfit_%s.txt'%(options.year)
+    #    #cmd='combineCards.py {mu} {el} > {elmu}'.format(mu=combineCardName_mu,el=combineCardName_el,elmu=combineCardName)
+    #    #os.system(cmd)
+    #    #return True 
+    #    
+    #else:
+    #    
+    #    makeWS        = Prepare_workspace_4limit(options.year,options.chan)
+    #    makeWS.Make_input()
     
