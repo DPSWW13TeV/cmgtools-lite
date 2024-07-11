@@ -1063,14 +1063,20 @@ def roofitizeReport(histoWithNuisanceMap, workspace=None, xvarName="x", density=
     # sanity check all inputs, and get one representative histogram
     h0 = None
     for k,h in histoWithNuisanceMap.items():
+        print('running for AM', h.GetName(),k)
         if k == "data": continue
         if not isinstance(h, HistoWithNuisances):
             raise RuntimeError("element %s (%s, %s) is not a HistoWithNuisances" % (h, h.GetName() if h else "<nil>"))
         if not str(h.raw().ClassName()).startswith("TH1"): 
             raise RuntimeError("element %s (%s, %s) is not a TH1" % (h, h.GetName() if h else "<nil>", h.ClassName() if h else "<nil>"))
-        if h.Integral() <= 0: continue
-        if h0 == None: h0 = h
+        if h.Integral() <= 0: 
+            print("integral is neg or zero",h.GetName(),k,h.Integral())
+            continue
+        if h0 == None: 
+            h0 = h;
+            print("asigned h to h0",h0,h0.GetName())
     if h0 == None: raise RuntimeError("Empty report")
+    
     roofit = context
     if context != None:
         if workspace != None and workspace != context.workspace: 

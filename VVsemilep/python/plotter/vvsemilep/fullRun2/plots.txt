@@ -187,16 +187,16 @@ mWV_typ31_pmet_boosted :  mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Se
 dRfjlep    : dR_fjlep   : 50,0,5.0; XTitle="#DeltaR(j\,l)", IncludeOverflows=False
 dphifjpmet : dphi_fjmet : 20,0,3.15; XTitle="#Delta#phi_{j\,p_{T}^{miss}}",Logy, MoreY=1.85, IncludeOverflows=False
 
-ptWV_pmet : ptWV(Lep1_pt,Lep1_eta,Lep1_phi,Lep1_pdgId,Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,pmet,pmet_phi) : 100,0,2000; XTitle="p_{T}^{WV} (GeV)",Logy, MaxDigi, IncludeOverflows=False
+ptWV_pmet : ptWV(Lep1_pt,Lep1_eta,Lep1_phi,Lep1_pdgId,Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,pmet_pt,pmet_phi) : 100,0,2000; XTitle="p_{T}^{WV} (GeV)",Logy, MaxDigi, IncludeOverflows=False
 
-ptWV_pmet_vBins : ptWV(Lep1_pt,Lep1_eta,Lep1_phi,Lep1_pdgId,Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,pmet,pmet_phi) : [0,25,50,75,100,125,150,175,200,225,250,275,300,325,350,375,400,450,500,550,600,800,2000]; XTitle="ptWV",Logy, IncludeOverflows=False
+ptWV_pmet_vBins : ptWV(Lep1_pt,Lep1_eta,Lep1_phi,Lep1_pdgId,Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,pmet_pt,pmet_phi) : [0,25,50,75,100,125,150,175,200,225,250,275,300,325,350,375,400,450,500,550,600,800,2000]; XTitle="ptWV",Logy, IncludeOverflows=False
 
 dphifjlep  :  abs(deltaPhi(Lep1_phi,Selak8Jet1_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{j\,l}",MoreY=1.85, IncludeOverflows=False
 dphil1pmet : abs(deltaPhi(Lep1_phi,pmet_phi)) : 20,0.,3.15; XTitle="#Delta#phi_{l\,p_{T}^{miss}} (e^{#pm}#mu^{#pm}) (rad.)", MoreY=2.0
-mt1pmet    : mt_2(Lep1_pt,Lep1_phi,pmet,pmet_phi) : 20,0,250; XTitle="m_{T} (GeV)",MoreY=2.0, IncludeOverflows=False
+mt1pmet    : mt_2(Lep1_pt,Lep1_phi,pmet_pt,pmet_phi) : 20,0,250; XTitle="m_{T} (GeV)",MoreY=2.0, IncludeOverflows=False
 ptlepfj    : pt_2(Lep1_pt,Lep1_phi,Selak8Jet1_pt[0],Selak8Jet1_phi[0]) : 100,0,1000; XTitle="p_{T}(l\,j)", Logy, IncludeOverflows=False
 mlepfj     : mass_2(Lep1_pt,Lep1_eta,Lep1_phi,Lep1_pdgId,Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop) : 100,0,1000; XTitle="mlepfj", Logy, IncludeOverflows=False
-ptleppmet  : pt_2(Lep1_pt,Lep1_phi,pmet,pmet_phi) : 100,0,1000; XTitle="p_{T}(l\,p_{T}^{miss})", IncludeOverflows=False, MoreY=1.75
+ptleppmet  : pt_2(Lep1_pt,Lep1_phi,pmet_pt,pmet_phi) : 100,0,1000; XTitle="p_{T}(l\,p_{T}^{miss})", IncludeOverflows=False, MoreY=1.75
 
 
 
@@ -247,10 +247,10 @@ nJet30_Recl        : nJet30_Recl        : [0,1,2,3,4,5] ; XTitle='njets with pT 
 
 
 
-puppimet         :     pmet        : 45,100,2000 ; XTitle="p_{T}^{miss} (GeV)",MoreY=25, MaxDigi, Logy
+puppimet         :     pmet_pt        : 45,100,2000 ; XTitle="p_{T}^{miss} (GeV)",MoreY=25, MaxDigi, Logy
 puppimetphi      :     pmet_phi    : 32,-3.2,3.2 ; XTitle="p_{T}^{miss} (#phi)",MoreY=1.85
 nVert  	         :     PV_npvsGood     : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
-pmet : pmet :  100,0,2000 ; XTitle="p_{T}^{miss} (GeV)",MoreY=25, Logy
+pmet : pmet_pt :  100,0,2000 ; XTitle="p_{T}^{miss} (GeV)",MoreY=25, Logy
 pmet_phi : pmet_phi : 32,-3.2,3.2 ; XTitle="p_{T}^{miss} (#phi)" ##,MoreY=10
 
 

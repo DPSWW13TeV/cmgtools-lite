@@ -81,7 +81,11 @@ goodfjdata)
 
 
 wjet)		
-	basecmd="${BCORE}/0_wjest_v3  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  "
+	basecmd="${BCORE}/0_wjest_v4  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root " #--de .*Run.* "
+	;;
+wjet_data)
+	basecmd="${BCORE}/0_wjest_v4  ${CMGT} input_wjest_data --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --dm .*Run.*"
+
 	;;
 
 skim_wjet)		

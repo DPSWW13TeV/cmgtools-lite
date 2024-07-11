@@ -15,11 +15,19 @@ def if3(cond, iftrue, iffalse):
     return iftrue if cond else iffalse
 
 class input_WJestimation(Module):
-    def __init__(self, lepMultiplicity, fjetMultiplicity, selection,mvar='sD'):
+    def __init__(self, isMC,lepMultiplicity, fjetMultiplicity, selection,massVar='sD',jecs=[]):
         self.lepMultiplicity=lepMultiplicity
         self.fjetMultiplicity=fjetMultiplicity
         self.selection=selection
-        self.mvar=mvar
+        self.mvar=massVar
+        self.isMC=isMC
+        self.jecs=jecs
+        self.pmet_vars=['pt','phi']
+        self.shift=["Up","Down"]
+        self.vars=['pt','eta','phi','mass','particleNetMD_Xqq','msoftdrop','particleNetMD_Xbb','particleNetMD_Xcc','particleNetMD_QCD','pNetWtagscore','pNetWtagSF']
+        if self.isMC: self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
+        self.pmet_uncert=['JES','JER','Unclustered']
+        if self.isMC:self.pmet_vars+=[pmetV+uncert+sh for pmetV in self.pmet_vars for uncert in self.pmet_uncert for sh in self.shift]
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
@@ -28,11 +36,17 @@ class input_WJestimation(Module):
                 self.out.branch('Lep%d_%s'%(l+1,var),'F')
 
 
-        for var in 'pt,eta,phi,mass,particleNetMD_Xqq,msoftdrop,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetWtagSF'.split(','): #msoftdrop,particleNet_mass,
+        for var in self.vars: #'pt,eta,phi,mass,particleNetMD_Xqq,msoftdrop,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetWtagSF'.split(','): 
             for j in range(self.fjetMultiplicity):
                 self.out.branch('Selak8Jet%d_%s'%(j+1,var), 'F')
-        self.out.branch('event', 'L')
+        for var in self.pmet_vars:
+            self.out.branch('pmet_%s'%(var), 'F')
         self.out.branch('nFj','I')
+        #for jec in self.jecs:
+        #    for sh in self.shift:
+        #         self.out.branch('nFj_%s%s'%(jec,sh),'I')
+        #         self.out.branch('nBJetMedium30_%s%s'%(jec,sh),'I')
+        self.out.branch('event', 'L')
         self.out.branch('nLep','I')
         self.out.branch('nLepFO','I')
         self.out.branch('nLepTight','I')
@@ -40,7 +54,7 @@ class input_WJestimation(Module):
         self.out.branch('event_presel', 'L')
         self.out.branch('nBJetMedium30', 'I')
         self.out.branch('pmet'       ,'F')
-        self.out.branch('pmet_phi'   ,'F')
+        #self.out.branch('pmet_phi'   ,'F')
         self.out.branch('evt_wt'       ,'F') #pu*prefiring*prescale*hem
         self.out.branch('pu_wt'       ,'F') #pu
         self.out.branch('prefiring_wt'       ,'F') #prefiring
@@ -86,28 +100,38 @@ class input_WJestimation(Module):
                 break;
         tot_sel= sel_i and len(leps) == self.lepMultiplicity  and  len(jets) > 0
         self.out.fillBranch('event_sel',tot_sel)        
-        self.out.fillBranch('nFj',event.nFatJetSel_Recl)
-        self.out.fillBranch('nLep',len(leps))
-        self.out.fillBranch('nLepFO',event.nLepFO_Recl)
-        self.out.fillBranch('nLepTight',event.nLepTight_Recl)
+        self.out.fillBranch('nFj',event.nFatJetSel_Recl if tot_sel else 0)
+        
+        #for jec in self.jecs:
+        #    for sh in self.shift:
+        #        self.out.fillBranch('nFj_%s%s'%(jec,sh),getattr(event,'nFatJet_%s%s_Recl'%(jec,sh))  if tot_sel else 0)
+        #        self.out.fillBranch('nBJetMedium30_%s%s'%(jec,sh),getattr(event,'nBJetMedium30_%s%s_Recl'%(jec,sh))  if tot_sel else 999)
+
+        self.out.fillBranch('nLep',len(leps) if tot_sel else 0)
+        self.out.fillBranch('nLepFO',event.nLepFO_Recl  if tot_sel else 0)
+        self.out.fillBranch('nLepTight',event.nLepTight_Recl  if tot_sel else 0)
         #if tot_sel: print "finally ",tot_sel,event.event
         for lep in range(self.lepMultiplicity):
             for var in 'pt,eta,phi,pdgId'.split(','):
                 self.out.fillBranch('Lep%d_%s'%(lep+1,var), getattr(leps[lep],var) if tot_sel else -999.0)
             self.out.fillBranch('Lep%d_tightId'%(lep+1), getattr(leps[lep],"isLepTight_Recl") if tot_sel else 0)
         for jet in range(self.fjetMultiplicity): 
-            for var in 'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore'.split(','): #,pNetWtagscore#,msoftdrop particleNet_mass,
-                self.out.fillBranch('Selak8Jet%d_%s'%(jet+1,var), getattr(jets[jet],var) if tot_sel else -999.0)
+            for var in self.vars: #'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore'.split(','): 
+                if "pNetWtagSF" in var: 
+                    continue
+                else:
+                    self.out.fillBranch('Selak8Jet%d_%s'%(jet+1,var), getattr(jets[jet],var) if tot_sel else -999.0)
             #if tot_sel:print event.event,getattr(jets[jet],"pt"),getattr(jets[jet],"eta"),getattr(jets[jet],"msoftdrop")
             pnetsf=1.0;
             if tot_sel:
                 pnetsf=pNetSFMD_WvsQCD(getattr(jets[jet],'pt'),event.year,event.suberaId) if not isData else 1.0
             #print "event \t",event.event,"\t pNetWscore \t",pNetWscore
             self.out.fillBranch('Selak8Jet%d_pNetWtagSF'%(jet+1),pnetsf)
-                
+        for i in self.pmet_vars:
+            self.out.fillBranch('pmet_%s'%i,getattr(event,'PuppiMET_%s'%i) if tot_sel else -999.0)
         self.out.fillBranch('mWV',calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi) if tot_sel else -999.0)
         self.out.fillBranch('pmet',event.PuppiMET_pt if tot_sel else -999.0)
-        self.out.fillBranch('pmet_phi',event.PuppiMET_phi if tot_sel else -999.0)
+        #       self.out.fillBranch('pmet_phi',event.PuppiMET_phi if tot_sel else -999.0)
         self.out.fillBranch('trigger1e',event.Trigger_1e if tot_sel else 0)
         self.out.fillBranch('trigger1m',event.Trigger_1m if tot_sel else 0)
         self.out.fillBranch('nBJetMedium30',event.nBJetMedium30_Recl if tot_sel else 999)
@@ -175,3 +199,7 @@ class input_WJestimation(Module):
 ##pu*prefiring*prescale*hemwt
 ##pnetscore*lepSF
 ##trigger SF
+
+
+
+

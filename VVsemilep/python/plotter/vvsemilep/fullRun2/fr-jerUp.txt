@@ -1,3 +1,5 @@
 change: PuppiMET_pt\b:  PuppiMET_ptJERUp
 change: PuppiMET_phi\b: PuppiMET_phiJERUp
+change: pmet_pt\b:  pmet_ptJERUp
+change: pmet_phi\b: pmet_phiJERUp
 weight: 1

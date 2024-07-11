@@ -30,7 +30,7 @@ baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
 MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc']
 Datafriends = ['1_recl']
-friends     = ['3_ak8_sdm45','0_wjest_v3']
+friends     = ['3_ak8_sdm45','0_wjest_v4']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
 fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
@@ -38,7 +38,7 @@ genvars_phi = ['jetphi_mWV','lephi_mWV','SeldLep1_pt','SelGak8Jet1_pt','SelGak8J
 
 HEM=['puppimetphi','etaphi1','FatJet1_phi','FatJet1_eta']#'FatJet1_etaphi','eta1','phi1',,
 
-aTGC_chk   =['tmWV_typ0_pmet_boosted','FatJet1_pt_vBins','FatJet1_pt_vBins','Lep1_pt_vBins','Genptlepmet','tptleppmet','tmWV_typ0_pmet_boosted','tGenmWV_typ0_pmet_boosted','FatJet1_pt_vBins','tFatJet1_sDrop_mass','tptWV_pmet','nBJetLoose30_Recl','nBJetMedium30_Recl', 'aTGC_wt','aTGC_wt_neg','aTGC_wt_pos','aTGC_wt_SM','aTGC_wt1','aTGC_wt2','test_plot'] #
+aTGC_chk   =['tmWV_typ0_pmet_boosted','FatJet1_pt_vBins','Lep1_pt_vBins','Genptlepmet','tptleppmet','tmWV_typ0_pmet_boosted','tGenmWV_typ0_pmet_boosted','FatJet1_pt','tFatJet1_sDrop_mass','tptWV_pmet','nBJetLoose30_Recl','nBJetMedium30_Recl', 'aTGC_wt','aTGC_wt_neg','aTGC_wt_pos','aTGC_wt_SM','aTGC_wt1','aTGC_wt2','test_plot'] #
 
 
 mWV=['ratio_typ0','ratio_typ1','ratio_typ2','ratio_typ3','mWV_typ0_pmet_boosted','mWV_typ01_pmet_boosted','mWV_typ10_pmet_boosted','mWV_typ11_pmet_boosted','mWV_typ20_pmet_boosted','mWV_typ21_pmet_boosted','mWV_typ30_pmet_boosted','mWV_typ31_pmet_boosted']
@@ -47,7 +47,7 @@ topCR=['mWV_typ0_met_boosted','FatJet1_pt','FatJet1_sDrop_mass']
 
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
 
-theWVfullset=['FatJet1_sDrop_mass','mWV','FatJet1_pt']#, 'puppimetphi','Lep1_pt','nBJetMedium30_Recl','nFatJet','puppimet','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','nJet30_Recl','Lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass''mt1pmet','nLepGood','nLepFO','sumBoosted']
+theWVfullset=['FatJet1_sDrop_mass','FatJet1_pt','Lep1_pt','pmet']#,'mWV','FatJet1_pt']#, 'puppimetphi','Lep1_pt','nBJetMedium30_Recl','nFatJet','puppimet','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','nJet30_Recl','Lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass''mt1pmet','nLepGood','nLepFO','sumBoosted']
 
 theWVultimateset=['puppimetphi','ptWV_pmet','mWV','puppimet','Lep1_pt','FatJet1_sDrop_mass','FatJet1_pt','dphifjpmet','dphifjlep','dphil1pmet','nBJetLoose30_Recl']
 
@@ -158,7 +158,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     fplots       = 'vvsemilep/fullRun2/plots.txt'
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
-    processes    = ['WJets','tt','singletop','Others','data','WV_sm','WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb']#,'SM_WW','SM_WZ'] 'SM_WW','WW_sm','WZ_sm',
+    processes    = ['tt','data','WJets','tt','singletop','Others','data','SM_WW','SM_WZ','WZ_sm_lin_quad_cw','WZ_quad_cw','WZ_quad_c3w','WZ_sm_lin_quad_cw','WW_quad_cw','WW_quad_cb','WW_quad_c3w','WW_sm_lin_quad_cw','WW_sm_lin_quad_cb']#,'SM_WW','SM_WZ'] 'SM_WW','WW_sm','WZ_sm','WV_sm',
 
     WCs=['cW','c3w','cb']
 #    for ops in WCs:
@@ -214,6 +214,8 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                         processes.remove('data')
                         showratio   = False
                         fsyst=''
+                    if  "top" in pR and fitCR:
+                        extraopts+= ' --xp Others --xp .*quad.*  --xp QCD'
                     makeplots  = ['{}'.format(a)  for a in plotvars]
                     print (makeplots)
                     runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata, makeplots, showratio, applylepSFs, year, nLep,extraopts,invert,cutflow,bareNano,doWJ)
@@ -221,7 +223,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     if "top" in pR: 
                         mWV_dist=" {here} {binning} ".format(here=mWV_fxn[LF],binning=mWV_binning)
                         binNamecards=binName+"_"+year
-                        extraoptscards= ' --xp Others --binname %s '%(binNamecards)
+                        extraoptscards= ' --xp Others --xp .*quad.* --binname %s --xp QCD'%(binNamecards)
                         if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
                         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
                     else:

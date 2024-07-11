@@ -1,5 +1,6 @@
 change: MET_pt\b: MET_pt_jesBBEC1_yearDown
 change: PuppiMET_pt_jesBBEC1_yearDown\b: PuppiMET_pt
+change: pmet_pt_jesBBEC1_yearDown\b: pmet_pt
 change: METFixEE2017_pt\b: METFixEE2017_pt_jesBBEC1_yearDown
 change: nJet25_Recl\b: nJet25_jesBBEC1_yearDown_Recl
 change: nJet30_Recl\b: nJet30_jesBBEC1_yearDown_Recl
@@ -12,6 +13,7 @@ change: nBJetMedium40_Recl\b: nBJetMedium40_jesBBEC1_yearDown_Recl
 change: nBJetTight40_Recl\b: nBJetTight40_jesBBEC1_yearDown_Recl
 change: JetSel_Recl_pt\b: JetSel_Recl_pt_jesBBEC1_yearDown
 change: FatJetSel_Recl_pt\b: FatJetSel_Recl_pt_jesBBEC1_yearDown
+change: Selak8Jet1_pt\b: Selak8Jet1_pt_jesBBEC1_yearDown
 change: ak8Vtagged_pt\b:ak8Vtagged_pt_jesBBEC1_yearDown
 change: ak8Vtagged_WPL_pt\b:ak8Vtagged_WPL_pt_jesBBEC1_yearDown
 change: ak8Vtagged_WPM_pt\b:ak8Vtagged_WPM_pt_jesBBEC1_yearDown

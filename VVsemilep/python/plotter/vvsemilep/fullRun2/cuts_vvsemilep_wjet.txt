@@ -2,7 +2,7 @@ alwaystrue: 1
 filters: Flag_BadPFMuonDzFilter && Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && (Flag_ecalBadCalibFilter || (year == 2016))  $DATA{&& Flag_eeBadScFilter}
 
 trigger : trigger1e || trigger1m 
-singlelep   : (nLepFO == 1 && nLepTight==1 &&  Lep1_pt>50 && pmet > 110 && Lep1_tightId && nFj > 0)
+singlelep   : (nLepFO == 1 && nLepTight==1 &&  Lep1_pt>50 && pmet_pt > 110 && Lep1_tightId && nFj > 0)
 etael1      : (abs(Lep1_pdgId) == 13 || (abs(Lep1_eta) < 1.442 || abs(Lep1_eta) > 1.556 ))
 el          : abs(Lep1_pdgId) == 11 && trigger1e       ;          Disable=True
 mu          : abs(Lep1_pdgId) == 13 && trigger1m       ;          Disable=True
@@ -18,13 +18,13 @@ dphifjlep  : dphi_fjlep > 2.0 ; Disable=True
 dphifjmet  : dphi_fjmet > 2.0 ; Disable=True
 ptWlep     : pTWlep  > 200 ; Disable=True
 ##mWVtyp0pmet : mWV > 950 ;           Disable=True
-mWVtyp0pmet : mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,Lep1_pt,Lep1_eta,Lep1_phi,pmet,pmet_phi,0) > 950 ;           Disable=True
+mWVtyp0pmet : mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,Lep1_pt,Lep1_eta,Lep1_phi,pmet_pt,pmet_phi,0) > 950 ;           Disable=True
 Mjuppercut  : Selak8Jet1_msoftdrop < 150 ;           Disable=True
-Mwvuppercut : mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,Lep1_pt,Lep1_eta,Lep1_phi,pmet,pmet_phi,0) < 4550 ;           Disable=True
+Mwvuppercut : mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,Lep1_pt,Lep1_eta,Lep1_phi,pmet_pt,pmet_phi,0) < 4550 ;           Disable=True
 bVeto       : nBJetMedium30 == 0  ;           Disable=True
-
-
-
+wjCR        : nBJetMedium30 == 0 && (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ;    Disable=True
+topCR       : (nBJetMedium30 > 0 && nFj > 0 && Selak8Jet1_msoftdrop < 150 && Selak8Jet1_msoftdrop >= 45) ;           Disable=True
+inclB       : nFj > 0 ; Disable=True
 
 
 #https://twiki.cern.ch/twiki/bin/view/CMS/MissingETOptionalFiltersRun2#2018_2017_data_and_MC_UL
