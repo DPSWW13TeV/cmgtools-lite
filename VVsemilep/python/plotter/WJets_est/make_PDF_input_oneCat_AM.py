@@ -67,7 +67,7 @@ class Prepare_workspace_4limit:
             self.wtagger_label          = 'WPM' 
             self.PNS                    = self.PNSWP[self.wtagger_label]
             eos=os.path.join(options.plotsDir,'%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date))
-            if not os.path.isdir(eos): os.system("mkdir -p %s"%eos)
+            #if not os.path.isdir(eos): os.system("mkdir -p %s"%eos)
             if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+eos)
             extra_str="%s%s"%("weighted" if useWts else "unweighted",self.pf)
             self.plotsDir = os.path.join(eos,'plots_aTGC_%s_%s_%s_%s_%s' %(self.channel,self.wtagger_label,self.mlvj_lo,int(self.mlvj_hi),extra_str))
