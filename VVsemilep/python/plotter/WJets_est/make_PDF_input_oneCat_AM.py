@@ -5,7 +5,7 @@ vetoPlots=['cwww_WW_lin','cwww_WZ_lin','cb_WZ_lin','cb_WZ_quad']
 from ROOT import TH1F 
 
 
-
+#date="2024-07-16"
 ROOT.RooMsgService.instance().setGlobalKillBelow(RooFit.FATAL)
 
 parser        = OptionParser()
@@ -21,6 +21,8 @@ parser.add_option('--hi', action='store', dest='mlvj_hi', type='float', default=
 parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=950, help='set lower cut on MWV, mat cause problems')
 parser.add_option('--inPath', action="store",type="string",dest="inPath",default="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/")
 parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/%s/%s/www/VVsemilep/WJest"%(os.environ['USER'][0],os.environ['USER']),help='save plots here')
+parser.add_option('--db', action="store",type="string",dest="DB",default="WWWZ")
+
 (options,args) = parser.parse_args()
 
 
@@ -35,7 +37,8 @@ def if3(cond, iftrue, iffalse):
 
 
 final_cardsdir_name="%s/src/CMGTools/VVsemilep/python/plotter/Cards/" %(os.environ['CMSSW_BASE']); #for future perhaps add year as sub dir 
-if not os.path.isdir(final_cardsdir_name):  os.system("mkdir -p %s"%final_cardsdir_name)
+if not os.path.isdir(final_cardsdir_name):  
+    os.system("mkdir -p %s "%final_cardsdir_name)
 
 class Prepare_workspace_4limit:
 
@@ -67,15 +70,17 @@ class Prepare_workspace_4limit:
             self.wtagger_label          = 'WPM' 
             self.PNS                    = self.PNSWP[self.wtagger_label]
             eos=os.path.join(options.plotsDir,'%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date))
-            #if not os.path.isdir(eos): os.system("mkdir -p %s"%eos)
-            if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+eos)
+            if not os.path.isdir(eos): os.system("mkdir -p %s"%eos)
+            if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php %s/"%eos)
             extra_str="%s%s"%("weighted" if useWts else "unweighted",self.pf)
             self.plotsDir = os.path.join(eos,'plots_aTGC_%s_%s_%s_%s_%s' %(self.channel,self.wtagger_label,self.mlvj_lo,int(self.mlvj_hi),extra_str))
-            if not os.path.isdir(self.plotsDir): os.system("mkdir -p %s"%self.plotsDir)
-            os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
-            os.system("cp make_PDF_input_oneCat_AM.py "+self.plotsDir)
+            if not os.path.isdir(self.plotsDir): 
+                print "here",self.plotsDir
+                os.system("mkdir  %s "%self.plotsDir)
+            os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php %s/" %self.plotsDir)
+            os.system("cp make_PDF_input_oneCat_AM.py %s/" %self.plotsDir)
             self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',extra_str,self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))##date
-            if not os.path.isdir(self.rlt_DIR_name): os.system("mkdir -p  %s"%self.rlt_DIR_name)
+            if not os.path.isdir(self.rlt_DIR_name): os.system("mkdir -p  %s "%self.rlt_DIR_name)
             ##read workspace containing background pdfs
             fileInWs                    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.mlvj_hi)))
             w                           = fileInWs.Get('workspace4limit_')
@@ -90,6 +95,7 @@ class Prepare_workspace_4limit:
             self.samples={
                     'WW':[ww_atgc],
                     'WZ':[wz_atgc]}
+            self.aTGCprocs=list(self.samples.keys())
             self.lumi_uncrt={'2016':[('lumi_13TeV_2016','1.022'),('lumi_13TeV_XY','1.009'),('lumi_13TeV_BBD','1.004'),('lumi_13TeV_DB','1.005'),('Lumi_13TeV_GS','1.004')],
                              '2017':[('lumi_13TeV_2017','1.020'),('lumi_13TeV_XY','1.008'),('lumi_13TeV_LS','1.003'),('lumi_13TeV_BBD','1.004'),('lumi_13TeV_DB','1.005'),('lumi_13TeV_BCC','1.003'),('lumi_13TeV_GS','1.001')],
                              '2018':[('lumi_13TeV_2018','1.015'),('lumi_13TeV_XY','1.020'),('lumi_13TeV_LS','1.002'),('lumi_13TeV_BCC','1.002')]}
@@ -206,10 +212,10 @@ objName ==objName_before ):
 
             return theLeg;
 ##########################
-        def Read_ATGCtree(self,ch='mu'):
+        def Read_ATGCtree(self,ch='mu',procs=['WW','WZ']):
             print ('######### Making histograms for aTGC working points #########')
             hists4scale        = {}
-            for WV in ['WW','WZ']:
+            for WV in self.aTGCprocs: #['WW','WZ']:
                 #create 3 histograms for each aTGC parameter (positive, negative and positive-negative working point)
                 for para in self.POI:
                     hists4scale['c_pos_%s_hist_%s'%(WV,para)] = TH1F('c_pos_%s_hist_%s'%(WV,para),'c_pos_%s_hist_%s'%(WV,para),self.nbins,self.mlvj_lo,self.mlvj_hi);
@@ -420,7 +426,7 @@ objName ==objName_before ):
             #    return True 
                 
         #function to import multiple items from a list into a workspace
-        def Import_to_ws(self,workspace,items,recycle=1):
+        def Import_to_ws(self,workspace,items,recycle=0):
             for item in items:
                 if recycle:
                     getattr(workspace,'import')(item,RooFit.RecycleConflictNodes())
@@ -480,17 +486,12 @@ objName ==objName_before ):
             self.Import_to_ws(self.wtmp,[cwww,cw,cb,self.eps4cbWZ,self.eps4cbWW,SMdatahist,SMdatahist,N_SM,N_sm_lin_quad_cb,N_sm_lin_quad_cw,N_sm_lin_quad_cwww,N_quad_cb,N_quad_cw,N_quad_cwww]) 
             #define parameter ranges for error function
             print "checkpoint 2"
-            if self.ch=='el':
-                Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,1700.)
-                Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1000.,500.,2500.)
-                Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,500.,0.,2500.)
-            elif self.ch=='mu':
-                Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,7500.)
-                Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,0.,500.,2000.)
-                Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,1500.,500.,2000.)
-            Erf_offset_cwww         = RooRealVar('Erf_offset_cwww_%s'%channel,'Erf_offset_cwww_%s'%channel,1000.,500.,1500.)
-            Erf_offset_cw           = RooRealVar('Erf_offset_cw_%s'%channel,'Erf_offset_cw_%s'%channel,1000.,500.,2500.)
-            Erf_offset_cb           = RooRealVar('Erf_offset_cb_%s'%channel,'Erf_offset_cb_%s'%channel,1000.,0.,1500.)
+            Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,500.,0.,2500.)
+            Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1000.,500.,2500.)
+            Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,500.,0.,2500.)
+            Erf_offset_cwww         = RooRealVar('Erf_offset_cwww_%s'%channel,'Erf_offset_cwww_%s'%channel,500.,0.,2500.)
+            Erf_offset_cw           = RooRealVar('Erf_offset_cw_%s'%channel,'Erf_offset_cw_%s'%channel,500.,0.,1500.)
+            Erf_offset_cb           = RooRealVar('Erf_offset_cb_%s'%channel,'Erf_offset_cb_%s'%channel,500.,0.,2500.)
             self.Import_to_ws(self.wtmp,[Erf_width_cwww,Erf_offset_cwww,Erf_width_cw,Erf_offset_cw,Erf_offset_cb,Erf_width_cb])                
             print "checkpoint 3"
             #fileInHist    = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.mlvj_lo,self.mlvj_hi))
@@ -510,11 +511,11 @@ objName ==objName_before ):
                 factor     = if3(self.POI[i] == "cwww",3.6, if3(self.POI[i] == "cb",20,4.5))
                 norm_lin   = RooRealVar('norm_sm_lin_quad_%s'%s_name,'norm_sm_lin_quad_%s'%s_name,0.5*(N_pos_tmp-N_neg_tmp)/SM.sumEntries()/factor)
                 norm_quad  = RooRealVar('norm_quad_%s'%s_name,'norm_quad_%s'%s_name,(0.5*(N_pos_tmp+N_neg_tmp)-SM.sumEntries())/SM.sumEntries()/factor**2 )
-                a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.00012,-0.01,0) #-0.000173527 for cb #-0.0012 to 0.1
-                a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps))#4cbWZ if sample=='WZ' else self.eps4cbWW))
+                a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.00012,-0.01,0.1) #-0.000173527 for cb #-0.0012 to 0.1
+                a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
                 cPdf_quad   = RooErfExpPdf('%s_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a2,self.wtmp.var('Erf_offset_%s'%s_name),self.wtmp.var('Erf_width_%s'%s_name))
 
-                a5_lin    = RooRealVar("a5_lin_%s"%s_name,"a5_lin_%s"%s_name,-2e-7,-1e-1,1e-1);
+                a5_lin    = RooRealVar("a5_lin_%s"%s_name,"a5_lin_%s"%s_name,-2e-4,-1e-1,0.1);
                 a4_lin    = RooRealVar("a4_lin_%s"%s_name,"a4_lin%s"%s_name,0, -20000, 20000);
                 cPdf_lin  = ROOT.RooExpNPdf('%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a5_lin, a4_lin);
                 linStr=self.POI[i]+'_'+sample+'_lin'
@@ -556,8 +557,10 @@ objName ==objName_before ):
             pbkgs  = ['WJets','TTbar','STop']
             dbbkgs = ['WW_sm','WZ_sm']
             terms  = ['_sm_lin_quad_','_quad_']
-            moreprocs=[p+q for p in ['WZ','WW'] for q in terms]               
+            moreprocs=[p+q for p in self.aTGCprocs for q in terms]               
             EFTprocs=[p+q for p in moreprocs for q in self.POI]
+            veto=['WZ_sm_lin_quad_cb','WZ_quad_cb','WW_sm_lin_quad_cwww','WZ_sm_lin_quad_cwww']
+            EFTprocs=[p for p in EFTprocs if p not in veto]
             allprocs=EFTprocs+pbkgs+dbbkgs
             binname = '{region}_{ch}'.format(ch=self.ch,region=region)
             codename='WWWZ_{region}_{ch}_{year}'.format(ch=self.ch,region=region,year=self.year)
@@ -600,15 +603,21 @@ objName ==objName_before ):
             datacard.write('##----------------------------------\n')
             datacard.write('''
 normvar_WJets_{ch}  flatParam
-rrv_c_Exp_WJets0_{ch}  flatParam
-rrv_c_ExpN_WJets0_sb_{ch}  flatParam
-rrv_n_ExpN_WJets0_sb_{ch}  flatParam
-Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig0 param 0.0 1.4
-Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig1 param 0.0 1.4
+rrv_c_Exp_WJets0_sb_{ch}  flatParam
+Deco_WJets0_sim_{ch}_WPM_mlvj_13TeV_eig0 param 0.0 1.8
+Deco_WJets0_sim_{ch}_WPM_mlvj_13TeV_eig1 param 0.0 1.8
+Deco_TTbar_sb_{ch}_WPM_mlvj_13TeV_eig0 param 0.0 2.0
+Deco_TTbar_sb_{ch}_WPM_mlvj_13TeV_eig1 param 0.0 2.0
+Deco_TTbar_sig_{ch}_WPM_mlvj_13TeV_eig0 param 0.0 2.0
+Deco_TTbar_sig_{ch}_WPM_mlvj_13TeV_eig1 param 0.0 2.0
+rrv_c_ChiSq_WJets0_{ch}  flatParam
+rrv_shift_ChiSq_WJets0_{ch}  flatParam
 slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                        )    
             datacard.close()
             return cardName_test
+#rrv_c_ExpN_WJets0_sb_{ch}  flatParam
+#rrv_n_ExpN_WJets0_sb_{ch}  flatParam
 
 
 #Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig2 param 0.0 1.4
@@ -622,10 +631,11 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
         def Make_input(self):
 
             #prepare variables, parameters and temporary workspace
-            self.Read_ATGCtree(self.ch)
+            self.Read_ATGCtree(self.ch,self.aTGCprocs)
             #make and fit signal pdf for WW and WZ
-            self.Make_signal_pdf(self.rrv_mass_lvj,'WW')
-            self.Make_signal_pdf(self.rrv_mass_lvj,'WZ')
+            for i in self.aTGCprocs:
+                self.Make_signal_pdf(self.rrv_mass_lvj,i)
+            #            self.Make_signal_pdf(self.rrv_mass_lvj,'WZ')
 
             #read, rename and write bkg pdfs and bkg rates
             fileInWs    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,int(self.mlvj_lo),int(self.mlvj_hi)))
@@ -676,7 +686,7 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                 data_obs            = RooDataSet('data_obs','data_obs',w_bkg.data('dataset_2d_%s_%s'%(region,self.ch)),RooArgSet(self.WS2.var('rrv_mass_lvj'),self.WS2.var('mj_%s'%region)))
                 getattr(self.WS2,'import')(data_obs)
 
-                for VV in ['WW','WZ']:
+                for VV in self.aTGCprocs: #['WW','WZ']:
                     ##AM HERE define the normalizations for linear and quadratic terms
                     ##AMMpdf_atgc_mlvj_VV        = self.WS2.pdf('aTGC_model_%s_%s'%(self.ch,VV))
                     pdf_atgc_mj_VV          = w_bkg.pdf('%s_mj_%s_%s'%(VV,region,self.ch))
@@ -713,9 +723,8 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                     
 
                 ##define which parameters are floating (also has to be done in the datacard)
-                print "this is missing piece of crap==============","rrv_c_Exp_WJets0_%s"%self.ch
-                self.WS2.var("rrv_c_ChiSq_WJets0_%s"%self.ch).setConstant(kFALSE) ##am
-                #self.WS2.var("rrv_c_Exp_WJets0_%s"%self.ch).setConstant(kFALSE)
+                #self.WS2.var("rrv_c_ChiSq_WJets0_%s"%self.ch).setConstant(kFALSE) ##am
+                self.WS2.var("rrv_c_Exp_WJets0_%s"%self.ch).setConstant(kFALSE)
                 self.WS2.var("normvar_WJets_%s"%self.ch).setConstant(kFALSE)
                 if 'sb' in region:
                     self.WS2.var("rrv_c_Exp_WJets0_sb_%s"%self.ch).setConstant(kFALSE)
@@ -741,17 +750,16 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
             cmd = 'combineCards.py {sig} {sb_lo} {sb_hi}  > {dC}'.format(sig=card_sig,sb_lo=card_sb_lo,sb_hi=card_sb_hi,dC=combineCardName)
 
             if options.Make_plots:
-                self.Make_plots(self.rrv_mass_lvj,'WW',self.fitresults)
-                self.Make_plots(self.rrv_mass_lvj,'WZ',self.fitresults)
-            
-
+                for i in self.aTGCprocs:
+                    self.Make_plots(self.rrv_mass_lvj,i,self.fitresults)
+                    
+                    #self.Make_plots(self.rrv_mass_lvj,'WZ',self.fitresults)
             for i in range(3):
                 for j in range(3):
                     self.wtmp.var(self.POI[j]).setVal(0)
-                self.wtmp.var(self.POI[i]).setVal(self.PAR_MAX[self.POI[i]])
-#                print (channel + ' ' + self.POI[i] + ' : ' + str(w.var('rate_VV').getVal()*normfactor_3d.getVal()))
+                #self.wtmp.var(self.POI[i]).setVal(self.PAR_MAX[self.POI[i])
 
-            raw_input(self.channel)
+            #raw_input(self.channel)
             return combineCardName
 
 ###run code###
@@ -762,15 +770,15 @@ if __name__ == '__main__':
         combineCardName_el=makeWS_el.Make_input()
         makeWS_mu        = Prepare_workspace_4limit(options.year,'mu')
         combineCardName_mu=makeWS_mu.Make_input()
-        output_card_name='aC_WWWZ_simfit'
-        cmd = 'combineCards.py aC_WWWZ_sig_el_{yr}_{dd}.txt aC_WWWZ_sig_mu_{yr}_{dd}.txt aC_WWWZ_sb_lo_el_{yr}_{dd}.txt aC_WWWZ_sb_lo_mu_{yr}_{dd}.txt aC_WWWZ_sb_hi_el_{yr}_{dd}.txt aC_WWWZ_sb_hi_mu_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date)
+        output_card_name='aC_%s_simfit'%(options.DB)
+        cmd = 'combineCards.py aC_{DB}_sig_el_{yr}_{dd}.txt aC_{DB}_sig_mu_{yr}_{dd}.txt aC_{DB}_sb_lo_el_{yr}_{dd}.txt aC_{DB}_sb_lo_mu_{yr}_{dd}.txt aC_{DB}_sb_hi_el_{yr}_{dd}.txt aC_{DB}_sb_hi_mu_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date,DB=options.DB)
         print (cmd)
         os.system(cmd)
     else:
         makeWS= Prepare_workspace_4limit(options.year,options.chan)
         combineCardName=makeWS.Make_input()
-        output_card_name='aC_WWWZ_%s'%options.chan
-        cmd = 'combineCards.py aC_WWWZ_sig_{FS}_{yr}_{dd}.txt  aC_WWWZ_sb_lo_{FS}_{yr}_{dd}.txt  aC_WWWZ_sb_hi_{FS}_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date,FS=options.chan)
+        output_card_name='aC_%s_%s'%(options.DB,options.chan)
+        cmd = 'combineCards.py aC_{DB}_sig_{FS}_{yr}_{dd}.txt  aC_{DB}_sb_lo_{FS}_{yr}_{dd}.txt  aC_{DB}_sb_hi_{FS}_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date,FS=options.chan,DB=options.DB)
         print (cmd)
         os.system(cmd)
 

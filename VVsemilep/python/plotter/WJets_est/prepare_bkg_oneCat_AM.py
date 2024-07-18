@@ -247,19 +247,19 @@ class doFit_wj_and_wlvj:
         self.PNS = self.PNSWP[self.wtagger_label]
 
         eos=os.path.join(options.plotsDir,'%s/%s_%s'%(self.year,'pNM' if usepNM else 'sDM',date))
-        if not os.path.isdir(eos): os.system("mkdir %s"%eos)
-        if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+eos)
+        if not os.path.isdir(eos): os.system("mkdir -p %s/"%eos)
+        if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php %s/"%eos)
         extra_str="%s%s"%("weighted" if useWts else "unweighted",self.pf)
         self.plotsDir = eos+'/plots_%s_%s_%s_%s_%s' %(self.ch,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi),extra_str)
-        if not os.path.isdir(self.plotsDir): os.system("mkdir %s"%self.plotsDir)
-        os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
+        if not os.path.isdir(self.plotsDir): os.system("mkdir -p  %s/"%self.plotsDir)
+        os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php %s/"%self.plotsDir)
         os.system("cp prepare_bkg_oneCat_AM.py "+self.plotsDir)
-        if not os.path.isdir(os.path.join(self.plotsDir,"other")): os.system("mkdir %s"%(os.path.join(self.plotsDir,"other")))
+        if not os.path.isdir(os.path.join(self.plotsDir,"other")): os.system("mkdir -p %s/"%(os.path.join(self.plotsDir,"other")))
         os.system("cp ~/public/index.php %s"%self.plotsDir+"/other")
         self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',extra_str,self.ch,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))##date
-        if not os.path.isdir(self.rlt_DIR_name):                os.system("mkdir -p %s " %self.rlt_DIR_name);
+        if not os.path.isdir(self.rlt_DIR_name):                os.system("mkdir -p %s/" %self.rlt_DIR_name);
         self.rlt_DIR=self.rlt_DIR_name
-        if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+self.plotsDir)
+        if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php %s/" %self.plotsDir)
         #result files: The event number, parameters and error write into a txt file. The dataset and pdfs write into a root file
         ## extra text file
         self.file_rlt_txt = self.rlt_DIR+"other_wwlvj_%s_%s.txt"%(self.ch,self.wtagger_label)
@@ -2523,7 +2523,7 @@ objName ==objName_before ):
         else:
             if useWts:
                 #self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","Exp") #"Exp"
-                self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","ChiSqBern")
+                self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","Exp")#ChiSqBern")
             else: self.fit_mj_single_MC(self.file_WJets_mc,"_WJets0","Exp")
         if doalter:     
             self.fit_mj_single_MC(self.file_WJets_mc,"_WJets1","User1");
@@ -2626,7 +2626,7 @@ objName ==objName_before ):
                     int_gaus        = self.workspace4fit_.pdf('gaus1_TTbar_'+self.ch).createIntegral(ras_mass_j,ras_mass_j,region).getVal()*(1-old_frac.getVal())
                     int_erfexp      = self.workspace4fit_.pdf('erfexp_TTbar_'+self.ch+'_mj').createIntegral(ras_mass_j,ras_mass_j,region).getVal()*old_frac.getVal()
                     new_frac.setVal(int_erfexp/(int_gaus+int_erfexp))
-                    if verbose:                    print "IMPCHK preparing ws new_frac for %s  in %s region is %f"%(bkg,region,new_frac.getVal())
+                    if verbose:                print "IMPCHK preparing ws new_frac for %s  in %s region is %f"%(bkg,region,new_frac.getVal())
 
                     custom_mj.replaceArg(old_frac,new_frac)
                 elif bkg=='STop':

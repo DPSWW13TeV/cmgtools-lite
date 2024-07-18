@@ -2,7 +2,7 @@ import optparse, subprocess, datetime, math, array, copy, os, re, sys,shutil
 
 
 outDir="/eos/user/a/anmehta/www/VVsemilep/EFT_nllscans/"
-date="2024-02-21"
+date="2024-07-12"
 
 ##date_wjest_ws="" AM add an option to replace the existing date if needed
 
@@ -62,11 +62,11 @@ def commandsToRun(dc,pf,outDir):
     dCard_str_wpath=dc.split('.txt')[0]
     dCard_str=dCard_str_wpath.replace('/','_')
     os.system("cp %s.txt %s" %(dCard_str_wpath,outDir))
-    os.system("text2workspace.py  %s.txt -P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative  --X-allow-no-signal  -o  model_%s.root   --PO eftOperators=cwww" %(dCard_str,dCard_str)) #  --X-allow-no-signal
-    os.system("combine -M MultiDimFit model_%s.root  --algo=grid --points 1000  -m 125  -t -1  --redefineSignalPOIs k_cwww  --freezeParameters r --setParameters r=1   --setParameterRanges k_cwww=-10,10  --X-rtd MINIMIZER_MaxCalls=400000  --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT  --alignEdges 1  --verbose 9"%(dCard_str_wpath))
-    os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_cwww -maxNLL 10 -lumi 58 -cms -preliminary -o %s/scan_%s_%s.png -xlabel \"c_{www}*3.6 [TeV^{-2}]\"" %(outDir,dCard_str,pf))
-    os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_cwww -maxNLL 10 -lumi 58 -cms -preliminary -o %s/scan_%s_%s.pdf -xlabel \"c_{www}*3.6 [TeV^{-2}]\"" %(outDir,dCard_str,pf))
-    os.system("combine  -M FitDiagnostics  model_%s.root  -t -1 --redefineSignalPOIs k_cwww --freezeParameters r --cminDefaultMinimizerStrategy 0 --toysFrequentist --setParameters r=1    --setParameterRanges k_cwww=-10,10 --robustFit=1  --verbose 3 --saveNormalizations  --saveShapes --plots "%(dCard_str_wpath)) #--plots --toysFile higgsCombineTest.GenerateOnly.mH125.123456.root -t -1 
+    os.system("text2workspace.py  %s.txt -P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative  --X-allow-no-signal  -o  model_%s.root  --PO eftOperators=cwww" %(dCard_str,dCard_str)) #  --X-allow-no-signal
+    os.system("combine -M MultiDimFit model_%s.root  --algo=grid --points 1000  -m 125  -t -1  --redefineSignalPOIs k_cwww  --freezeParameters r --setParameters r=1  --setParameterRanges  k_cwww=-10,10 --X-rtd MINIMIZER_MaxCalls=400000  --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT  --alignEdges 1  --verbose 9"%(dCard_str_wpath))
+    os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_cwww  -lumi 58 -cms -preliminary -o %s/scan_%s_%s.png -xlabel \"c_{www}*1.0 [TeV^{-2}]\"" %(outDir,dCard_str,pf))
+    os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_cwww  -lumi 58 -cms -preliminary -o %s/scan_%s_%s.pdf -xlabel \"c_{www}*1.0 [TeV^{-2}]\"" %(outDir,dCard_str,pf))
+#    os.system("combine  -M FitDiagnostics  model_%s.root  -t -1 --redefineSignalPOIs k_cwww --freezeParameters r --cminDefaultMinimizerStrategy 0 --toysFrequentist --setParameters r=1    --setParameterRanges k_cwww=-10,10 --robustFit=1  --verbose 3 --saveNormalizations  --saveShapes --plots "%(dCard_str_wpath)) #--plots --toysFile higgsCombineTest.GenerateOnly.mH125.123456.root -t -1 
 
     return True
 
@@ -77,9 +77,9 @@ def commandsToRun(dc,pf,outDir):
 if __name__ == '__main__':
 
     #year=sys.argv[1]
-    pf="" #sys.argv[1]
+    #pf=sys.argv[1]
     date=datetime.date.today().isoformat() #"2021-12-02" #
-
+    pf=date
     extra="" #_bb17c50f50" #_VGN50"
     #vartopCR="mWV"+extra
     #baseDir=os.getcwd()
@@ -90,7 +90,9 @@ if __name__ == '__main__':
     #dC16=combineCards("2016")
     #dC17=combineCards("2017")
     #dC18=combineCards("2018","onelep","cwww",pf)
-    commandsToRun("aC_WWWZ_simfit_2018_2024-02-21.txt",pf,outDir)
+    #commandsToRun("aC_WWWZ_simfit_2018_2024-07-15.txt",pf,outDir)
+    commandsToRun("aC_WWWZ_simfit_2018_2024-07-15.txt",pf,outDir)
+
     #commandsToRun()
     ##amsuperdC='dc_{pf}_onelep_FR2{cg}.txt'.format(cg=cc,pf=str(date+"-"+bS2lss+vartopCR+bS4l))
     ##amcmd='combineCards.py {yr1} {yr2} {yr3} > {dc}'.format(dc=superdC,yr1=dC16,yr2=dC17,yr3=dC18)
@@ -117,3 +119,6 @@ if __name__ == '__main__':
 
 
 
+## text2workspace.py test.txt  -P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative  --X-allow-no-signal  -o  model_test.root  --PO eftOperators=cb --X-assign-flatParam-prior
+
+## combine -M MultiDimFit model_test.root  --algo=grid --points 1000  -m 125  -t -1  --redefineSignalPOIs k_cb  --freezeParameters r --setParameters r=1  --setParameterRanges  k_cb=-10,10 --X-rtd MINIMIZER_MaxCalls=400000  --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT  --alignEdges 1 --verbose 9
