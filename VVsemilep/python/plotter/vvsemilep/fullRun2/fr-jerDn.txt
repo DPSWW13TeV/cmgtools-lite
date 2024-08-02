@@ -2,5 +2,5 @@ change: PuppiMET_pt\b:  PuppiMET_ptJERDown
 change: PuppiMET_phi\b: PuppiMET_phiJERDown
 change: pmet_pt\b:  pmet_ptJERDown
 change: pmet_phi\b: pmet_phiJERDown
-
+change: Selak8Jet1_pt\b: Selak8Jet1_pt_jerDown
 weight: 1

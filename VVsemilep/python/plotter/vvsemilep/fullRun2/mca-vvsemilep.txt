@@ -2,7 +2,11 @@
 
 incl_mc : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-mc.txt" ,AddWeight="pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,year\,suberaId\,0)*HEMhandle(year\,ak8sDMgt45_phi[0]\,ak8sDMgt45_eta[0]\,LepGood_phi[iLepFO_Recl[0]]\,LepGood_eta[iLepFO_Recl[0]]\, LepGood_pdgId[iLepFO_Recl[0]]\,run\,0)"        #,genSumWeightName=""
 
+incl_eft : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-eft.txt" ,AddWeight="pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,year\,suberaId\,0)*HEMhandle(year\,ak8sDMgt45_phi[0]\,ak8sDMgt45_eta[0]\,LepGood_phi[iLepFO_Recl[0]]\,LepGood_eta[iLepFO_Recl[0]]\, LepGood_pdgId[iLepFO_Recl[0]]\,run\,0)"        #,genSumWeightName=""
+
 incl_wj : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-wj.txt" ,AddWeight="HEMhandle(year\,ak8sDMgt45_phi[0]\,ak8sDMgt45_eta[0]\,LepGood_phi[iLepFO_Recl[0]]\,LepGood_eta[iLepFO_Recl[0]]\, LepGood_pdgId[iLepFO_Recl[0]]\,run\,0)" 
+
+
 
 incl_data : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-data.txt" ,AddWeight="HEMhandle(year\,ak8sDMgt45_phi[0]\,ak8sDMgt45_eta[0]\,LepGood_phi[iLepFO_Recl[0]]\,LepGood_eta[iLepFO_Recl[0]]\, LepGood_pdgId[iLepFO_Recl[0]]\,run\,1)"
 
@@ -11,3 +15,5 @@ incl_data : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-data.txt" ,AddWe
 ##amincl_mc_el_eff_Dn : + ; IncludeMca="mca-mc.txt", AddWeight="el_eff_dn", SkipMe=True, PostFix="_el_eff_Dn"
 ##amincl_mc_mu_eff_Up : + ; IncludeMca="mca-mc.txt", AddWeight="mu_eff_up", SkipMe=True, PostFix="_mu_eff_Up"
 ##amincl_mc_mu_eff_Dn : + ; IncludeMca="mca-mc.txt", AddWeight="mu_eff_dn", SkipMe=True, PostFix="_mu_eff_Dn"
+
+

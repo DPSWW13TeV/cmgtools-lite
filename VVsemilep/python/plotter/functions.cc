@@ -132,41 +132,6 @@ double METz_calc(float pt1, float eta1, float phi1,int pdgId1,float met, float m
     return pz1_type0;
 }
 
-double mass_WV_el(float jpt,float jeta,float jphi, float jm,float lpt,float leta,float lphi,float met,float metphi, int type){
-  float massWV=-999.0;
-  TLorentzVector lep(0.,0.,0.,0);
-  TLorentzVector jet(0.,0.,0.,0);
-  TLorentzVector metV(0.,0.,0.,0);
-  TLorentzVector mWV(0.,0.,0.,0);
-  //float lmass= abs(lpdgId) == 13 ? 0.106 : 0.512e-3;
-  lep.SetPtEtaPhiM(lpt,leta,lphi,0.512e-3);
-  jet.SetPtEtaPhiM(jpt,jeta,jphi,jm);
-  
-  float pz1=METz_calc(lpt,leta, lphi,11,met,metphi,type);
-  metV.SetPxPyPzE(met*TMath::Cos(metphi), met*TMath::Sin(metphi),pz1,sqrt(met*met+pz1*pz1));
-  mWV=lep+jet+metV;
-  massWV=mWV.M();
-  return massWV;
-}
-
-double mass_WV_mu(float jpt,float jeta,float jphi, float jm,float lpt,float leta,float lphi,float met,float metphi, int type){
-  //FIXME: compute neupz first and pass it as an argument ->get rid of pdgId and type args
-  float massWV=-999.0;
-  TLorentzVector lep(0.,0.,0.,0);
-  TLorentzVector jet(0.,0.,0.,0);
-  TLorentzVector metV(0.,0.,0.,0);
-  TLorentzVector mWV(0.,0.,0.,0);
-  //float lmass= abs(lpdgId) == 13 ? 0.106 : 0.512e-3;
-  
-  lep.SetPtEtaPhiM(lpt,leta,lphi,0.106);
-  jet.SetPtEtaPhiM(jpt,jeta,jphi,jm);
-  
-  float pz1=METz_calc(lpt,leta, lphi,13,met,metphi,type);
-  metV.SetPxPyPzE(met*TMath::Cos(metphi), met*TMath::Sin(metphi),pz1,sqrt(met*met+pz1*pz1));
-  mWV=lep+jet+metV;
-  massWV=mWV.M();
-  return massWV;
-}
 double mass_WV(float jpt,float jeta,float jphi, float jm,float lpt,float leta,float lphi,float met,float metphi, int type){
   //FIXME: compute neupz first and pass it as an argument ->get rid of pdgId and type args
   float massWV=-999.0;

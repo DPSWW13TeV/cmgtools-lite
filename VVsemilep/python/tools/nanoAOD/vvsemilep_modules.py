@@ -122,8 +122,8 @@ def smoothBFlav(jetpt,ptmin,ptmax,year, subera,scale_loose=1.0):
     return x*wploose[year-2016][subera]*scale_loose + (1-x)*wpmedium[year-2016][subera]
 
 
-#jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] + ['jer%d'%j for j in range(6)]
-jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] 
+jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] + ['jer']
+#jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] 
 
 
 from CMGTools.VVsemilep.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning

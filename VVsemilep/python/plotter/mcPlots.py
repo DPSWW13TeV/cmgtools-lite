@@ -513,7 +513,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     line.Draw("L")
     for ratio in ratios:
         ratio.Draw("E SAME" if ratio.ClassName() != "TGraphAsymmErrors" else "PZ SAME");
-    leg0 = ROOT.TLegend(0.12 if doWide else 0.2, 0.84, 0.25 if doWide else 0.45, 0.94)
+    leg0 = ROOT.TLegend(0.12 if doWide else 0.2, 0.75, 0.25 if doWide else 0.45, 0.85)
     leg0.SetFillColor(0)
     leg0.SetShadowColor(0)
     leg0.SetLineColor(0)
@@ -851,7 +851,7 @@ class PlotMaker:
                         if self._options.errors and plotmode != "stack":
                             plot.SetMarkerColor(plot.GetFillColor())
                             plot.SetMarkerStyle(21)
-                            plot.SetMarkerSize(1.5)
+                            plot.SetMarkerSize(1)
                         else:
                             plot.SetMarkerStyle(0)
 
@@ -1127,7 +1127,7 @@ class PlotMaker:
                                     c1.Print("%s/%s_%s.%s" % (fdir, outputName, p, ext))
                                 if "data" in pmap and "TGraph" in pmap["data"].ClassName():
                                     pmap["data"].SetMarkerStyle(mca.getProcessOption('data','MarkerStyle',1))
-                                    pmap["data"].SetMarkerSize(pspec.getOption("MarkerSize",1.6))
+                                    pmap["data"].SetMarkerSize(pspec.getOption("MarkerSize",1))
                                     for p in ["signal", "background", "total"]:
                                         if p not in pmap: continue
                                         plot = pmap[p]

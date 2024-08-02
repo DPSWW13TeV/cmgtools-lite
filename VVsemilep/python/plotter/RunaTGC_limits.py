@@ -91,7 +91,7 @@ if __name__ == '__main__':
     #dC17=combineCards("2017")
     #dC18=combineCards("2018","onelep","cwww",pf)
     #commandsToRun("aC_WWWZ_simfit_2018_2024-07-15.txt",pf,outDir)
-    commandsToRun("aC_WWWZ_simfit_2018_2024-07-15.txt",pf,outDir)
+    commandsToRun("aC_WWWZ_simfit_2018_2024-07-18.txt",pf,outDir)
 
     #commandsToRun()
     ##amsuperdC='dc_{pf}_onelep_FR2{cg}.txt'.format(cg=cc,pf=str(date+"-"+bS2lss+vartopCR+bS4l))
@@ -119,6 +119,6 @@ if __name__ == '__main__':
 
 
 
-## text2workspace.py test.txt  -P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative  --X-allow-no-signal  -o  model_test.root  --PO eftOperators=cb --X-assign-flatParam-prior
+## text2workspace.py test.txt  -P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative  --X-allow-no-signal  -o  model_test.root  --PO eftOperators=cb 
 
 ## combine -M MultiDimFit model_test.root  --algo=grid --points 1000  -m 125  -t -1  --redefineSignalPOIs k_cb  --freezeParameters r --setParameters r=1  --setParameterRanges  k_cb=-10,10 --X-rtd MINIMIZER_MaxCalls=400000  --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT  --alignEdges 1 --verbose 9

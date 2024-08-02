@@ -1,5 +1,13 @@
 # vim: syntax=sh
 incl_data : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-data.txt" 
 incl_wj : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-wj.txt" 
-incl_all : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-mc.txt",AddWeight="Selak8Jet1_pNetWtagSF"
+incl_bkg : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-mc.txt",AddWeight="Selak8Jet1_pNetWtagSF"
+incl_sig : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-eft.txt",AddWeight="Selak8Jet1_pNetWtagSF"
+
+
+incl_WJ_lo : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-wj.txt" ,AddWeight="(Selak8Jet1_msoftdrop < 65)",LineStyle=ROOT.kDotted,PostFix="CR_lo",LineColor=ROOT.kOrange+10
+incl_WJ_hi : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-wj.txt" ,AddWeight="(Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)",LineStyle=ROOT.kDashed,PostFix="CR_hi",LineColor=ROOT.kRed+4
+incl_WJ_cr : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-wj.txt" ,AddWeight="(Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150))",LineStyle=ROOT.kDashDotted,PostFix="CR",LineColor=ROOT.kBlack
+incl_WJ_sig : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-wj.txt" ,AddWeight="(Selak8Jet1_msoftdrop >= 65 && Selak8Jet1_msoftdrop < 105)", PostFix="SR",LineColor=ROOT.kPink+9
+
 

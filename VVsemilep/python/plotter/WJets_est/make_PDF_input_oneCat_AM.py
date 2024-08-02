@@ -21,7 +21,7 @@ parser.add_option('--hi', action='store', dest='mlvj_hi', type='float', default=
 parser.add_option('--lo', action='store', dest='mlvj_lo', type='float', default=950, help='set lower cut on MWV, mat cause problems')
 parser.add_option('--inPath', action="store",type="string",dest="inPath",default="/eos/cms/store/cmst3/group/dpsww//NanoTrees_v9_vvsemilep_06012023/")
 parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/%s/%s/www/VVsemilep/WJest"%(os.environ['USER'][0],os.environ['USER']),help='save plots here')
-parser.add_option('--db', action="store",type="string",dest="DB",default="WWWZ")
+
 
 (options,args) = parser.parse_args()
 
@@ -82,7 +82,7 @@ class Prepare_workspace_4limit:
             self.rlt_DIR_name="Cards/%s/cards_%s_%s_%s_%s_%s_%s/"%(date,'pNM' if usepNM else 'sDM',extra_str,self.channel,self.wtagger_label,options.mlvj_lo,int(options.mlvj_hi))##date
             if not os.path.isdir(self.rlt_DIR_name): os.system("mkdir -p  %s "%self.rlt_DIR_name)
             ##read workspace containing background pdfs
-            fileInWs                    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.mlvj_hi)))
+            fileInWs                    = ROOT.TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,950,int(self.mlvj_hi)))
             w                           = fileInWs.Get('workspace4limit_')
             self.rrv_mass_lvj           = w.var('rrv_mass_lvj')
             self.rrv_mass_lvj.SetTitle('m_{WV}')
@@ -135,7 +135,7 @@ class Prepare_workspace_4limit:
     ################
         def legend4Plot(self, plot,isFill=1, x_offset_low=0.,y_offset_low=0.,x_offset_high =0., y_offset_high =0., TwoCoulum =1.,firstentry=''):
             #        print "############### draw the legend ########################"
-            theLeg = TLegend(0.37+x_offset_low, 0.50+y_offset_low, 0.72+x_offset_high, 0.82+y_offset_high, "", "NDC");            
+            theLeg = ROOT.TLegend(0.37+x_offset_low, 0.50+y_offset_low, 0.72+x_offset_high, 0.82+y_offset_high, "", "NDC");            
             #theLeg.SetName("theLegend");
             if TwoCoulum :                theLeg.SetNColumns(2);
 
@@ -284,8 +284,9 @@ objName ==objName_before ):
                 N_quad_cw           = RooRealVar('N_quad_cw_%s'%WV,'N_quad_cw_%s'%WV,hists4scale['c_quad_%s_hist_cw'%WV].Integral())
 
 		self.Import_to_ws(self.wtmp, [N_sm_lin_quad_cb,N_sm_lin_quad_cwww,N_sm_lin_quad_cw,N_quad_cb,N_quad_cwww,N_quad_cw])
+		self.Import_to_ws(self.WS, [N_sm_lin_quad_cb,N_sm_lin_quad_cwww,N_sm_lin_quad_cw,N_quad_cb,N_quad_cwww,N_quad_cw])
             #write histograms to file
-            fileOut        = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.mlvj_lo,self.mlvj_hi),'recreate')
+            fileOut        = ROOT.TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.mlvj_lo,self.mlvj_hi),'recreate')
             for key in hists4scale:
                 hists4scale[key].Write()
             print ('--------> Written to file ' + fileOut.GetName())
@@ -300,7 +301,7 @@ objName ==objName_before ):
             return latex
         def get_canvas(self,cname):
             CMS_lumi.lumi_13TeV = "%s fb^{-1}" %str(lumis[self.year])
-            CMS_lumi.writeExtraText = True
+            CMS_lumi.writeExtraText = False #True
             CMS_lumi.extraText = "Preliminary"
             iPos = 11
             if( iPos==0 ): CMS_lumi.relPosX = 0.15
@@ -317,34 +318,23 @@ objName ==objName_before ):
 
         
         def Make_plots(self,rrv_x,cat,fitres):
-            can     = [];can2    = [];      plots   = [];     plots2  = []; pads    = []; dummy_list=[]
+            can     = [];    plots   = [];               dummy_list=[]
             channel = self.ch+'_'+cat
             for i in range(3):
+                if self.POI[i] == 'cb' and cat == "WZ": continue
                 rrv_x.setRange(self.mlvj_lo,self.mlvj_hi)
                 p       = rrv_x.frame(self.mlvj_lo,self.mlvj_hi)
                 p2      = rrv_x.frame(self.mlvj_lo,self.mlvj_hi)
-                c       = self.get_canvas(cat+'_'+self.POI[i]+'-');#TCanvas(cat+'_'+self.POI[i]+'-',self.POI[i]+'-',600,600)
+                c       = self.get_canvas(cat+'_'+self.POI[i]);
                 c.Draw();                c.cd();
-                pad1        = TPad(cat+'pad1_%s'%self.POI[i],cat+'pad1_%s'%self.POI[i],0.,0.3,1.,1.)  
-                pad2        = TPad(cat+'pad2_%s'%self.POI[i],cat+'pad2_%s'%self.POI[i],0.,0.02,1.,0.3)
-                c2          = TCanvas(cat+self.POI[i]+'+',self.POI[i]+'+',600,600)
-                c2.cd()
-                pad3        = TPad(cat+'pad3_%s'%self.POI[i],cat+'pad3_%s'%self.POI[i],0.,0.3,1.,1.)
-                pad4        = TPad(cat+'pad4_%s'%self.POI[i],cat+'pad4_%s'%self.POI[i],0.,0.02,1.,0.3)
-                p2pads      = [pad1,pad2,pad3,pad4]
-                can.append(c); can2.append(c2);  plots.append(p);        plots2.append(p2);                pads.append(p2pads)
-                dummy_list.append(can);dummy_list.append(can2),dummy_list.append(plots);dummy_list.append(plots2);dummy_list.append(pads);
-            for i in range(3):
-                can[i].cd();
-                #CMS_lumi.CMS_lumi(pads[i][0], 4, 11,0.075);
-                pads[i][0].Update()
-                pads[i][0].Draw();                pads[i][1].Draw()
-                pads[i][0].SetLeftMargin(0.1);    pads[i][1].SetLeftMargin(0.1)
-
-
-                for j in range(3):
-                    self.wtmp.var(self.POI[j]).setVal(0)
-
+                pad1        = ROOT.TPad(cat+'pad1_%s'%self.POI[i],cat+'pad1_%s'%self.POI[i],0.,0.3,1.,1.)  
+                pad2        = ROOT.TPad(cat+'pad2_%s'%self.POI[i],cat+'pad2_%s'%self.POI[i],0.,0.02,1.,0.3)
+                pad1.Draw();pad2.Draw();
+                pad2.SetLeftMargin(0.1);    pad1.SetLeftMargin(0.1)
+                plots.append(p);                c.Update();
+                dummy_list.append(c);dummy_list.append(pad2),dummy_list.append(pad1);
+                #                for j in range(3):
+                self.wtmp.var(self.POI[i]).setVal(0)
                 pullhist_q=None;pullhist_l=None
                 linStr=self.POI[i]+'_'+cat+'_lin'
                 quadStr=self.POI[i]+'_'+cat+'_quad'
@@ -352,36 +342,31 @@ objName ==objName_before ):
                     lin_Norm=self.wtmp.var('norm_sm_lin_quad_%s_%s'%(self.POI[i],channel))
                     print "linear term \t", self.POI[i],"\t", channel,"\t",lin_Norm.getVal(),"\t",self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
                     self.wtmp.data('sm_lin_quad_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(ROOT.kAzure+10),RooFit.MarkerSize(0.75),RooFit.LineColor(ROOT.kAzure+10),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('P0E1'),RooFit.Name('linData'))
-                    self.wtmp.pdf('%s_sm_lin_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kAzure+7),RooFit.LineStyle(kDotted),RooFit.Normalization(lin_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('linModel'))
-                    
+                    self.wtmp.pdf('%s_sm_lin_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kAzure+7),RooFit.LineStyle(ROOT.kDotted),RooFit.Normalization(lin_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('linModel'))                    
                     pullhist_l= plots[i].pullHist('linData','linModel')
 
                 if quadStr not in vetoPlots:
                     quad_Norm=self.wtmp.var('norm_quad_%s_%s'%(self.POI[i],channel))
                     print "quad term \t", self.POI[i],"\t", channel,"\t",quad_Norm.getVal(),"\t",self.wtmp.data('SMdatahist_%s'%cat).sumEntries()
-                    self.wtmp.pdf('%s_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kPink-2),RooFit.LineStyle(kDashed),RooFit.Normalization(quad_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('quadModel'))
+                    self.wtmp.pdf('%s_quad_%s_%s'%(cat,self.POI[i],self.ch)).plotOn(plots[i],RooFit.LineColor(ROOT.kPink-2),RooFit.LineStyle(ROOT.kDashed),RooFit.Normalization(quad_Norm.getVal()*self.wtmp.data('SMdatahist_%s'%cat).sumEntries(), RooAbsReal.NumEvent),RooFit.Name('quadModel'))
                     self.wtmp.data('quad_datahist_%s_%s'%(cat,self.POI[i])).plotOn(plots[i],RooFit.MarkerColor(ROOT.kPink-7),RooFit.MarkerSize(0.75),RooFit.LineColor(ROOT.kPink-7),RooFit.DataError(RooAbsData.SumW2),RooFit.DrawOption('P0E1'),RooFit.Name('quadData'))
                     pullhist_q= plots[i].pullHist('quadData','quadModel')
 
 
-                plotmax        = 1e4; plotmin = 1e-4
+                plotmax        = 1e5; plotmin = 1e-3
                 plots[i].GetYaxis().SetRangeUser(plotmin,plotmax)
-                pads[i][0].cd();pads[i][0].SetBottomMargin(0.03);pads[i][0].SetTopMargin(0.1);
-                pads[i][0].SetLogy()
+                pad1.cd();pad1.SetBottomMargin(0.03);pad1.SetTopMargin(0.1);
+                pad1.SetLogy()
                 plots[i].SetTitle('')
                 plots[i].GetYaxis().SetTitle('Events')
                 plots[i].GetYaxis().SetTitleSize(0.04);plots[i].GetYaxis().SetLabelSize(0.035);
                 plots[i].GetXaxis().SetLabelOffset(99999)
-                txt = ROOT.TText(2, 100, "Signal")
-                txt.SetTextSize(0.04)
-                txt.SetTextColor(ROOT.kRed)
-                plots[i].addObject(txt)
                 plots[i].Draw()
                 ndof        = (self.mlvj_hi-self.mlvj_lo)/100 - 4
                 #plots[i].Print()
                 parlatex        = ['#frac{c_{WWW}}{#Lambda^{2}}','#frac{c_{W}}{#Lambda^{2}}','#frac{c_{B}}{#Lambda^{2}}']
-                leg        = TLegend(0.15,0.675,0.875,0.85)
-                leg.SetFillStyle(0);leg.SetTextFont(42);                leg.SetBorderSize(0);leg.SetNColumns(2);
+                leg        = ROOT.TLegend(0.5,0.5,0.875,0.85)
+                leg.SetFillStyle(0);leg.SetTextFont(42);                leg.SetBorderSize(0);leg.SetNColumns(1);
                 leg.SetFillStyle(0); leg.SetTextSize(0.035);
                 if quadStr not in vetoPlots:  
                     leg.AddEntry(plots[i].findObject('quadData'),'quad. MC '+parlatex[i]+'= 1 TeV^{#minus2}','le')
@@ -392,12 +377,19 @@ objName ==objName_before ):
 
                 leg.Draw()
                 #leg.Print()
-
-                pads[i][1].cd();                pads[i][1].SetTopMargin(0.03);  pads[i][1].SetBottomMargin(0.3)##HERE
+                CMS_lumi.CMS_lumi(pad1,4,0,0.045)
+                pt = ROOT.TPaveText(0.6,0.72,0.875,0.89, "blNDC")
+                pt.SetFillStyle(0)
+                pt.SetBorderSize(0)
+                pt.SetTextAlign(32)
+                pt.SetTextSize(0.04)
+                pt.AddText(cat)
+                pt.Draw("SAME")
+                pad2.cd();                pad2.SetTopMargin(0.03);  pad2.SetBottomMargin(0.3)##HERE
                 if ROOT.gROOT.FindObject("dummy") != None: ROOT.gROOT.FindObject("dummy").Delete()
                 ratio_style = ROOT.TH1D('dummy','dummy',(self.mlvj_hi-self.mlvj_lo)/100,self.mlvj_lo,self.mlvj_hi)
                 ratio_style.SetMarkerStyle(21)
-                ratio_style.SetLineColor(kBlack);ratio_style.SetLineWidth(1);
+                ratio_style.SetLineColor(ROOT.kBlack);ratio_style.SetLineWidth(1);
                 ratio_style.SetMaximum(3)
                 ratio_style.SetMinimum(-3)
                 ratio_style.GetYaxis().SetNdivisions(7)
@@ -415,15 +407,13 @@ objName ==objName_before ):
                 if (pullhist_l) is not None: 
                     pullhist_l.SetLineColor(ROOT.kAzure+10);pullhist_l.SetLineWidth(1);pullhist_l.SetMarkerStyle(25); pullhist_l.SetMarkerColor(ROOT.kAzure+10);
                     pullhist_l.Draw("SAME P0E1")
-                    #pullhist_l1.SetLineColor(8);pullhist_l1.SetLineWidth(1);pullhist_l1.SetMarkerStyle(27); pullhist_l1.SetMarkerColor(8);
-                    #pullhist_l1.Draw("SAME P0E1")
 
-                can[i].Update()
-                can[i].SaveAs(self.plotsDir+'/%s_neg_%s.pdf'%(self.POI[i],channel))
-                can[i].SaveAs(self.plotsDir+'/%s_neg_%s.png'%(self.POI[i],channel))
-                dummy_list.append(can[i]);dummy_list.append(pullhist_l);dummy_list.append(pullhist_q);
+                c.Update()
+                c.SaveAs(self.plotsDir+'/%s_neg_%s.pdf'%(self.POI[i],channel))
+                c.SaveAs(self.plotsDir+'/%s_neg_%s.png'%(self.POI[i],channel))
+#                dummy_list.append(can[i]);dummy_list.append(pullhist_l);dummy_list.append(pullhist_q);
 
-            #    return True 
+
                 
         #function to import multiple items from a list into a workspace
         def Import_to_ws(self,workspace,items,recycle=0):
@@ -444,7 +434,7 @@ objName ==objName_before ):
             cb.setConstant(kTRUE);
    
             #get SM and other histograms and make RooDataHists
-            fileInHist      = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.mlvj_lo,self.mlvj_hi))
+            fileInHist      = ROOT.TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.mlvj_lo,self.mlvj_hi))
             rrv_x.setRange(self.mlvj_lo,self.mlvj_hi)
             SMdatahist                  = RooDataHist('SMdatahist_%s'     %sample,'SMdatahist_%s'     %sample,RooArgList(rrv_x),fileInHist.Get('c_sm_%s_hist'%sample))
             SM                          = RooDataHist('SM%s_4scale'%sample,'SM%s_4scale'%sample,RooArgList(rrv_x),fileInHist.Get('c_sm_%s_hist'%sample))
@@ -465,7 +455,7 @@ objName ==objName_before ):
             c3_AM=ROOT.TCanvas('can_am_%s'%(channel),'',600,600); #c3_AM.SetLogy();
             mplot_tmp_am = rrv_x.frame( RooFit.Bins(rrv_x.getBins()));
             SMdatahist.plotOn( mplot_tmp_am,RooFit.Name("sm"),RooFit.MarkerSize(1), RooFit.DataError(RooAbsData.Poisson), RooFit.XErrorSize(0), RooFit.MarkerColor(1), RooFit.LineColor(1) );
-            SMPdf.plotOn(mplot_tmp_am, RooFit.Name("smpdf"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kOrange));
+            SMPdf.plotOn(mplot_tmp_am, RooFit.Name("smpdf"),RooFit.LineStyle(ROOT.kDashDotted),RooFit.LineColor(ROOT.kOrange));
             self.leg_tmp_AM= self.legend4Plot(mplot_tmp_am,0, 0, 0., 0., -0.1,0,channel);
             mplot_tmp_am.addObject(self.leg_tmp_AM);
             mplot_tmp_am.Draw();        c3_AM.Update();        c3_AM.Draw();
@@ -484,17 +474,20 @@ objName ==objName_before ):
             N_quad_cwww          = RooRealVar('N_quad_cwww%s'%channel,'N_quad_cwww%s'%channel,quad_cwww_DataHist.sumEntries())
             print "checkpoint 1"
             self.Import_to_ws(self.wtmp,[cwww,cw,cb,self.eps4cbWZ,self.eps4cbWW,SMdatahist,SMdatahist,N_SM,N_sm_lin_quad_cb,N_sm_lin_quad_cw,N_sm_lin_quad_cwww,N_quad_cb,N_quad_cw,N_quad_cwww]) 
+            self.Import_to_ws(self.WS,[cwww,cw,cb,self.eps4cbWZ,self.eps4cbWW,SMdatahist,SMdatahist,N_SM,N_sm_lin_quad_cb,N_sm_lin_quad_cw,N_sm_lin_quad_cwww,N_quad_cb,N_quad_cw,N_quad_cwww]) 
+
             #define parameter ranges for error function
             print "checkpoint 2"
-            Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,500.,0.,2500.)
-            Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1000.,500.,2500.)
-            Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,500.,0.,2500.)
-            Erf_offset_cwww         = RooRealVar('Erf_offset_cwww_%s'%channel,'Erf_offset_cwww_%s'%channel,500.,0.,2500.)
-            Erf_offset_cw           = RooRealVar('Erf_offset_cw_%s'%channel,'Erf_offset_cw_%s'%channel,500.,0.,1500.)
-            Erf_offset_cb           = RooRealVar('Erf_offset_cb_%s'%channel,'Erf_offset_cb_%s'%channel,500.,0.,2500.)
+            Erf_width_cwww      = RooRealVar('Erf_width_cwww_%s'%channel,'Erf_width_cwww_%s'%channel,1000.,500.,1700.)
+            Erf_width_cw        = RooRealVar('Erf_width_cw_%s'%channel,'Erf_width_cw_%s'%channel,1000.,500.,2000.)
+            Erf_width_cb        = RooRealVar('Erf_width_cb_%s'%channel,'Erf_width_cb_%s'%channel,1000.,500.,2000.)
+            Erf_offset_cwww         = RooRealVar('Erf_offset_cwww_%s'%channel,'Erf_offset_cwww_%s'%channel,1000.,500,1700.)
+            Erf_offset_cw           = RooRealVar('Erf_offset_cw_%s'%channel,'Erf_offset_cw_%s'%channel,1000.,500.,2000.)
+            Erf_offset_cb           = RooRealVar('Erf_offset_cb_%s'%channel,'Erf_offset_cb_%s'%channel,1000.,500.,2000.)
             self.Import_to_ws(self.wtmp,[Erf_width_cwww,Erf_offset_cwww,Erf_width_cw,Erf_offset_cw,Erf_offset_cb,Erf_width_cb])                
+            self.Import_to_ws(self.WS,[Erf_width_cwww,Erf_offset_cwww,Erf_width_cw,Erf_offset_cw,Erf_offset_cb,Erf_width_cb])                
             print "checkpoint 3"
-            #fileInHist    = TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.mlvj_lo,self.mlvj_hi))
+            #fileInHist    = ROOT.TFile.Open(self.rlt_DIR_name+'/hists4scale_%s_WV_aTGC-%s_%s.root'%(self.ch,self.mlvj_lo,self.mlvj_hi))
             for i in range(len(self.POI)):
                 s_name        = self.POI[i] + '_' + channel #added to parameter names
                 rrv_x.setRange(self.mlvj_lo,self.mlvj_hi)                
@@ -511,12 +504,12 @@ objName ==objName_before ):
                 factor     = if3(self.POI[i] == "cwww",3.6, if3(self.POI[i] == "cb",20,4.5))
                 norm_lin   = RooRealVar('norm_sm_lin_quad_%s'%s_name,'norm_sm_lin_quad_%s'%s_name,0.5*(N_pos_tmp-N_neg_tmp)/SM.sumEntries()/factor)
                 norm_quad  = RooRealVar('norm_quad_%s'%s_name,'norm_quad_%s'%s_name,(0.5*(N_pos_tmp+N_neg_tmp)-SM.sumEntries())/SM.sumEntries()/factor**2 )
-                a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.00012,-0.01,0.1) #-0.000173527 for cb #-0.0012 to 0.1
+                a2_4fit     = RooRealVar('a_quad_4fit_%s'%s_name,'a_quad_4fit_%s'%s_name,-0.0012,-0.1,0.1) #-0.000173527 for cb #-0.0012 to 0.1
                 a2          = RooFormulaVar('a_quad_nuis_%s'%s_name,'a_quad_nuis_%s'%s_name,'@0*@1',RooArgList(a2_4fit,self.eps4cbWZ if sample=='WZ' else self.eps4cbWW))
-                cPdf_quad   = RooErfExpPdf('%s_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a2,self.wtmp.var('Erf_offset_%s'%s_name),self.wtmp.var('Erf_width_%s'%s_name))
+                cPdf_quad   = ROOT.RooErfExpPdf('%s_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a2,self.wtmp.var('Erf_offset_%s'%s_name),self.wtmp.var('Erf_width_%s'%s_name))
 
                 a5_lin    = RooRealVar("a5_lin_%s"%s_name,"a5_lin_%s"%s_name,-2e-4,-1e-1,0.1);
-                a4_lin    = RooRealVar("a4_lin_%s"%s_name,"a4_lin%s"%s_name,0, -20000, 20000);
+                a4_lin    = RooRealVar("a4_lin_%s"%s_name,"a4_lin%s"%s_name,0, -2000, 2000);
                 cPdf_lin  = ROOT.RooExpNPdf('%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),'%s_sm_lin_quad_%s_%s'%(sample,self.POI[i],self.ch),rrv_x,a5_lin, a4_lin);
                 linStr=self.POI[i]+'_'+sample+'_lin'
                 quadStr=self.POI[i]+'_'+sample+'_quad'
@@ -534,15 +527,19 @@ objName ==objName_before ):
                     self.fitresults.append(fitres_lin) 
 
                 a2_4fit.setConstant(kTRUE)
-                #a3_4fit.setConstant(kTRUE)
                 Erf_offset_cwww.setConstant(kTRUE);Erf_width_cwww.setConstant(kTRUE);
                 Erf_offset_cw.setConstant(kTRUE);Erf_width_cw.setConstant(kTRUE);       
-                Erf_offset_cb.setConstant(kTRUE);            Erf_width_cb.setConstant(kTRUE)
+                Erf_offset_cb.setConstant(kTRUE);  
+                Erf_width_cb.setConstant(kTRUE)
                 a4_lin.setConstant(kTRUE); a5_lin.setConstant(kTRUE)
                 self.Import_to_ws(self.wtmp,[Erf_width_cwww,Erf_offset_cwww,Erf_width_cw,Erf_offset_cw,Erf_offset_cb,Erf_width_cb,a4_lin,a5_lin])                
+                self.Import_to_ws(self.WS,[Erf_width_cwww,Erf_offset_cwww,Erf_width_cw,Erf_offset_cw,Erf_offset_cb,Erf_width_cb,a4_lin,a5_lin])                
                 #PDF for SM interference
                 self.Import_to_ws(self.wtmp,[cPdf_quad,cPdf_lin],1)
                 self.Import_to_ws(self.wtmp,[norm_lin,norm_quad])
+                self.Import_to_ws(self.WS,[cPdf_quad,cPdf_lin],1)
+                self.Import_to_ws(self.WS,[norm_lin,norm_quad])
+
             for i in range(3):
                 self.wtmp.var(self.POI[i]).setVal(0)
             for i in range(3):
@@ -610,14 +607,15 @@ Deco_TTbar_sb_{ch}_WPM_mlvj_13TeV_eig0 param 0.0 2.0
 Deco_TTbar_sb_{ch}_WPM_mlvj_13TeV_eig1 param 0.0 2.0
 Deco_TTbar_sig_{ch}_WPM_mlvj_13TeV_eig0 param 0.0 2.0
 Deco_TTbar_sig_{ch}_WPM_mlvj_13TeV_eig1 param 0.0 2.0
-rrv_c_ChiSq_WJets0_{ch}  flatParam
-rrv_shift_ChiSq_WJets0_{ch}  flatParam
+rrv_c_Exp_WJets0_{ch}  flatParam
 slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                        )    
             datacard.close()
             return cardName_test
 #rrv_c_ExpN_WJets0_sb_{ch}  flatParam
 #rrv_n_ExpN_WJets0_sb_{ch}  flatParam
+#rrv_c_ChiSq_WJets0_{ch}  flatParam
+#rrv_shift_ChiSq_WJets0_{ch}  flatParam
 
 
 #Deco_WJets0_sim_{ch}_HPV_mlvj_13TeV_eig2 param 0.0 1.4
@@ -635,10 +633,9 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
             #make and fit signal pdf for WW and WZ
             for i in self.aTGCprocs:
                 self.Make_signal_pdf(self.rrv_mass_lvj,i)
-            #            self.Make_signal_pdf(self.rrv_mass_lvj,'WZ')
 
             #read, rename and write bkg pdfs and bkg rates
-            fileInWs    = TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,int(self.mlvj_lo),int(self.mlvj_hi)))
+            fileInWs    = ROOT.TFile.Open(self.rlt_DIR_name+'/wwlvj_%s_%s_%s_%s_workspace.root'%(self.ch,self.wtagger_label,int(self.mlvj_lo),int(self.mlvj_hi)))
             w_bkg       = fileInWs.Get('workspace4limit_') 
 
             for bkg in ['WJets','TTbar','STop','WW','WZ']:
@@ -693,6 +690,11 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                     norm_VV_reg             = self.WS2.function("%s_norm"%VV).Clone("%s_norm_%s_%s"%(VV,region,self.ch))
 
                     for ops in ['cwww','cw','cb']:
+                        fs        = self.ch+'_'+VV
+                        self.WS2.var("Erf_width_%s_%s"%(ops,fs)).setConstant(kFALSE)
+                        self.WS2.var("Erf_offset_%s_%s"%(ops,fs)).setConstant(kFALSE)
+                        self.WS2.var("rrv_c_Exp_WJets0_%s"%self.ch).setConstant(kFALSE)
+                        self.WS2.var("normvar_WJets_%s"%self.ch).setConstant(kFALSE)
                         pdf_sm_lin_quad_mlvj_VV = self.wtmp.pdf('%s_sm_lin_quad_%s_%s'%(VV,ops,self.ch)) ##AMNewPdf_lin
                         pdf_quad_mlvj_VV        = self.wtmp.pdf('%s_quad_%s_%s'%(VV,ops,self.ch)) ##AMNewPdf_quad
                         print "defined pdfs",ops,VV,region,self.ch,pdf_sm_lin_quad_mlvj_VV.Print();
@@ -710,7 +712,7 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                         c3_AM=ROOT.TCanvas('c3_%s_%s_%s_%s'%(ops,VV,region,self.ch),'',600,600); #c3_AM.SetLogy();                        
                         mplot_tmp_AM = rrv_mass_lvj.frame(RooFit.Bins(rrv_mass_lvj.getBins()));
 
-                        pdf_sm_lin_quad_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("lin"),RooFit.LineStyle(kDashDotted),RooFit.LineColor(ROOT.kOrange+10));
+                        pdf_sm_lin_quad_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("lin"),RooFit.LineStyle(ROOT.kDashDotted),RooFit.LineColor(ROOT.kOrange+10));
                         pdf_quad_mlvj_VV.plotOn(mplot_tmp_AM, RooFit.Name("quad"),RooFit.LineColor(ROOT.kBlue));
                         self.leg_tmp_am= self.legend4Plot(mplot_tmp_AM,0, 0, 0., 0., -0.1,0,str(self.ch+"-"+ops));
                         mplot_tmp_AM.addObject(self.leg_tmp_am);
@@ -735,7 +737,7 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
                     #self.WS2.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig2"%(self.ch,self.wtagger_label)).setConstant(kTRUE)
                     #self.WS2.var("Deco_WJets0_sim_%s_%s_mlvj_13TeV_eig3"%(self.ch,self.wtagger_label)).setConstant(kTRUE)
 
-                output        = TFile(self.rlt_DIR_name+'/WWWZ_{region}_{ch}_{year}_ws.root'.format(ch=self.ch,region=region,year=self.year),'recreate')
+                output        = ROOT.TFile(self.rlt_DIR_name+'/WWWZ_{region}_{ch}_{year}_ws.root'.format(ch=self.ch,region=region,year=self.year),'recreate')
                 self.WS2.SetName('proc_WWWZ_%s_%s_%s'%(region,self.ch,self.year))
                 self.WS2.Write();
                 output.Close()
@@ -752,14 +754,13 @@ slope_nuis    param  1.0 0.05'''.format(ch=self.ch)
             if options.Make_plots:
                 for i in self.aTGCprocs:
                     self.Make_plots(self.rrv_mass_lvj,i,self.fitresults)
-                    
                     #self.Make_plots(self.rrv_mass_lvj,'WZ',self.fitresults)
-            for i in range(3):
-                for j in range(3):
-                    self.wtmp.var(self.POI[j]).setVal(0)
+            #for i in range(3):
+            for j in range(3):
+                self.wtmp.var(self.POI[j]).setVal(0)
                 #self.wtmp.var(self.POI[i]).setVal(self.PAR_MAX[self.POI[i])
 
-            #raw_input(self.channel)
+            raw_input(self.channel)
             return combineCardName
 
 ###run code###
@@ -768,17 +769,18 @@ if __name__ == '__main__':
     if options.chan=='elmu':
         makeWS_el        = Prepare_workspace_4limit(options.year,'el')
         combineCardName_el=makeWS_el.Make_input()
+        print"done with el"
         makeWS_mu        = Prepare_workspace_4limit(options.year,'mu')
         combineCardName_mu=makeWS_mu.Make_input()
-        output_card_name='aC_%s_simfit'%(options.DB)
-        cmd = 'combineCards.py aC_{DB}_sig_el_{yr}_{dd}.txt aC_{DB}_sig_mu_{yr}_{dd}.txt aC_{DB}_sb_lo_el_{yr}_{dd}.txt aC_{DB}_sb_lo_mu_{yr}_{dd}.txt aC_{DB}_sb_hi_el_{yr}_{dd}.txt aC_{DB}_sb_hi_mu_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date,DB=options.DB)
+        output_card_name='aC_WWWZ_simfit'
+        cmd = 'combineCards.py aC_WWWZ_sig_el_{yr}_{dd}.txt aC_WWWZ_sig_mu_{yr}_{dd}.txt aC_WWWZ_sb_lo_el_{yr}_{dd}.txt aC_WWWZ_sb_lo_mu_{yr}_{dd}.txt aC_WWWZ_sb_hi_el_{yr}_{dd}.txt aC_WWWZ_sb_hi_mu_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date)
         print (cmd)
         os.system(cmd)
     else:
         makeWS= Prepare_workspace_4limit(options.year,options.chan)
         combineCardName=makeWS.Make_input()
         output_card_name='aC_%s_%s'%(options.DB,options.chan)
-        cmd = 'combineCards.py aC_{DB}_sig_{FS}_{yr}_{dd}.txt  aC_{DB}_sb_lo_{FS}_{yr}_{dd}.txt  aC_{DB}_sb_hi_{FS}_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date,FS=options.chan,DB=options.DB)
+        cmd = 'combineCards.py aC_WWWZ_sig_{FS}_{yr}_{dd}.txt  aC_WWWZ_sb_lo_{FS}_{yr}_{dd}.txt  aC_WWWZ_sb_hi_{FS}_{yr}_{dd}.txt > {dC}_{yr}_{dd}.txt'.format(dC=output_card_name,yr=options.year,dd=date,FS=options.chan,DB=options.DB)
         print (cmd)
         os.system(cmd)
 

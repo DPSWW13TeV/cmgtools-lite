@@ -1,46 +1,55 @@
 import os,string,sys
 from plots_VVsemilep import *
 
-allvars=  theWVfullset
+allvars=  theWVultimateset #theWVfullset
 doWhat=sys.argv[1] #cards or plots
 fName='submitFile_%s.condor'%doWhat
 tmp_condor = open('jobs/%s'%fName, 'w')
-tmp_condor.write('''Executable = dummy_{dW}.sh
+tmp_condor.write('''Executable = dummy.sh
 use_x509userproxy = true
 getenv      = True                                                                                                              
-Log        = jobs/Wspc{dW}_$(ProcId).log
-Output     = jobs/Wspc{dW}_$(ProcId).out
-Error      = jobs/Wspc{dW}_$(ProcId).error
+Log        = jobs/{dW}_$(ProcId).log
+Output     = jobs/{dW}_$(ProcId).out
+Error      = jobs/{dW}_$(ProcId).error
 #requirements = (OpSysAndVer =?= "CentOS7")
-+JobFlavour = "workday"
++JobFlavour = "tomorrow"
 arguments  = $(info) 
+on_exit_remove = (ExitBySignal == False) && (ExitCode == 0)
+max_retries    = 3
+requirements   = Machine =!= LastRemoteHost
 MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"\n'''.format(dW=doWhat))
 if os.environ['USER'] in ['anmehta', 'vmilosev']:
    tmp_condor.write('+AccountingGroup = "group_u_CMST3.all"\n')
 tmp_condor.write('queue info from ( \n')
 pf=""
 lepsel={'topCR' : ["onelep"],
+        'topCR_incl' : ["onelep"],
+        'topCR_twob' : ["onelep"],
         'inclB' : ["mu","el"],
         'SR'    : ["mu","el"],
         'sig'   : ["mu","el"],
         'sb_lo' : ["mu","el"],
         'sb_hi' : ["mu","el"],
         'SB'    : ["mu","el"],
+        'wjCR_incl': ["onelep"], #"mu","el",
+        'wjCR_lo'  : ["onelep"], #"mu","el",
+        'wjCR_hi'  : ["onelep"] #"mu","el",
+
 
 }
-ops=['c3w','ccw','cb','']
-for sel in ["topCR"]:# #"SB","SR"]: #"inclB","sig"]: #,"sb_lo","sb_hi"]:  #"wjCR","topCR",]:
+ops=['c3w','cw','cb','']
+for sel in ["wjCR_incl","wjCR_lo","wjCR_hi","topCR_incl","topCR_twob"]: #"wjSB","wjCR_lo","wjCR_hi"]:#"topCR","sig","sb_lo","sb_hi"]: #"SB","SR"]: #"inclB","sig"]: #,"sb_lo","sb_hi"]:  #"wjCR","topCR",]:
    for cat in ["boosted"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
            for lep in lepsel[sel]: #["el"]: #"mu","el"]: #
               if 'plots' in  doWhat:
                  for iVar in allvars:
-                    tmp_condor.write('{cmssw} {yr} {cat} {sel} {lf} {iVar} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,cmssw=os.environ['PWD']) )
+                    tmp_condor.write('{cmssw} {yr} {cat} {sel} {lf} {doWhat} {iVar} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,cmssw=os.environ['PWD']))
               else:
-                 if "top" in sel:
-                    tmp_condor.write('{cmssw} {yr} {cat} {sel} {lf} {pf} \n'.format(cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,cmssw=os.environ['PWD'] ) )
-                    for op in ops: #still needs to be validated
-                       tmp_condor.write('{cmssw} {yr} {cat} {sel} {lf} {op} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,op=op,sel=sel,lf=lep,pf=pf ) )
+                 tmp_condor.write('{cmssw} {yr} {cat} {sel} {lf} {doWhat} {pf} \n'.format(doWhat=doWhat,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,cmssw=os.environ['PWD'] ) )
+#                    for op in ops: #still needs to be validated
+#                       tmp_condor.write('{cmssw} {yr} {cat} {sel} {lf} {op} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,op=op,sel=sel,lf=lep,pf=pf ) )
+#                    if  "top" not in sel:                    needt to do per WC
 
 tmp_condor.write(') \n')
 tmp_condor.close()

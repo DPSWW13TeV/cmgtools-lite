@@ -129,7 +129,7 @@ class MCAnalysis:
                 if k[-1] == ":": extra[k[:-1]] = v # forced overwrite
                 elif k[-1] == "+": extra[k[:-1]] += v # forced append
                 else:
-                    if k in extra: raise RuntimeError('You are trying to overwrite an extra option already set')
+                    if k in extra: raise RuntimeError('You are trying to overwrite an extra option already set',k)
                     extra[k] = v
             field = [f.strip() for f in line.split(':')]
             if len(field) == 1 and field[0] == "*":

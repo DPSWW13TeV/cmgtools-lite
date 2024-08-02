@@ -38,9 +38,9 @@ wjCR         : nBJetMedium30_Recl == 0 && (ak8sDMgt45_msoftdrop[0] < 65 || (ak8s
 bpartonFlav : JetSel_Recl_hadronFlavour == 5 ;           Disable=True
 cpartonFlav : JetSel_Recl_hadronFlavour == 4 ;           Disable=True
 lightpartonFlav : JetSel_Recl_hadronFlavour == 0 and JetSel_Recl_hadronFlavour !=4 and JetSel_Recl_hadronFlavour !=5 ;           Disable=True
-Loosebtag : JetSel_Recl_btagDeepFlavB > 0.0490 ;           Disable=True
-Medbtag : JetSel_Recl_btagDeepFlavB > 0.2783 ;           Disable=True
-Tightbtag : JetSel_Recl_btagDeepFlavB > 0.71 ;           Disable=True
+Loosebtag   : JetSel_Recl_btagDeepFlavB > 0.0490 ;           Disable=True
+Medbtag     : JetSel_Recl_btagDeepFlavB > 0.2783 ;           Disable=True
+Tightbtag   : JetSel_Recl_btagDeepFlavB > 0.71 ;           Disable=True
 
 ##plusonly : LepGood1_pdgId < 0; Disable=True
 resolved: Sum$(JetSel_Recl_pt > 30) >= 2 && nFatJetSel == 0 ;    Disable=True

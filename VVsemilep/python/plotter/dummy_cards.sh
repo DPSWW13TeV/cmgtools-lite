@@ -14,9 +14,9 @@ echo "i am in this directory ${PWD} and making this plot ${5}"
 
 #python runDPS.py --results --dW plots --year ${2} --finalState ${3}  --applylepSFs --runblind  --splitCharge
 if [[ $# -eq 6 ]]; then
-    python plots_VVsemilep.py --results --dW cards --year ${2} --finalState ${3} --sel ${4} --lf ${5} --WC ${6} --applylepSFs 
+    python plots_VVsemilep.py --results --dW cards --year ${2} --nLep 1 --finalState ${3} --sel ${4} --lf ${5}  --doWJ --applylepSFs  #--WC ${6}
 else
-    python plots_VVsemilep.py --results --dW cards --year ${2} --finalState ${3}  --sel ${4} --lf ${5} --WC ${6} --pf ${7} --applylepSFs
+    python plots_VVsemilep.py --results --dW cards --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --WC ${6} --doWJ --pf ${7} --applylepSFs
 fi
 
 

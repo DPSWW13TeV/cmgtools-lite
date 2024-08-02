@@ -25,7 +25,9 @@ class input_WJestimation(Module):
         self.pmet_vars=['pt','phi']
         self.shift=["Up","Down"]
         self.vars=['pt','eta','phi','mass','particleNetMD_Xqq','msoftdrop','particleNetMD_Xbb','particleNetMD_Xcc','particleNetMD_QCD','pNetWtagscore','pNetWtagSF']
-        if self.isMC: self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
+        if self.isMC: 
+            self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
+            self.vars+=["msoftdrop_"+jec+sh for jec in self.jecs for sh in self.shift]
         self.pmet_uncert=['JES','JER','Unclustered']
         if self.isMC:self.pmet_vars+=[pmetV+uncert+sh for pmetV in self.pmet_vars for uncert in self.pmet_uncert for sh in self.shift]
         pass
@@ -134,7 +136,7 @@ class input_WJestimation(Module):
         #       self.out.fillBranch('pmet_phi',event.PuppiMET_phi if tot_sel else -999.0)
         self.out.fillBranch('trigger1e',event.Trigger_1e if tot_sel else 0)
         self.out.fillBranch('trigger1m',event.Trigger_1m if tot_sel else 0)
-        self.out.fillBranch('nBJetMedium30',event.nBJetMedium30_Recl if tot_sel else 999)
+        self.out.fillBranch('nBJetMedium30',event.nBJetMedium30_Recl if tot_sel else -999)
                 
         self.out.fillBranch('dR_fjlep',deltaR(leps[0].eta,leps[0].phi,jets[0].eta,jets[0].phi) if tot_sel else 999.0)
         self.out.fillBranch('dphi_fjlep',abs(deltaPhi(leps[0].phi,jets[0].phi)) if tot_sel else -999.0 )

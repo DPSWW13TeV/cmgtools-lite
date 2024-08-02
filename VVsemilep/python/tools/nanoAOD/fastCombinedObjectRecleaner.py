@@ -41,7 +41,7 @@ class fastCombinedObjectRecleaner(Module):
         self.vars_taus_uchar = [] ##am['idDeepTau2017v2p1VSjet','idDeepTau2017v2p1VSe','idDeepTau2017v2p1VSmu']
         self.vars_jets = [("pt","pt_nom") if self.isMC and len(self.variations) else 'pt',"btagDeepB","qgl",'btagDeepFlavB'] + [ 'pt_%s%s'%(x,y) for x in self.variations for y in ["Up","Down"]] 
         self.vars_jets_int = (["hadronFlavour"] if self.isMC else [])
-        self.vars_fatjets = [("pt","pt_nom") if self.isMC and len(self.variations) else 'pt',"btagDeepB"] + [ 'pt_%s%s'%(x,y) for x in self.variations for y in ["Up","Down"]] ##am
+        self.vars_fatjets = [("pt","pt_nom") if self.isMC and len(self.variations) else 'pt',"btagDeepB"] + [ 'pt_%s%s'%(x,y) for x in self.variations for y in ["Up","Down"]] +  [ 'msoftdrop_%s%s'%(x,y) for x in self.variations for y in ["Up","Down"]] #
         #,"deepTag_WvsQCD",'deepTag_ZvsQCD','deepTag_TvsQCD','deepTag_QCDothers','deepTag_QCD','deepTagMD_ZbbvsQCD','deepTagMD_ZvsQCD','deepTagMD_bbvsLight','deepTagMD_ccvsLight',,'particleNet_mass','msoftdrop'
         self.vars_fatjets_floats = ["particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2","msoftdrop","mass"] 
         self.vars_fatjets_int = (["hadronFlavour"] if self.isMC else []) + ["muonIdx3SJ","electronIdx3SJ"] ##am
@@ -115,10 +115,19 @@ class fastCombinedObjectRecleaner(Module):
         self._worker.setLeptons(self.nLepGood, self.LepGood_pt, self.LepGood_eta, self.LepGood_phi, self.LepGood_jetIdx)
         self._worker.setTaus(getattr(self,'n%s'%self.tauc),getattr(self,'%s_pt'%self.tauc),getattr(self,'%s_eta'%self.tauc),getattr(self,'%s_phi'%self.tauc), getattr(self,'%s_jetIdx'%self.tauc))
         jecs= ROOT.vector("TTreeReaderArray<float>*")()
+        fjecs= ROOT.vector("TTreeReaderArray<float>*")()
         if self.isMC and len(self.variations):
             for var in self.variations:
                 jecs.push_back( getattr(self, '%s_pt_%sUp'%(self.jc, var)))
                 jecs.push_back( getattr(self, '%s_pt_%sDown'%(self.jc, var)))
+
+        if self.isMC and len(self.variations):
+            for var in self.variations:
+                fjecs.push_back( getattr(self, '%s_pt_%sUp'%(self.fjc, var)))
+                fjecs.push_back( getattr(self, '%s_pt_%sDown'%(self.fjc, var)))
+                fjecs.push_back( getattr(self, '%s_msoftdrop_%sUp'%(self.fjc, var)))
+                fjecs.push_back( getattr(self, '%s_msoftdrop_%sDown'%(self.fjc, var)))
+
 
         self._worker.setJets(getattr(self,'n%s'%self.jc),getattr(self,'%s_pt'%self.jc),getattr(self,'%s_eta'%self.jc),getattr(self,'%s_phi'%self.jc), # Jet pt has already been replaced by Jet_pt_nom in mc above
                              getattr(self,'%s_%s'%(self.jc,self.jetBTag)),
@@ -127,7 +136,7 @@ class fastCombinedObjectRecleaner(Module):
         self._worker.setFatJets(getattr(self,'n%s'%self.fjc),getattr(self,'%s_pt'%self.fjc),getattr(self,'%s_eta'%self.fjc),getattr(self,'%s_phi'%self.fjc), 
                                 getattr(self,'%s_muonIdx3SJ'%(self.fjc)),
                                 getattr(self,'%s_electronIdx3SJ'%(self.fjc)),
-                             jecs
+                             fjecs
                          )
         self._workerMV.setLeptons(self.nLepGood, self.LepGood_pt, self.LepGood_eta, self.LepGood_phi, self.LepGood_mass, self.LepGood_pdgId)
 
