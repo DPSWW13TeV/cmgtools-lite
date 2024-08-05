@@ -22,8 +22,17 @@ case ${6} in
 	python plots_VVsemilep.py --results --dW plots  --doWJ --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --applylepSFs  --fCR --pv ${7} #--fCR
     ;;
     cards)
-	python plots_VVsemilep.py --results --dW cards  --doWJ --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --applylepSFs --WC ${7}  #
-    ;;
+	case ${4} in
+	    sig|sb_lo|sb_hi)
+		echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --applylepSFs --WC ${7}"
+		python plots_VVsemilep.py --results --dW cards  --doWJ --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --applylepSFs --WC ${7}
+		;;
+	    *)
+		echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --applylepSFs "
+	    python plots_VVsemilep.py --results --dW cards  --doWJ --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --applylepSFs 
+	    ;;
+	esac
+	;;
 esac
 
 
