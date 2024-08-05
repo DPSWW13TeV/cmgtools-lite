@@ -37,19 +37,21 @@ lepsel={'topCR' : ["onelep"],
 
 
 }
-ops=['c3w','cw','cb','']
-for sel in ["wjCR_incl","wjCR_lo","wjCR_hi","topCR_incl","topCR_twob"]: #"wjSB","wjCR_lo","wjCR_hi"]:#"topCR","sig","sb_lo","sb_hi"]: #"SB","SR"]: #"inclB","sig"]: #,"sb_lo","sb_hi"]:  #"wjCR","topCR",]:
+ops=['c3w']#,'cw','cb','']
+for sel in ["wjCR_incl","wjCR_lo","wjCR_hi","topCR_incl","topCR_twob","sig","sb_lo","sb_hi"]:#"topCR","sig","sb_lo","sb_hi"]: #"SB","SR"]
    for cat in ["boosted"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
-           for lep in lepsel[sel]: #["el"]: #"mu","el"]: #
+           for lep in lepsel[sel]: 
               if 'plots' in  doWhat:
                  for iVar in allvars:
                     tmp_condor.write('{cmssw} {yr} {cat} {sel} {lf} {doWhat} {iVar} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,cmssw=os.environ['PWD']))
               else:
-                 tmp_condor.write('{cmssw} {yr} {cat} {sel} {lf} {doWhat} {pf} \n'.format(doWhat=doWhat,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,cmssw=os.environ['PWD'] ) )
-#                    for op in ops: #still needs to be validated
-#                       tmp_condor.write('{cmssw} {yr} {cat} {sel} {lf} {op} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,op=op,sel=sel,lf=lep,pf=pf ) )
-#                    if  "top" not in sel:                    needt to do per WC
+                 if 'wj' in sel or 'top' in sel: 
+                    tmp_condor.write('{cmssw} {yr} {cat} {sel} {lf} {doWhat} {pf} \n'.format(doWhat=doWhat,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,cmssw=os.environ['PWD'] ) )
+                 else:
+                    for op in ops: #still needs to be validated
+                       tmp_condor.write('{cmssw} {yr} {cat} {sel} {lf} {doWhat} {op} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,op=op ) )
+
 
 tmp_condor.write(') \n')
 tmp_condor.close()

@@ -15,7 +15,7 @@ $alias : wzaTGC : WZ.*cw.*|WZ.*cb.*|WZ.*c3w.*|
 
 $alias : PromptFromMC : $top|$vvsl|$qcd|$aTGC
 $alias : AllFromMC    : $top|$vvsl|$qcd|$aTGC|$wj
-$alias : PNET   : $top|$vvsl|$dy
+$alias : PNET   : $top|$vvsl|$dy|$aTGC
 $alias : FRData : data_fakes|.*_promptsub
 $alias : FRAll  : data_fakes|.*_promptsub|TT_FR_QCD
 
