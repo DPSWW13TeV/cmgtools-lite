@@ -160,11 +160,13 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     if doWhat == "plots" and ('SR' in selection or "sig" in selection):
         blinded=True
     for pR in selection:
-        if 'top' in pR and fitCR:         fittodata.append('tt');
+        if 'topCR_twob' in pR and fitCR:         fittodata.append('tt');
+        if 'topCR_oneb' in pR and fitCR:         fittodata.append('singletop');
         if 'wj' in pR and fitCR:          fittodata.append('WJets');
         exclude = ' ' #--xu CMS_vvsl18_pNetscore' if 'wjCR' not in pR else  ' '
         #signal= if3(pR == 'SR',if3(nLep > 1,'--sp ZV','--sp aTGC_WW --sp aTGC_WZ'), if3('top' in pR, ' --sp tt --sp singletop', ' --sp WJets'))
-        signal= if3(pR == 'SR' or pR == 'sig',if3(nLep > 1,'--sp ZV','--sp .*ccw.* --sp .*cb.*'), if3('top' in pR, ' --sp tt ', ' --sp WJets'))
+        signal = if3(pR == 'SR' or pR == 'sig','--sp .*cw.* --sp .*cb.*', if3('topCR' in pR, if3(pR == 'topCR_oneb',' --sp tt ',' --sp singletop '), ' --sp WJets'))
+
         for LF in lepflav:
             for FS in finalState:
                 binName = '{jet}_{lep}_{pR}'.format(lep=LF,jet=FS,pR=pR)
@@ -200,7 +202,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     if "top" in pR or 'wj' in pR: 
                         mWV_dist=" {here} {binning} ".format(here=mWV_fxn,binning=mWV_binning)
                         binNamecards=binName+"_"+year
-                        extraoptscards= ' --xp Others --xp .*quad.* --binname %s %s '%(binNamecards, '--xp QCD ' if 'top' in pR else '')
+                        extraoptscards= ' --xp Others --xp .*quad.*  --sp WW_sm --sp WZ_sm  --binname %s %s '%(binNamecards, '--xp QCD ' if 'top' in pR else '')
                         if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
                         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
                     else:
@@ -313,7 +315,7 @@ if __name__ == '__main__':
     parser.add_option('--applylepSFs',dest='applylepSFs', action='store_true', default=False, help='apply lep id/iso SFs')
     parser.add_option('--runblind', dest='blinded', action='store_true' , default=False , help='make plots without datat points')
     parser.add_option('--genD', dest='genDressed', action='store_true' , default=False , help='use dressed leptons for gen lvl plots')
-    parser.add_option('--sel',dest='sel', action='append', default=[], help='make plots with SR/wjCR/wjCR_lo/wjCR_hi/inclB/topCR/sig/sb_lo/sb_hi')
+    parser.add_option('--sel',dest='sel', action='append', default=[], help='make plots with SR/wjCR/wjCR_lo/wjCR_hi/inclB/topCR_oneb/topCR_twobsig/sb_lo/sb_hi')
     parser.add_option('--dCF',dest='dCF', action='store_true', default=False , help='cutflow with MC & plot shapes w/o uncert')
     parser.add_option('--fCR',dest='fCR', action='store_true', default=False , help='fit to data in the CR')
     parser.add_option('--wjD',dest='wjD', type='string', default="2023-12-19", help='date to pick WJ workspace from')

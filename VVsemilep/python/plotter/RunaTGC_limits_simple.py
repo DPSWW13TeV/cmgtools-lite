@@ -2,7 +2,7 @@ import optparse, subprocess, datetime, math, array, copy, os, re, sys,shutil
 
 
 outDir="/eos/user/a/anmehta/www/VVsemilep/EFT_nllscans/"
-date="2024-07-29"
+#date="2024-07-29"
 
 ##date_wjest_ws="" AM add an option to replace the existing date if needed
 
@@ -11,21 +11,23 @@ def combineCards(yr,FS,WC,pf,usetopCR=True):
     eft_sig='_%s'%WC if len(WC)>0 else ''
     if FS == "onelep":
         finalDC='dc_{date_dC}_{FS}_{yr}{op}.txt'.format(date_dC=date_dC,yr=yr,op=WC,FS=FS)
-        CRpart= '''top_cr_{year}=Cards/cards_{date_dC}_doWJ_boosted_onelep_topCR_{year}/boosted_onelep_topCR_{year}.txt'''.format(year=yr,date_dC=date_dC)
-        cmd1 = 'combineCards.py el_sb_lo_{year}=Cards/cards_{date_dC}_doWJ_boosted_el_sb_lo_{year}/boosted_el_sb_lo{WC}_{year}.txt  el_sb_hi_{year}=Cards/cards_{date_dC}_doWJ_boosted_el_sb_hi_{year}/boosted_el_sb_hi{WC}_{year}.txt   el_sig_{year}=Cards/cards_{date_dC}_doWJ_boosted_el_sig_{year}/boosted_el_sig{WC}_{year}.txt  mu_sb_lo_{year}=Cards/cards_{date_dC}_doWJ_boosted_mu_sb_lo_{year}/boosted_mu_sb_lo{WC}_{year}.txt  mu_sb_hi_{year}=Cards/cards_{date_dC}_doWJ_boosted_mu_sb_hi_{year}/boosted_mu_sb_hi{WC}_{year}.txt   mu_sig_{year}=Cards/cards_{date_dC}_doWJ_boosted_mu_sig_{year}/boosted_mu_sig{WC}_{year}.txt {topCR}  > {dc}'.format(year=yr,date_dC=date_dC,dc=finalDC,topCR=(CRpart if usetopCR else ''),WC=eft_sig)
+        CRpart= '''top_cr_oneb_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_oneb_{year}/boosted_onelep_topCR_oneb_{year}.txt top_cr_twob_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_twob_{year}/boosted_onelep_topCR_twob_{year}.txt'''.format(year=yr,date_dC=date_dC)
+        cmd1 = 'combineCards.py el_sb_lo_{year}=Cards/cards_{date_dC}_boosted_el_sb_lo_{year}/boosted_el_sb_lo{WC}_{year}.txt  el_sb_hi_{year}=Cards/cards_{date_dC}_boosted_el_sb_hi_{year}/boosted_el_sb_hi{WC}_{year}.txt   el_sig_{year}=Cards/cards_{date_dC}_boosted_el_sig_{year}/boosted_el_sig{WC}_{year}.txt  mu_sb_lo_{year}=Cards/cards_{date_dC}_boosted_mu_sb_lo_{year}/boosted_mu_sb_lo{WC}_{year}.txt  mu_sb_hi_{year}=Cards/cards_{date_dC}_boosted_mu_sb_hi_{year}/boosted_mu_sb_hi{WC}_{year}.txt   mu_sig_{year}=Cards/cards_{date_dC}_boosted_mu_sig_{year}/boosted_mu_sig{WC}_{year}.txt {topCR}  > {dc}'.format(year=yr,date_dC=date_dC,dc=finalDC,topCR=(CRpart if usetopCR else ''),WC=eft_sig)
         print cmd1
         os.system(cmd1)
         dC = open(finalDC, 'a')
-        dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]'''.format(yr=yr))
+        dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
+norm_singletop  rateParam *{yr}  singletop 1 [0,5]'''.format(yr=yr))
         dC.close()
         return finalDC
         #commandsToRun(finalDC,pf,outDir)
     else:
         dC1='dc_{date_dC}_{FS}_{yr}{op}.txt'.format(date_dC=date_dC,yr=yr,op=WC,FS=FS)
-        cmd1 = 'combineCards.py {FS}_sb_lo_{year}=Cards/cards_{date_dC}_doWJ_boosted_{FS}_sb_lo_{year}/boosted_{FS}_sb_lo{WC}_{year}.txt  {FS}_sb_hi_{year}=Cards/cards_{date_dC}_doWJ_boosted_{FS}_sb_hi_{year}/boosted_{FS}_sb_hi{WC}_{year}.txt   {FS}_sig_{year}=Cards/cards_{date_dC}_doWJ_boosted_{FS}_sig_{year}/boosted_{FS}_sig{WC}_{year}.txt top_cr_{year}=Cards/cards_{date_dC}_doWJ_boosted_onelep_topCR_{year}/boosted_onelep_topCR_{year}.txt  > {dc}'.format(year=yr,date_dC=date_dC,dc=dC1,FS=FS,WC=eft_sig)
+        cmd1 = 'combineCards.py {FS}_sb_lo_{year}=Cards/cards_{date_dC}_boosted_{FS}_sb_lo_{year}/boosted_{FS}_sb_lo{WC}_{year}.txt  {FS}_sb_hi_{year}=Cards/cards_{date_dC}_boosted_{FS}_sb_hi_{year}/boosted_{FS}_sb_hi{WC}_{year}.txt   {FS}_sig_{year}=Cards/cards_{date_dC}_boosted_{FS}_sig_{year}/boosted_{FS}_sig{WC}_{year}.txt top_cr_twob_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_twob_{year}/boosted_onelep_topCR_twob_{year}.txt top_cr_oneb_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_oneb_{year}/boosted_onelep_topCR_oneb_{year}.txt  > {dc}'.format(year=yr,date_dC=date_dC,dc=dC1,FS=FS,WC=eft_sig)
         os.system(cmd1)
         dC = open(dC1, 'a')
-        dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5] '''.format(yr=yr,FS=FS))
+        dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
+norm_singletop  rateParam *{yr}  singletop 1 [0,5]'''.format(yr=yr))
         dC.close()
         
         return dC
@@ -62,7 +64,7 @@ if __name__ == '__main__':
 
     #year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2024-07-29" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2024-08-06" #datetime.date.today().isoformat() #"2021-12-02" #
     pf=""
     extra="" #_bb17c50f50" #_VGN50"
     #vartopCR="mWV"+extra

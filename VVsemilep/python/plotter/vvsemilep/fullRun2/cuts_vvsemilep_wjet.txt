@@ -29,7 +29,8 @@ wjCR_incl   : nBJetMedium30 == 0 && (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_ms
 wjCR_lo     : nBJetMedium30 == 0 && Selak8Jet1_msoftdrop < 65 ;    Disable=True
 wjCR_hi     : nBJetMedium30 == 0 &&  Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150;    Disable=True
 topCR_incl  : nBJetMedium30 > 0  && Selak8Jet1_msoftdrop < 150 && Selak8Jet1_msoftdrop < 150;           Disable=True
-topCR_twob  : nBJetMedium30 > 1  && Selak8Jet1_msoftdrop < 150 && Selak8Jet1_msoftdrop < 150;           Disable=True
+topCR_twob  : nBJetMedium30 == 2  && Selak8Jet1_msoftdrop < 150 && Selak8Jet1_msoftdrop < 150;           Disable=True
+topCR_oneb  : nBJetMedium30 == 1  && Selak8Jet1_msoftdrop < 150 && Selak8Jet1_msoftdrop < 150;           Disable=True
 inclB       : nFj > 0 ; Disable=True
 
 

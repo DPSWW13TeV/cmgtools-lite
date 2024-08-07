@@ -32,7 +32,11 @@ Mwvuppercut  : mass_WV(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8s
 
 bVeto        : nBJetMedium30_Recl == 0  ;           Disable=True
 inclB        : nak8sDMgt45 > 0 ; Disable=True
-topCR        : (nBJetMedium30_Recl > 0 && nak8sDMgt45 > 0 && ak8sDMgt45_msoftdrop[0] < 150 && ak8sDMgt45_msoftdrop[0] >= 45) ;           Disable=True
+topCR_incl        : (nBJetMedium30_Recl > 0 && nak8sDMgt45 > 0 && ak8sDMgt45_msoftdrop[0] < 150 && ak8sDMgt45_msoftdrop[0] >= 45) ;           Disable=True
+topCR_twob        : (nBJetMedium30_Recl == 2 && nak8sDMgt45 > 0 && ak8sDMgt45_msoftdrop[0] < 150 && ak8sDMgt45_msoftdrop[0] >= 45) ;           Disable=True
+topCR_oneb        : (nBJetMedium30_Recl == 1 && nak8sDMgt45 > 0 && ak8sDMgt45_msoftdrop[0] < 150 && ak8sDMgt45_msoftdrop[0] >= 45) ;           Disable=True
+
+
 wjCR         : nBJetMedium30_Recl == 0 && (ak8sDMgt45_msoftdrop[0] < 65 || (ak8sDMgt45_msoftdrop[0] > 105 && ak8sDMgt45_msoftdrop[0] < 150)) ;    Disable=True 
 
 bpartonFlav : JetSel_Recl_hadronFlavour == 5 ;           Disable=True

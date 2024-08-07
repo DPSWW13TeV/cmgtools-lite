@@ -15,21 +15,31 @@ echo "i am in this directory ${PWD} and making this plot ${5}"
 
 
 
-case ${6} in
+case ${2} in
     plots)	
 	#ls /eos/user/a/anmehta/www/ || exit 11
 	ls /eos/user || exit 11
-	python plots_VVsemilep.py --results --dW plots  --doWJ --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --applylepSFs  --fCR --pv ${7} #--fCR
+	python plots_VVsemilep.py --results --dW plots  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs  --fCR --pv ${7} #--fCR
     ;;
     cards)
-	case ${4} in
+	case ${5} in
 	    sig|sb_lo|sb_hi)
-		echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --applylepSFs --WC ${7}"
-		python plots_VVsemilep.py --results --dW cards  --doWJ --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --applylepSFs --WC ${7}
+		if [[ $# -lt 8 ]]; then
+		    echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --WC ${7}"
+		    python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --WC ${7} 
+		else
+		    echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --WC ${7} --pf ${8}"
+		    python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --WC ${7} --pf ${8}
+		fi
 		;;
 	    *)
-		echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --applylepSFs "
-	    python plots_VVsemilep.py --results --dW cards  --doWJ --year ${2} --nLep 1 --finalState ${3}  --sel ${4} --lf ${5} --applylepSFs 
+		if [[ $# -lt 7 ]]; then
+		    echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs"
+		    python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs 
+		else
+		    echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --pf ${7}"
+		    python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --pf ${7}
+		fi
 	    ;;
 	esac
 	;;

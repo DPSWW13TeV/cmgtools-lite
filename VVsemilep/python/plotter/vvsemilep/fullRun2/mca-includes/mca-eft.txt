@@ -1,4 +1,3 @@
-
 WW_SMEFT_cW :   WmWpToLmNujj_SMEFT_LO : xsec : LHEReweightingWeight[2]; FillColor=ROOT.kGreen-3,   Label="W^{\#pm}W^{\#mp} c_{W}", genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
 WW_SMEFT_cW :   WpWmToLpNujj_SMEFT_LO : xsec : LHEReweightingWeight[2]; FillColor=ROOT.kGreen-3,   Label="W^{\#pm}W^{\#mp} c_{W}", genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
 WZ_SMEFT_cW :   WpZToLpNujj_SMEFT_LO  : xsec : LHEReweightingWeight[2]; FillColor=ROOT.kGreen-9,   Label="W^{\#pm}Z c_{W}"       ,LineStyle=ROOT.kDotted, genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
@@ -218,61 +217,6 @@ pt05sm_lin_quad_c3w : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec :
 
 
 
-tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="t\#bart", FriendsSimple="{P}/2_toppT_rw/"
-
-
-
-
-
-Others : QCD_Pt15to20_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt20to30_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt30to50_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt50to80_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt80to120_EMEnriched  :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt120to170_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt170to300_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt300toInf_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt20to30_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt80to120_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt15to20_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt170to250_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt20to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt250toInf_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt30to80_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-
-
-
-
-
-
-
-#tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="t\#bart", FriendsSimple="{P}/2_toppT_rw/"
-
-
-##tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<700) ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
-#Top_pTrw
-
-
-highmass_tt : TT_mtt1ktoinf: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
-highmass_tt : TT_mttp7kto1k: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
-
-
-singletop   : T_sch                : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : Tbar_tch             : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : T_tch                : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : T_tWch_noFullyHad    : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : Tbar_tWch_noFullyHad : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top" #, years="2018"
 
 
 
