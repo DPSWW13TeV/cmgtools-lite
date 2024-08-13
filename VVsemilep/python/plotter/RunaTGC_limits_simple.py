@@ -11,13 +11,13 @@ def combineCards(yr,FS,WC,pf,usetopCR=True):
     eft_sig='_%s'%WC if len(WC)>0 else ''
     if FS == "onelep":
         finalDC='dc_{date_dC}_{FS}_{yr}{op}.txt'.format(date_dC=date_dC,yr=yr,op=WC,FS=FS)
-        CRpart= '''top_cr_oneb_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_oneb_{year}/boosted_onelep_topCR_oneb_{year}.txt top_cr_twob_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_twob_{year}/boosted_onelep_topCR_twob_{year}.txt'''.format(year=yr,date_dC=date_dC)
-        cmd1 = 'combineCards.py el_sb_lo_{year}=Cards/cards_{date_dC}_boosted_el_sb_lo_{year}/boosted_el_sb_lo{WC}_{year}.txt  el_sb_hi_{year}=Cards/cards_{date_dC}_boosted_el_sb_hi_{year}/boosted_el_sb_hi{WC}_{year}.txt   el_sig_{year}=Cards/cards_{date_dC}_boosted_el_sig_{year}/boosted_el_sig{WC}_{year}.txt  mu_sb_lo_{year}=Cards/cards_{date_dC}_boosted_mu_sb_lo_{year}/boosted_mu_sb_lo{WC}_{year}.txt  mu_sb_hi_{year}=Cards/cards_{date_dC}_boosted_mu_sb_hi_{year}/boosted_mu_sb_hi{WC}_{year}.txt   mu_sig_{year}=Cards/cards_{date_dC}_boosted_mu_sig_{year}/boosted_mu_sig{WC}_{year}.txt {topCR}  > {dc}'.format(year=yr,date_dC=date_dC,dc=finalDC,topCR=(CRpart if usetopCR else ''),WC=eft_sig)
+        CRpart= '''top_cr_incl_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_incl_{year}/boosted_onelep_topCR_incl_{year}.txt '''.format(year=yr,date_dC=date_dC)
+        cmd1 = 'combineCards.py boosted_onelep_wjCR_incl_{year}=Cards/cards_{date_dC}_boosted_onelep_wjCR_incl_{year}/boosted_onelep_wjCR_incl_{year}.txt  el_sig_{year}=Cards/cards_{date_dC}_boosted_el_sig_{year}/boosted_el_sig{WC}_{year}.txt  mu_sig_{year}=Cards/cards_{date_dC}_boosted_mu_sig_{year}/boosted_mu_sig{WC}_{year}.txt {topCR}  > {dc}'.format(year=yr,date_dC=date_dC,dc=finalDC,topCR=(CRpart if usetopCR else ''),WC=eft_sig)
         print cmd1
         os.system(cmd1)
         dC = open(finalDC, 'a')
         dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
-norm_singletop  rateParam *{yr}  singletop 1 [0,5]'''.format(yr=yr))
+norm_WJets rateParam *{yr}  WJets 1 [0,5]'''.format(yr=yr))
         dC.close()
         return finalDC
         #commandsToRun(finalDC,pf,outDir)
@@ -27,6 +27,7 @@ norm_singletop  rateParam *{yr}  singletop 1 [0,5]'''.format(yr=yr))
         os.system(cmd1)
         dC = open(dC1, 'a')
         dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
+norm_WJets rateParam *{yr}  WJets 1 [0,5]
 norm_singletop  rateParam *{yr}  singletop 1 [0,5]'''.format(yr=yr))
         dC.close()
         
@@ -49,10 +50,10 @@ def commandsToRun(dc,pf,outDir,WC):
     
     os.system("cp %s.txt %s" %(dCard_str_wpath,outDir))
     os.system("text2workspace.py  %s.txt -P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative  --X-allow-no-signal  -o  model_%s.root  --PO eftOperators=%s" %(dCard_str,dCard_str,WC)) #  --X-allow-no-signal
-    os.system("combine -M MultiDimFit model_%s.root  --algo=grid --points 1000  -m 125  -t -1  --redefineSignalPOIs k_%s  --freezeParameters r --setParameters r=1  --setParameterRanges  k_%s=-10,10 --X-rtd MINIMIZER_MaxCalls=400000  --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT  --alignEdges 1  --verbose 9"%(dCard_str_wpath,WC,WC))
-    os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_%s  -lumi 58 -cms -preliminary -o %s/scan_%s_%s.png -xlabel \"c_{%s}*1.0 [TeV^{-2}]\"" %(WC,outDir,dCard_str,pf,WC))
-    os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_%s  -lumi 58 -cms -preliminary -o %s/scan_%s_%s.pdf -xlabel \"c_{%s}*1.0 [TeV^{-2}]\"" %(WC,outDir,dCard_str,pf,WC))
-#    os.system("combine  -M FitDiagnostics  model_%s.root  -t -1 --redefineSignalPOIs k_cwww --freezeParameters r --cminDefaultMinimizerStrategy 0 --toysFrequentist --setParameters r=1    --setParameterRanges k_cwww=-10,10 --robustFit=1  --verbose 3 --saveNormalizations  --saveShapes --plots "%(dCard_str_wpath)) #--plots --toysFile higgsCombineTest.GenerateOnly.mH125.123456.root -t -1 
+    os.system("combine -M MultiDimFit model_%s.root  --algo=grid --points 1000  -m 125  -t -1  --redefineSignalPOIs k_%s  --freezeParameters r --setParameters r=1  --setParameterRanges  k_%s=-5,5 --X-rtd MINIMIZER_MaxCalls=400000  --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT  --alignEdges 1  --verbose 1"%(dCard_str_wpath,WC,WC))
+    os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_%s  -lumi 58 -cms -preliminary -o %s/scan_%s_%s.png -xlabel \"c_{%s} [TeV^{-2}]\"" %(WC,outDir,dCard_str,pf,WC))
+    os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_%s  -lumi 58 -cms -preliminary -o %s/scan_%s_%s.pdf -xlabel \"c_{%s} [TeV^{-2}]\"" %(WC,outDir,dCard_str,pf,WC))
+    os.system("combine  -M FitDiagnostics  model_%s.root  -t -1 --expectSignal 1  --redefineSignalPOIs k_%s --freezeParameters r,k_%s --cminDefaultMinimizerStrategy 0 --toysFrequentist  --robustFit=1  --setParameters r=1"%(dCard_str,WC,WC)) #--saveNormalizations  --saveShapes --plots  
 
     return True
 
@@ -64,14 +65,9 @@ if __name__ == '__main__':
 
     #year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2024-08-06" #datetime.date.today().isoformat() #"2021-12-02" #
-    pf=""
+    date="2024-08-09" #datetime.date.today().isoformat() #"2021-12-02" #
+    pf="HMTS"
     extra="" #_bb17c50f50" #_VGN50"
-    #vartopCR="mWV"+extra
-    #baseDir=os.getcwd()
-    #combdir='Cards/combination/'
-    #outdir=os.path.join(baseDir,combdir)
-    #print outdir
     #cspf=['plusplus','minusminus']
     #dC16=combineCards("2016")
     #dC17=combineCards("2017")
@@ -107,3 +103,5 @@ if __name__ == '__main__':
 ## text2workspace.py test.txt  -P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative  --X-allow-no-signal  -o  model_test.root  --PO eftOperators=cb 
 
 ## combine -M MultiDimFit model_test.root  --algo=grid --points 1000  -m 125  -t -1  --redefineSignalPOIs k_cb  --freezeParameters r --setParameters r=1  --setParameterRanges  k_cb=-10,10 --X-rtd MINIMIZER_MaxCalls=400000  --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT  --alignEdges 1 --verbose 9
+#        cmd1 = 'combineCards.py el_sb_lo_{year}=Cards/cards_{date_dC}_boosted_el_sb_lo_{year}/boosted_el_sb_lo{WC}_{year}.txt  el_sb_hi_{year}=Cards/cards_{date_dC}_boosted_el_sb_hi_{year}/boosted_el_sb_hi{WC}_{year}.txt   el_sig_{year}=Cards/cards_{date_dC}_boosted_el_sig_{year}/boosted_el_sig{WC}_{year}.txt  mu_sb_lo_{year}=Cards/cards_{date_dC}_boosted_mu_sb_lo_{year}/boosted_mu_sb_lo{WC}_{year}.txt  mu_sb_hi_{year}=Cards/cards_{date_dC}_boosted_mu_sb_hi_{year}/boosted_mu_sb_hi{WC}_{year}.txt   mu_sig_{year}=Cards/cards_{date_dC}_boosted_mu_sig_{year}/boosted_mu_sig{WC}_{year}.txt {topCR}  > {dc}'.format(year=yr,date_dC=date_dC,dc=finalDC,topCR=(CRpart if usetopCR else ''),WC=eft_sig)
+#        CRpart= '''top_cr_oneb_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_oneb_{year}/boosted_onelep_topCR_oneb_{year}.txt top_cr_twob_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_twob_{year}/boosted_onelep_topCR_twob_{year}.txt'''.format(year=yr,date_dC=date_dC)

@@ -7,42 +7,31 @@ echo $PWD
 
 cd ${1}
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-echo "i am in this directory ${PWD}"
 eval `scram runtime -sh`
-
-
-echo "i am in this directory ${PWD} and making this plot ${5}"
+echo "i am in this directory ${PWD} and doingthis ${2}"
 
 
 
 case ${2} in
     plots)	
 	#ls /eos/user/a/anmehta/www/ || exit 11
-	ls /eos/user || exit 11
-	python plots_VVsemilep.py --results --dW plots  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs  --fCR --pv ${7} #--fCR
+	ls /eos/user/ || exit 11
+	python plots_VVsemilep.py --results --dW plots  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs  --pv ${7} #--dCF #--runblind #--fCR
     ;;
     cards)
-	case ${5} in
-	    sig|sb_lo|sb_hi)
-		if [[ $# -lt 8 ]]; then
-		    echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --WC ${7}"
-		    python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --WC ${7} 
-		else
-		    echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --WC ${7} --pf ${8}"
-		    python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --WC ${7} --pf ${8}
-		fi
-		;;
-	    *)
-		if [[ $# -lt 7 ]]; then
-		    echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs"
-		    python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs 
-		else
-		    echo "python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --pf ${7}"
-		    python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --pf ${7}
-		fi
-	    ;;
-	esac
-	;;
+	basecmd="python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs  --fv ${7}"
+	cmd_more=" "
+	if [[ $# -eq 8 ]]; then
+	    cmd_more=" --WC ${8}"
+	elif [[ $# -eq 9 ]]; then
+	    cmd_more=" --WC ${8} --pf ${9}"  
+	else
+	    cmd_more=" "
+	fi;
+	echo ${basecmd} ${cmd_more}
+	${basecmd} ${cmd_more}
+	;;    
+
 esac
 
 

@@ -25,7 +25,6 @@ WV_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweight
 WV_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM "
 WV_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM "
 WV_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM "
-
 WV_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
 WV_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
 WV_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
@@ -42,12 +41,13 @@ WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweight
 WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
 WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
 WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
+
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
 
 
 WW_SMEFT_sm :   WmWpToLmNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM", genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
@@ -97,7 +97,7 @@ Others : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="othe
 
 
 
-tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="t\#bart", FriendsSimple="{P}/2_toppT_rw/"
+#tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="t\#bart", FriendsSimple="{P}/2_toppT_rw/"
 
 
 singletop   : T_sch                : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
@@ -108,16 +108,9 @@ singletop   : Tbar_tWch_noFullyHad : xsec : 1 ; FillColor=ROOT.kGray+1, Label="S
 
 
 
-
-
-
-
-
-##tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<700) ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
+tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<700) ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
 #Top_pTrw
-
-
-highmass_tt : TT_mtt1ktoinf: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
-highmass_tt : TT_mttp7kto1k: xsec : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/",SkipMe=True
+tt : TT_mtt1ktoinf: xsec : Top_pTrw ; FillColor=ROOT.kViolet+3, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/" #,SkipMe=True
+tt : TT_mttp7kto1k: xsec : Top_pTrw ; FillColor=ROOT.kViolet+3, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"#,SkipMe=True
 
 

@@ -80,7 +80,7 @@ if analysis == "main":
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",#problem
         #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
         #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf"
-        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
+        #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
         #".*SMEFT_LO.*",
         #     "WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
         #      "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
@@ -100,7 +100,7 @@ if analysis == "main":
         #"WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX",
         #"WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX"
         # diboson
-        #"ZZTo2Q2L", 
+        "ZZTo2Q2L", "ZH","GGH","VHToNonbb",
         #        "WZTo2Q2L" #, #       "WZTo1L1Nu2Q",
         #        "WWTo1L1Nu2Q",
         #"WJets.*",

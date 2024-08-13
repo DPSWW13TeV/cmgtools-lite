@@ -51,14 +51,14 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All -d WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_testel9 " # --de .*Run.* " #--dm .*SMEFT.* " #
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All --de .*Run.* " #--dm .*SMEFT.* " #
 
 	;;
 
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root -d TTSemi_pow_part3 " #--de .*Run.*  "
+	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root --de .*Run.*  "
 	;;
 
 fjtagged)
@@ -72,7 +72,7 @@ fjtaggeddata)
 
 goodfj)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root " #-d TTSemi_pow_part3 " #--de .*Run.* "
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root  -d ZZTo2Q2L_part2 -d VHToNonbb -d ZH -d GGH" # --de .*Run.* "
 	;;
 
 goodfjdata)
@@ -81,7 +81,7 @@ goodfjdata)
 
 
 wjet)		
-	basecmd="${BCORE}/0_wjest_v4  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --de .*Run.* "
+	basecmd="${BCORE}/0_wjest_v4  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  -d ZZTo2Q2L_part2 -d VHToNonbb -d ZH -d GGH" #--de .*Run.* "
 	;;
 wjet_data)
 	basecmd="${BCORE}/0_wjest_v4  ${CMGT} input_wjest_data --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --dm .*Run.*"
@@ -104,7 +104,7 @@ npdf)
 
 
 genInfo)
-	echo "genInfo ${BCORE} ${CMGT}"
+	echo "genInfo ${BCORE} ${CMGT}, this module is pretty old and no longer maintained"
 	basecmd="${BCORE}genInfo/ ${CMGT} whad_info --de .*Run.* "
 	echo $basecmd
 	;; 

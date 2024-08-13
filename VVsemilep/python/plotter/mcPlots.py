@@ -513,7 +513,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     line.Draw("L")
     for ratio in ratios:
         ratio.Draw("E SAME" if ratio.ClassName() != "TGraphAsymmErrors" else "PZ SAME");
-    leg0 = ROOT.TLegend(0.12 if doWide else 0.2, 0.75, 0.25 if doWide else 0.45, 0.85)
+    leg0 = ROOT.TLegend(0.12 if doWide else 0.18, 0.75, 0.25 if doWide else 0.45, 0.85)
     leg0.SetFillColor(0)
     leg0.SetShadowColor(0)
     leg0.SetLineColor(0)

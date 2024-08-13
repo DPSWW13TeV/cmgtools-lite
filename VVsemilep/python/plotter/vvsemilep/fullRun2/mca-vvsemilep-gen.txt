@@ -6,3 +6,9 @@ WJetsHT60 : WJetsToLNu_HT-600To800   : 10.99*1.0 : 1 ; FillColor=ROOT.kTeal+1, L
 WJetsHT80 : WJetsToLNu_HT-800To1200  : 4.936*1.0 : 1 ; FillColor=ROOT.kYellow+1, Label="WJ_htb800"
 WJetsHT120 : WJetsToLNu_HT-1200To2500 : 1.156*1.0 : 1 ; FillColor=ROOT.kPink+1, Label="WJ_htb1200"  
 WJetsHT250 : WJetsToLNu_HT-2500ToInf  : 0.02623*1.21 : 1 ; FillColor=ROOT.kCyan, Label="WJ_htb2500"
+
+
+incl_mc : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-mc.txt" 
+incl_eft : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-eft.txt"
+incl_wj : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-wj.txt" 
+

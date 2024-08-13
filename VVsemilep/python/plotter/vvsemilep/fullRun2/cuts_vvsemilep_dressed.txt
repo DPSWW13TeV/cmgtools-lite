@@ -2,20 +2,18 @@ alwaystrue: 1
 singlelep   : nSeldLeps == 1 
 leadlep     : GenDressedLepton_pt[0] > 50 ; Disable=True
 phi_var     : (nSeldLeps == 1  && SeldLep1_pt > 50 && nSelGak8Jets > 0 && SelGak8Jet1_mass > 45 && GenMET_pt > 110) ; Disable=True
-phi_var_ptWlep   :  pt_2(SeldLep1_pt,SeldLep1_phi,GenMET_pt,GenMET_phi) > 150 ; Disable=True
+phi_var_ptWlep :  pt_2(SeldLep1_pt,SeldLep1_phi,GenMET_pt,GenMET_phi) > 150 ; Disable=True
 phi_var_mWV : if3(abs(SeldLep1_pdgId) == 13, mass_WV_mu(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0),mass_WV_el(SelGak8Jet1_pt,SelGak8Jet1_eta,SelGak8Jet1_phi,SelGak8Jet1_mass,SeldLep1_pt,SeldLep1_eta,SeldLep1_phi,GenMET_pt,GenMET_phi,0) ) > 950; Disable=True
 
 
 etacutl1    : abs(GenDressedLepton_eta[0]) < if3(abs(GenDressedLepton_pdgId[0])==13,2.4,2.5) ; Disable=True
 etael1      : (abs(GenDressedLepton_pdgId[0]) == 13 || (abs(GenDressedLepton_eta[0]) < 1.442 || abs(GenDressedLepton_eta[0]) > 1.556 && abs(GenDressedLepton_pdgId[0])==11)); Disable=True
+
 fatjet      : Sum$(GenJetAK8_pt > 200 && abs(GenJetAK8_eta) < 2.4 && GenJetAK8_mass > 40) > 0  ; Disable=True
-leadfatjet      : GenJetAK8_pt[0] > 200 && abs(GenJetAK8_eta[0]) < 2.4 && GenJetAK8_mass[0] > 40 ; Disable=True
+leadfatjet  : GenJetAK8_pt[0] > 200 && abs(GenJetAK8_eta[0]) < 2.4 && GenJetAK8_mass[0] > 40 ; Disable=True
+ptWlep      :  pt_2(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi) > 150 ; Disable=True
+mWV         :  mass_WV(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0) > 950; Disable=True
 
-ptWlep:  pt_2(GenDressedLepton_pt[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi) > 150 ; Disable=True
-
-mWV : if3(abs(GenDressedLepton_pdgId[0]) == 13, mass_WV_mu(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0),mass_WV_el(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0) ) > 950; Disable=True
-
-WhadpT : genwhad_pt > 200 ; Disable=True
 
 ttbar       : Sum$(Genalltops_status==22) ==2 ; Disable=True
 nQ          : Sum$(abs(LHEPart_pdgId) < 6) > 2 ; Disable=True
