@@ -1,7 +1,6 @@
 import os,string,sys
 from plots_VVsemilep import *
 
-
 allvars=  theWVultimateset
 doWhat=sys.argv[1] #cards or plots
 fName='submitFile_%s.condor'%doWhat

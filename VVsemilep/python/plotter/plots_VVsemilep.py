@@ -278,32 +278,33 @@ def alphaRatio(year,nLep,lepflav,finalState,applylepSFs,postfix,plotvars,doWJ):
 ########################################
 def makesimpleplots(year,useDressed=True):
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    MCfriends   = ['phi_var_v2']#2_toppT_rw']
-    Datafriends = []
-    friends     = []
+    #MCfriends   = ['phi_var_v2']#2_toppT_rw']
+    #Datafriends = []
+    #friends     = []
     targetdir   = os.path.join(eos,'GenLevel/{date}{pf}/'.format(date=date,pf=('_dressed' if useDressed else '') ))
-    fmca        = 'vvsemilep/fullRun2/mca-vvsemilep-gen.txt'
+    #fmca        = 'vvsemilep/fullRun2/mca-vvsemilep-gen.txt'
     fsyst       = ''
-    fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep_dressed.txt'
+    fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' #_dressed.txt'
     bareNano    = False
-    cutFlow     = False
-    processes   = ['WW_sm','SM_WW','SM_WZ','WZ_sm']
+    cutFlow     = True
+    processes   = ['SM_WW','SM_WZ','tt','WJets','singletop','Others'] #['WW_sm']#,'SM_WW','SM_WZ','WZ_sm']
     #'WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT80','WJetsHT60','WJetsHT40','WJetsHT20']
     #cuts_onelep   = ['singlelep']
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
 
-    showratio=True
+    showratio=False
     applylepSFs=False
     nLep=1
-    plotvars   = ['nVert','SeldLep1_eta','SeldLep1_pt','SelGak8Jet1_pt','SelGak8Jet1_mass']
+    plotvars   = ['PuppiMET_pt']#'nVert','SeldLep1_eta','SeldLep1_pt','SelGak8Jet1_pt','SelGak8Jet1_mass']
 
     disable   = []; 
     #enable=['ttbar','nQ']#'WhadpT','mWV','leadfatjet','fatjet','ptWlep','leadlep','etacutl1'] #'ttbar','nQ']
-    enable=['ptWlep','mWV','fatjet']#'phi_var']#,'ptWlep']
+    #enable=['ptWlep','mWV','fatjet']#'phi_var']#,'ptWlep']
+    enable = ['ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','Mjuppercut','Mwvuppercut']
     ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  2.15'
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
-    anything = '  --showRatio  --ratioNums WW_sm --ratioDen SM_WW   --ratioYLabel=aTGC/SM --plotmode nostack' #sm,sm_lin_quad_c3w,aTGC_WW_SM_incl --ratioDen WW  #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' 
+    anything = ' --plotmode nostack  '#--showRatio  --ratioNums WW_sm --ratioDen SM_WW   --ratioYLabel=aTGC/SM --plotmode nostack' #sm,sm_lin_quad_c3w,aTGC_WW_SM_incl --ratioDen WW  #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' 
     extraopts = ratio + spam + legends + anything
     makeplots  = ['{}'.format(a)  for a in plotvars]
 
