@@ -6,32 +6,27 @@ outDir="/eos/user/a/anmehta/www/VVsemilep/EFT_nllscans/"
 
 ##date_wjest_ws="" AM add an option to replace the existing date if needed
 
-def combineCards(yr,FS,WC,pf,usetopCR=True):
+def combineCards(yr,FS,WC,pf,vartop,varwj,varsig):
     date_dC=date+("_"+pf if len (pf) > 0 else "")
     eft_sig='_%s'%WC if len(WC)>0 else ''
+    finalDC='dc_{date_dC}_{FS}_{yr}{op}_{1}topCR_{2}wjCR_{3}sig.txt'.format(date_dC=date_dC,yr=yr,op=WC,FS=FS,1=vartop,2=varwj,3=varsig)
+    topCRpart= '''top_cr_hi_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_hi_{vartop}_{year}/boosted_onelep_topCR_hi_{year}.txt top_cr_lo_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_lo_{vartop}_{year}/boosted_onelep_topCR_lo_{year}.txt'''.format(year=yr,date_dC=date_dC,vartop=vartop)
     if FS == "onelep":
-        finalDC='dc_{date_dC}_{FS}_{yr}{op}.txt'.format(date_dC=date_dC,yr=yr,op=WC,FS=FS)
-        CRpart= '''top_cr_incl_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_incl_{year}/boosted_onelep_topCR_incl_{year}.txt '''.format(year=yr,date_dC=date_dC)
-        cmd1 = 'combineCards.py boosted_onelep_wjCR_incl_{year}=Cards/cards_{date_dC}_boosted_onelep_wjCR_incl_{year}/boosted_onelep_wjCR_incl_{year}.txt  el_sig_{year}=Cards/cards_{date_dC}_boosted_el_sig_{year}/boosted_el_sig{WC}_{year}.txt  mu_sig_{year}=Cards/cards_{date_dC}_boosted_mu_sig_{year}/boosted_mu_sig{WC}_{year}.txt {topCR}  > {dc}'.format(year=yr,date_dC=date_dC,dc=finalDC,topCR=(CRpart if usetopCR else ''),WC=eft_sig)
-        print cmd1
-        os.system(cmd1)
-        dC = open(finalDC, 'a')
-        dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
-norm_WJets rateParam *{yr}  WJets 1 [0,5]'''.format(yr=yr))
-        dC.close()
-        return finalDC
-        #commandsToRun(finalDC,pf,outDir)
+        wjCRpart_onelep= '''wj_cr_hi_{year}=Cards/cards_{date_dC}_boosted_onelep_wjCR_hi_{varwj}_{year}/boosted_onelep_wjCR_hi_{year}.txt wj_cr_lo_{year}=Cards/cards_{date_dC}_boosted_onelep_wjCR_lo_{varwj}_{year}/boosted_onelep_wjCR_lo_{year}.txt'''.format(year=yr,date_dC=date_dC,varwj=varwj)
+        wjCRpart= '''mu_wj_cr_hi_{year}=Cards/cards_{date_dC}_boosted_mu_wjCR_hi_{varwj}_{year}/boosted_mu_wjCR_hi_{year}.txt mu_wj_cr_lo_{year}=Cards/cards_{date_dC}_boosted_mu_wjCR_lo_{varwj}_{year}/boosted_mu_wjCR_lo_{year}.txt   el_wj_cr_hi_{year}=Cards/cards_{date_dC}_boosted_el_wjCR_hi_{varwj}_{year}/boosted_el_wjCR_hi_{year}.txt el_wj_cr_lo_{year}=Cards/cards_{date_dC}_boosted_el_wjCR_lo_{varwj}_{year}/boosted_el_wjCR_lo_{year}.txt'''.format(year=yr,date_dC=date_dC,varwj=varwj)
+        cmd1 = 'combineCards.py  el_sig_{year}=Cards/cards_{date_dC}_boosted_el_sig_{varsig}_{year}/boosted_el_sig{WC}_{year}.txt  mu_sig_{year}=Cards/cards_{date_dC}_boosted_mu_sig_{varsig}_{year}/boosted_mu_sig{WC}_{year}.txt {topCR}  {wjCRpart} > {dc}'.format(year=yr,date_dC=date_dC,dc=finalDC,topCR=topCRpart,wjCRpart=wjCRpart,varsig=varsig,WC=eft_sig)
     else:
-        dC1='dc_{date_dC}_{FS}_{yr}{op}.txt'.format(date_dC=date_dC,yr=yr,op=WC,FS=FS)
-        cmd1 = 'combineCards.py {FS}_sb_lo_{year}=Cards/cards_{date_dC}_boosted_{FS}_sb_lo_{year}/boosted_{FS}_sb_lo{WC}_{year}.txt  {FS}_sb_hi_{year}=Cards/cards_{date_dC}_boosted_{FS}_sb_hi_{year}/boosted_{FS}_sb_hi{WC}_{year}.txt   {FS}_sig_{year}=Cards/cards_{date_dC}_boosted_{FS}_sig_{year}/boosted_{FS}_sig{WC}_{year}.txt top_cr_twob_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_twob_{year}/boosted_onelep_topCR_twob_{year}.txt top_cr_oneb_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_oneb_{year}/boosted_onelep_topCR_oneb_{year}.txt  > {dc}'.format(year=yr,date_dC=date_dC,dc=dC1,FS=FS,WC=eft_sig)
-        os.system(cmd1)
-        dC = open(dC1, 'a')
-        dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
-norm_WJets rateParam *{yr}  WJets 1 [0,5]
-norm_singletop  rateParam *{yr}  singletop 1 [0,5]'''.format(yr=yr))
-        dC.close()
-        
-        return dC
+        wjCRpart= '''{FS}_wj_cr_hi_{year}=Cards/cards_{date_dC}_boosted_{FS}_wjCR_hi_{varwj}_{year}/boosted_{FS}_wjCR_hi_{year}.txt {FS}_wj_cr_lo_{year}=Cards/cards_{date_dC}_boosted_{FS}_wjCR_lo_{varwj}_{year}/boosted_{FS}_wjCR_lo_{year}.txt '''.format(FS=FS,year=yr,date_dC=date_dC,varwj=varwj)
+        cmd1 = 'combineCards.py   {FS}_sig_{year}=Cards/cards_{date_dC}_boosted_{FS}_sig_{varsig}_{year}/boosted_{FS}_sig{WC}_{year}.txt {topCR}  {wjCRpart} > {dc}'.format(year=yr,date_dC=date_dC,dc=finalDC,topCR=topCRpart,wjCRpart=wjCRpart,varsig=varsig,WC=eft_sig,FS=FS)
+
+    print cmd1
+    os.system(cmd1)
+    dC = open(finalDC, 'a')
+    dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
+norm_WJets rateParam *{yr}  WJets 1 [0,5]'''.format(yr=yr))
+    dC.close()
+    return finalDC
+    return dC
 
 
 def commandsToRun(dc,pf,outDir,WC):
@@ -66,24 +61,9 @@ if __name__ == '__main__':
     #year=sys.argv[1]
     #pf=sys.argv[1]
     date="2024-08-09" #datetime.date.today().isoformat() #"2021-12-02" #
-    pf="HMTS"
-    extra="" #_bb17c50f50" #_VGN50"
-    #cspf=['plusplus','minusminus']
-    #dC16=combineCards("2016")
-    #dC17=combineCards("2017")
+    pf=""
     dC18=combineCards("2018","onelep","cw",pf)
     commandsToRun(dC18,pf,outDir,"cw")
-
-    #commandsToRun()
-    ##amsuperdC='dc_{pf}_onelep_FR2{cg}.txt'.format(cg=cc,pf=str(date+"-"+bS2lss+vartopCR+bS4l))
-    ##amcmd='combineCards.py {yr1} {yr2} {yr3} > {dc}'.format(dc=superdC,yr1=dC16,yr2=dC17,yr3=dC18)
-    ##amos.system(cmd)
-    ##amrunCombine='combine -M Significance  {finalDC}'.format(finalDC=superdC)
-    ##amos.system(runCombine)
-    ##amos.system("text2workspace.py {finalDC} -m 125".format(finalDC=superdC))
-    ##amos.system("cp {finalDC}.root {finalDC}_workspace.root".format(finalDC=superdC))
-    ##amos.system('mv finalDC* {od}/'.format(od=outdir,finalDC=superdC))
-    
 
 
 #text2workspace.py Cards/combination/dc_2022-01-24-SoBord_sqV3m3lm4l_ll_noee_FR2_cs_combined.txt -o dc_2022-01-24_FR2_workspace.root

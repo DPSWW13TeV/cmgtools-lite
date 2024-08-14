@@ -29,7 +29,7 @@ fitvars={
 'mWV_binning_simple': "mWV 36,950,4550",
 'mWV_binning'       : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]",
 'mWV_fxn'           : "mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,Lep1_pt,Lep1_eta,Lep1_phi,pmet_pt,pmet_phi,0) 36,950,4550",
-'fjet_pt'           : "Selak8Jet1_pt [200,250,300,350,400,450,500,550,600,650,700,750,800,900,1000,2000]",
+'fjet_pt'           : "Selak8Jet1_pt [200,250,300,350,400,450,500,550,600,650,700,800,1000,2000]",
 'fjet_pt_simple'    : "Selak8Jet1_pt 18,200,2000",
 ''                  : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]"
 }
@@ -48,13 +48,15 @@ fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 eventvars   = ['nVert']
 genvars_phi = ['jetphi_mWV','lephi_mWV','SeldLep1_pt','SelGak8Jet1_pt','SelGak8Jet1_mass','ttGenmWV_typ0_pmet_boosted','SeldLep1_eta','SeldLep1_phi','SeldLep1_pdgId','SeldLep1_pt_HF','SeldLep1_eta_HF','SeldLep1_phi_HF','nSeldLeps','SelGak8Jet1_pt','SelGak8Jet1_eta','SelGak8Jet1_phi','SelGak8Jet1_mass','SelGak8Jet1_pt_HF','SelGak8Jet1_eta_HF','SelGak8Jet1_phi_HF','SelGak8Jet1_mass_HF','nSelGak8Jets','neutrino_pt_HF','neutrino_phi_HF']    
 HEM=['puppimetphi','etaphi1','FatJet1_phi','FatJet1_eta','FatJet1_etaphi','eta1','phi1']
-aTGC_chk   =['tmWV_typ0_pmet_boosted','FatJet1_pt_vBins','Lep1_pt_vBins','Genptlepmet','tptleppmet','tmWV_typ0_pmet_boosted','tGenmWV_typ0_pmet_boosted','FatJet1_pt','tFatJet1_sDrop_mass','tptWV_pmet','nBJetLoose30_Recl','nBJetMedium30_Recl', 'aTGC_wt','aTGC_wt_neg','aTGC_wt_pos','aTGC_wt_SM','aTGC_wt1','aTGC_wt2','test_plot'] #
+aTGC_chk   =['tmWV_typ0_pmet_boosted','Lep1_pt_vBins','Genptlepmet','tptleppmet','tmWV_typ0_pmet_boosted','tGenmWV_typ0_pmet_boosted','FatJet1_pt','tFatJet1_sDrop_mass','tptWV_pmet','nBJetLoose30_Recl','nBJetMedium30_Recl', 'aTGC_wt','aTGC_wt_neg','aTGC_wt_pos','aTGC_wt_SM','aTGC_wt1','aTGC_wt2','test_plot'] #
 mWV=['ratio_typ0','ratio_typ1','ratio_typ2','ratio_typ3','mWV_typ0_pmet_boosted','mWV_typ01_pmet_boosted','mWV_typ10_pmet_boosted','mWV_typ11_pmet_boosted','mWV_typ20_pmet_boosted','mWV_typ21_pmet_boosted','mWV_typ30_pmet_boosted','mWV_typ31_pmet_boosted']
 topCR=['mWV_typ0_met_boosted','FatJet1_pt','FatJet1_sDrop_mass']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
-theWVfullset=['nBJetMedium30_Recl','mt1pmet','FatJet1_pt_logy','mWV_logy','pmet_logy']#,'FatJet1_sDrop_mass','FatJet1_pt','mWV','mWV_vBins','FatJet1_pNetMD_Wtagscore','FatJet1_pt_vBins','FatJet1_pt_logy','mWV_logy','pmet_logy','pmet','FatJet1_sDrop_mass_logy','nVert']#'Lep1_pt','pmet']#'nFatJet','dphifjpmet','dphifjlep','ptWV_pmet','dphil1pmet','dphifjpmet','ptleppmet','nJet30_Recl','Lep1_eta','FatJet1_eta','FatJet1_mass','FatJet1_pNetMD_Wtagscore','FatJet1_tau21','FatJet1_pNet_mass''mt1pmet','nLepGood','nLepFO','sumBoosted']"Lep1_pt_vBins",'pmet_vBins',
 
-theWVultimateset=["FatJet1_sDrop_mass","FatJet1_pt","Lep1_pt","puppimetphi",'ptWV_pmet','mWV','pmet','dphifjpmet','dphifjlep','dphil1pmet','nBJetLoose30_Recl','mt1pmet','FatJet1_pt_logy','mWV_logy','pmet_logy']
+
+theWVultimateset=['mWV','mWV_logy','pmet','pmet_logy','FatJet1_pt','FatJet1_pt_logy','FatJet1_sDrop_mass','FatJet1_sDrop_mass_logy','mt1pmet','pmet_phi','nVert','nBJetMedium30_Recl','nBJetLoose30_Recl','dphifjpmet','ptWV_pmet','ptWV_pmet_logy','dphifjlep','dphil1pmet','Lep1_pt_logy','Lep1_pt','FatJet1_pNetMD_Wtagscore']##'nLepGood','nFatJet'
+
+["FatJet1_sDrop_mass","FatJet1_pt","Lep1_pt","puppimetphi",'ptWV_pmet','mWV','pmet','dphifjpmet','dphifjlep','dphil1pmet','nBJetLoose30_Recl','mt1pmet','FatJet1_pt_logy','mWV_logy','pmet_logy']
 ak4jetvars = ['nBJetLoose30_Recl','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt','htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1','Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl','htJet25j_Recl','mhtJet25_Recl']
 MConly     = ['Mttbar','genwhad_costcm','genwhad_costcs','genwhad_cost2d','genwhad_phics','genwhad_mt','genwhad_pt','genwhad_eta','genwhad_y','recoil_whad_x','recoil_whad_y','genwlep_costcm','genwlep_costcs','genwlep_cost2d','genwlep_phics','genwlep_mt','genwlep_pt','genwlep_eta','genwlep_y','recoil_wlep_x','recoil_wlep_y','nGenJetAK8','nGenJetAK8_ptgtp2k','GenJetAK8_pt','GenJetAK8_mass','GenmWV_typ0_pmet_boosted','GenDressedLeptonpt','GenMETphi','GenMET','Genptlepmet','Genptlepfj','Genmlepfj','sum_ttbar','pdgid1','pdgid2','LHE_HT','LHE_HT_log','LHE_HT_lin','Jet1_hadronFlavour','Jet1_partonFlavour','Jet2_hadronFlavour','Jet2_partonFlavour','LHE_Vpt']
 dRchecks   = ['dR','dRfjj','dRjj','dRfjlep']

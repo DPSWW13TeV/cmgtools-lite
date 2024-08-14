@@ -2,7 +2,7 @@ import os,string,sys
 from plots_VVsemilep import *
 
 
-allvars=  theWVultimateset #theWVfullset #theWVultimateset #theWVfullset #theWVultimateset #theWVfullset
+allvars=  theWVultimateset
 doWhat=sys.argv[1] #cards or plots
 fName='submitFile_%s.condor'%doWhat
 tmp_condor = open('jobs/%s'%fName, 'w')
@@ -15,9 +15,10 @@ Error      = jobs/{dW}_$(Cluster)_$(ProcId).error
 #requirements = (OpSysAndVer =?= "CentOS7")
 +JobFlavour = "tomorrow"
 arguments  = $(info) 
-request_cpus  = 8
+request_cpus  = 4
 on_exit_remove = (ExitBySignal == False) && (ExitCode == 0)
 max_retries    = 3
+request_memory= 460648
 requirements   = Machine =!= LastRemoteHost
 MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"\n'''.format(dW=doWhat))
 if os.environ['USER'] in ['anmehta', 'vmilosev']:
@@ -65,7 +66,7 @@ tmp_condor.write(') \n')
 tmp_condor.close()
 
 print 'condor_submit jobs/%s'%fName
-#os.system('condor_submit jobs/%s'%fName)
+os.system('condor_submit jobs/%s'%fName)
 
 
 #python plots_VVsemilep.py --results --sel plots --year ${2} --nLep ${3} --finalState ${4} --pv ${5} --pf ${6}

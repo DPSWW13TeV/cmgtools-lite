@@ -411,7 +411,7 @@ GGH = kreator.makeMCComponent("GGH","/GluGluHToBB_Pt-200ToInf_M-125_TuneCP5_MINL
 
 Higgs = [
     #     GGHZZ4L,
-    #    VHToNonbb,
+    VHToNonbb,
     #VHToNonbb_ll,
     #    ZHToTauTau,
     WminusH, WplusH,ZH,GGH
