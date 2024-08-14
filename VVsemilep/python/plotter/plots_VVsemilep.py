@@ -147,8 +147,8 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     showratio    = True
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
-    processes    = ['SM_WW','SM_WZ','tt','WJets','singletop','Others','data']#,'WW_sm','WZ_sm']'WW_sm','WZ_sm','
-    vetoPlots=['WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cb','WZ_quad_cb']
+    processes    = ['SM_WW','SM_WZ','tt','WJets','singletop','QCD','data','WH']#,'WW_sm','WZ_sm']'WW_sm','WZ_sm','
+    vetoPlots    = ['WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cb','WZ_quad_cb']
     #WCs=[]#'cw']#,'c3w','cb']
     for ops in WCs:
         morePs=['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']

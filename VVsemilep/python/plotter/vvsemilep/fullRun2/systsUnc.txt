@@ -1,24 +1,19 @@
 # vim: syntax=sh
 
 ### Alias definitions. Careful to avoid trailing '.*' to avoid matching _promptsub
-$alias : wvsl  : WV|WW.*|WZ.*|SM.*|.*cw.*|.*cb.*
+$alias : wvsm  : WV|WW.*|WZ.*|SM.*
 $alias : wj    : WJets.*
-$alias : dy    : DYJets.*|lhefdy
 $alias : st    : singletop|T_[a-z]+ch|T[a-z]+_[a-z]+ch
 $alias : ttbar : TTJets|TTJets_part.*|tthighmass|ttsemi|tt
+$alias : VH    : WH|VHToNonbb|ZH 
 $alias : top   : $st|$ttbar
-$alias : qcd   : QCD.*
-$alias : wzj   : $wj|$dy
+$alias : qcd   : QCD.*|Other.*
 $alias : aTGC   : .*cw.*|.*cb.*
 $alias : wwaTGC : WW.*cw.*|WW.*cb.*|WW.*c3w.*|
 $alias : wzaTGC : WZ.*cw.*|WZ.*cb.*|WZ.*c3w.*|
-
-$alias : PromptFromMC : $top|$wvsl|$qcd|
-$alias : AllFromMC    : $top|$wvsl|$qcd|$wj
-$alias : PNET   : $top|$wvsl|$dy|$aTGC
-$alias : FRData : data_fakes|.*_promptsub
-$alias : FRAll  : data_fakes|.*_promptsub|TT_FR_QCD
-$alias : bkg : $top|$wj
+$alias : AllFromMC : $top|$wvsl|$qcd|$wj|$VH
+$alias : PNET   : $top|$wvsm|$aTGC
+$alias : bkg    : $top|$wj|$VH|$wvsm
 
 ### Uncertainties
 
@@ -46,11 +41,18 @@ lumi_13TeV_BCC 		: $AllFromMC : .* : normSymm : 1.002; year="2018"
 lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.004; year="2016"
 lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.001; year="2017"
 
-## pdf#nnpdf : $PromptFromMC :  .* : templateSymm; Normalize=False, AddWeight='nnpdf_rms', year="2018"
+nnpdf : $bkg :  .* : templateSymm; Normalize=False, AddWeight='nnpdf_rms', year="2018"
 
+
+
+CMS_wvsl_qcdscales_shape_VH : $VH : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 
 CMS_wvsl_qcdscales_shape_WW : WW_sm : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 CMS_wvsl_qcdscales_shape_WZ : WZ_sm : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+
+CMS_wvsl_qcdscales_shape_WW : SM_WW : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+CMS_wvsl_qcdscales_shape_WZ : SM_WZ : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+
 
 CMS_wvsl_qcdscales_shape_WW_aTGC : $wwaTGC : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 
@@ -255,7 +257,7 @@ CMS_wvsl18_btag_HFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagS
 ##ampdf_99  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[99]'
 ##ampdf_100  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]'
 ##ampdf_alphaS  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[101]'
-##ampdf_alphaS  : $wvsl : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]'
+##ampdf_alphaS  : $wvsm : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]'
 
 
  

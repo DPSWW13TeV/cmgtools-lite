@@ -14,10 +14,10 @@ Error      = jobs/{dW}_$(Cluster)_$(ProcId).error
 #requirements = (OpSysAndVer =?= "CentOS7")
 +JobFlavour = "tomorrow"
 arguments  = $(info) 
-request_cpus  = 4
+request_cpus  = 8
+request_memory = 50000
 on_exit_remove = (ExitBySignal == False) && (ExitCode == 0)
 max_retries    = 3
-request_memory= 460648
 requirements   = Machine =!= LastRemoteHost
 MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"\n'''.format(dW=doWhat))
 if os.environ['USER'] in ['anmehta', 'vmilosev']:
@@ -26,8 +26,8 @@ tmp_condor.write('queue info from ( \n')
 pf="" #HMTS"
 allfavs=["mu","el","onelep"]
 ll=["mu","el"]
-fitvar_sig=['mWV_binning','mWV_binning_simple']
-fitvar_bkg=['fjet_pt','fjet_pt_simple']
+fitvar_sig=['mWV_binning']#,'mWV_binning_simple']
+fitvar_bkg=['fjet_pt']#,'fjet_pt_simple']
 lepsel={'topCR' : ["onelep"],
         'topCR_incl' : [ ["onelep"],fitvar_bkg],
         'topCR_twob' : [ ["onelep"],fitvar_bkg],
@@ -41,11 +41,11 @@ lepsel={'topCR' : ["onelep"],
         'sb_hi' : [allfavs,fitvar_sig],
         'SB'    : [allfavs,fitvar_bkg],
         'wjCR_incl': [ll,fitvar_bkg],
-        'wjCR_lo'  : [allfavs,fitvar_bkg],
-        'wjCR_hi'  : [allfavs,fitvar_bkg],
+        'wjCR_lo'  : [ll,fitvar_bkg],
+        'wjCR_hi'  : [ll,fitvar_bkg],
 }
-ops=['c3w']#,'cw','cb','']
-for sel in ["sig","topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]: 
+ops=['cw','c3w','cb']
+for sel in ["topCR_lo","topCR_hi","wjCR_lo","wjCR_hi","sig"]:
    for cat in ["boosted"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 
@@ -57,7 +57,7 @@ for sel in ["sig","topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]:
                     if 'wj' in sel or 'top' in sel: 
                        tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {fv} {pf} \n'.format(doWhat=doWhat,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,cmssw=os.environ['PWD'],fv=fv ) )
                     else:
-                       for op in ops: #still needs to be validated
+                       for op in ops: 
                           tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {fv} {op} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,op=op,fv=fv ) )
 
 

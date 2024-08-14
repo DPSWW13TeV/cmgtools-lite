@@ -12,8 +12,8 @@ SM_WW_minus  : WWTo1L1Nu2Q : xsec : LepGood1_charge < 0 ; FillColor=30, Label="W
 #pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)
 
 
-SM_WW   : WWTo1L1Nu2Q : xsec   : 1 ; FillColor=30, Label="WW SM" 
-SM_WZ   : WZTo1L1Nu2Q : 11.46  : 1 ; FillColor=ROOT.kTeal-7, Label="WZ SM"
+SM_WW   : WWTo1L1Nu2Q : xsec   : 1 ; FillColor=30, Label="WW" 
+SM_WZ   : WZTo1L1Nu2Q : 11.46  : 1 ; FillColor=ROOT.kTeal-7, Label="WZ"
 
 
 Fiveflav_WZplus  : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="WZ SM5FP" ,SkipMe=True
@@ -61,35 +61,35 @@ WZ_SMEFT_sm :   WmZToLmNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColo
 
 
 
-Others : WplusH  : xsec : 1 ; FillColor=ROOT.kYellow, Label="others",
-Others : WminusH : xsec : 1 ; FillColor=ROOT.kYellow, Label="others",
+WH : WplusH  : xsec : 1 ; FillColor=ROOT.kYellow, Label="WH",
+WH : WminusH : xsec : 1 ; FillColor=ROOT.kYellow, Label="WH",
 
-Others : QCD_Pt15to20_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt20to30_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt30to50_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt50to80_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt80to120_EMEnriched  :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt120to170_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt170to300_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt300toInf_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt20to30_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt80to120_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt15to20_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt170to250_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt20to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt250toInf_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt30to80_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
-Others : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="others"
+QCD : QCD_Pt15to20_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt20to30_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt30to50_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt50to80_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt80to120_EMEnriched  :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt120to170_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt170to300_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt300toInf_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt20to30_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt80to120_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt15to20_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt170to250_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt20to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt250toInf_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt30to80_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+QCD : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
 
 
 ##taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py
