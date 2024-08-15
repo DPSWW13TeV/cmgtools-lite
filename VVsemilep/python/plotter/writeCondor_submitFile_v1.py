@@ -45,7 +45,7 @@ lepsel={'topCR' : ["onelep"],
         'wjCR_hi'  : [ll,fitvar_bkg],
 }
 ops=['cw','c3w','cb']
-for sel in ["sig"]:#topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]: #,"sig"]:
+for sel in ["sig","topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]:
    for cat in ["boosted"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 

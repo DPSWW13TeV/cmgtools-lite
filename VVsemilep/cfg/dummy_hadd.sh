@@ -5,7 +5,7 @@ echo $*
 echo 'i am in this directory'
 echo $PWD
 
-cd /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/
+cd ${1}
 echo "i am in this directory ${PWD}"
 eval $(scramv1 runtime -sh);
 
@@ -14,8 +14,8 @@ eval $(scramv1 runtime -sh);
 ##amcd /eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/2018
 ##am#echo "i am in this directory ${PWD}"
 
-#python checkfaulty_nAODfiles.py ${1}
-python runhaddNano.py ${1}
+#python checkfaulty_nAODfiles.py ${2}
+python runhaddNano.py ${2}
 #if [[ $# -eq 3 ]]; then
 #haddnano.py ${1} ${2} ${3}
 #else

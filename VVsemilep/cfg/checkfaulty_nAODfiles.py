@@ -3,9 +3,8 @@ import ROOT
 import numpy
 import sys, os
 
-#basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/WmWpToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX/'
 dirname=sys.argv[1]
-basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/Feb2024/%s/'%dirname #WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX/' #/eos/cms/store/group/phys_smp/ec/anmehta/aTGCSep2023/%s/'%dirname
+basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/aTGC_Apr2024_UL17/%s/'%dirname 
 files =   [os.path.join(basepath_private,x) for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x)) ] 
 
 ref=ROOT.TFile.Open(files[0])

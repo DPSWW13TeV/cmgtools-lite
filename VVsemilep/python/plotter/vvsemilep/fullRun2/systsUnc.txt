@@ -4,7 +4,7 @@
 $alias : wvsm  : WV|WW.*|WZ.*|SM.*
 $alias : wj    : WJets.*
 $alias : st    : singletop|T_[a-z]+ch|T[a-z]+_[a-z]+ch
-$alias : ttbar : TTJets|TTJets_part.*|tthighmass|ttsemi|tt
+$alias : ttbar : TTJets|TTJets_part.*|tthighmass|ttsemi|tt|TT_mtt.*
 $alias : VH    : WH|VHToNonbb|ZH 
 $alias : top   : $st|$ttbar
 $alias : qcd   : QCD.*|Other.*

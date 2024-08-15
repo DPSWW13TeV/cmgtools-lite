@@ -117,7 +117,7 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
         if doWJtypeplots:
             cmd+=" -W lepSF*btagSF*triggerSF_ttH(Lep1_pdgId,Lep1_pt,0,0,1,year,suberaId) "
         else:
-            cmd+=" -W L1PreFiringWeight_Nom*puWeight*lepsf*btagSF*triggerSF_ttH(Lep1_pdgId, Lep1_pt,0,0,1,year, suberaId)" 
+            cmd+=" -W L1PreFiringWeight_Nom*puWeight*lepsf*btagSF*triggerSF_ttH(Lep1_pdgId,Lep1_pt,0,0,1,year,suberaId) " 
     else:
         if not bareNano:
             cmd += ''.join(" -W puWeight*L1PreFiringWeight_Nom")
@@ -286,13 +286,13 @@ def makesimpleplots(year,useDressed=True):
     fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' #_dressed.txt'
     bareNano    = False
     cutFlow     = True
-    processes   = ['SM_WW','SM_WZ','tt','WJets','singletop','Others'] #['WW_sm']#,'SM_WW','SM_WZ','WZ_sm']
+    processes   = ['SM_WW']#,'SM_WZ','tt','WJets','singletop','Others'] #['WW_sm']#,'SM_WW','SM_WZ','WZ_sm']
     #'WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT80','WJetsHT60','WJetsHT40','WJetsHT20']
     #cuts_onelep   = ['singlelep']
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
 
     showratio=False
-    applylepSFs=False
+    applylepSFs=True
     nLep=1
     plotvars   = ['PuppiMET_pt']#'nVert','SeldLep1_eta','SeldLep1_pt','SelGak8Jet1_pt','SelGak8Jet1_mass']
 
