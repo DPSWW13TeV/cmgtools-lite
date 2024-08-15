@@ -977,7 +977,7 @@ class PlotMaker:
                         doSpam(options.addspam, .68, .855, .9, .895, align=32, textSize=(0.045 if doRatio else 0.033)*options.topSpamSize)
                     else:
                         doSpam(options.addspam, .23, .855, .6, .895, align=12, textSize=(0.045 if doRatio else 0.033)*options.topSpamSize)
-                legendCutoff = pspec.getOption('LegendCutoff', 1e-5 if c1.GetLogy() else 1e-2)
+                legendCutoff = pspec.getOption('LegendCutoff', 1e-6 if c1.GetLogy() else 1e-3)
                 if plotmode == "norm": legendCutoff = 0 
                 if plotmode == "stack":
                     if options.noStackSig: mcStyle = ("L","F")

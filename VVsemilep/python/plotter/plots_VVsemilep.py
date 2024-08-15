@@ -36,7 +36,7 @@ fitvars={
 
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
-MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc','1_btag_SFs']
+MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc','1_btag_SFs','nnpdf_rms']
 Datafriends = ['1_recl']
 friends     = ['3_ak8_sdm45','0_wjest_v4']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
@@ -54,7 +54,7 @@ topCR=['mWV_typ0_met_boosted','FatJet1_pt','FatJet1_sDrop_mass']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
 
 
-theWVultimateset=['mWV','mWV_logy','pmet','pmet_logy','FatJet1_pt','FatJet1_pt_logy','FatJet1_sDrop_mass','FatJet1_sDrop_mass_logy','mt1pmet','pmet_phi','nVert','nBJetMedium30_Recl','nBJetLoose30_Recl','dphifjpmet','ptWV_pmet','ptWV_pmet_logy','dphifjlep','dphil1pmet','Lep1_pt_logy','Lep1_pt','FatJet1_pNetMD_Wtagscore']##'nLepGood','nFatJet'
+theWVultimateset=['mWV']#,'mWV_logy','pmet','pmet_logy','FatJet1_pt','FatJet1_pt_logy','FatJet1_sDrop_mass','FatJet1_sDrop_mass_logy','mt1pmet','pmet_phi','nVert','nBJetMedium30_Recl','nBJetLoose30_Recl','dphifjpmet','ptWV_pmet','ptWV_pmet_logy','dphifjlep','dphil1pmet','Lep1_pt_logy','Lep1_pt','FatJet1_pNetMD_Wtagscore']##'nLepGood','nFatJet'
 
 ["FatJet1_sDrop_mass","FatJet1_pt","Lep1_pt","puppimetphi",'ptWV_pmet','mWV','pmet','dphifjpmet','dphifjlep','dphil1pmet','nBJetLoose30_Recl','mt1pmet','FatJet1_pt_logy','mWV_logy','pmet_logy']
 ak4jetvars = ['nBJetLoose30_Recl','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt','htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1','Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl','htJet25j_Recl','mhtJet25_Recl']
@@ -72,7 +72,7 @@ def if3(cond, iftrue, iffalse):
 
 def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses,applyWtsnSFs, year,nLep,lepflav,selstr,wj_date,extraopts = '',invertedcuts = []):
     varToFit= '{plotvar} {binning}'.format(plotvar=plotbin.split()[0], binning=plotbin.split()[1]) #assumes WJ type frnds are being used  
-    cmd = 'makeShapeCardsNew.py -f -j 8 -l {lumi} --od {CARDSOUTDIR} --tree NanoAOD --year {YEAR} --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt  --WA evt_wt {fmca} {fcut}  --amc  --threshold 0.01 --split-factor=-1 --unc {fsyst}  {varName} --lf {lepflav} --wjD {wj_date} --sel {selstr}'.format(lumi=lumis[year],selstr=selstr,CARDSOUTDIR=targetdir, trees=trees, fmca=fmca, fcut=fcut,YEAR=year if year !='all' else '2016APV,2016,2017,2018',fsyst=fsyst,varName=varToFit,wj_date=wj_date,lepflav=lepflav) #--asimov signal #--amc --threshold 0.01 --amc
+    cmd = 'makeShapeCardsNew.py -f -j 16 -l {lumi} --od {CARDSOUTDIR} --tree NanoAOD --year {YEAR} --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt  --WA evt_wt {fmca} {fcut}  --amc  --threshold 0.01 --split-factor=-1 --unc {fsyst}  {varName} --lf {lepflav} --wjD {wj_date} --sel {selstr}'.format(lumi=lumis[year],selstr=selstr,CARDSOUTDIR=targetdir, trees=trees, fmca=fmca, fcut=fcut,YEAR=year if year !='all' else '2016APV,2016,2017,2018',fsyst=fsyst,varName=varToFit,wj_date=wj_date,lepflav=lepflav) #--asimov signal #--amc --threshold 0.01 --amc
     cmd += ''.join(' -P '+Ptree for Ptree in trees)
     cmd += ''.join(' --Fs {P}/'+frnd for frnd in friends)
     cmd += ''.join(' --FMCs {P}/'+frnd for frnd in MCfriends)
@@ -94,7 +94,7 @@ def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     subprocess.call(['python']+cmd.split())
 #####################################
 def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enabledcuts, disabledcuts, processes, scaleprocesses, fitdataprocess, plotlist, showratio, applyWtsnSFs, year,nLep,extraopts = ' ', invertedcuts = [],cutFlow=False,bareNano=False,doWJtypeplots=False):    
-    cmd= ' mcPlots.py  -j 10 -l {lumi}  --tree NanoAOD  --year {YEAR} --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,lumi=lumis[year],YEAR=year if year!='all' else '2016APV,2016,2017,2018')
+    cmd= ' mcPlots.py  -j 16 -l {lumi}  --tree NanoAOD  --year {YEAR} --pdir {td} {fmca} {fcut} {fplots} --split-factor=-1  -P {trees} --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt '.format(td=targetdir, trees=trees, fmca=fmca, fcut=fcut, fplots=fplots,lumi=lumis[year],YEAR=year if year!='all' else '2016APV,2016,2017,2018')
     if not cutFlow:
         cmd+=''.join(' -f')
     if not bareNano:
@@ -210,7 +210,6 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     if  pR in ['sig','SR'] and 'data' in processes and blinded :  
                         processes.remove('data')
                         showratio   = False
-                        fsyst=''
                     elif  "top" in pR and fitCR:
                         extraopts+= ' --xp Others --xp .*quad.*  --xp QCD'
                     elif  "wj" in pR and fitCR:

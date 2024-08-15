@@ -4,3 +4,11 @@
 *_ACLiC_dict_rdict.pcm
 cards/cards_*
 susy-interface/tmp/
+*.png
+*.out
+anmehta.cc
+higgsCombineTest.*
+fitDiagnostics.*
+foo*
+*ACLiC_dict*
+model_*root

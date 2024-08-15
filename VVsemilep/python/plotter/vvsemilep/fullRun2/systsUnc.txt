@@ -13,7 +13,7 @@ $alias : wwaTGC : WW.*cw.*|WW.*cb.*|WW.*c3w.*|
 $alias : wzaTGC : WZ.*cw.*|WZ.*cb.*|WZ.*c3w.*|
 $alias : AllFromMC : $top|$wvsl|$qcd|$wj|$VH
 $alias : PNET   : $top|$wvsm|$aTGC
-$alias : bkg    : $top|$wj|$VH|$wvsm
+$alias : allbutqcd    : $top|$wj|$VH|$wvsm
 
 ### Uncertainties
 
@@ -41,7 +41,9 @@ lumi_13TeV_BCC 		: $AllFromMC : .* : normSymm : 1.002; year="2018"
 lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.004; year="2016"
 lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.001; year="2017"
 
-nnpdf : $bkg :  .* : templateSymm; Normalize=False, AddWeight='nnpdf_rms', year="2018"
+nnpdf : $allbutqcd :  .* : templateSymm; Normalize=False, AddWeight='nnpdf_rms' #, year="2018"
+
+#pdf_WH        : $WH   : .* : normSymm : 1.019
 
 
 

@@ -14,14 +14,14 @@ Error      = jobs/{dW}_$(Cluster)_$(ProcId).error
 #requirements = (OpSysAndVer =?= "CentOS7")
 +JobFlavour = "tomorrow"
 arguments  = $(info) 
-request_cpus  = 8
-request_memory = 50000
 on_exit_remove = (ExitBySignal == False) && (ExitCode == 0)
 max_retries    = 3
 requirements   = Machine =!= LastRemoteHost
 MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"\n'''.format(dW=doWhat))
 if os.environ['USER'] in ['anmehta', 'vmilosev']:
    tmp_condor.write('+AccountingGroup = "group_u_CMST3.all"\n')
+#if 'plots' in doWhat:
+   #tmp_condor.write('request_memory = 50000 \n')
 tmp_condor.write('queue info from ( \n')
 pf="" #HMTS"
 allfavs=["mu","el","onelep"]
@@ -45,7 +45,7 @@ lepsel={'topCR' : ["onelep"],
         'wjCR_hi'  : [ll,fitvar_bkg],
 }
 ops=['cw','c3w','cb']
-for sel in ["topCR_lo","topCR_hi","wjCR_lo","wjCR_hi","sig"]:
+for sel in ["sig"]:#topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]: #,"sig"]:
    for cat in ["boosted"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 
