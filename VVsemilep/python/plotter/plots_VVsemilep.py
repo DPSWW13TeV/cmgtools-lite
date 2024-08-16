@@ -26,11 +26,10 @@ scaleEFTylds={
 #https://hypernews.cern.ch/HyperNews/CMS/get/JetMET/2000.html 
 fitvars={
 'mWV_binning_res'   : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,2546,2659,2775,2895,3019,3147,3279,3416,3558,3704, 3854, 4010, 4171, 4337, 4509,4550]",
-'mWV_binning_simple': "mWV 36,950,4550",
-'mWV_binning'       : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]",
-'mWV_fxn'           : "mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,Lep1_pt,Lep1_eta,Lep1_phi,pmet_pt,pmet_phi,0) 36,950,4550",
+'mWV_fixedbW'       : "mWV 36,950,4550",
+'mWV'               : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]",
 'fjet_pt'           : "Selak8Jet1_pt [200,250,300,350,400,450,500,550,600,650,700,800,1000,2000]",
-'fjet_pt_simple'    : "Selak8Jet1_pt 18,200,2000",
+'fjet_pt_fixedbW'   : "Selak8Jet1_pt 18,200,2000",
 ''                  : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]"
 }
 
@@ -45,18 +44,19 @@ fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 
 
 ####################variables for plotting 
+
 eventvars   = ['nVert']
 genvars_phi = ['jetphi_mWV','lephi_mWV','SeldLep1_pt','SelGak8Jet1_pt','SelGak8Jet1_mass','ttGenmWV_typ0_pmet_boosted','SeldLep1_eta','SeldLep1_phi','SeldLep1_pdgId','SeldLep1_pt_HF','SeldLep1_eta_HF','SeldLep1_phi_HF','nSeldLeps','SelGak8Jet1_pt','SelGak8Jet1_eta','SelGak8Jet1_phi','SelGak8Jet1_mass','SelGak8Jet1_pt_HF','SelGak8Jet1_eta_HF','SelGak8Jet1_phi_HF','SelGak8Jet1_mass_HF','nSelGak8Jets','neutrino_pt_HF','neutrino_phi_HF']    
-HEM=['puppimetphi','etaphi1','FatJet1_phi','FatJet1_eta','FatJet1_etaphi','eta1','phi1']
+HEM=['etaphi1','FatJet1_phi','FatJet1_eta','FatJet1_etaphi','eta1','phi1']
 aTGC_chk   =['tmWV_typ0_pmet_boosted','Lep1_pt_vBins','Genptlepmet','tptleppmet','tmWV_typ0_pmet_boosted','tGenmWV_typ0_pmet_boosted','FatJet1_pt','tFatJet1_sDrop_mass','tptWV_pmet','nBJetLoose30_Recl','nBJetMedium30_Recl', 'aTGC_wt','aTGC_wt_neg','aTGC_wt_pos','aTGC_wt_SM','aTGC_wt1','aTGC_wt2','test_plot'] #
 mWV=['ratio_typ0','ratio_typ1','ratio_typ2','ratio_typ3','mWV_typ0_pmet_boosted','mWV_typ01_pmet_boosted','mWV_typ10_pmet_boosted','mWV_typ11_pmet_boosted','mWV_typ20_pmet_boosted','mWV_typ21_pmet_boosted','mWV_typ30_pmet_boosted','mWV_typ31_pmet_boosted']
 topCR=['mWV_typ0_met_boosted','FatJet1_pt','FatJet1_sDrop_mass']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
 
 
-theWVultimateset=['mWV']#,'mWV_logy','pmet','pmet_logy','FatJet1_pt','FatJet1_pt_logy','FatJet1_sDrop_mass','FatJet1_sDrop_mass_logy','mt1pmet','pmet_phi','nVert','nBJetMedium30_Recl','nBJetLoose30_Recl','dphifjpmet','ptWV_pmet','ptWV_pmet_logy','dphifjlep','dphil1pmet','Lep1_pt_logy','Lep1_pt','FatJet1_pNetMD_Wtagscore']##'nLepGood','nFatJet'
+theWVultimateset=['mWV','pmet','FatJet1_pt','FatJet1_sDrop_mass','mt1pmet','pmet_phi','nVert','nBJetMedium30_Recl','nBJetLoose30_Recl','dphifjpmet','ptWV_pmet','dphifjlep','dphil1pmet','Lep1_pt','FatJet1_pNetMD_Wtagscore']##'nLepGood','nFatJet'
+theWVultimateset_log=['mWV_logy','pmet_logy','FatJet1_pt_logy','FatJet1_sDrop_mass_logy','ptWV_pmet_logy','Lep1_pt_logy']
 
-["FatJet1_sDrop_mass","FatJet1_pt","Lep1_pt","puppimetphi",'ptWV_pmet','mWV','pmet','dphifjpmet','dphifjlep','dphil1pmet','nBJetLoose30_Recl','mt1pmet','FatJet1_pt_logy','mWV_logy','pmet_logy']
 ak4jetvars = ['nBJetLoose30_Recl','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','Jet2_pt','htJet30','Jet1_qgl','Jet1_btagDeepFlavB','Jet1_btagCSVV2','Jet2_qgl','Jet2_btagDeepFlavB','Jet2_btagCSVV2','Jet1_pt','Jet2_pt','mjj','mt1','Jet1_eta','Jet1_mass','Jet2_eta','Jet2_mass','nJet30','htJet30j_Recl','mhtJet30_Recl','htJet25j_Recl','mhtJet25_Recl']
 MConly     = ['Mttbar','genwhad_costcm','genwhad_costcs','genwhad_cost2d','genwhad_phics','genwhad_mt','genwhad_pt','genwhad_eta','genwhad_y','recoil_whad_x','recoil_whad_y','genwlep_costcm','genwlep_costcs','genwlep_cost2d','genwlep_phics','genwlep_mt','genwlep_pt','genwlep_eta','genwlep_y','recoil_wlep_x','recoil_wlep_y','nGenJetAK8','nGenJetAK8_ptgtp2k','GenJetAK8_pt','GenJetAK8_mass','GenmWV_typ0_pmet_boosted','GenDressedLeptonpt','GenMETphi','GenMET','Genptlepmet','Genptlepfj','Genmlepfj','sum_ttbar','pdgid1','pdgid2','LHE_HT','LHE_HT_log','LHE_HT_lin','Jet1_hadronFlavour','Jet1_partonFlavour','Jet2_hadronFlavour','Jet2_partonFlavour','LHE_Vpt']
 dRchecks   = ['dR','dRfjj','dRjj','dRfjlep']
@@ -143,27 +143,30 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,doWJ,fitCR,WCs,varTofit,acP,acC,wjDate):
     #    print ("vorsichtig sein!! du hast tagging auswahl im top CR geloschen")
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
+    fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
     showratio    = True
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
     processes    = ['SM_WW','SM_WZ','tt','WJets','singletop','QCD','data','VH','ZZ']#,'WW_sm','WZ_sm']'WW_sm','WZ_sm','
-    vetoPlots    = ['WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cb','WZ_quad_cb']
-    #WCs=[]#'cw']#,'c3w','cb']
-    for ops in WCs:
-        morePs=['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
-        processes+=[s + ops for s in morePs if s not in vetoPlots]
+    vetoPlots    = ['WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cb','WZ_quad_cb','WZ_cb']
+    morePs       = ['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
+    if 'all' in WCs: WCs=['cw','c3w','cb']
+
+    for op in WCs:
+        if 'cards' in doWhat:
+            processes+=[s + op for s in morePs if s not in vetoPlots]
+        else:
+            processes+=[s + op for s in ['WW_','WZ_'] if str(s+op) not in vetoPlots]
+
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_boosted = ['ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','Mjuppercut','Mwvuppercut']
-    cuts_cards_opts=['sb_lo','sb_hi','sig']#
     cuts_btagEff = ['btagSR','bpartonFlav','Loosebtag','Medbtag','Tightbtag'] ##here for reference ['lightpartonFlav','cpartonFlav']
-    cuts_WJest   = ['cuts_wjest']
     bareNano    = False
-    print (processes)
+
     signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.03 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 ' 
-    #legends = ' --perBin  --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
+    #legends = '  --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
     ubands  =  ' --showMCError  --showIndivSigs --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
     ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5 ' #--plotmode nostack ' # --ratioNums WW_SMEFT_sm,WW_sm   --ratioDen SM_WW --ratioYLabel=aTGC/SM  --plotmode nostack ' # --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' #
@@ -172,16 +175,14 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
 
-    if doWhat == "plots" and ('SR' in selection or "sig" in selection):
-        blinded=True
+    if doWhat == "plots" and ('SR' in selection or "sig" in selection):        blinded=True
     for pR in selection:
-        if 'topCR_twob' in pR and fitCR:         fittodata.append('tt');
-        if 'topCR_oneb' in pR and fitCR:         fittodata.append('singletop');
-        if 'wj' in pR and fitCR:          fittodata.append('WJets');
+        if 'topCR' in pR and fitCR:         fittodata.append('tt');
+        if 'wj' in pR and fitCR:            fittodata.append('WJets');
         exclude = ' ' #--xu CMS_vvsl18_pNetscore' if 'wjCR' not in pR else  ' '
-        signal = if3(pR == 'SR' or pR == 'sig','--sp .*cw.* --sp .*cb.*', if3('topCR' in pR, if3(pR == 'topCR_oneb',' --sp tt ',' --sp singletop '), ' --sp WJets'))
+        signal = if3(pR == 'SR' or pR == 'sig','--sp .*c.* ', if3('topCR' in pR, ' --sp tt ', ' --sp WJets'))
         for i in processes:
-            x = re.search("^W.*_c*", i)
+            x = re.search("^W.*_c*", i) #this is gonna scale only EFT components and not the SM yields from eft!! this is fine as long as we take SM ylds from excl samples
             if x:
                 if 'sig' in pR or 'SR' in pR:
                     scalethem[i]=scaleEFTylds['sig'][i.split('_')[0]]
@@ -201,19 +202,15 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 enable.append(LF); 
                 enable.append(pR)
                 #enable+=cuts_btagEff
-                #if "wjCR" not in pR:   
-                enable.append(FS); #now tagger
-                anything = "  --binname %s "%binName #--showIndivSigs #--pseudoData all
+                enable.append(FS); #tagger
+                anything = "  --binname %s "%binName ##--pseudoData all
                 extraopts+= anything
                 if 'plots' in doWhat:
                     if len(acP) > 0: extraopts += ''.join(' -E ^'+cut for cut in acP )
-                    if  pR in ['sig','SR'] and 'data' in processes and blinded :  
-                        processes.remove('data')
-                        showratio   = False
-                    elif  "top" in pR and fitCR:
-                        extraopts+= ' --xp Others --xp .*quad.*  --xp QCD'
-                    elif  "wj" in pR and fitCR:
-                        extraopts+= ' --xp .*quad.* '
+                    if pR in ['sig','SR'] and 'data' in processes and blinded :  
+                        processes.remove('data');  showratio   = False
+                    elif  "top" in pR and fitCR: extraopts+= ' --xp Others --xp .*quad.*  --xp QCD'
+                    elif  "wj" in pR and fitCR: extraopts+= ' --xp .*quad.* '
                     makeplots  = ['{}'.format(a)  for a in plotvars]
                     print (makeplots)
                     runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata, makeplots, showratio, applylepSFs, year, nLep,extraopts,invert,cutflow,bareNano,doWJ)

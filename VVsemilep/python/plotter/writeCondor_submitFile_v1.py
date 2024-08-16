@@ -7,8 +7,8 @@ pf=""
 
 allfavs=["mu","el","onelep"]
 ll=["mu","el"]
-fitvar_sig=['mWV_binning']#,'mWV_binning_simple']
-fitvar_bkg=['fjet_pt']#,'fjet_pt_simple']
+fitvar_sig=['mWV']#,'mWV_fixedbW']
+fitvar_bkg=['fjet_pt']#,'fjet_pt_fixedbW']
 
 lepsel={'topCR' : ["onelep"],
         'topCR_incl' : [ ["onelep"],fitvar_bkg],
@@ -26,7 +26,7 @@ lepsel={'topCR' : ["onelep"],
         'wjCR_lo'  : [ll,fitvar_bkg],
         'wjCR_hi'  : [ll,fitvar_bkg],
 }
-ops=['cw','c3w','cb']
+ops=['all']#,'c3w','cb']
 
 
 fName='submitFile_%s.condor'%doWhat
@@ -45,6 +45,8 @@ requirements   = Machine =!= LastRemoteHost
 MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"\n'''.format(dW=doWhat))
 if os.environ['USER'] in ['anmehta', 'vmilosev']:
    tmp_condor.write('+AccountingGroup = "group_u_CMST3.all"\n')
+if 'plots' in doWhat :
+   tmp_condor.write('request_memory = 10GB\n')
 tmp_condor.write('queue info from ( \n')
 
 for sel in ["sig","topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]:
@@ -71,7 +73,7 @@ tmp_condor.write(') \n')
 tmp_condor.close()
 
 print 'condor_submit jobs/%s'%fName
-os.system('condor_submit jobs/%s'%fName)
+#os.system('condor_submit jobs/%s'%fName)
 
 
 #python plots_VVsemilep.py --results --sel plots --year ${2} --nLep ${3} --finalState ${4} --pv ${5} --pf ${6}
