@@ -36,7 +36,7 @@ fitvars={
 
 baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
 ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
-MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc','1_btag_SFs','nnpdf_rms']
+MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc','1_btag_SFs_fixedWP_v1','nnpdf_rms'] #1_btag_SFs'
 Datafriends = ['1_recl']
 friends     = ['3_ak8_sdm45','0_wjest_v4']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
@@ -61,7 +61,7 @@ ak4jetvars = ['nBJetLoose30_Recl','nBJetMedium30_Recl','nJet30_Recl','Jet1_pt','
 MConly     = ['Mttbar','genwhad_costcm','genwhad_costcs','genwhad_cost2d','genwhad_phics','genwhad_mt','genwhad_pt','genwhad_eta','genwhad_y','recoil_whad_x','recoil_whad_y','genwlep_costcm','genwlep_costcs','genwlep_cost2d','genwlep_phics','genwlep_mt','genwlep_pt','genwlep_eta','genwlep_y','recoil_wlep_x','recoil_wlep_y','nGenJetAK8','nGenJetAK8_ptgtp2k','GenJetAK8_pt','GenJetAK8_mass','GenmWV_typ0_pmet_boosted','GenDressedLeptonpt','GenMETphi','GenMET','Genptlepmet','Genptlepfj','Genmlepfj','sum_ttbar','pdgid1','pdgid2','LHE_HT','LHE_HT_log','LHE_HT_lin','Jet1_hadronFlavour','Jet1_partonFlavour','Jet2_hadronFlavour','Jet2_partonFlavour','LHE_Vpt']
 dRchecks   = ['dR','dRfjj','dRjj','dRfjlep']
 moreak8jetvars = ['dphifjmet','dphifjlep','dRfjlep','nFatJet_wtagged','FatJet1_tau21','FatJet1_sDrop_mass','FatJet1_pNet_mass','FatJet1_pt','FatJet1_pNetMD_Wtag','FatJet1_muonIdx3SJ_wtag','FatJet1_electronIdx3SJ_wtag','FatJet1_pNetMD_Wtag','FatJet1_eta','FatJet1_n2b1','FatJet1_n3b1','FatJet1_particleNetMD_QCD','FatJet1_particleNetMD_Xbb','FatJet1_particleNetMD_Xqq','FatJet1_particleNet_QCD','FatJet1_particleNet_WvsQCD','FatJet1_tau21','FatJet1_tau21_tau32','FatJet1_area','FatJet1_btagCSVV2','FatJet1_btagDDBvLV2','FatJet1_btagDeepB','FatJet1_deepTagMD_ZbbvsQCD','FatJet1_deepTagMD_ZvsQCD','FatJet1_deepTagMD_bbvsLight','FatJet1_deepTag_QCD','FatJet1_deepTag_QCDothers','FatJet1_particleNet_ZvsQCD','FatJet1_tau1','FatJet1_tau2','FatJet1_tau3','FatJet1_tau4','FatJet1_hadronFlavour','FatJet1_nBHadrons','FatJet1_nCHadrons','FatJet1_tau32','FatJet1_tau42']
-
+theWVultimateset_noWJ=['mt1pmet_nowj','mWV_nowj','FatJet1_sDrop_mass_nowj','FatJet1_pt_nowj','pmet_nowj']
 
 
 ###################
@@ -117,7 +117,7 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
         if doWJtypeplots:
             cmd+=" -W lepSF*btagSF*triggerSF_ttH(Lep1_pdgId,Lep1_pt,0,0,1,year,suberaId) "
         else:
-            cmd+=" -W L1PreFiringWeight_Nom*puWeight*lepsf*btagSF*triggerSF_ttH(Lep1_pdgId,Lep1_pt,0,0,1,year,suberaId) " 
+            cmd+=" -W L1PreFiringWeight_Nom*puWeight*lepsf*btagSF*triggerSF_ttH(LepGood1_pdgId,LepGood1_pt,0,0,1,year,suberaId) " 
     else:
         if not bareNano:
             cmd += ''.join(" -W puWeight*L1PreFiringWeight_Nom")
@@ -147,7 +147,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     showratio    = True
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
-    processes    = ['SM_WW','SM_WZ','tt','WJets','singletop','QCD','data','WH']#,'WW_sm','WZ_sm']'WW_sm','WZ_sm','
+    processes    = ['SM_WW','SM_WZ','tt','WJets','singletop','QCD','data','VH','ZZ']#,'WW_sm','WZ_sm']'WW_sm','WZ_sm','
     vetoPlots    = ['WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cb','WZ_quad_cb']
     #WCs=[]#'cw']#,'c3w','cb']
     for ops in WCs:
@@ -285,8 +285,8 @@ def makesimpleplots(year,useDressed=True):
     fsyst       = ''
     fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' #_dressed.txt'
     bareNano    = False
-    cutFlow     = True
-    processes   = ['SM_WW']#,'SM_WZ','tt','WJets','singletop','Others'] #['WW_sm']#,'SM_WW','SM_WZ','WZ_sm']
+    cutFlow     = False
+    processes   = ['VH']#,'SM_WZ','tt','WJets','singletop','Others'] #['WW_sm']#,'SM_WW','SM_WZ','WZ_sm']
     #'WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT80','WJetsHT60','WJetsHT40','WJetsHT20']
     #cuts_onelep   = ['singlelep']
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
@@ -294,7 +294,7 @@ def makesimpleplots(year,useDressed=True):
     showratio=False
     applylepSFs=True
     nLep=1
-    plotvars   = ['PuppiMET_pt']#'nVert','SeldLep1_eta','SeldLep1_pt','SelGak8Jet1_pt','SelGak8Jet1_mass']
+    plotvars   = theWVultimateset_noWJ
 
     disable   = []; 
     #enable=['ttbar','nQ']#'WhadpT','mWV','leadfatjet','fatjet','ptWlep','leadlep','etacutl1'] #'ttbar','nQ']

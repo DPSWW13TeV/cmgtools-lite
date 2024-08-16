@@ -1,23 +1,5 @@
-WV : WZTo1L1Nu2Q : 10.71: 1 ; FillColor=30, Label="WV (SM)"  ,SkipMe=True
+WV : WZTo1L1Nu2Q : 10.71     : 1 ; FillColor=30, Label="WV (SM)"  ,SkipMe=True
 WV : WWTo1L1Nu2Q : 5.090e+01 : 1 ; FillColor=30, Label="WV (SM)" ,SkipMe=True
-
-SM_WZ_plus   : WZTo1L1Nu2Q : 11.46  : LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ plus",SkipMe=True
-SM_WZ_minus  : WZTo1L1Nu2Q : 11.46  : LepGood1_charge < 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ minus",SkipMe=True
-SM_WW_plus   : WWTo1L1Nu2Q : xsec : LepGood1_charge > 0 ; FillColor=30, Label="WW SM plus" ,SkipMe=True
-SM_WW_minus  : WWTo1L1Nu2Q : xsec : LepGood1_charge < 0 ; FillColor=30, Label="WW SM minus",SkipMe=True
-
-
-
-##https://github.com/raggleton/aTGCsAnalysis/blob/472a635fba97990c6f0a899557424d0589a81061/Common/test/addWeightSamples.cpp#L37
-#pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)
-
-
-SM_WW   : WWTo1L1Nu2Q : xsec   : 1 ; FillColor=30, Label="WW" 
-SM_WZ   : WZTo1L1Nu2Q : 11.46  : 1 ; FillColor=ROOT.kTeal-7, Label="WZ"
-
-
-Fiveflav_WZplus  : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="WZ SM5FP" ,SkipMe=True
-Fiveflav_WZminus : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge < 0 ; FillColor=ROOT.kTeal-7, Label="WZ SM 5fM",SkipMe=True
 
 WV_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM "
 WV_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM "
@@ -31,65 +13,75 @@ WV_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweight
 WV_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
 WV_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
 WV_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
-
-
-
-
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=30,   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
-
-
 WW_SMEFT_sm :   WmWpToLmNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM", genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
 WW_SMEFT_sm :   WpWmToLpNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM", genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
-
-
 WZ_SMEFT_sm :   WpZToLpNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted, genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
 WZ_SMEFT_sm :   WmZToLmNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted, genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
 
 
 
+##https://github.com/raggleton/aTGCsAnalysis/blob/472a635fba97990c6f0a899557424d0589a81061/Common/test/addWeightSamples.cpp#L37
+#pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)
 
 
-WH : WplusH  : xsec : 1 ; FillColor=ROOT.kYellow, Label="WH",
-WH : WminusH : xsec : 1 ; FillColor=ROOT.kYellow, Label="WH",
+SM_WW   : WWTo1L1Nu2Q : xsec   : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="WW" 
+SM_WZ   : WZTo1L1Nu2Q : 11.46  : 1 ; FillColor=ROOT.TColor.GetColor("\#e42536"), Label="WZ"
 
-QCD : QCD_Pt15to20_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt20to30_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt30to50_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt50to80_EMEnriched   :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt80to120_EMEnriched  :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt120to170_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt170to300_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt300toInf_EMEnriched :  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt20to30_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt80to120_Mu5  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt15to20_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt170to250_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt20to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt250toInf_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt30to80_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
-QCD : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
+
+
+
+
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#b9ac70"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#b9ac70"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#b9ac70"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#b9ac70"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#b9ac70"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#b9ac70"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
+
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+
+
+
+
+
+
+VH : WplusH   	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
+VH : WminusH 	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
+VH : ZH      	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
+VH : VHToNonbb  : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
+ZZ : ZZTo2Q2L_part2+ZZTo2Q2L_part1+ZZTo2Q2L_part0	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#92dadd"), Label="ZZ"
+
+QCD : QCD_Pt15to20_EMEnriched   :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt20to30_EMEnriched   :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt30to50_EMEnriched   :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt50to80_EMEnriched   :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt80to120_EMEnriched  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt120to170_EMEnriched :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt170to300_EMEnriched :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt300toInf_EMEnriched :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt20to30_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt80to120_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt15to20_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt170to250_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt20to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt250toInf_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt30to80_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
+QCD : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="QCD"
 
 
 ##taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py
@@ -97,22 +89,20 @@ QCD : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.kPink-2, Label="QCD"
 
 
 
-#tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.kViolet+7, Label="t\#bart", FriendsSimple="{P}/2_toppT_rw/"
+#tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.TColor.GetColor("\#7a21dd"), Label="t\#bart", FriendsSimple="{P}/2_toppT_rw/"
 
 
-singletop   : T_sch                : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : Tbar_tch             : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : T_tch                : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : T_tWch_noFullyHad    : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top"
-singletop   : Tbar_tWch_noFullyHad : xsec : 1 ; FillColor=ROOT.kGray+1, Label="Single top" #, years="2018"
+singletop   : T_sch                : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top"
+singletop   : Tbar_tch             : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top"
+singletop   : T_tch                : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top"
+singletop   : T_tWch_noFullyHad    : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top"
+singletop   : Tbar_tWch_noFullyHad : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top" #, years="2018"
 
 
 
-tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<700) ; FillColor=ROOT.kViolet+7, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
-#Top_pTrw
+tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<700) ; FillColor=ROOT.TColor.GetColor("\#7a21dd"), Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
 
-
-tt : TT_mtt1ktoinf: xsec : Top_pTrw ; FillColor=ROOT.kViolet+3, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/" #,SkipMe=True
-tt : TT_mttp7kto1k: xsec : Top_pTrw ; FillColor=ROOT.kViolet+3, Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"#,SkipMe=True
+tt : TT_mtt1ktoinf: xsec : Top_pTrw ; FillColor=ROOT.TColor.GetColor("\#7a21dd"), Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"  #,SkipMe=True
+tt : TT_mttp7kto1k: xsec : Top_pTrw ; FillColor=ROOT.TColor.GetColor("\#7a21dd"), Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"  #,SkipMe=True
 
 

@@ -67,28 +67,37 @@ fjtagged)
 	;;
 
 fjtaggeddata)
-	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
+	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.* "
 	;;
 
 goodfj)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root  -d ZZTo2Q2L_part2 -d VHToNonbb -d ZH -d GGH" # --de .*Run.* "
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root  --de .*Run.* "
 	;;
 
 goodfjdata)
-	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
+	 echo "fjtagged data"
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.* "
 	;;
 
-
-wjet)		
-	basecmd="${BCORE}/0_wjest_v4  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  -d ZZTo2Q2L_part2 -d VHToNonbb -d ZH -d GGH" #--de .*Run.* "
+wjet)
+	echo "wjet"
+	basecmd="${BCORE}/0_wjest_v4  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --de .*Run.* "  
 	;;
+
 wjet_data)
-	basecmd="${BCORE}/0_wjest_v4  ${CMGT} input_wjest_data --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --dm .*Run.*"
-
+	echo "wjet data"
+	basecmd="${BCORE}/0_wjest_v4  ${CMGT} input_wjest_data --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --dm .*Run.* "
 	;;
 
-skim_wjet)		
+nnpdf)
+	echo "npdf"
+	basecmd="${BCORE}nnpdf_rms  ${CMGT} rms_val -d ZZTo2Q2L_part2 -d VHToNonbb  -d ZH -d GGH  -d ZZTo2Q2L_part0 -d ZZTo2Q2L_part1 " #--de .*Run.* "
+	;;
+
+
+skimwjet) 
+	echo "wj skim"
 	basecmd="${BCORE}/wjest_skim_v1  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root "
 	;;
 
@@ -96,12 +105,6 @@ top)
 	echo "top pT reweighting "
 	basecmd="${BCORE}2_toppT_rw  ${CMGT} topsf   --dm TT.* "
 	;;
-
-npdf)
-	echo "npdf"
-	basecmd="${BCORE}nnpdf_rms  ${CMGT} rms_val --de .*Run.* "
-	;;
-
 
 genInfo)
 	echo "genInfo ${BCORE} ${CMGT}, this module is pretty old and no longer maintained"

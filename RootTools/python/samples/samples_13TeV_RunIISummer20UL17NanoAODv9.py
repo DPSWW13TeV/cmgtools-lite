@@ -112,8 +112,11 @@ WJetsToLNuHT = [
 
 TTSemi_pow = kreator.makeMCComponent("TTSemi_pow", "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM", "CMS", ".*root", 831.76*2*(3*0.108)*(1-3*0.108) )
 
+TT_mttp7kto1k = kreator.makeMCComponent("TT_mttp7kto1k","/TT_Mtt-700to1000_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM", "CMS", ".*root", 6.472e+01*1.21)
+TT_mtt1ktoinf = kreator.makeMCComponent("TT_mtt1ktoinf","/TT_Mtt-1000toInf_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM", "CMS", ".*root", 1.644e+01*1.21) 
+
 TTs = [ 
-        TTSemi_pow
+        TTSemi_pow,TT_mttp7kto1k,TT_mtt1ktoinf
 ]
 
 # # ====== SINGLE TOP ======
@@ -141,7 +144,7 @@ Ts = [
 
 
 
-basepath_eosN="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_March2024/"
+basepath_eosN="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_aTGC_Apr2024_UL17/"
 
 WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600=kreator.makeMCComponentSimple('WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600',"/WZToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,5.401e-01*0.69911,prefix='root://xrootd-cms.infn.it/')
 WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800=kreator.makeMCComponentSimple('WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800',"/WZToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,8.544e-02*0.69911,prefix='root://xrootd-cms.infn.it/')
@@ -178,27 +181,21 @@ WplusH = kreator.makeMCComponent("WplusH","/WplusH_HToBB_WToLNu_M-125_TuneCP5_13
 VHToNonbb = kreator.makeMCComponent("VHToNonbb", "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM", "CMS", ".*root", 0.9561)
 
 
-DiBosons = [ZZTo2Q2L,WZTo1L1Nu2Q,WWTo1L1Nu2Q,ZH,WminusH,WplusH,VHToNonbb]
-#    GluGluToContinToZZTo4e      ,
-#    GluGluToContinToZZTo4mu     ,
-#    GluGluToContinToZZTo4tau    ,
-#    GluGluToContinToZZTo2e2mu   ,
-#    GluGluToContinToZZTo2e2tau  ,
-#    GluGluToContinToZZTo2mu2tau ,
-#    WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
-#    WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
-#    WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800,
-#    WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf,
-#    WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800,
-#    WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf,
-#    WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600,
-#    WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800,
-#    WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf,
-#    WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600,
-#    WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800,
-#    WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf,
-#
-#]
+DiBosons = [ZZTo2Q2L,WZTo1L1Nu2Q,WWTo1L1Nu2Q,ZH,WminusH,WplusH,VHToNonbb,
+    WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
+    WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
+    WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800,
+    WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf,
+    WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800,
+    WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf,
+    WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600,
+    WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800,
+    WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf,
+    WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600,
+    WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800,
+    WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf,
+
+]
 
 # # ===  TRI-BOSONS
 

@@ -1,10 +1,10 @@
 ##taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py
-WJets : WJetsToLNu_HT70to100     : 1271*1.21    : 1 ; FillColor=ROOT.kAzure+1,   Label="W+jets"
-WJets : WJetsToLNu_HT100to200    : 1253*1.21    : 1 ; FillColor=ROOT.kAzure+1,   Label="W+jets"
-WJets : WJetsToLNu_HT200to400    : 335.9*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   Label="W+jets"
-WJets : WJetsToLNu_HT400to600    : 45.21*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   Label="W+jets"
-WJets : WJetsToLNu_HT600to800    : 10.99*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   Label="W+jets"
-WJets : WJetsToLNu_HT800to1200   : 4.936*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   Label="W+jets"
-WJets : WJetsToLNu_HT1200to2500  : 1.156*1.21 	: 1 ; FillColor=ROOT.kAzure+1,   Label="W+jets"
-WJets : WJetsToLNu_HT2500toInf   : 0.02623*1.21 : 1 ; FillColor=ROOT.kAzure+1,   Label="W+jets"
+WJets : WJetsToLNu_HT70to100     : 1271*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#3f90da"),   Label="W+jets"
+WJets : WJetsToLNu_HT100to200    : 1253*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#3f90da"),   Label="W+jets"
+WJets : WJetsToLNu_HT200to400    : 335.9*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#3f90da"),   Label="W+jets"
+WJets : WJetsToLNu_HT400to600    : 45.21*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#3f90da"),   Label="W+jets"
+WJets : WJetsToLNu_HT600to800    : 10.99*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#3f90da"),   Label="W+jets"
+WJets : WJetsToLNu_HT800to1200   : 4.936*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#3f90da"),   Label="W+jets"
+WJets : WJetsToLNu_HT1200to2500  : 1.156*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#3f90da"),   Label="W+jets"
+WJets : WJetsToLNu_HT2500toInf   : 0.02623*1.21 : 1 ; FillColor=ROOT.TColor.GetColor("\#3f90da"),   Label="W+jets"
 

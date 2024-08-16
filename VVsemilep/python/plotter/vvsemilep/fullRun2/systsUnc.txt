@@ -1,19 +1,19 @@
 # vim: syntax=sh
 
 ### Alias definitions. Careful to avoid trailing '.*' to avoid matching _promptsub
-$alias : wvsm  : WV|WW.*|WZ.*|SM.*
+$alias : vvsm  : WV|WW.*|WZ.*|SM.*|ZZTo2Q2L.*
 $alias : wj    : WJets.*
 $alias : st    : singletop|T_[a-z]+ch|T[a-z]+_[a-z]+ch
 $alias : ttbar : TTJets|TTJets_part.*|tthighmass|ttsemi|tt|TT_mtt.*
-$alias : VH    : WH|VHToNonbb|ZH 
+$alias : VH    : WH|VHToNonbb|ZH|WplusH|WminusH
 $alias : top   : $st|$ttbar
 $alias : qcd   : QCD.*|Other.*
 $alias : aTGC   : .*cw.*|.*cb.*
 $alias : wwaTGC : WW.*cw.*|WW.*cb.*|WW.*c3w.*|
 $alias : wzaTGC : WZ.*cw.*|WZ.*cb.*|WZ.*c3w.*|
 $alias : AllFromMC : $top|$wvsl|$qcd|$wj|$VH
-$alias : PNET   : $top|$wvsm|$aTGC
-$alias : allbutqcd    : $top|$wj|$VH|$wvsm
+$alias : PNET   : $top|$vvsm|$aTGC
+$alias : allbutqcd    : $top|$wj|$VH|$vvsm
 
 ### Uncertainties
 
@@ -134,22 +134,38 @@ CMS_wvsl_res_2017  : $AllFromMC : .* : templateAsymm; FakeRates=['vvsemilep/full
 CMS_wvsl_res_2018  : $AllFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/fr-jerUp.txt'\,'vvsemilep/fullRun2/fr-jerDn.txt'], year="2018"
 
 
-CMS_wvsl_btag_LF      : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lf/btagSF'\,'btagSFdown_lf/btagSF']
-CMS_wvsl_btag_HF      : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hf/btagSF'\,'btagSFdown_hf/btagSF']
-CMS_wvsl_btag_cErr1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_cferr1/btagSF'\,'btagSFdown_cferr1/btagSF']
-CMS_wvsl_btag_cErr2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_cferr2/btagSF'\,'btagSFdown_cferr2/btagSF']
-CMS_wvsl16_btag_LFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats1/btagSF'\,'btagSFdown_lfstats1/btagSF'], year="2016"
-CMS_wvsl16_btag_HFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats1/btagSF'\,'btagSFdown_hfstats1/btagSF'], year="2016"
-CMS_wvsl16_btag_LFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats2/btagSF'\,'btagSFdown_lfstats2/btagSF'], year="2016"
-CMS_wvsl16_btag_HFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats2/btagSF'\,'btagSFdown_hfstats2/btagSF'], year="2016"
-CMS_wvsl17_btag_LFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats1/btagSF'\,'btagSFdown_lfstats1/btagSF'], year="2017"
-CMS_wvsl17_btag_HFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats1/btagSF'\,'btagSFdown_hfstats1/btagSF'], year="2017"
-CMS_wvsl17_btag_LFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats2/btagSF'\,'btagSFdown_lfstats2/btagSF'], year="2017"
-CMS_wvsl17_btag_HFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats2/btagSF'\,'btagSFdown_hfstats2/btagSF'], year="2017"
-CMS_wvsl18_btag_LFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats1/btagSF'\,'btagSFdown_lfstats1/btagSF'], year="2018"
-CMS_wvsl18_btag_HFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats1/btagSF'\,'btagSFdown_hfstats1/btagSF'], year="2018"
-CMS_wvsl18_btag_LFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats2/btagSF'\,'btagSFdown_lfstats2/btagSF'], year="2018"
-CMS_wvsl18_btag_HFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats2/btagSF'\,'btagSFdown_hfstats2/btagSF'], year="2018"
+
+#CMS_wvsl_btag_LF      : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lf/btagSF'\,'btagSFdown_lf/btagSF']
+#CMS_wvsl_btag_HF      : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hf/btagSF'\,'btagSFdown_hf/btagSF']
+#CMS_wvsl_btag_cErr1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_cferr1/btagSF'\,'btagSFdown_cferr1/btagSF']
+#CMS_wvsl_btag_cErr2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_cferr2/btagSF'\,'btagSFdown_cferr2/btagSF']
+#CMS_wvsl16_btag_LFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats1/btagSF'\,'btagSFdown_lfstats1/btagSF'], year="2016"
+#CMS_wvsl16_btag_HFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats1/btagSF'\,'btagSFdown_hfstats1/btagSF'], year="2016"
+#CMS_wvsl16_btag_LFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats2/btagSF'\,'btagSFdown_lfstats2/btagSF'], year="2016"
+#CMS_wvsl16_btag_HFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats2/btagSF'\,'btagSFdown_hfstats2/btagSF'], year="2016"
+#CMS_wvsl17_btag_LFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats1/btagSF'\,'btagSFdown_lfstats1/btagSF'], year="2017"
+#CMS_wvsl17_btag_HFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats1/btagSF'\,'btagSFdown_hfstats1/btagSF'], year="2017"
+#CMS_wvsl17_btag_LFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats2/btagSF'\,'btagSFdown_lfstats2/btagSF'], year="2017"
+#CMS_wvsl17_btag_HFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats2/btagSF'\,'btagSFdown_hfstats2/btagSF'], year="2017"
+#CMS_wvsl18_btag_LFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats1/btagSF'\,'btagSFdown_lfstats1/btagSF'], year="2018"
+#CMS_wvsl18_btag_HFStats1   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats1/btagSF'\,'btagSFdown_hfstats1/btagSF'], year="2018"
+#CMS_wvsl18_btag_LFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_lfstats2/btagSF'\,'btagSFdown_lfstats2/btagSF'], year="2018"
+#CMS_wvsl18_btag_HFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagSFup_hfstats2/btagSF'\,'btagSFdown_hfstats2/btagSF'], year="2018"
+
+
+
+
+CMS_wvsl_btagSFbc_correlated         : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_correlated/btagSF'\,'btagSF_light_down_correlated/btagSF']
+CMS_wvsl_btagSFlight_correlated      : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_correlated/btagSF'\,'btagSF_heavy_down_correlated/btagSF']
+CMS_wvsl_btagSFbc                    : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2018"
+CMS_wvsl_btagSFlight                 : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2018"
+CMS_wvsl_btagSFbc                    : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2017"
+CMS_wvsl_btagSFlight                 : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2017"
+CMS_wvsl_btagSFbc                    : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2016"
+CMS_wvsl_btagSFlight                 : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2016"
+CMS_wvsl_btagSFbc                    : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2016APV"
+CMS_wvsl_btagSFlight                 : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2016APV"
+
 
 
 
@@ -259,7 +275,7 @@ CMS_wvsl18_btag_HFStats2   : $AllFromMC : .* : templateAsymm; AddWeights=['btagS
 ##ampdf_99  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[99]'
 ##ampdf_100  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]'
 ##ampdf_alphaS  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[101]'
-##ampdf_alphaS  : $wvsm : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]'
+##ampdf_alphaS  : $vvsm : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]'
 
 
  

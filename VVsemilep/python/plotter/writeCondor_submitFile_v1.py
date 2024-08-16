@@ -3,31 +3,13 @@ from plots_VVsemilep import *
 
 allvars=  theWVultimateset
 doWhat=sys.argv[1] #cards or plots
-fName='submitFile_%s.condor'%doWhat
-tmp_condor = open('jobs/%s'%fName, 'w')
-tmp_condor.write('''Executable = dummy.sh
-use_x509userproxy = true
-getenv      = True                                                                                                              
-Log        = jobs/{dW}_$(Cluster)_$(ProcId).log
-Output     = jobs/{dW}_$(Cluster)_$(ProcId).out
-Error      = jobs/{dW}_$(Cluster)_$(ProcId).error
-#requirements = (OpSysAndVer =?= "CentOS7")
-+JobFlavour = "tomorrow"
-arguments  = $(info) 
-on_exit_remove = (ExitBySignal == False) && (ExitCode == 0)
-max_retries    = 3
-requirements   = Machine =!= LastRemoteHost
-MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"\n'''.format(dW=doWhat))
-if os.environ['USER'] in ['anmehta', 'vmilosev']:
-   tmp_condor.write('+AccountingGroup = "group_u_CMST3.all"\n')
-#if 'plots' in doWhat:
-   #tmp_condor.write('request_memory = 50000 \n')
-tmp_condor.write('queue info from ( \n')
-pf="" #HMTS"
+pf=""
+
 allfavs=["mu","el","onelep"]
 ll=["mu","el"]
 fitvar_sig=['mWV_binning']#,'mWV_binning_simple']
 fitvar_bkg=['fjet_pt']#,'fjet_pt_simple']
+
 lepsel={'topCR' : ["onelep"],
         'topCR_incl' : [ ["onelep"],fitvar_bkg],
         'topCR_twob' : [ ["onelep"],fitvar_bkg],
@@ -45,13 +27,37 @@ lepsel={'topCR' : ["onelep"],
         'wjCR_hi'  : [ll,fitvar_bkg],
 }
 ops=['cw','c3w','cb']
+
+
+fName='submitFile_%s.condor'%doWhat
+tmp_condor = open('jobs/%s'%fName, 'w')
+tmp_condor.write('''Executable = dummy.sh
+use_x509userproxy = true
+getenv      = True                                                                                                              
+Log        = jobs/{dW}_$(Cluster)_$(ProcId).log
+Output     = jobs/{dW}_$(Cluster)_$(ProcId).out
+Error      = jobs/{dW}_$(Cluster)_$(ProcId).error
++JobFlavour = "tomorrow"
+arguments  = $(info) 
+on_exit_remove = (ExitBySignal == False) && (ExitCode == 0)
+max_retries    = 3
+requirements   = Machine =!= LastRemoteHost
+MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"\n'''.format(dW=doWhat))
+if os.environ['USER'] in ['anmehta', 'vmilosev']:
+   tmp_condor.write('+AccountingGroup = "group_u_CMST3.all"\n')
+tmp_condor.write('queue info from ( \n')
+
 for sel in ["sig","topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]:
    for cat in ["boosted"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 
               if 'plots' in  doWhat:
                  for iVar in allvars:
-                    tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {iVar} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,cmssw=os.environ['PWD']))
+                    if len(ops) > 0 :
+                       for op in ops: 
+                          tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {iVar} {op} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,op=op,cmssw=os.environ['PWD']))
+                    else:
+                        tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {iVar} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,op=op,cmssw=os.environ['PWD']))
               else:
                  for fv in lepsel[sel][1]:
                     if 'wj' in sel or 'top' in sel: 

@@ -3,6 +3,7 @@ incl_data : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-data.txt"
 incl_wj : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-wj.txt" 
 incl_bkg : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-mc.txt",AddWeight="Selak8Jet1_pNetWtagSF"
 incl_sig : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-eft.txt",AddWeight="Selak8Jet1_pNetWtagSF"
+incl_smeft : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-smeft.txt",AddWeight="Selak8Jet1_pNetWtagSF"
 
 
 incl_WJ_lo : + ; IncludeMca="vvsemilep/fullRun2/mca-includes/mca-wj.txt" ,AddWeight="(Selak8Jet1_msoftdrop < 65)",LineStyle=ROOT.kDotted,PostFix="CR_lo",LineColor=ROOT.kOrange+10
