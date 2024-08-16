@@ -1,0 +1,17 @@
+WW_SMEFT_cW :   WmWpToLmNujj_SMEFT_LO : xsec : LHEReweightingWeight[2]; FillColor=ROOT.kGreen-3,   Label="W^{\#pm}W^{\#mp} c_{W}", genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+WW_SMEFT_cW :   WpWmToLpNujj_SMEFT_LO : xsec : LHEReweightingWeight[2]; FillColor=ROOT.kGreen-3,   Label="W^{\#pm}W^{\#mp} c_{W}", genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+WZ_SMEFT_cW :   WpZToLpNujj_SMEFT_LO  : xsec : LHEReweightingWeight[2]; FillColor=ROOT.TColor.GetColor("\#e76300"),   Label="W^{\#pm}Z c_{W}"       ,LineStyle=ROOT.kDotted, genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+WZ_SMEFT_cW :   WmZToLmNujj_SMEFT_LO  : xsec : LHEReweightingWeight[2]; FillColor=ROOT.TColor.GetColor("\#e76300"),   Label="W^{\#pm}Z c_{W}"       ,LineStyle=ROOT.kDotted, genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+
+WW_SMEFT_lin_cW+ :   WmWpToLmNujj_SMEFT_LO : xsec : 0.5*(LHEReweightingWeight[2]-LHEReweightingWeight[1]); FillColor=ROOT.TColor.GetColor("\#e76300"),   Label="W^{\#pm}W^{\#mp} c_{W}" , genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+WW_SMEFT_lin_cW+ :   WpWmToLpNujj_SMEFT_LO : xsec : 0.5*(LHEReweightingWeight[2]-LHEReweightingWeight[1]); FillColor=ROOT.TColor.GetColor("\#e76300"),   Label="W^{\#pm}W^{\#mp} c_{W}", genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+WZ_SMEFT_lin_cW+ :   WpZToLpNujj_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[2]-LHEReweightingWeight[1]); FillColor=ROOT.kOrange+1,   Label="W^{\#pm}Z c_{W}"  ,LineStyle=ROOT.kDotted, genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+WZ_SMEFT_lin_cW+ :   WmZToLmNujj_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[2]-LHEReweightingWeight[1]); FillColor=ROOT.kOrange+1,   Label="W^{\#pm}Z c_{W}"  ,LineStyle=ROOT.kDotted, genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+
+WW_SMEFT_quad_cW+ :   WmWpToLmNujj_SMEFT_LO : xsec : (0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]); FillColor=ROOT.kRed-2,   Label="W^{\#pm}W^{\#mp} c_{W}", genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+WW_SMEFT_quad_cW+ :   WpWmToLpNujj_SMEFT_LO : xsec : (0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]); FillColor=ROOT.kRed-2,   Label="W^{\#pm}W^{\#mp} c_{W}", genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+WZ_SMEFT_quad_cW+ :   WpZToLpNujj_SMEFT_LO  : xsec : (0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]); FillColor=ROOT.kRed-7,   Label="W^{\#pm}Z c_{W}"       ,LineStyle=ROOT.kDotted, genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+WZ_SMEFT_quad_cW+ :   WmZToLmNujj_SMEFT_LO  : xsec : (0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]); FillColor=ROOT.kRed-7,   Label="W^{\#pm}Z c_{W}"       ,LineStyle=ROOT.kDotted, genSumWeightName="LHEReweightingSumw[2]*genEventSumw"
+
+
+
