@@ -143,7 +143,7 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,doWJ,fitCR,WCs,varTofit,acP,acC,wjDate):
     #    print ("vorsichtig sein!! du hast tagging auswahl im top CR geloschen")
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
+    fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
     showratio    = True
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
