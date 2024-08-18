@@ -1,19 +1,20 @@
 # vim: syntax=sh
 
 ### Alias definitions. Careful to avoid trailing '.*' to avoid matching _promptsub
-$alias : vvsm  : WV|WW.*|WZ.*|SM.*|ZZTo2Q2L.*
-$alias : wj    : WJets.*
-$alias : st    : singletop|T_[a-z]+ch|T[a-z]+_[a-z]+ch
-$alias : ttbar : TTJets|TTJets_part.*|tthighmass|ttsemi|tt|TT_mtt.*
-$alias : VH    : WH|VHToNonbb|ZH|WplusH|WminusH
-$alias : top   : $st|$ttbar
-$alias : qcd   : QCD.*|Other.*
+$alias : vvsm   : WV|WW.*|WZ.*|SM.*
+$alias : wj     : WJets.*
+$alias : st     : singletop|T_[a-z]+ch|T[a-z]+_[a-z]+ch
+$alias : ttbar  : TTJets|TTJets_part.*|tthighmass|ttsemi|tt|TT_mtt.*
+$alias : VH     : WH|VH.*|ZH|WplusH|WminusH
+$alias : Others : WH|VH.*|ZH|WplusH|WminusH|ZZ.*
+$alias : top    : $st|$ttbar
+$alias : qcd    : QCD.*
 $alias : aTGC   : .*cw.*|.*cb.*
 $alias : wwaTGC : WW.*cw.*|WW.*cb.*|WW.*c3w.*|
 $alias : wzaTGC : WZ.*cw.*|WZ.*cb.*|WZ.*c3w.*|
-$alias : AllFromMC : $top|$wvsl|$qcd|$wj|$VH
-$alias : PNET   : $top|$vvsm|$aTGC
-$alias : allbutqcd    : $top|$wj|$VH|$vvsm
+$alias : AllFromMC  : $top|$wvsl|$qcd|$wj|$Others
+$alias : PNET       : $top|$vvsm|$aTGC|$Others
+$alias : allbutqcd  : $top|$wj|$VH|$vvsm|$Others
 
 ### Uncertainties
 
@@ -53,7 +54,10 @@ CMS_wvsl_qcdscales_shape_WW : WW_sm : .* : envelope ; FakeRates=['vvsemilep/full
 CMS_wvsl_qcdscales_shape_WZ : WZ_sm : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 
 CMS_wvsl_qcdscales_shape_WW : SM_WW : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+
 CMS_wvsl_qcdscales_shape_WZ : SM_WZ : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+
+CMS_wvsl_qcdscales_shape_Others : $Others : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 
 
 CMS_wvsl_qcdscales_shape_WW_aTGC : $wwaTGC : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
