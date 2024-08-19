@@ -1,7 +1,7 @@
 # vim: syntax=sh
 
 ### Alias definitions. Careful to avoid trailing '.*' to avoid matching _promptsub
-$alias : vvsm   : WV|WW.*|WZ.*|SM.*
+$alias : vvsm   : WV|WW_sm|WZ_sm|SM.*
 $alias : wj     : WJets.*
 $alias : st     : singletop|T_[a-z]+ch|T[a-z]+_[a-z]+ch
 $alias : ttbar  : TTJets|TTJets_part.*|tthighmass|ttsemi|tt|TT_mtt.*
@@ -51,6 +51,7 @@ nnpdf : $allbutqcd :  .* : templateSymm; Normalize=False, AddWeight='nnpdf_rms' 
 CMS_wvsl_qcdscales_shape_VH : $VH : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 
 CMS_wvsl_qcdscales_shape_WW : WW_sm : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+
 CMS_wvsl_qcdscales_shape_WZ : WZ_sm : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 
 CMS_wvsl_qcdscales_shape_WW : SM_WW : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']

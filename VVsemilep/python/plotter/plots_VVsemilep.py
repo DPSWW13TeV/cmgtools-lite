@@ -27,8 +27,8 @@ scaleEFTylds={
 fitvars={
 'mWV_binning_res'   : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,2546,2659,2775,2895,3019,3147,3279,3416,3558,3704, 3854, 4010, 4171, 4337, 4509,4550]",
 'mWV_fixedbW'       : "mWV 36,950,4550",
-'mWV'               : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]",
-'fjet_pt'           : "Selak8Jet1_pt [200,250,300,350,400,450,500,550,600,650,700,800,1000,2000]",
+'mWV'               : "mWV [950,1000,1050,1100,1150,1200,1300,1400,1500,1600,1700,1900,2100,2300,2500,4500]",
+'fjet_pt'           : "Selak8Jet1_pt [200,250,300,350,400,450,500,550,600,650,700,800,2000]",
 'fjet_pt_fixedbW'   : "Selak8Jet1_pt 18,200,2000",
 ''                  : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]"
 }
@@ -147,7 +147,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     showratio    = True
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
-    processes    = ['SM_WW','SM_WZ','tt','WJets','singletop','QCD','data','Others']#'VH','ZZ']#,'WW_sm','WZ_sm']'WW_sm','WZ_sm','
+    processes    = ['WW_sm','WZ_sm','tt','WJets','singletop','data','Others','QCD'] #'VH','QCD','ZZ',SM_WW','SM_WZ',]
     vetoPlots    = ['WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cb','WZ_quad_cb','WZ_cb']
     morePs       = ['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
     if 'all' in WCs: WCs=['cw','c3w','cb']
@@ -182,8 +182,8 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         exclude = ' ' #--xu CMS_vvsl18_pNetscore' if 'wjCR' not in pR else  ' '
         signal = if3(pR == 'SR' or pR == 'sig','--sp .*c.* ', if3('topCR' in pR, ' --sp tt ', ' --sp WJets'))
         for i in processes:
-            x = re.search("^W.*_c*", i) #this is gonna scale only EFT components and not the SM yields from eft!! this is fine as long as we take SM ylds from excl samples
-            if x:
+            x = re.search("^W.*_c*", i) or re.search("^W.*_sm*", i) 
+            if x :
                 if 'sig' in pR or 'SR' in pR:
                     scalethem[i]=scaleEFTylds['sig'][i.split('_')[0]]
                 else:
@@ -219,7 +219,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     mWV_dist=" {here} ".format(here=fitvars[varTofit])
                     if "top" in pR or 'wj' in pR: 
                         binNamecards=binName+"_"+year
-                        extraoptscards= ' --xp Others --xp .*quad.*  --sp WW_sm --sp WZ_sm  --binname %s %s '%(binNamecards, '--xp QCD ' if 'top' in pR else '')
+                        extraoptscards= ' --binname %s '%(binNamecards) #, '--xp QCD ' if 'top' in pR else '') --xp Others --xp .*quad.*  --sp WW_sm --sp WZ_sm 
                         if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
                         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
                     else:
