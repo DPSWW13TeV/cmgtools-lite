@@ -21,18 +21,18 @@ FatJet1_pt_nowj           : ak8sDMgt45_pt[0]         : [200,250,300,350,400,450,
 pmet_nowj                 : PuppiMET_pt  :  [20,50,100,140,180,220,260,300,350,400,450,500,600,800,2000] ; XTitle="p_{T}^{miss} (GeV)",MoreY=1.5
 
 
-pmet_phi                  : pmet_phi : 8,-3.2,3.2 ; XTitle="p_{T}^{miss} (#phi)",MoreY=1.5
-nVert  	                  : PV_npvsGood     : 50,0,50; XTitle="n_{vertices}", MoreY=1.5
-nBJetMedium30_Recl 	  : nBJetMedium30_Recl : [0,1,2,3,4,5] ; XTitle='N_{bjets}' ,IncludeOverflows=False,MoreY=2.0
+pmet_phi                  : pmet_phi : 8,-3.2,3.2 ; XTitle="p_{T}^{miss} (#phi) (rad.)",MoreY=2.0
+nVert  	                  : PV_npvsGood     : 50,0,50; XTitle="n_{vertices}", MoreY=2.0
+nBJetMedium30_Recl 	  : nBJetMedium30_Recl : [0,1,2,3,4,5] ; XTitle='N_{bjets}' ,IncludeOverflows=False,MoreY=2.5
 nBJetLoose30_Recl  	  : nBJetLoose30_Recl  : [0,1,2,3,4,5] ; XTitle='nBJetLoose30_Recl' ,IncludeOverflows=False,MoreY=1.5
-dphifjpmet         	  : dphi_fjmet : 20,0,3.2; XTitle="#Delta#phi(j\,p_{T}^{miss}) (rad.)",Logy, MoreY=2.0, IncludeOverflows=False
-ptWV_pmet          	  : ptWV(Lep1_pt,Lep1_eta,Lep1_phi,Lep1_pdgId,Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,pmet_pt,pmet_phi) :[0,50,100,150,200,250,300,350,400,600,2000] ; XTitle="p_{T}^{WV} (GeV)",MoreY=1.5,MaxDigi
-ptWV_pmet_logy     	  : ptWV(Lep1_pt,Lep1_eta,Lep1_phi,Lep1_pdgId,Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,pmet_pt,pmet_phi) : [0,50,100,150,200,250,300,350,400,600,2000]; XTitle="p_{T}^{WV}",Logy, MoreY=20,MaxDigi
-dphifjlep          	  : abs(deltaPhi(Lep1_phi,Selak8Jet1_phi)) : 20,0.,3.2; XTitle="#Delta#phi({j\,l) (rad.)",MoreY=1.85, IncludeOverflows=False
-dphil1pmet         	  : abs(deltaPhi(Lep1_phi,pmet_phi))        : 20,0.,3.2; XTitle="#Delta#phi({l\,p_{T}^{miss}) (rad.)", MoreY=2.0
-Lep1_pt_logy       	  : Lep1_pt : [50,60,70,80,100,120,160,200,300,400,500,600,700,2000]; XTitle="Leading lepton p_{T} (GeV)" ,Logy, MoreY=10,MaxDigi
-Lep1_pt 	   	  : Lep1_pt : [50,60,70,80,100,120,160,200,300,400,500,600,700,2000]; XTitle="p_{T}^{l} (GeV)",MoreY=2.5,MaxDigi
-FatJet1_pNetMD_Wtagscore  : Selak8Jet1_pNetWtagscore  : 10,0.5,1; XTitle=" pNetMD(#frac{Xcc+Xqq}{Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=1.85
+dphifjpmet         	  : dphi_fjmet : 20,0,3.2; XTitle="#Delta#phi(j\,p_{T}^{miss}) (rad.)",Logy, MoreY=10, IncludeOverflows=False
+ptWV_pmet          	  : ptWV(Lep1_pt,Lep1_eta,Lep1_phi,Lep1_pdgId,Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,pmet_pt,pmet_phi) :[0,50,100,150,200,250,300,350,400,600,2000] ; XTitle="p_{T}^{WV} (GeV)",MoreY=1.75
+ptWV_pmet_logy     	  : ptWV(Lep1_pt,Lep1_eta,Lep1_phi,Lep1_pdgId,Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,pmet_pt,pmet_phi) : [0,50,100,150,200,250,300,350,400,600,2000]; XTitle="p_{T}^{WV}",Logy, MoreY=20 #,MaxDigi
+dphifjlep          	  : abs(deltaPhi(Lep1_phi,Selak8Jet1_phi)) : 20,0.,3.2; XTitle="#Delta#phi({j\,l) (rad.)",Logy,MoreY=10 #, IncludeOverflows=False
+dphil1pmet         	  : abs(deltaPhi(Lep1_phi,pmet_phi))        : 20,0.,3.2; XTitle="#Delta#phi({l\,p_{T}^{miss}) (rad.)", Logy, MoreY=10
+Lep1_pt_logy       	  : Lep1_pt : [50,60,70,80,100,120,160,200,300,400,500,600,700,2000]; XTitle="Leading lepton p_{T} (GeV)" ,Logy, MoreY=10 #,MaxDigi
+Lep1_pt 	   	  : Lep1_pt : [50,60,70,80,100,120,160,200,300,400,500,600,700,2000]; XTitle="p_{T}^{l} (GeV)",MoreY=2.5 #,MaxDigi
+FatJet1_pNetMD_Wtagscore  : Selak8Jet1_pNetWtagscore  : 10,0.5,1; XTitle=" score(#frac{Xcc+Xqq}{Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=2.0
 
 
 

@@ -13,6 +13,7 @@ WV_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweight
 WV_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
 WV_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
 WV_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.kMagenta+1,   Label="aTGC\#rightarrowWV SM"
+
 WW_SMEFT_sm :   WmWpToLmNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM", genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
 WW_SMEFT_sm :   WpWmToLpNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM", genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
 WZ_SMEFT_sm :   WpZToLpNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted, genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
@@ -29,12 +30,13 @@ WZ_sm   : WZTo1L1Nu2Q : 11.46  : 1 ; FillColor=ROOT.TColor.GetColor("\#e42536"),
 
 
 
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM " 
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM" 
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM"
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM"
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM"
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM"
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM"
+
 WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
 WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
 WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted

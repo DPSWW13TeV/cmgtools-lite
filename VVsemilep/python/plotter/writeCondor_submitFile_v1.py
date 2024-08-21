@@ -73,7 +73,7 @@ tmp_condor.write(') \n')
 tmp_condor.close()
 
 print 'condor_submit jobs/%s'%fName
-#os.system('condor_submit jobs/%s'%fName)
+os.system('condor_submit jobs/%s'%fName)
 
 
 #python plots_VVsemilep.py --results --sel plots --year ${2} --nLep ${3} --finalState ${4} --pv ${5} --pf ${6}

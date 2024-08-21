@@ -872,7 +872,7 @@ class PlotMaker:
                 plotformat = (1200,600) if doWide else (600,600)
                 sf = 20./plotformat[0]
                 ROOT.gStyle.SetPadLeftMargin(600.*0.18/plotformat[0])
-                #ROOT.gStyle.SetPadRightMargin(800.*0.065/plotformat[0])
+
 
                 stack.Draw("GOFF")
                 ytitle = "Events" if not self._options.printBinning else "Events / %s" %(self._options.printBinning)
@@ -891,7 +891,8 @@ class PlotMaker:
                 total.GetYaxis().SetTitle(pspec.getOption('YTitle',ytitle))
                 total.GetXaxis().SetTitle(pspec.getOption('XTitle',outputName))
                 total.GetXaxis().SetNdivisions(pspec.getOption('XNDiv',510))
-                if pspec.hasOption('MaxDigi'): 
+                if pspec.hasOption('MaxDigi'):
+                    ROOT.gStyle.SetPadRightMargin(800.*0.065/plotformat[0])
                     total.GetXaxis().SetMaxDigits(2);##am
                 if outputDir: outputDir.WriteTObject(stack)
                 # 
