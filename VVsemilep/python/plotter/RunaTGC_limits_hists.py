@@ -45,7 +45,7 @@ def commandsToRun(dc,pf,outDir,WC):
     
     os.system("cp %s.txt %s" %(dCard_str_wpath,outDir))
     os.system("text2workspace.py  %s.txt -P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative  --X-allow-no-signal  -o  model_%s.root  --PO eftOperators=%s" %(dCard_str,dCard_str,WC)) #  --X-allow-no-signal
-    os.system("combine -M MultiDimFit model_%s.root  --algo=grid --points 2000  -m 125  -t -1  --redefineSignalPOIs k_%s  --freezeParameters r --setParameters r=1  --setParameterRanges  k_%s=-10,10 --X-rtd MINIMIZER_MaxCalls=400000  --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT  --alignEdges 1  --verbose 1"%(dCard_str_wpath,WC,WC))
+    os.system("combine -M MultiDimFit model_%s.root  --algo=grid --points 2000  -m 125  -t -1  --redefineSignalPOIs k_%s  --freezeParameters r --setParameters r=1  --setParameterRanges  k_%s=-10,10 --X-rtd MINIMIZER_MaxCalls=400000  --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT  --alignEdges 1  "%(dCard_str_wpath,WC,WC)) #--verbose 1
     os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_%s  -lumi 58 -cms -preliminary -o %s/scan_%s%s.png -xlabel \"c_{%s} [TeV^{-2}]\"" %(WC,outDir,dCard_str,WC,pf))
     os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_%s  -lumi 58 -cms -preliminary -o %s/scan_%s%s.pdf -xlabel \"c_{%s} [TeV^{-2}]\"" %(WC,outDir,dCard_str,WC,pf))
     #os.system("combine  -M FitDiagnostics  model_%s.root  -t -1 --expectSignal 1  --redefineSignalPOIs k_%s --freezeParameters r,k_%s --cminDefaultMinimizerStrategy 0 --toysFrequentist  --robustFit=1  --setParameters r=1"%(dCard_str,WC,WC)) #--saveNormalizations  --saveShapes --plots  
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
     #year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2024-08-19" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2024-08-21" #datetime.date.today().isoformat() #"2021-12-02" #
     pf=""
     dC18=combineCards("2018","onelep","cw",pf)
     commandsToRun(dC18,pf,outDir,"cw")

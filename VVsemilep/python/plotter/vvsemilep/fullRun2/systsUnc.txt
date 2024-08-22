@@ -42,7 +42,7 @@ lumi_13TeV_BCC 		: $AllFromMC : .* : normSymm : 1.002; year="2018"
 lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.004; year="2016"
 lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.001; year="2017"
 
-nnpdf : $allbutqcd :  .* : templateSymm; Normalize=False, AddWeight='nnpdf_rms' #, year="2018"
+#nnpdf : $allbutqcd :  .* : templateSymm; Normalize=False, AddWeight='nnpdf_rms' #, year="2018"
 
 #pdf_WH        : $WH   : .* : normSymm : 1.019
 

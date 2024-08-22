@@ -158,9 +158,9 @@ def doTinyCmsPrelim(textLeft="_default_",textRight="_default_",hasExpo=False,tex
     textLeft = textLeft.replace("%(lumi)",lumitext)
     textRight = textRight.replace("%(lumi)",lumitext)
     if textLeft not in ['', None]:
-        doSpam(textLeft, (.28 if hasExpo else 0.07 if doWide else .16)+xoffs, .955, .60+xoffs, .995, align=12, textSize=textSize)
+        doSpam(textLeft, (.28 if hasExpo else 0.07 if doWide else .16)+xoffs, .955, .60+xoffs, .99, align=12, textSize=textSize)
     if textRight not in ['', None]:
-        doSpam(textRight,(0.5 if doWide else .45)+xoffs, .955, .98+xoffs, .995, align=32, textSize=textSize)
+        doSpam(textRight,(0.5 if doWide else .45)+xoffs, .955, .98+xoffs, .99, align=32, textSize=textSize)
 
 def reMax(hist,hist2,islog,factorLin=1.3,factorLog=2.0,doWide=False):
     if  hist.ClassName() == 'THStack':

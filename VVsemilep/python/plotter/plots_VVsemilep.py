@@ -166,7 +166,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     signal  = ''
     spam    = ' --topSpamSize 1.0 --noCms '
     
-    legends = ' --legendFontSize 0.028 --legendBorder 0 --legendWidth  0.7  --legendColumns 3 '
+    legends = ' --legendFontSize 0.028 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '
     #legends = '  --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
     ubands  =  ' --showMCError  --showIndivSigs --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
@@ -220,7 +220,8 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     mWV_dist=" {here} ".format(here=fitvars[varTofit])
                     if "top" in pR or 'wj' in pR: 
                         binNamecards=binName+"_"+year
-                        extraoptscards= ' --binname %s  --sp WW_sm --sp WZ_sm '%(binNamecards) #, '--xp QCD ' if 'top' in pR else '') --xp Others --xp .*quad.*  --sp WW_sm --sp WZ_sm 
+                        extraoptscards= ' --binname %s  --sp WW_sm --sp WZ_sm '%(binNamecards) #, '--xp QCD ' if 'top' in pR else '') --xp Others --xp .*quad.*  --sp WW_sm --sp WZ_sm
+                        if "wjCR_hi" in pR:  extraoptscards+= " --xp QCD --xp Others"
                         if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
                         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
                     else:

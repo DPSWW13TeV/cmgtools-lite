@@ -1,7 +1,7 @@
 import os,string,sys
 from plots_VVsemilep import *
 
-allvars=  theWVultimateset
+allvars=  theWVultimateset_noWJ #theWVultimateset
 doWhat=sys.argv[1] #cards or plots
 pf=""
 
@@ -26,7 +26,7 @@ lepsel={'topCR' : ["onelep"],
         'wjCR_lo'  : [ll,fitvar_bkg],
         'wjCR_hi'  : [ll,fitvar_bkg],
 }
-ops=['all']#,'c3w','cb']
+ops=[] #'all']#,'cw','c3w','cb']
 
 
 fName='submitFile_%s.condor'%doWhat
@@ -49,7 +49,7 @@ if 'plots' in doWhat :
    tmp_condor.write('request_memory = 10GB\n')
 tmp_condor.write('queue info from ( \n')
 
-for sel in ["sig","topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]:
+for sel in ["sig"]: #,"topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]:
    for cat in ["boosted"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 
@@ -59,7 +59,7 @@ for sel in ["sig","topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]:
                        for op in ops: 
                           tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {iVar} {op} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,op=op,cmssw=os.environ['PWD']))
                     else:
-                        tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {iVar} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,op=op,cmssw=os.environ['PWD']))
+                        tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {iVar} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,cmssw=os.environ['PWD']))
               else:
                  for fv in lepsel[sel][1]:
                     if 'wj' in sel or 'top' in sel: 
