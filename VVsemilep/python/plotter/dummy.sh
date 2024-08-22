@@ -29,7 +29,6 @@ case ${2} in
 	cmd_emore="  --dW plots  --dCF --pv ${7}"
 	;;
     cards)
-	basecmd="python plots_VVsemilep.py --results --dW cards  --doWJ --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs  --fv ${7}"
 	cmd_emore=" --dW cards --fv ${7}"
 	;;    
 esac
