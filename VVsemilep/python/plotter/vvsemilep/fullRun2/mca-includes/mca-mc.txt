@@ -23,37 +23,37 @@ WZ_SMEFT_sm :   WmZToLmNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColo
 
 ##https://github.com/raggleton/aTGCsAnalysis/blob/472a635fba97990c6f0a899557424d0589a81061/Common/test/addWeightSamples.cpp#L37
 #pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)
+#http://www.arxiv.org/pdf/1408.5243 WW k factor
+#http://www.arxiv.org/pdf/1604.08576 WZ k factor
 
-
-WW_sm   : WWTo1L1Nu2Q : xsec   : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="WW" ,SkipMe=True
-WZ_sm   : WZTo1L1Nu2Q : 11.46  : 1 ; FillColor=ROOT.TColor.GetColor("\#e42536"), Label="WZ" ,SkipMe=True
-
-
-
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM" 
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM"
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM"
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM"
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM"
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM"
-
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted
+WW_sm   : WWTo1L1Nu2Q : xsec*1.12   : 1 ; FillColor=ROOT.TColor.GetColor("\#ffa90e"), Label="WW_sm" 
+WZ_sm   : WZTo1L1Nu2Q : 11.46*1.11  : 1 ; FillColor=ROOT.TColor.GetColor("\#e42536"), Label="WZ_sm" 
 
 
 
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",SkipMe=True
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",SkipMe=True
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",SkipMe=True
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",SkipMe=True
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",SkipMe=True
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",SkipMe=True
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted,SkipMe=True
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted,SkipMe=True
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted,SkipMe=True
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted,SkipMe=True
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted,SkipMe=True
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM"#,LineStyle=ROOT.kDotted,SkipMe=True
 
 
 
-Others : WplusH   	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
-Others : WminusH 	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
-Others : ZH      	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
-Others : VHToNonbb  : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
-Others : ZZTo2Q2L_part2+ZZTo2Q2L_part1+ZZTo2Q2L_part0	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
+
+
+
+VH : WplusH   	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
+VH : WminusH 	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
+VH : ZH      	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
+VH : VHToNonbb  : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
+VH : ZZTo2Q2L_part2+ZZTo2Q2L_part1+ZZTo2Q2L_part0	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
 
 
 

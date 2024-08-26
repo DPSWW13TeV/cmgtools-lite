@@ -382,8 +382,8 @@ event_sel=  ['event.nLepFO_Recl == 1                                 ',
 
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import vvsemilep_TreeForWJestimation
 wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,1,event_sel)
-event_sel_incl=['event.nLepFO_Recl == 1                                 ',
-            'event.PuppiMET_pt > 110                                 ',
+event_sel_incl=['event.nLepFO_Recl == 1                             ',
+            'event.PuppiMET_pt > 40                                 ',
             '(event.Trigger_1e or  event.Trigger_1m)                 ',
             'event.LepGood_pt[event.iLepFO_Recl[0]] > 50             ',
             'event.LepGood_isLepTight_Recl[event.iLepFO_Recl[0]] == 1',

@@ -1,11 +1,11 @@
 data : SingleMuon_Run2018A_UL18	; years="2018"
-data : SingleMuon_Run2018B_UL18	; years="2018"
-data : SingleMuon_Run2018C_UL18	; years="2018"
-data : SingleMuon_Run2018D_UL18 ; years="2018"
-data : EGamma_Run2018A_UL18	; years="2018"
-data : EGamma_Run2018B_UL18	; years="2018"
-data : EGamma_Run2018C_UL18	; years="2018"
-data : EGamma_Run2018D_UL18	; years="2018"
+#data : SingleMuon_Run2018B_UL18	; years="2018"
+#data : SingleMuon_Run2018C_UL18	; years="2018"
+#data : SingleMuon_Run2018D_UL18 ; years="2018"
+#data : EGamma_Run2018A_UL18	; years="2018"
+#data : EGamma_Run2018B_UL18	; years="2018"
+#data : EGamma_Run2018C_UL18	; years="2018"
+#data : EGamma_Run2018D_UL18	; years="2018"
 
 
 data : DoubleEG_Run2017B_UL2017; years="2017"

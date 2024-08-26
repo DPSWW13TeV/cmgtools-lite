@@ -513,7 +513,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     line.Draw("L")
     for ratio in ratios:
         ratio.Draw("E SAME" if ratio.ClassName() != "TGraphAsymmErrors" else "PZ SAME");
-    leg0 = ROOT.TLegend(0.12 if doWide else 0.2, 0.8, 0.25 if doWide else 0.45, 0.85)
+    leg0 = ROOT.TLegend(0.12 if doWide else 0.25, 0.8, 0.25 if doWide else 0.35, 0.85)
     leg0.SetFillColor(0)
     leg0.SetShadowColor(0)
     leg0.SetLineColor(0)
@@ -521,7 +521,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     leg0.SetTextSize(textSize*0.7/0.3)
     leg0.AddEntry(unityErr0, "stat. unc.", "F")
     if showStatTotLegend: leg0.Draw()
-    leg1 = ROOT.TLegend(0.25 if doWide else 0.55, 0.75, 0.38 if doWide else 0.65, 0.85)
+    leg1 = ROOT.TLegend(0.25 if doWide else 0.55, 0.8, 0.38 if doWide else 0.65, 0.85)
     ##amleg1 = ROOT.TLegend(0.25 if doWide else 0.45, 0.84, 0.38 if doWide else 0.7, 0.94)
     leg1.SetFillColor(0)
     leg1.SetShadowColor(0)
@@ -1039,7 +1039,7 @@ class PlotMaker:
                         fdir = printDir;
                         if not os.path.exists(fdir): 
                             os.makedirs(fdir); 
-                            if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/g/gpetrucc/php/index.php "+fdir)
+                            if os.path.exists("/afs/cern.ch"): os.system("cp /afs/cern.ch/user/a/anmehta/public/index.php "+fdir)
                             elif os.path.exists("/pool/ciencias/"): os.system("cp /pool/ciencias/HeppyTrees/RA7/additionalReferenceCode/index.php "+fdir)
                         if ext == "txt" and self._options.perBin:
                             dump = open("%s/%s_perBin.%s" % (fdir, outputName, ext), "w")
