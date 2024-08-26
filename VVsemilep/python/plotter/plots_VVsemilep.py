@@ -55,7 +55,7 @@ bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavou
 
 
 theWVultimateset=['mWV','pmet','FatJet1_pt','FatJet1_sDrop_mass','mt1pmet','pmet_phi','nVert','nBJetMedium30_Recl','nBJetLoose30_Recl','dphifjpmet','ptWV_pmet','dphifjlep','dphil1pmet','Lep1_pt','FatJet1_pNetMD_Wtagscore']##'nLepGood','nFatJet'
-theWVultimateset_log=['mWV_logy','pmet_logy','FatJet1_pt_logy','FatJet1_sDrop_mass_logy','ptWV_pmet_logy','Lep1_pt_logy']
+theWVultimateset_log=['mWV_logy','pmet_logy','FatJet1_pt_logy','FatJet1_sDrop_mass_logy','ptWV_pmet_logy','Lep1_pt_logy','mt1pmet_logy']
 theWVultimateset_noWJ=['mt1pmet_nowj','mWV_nowj','FatJet1_sDrop_mass_nowj','FatJet1_pt_nowj','pmet_nowj']
 
 
@@ -142,7 +142,6 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 
 ##################
 def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,doWJ,fitCR,WCs,varTofit,acP,acC,wjDate):
-    #    print ("vorsichtig sein!! du hast tagging auswahl im top CR geloschen")
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
     fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
     showratio    = True
@@ -154,11 +153,14 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     if 'all' in WCs: WCs=['cw','c3w','cb']
 
     for op in WCs:
-        if 'cards' in doWhat:
-            processes+=[s + op for s in morePs if s not in vetoPlots]
+        if len(op) == 0:
+            processes=processes
         else:
-            processes+=[s + op for s in ['WW_','WZ_'] if str(s+op) not in vetoPlots]
-
+            if 'cards' in doWhat:
+                processes+=[s + op for s in morePs if s not in vetoPlots]            
+            else:
+                processes+=[s + op for s in ['WW_','WZ_'] if str(s+op) not in vetoPlots]
+                
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_boosted = ['ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','Mjuppercut','Mwvuppercut']
     cuts_btagEff = ['btagSR','bpartonFlav','Loosebtag','Medbtag','Tightbtag'] ##here for reference ['lightpartonFlav','cpartonFlav']
@@ -226,12 +228,18 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                         if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
                         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
                     else:
-                        for op in WCs:
-                            binNamecards=binName+"_"+op+"_"+year
-                            extraoptscards= ' --sp WW_sm --sp WZ_sm --sp SM.* --binname %s '%(binNamecards) ##signal process SM for checks
-                            if len(acC) > 0:extraoptscards+=''.join(' -E ^'+cut for cut in acC )
+                        extraoptscards= ' --sp WW_sm --sp WZ_sm --sp SM.* '
+                        if len(acC) > 0:extraoptscards+=''.join(' -E ^'+cut for cut in acC )
+                        if len(WCs) > 0:
+                            for op in WCs:
+                                binNamecards=binName+"_"+op+"_"+year
+                                extraoptscards+=' --binname %s '%(binNamecards)
+                                runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
+                        else:
+                            binNamecards=binName+"_"+year
+                            extraoptscards+=' --binname %s '%(binNamecards)
                             runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
-
+                                
 
 #####################################
 #################

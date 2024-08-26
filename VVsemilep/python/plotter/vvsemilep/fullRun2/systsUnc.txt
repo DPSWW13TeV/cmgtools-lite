@@ -12,13 +12,14 @@ $alias : qcd    : QCD.*
 $alias : aTGC   : .*cw.*|.*cb.*
 $alias : wwaTGC : WW.*cw.*|WW.*cb.*|WW.*c3w.*|
 $alias : wzaTGC : WZ.*cw.*|WZ.*cb.*|WZ.*c3w.*|
-$alias : AllFromMC  : $top|$wvsl|$qcd|$wj|$Others|$VH
+$alias : AllFromMC  : $top|$vvsm|$qcd|$wj|$Others|$VH
 $alias : PNET       : $top|$vvsm|$aTGC|$Others|$VH
 $alias : allbutqcd  : $top|$wj|$VH|$vvsm|$Others|$VH
 
 ### Uncertainties
 
 # lumi from https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#LumiComb
+
 lumi_13TeV_2016		: $AllFromMC : .* : normSymm : 1.022; year="2016"
 lumi_13TeV_2017		: $AllFromMC : .* : normSymm : 1.020; year="2017"
 lumi_13TeV_2018		: $AllFromMC : .* : normSymm : 1.015; year="2018"
@@ -280,8 +281,8 @@ pdf_98  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeig
 pdf_99  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[99]'
 pdf_100 : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]'
 
-pdf_101  : $top|$wj|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[101]'
-pdf_102  : $top|$wj|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[102]'
+pdf_101  : $top|$wj|$Others|$VH : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[101]'
+pdf_102  : $top|$wj|$Others|$VH : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[102]'
 
 
  

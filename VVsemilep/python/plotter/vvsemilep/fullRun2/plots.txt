@@ -12,8 +12,8 @@ FatJet1_pt                : Selak8Jet1_pt  : [200,250,300,350,400,450,500,550,60
 FatJet1_pt_logy           : Selak8Jet1_pt  : [200,250,300,350,400,450,500,550,600,650,700,800,2000]; XTitle="p_{T}^{jet} (GeV)", Logy, MoreY=20 ,MaxDigi, IncludeOverflows=True
 FatJet1_sDrop_mass        : Selak8Jet1_msoftdrop        : 24,40,160; XTitle="m_{SD}^{jet} (GeV)", MoreY=2.0, IncludeOverflows=True
 FatJet1_sDrop_mass_logy   : Selak8Jet1_msoftdrop        : 24,40,160; XTitle="m_{SD}^{jet} (GeV)", Logy, MoreY=5, IncludeOverflows=True
-mt1pmet                   : mt_2(Lep1_pt,Lep1_phi,pmet_pt,pmet_phi) : 20,0,200; XTitle="m_{T}(l\,p_{T}^{miss}) (GeV)",MoreY=2.0, IncludeOverflows=False
-
+mt1pmet                   : mt_2(Lep1_pt,Lep1_phi,pmet_pt,pmet_phi) : 20,0,200; XTitle="m_{T}(l\,p_{T}^{miss}) (GeV)",MoreY=2.0, IncludeOverflows=True
+mt1pmet_logy               : mt_2(Lep1_pt,Lep1_phi,pmet_pt,pmet_phi) : 20,0,200; XTitle="m_{T}(l\,p_{T}^{miss}) (GeV)",MoreY=10,Logy, IncludeOverflows=True
 mt1pmet_nowj              : mt_2(LepGood1_pt,LepGood1_phi,PuppiMET_pt,PuppiMET_phi) : 20,0,200; XTitle="m_{T}(l\,p_{T}^{miss}) (GeV)",MoreY=2.0 #, IncludeOverflows=True
 mWV_nowj		  : mass_WV(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0): [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]     ; XTitle="m_{WV} (GeV)",  MoreY=10, Logy, IncludeOverflows=True
 FatJet1_sDrop_mass_nowj	  : ak8sDMgt45_msoftdrop[0]  : 16,40,200; XTitle="m_{SD}^{jet} (GeV)", MoreY=2.0, IncludeOverflows=True
@@ -23,16 +23,16 @@ pmet_nowj                 : PuppiMET_pt  :  [0,60,80,90,100,110,120,130,140,160,
 
 pmet_phi                  : pmet_phi : 8,-3.2,3.2 ; XTitle="p_{T}^{miss} (#phi) (rad.)",MoreY=2.0
 nVert  	                  : PV_npvsGood     : 50,0,50; XTitle="n_{vertices}", MoreY=2.0
-nBJetMedium30_Recl 	  : nBJetMedium30_Recl : [0,1,2,3,4,5] ; XTitle='N_{bjets}' ,IncludeOverflows=False,MoreY=2.5
-nBJetLoose30_Recl  	  : nBJetLoose30_Recl  : [0,1,2,3,4,5] ; XTitle='nBJetLoose30_Recl' ,IncludeOverflows=False,MoreY=1.5
-dphifjpmet         	  : dphi_fjmet : 20,0,3.2; XTitle="#Delta#phi(j\,p_{T}^{miss}) (rad.)",Logy, MoreY=10, IncludeOverflows=False
+nBJetMedium30_Recl 	  : nBJetMedium30_Recl : [0,1,2,3,4,5] ; XTitle='N_{bjets}' ,MoreY=2.5
+nBJetLoose30_Recl  	  : nBJetLoose30_Recl  : [0,1,2,3,4,5] ; XTitle='nBJetLoose30_Recl' ,MoreY=1.5
+dphifjpmet         	  : dphi_fjmet : 20,0,3.2; XTitle="#Delta#phi(j\,p_{T}^{miss}) (rad.)",Logy, MoreY=10, IncludeOverflows=True
 ptWV_pmet          	  : ptWV(Lep1_pt,Lep1_eta,Lep1_phi,Lep1_pdgId,Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,pmet_pt,pmet_phi) :[0,50,100,150,200,250,300,350,400,600,2000] ; XTitle="p_{T}^{WV} (GeV)",MoreY=1.75, IncludeOverflows=True
 ptWV_pmet_logy     	  : ptWV(Lep1_pt,Lep1_eta,Lep1_phi,Lep1_pdgId,Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,pmet_pt,pmet_phi) : [0,50,100,150,200,250,300,350,400,600,2000]; XTitle="p_{T}^{WV}",Logy, MoreY=20, IncludeOverflows=True
-dphifjlep          	  : abs(deltaPhi(Lep1_phi,Selak8Jet1_phi)) : 20,0.,3.2; XTitle="#Delta#phi({j\,l) (rad.)",Logy,MoreY=10 #, IncludeOverflows=False
+dphifjlep          	  : abs(deltaPhi(Lep1_phi,Selak8Jet1_phi)) : 20,0.,3.2; XTitle="#Delta#phi({j\,l) (rad.)",Logy,MoreY=10 
 dphil1pmet         	  : abs(deltaPhi(Lep1_phi,pmet_phi))        : 20,0.,3.2; XTitle="#Delta#phi({l\,p_{T}^{miss}) (rad.)", Logy, MoreY=10
 Lep1_pt_logy       	  : Lep1_pt : [50,60,70,80,100,120,160,200,300,400,500,600,700,2000]; XTitle="Leading lepton p_{T} (GeV)" ,Logy, MoreY=10, IncludeOverflows=True #,MaxDigi
 Lep1_pt 	   	  : Lep1_pt : [50,60,70,80,100,120,160,200,300,400,500,600,700,2000]; XTitle="p_{T}^{l} (GeV)",MoreY=2.5, IncludeOverflows=True #,MaxDigi
-FatJet1_pNetMD_Wtagscore  : Selak8Jet1_pNetWtagscore  : 10,0.5,1; XTitle=" score(#frac{Xcc+Xqq}{Xcc+Xqq+QCD})", IncludeOverflows=False, MoreY=2.0
+FatJet1_pNetMD_Wtagscore  : Selak8Jet1_pNetWtagscore  : 10,0.5,1; XTitle=" score(#frac{Xcc+Xqq}{Xcc+Xqq+QCD})", MoreY=2.0
 
 
 
