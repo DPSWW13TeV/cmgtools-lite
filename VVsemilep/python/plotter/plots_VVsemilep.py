@@ -186,7 +186,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         exclude = ' ' #--xu CMS_vvsl18_pNetscore' if 'wjCR' not in pR else  ' '
         signal = if3(pR == 'sig','--sp .*c.* ', if3('topCR' in pR, ' --sp tt ', ' --sp WJets'))
         for i in processes:
-            x = re.search("^W.*_c*", i) or re.search("^W.*_sm*", i) 
+            x = re.search("^W.*_c*", i) or re.search("^W.*_sm_*", i)  
             if x :
                 if 'sig' in pR :
                     scalethem[i]=scaleEFTylds['sig'][i.split('_')[0]]
