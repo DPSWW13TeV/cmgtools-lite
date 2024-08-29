@@ -2,23 +2,23 @@
 baseDir='/eos/cms/store/cmst3/group/dpsww/'
 Trees='NanoTrees_v9_vvsemilep_06012023/' #'vvsemilep/' 
 skimmedTrees='NanoTrees_v9_vvsemilep_skimmed' 
-Friends_recl_unskimmed='2_recl'
+Friends_recl_unskimmed='1_recl'
 
 [ ! -d "$skimmedTrees" ] && mkdir -p "$skimmedTrees"
 years=("2018") # "2018") # "2016")
-frnds=("dpsbdt_neu_ssnoeebkg_afacdps_unclEn" "dpsbdt_neu_ssnoeebkg_afacdps") 
+frnds=("3_ak8_sdm45" "0_wjest_v4" "4_scalefactors" "0_wjest_v5" "1_btag_SFs_fixedWP_v1" "2_jmeUnc" "2_recl_allvars")
 
 for yr in "${years[@]}"
 do
     echo "running skimming for $yr"
 
-    python skimTreesNew.py mca-skim-${yr}.txt vvsemilep/fullRun2/skim_1l_2los_FO.txt ${baseDir}/${skimmedTrees}/${yr}/ -P ${baseDir}/${Trees}/${yr} --Fs ${baseDir}/${Trees}/${yr}/${Friends_recl_unskimmed}  --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  -j 1  --tree NanoAOD #--skim-friends
-
-    #for frnd in "${frnds[@]}"
-    #do
-    #	#echo "running for ${frnd}"
-    #	python skimFTreesNew.py ${baseDir}/${skimmedTrees}/${yr}/ ${baseDir}/${Trees}/${yr}/${frnd}/
-    #done
+    python skimTreesNew.py mca-skim-${yr}.txt  vvsemilep/fullRun2/skim_1l_2los_FO.txt ${baseDir}/${skimmedTrees}/${yr}/ -P ${baseDir}/${Trees}/${yr} --Fs ${baseDir}/${Trees}/${yr}/${Friends_recl_unskimmed}  --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  -j 2  --tree NanoAOD --skim-friends --skip-existing
+#mca-skim-${yr}.txt
+    for frnd in "${frnds[@]}"
+    do
+    	#echo "running for ${frnd}"
+    	python skimFTreesNew.py ${baseDir}/${skimmedTrees}/${yr}/ ${baseDir}/${Trees}/${yr}/${frnd}/
+    done
 
 
 done

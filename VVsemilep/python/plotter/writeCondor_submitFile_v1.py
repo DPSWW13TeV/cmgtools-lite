@@ -1,7 +1,7 @@
 import os,string,sys
 from plots_VVsemilep import *
 
-allvars=  theWVultimateset_log #theWVultimateset+
+allvars=  theWVultimateset_log +theWVultimateset
 doWhat=sys.argv[1] #cards or plots
 pf=""
 
@@ -24,7 +24,7 @@ lepsel={'topCR' : ["onelep"],
         'wjCR_lo'  : [ll,fitvar_bkg],
         'wjCR_hi'  : [ll,fitvar_bkg],
 }
-ops=['cw'] #'all']#,'cw','c3w','cb']
+ops=['cw','c3w','cb'] #] #'all']#,'cw',
 
 
 fName='submitFile_%s.condor'%doWhat
@@ -39,6 +39,7 @@ Error      = jobs/{dW}_$(Cluster)_$(ProcId).error
 arguments  = $(info) 
 on_exit_remove = (ExitBySignal == False) && (ExitCode == 0)
 max_retries    = 3
+request_memory = 10GB
 requirements   = Machine =!= LastRemoteHost
 MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"\n'''.format(dW=doWhat))
 if os.environ['USER'] in ['anmehta', 'vmilosev']:
@@ -47,7 +48,7 @@ if 'plots' in doWhat :
    tmp_condor.write('request_memory = 10GB\n')
 tmp_condor.write('queue info from ( \n')
 
-for sel in ["sig","topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]:
+for sel in ["topCR_incl","sig","topCR_lo","topCR_hi","wjCR_lo","wjCR_hi"]:
    for cat in ["boosted"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 

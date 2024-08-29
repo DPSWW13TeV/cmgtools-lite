@@ -1,36 +1,111 @@
-#WZTo1L1Nu2Q : WZTo1L1Nu2Q : xsec
-#T_tWch_incldecays : T_tWch_incldecays : xsec
+WWTo1L1Nu2Q : WWTo1L1Nu2Q : xsec 
+WZTo1L1Nu2Q : WZTo1L1Nu2Q : xsec
+WZTo2Q2L    : WZTo2Q2L    : xsec
 
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1 : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1 : xsec 
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1 : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1 : xsec 
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2 : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2 : xsec 
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2 : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2 : xsec 
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2 : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2 : xsec 
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2 : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2 : xsec 
+
+WpWmToLpNujj_SMEFT_LO : WpWmToLpNujj_SMEFT_LO : xsec
+WpZToLpNujj_SMEFT_LO  : WpZToLpNujj_SMEFT_LO : xsec
+WmZToLmNujj_SMEFT_LO  : WmZToLmNujj_SMEFT_LO  : xsec
+WmWpToLmNujj_SMEFT_LO : WmWpToLmNujj_SMEFT_LO : xsec
+VHToNonbb : VHToNonbb : xsec
+ZH : ZH : xsec
+GGH  : GGH : xsec
+
+WZTo1L1Nu2Q : WZTo1L1Nu2Q : xsec
+ZZTo2Q2L_part2 : ZZTo2Q2L_part2: xsec
+ZZTo2Q2L_part1 : ZZTo2Q2L_part1: xsec
+ZZTo2Q2L_part0 : ZZTo2Q2L_part0: xsec
+
+Tbar_tch : Tbar_tch : xsec 
 T_sch : T_sch : xsec
-##amZZTo2Q2L : ZZTo2Q2L : xsec
-##amWZTo2Q2L : WZTo2Q2L : xsec
-##amT_tch : T_tch : xsec
-##amT_tWch_noFullyHad : T_tWch_noFullyHad : xsec
-##amDYJetsToLL_LHEFilterPtZ50to100  : DYJetsToLL_LHEFilterPtZ50to100  : xsec
-##amDYJetsToLL_LHEFilterPtZ400to650 : DYJetsToLL_LHEFilterPtZ400to650 : xsec
-##amDYJetsToLL_LHEFilterPtZ650toinf : DYJetsToLL_LHEFilterPtZ650toinf : xsec
-##amDYJetsToLL_LHEFilterPtZ250to400 : DYJetsToLL_LHEFilterPtZ250to400 : xsec
-##amDYJetsToLL_LHEFilterPtZ100to250 : DYJetsToLL_LHEFilterPtZ100to250 : xsec
-##amDYJetsToLL_LHEFilterPtZ0to50_sub0 : DYJetsToLL_LHEFilterPtZ0to50_sub0 : xsec
-##amDYJetsToLL_LHEFilterPtZ0to50_sub0_1 : DYJetsToLL_LHEFilterPtZ0to50_sub0_1 : xsec
-##amDYJetsToLL_LHEFilterPtZ0to50_sub1 : DYJetsToLL_LHEFilterPtZ0to50_sub1 : xsec
+T_tch : T_tch :xsec
+Tbar_tWch_incldecays : Tbar_tWch_incldecays : xsec 
+T_tWch_noFullyHad : T_tWch_noFullyHad : xsec
+T_tWch_incldecays : T_tWch_incldecays : xsec
+Tbar_tWch_noFullyHad : Tbar_tWch_noFullyHad : xsec
+TT_mtt1ktoinf : TT_mtt1ktoinf : xsec
+TT_mttp7kto1k : TT_mttp7kto1k : xsec
 
-##amdata : EGamma_Run2018D_UL18
-##amdata : MuonEG_Run2018B_UL18
-##amdata : SingleMuon_Run2018D_UL18
-##amdata : EGamma_Run2018B_UL18
-##amdata : MuonEG_Run2018D_UL18
-##amdata : DoubleMuon_Run2018B_UL18
-##amdata : MuonEG_Run2018A_UL18
-##amdata : EGamma_Run2018C_UL18
-##amdata : MuonEG_Run2018C_UL18
-##amdata : SingleMuon_Run2018C_UL18
-##amdata : SingleMuon_Run2018A_UL18
-##amdata : SingleMuon_Run2018B_UL18
-##amdata : DoubleMuon_Run2018C_UL18
-##amdata : EGamma_Run2018A_UL18
-##amdata : DoubleMuon_Run2018A_UL18
-##amdata : DoubleMuon_Run2018D_UL18_part0
-##amdata : DoubleMuon_Run2018D_UL18_part1
-##amdata : DoubleMuon_Run2018D_UL18_part2
-##amdata : DoubleMuon_Run2018D_UL18_part3
+
+TTSemi_pow_part0 : TTSemi_pow_part0  : xsec
+TTSemi_pow_part1 : TTSemi_pow_part1  : xsec
+TTSemi_pow_part2 : TTSemi_pow_part2  : xsec
+TTSemi_pow_part4 : TTSemi_pow_part4  : xsec
+TTSemi_pow_part3 : TTSemi_pow_part3  : xsec
+TTSemi_pow_part7 : TTSemi_pow_part7  : xsec
+TTSemi_pow_part6 : TTSemi_pow_part6  : xsec
+TTSemi_pow_part5 : TTSemi_pow_part5  : xsec
+TTSemi_pow_part8 : TTSemi_pow_part8  : xsec
+TTSemi_pow_part9 : TTSemi_pow_part9  : xsec
+
+
+WJetsToLNu_HT70to100    : WJetsToLNu_HT70to100     : xsec
+WJetsToLNu_HT100to200   : WJetsToLNu_HT100to200    : xsec
+WJetsToLNu_HT200to400   : WJetsToLNu_HT200to400    : xsec
+WJetsToLNu_HT400to600   : WJetsToLNu_HT400to600    : xsec
+WJetsToLNu_HT600to800   : WJetsToLNu_HT600to800    : xsec
+WJetsToLNu_HT800to1200  : WJetsToLNu_HT800to1200   : xsec
+WJetsToLNu_HT1200to2500 : WJetsToLNu_HT1200to2500  : xsec
+WJetsToLNu_HT2500toInf  : WJetsToLNu_HT2500toInf   : xsec
+WJetsToLNu_NLO		: WJetsToLNu_NLO	   : xsec
+WZToLNuQQ01j_5f_amcatnloFxFx : WZToLNuQQ01j_5f_amcatnloFxFx : xsec
+
+
+QCD_Pt600to800_Mu5	  : QCD_Pt600to800_Mu5	      : xsec
+QCD_Pt30to50_Mu5 	  : QCD_Pt30to50_Mu5 	      : xsec
+QCD_Pt1000toInf_Mu5 	  : QCD_Pt1000toInf_Mu5       : xsec
+
+QCD_Pt20to30_Mu5      : QCD_Pt20to30_Mu5      : xsec
+QCD_Pt15to20_Mu5      :	QCD_Pt15to20_Mu5      : xsec
+QCD_Pt50to80_Mu5      :	QCD_Pt50to80_Mu5      : xsec
+QCD_Pt80to120_Mu5     :	QCD_Pt80to120_Mu5     : xsec
+QCD_Pt470to600_Mu5    :	QCD_Pt470to600_Mu5    : xsec
+QCD_Pt800to1000_Mu5   :	QCD_Pt800to1000_Mu5   : xsec
+QCD_Pt300to470_Mu5    :	QCD_Pt300to470_Mu5    : xsec
+QCD_Pt120to170_Mu5    :	QCD_Pt120to170_Mu5    : xsec
+QCD_Pt170to300_Mu5    :	QCD_Pt170to300_Mu5    : xsec
+
+
+QCD_Pt80to170_bcToE : QCD_Pt80to170_bcToE : xsec
+QCD_Pt250toInf_bcToE : QCD_Pt250toInf_bcToE : xsec
+QCD_Pt170to250_bcToE : QCD_Pt170to250_bcToE : xsec 
+
+QCD_Pt30to80_bcToE : QCD_Pt30to80_bcToE : xsec
+QCD_Pt15to20_bcToE : QCD_Pt15to20_bcToE : xsec
+QCD_Pt20to30_bcToE : QCD_Pt20to30_bcToE : xsec
+
+WminusH : WminusH : xsec
+WplusH  : WplusH : xsec 
+WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_4f : WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX_4f : xsec 
+WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f : WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX_4f : xsec 
+
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1 : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1: xsec
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1 : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1: xsec
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1 : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1: xsec
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1 : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1: xsec
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2 : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2: xsec
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2 : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2: xsec
+
+QCD_Pt20to30_EMEnriched   : QCD_Pt20to30_EMEnriched   : xsec 
+QCD_Pt30to50_EMEnriched   : QCD_Pt30to50_EMEnriched   : xsec
+QCD_Pt300toInf_EMEnriched : QCD_Pt300toInf_EMEnriched : xsec
+QCD_Pt170to300_EMEnriched : QCD_Pt170to300_EMEnriched : xsec
+QCD_Pt15to20_EMEnriched   : QCD_Pt15to20_EMEnriched   : xsec
+QCD_Pt50to80_EMEnriched	  : QCD_Pt50to80_EMEnriched   : xsec
+QCD_Pt80to120_EMEnriched  : QCD_Pt80to120_EMEnriched  : xsec
+QCD_Pt120to170_EMEnriched :QCD_Pt120to170_EMEnriched  : xsec
+
+data : SingleMuon_Run2018A_UL18
+data : SingleMuon_Run2018C_UL18
+data : SingleMuon_Run2018B_UL18
+data : SingleMuon_Run2018D_UL18
+data : EGamma_Run2018B_UL18
+data : EGamma_Run2018D_UL18
+data : EGamma_Run2018C_UL18
+data : EGamma_Run2018A_UL18
