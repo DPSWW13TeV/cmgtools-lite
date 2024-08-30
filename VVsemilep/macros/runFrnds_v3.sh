@@ -19,7 +19,13 @@ echo $runWhat,$year,$runWhere
 
 ################### following should not be changed
 localTrees='local_dir_NAME/'  
-Trees='NanoTrees_v9_vvsemilep_06012023/'
+Trees='NanoTrees_v9_vvsemilep_skimmed/'
+#Trees='NanoTrees_v9_vvsemilep_06012023/'
+if [ ${runWhat} == "reclmc" ] ||  [ ${runWhat}== "recldata" ]
+then 
+    Trees='NanoTrees_v9_vvsemilep_06012023/'
+fi 
+
 nEvt=120000 
 Parent=${baseDir}/${Trees}/${year}
 BCORE="python prepareEventVariablesFriendTree.py -a group_u_CMST3.all -t NanoAOD ${Parent} ${Parent}/";
@@ -51,7 +57,7 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All --de .*Run.* " #--dm .*SMEFT.* " #
+	basecmd="${BCORE}2_jmeUnc_v1/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All " #--de .*Run.* " #--dm .*SMEFT.* " #
 
 	;;
 

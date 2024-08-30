@@ -33,8 +33,8 @@ fitvars={
 ''                  : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]"
 }
 
-baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #parent trees 
-ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed
+baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_skimmed/' #skimmed parent trees 
+ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed parent trees
 MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc','1_btag_SFs_fixedWP_v1']#,'nnpdf_rms'] #1_btag_SFs'
 Datafriends = ['1_recl']
 friends     = ['3_ak8_sdm45','0_wjest_v5']
@@ -144,14 +144,14 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 ##################
 def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,doWJ,fitCR,WCs,varTofit,acP,acC,wjDate):
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
-    fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
+    fsyst        = '' #vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
     showratio    = True
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
     processes    = ['WW_sm','WZ_sm','tt','WJets','singletop','data','VH','QCD'] 
     vetoPlots    = ['WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cb','WZ_quad_cb','WZ_cb']
     morePs       = ['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
-    if 'all' in WCs: WCs=['cw','c3w','cb']
+    if 'all' in WCs: WCs=['cw','c3w','cb','cW','cHDD','clu']
 
     for op in WCs:
         if len(op) == 0:
@@ -188,7 +188,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         signal = if3(pR == 'sig','--sp .*c.* ', if3('topCR' in pR, ' --sp tt ', ' --sp WJets'))
         for i in processes:
             #x = re.search("^W.*_c*", i) #or re.search("^W.*_sm*", i)  #FIXME this won't scale the EFT-based SM yields if we take the SM components from aTGC samples!!
-            x = re.search(".*sm_lin_quad.*", i) or re.search(".*quad.*", i)
+            x = re.search(".*cw.*", i) or re.search(".*cb.*", i) or re.search(".*c3w.*", i)
             print('gonna scale',i,x)
             if x :
                 if 'sig' in pR :
@@ -227,12 +227,12 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     mWV_dist=" {here} ".format(here=fitvars[varTofit])
                     if "top" in pR or 'wj' in pR: 
                         binNamecards=binName+"_"+year
-                        extraoptscards= ' --binname %s  --sp WW_sm --sp WZ_sm --sp SM.* '%(binNamecards) #, '--xp QCD ' if 'top' in pR else '') --xp Others --xp .*quad.*  --sp WW_sm --sp WZ_sm
-                        if "wjCR_hi" in pR:  extraoptscards+= " --xp QCD --xp Others"
+                        extraoptscards= ' --binname %s  --sp WW_sm --sp WZ_sm --xp QCD --sp SM.* '%(binNamecards) #, '--xp QCD ' if 'top' in pR else '') --xp Others --xp .*quad.*  --sp WW_sm --sp WZ_sm
+                        if "wjCR_hi" in pR:  extraoptscards+= "  --xp Others"
                         if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
                         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
                     else:
-                        extraoptscards= ' --sp WW_sm --sp WZ_sm --sp SM.* '
+                        extraoptscards= ' --sp WW_sm --xp QCD --sp WZ_sm --sp SM.* '
                         if len(acC) > 0:extraoptscards+=''.join(' -E ^'+cut for cut in acC )
                         if len(WCs) > 0:
                             for op in WCs:
