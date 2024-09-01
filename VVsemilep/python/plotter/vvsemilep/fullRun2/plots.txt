@@ -4,12 +4,13 @@
 debugsel       : mWV_dumy : 36,950,4550  ; XTitle="mWV"
 
 
-mWV            	 	  : mWV : [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]  ; XTitle="m_{WV} (GeV)",  MoreY=1.5, IncludeOverflows=True
-mWV_logy       		  : mWV : [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]  ; XTitle="m_{WV} (GeV)",  MoreY=10, Logy, IncludeOverflows=True
+mWV            	 	  : mWV : [950,1050,1150,1250,1350,1500,1600,1700,1900,2100,2300,2500,3500,4500]  ; XTitle="m_{WV} (GeV)",  MoreY=1.5, IncludeOverflows=True
+mWV_logy            	  : mWV : [950,1050,1150,1250,1350,1500,1600,1700,1900,2100,2300,2500,3500,4500]  ; XTitle="m_{WV} (GeV)",  IncludeOverflows=True, MoreY=10, Logy,
+#mWV_logy       	  : mWV : [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]  ; XTitle="m_{WV} (GeV)",  MoreY=10, Logy, IncludeOverflows=True
 pmet           		  : pmet_pt :  [100,140,180,220,260,300,350,400,500,600,800,2000] ; XTitle="p_{T}^{miss} (GeV)",MoreY=1.5, IncludeOverflows=True
 pmet_logy      		  : pmet_pt :  [100,140,180,220,260,300,350,400,500,600,800,2000] ; XTitle="p_{T}^{miss} (GeV)",MoreY=20,MaxDigi, Logy, IncludeOverflows=True
-FatJet1_pt                : Selak8Jet1_pt  : [200,250,300,350,400,450,500,550,600,650,700,800,2000]; XTitle="p_{T}^{jet} (GeV)",MoreY=2,MaxDigi, IncludeOverflows=True
-FatJet1_pt_logy           : Selak8Jet1_pt  : [200,250,300,350,400,450,500,550,600,650,700,800,2000]; XTitle="p_{T}^{jet} (GeV)", Logy, MoreY=20 ,MaxDigi, IncludeOverflows=True
+FatJet1_pt                : Selak8Jet1_pt  : [200,300,400,500,600,700,800,2000]; XTitle="p_{T}^{jet} (GeV)",MoreY=2,MaxDigi, IncludeOverflows=True
+FatJet1_pt_logy           : Selak8Jet1_pt  : [200,300,400,500,600,700,800,2000]; XTitle="p_{T}^{jet} (GeV)", Logy, MoreY=20 ,MaxDigi, IncludeOverflows=True
 FatJet1_sDrop_mass        : Selak8Jet1_msoftdrop        : 24,40,160; XTitle="m_{SD}^{jet} (GeV)", MoreY=2.0, IncludeOverflows=True
 FatJet1_sDrop_mass_logy   : Selak8Jet1_msoftdrop        : 24,40,160; XTitle="m_{SD}^{jet} (GeV)", Logy, MoreY=5, IncludeOverflows=True
 mt1pmet                   : mt_2(Lep1_pt,Lep1_phi,pmet_pt,pmet_phi) : 20,0,200; XTitle="m_{T}(l\,p_{T}^{miss}) (GeV)",MoreY=2.0, IncludeOverflows=True

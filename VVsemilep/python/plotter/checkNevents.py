@@ -6,7 +6,7 @@ from glob import glob
 year=sys.argv[1]
 frnds_dir=sys.argv[2]
 #frnds_dir="3_ak8Vtagged_sdm45"
-eospath="/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/"
+eospath="/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_skimmed"
 
 basepath=os.path.join(eospath,year) 
 faultyfrnds=[]
@@ -14,7 +14,6 @@ faultyfrnds=[]
 for x in glob(basepath+"/*.root"):
     #proc=os.path.basename(x)[:-len("_Friend.root")]
     proc=os.path.basename(x)[:-len(".root")]
-    #print proc 
     fIn=ROOT.TFile.Open(x)
     #print x
     n_p=fIn.Get("Events").GetEntries();
@@ -30,5 +29,6 @@ for x in glob(basepath+"/*.root"):
             print "Np",n_p,"Nf",n_f,"frnd file",frnd_file
             faultyfrnds.append(frnd_file)
         else: continue
-
+    else:
+        print('could not find frnds tree for',proc)
 print "faultyfrnds" , faultyfrnds

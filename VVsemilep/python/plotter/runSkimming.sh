@@ -6,14 +6,12 @@ Friends_recl_unskimmed='1_recl'
 
 [ ! -d "$skimmedTrees" ] && mkdir -p "$skimmedTrees"
 years=("2018") # "2018") # "2016")
-frnds=("3_ak8_sdm45" "0_wjest_v4" "4_scalefactors" "0_wjest_v5" "1_btag_SFs_fixedWP_v1" "2_jmeUnc" "2_recl_allvars")
+frnds=("4_scalefactors" "0_wjest_v5" "1_btag_SFs_fixedWP_v1" "3_ak8_sdm45" "2_jmeUnc" "2_recl_allvars" ) #"2_toppT_rw")
 
 for yr in "${years[@]}"
 do
     echo "running skimming for $yr"
-
     python skimTreesNew.py mca-skim-${yr}.txt  vvsemilep/fullRun2/skim_1l_2los_FO.txt ${baseDir}/${skimmedTrees}/${yr}/ -P ${baseDir}/${Trees}/${yr} --Fs ${baseDir}/${Trees}/${yr}/${Friends_recl_unskimmed}  --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  -j 2  --tree NanoAOD --skim-friends --skip-existing
-#mca-skim-${yr}.txt
     for frnd in "${frnds[@]}"
     do
     	#echo "running for ${frnd}"
