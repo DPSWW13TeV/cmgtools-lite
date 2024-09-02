@@ -1,7 +1,7 @@
 import os,string,sys
 from plots_VVsemilep import *
 
-allvars=  theWVultimateset_log +theWVultimateset
+allvars=  theWVultimateset_log #+theWVultimateset
 doWhat=sys.argv[1] #cards or plots
 pf=""
 
