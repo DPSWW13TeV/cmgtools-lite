@@ -50,11 +50,11 @@ WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweight
 
 
 
-VH : WplusH   	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
-VH : WminusH 	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
-VH : ZH      	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
-VH : VHToNonbb  : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
-VH : ZZTo2Q2L_part2+ZZTo2Q2L_part1+ZZTo2Q2L_part0	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="VH"
+Others : WplusH   	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
+Others : WminusH 	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
+Others : ZH      	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
+Others : VHToNonbb  : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
+Others : ZZTo2Q2L_part2+ZZTo2Q2L_part1+ZZTo2Q2L_part0	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
 
 
 

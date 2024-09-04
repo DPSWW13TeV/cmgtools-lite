@@ -4,17 +4,17 @@
 $alias : vvsm   : WV|WW_sm|WZ_sm|SM.*
 $alias : wj     : WJets.*
 $alias : st     : singletop|T_[a-z]+ch|T[a-z]+_[a-z]+ch
-$alias : ttbar  : TTJets|TTJets_part.*|tthighmass|ttsemi|tt|TT_mtt.*
+$alias : ttbar  : TTJets|TTJets_part.*|ttsemi|tt|TT*
 $alias : VH     : WH|VH.*|ZH|WplusH|WminusH
 $alias : Others : WH|VH.*|ZH|WplusH|WminusH|ZZ.*
 $alias : top    : $st|$ttbar
 $alias : qcd    : QCD.*
-$alias : aTGC   : .*cw.*|.*cb.*
-$alias : wwaTGC : WW.*cw.*|WW.*cb.*|WW.*c3w.*|
-$alias : wzaTGC : WZ.*cw.*|WZ.*cb.*|WZ.*c3w.*|
-$alias : AllFromMC  : $top|$vvsm|$qcd|$wj|$Others|$VH
+$alias : wwaTGC : WW_sm_lin_quad.*|WW_quad.*
+$alias : wzaTGC : WZ_sm_lin_quad.*|WZ_quad.*
+$alias : aTGC   : $wzaTGC|$wwaTGC
+$alias : AllFromMC  : $top|$vvsm|$qcd|$wj|$Others|$VH|$aTGC
 $alias : PNET       : $top|$vvsm|$aTGC|$Others|$VH
-$alias : allbutqcd  : $top|$wj|$VH|$vvsm|$Others|$VH
+$alias : bkg        : $top|$wj|$VH|$vvsm|$Others
 
 ### Uncertainties
 
@@ -91,7 +91,9 @@ CMS_PS_WW_sm :    WW_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/
 CMS_PS_WZ_sm :    WZ_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 
 CMS_PS_Others :   $Others  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+
 CMS_PS_VH     :   $VH  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+
 CMS_PS_QCD     :   $QCD  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 
 
@@ -104,7 +106,7 @@ CMS_wvsl17_L1PreFiring : $AllFromMC : .* : templateAsymm; AddWeights=['L1PreFiri
 
 #pu
 
-#CMS_pileup : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight']
+
 CMS_pileup_2016 : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight'], year="2016"
 CMS_pileup_2016APV : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight'], year="2016APV"
 CMS_pileup_2017 : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight'],	year="2017"
@@ -128,7 +130,6 @@ CMS_wvsl18_trigger_mu  : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=F
 
 CMS_top_pT_rwgt  : $ttbar : .* : templateSymm; Normalize=False, AddWeight='1.0/Top_pTrw'
 
-#CMS_top_pT_rwgt  : $ttbar : .* : templateAsymm; AddWeights=['1/Top_pTrw'\,'Top_pTrw/Top_pTrw']
 
 CMS_pmet_UnclusteredEn : $AllFromMC : .*mu.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
 CMS_pmet_UnclusteredEn : $AllFromMC : .*el.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
@@ -212,103 +213,103 @@ CMS_btagSFlight                 : $AllFromMC : .* : templateAsymm; AddWeights=['
 
 ##amFIXME need to check if this is vaid for all samples!!
 
-pdf_0   : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[0]'
-pdf_1   : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[1]'
-pdf_2   : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[2]'
-pdf_3   : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[3]'
-pdf_4   : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[4]'
-pdf_5   : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[5]'
-pdf_6   : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[6]'
-pdf_7   : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[7]'
-pdf_8   : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[8]'
-pdf_9   : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[9]'
-pdf_10  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[10]'
-pdf_11  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[11]'
-pdf_12  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[12]'
-pdf_13  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[13]'
-pdf_14  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[14]'
-pdf_15  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[15]'
-pdf_16  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[16]'
-pdf_17  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[17]'
-pdf_18  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[18]'
-pdf_19  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[19]'
-pdf_20  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[20]'
-pdf_21  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[21]'
-pdf_22  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[22]'
-pdf_23  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[23]'
-pdf_24  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[24]'
-pdf_25  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[25]'
-pdf_26  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[26]'
-pdf_27  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[27]'
-pdf_28  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[28]'
-pdf_29  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[29]'
-pdf_30  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[30]'
-pdf_41  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[41]'
-pdf_42  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[42]'
-pdf_43  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[43]'
-pdf_44  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[44]'
-pdf_45  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[45]'
-pdf_46  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[46]'
-pdf_47  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[47]'
-pdf_48  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[48]'
-pdf_49  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[49]'
-pdf_50  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[50]'
-pdf_51  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[51]'
-pdf_52  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[52]'
-pdf_53  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[53]'
-pdf_54  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[54]'
-pdf_55  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[55]'
-pdf_56  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[56]'
-pdf_57  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[57]'
-pdf_58  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[58]'
-pdf_59  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[59]'
-pdf_60  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[60]'
+pdf_0   : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[0]'
+pdf_1   : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[1]'
+pdf_2   : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[2]'
+pdf_3   : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[3]'
+pdf_4   : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[4]'
+pdf_5   : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[5]'
+pdf_6   : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[6]'
+pdf_7   : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[7]'
+pdf_8   : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[8]'
+pdf_9   : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[9]'
+pdf_10  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[10]'
+pdf_11  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[11]'
+pdf_12  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[12]'
+pdf_13  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[13]'
+pdf_14  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[14]'
+pdf_15  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[15]'
+pdf_16  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[16]'
+pdf_17  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[17]'
+pdf_18  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[18]'
+pdf_19  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[19]'
+pdf_20  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[20]'
+pdf_21  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[21]'
+pdf_22  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[22]'
+pdf_23  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[23]'
+pdf_24  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[24]'
+pdf_25  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[25]'
+pdf_26  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[26]'
+pdf_27  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[27]'
+pdf_28  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[28]'
+pdf_29  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[29]'
+pdf_30  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[30]'
+pdf_41  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[41]'
+pdf_42  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[42]'
+pdf_43  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[43]'
+pdf_44  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[44]'
+pdf_45  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[45]'
+pdf_46  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[46]'
+pdf_47  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[47]'
+pdf_48  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[48]'
+pdf_49  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[49]'
+pdf_50  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[50]'
+pdf_51  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[51]'
+pdf_52  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[52]'
+pdf_53  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[53]'
+pdf_54  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[54]'
+pdf_55  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[55]'
+pdf_56  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[56]'
+pdf_57  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[57]'
+pdf_58  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[58]'
+pdf_59  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[59]'
+pdf_60  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[60]'
 
-pdf_61  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[61]'
-pdf_62  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[62]'
-pdf_63  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[63]'
-pdf_64  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[64]'
-pdf_65  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[65]'
-pdf_66  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[66]'
-pdf_67  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[67]'
-pdf_68  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[68]'
-pdf_69  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[69]'
-pdf_70  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[70]'
-
-
-pdf_71  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[71]'
-pdf_72  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[72]'
-pdf_73  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[73]'
-pdf_74  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[74]'
-pdf_75  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[75]'
-pdf_76  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[76]'
-pdf_77  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[77]'
-pdf_78  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[78]'
-pdf_79  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[79]'
-pdf_80  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[80]'
+pdf_61  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[61]'
+pdf_62  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[62]'
+pdf_63  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[63]'
+pdf_64  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[64]'
+pdf_65  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[65]'
+pdf_66  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[66]'
+pdf_67  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[67]'
+pdf_68  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[68]'
+pdf_69  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[69]'
+pdf_70  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[70]'
 
 
-pdf_81  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[81]'
-pdf_82  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[82]'
-pdf_83  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[83]'
-pdf_84  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[84]'
-pdf_85  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[85]'
-pdf_86  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[86]'
-pdf_87  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[87]'
-pdf_88  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[88]'
-pdf_89  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[89]'
-pdf_90  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[90]'
+pdf_71  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[71]'
+pdf_72  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[72]'
+pdf_73  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[73]'
+pdf_74  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[74]'
+pdf_75  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[75]'
+pdf_76  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[76]'
+pdf_77  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[77]'
+pdf_78  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[78]'
+pdf_79  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[79]'
+pdf_80  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[80]'
 
-pdf_91  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[91]'
-pdf_92  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[92]'
-pdf_93  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[93]'
-pdf_94  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[94]'
-pdf_95  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[95]'
-pdf_96  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[96]'
-pdf_97  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[97]'
-pdf_98  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[98]'
-pdf_99  : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[99]'
-pdf_100 : $AllFromMC : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]'
+
+pdf_81  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[81]'
+pdf_82  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[82]'
+pdf_83  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[83]'
+pdf_84  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[84]'
+pdf_85  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[85]'
+pdf_86  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[86]'
+pdf_87  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[87]'
+pdf_88  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[88]'
+pdf_89  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[89]'
+pdf_90  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[90]'
+
+pdf_91  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[91]'
+pdf_92  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[92]'
+pdf_93  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[93]'
+pdf_94  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[94]'
+pdf_95  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[95]'
+pdf_96  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[96]'
+pdf_97  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[97]'
+pdf_98  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[98]'
+pdf_99  : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[99]'
+pdf_100 : $bkg : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]'
 
 #pdf_101  : $top|$wj|$Others|$VH : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[101]' #mem=101 => central value Alphas(MZ)=0.116; mem=102 => central value Alphas(MZ)=0.120"
 #pdf_102  : $top|$wj|$Others|$VH : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[102]' #mem=101 => central value Alphas(MZ)=0.116; mem=102 => central value Alphas(MZ)=0.120"

@@ -28,7 +28,7 @@ fitvars={
 'mWV_binning_res'   : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,2546,2659,2775,2895,3019,3147,3279,3416,3558,3704, 3854, 4010, 4171, 4337, 4509,4550]",
 'mWV_fixedbW'       : "mWV 36,950,4550",
 'mWV'               : "mWV [950,1050,1150,1250,1350,1500,1600,1700,1900,2100,2300,2500,3500,4500]",
-'fjet_pt'           : "Selak8Jet1_pt [200,300,400,500,600,700,800,2000]",
+'fjet_pt'           : "Selak8Jet1_pt [200,250,300,350,400,450,500,600,700,800,2000]",
 'fjet_pt_fixedbW'   : "Selak8Jet1_pt 18,200,2000",
 ''                  : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]"
 }
@@ -54,8 +54,9 @@ topCR=['mWV_typ0_met_boosted','FatJet1_pt','FatJet1_sDrop_mass']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
 
 
-theWVultimateset=['mWV','pmet','FatJet1_pt','FatJet1_sDrop_mass','mt1pmet','pmet_phi','nVert','nBJetMedium30_Recl','nBJetLoose30_Recl','dphifjpmet','ptWV_pmet','dphifjlep','dphil1pmet','Lep1_pt','FatJet1_pNetMD_Wtagscore','dphijmet']##'nLepGood','nFatJet'
-theWVultimateset_log=['mWV_logy','pmet_logy','FatJet1_pt_logy','FatJet1_sDrop_mass_logy','ptWV_pmet_logy','Lep1_pt_logy','mt1pmet_logy']
+theWVultimateset=['mWV','pmet','FatJet1_pt','FatJet1_sDrop_mass','mtWlep','ptWlep','pmet_phi','nBJetMedium30_Recl','nBJetLoose30_Recl','ptWV_pmet','Lep1_pt','FatJet1_pNetMD_Wtagscore']
+#,'dphijmet']##'nLepGood','nFatJet','nVert','dphifjpmet','dphifjlep','dphil1pmet',
+theWVultimateset_log=['mWV_logy','FatJet1_pt_logy','pmet_logy','FatJet1_sDrop_mass_logy','ptWV_pmet_logy','Lep1_pt_logy','mtWlep_logy','ptWlep_logy']
 theWVultimateset_noWJ=['mt1pmet_nowj','mWV_nowj','FatJet1_sDrop_mass_nowj','FatJet1_pt_nowj','pmet_nowj']
 
 
@@ -148,7 +149,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     showratio    = True
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
-    processes    = ['WW_sm','WZ_sm','tt','WJets','singletop','data','VH','QCD'] 
+    processes    = ['WW_sm','WZ_sm','tt','WJets','singletop','data','Others','QCD'] 
     vetoPlots    = ['WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cb','WZ_quad_cb','WZ_cb']
     morePs       = ['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
     if 'all' in WCs: WCs=['cw','c3w','cb','cW','cHDD','clu']
@@ -161,7 +162,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 processes+=[s + op for s in morePs if s not in vetoPlots]            
             else:
                 processes+=[s + op for s in ['WW_','WZ_'] if str(s+op) not in vetoPlots]
-                
+    print(processes)
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_boosted = ['ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','Mjuppercut','Mwvuppercut']
     cuts_btagEff = ['btagSR','bpartonFlav','Loosebtag','Medbtag','Tightbtag'] ##here for reference ['lightpartonFlav','cpartonFlav']
@@ -204,7 +205,6 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 postfix=('_'+postfix if postfix else '')+('_fittodata' if fitCR else '')+('_'+'cutflow' if cutflow else '')+('_noWJtype' if not doWJ else '')
                 targetcarddir = 'Cards/cards_{date}{pf}_{FS}_{fv}_{year}'.format(FS=binName,year=year,date=date,fv=varTofit,pf=postfix )
                 print ('{yr}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf=postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName))
-                targetdir = os.path.join(eos,'{yr}/{pR}/{dd}_{bN}{sf}{pf}/'.format(dd=date,yr=year if year !='all' else 'fullRun2',pf= postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR.split('_')[0]))
                 enable=[]
                 enable+= cuts_boosted 
                 enable.append(LF); 
@@ -221,14 +221,16 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     elif  "wj" in pR and fitCR: extraopts+= ' --xp .*quad.* '
                     makeplots  = ['{}'.format(a)  for a in plotvars]
                     print (makeplots)
-                    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata, makeplots, showratio, applylepSFs, year, nLep,extraopts,invert,cutflow,bareNano,doWJ)
+                    for op in WCs:
+                        targetdir = os.path.join(eos,'{yr}/{pR}/{dd}_{bN}{sf}_{op}{pf}/'.format(op=op,dd=date,yr=year if year !='all' else 'fullRun2',pf= postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR.split('_')[0]))
+                        runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata, makeplots, showratio, applylepSFs, year, nLep,extraopts,invert,cutflow,bareNano,doWJ)
 
                 else:
                     mWV_dist=" {here} ".format(here=fitvars[varTofit])
                     if "top" in pR or 'wj' in pR: 
                         binNamecards=binName+"_"+year
                         extraoptscards= ' --binname %s  --sp WW_sm --sp WZ_sm --xp QCD --sp SM.* '%(binNamecards) #, '--xp QCD ' if 'top' in pR else '') --xp Others --xp .*quad.*  --sp WW_sm --sp WZ_sm
-                        if "wjCR_hi" in pR:  extraoptscards+= "  --xp Others"
+                        #if "wjCR_hi" in pR:  extraoptscards+= "  --xp Others"
                         if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
                         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
                     else:

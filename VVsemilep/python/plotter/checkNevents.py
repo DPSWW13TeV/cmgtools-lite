@@ -26,7 +26,7 @@ for x in glob(basepath+"/*.root"):
         n_f=fIn.Get("Friends").GetEntries();
         fIn.Close()
         if n_p != n_f:
-            print "Np",n_p,"Nf",n_f,"frnd file",frnd_file
+            print("Np",n_p,"Nf",n_f,"frnd file",frnd_file)
             faultyfrnds.append(frnd_file)
         else: continue
     else:

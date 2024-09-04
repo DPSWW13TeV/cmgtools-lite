@@ -67,6 +67,7 @@ DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
+        "T.*","QCD.*","W.*","Z.*","V.*"
         #"T_tch" #, "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
         ##am        #  # triboson
         #"WWW"
@@ -100,7 +101,7 @@ if analysis == "main":
         #"WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX",
         #"WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX"
         # diboson
-        "ZZTo2Q2L", "ZH","GGH","VHToNonbb",
+        #        "ZZTo2Q2L", "ZH","GGH","VHToNonbb",
         #        "WZTo2Q2L" #, #       "WZTo1L1Nu2Q",
         #        "WWTo1L1Nu2Q",
         #"WJets.*",
