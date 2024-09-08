@@ -20,7 +20,8 @@ conf = dict(
         fatjetptcut=200,
         fatjetmsdcut=40,
         jetptcut=25,
-        jeteta=2.4
+        jeteta=2.4,
+        metcut=40,
 )
 
 nElTight = "Sum$(Electron_pt > {tightlepPt} && Electron_sip3d < {sip3dtight}  && Electron_{eleIdloose} && Electron_{eleIdtight})".format(**conf)
@@ -28,6 +29,7 @@ nElLoose = "Sum$(Electron_pt > {looselepPt} && Electron_sip3d < {sip3dloose}  &&
 nMuLoose = "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose})".format(**conf)
 nMuTight = "Sum$(Muon_pt > {tightlepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsotight})".format(**conf)
 nJetLoose = "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < {jeteta}  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0) )".format(**conf)
+metsel   = "PuppiMET_pt > {metcut}".format(**conf)
 ##MET CUT can be added to the preskim selection
 vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
                       "{nMuTight} + {nElTight} >= 1 &&" + 
@@ -36,6 +38,11 @@ vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
                       "{nMuLoose} + {nElLoose} >= 1 &&" +
                       "{nMuLoose} + {nElLoose} < 3").format(nMuTight = nMuTight, nElTight = nElTight, nJetLoose = nJetLoose, nMuLoose= nMuLoose, nElLoose = nElLoose)
 
+wvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
+                      "{nMuTight} + {nElTight} == 1  &&" + 
+                      "{nJetLoose} && " + "{metsel}" + 
+                      "{nMuLoose} + {nElLoose} >= 1 &&" +
+                      "{nMuLoose} + {nElLoose} < 3 && ").format(metsel=metsel,nMuTight = nMuTight, nElTight = nElTight, nJetLoose = nJetLoose, nMuLoose= nMuLoose, nElLoose = nElLoose)
 
 
 muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["looselepPt" ] and l.sip3d < conf["sip3dloose"] and \
@@ -65,7 +72,7 @@ lepSkim = ttHPrescalingLepSkimmer(5,
                 minLeptons = 1, requireOppSignPair = True,
                 jetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) <  conf["jeteta"] and j.jetId > 0, 
                 fatjetSel = lambda f : f.pt > conf["fatjetptcut"] and abs(f.eta) < conf["jeteta"],  ##not all samples have fatjets
-                minJets = 4, minMET = 50, minFatJets = 1)
+                minJets = 4, minMET = 40, minFatJets = 1)
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger import collectionMerger
 lepMerge = collectionMerger(input = ["Electron","Muon"], 
                             output = "LepGood", 

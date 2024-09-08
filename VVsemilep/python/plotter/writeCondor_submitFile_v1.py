@@ -24,7 +24,7 @@ lepsel={'topCR' : ["onelep"],
         'wjCR_lo'  : [ll,fitvar_bkg],
         'wjCR_hi'  : [ll,fitvar_bkg],
 }
-ops=['all']#'cw','c3w','cW']#,'cb','cHDD','clu']
+ops=['cw','c3w','cb']#,'cb','cHDD','clu','cW']
 
 
 fName='submitFile_%s.condor'%doWhat

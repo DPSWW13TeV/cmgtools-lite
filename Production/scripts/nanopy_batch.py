@@ -28,7 +28,7 @@ echo
 cp -rvf $LS_SUBCWD/* .
 """
        dirCopy = """
-cp -rv Loop/* $LS_SUBCWD
+cp -rv Loop/*url $LS_SUBCWD
 if [ $? -ne 0 ]; then
    echo 'ERROR: problem copying job directory back'
 else

@@ -535,9 +535,17 @@ class MCAnalysis:
         ret = dict([ (k,mergePlots(plotspec.name+"_"+k,v)) for k,v in mergemap.items() ])
         
         ## construct envelope variations if any
-        for p,h in ret.items():
-            h.buildEnvelopes() 
-
+        if  self.variationsFile:
+            for var in self.variationsFile.uncertainty():
+                for p,h in ret.items():
+                    if not var.procmatch().match(p): continue
+                    if var.unc_type == "envelope":
+                        h.buildEnvelopes(var.name) ## construct envelope variations if any
+                    elif "pdfset" in var.unc_type.lower(): #hessian pdf
+                        h.buildEnvelopesForPDFs(var.name)
+        #for p,h in ret.items():
+            #h.buildEnvelopes() 
+            
         rescales = []
         self.compilePlotScaleMap(self._options.plotscalemap,rescales)
         for p,v in list(ret.items()):

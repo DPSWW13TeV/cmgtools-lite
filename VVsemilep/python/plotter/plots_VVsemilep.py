@@ -149,10 +149,10 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     showratio    = True
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
-    processes    = ['WW_sm','WZ_sm','tt','WJets','singletop','data','Others','QCD'] 
+    processes    = ['WW_sm','WZ_sm','tt','WJets','singletop','data','Others','QCD'] #'data','WZ_sm_lin_quad_cW','WW_sm_lin_quad_cW','WW_quad_cW','WZ_quad_cW','WW_quad_cHDD','WZ_quad_cHDD']#
     vetoPlots    = ['WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cb','WZ_quad_cb','WZ_cb']
     morePs       = ['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
-    if 'all' in WCs: WCs=['cw','c3w','cb','cW','cHDD','clu']
+    if 'all' in WCs: WCs=['cw','c3w','cb']#,'cW','cHDD','clu']
 
     for op in WCs:
         if len(op) == 0:
@@ -175,7 +175,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     #legends = '  --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.3  --legendColumns 1 '
     ubands  =  ' --showMCError  --showIndivSigs --noStackSig --showSigShape'
     exclude = ' '  #--xu CMS_vvsl18_pNetscore' 
-    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.5 ' #--plotmode nostack ' # --ratioNums WW_SMEFT_sm,WW_sm   --ratioDen SM_WW --ratioYLabel=aTGC/SM  --plotmode nostack ' # --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' #
+    ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.0 ' #--plotmode nostack ' # --ratioNums WW_SMEFT_sm,WW_sm   --ratioDen SM_WW --ratioYLabel=aTGC/SM  --plotmode nostack ' # --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' #
 
     more = '' # --plotmode norm' if cutflow else ''
     extraopts = ratio + spam + legends + ubands  + exclude + signal + more
@@ -221,9 +221,9 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     elif  "wj" in pR and fitCR: extraopts+= ' --xp .*quad.* '
                     makeplots  = ['{}'.format(a)  for a in plotvars]
                     print (makeplots)
-                    for op in WCs:
-                        targetdir = os.path.join(eos,'{yr}/{pR}/{dd}_{bN}{sf}_{op}{pf}/'.format(op=op,dd=date,yr=year if year !='all' else 'fullRun2',pf= postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR.split('_')[0]))
-                        runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata, makeplots, showratio, applylepSFs, year, nLep,extraopts,invert,cutflow,bareNano,doWJ)
+                    #for op in WCs: don't wanna run plots per operator 
+                    targetdir = os.path.join(eos,'{yr}/{pR}/{dd}_{bN}{sf}_{op}{pf}/'.format(op=op,dd=date,yr=year if year !='all' else 'fullRun2',pf= postfix,sf='_withoutSFs' if not applylepSFs else '',bN=binName,pR=pR.split('_')[0]))
+                    runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata, makeplots, showratio, applylepSFs, year, nLep,extraopts,invert,cutflow,bareNano,doWJ)
 
                 else:
                     mWV_dist=" {here} ".format(here=fitvars[varTofit])

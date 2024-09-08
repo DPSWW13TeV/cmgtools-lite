@@ -73,7 +73,10 @@ class Uncertainty:
                 raise RuntimeError("A set of FakeRates are needed for envelope")
             self.fakerate = [ FakeRate( fr, loadFilesNow=False, year=self._options.year) for fr in self.extra['FakeRates'] ]
 
-
+        elif self.unc_type=='HessianPDFset':
+            if 'FakeRates' not in self.extra:
+                raise RuntimeError("A set of FakeRates are needed for HessianPDFset")
+            self.fakerate = [ FakeRate( fr, loadFilesNow=False, year=self._options.year) for fr in self.extra['FakeRates'] ]
         elif self.unc_type=='none':
             pass
         else: raise RuntimeError('Uncertainty type "%s" not recognised' % self.unc_type)

@@ -12,7 +12,7 @@ kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = getHeppyOption("year", "2018")
+year = getHeppyOption("year", "2017")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","both")
@@ -37,8 +37,7 @@ if year == '2018':
     from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples as allData
 elif year == '2017':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL17NanoAODv9 import samples as mcSamples_
-    #from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_UL2017 as allData
-    from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_Run2017B_UL2017 as allData
+    from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_UL2017 as allData
 elif year == '2016':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL16NanoAODv9 import samples as mcSamples_
     from CMGTools.RootTools.samples.samples_13TeV_DATA2016_NanoAOD import dataSamples_UL16 as allData
@@ -67,8 +66,7 @@ DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
-        "T.*","QCD.*","W.*","Z.*","V.*"
-        #"T_tch" #, "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
+        "W.*","Z.*","QCD.*",
         ##am        #  # triboson
         #"WWW"
         #"QCD.*"

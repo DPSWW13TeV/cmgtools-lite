@@ -4,19 +4,18 @@ WW_cW+ :   WpWmToLpNujj_SMEFT_LO : xsec : LHEReweightingWeight[2]; FillColor=ROO
 WZ_cW+ :   WpZToLpNujj_SMEFT_LO  : xsec : LHEReweightingWeight[2]; FillColor=ROOT.kSpring+5,   Label="WZ_smeft_cW",LineStyle=ROOT.kDashed 
 WZ_cW+ :   WmZToLmNujj_SMEFT_LO  : xsec : LHEReweightingWeight[2]; FillColor=ROOT.kSpring+5,   Label="WZ_smeft_cW",LineStyle=ROOT.kDashed
 
-
 #linear term 0.5*(pos-neg)
 #quadterm (pos+neg)/2 -SM
 
-WW_sm_lin_quad_cW+ :   WmWpToLmNujj_SMEFT_LO : xsec : (LHEReweightingWeight[2]-LHEReweightingWeight[1])/2; FillColor=ROOT.kSpring+5,   Label="WW_smeft_cW" 
-WW_sm_lin_quad_cW+ :   WpWmToLpNujj_SMEFT_LO : xsec : (LHEReweightingWeight[2]-LHEReweightingWeight[1])/2; FillColor=ROOT.kSpring+5,   Label="WW_smeft_cW" 
-WZ_sm_lin_quad_cW+ :   WpZToLpNujj_SMEFT_LO  : xsec : (LHEReweightingWeight[2]-LHEReweightingWeight[1])/2; FillColor=ROOT.kSpring+5,   Label="WZ_smeft_cW",LineStyle=ROOT.kDashed 
-WZ_sm_lin_quad_cW+ :   WmZToLmNujj_SMEFT_LO  : xsec : (LHEReweightingWeight[2]-LHEReweightingWeight[1])/2; FillColor=ROOT.kSpring+5,   Label="WZ_smeft_cW",LineStyle=ROOT.kDashed
+WW_sm_lin_quad_cW+ :   WmWpToLmNujj_SMEFT_LO : xsec : (LHEReweightingWeight[2]-LHEReweightingWeight[1])/2; FillColor=ROOT.kSpring+5,   Label="WW c_{W}(I.)" 
+WW_sm_lin_quad_cW+ :   WpWmToLpNujj_SMEFT_LO : xsec : (LHEReweightingWeight[2]-LHEReweightingWeight[1])/2; FillColor=ROOT.kSpring+5,   Label="WW c_{W}(I.)" 
+WZ_sm_lin_quad_cW+ :   WpZToLpNujj_SMEFT_LO  : xsec : (LHEReweightingWeight[2]-LHEReweightingWeight[1])/2; FillColor=ROOT.kSpring+5,   Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed 
+WZ_sm_lin_quad_cW+ :   WmZToLmNujj_SMEFT_LO  : xsec : (LHEReweightingWeight[2]-LHEReweightingWeight[1])/2; FillColor=ROOT.kSpring+5,   Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
 
-WW_quad_cW+ :   WmWpToLmNujj_SMEFT_LO : xsec : 0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="WW_smeft_cW" 
-WW_quad_cW+ :   WpWmToLpNujj_SMEFT_LO : xsec : 0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="WW_smeft_cW" 
-WZ_quad_cW+ :   WpZToLpNujj_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="WZ_smeft_cW",LineStyle=ROOT.kDashed 
-WZ_quad_cW+ :   WmZToLmNujj_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="WZ_smeft_cW",LineStyle=ROOT.kDashed
+WW_quad_cW+ :   WmWpToLmNujj_SMEFT_LO : xsec : 0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="WW c_{W}(Q.)" 
+WW_quad_cW+ :   WpWmToLpNujj_SMEFT_LO : xsec : 0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="WW c_{W}(Q.)" 
+WZ_quad_cW+ :   WpZToLpNujj_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="WZ c_{W}(Q.)",LineStyle=ROOT.kDashed 
+WZ_quad_cW+ :   WmZToLmNujj_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]; FillColor=ROOT.kSpring+5,   Label="WZ c_{W}(Q.)",LineStyle=ROOT.kDashed
 
 
 WW_cHDD+  :   WmWpToLmNujj_SMEFT_LO : xsec : LHEReweightingWeight[4]; FillColor=ROOT.kBlue,   Label="WW_smeft_Chdd" 

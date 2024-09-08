@@ -3,7 +3,6 @@
 #########################vvsemilep vars 
 debugsel       : mWV_dumy : 36,950,4550  ; XTitle="mWV"
 
-
 mWV            	 	  : mWV : [950,1050,1150,1250,1350,1450,1600,1800,2000,2200,2400,2600,3000,3500,4500]  ; XTitle="m_{WV} (GeV)",  MoreY=1.5, IncludeOverflows=True
 mWV_logy            	  : mWV : [950,1050,1150,1250,1350,1450,1600,1800,2000,2200,2400,2600,3000,3500,4500]  ; XTitle="m_{WV} (GeV)",  IncludeOverflows=True, MoreY=10, Logy,
 FatJet1_pt                : Selak8Jet1_pt  : [200,250,300,350,400,450,500,550,600,700,800,900,1000,2000]; XTitle="p_{T}^{jet} (GeV)",MoreY=2,MaxDigi, IncludeOverflows=True
@@ -17,7 +16,7 @@ pmet_logy      		  : pmet_pt :  [100,150,200,250,300,350,400,500,600,800,1000,20
 FatJet1_sDrop_mass        : Selak8Jet1_msoftdrop        : 24,40,160; XTitle="m_{SD}^{jet} (GeV)", MoreY=2.0, IncludeOverflows=True
 FatJet1_sDrop_mass_logy   : Selak8Jet1_msoftdrop        : 24,40,160; XTitle="m_{SD}^{jet} (GeV)", Logy, MoreY=5, IncludeOverflows=True
 
-mtmtWlep                   : mt_2(Lep1_pt,Lep1_phi,pmet_pt,pmet_phi) : 20,0,200; XTitle="m_{T}(l\,p_{T}^{miss}) (GeV)",MoreY=2.0, IncludeOverflows=True
+mtWlep                   : mt_2(Lep1_pt,Lep1_phi,pmet_pt,pmet_phi) : 20,0,200; XTitle="m_{T}(l\,p_{T}^{miss}) (GeV)",MoreY=2.0, IncludeOverflows=True
 mtWlep_logy               : mt_2(Lep1_pt,Lep1_phi,pmet_pt,pmet_phi) : 20,0,200; XTitle="m_{T}(l\,p_{T}^{miss}) (GeV)",MoreY=10,Logy, IncludeOverflows=True
 mtWlep_nowj               : mt_2(LepGood1_pt,LepGood1_phi,PuppiMET_pt,PuppiMET_phi) : 20,0,200; XTitle="m_{T}(l\,p_{T}^{miss}) (GeV)",MoreY=2.0, IncludeOverflows=True
 

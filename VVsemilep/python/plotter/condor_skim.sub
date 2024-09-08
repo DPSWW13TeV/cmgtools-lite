@@ -1,13 +1,15 @@
 Executable = dummy_skim.sh
 use_x509userproxy = true
 getenv      = True                                                                                            
-Log        = jobs/skim_$(Cluster)_$(ProcId).log
-Output     = jobs/skim_$(Cluster)_$(ProcId).out
-Error      = jobs/skim_$(Cluster)_$(ProcId).error
-+JobFlavour = "testmatch"
+Log        = jobs/scan_$(Cluster)_$(ProcId).log
+Output     = jobs/scan_$(Cluster)_$(ProcId).out
+Error      = jobs/scan_$(Cluster)_$(ProcId).error
++JobFlavour = "tomorrow"
 arguments  = $(info) 
 MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"
 +AccountingGroup = "group_u_CMST3.all"
 queue info from ( 
-/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter runSkimming.sh 
+/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter RunaTGC_limits_hists.py
 ) 
+
+#/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/python/plotter runSkimming.sh 
