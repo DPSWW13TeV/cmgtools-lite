@@ -1,0 +1,116 @@
+QCD_Mu15							: QCD_Mu15                                                        : xsec 
+QCD_Pt20to30_EMEnriched						: QCD_Pt20to30_EMEnriched                                         : xsec 
+QCD_Pt20to30_Mu5						: QCD_Pt20to30_Mu5                                                : xsec 
+QCD_Pt80to170_bcToE						: QCD_Pt80to170_bcToE                                             : xsec 
+QCD_Pt170to250_bcToE						: QCD_Pt170to250_bcToE                                            : xsec 
+QCD_Pt15to30_bcToE						: QCD_Pt15to30_bcToE                                              : xsec 
+QCD_Pt30to50_EMEnriched						: QCD_Pt30to50_EMEnriched                                         : xsec 
+QCD_Pt50to80_Mu5						: QCD_Pt50to80_Mu5                                                : xsec 
+QCD_Pt80to120_Mu5						: QCD_Pt80to120_Mu5                                               : xsec 
+QCD_Pt30to80_bcToE						: QCD_Pt30to80_bcToE                                              : xsec 
+QCD_Pt300toInf_EMEnriched					: QCD_Pt300toInf_EMEnriched                                       : xsec 
+QCD_Pt50to80_EMEnriched						: QCD_Pt50to80_EMEnriched                                         : xsec 
+Tbar_tch_part0							: Tbar_tch_part0                                                  : xsec 
+Tbar_tch_part1							: Tbar_tch_part1                                                  : xsec 
+T_sch_part1							: T_sch_part1                                                     : xsec 
+T_sch_part0							: T_sch_part0                                                     : xsec 
+T_tch_part0							: T_tch_part0                                                     : xsec 
+T_tch_part1							: T_tch_part1                                                     : xsec 
+T_tWch_noFullyHad						: T_tWch_noFullyHad                                               : xsec 
+Tbar_tWch_noFullyHad						: Tbar_tWch_noFullyHad                                            : xsec 
+TT_mtt1ktoinf_part0						: TT_mtt1ktoinf_part0                                             : xsec 
+TT_mtt1ktoinf_part1						: TT_mtt1ktoinf_part1                                             : xsec 
+TT_mttp7kto1k_part0						: TT_mttp7kto1k_part0                                             : xsec 
+TT_mttp7kto1k_part1						: TT_mttp7kto1k_part1                                             : xsec 
+TT_mttp7kto1k_part2						: TT_mttp7kto1k_part2                                             : xsec 
+TTSemi_pow_part0						: TTSemi_pow_part0                                                : xsec 
+TTSemi_pow_part1						: TTSemi_pow_part1                                                : xsec 
+TTSemi_pow_part2						: TTSemi_pow_part2                                                : xsec 
+TTSemi_pow_part3						: TTSemi_pow_part3                                                : xsec 
+TTSemi_pow_part4						: TTSemi_pow_part4                                                : xsec 
+TTSemi_pow_part5						: TTSemi_pow_part5                                                : xsec 
+TTSemi_pow_part6						: TTSemi_pow_part6                                                : xsec 
+TTSemi_pow_part7						: TTSemi_pow_part7                                                : xsec 
+TTSemi_pow_part8						: TTSemi_pow_part8                                                : xsec 
+TTSemi_pow_part9						: TTSemi_pow_part9                                                : xsec 
+TTSemi_pow_part10						: TTSemi_pow_part10                                               : xsec 
+TTSemi_pow_part11						: TTSemi_pow_part11                                               : xsec
+TTSemi_pow_part12						: TTSemi_pow_part12                                               : xsec	
+TTSemi_pow_part13						: TTSemi_pow_part13                                               : xsec 
+TTSemi_pow_part14						: TTSemi_pow_part14                                               : xsec 
+TTSemi_pow_part15						: TTSemi_pow_part15                                               : xsec 
+TTSemi_pow_part16						: TTSemi_pow_part16                                               : xsec 
+TTSemi_pow_part17						: TTSemi_pow_part17                                               : xsec 
+TTSemi_pow_part10						: TTSemi_pow_part10                                               : xsec 
+TTSemi_pow_part11						: TTSemi_pow_part11                                               : xsec 
+TTSemi_pow_part12						: TTSemi_pow_part12                                               : xsec 
+TTSemi_pow_part13						: TTSemi_pow_part13                                               : xsec 
+TTSemi_pow_part18						: TTSemi_pow_part18                                               : xsec 
+TTSemi_pow_part19						: TTSemi_pow_part19                                               : xsec 
+TTSemi_pow_part20						: TTSemi_pow_part20                                               : xsec 
+TTSemi_pow_part21						: TTSemi_pow_part21                                               : xsec 
+TTSemi_pow_part22						: TTSemi_pow_part22                                               : xsec 
+TTSemi_pow_part23						: TTSemi_pow_part23                                               : xsec 
+TTSemi_pow_part24						: TTSemi_pow_part24                                               : xsec 
+TTSemi_pow_part25						: TTSemi_pow_part25                                               : xsec 
+TTSemi_pow_part26						: TTSemi_pow_part26                                               : xsec 
+TTSemi_pow_part27						: TTSemi_pow_part27                                               : xsec 
+TTSemi_pow_part28						: TTSemi_pow_part28                                               : xsec 
+WJetsToLNu_HT70To100_part0					: WJetsToLNu_HT70To100_part0                                      : xsec 
+WJetsToLNu_HT70To100_part1					: WJetsToLNu_HT70To100_part1                                      : xsec 
+WJetsToLNu_HT100to200_part0					: WJetsToLNu_HT100to200_part0                                     : xsec 
+WJetsToLNu_HT100to200_part1					: WJetsToLNu_HT100to200_part1                                     : xsec 
+WJetsToLNu_HT200to400_part0					: WJetsToLNu_HT200to400_part0                                     : xsec 
+WJetsToLNu_HT200to400_part1					: WJetsToLNu_HT200to400_part1                                     : xsec 
+WJetsToLNu_HT200to400_part2					: WJetsToLNu_HT200to400_part2                                     : xsec 
+WJetsToLNu_HT400to600						: WJetsToLNu_HT400to600                                           : xsec 
+WJetsToLNu_HT600to800						: WJetsToLNu_HT600to800                                           : xsec 
+WJetsToLNu_HT800to1200						: WJetsToLNu_HT800to1200                                          : xsec 
+WJetsToLNu_HT1200to2500						: WJetsToLNu_HT1200to2500                                         : xsec 
+WJetsToLNu_HT2500toInf						: WJetsToLNu_HT2500toInf                                          : xsec 
+WZTo1L1Nu2Q							: WZTo1L1Nu2Q                                                     : xsec 
+WWTo1L1Nu2Q_part0						: WWTo1L1Nu2Q_part0                                               : xsec 
+WWTo1L1Nu2Q_part1						: WWTo1L1Nu2Q_part1                                               : xsec 
+ZZTo2Q2L_part0							: ZZTo2Q2L_part0                                                  : xsec 
+ZZTo2Q2L_part1							: ZZTo2Q2L_part1                                                  : xsec 
+VHToNonbb							: VHToNonbb                                                       : xsec 
+WplusH								: WplusH                                                          : xsec 	
+WminusH								: WminusH                                                         : xsec 
+ZH								: ZH                                                              : xsec 
+QCD_Pt170to300_EMEnriched					: QCD_Pt170to300_EMEnriched                                       : xsec 
+QCD_Pt120to170_EMEnriched					: QCD_Pt120to170_EMEnriched                                       : xsec 
+QCD_Pt120to170_Mu5						: QCD_Pt120to170_Mu5                                              : xsec 
+QCD_Pt80to120_EMEnriched					: QCD_Pt80to120_EMEnriched                                        : xsec 
+QCD_Pt170to300_Mu5						: QCD_Pt170to300_Mu5                                              : xsec 
+QCD_Pt250toInf_bcToE						: QCD_Pt250toInf_bcToE                                            : xsec 
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600			: WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600                 : xsec 
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600			: WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600                  : xsec 
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600			: WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600                  : xsec 
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600			: WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600                 : xsec 
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800			: WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800                  : xsec 
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800			: WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800                  : xsec 
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800			: WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800                 : xsec 
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf			: WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf                 : xsec 
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800			: WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800                 : xsec 
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf			: WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf                  : xsec 
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf			: WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf                 : xsec 
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf			: WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf                  : xsec 
+data : SingleMuon_Run2017B_UL2017
+data : SingleMuon_Run2017C_UL2017_part1
+data : SingleMuon_Run2017C_UL2017_part0
+data : SingleMuon_Run2017D_UL2017
+data : SingleMuon_Run2017E_UL2017_part1
+data : SingleMuon_Run2017E_UL2017_part0
+data : SingleMuon_Run2017F_UL2017_part2
+data : SingleMuon_Run2017F_UL2017_part0
+data : SingleMuon_Run2017F_UL2017_part1
+data : SingleElectron_Run2017B_UL2017
+data : SingleElectron_Run2017C_UL2017
+data : SingleElectron_Run2017D_UL2017
+data : SingleElectron_Run2017E_UL2017
+data : SingleElectron_Run2017F_UL2017_part1
+data : SingleElectron_Run2017F_UL2017_part0
+
+
+
+

@@ -6,7 +6,7 @@ $alias : wj     : WJets.*
 $alias : st     : singletop|T_[a-z]+ch|T[a-z]+_[a-z]+ch
 $alias : ttbar  : TTJets|TTJets_part.*|ttsemi|tt|TT*
 $alias : VH     : WH|VH.*|ZH|WplusH|WminusH
-$alias : Others : WH|VH.*|ZH|WplusH|WminusH|ZZ.*
+$alias : Others : WH|VH.*|ZH.*|WplusH|WminusH|ZZ.*
 $alias : top    : $st|$ttbar
 $alias : qcd    : QCD.*
 $alias : wwaTGC : WW_sm_lin_quad.*|WW_quad.*
@@ -50,51 +50,61 @@ lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.001; year="2017"
 
 
 CMS_qcdscales_shape_VH : $VH : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-
 CMS_qcdscales_shape_WW : WW_sm : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-
 CMS_qcdscales_shape_WZ : WZ_sm : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-
 CMS_qcdscales_shape_WW : SM_WW : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-
 CMS_qcdscales_shape_WZ : SM_WZ : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-
 CMS_qcdscales_shape_Others : $Others : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-
-
-#CMS_qcdscales_shape_WW_aTGC : $wwaTGC : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-
-#CMS_qcdscales_shape_WZ_aTGC : $wzaTGC : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-
-
+CMS_qcdscales_shape_WW_aTGC : $wwaTGC : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+CMS_qcdscales_shape_WZ_aTGC : $wzaTGC : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 CMS_qcdscales_shape_tt : $ttbar : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-
 CMS_qcdscales_shape_singletop : $st : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-
-
 CMS_qcdscales_shape_wj : $wj  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
 
-CMS_qcdscales_shape_QCD : $QCD  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
+CMS_qcdscales_shape_QCD : $qcd  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
 
 
 
-CMS_PS_wj :       $wj  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-CMS_PS_tt :       $ttbar  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-CMS_PS_st :       $st  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+ISR_wj : $wj : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
+FSR_wj : $wj : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
 
+ISR_tt : $ttbar : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
+FSR_tt : $ttbar : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
+
+ISR_st : $st : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
+FSR_st : $st : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
+
+ISR_Others : $Others : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
+FSR_Others : $Others : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
+
+ISR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
+FSR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
+
+
+ISR_WZ_sm : WZ_sm : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
+FSR_WZ_sm : WZ_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
+
+
+#ISR_WW_aTGC :  $wwaTGC : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
+#FSR_WW_aTGC :  $wwaTGC : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
+#ISR_WZ_aTGC :  $wzaTGC : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
+#FSR_WZ_aTGC :  $wzaTGC : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
+
+
+#pdf_WW_sm	           : WW_sm   : .* : normSymm : 1.05
+#pdf_WZ_sm	           : WW_sm   : .* : normSymm : 1.05
+
+
+#CMS_PS_wj :       $wj  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+#CMS_PS_tt :       $ttbar  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+#CMS_PS_st :       $st  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 #CMS_PS_WW_aTGC :  $wwaTGC  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-
 #CMS_PS_WZ_aTGC :  $wzaTGC  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-
-CMS_PS_WW_sm :    WW_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-
-CMS_PS_WZ_sm :    WZ_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-
-CMS_PS_Others :   $Others  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-
-CMS_PS_VH     :   $VH  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-
-CMS_PS_QCD     :   $QCD  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+#CMS_PS_WW_sm :    WW_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+#CMS_PS_WZ_sm :    WZ_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+#CMS_PS_Others :   $Others  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+#CMS_PS_VH     :   $VH  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+#CMS_PS_QCD     :   $QCD  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 
 
 
@@ -120,12 +130,20 @@ CMS_eff_el : $AllFromMC : .*el.* : templateAsymm  ; AddWeights=['lepsf_el_up/lep
 CMS_eff_mu : $AllFromMC : .*lep.* : templateAsymm ; AddWeights=['lepsf_mu_up/lepsf'\,'lepsf_mu_dn/lepsf']
 CMS_eff_el : $AllFromMC : .*lep.* : templateAsymm ; AddWeights=['lepsf_el_up/lepsf'\,'lepsf_el_dn/lepsf']   
 
-CMS_wvsl18_pNetscore      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
-CMS_wvsl18_pNetscore      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
-CMS_wvsl18_pNetscore      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(ak8sDMgt45_pt[0]\,2018\,0\,1.0\,1)', year="2018"
+CMS_wvsl18_pNetscore      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,0\,1.0\,1)', year="2018"
+CMS_wvsl18_pNetscore      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,0\,1.0\,1)', year="2018"
+CMS_wvsl18_pNetscore      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,0\,1.0\,1)', year="2018"
+
+CMS_wvsl17_pNetscore      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,0\,1.0\,1)', year="2017"
+CMS_wvsl17_pNetscore      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,0\,1.0\,1)', year="2017"
+CMS_wvsl17_pNetscore      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,0\,1.0\,1)', year="2017"
+
 
 CMS_wvsl18_trigger_el  : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,0\,1)', year="2018"
 CMS_wvsl18_trigger_mu  : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,0\,1)', year="2018"
+
+CMS_wvsl17_trigger_el  : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,0\,1)', year="2017"
+CMS_wvsl17_trigger_mu  : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,0\,1)', year="2017"
 
 
 CMS_top_pT_rwgt  : $ttbar : .* : templateSymm; Normalize=False, AddWeight='1.0/Top_pTrw'
@@ -213,202 +231,107 @@ CMS_btagSFlight                 : $AllFromMC : .* : templateAsymm; AddWeights=['
 
 ##amFIXME need to check if this is vaid for all samples!!
 
-pdf_0   : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[0]'
-pdf_1   : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[1]'
-pdf_2   : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[2]'
-pdf_3   : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[3]'
-pdf_4   : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[4]'
-pdf_5   : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[5]'
-pdf_6   : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[6]'
-pdf_7   : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[7]'
-pdf_8   : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[8]'
-pdf_9   : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[9]'
-pdf_10  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[10]'
-pdf_11  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[11]'
-pdf_12  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[12]'
-pdf_13  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[13]'
-pdf_14  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[14]'
-pdf_15  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[15]'
-pdf_16  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[16]'
-pdf_17  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[17]'
-pdf_18  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[18]'
-pdf_19  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[19]'
-pdf_20  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[20]'
-pdf_21  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[21]'
-pdf_22  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[22]'
-pdf_23  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[23]'
-pdf_24  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[24]'
-pdf_25  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[25]'
-pdf_26  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[26]'
-pdf_27  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[27]'
-pdf_28  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[28]'
-pdf_29  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[29]'
-pdf_30  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[30]'
-pdf_41  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[41]'
-pdf_42  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[42]'
-pdf_43  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[43]'
-pdf_44  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[44]'
-pdf_45  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[45]'
-pdf_46  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[46]'
-pdf_47  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[47]'
-pdf_48  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[48]'
-pdf_49  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[49]'
-pdf_50  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[50]'
-pdf_51  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[51]'
-pdf_52  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[52]'
-pdf_53  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[53]'
-pdf_54  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[54]'
-pdf_55  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[55]'
-pdf_56  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[56]'
-pdf_57  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[57]'
-pdf_58  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[58]'
-pdf_59  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[59]'
-pdf_60  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[60]'
-
-pdf_61  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[61]'
-pdf_62  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[62]'
-pdf_63  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[63]'
-pdf_64  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[64]'
-pdf_65  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[65]'
-pdf_66  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[66]'
-pdf_67  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[67]'
-pdf_68  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[68]'
-pdf_69  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[69]'
-pdf_70  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[70]'
-
-
-pdf_71  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[71]'
-pdf_72  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[72]'
-pdf_73  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[73]'
-pdf_74  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[74]'
-pdf_75  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[75]'
-pdf_76  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[76]'
-pdf_77  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[77]'
-pdf_78  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[78]'
-pdf_79  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[79]'
-pdf_80  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[80]'
+pdf_0   : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[0]'
+pdf_1   : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[1]'
+pdf_2   : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[2]'
+pdf_3   : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[3]'
+pdf_4   : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[4]'
+pdf_5   : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[5]'
+pdf_6   : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[6]'
+pdf_7   : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[7]'
+pdf_8   : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[8]'
+pdf_9   : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[9]'
+pdf_10  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[10]'
+pdf_11  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[11]'
+pdf_12  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[12]'
+pdf_13  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[13]'
+pdf_14  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[14]'
+pdf_15  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[15]'
+pdf_16  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[16]'
+pdf_17  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[17]'
+pdf_18  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[18]'
+pdf_19  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[19]'
+pdf_20  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[20]'
+pdf_21  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[21]'
+pdf_22  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[22]'
+pdf_23  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[23]'
+pdf_24  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[24]'
+pdf_25  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[25]'
+pdf_26  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[26]'
+pdf_27  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[27]'
+pdf_28  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[28]'
+pdf_29  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[29]'
+pdf_30  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[30]'
+pdf_41  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[41]'
+pdf_42  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[42]'
+pdf_43  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[43]'
+pdf_44  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[44]'
+pdf_45  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[45]'
+pdf_46  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[46]'
+pdf_47  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[47]'
+pdf_48  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[48]'
+pdf_49  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[49]'
+pdf_50  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[50]'
+pdf_51  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[51]'
+pdf_52  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[52]'
+pdf_53  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[53]'
+pdf_54  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[54]'
+pdf_55  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[55]'
+pdf_56  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[56]'
+pdf_57  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[57]'
+pdf_58  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[58]'
+pdf_59  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[59]'
+pdf_60  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[60]'
+pdf_61  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[61]'
+pdf_62  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[62]'
+pdf_63  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[63]'
+pdf_64  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[64]'
+pdf_65  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[65]'
+pdf_66  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[66]'
+pdf_67  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[67]'
+pdf_68  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[68]'
+pdf_69  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[69]'
+pdf_70  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[70]'
 
 
-pdf_81  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[81]'
-pdf_82  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[82]'
-pdf_83  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[83]'
-pdf_84  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[84]'
-pdf_85  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[85]'
-pdf_86  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[86]'
-pdf_87  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[87]'
-pdf_88  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[88]'
-pdf_89  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[89]'
-pdf_90  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[90]'
+pdf_71  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[71]'
+pdf_72  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[72]'
+pdf_73  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[73]'
+pdf_74  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[74]'
+pdf_75  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[75]'
+pdf_76  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[76]'
+pdf_77  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[77]'
+pdf_78  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[78]'
+pdf_79  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[79]'
+pdf_80  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[80]'
 
-pdf_91  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[91]'
-pdf_92  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[92]'
-pdf_93  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[93]'
-pdf_94  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[94]'
-pdf_95  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[95]'
-pdf_96  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[96]'
-pdf_97  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[97]'
-pdf_98  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[98]'
-pdf_99  : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[99]'
-pdf_100 : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]'
 
+pdf_81  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[81]'
+pdf_82  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[82]'
+pdf_83  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[83]'
+pdf_84  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[84]'
+pdf_85  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[85]'
+pdf_86  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[86]'
+pdf_87  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[87]'
+pdf_88  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[88]'
+pdf_89  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[89]'
+pdf_90  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[90]'
+
+pdf_91  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[91]'
+pdf_92  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[92]'
+pdf_93  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[93]'
+pdf_94  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[94]'
+pdf_95  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[95]'
+pdf_96  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[96]'
+pdf_97  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[97]'
+pdf_98  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[98]'
+pdf_99  : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[99]'
+pdf_100 : $top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]'
 
 
 
 
 
-
-#######
-##ampdf_0   : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[0]/LHEPdfWeight[0]'
-##ampdf_1   : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[1]/LHEPdfWeight[1]'
-##ampdf_2   : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[2]/LHEPdfWeight[2]'
-##ampdf_3   : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[3]/LHEPdfWeight[3]'
-##ampdf_4   : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[4]/LHEPdfWeight[4]'
-##ampdf_5   : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[5]/LHEPdfWeight[5]'
-##ampdf_6   : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[6]/LHEPdfWeight[6]'
-##ampdf_7   : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[7]/LHEPdfWeight[7]'
-##ampdf_8   : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[8]/LHEPdfWeight[8]'
-##ampdf_9   : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[9]/LHEPdfWeight[9]'
-##ampdf_10  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[10]/LHEPdfWeight[10]'
-##ampdf_11  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[11]/LHEPdfWeight[11]'
-##ampdf_12  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[12]/LHEPdfWeight[12]'
-##ampdf_13  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[13]/LHEPdfWeight[13]'
-##ampdf_14  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[14]/LHEPdfWeight[14]'
-##ampdf_15  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[15]/LHEPdfWeight[15]'
-##ampdf_16  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[16]/LHEPdfWeight[16]'
-##ampdf_17  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[17]/LHEPdfWeight[17]'
-##ampdf_18  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[18]/LHEPdfWeight[18]'
-##ampdf_19  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[19]/LHEPdfWeight[19]'
-##ampdf_20  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[20]/LHEPdfWeight[20]'
-##ampdf_21  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[21]/LHEPdfWeight[21]'
-##ampdf_22  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[22]/LHEPdfWeight[22]'
-##ampdf_23  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[23]/LHEPdfWeight[23]'
-##ampdf_24  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[24]/LHEPdfWeight[24]'
-##ampdf_25  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[25]/LHEPdfWeight[25]'
-##ampdf_26  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[26]/LHEPdfWeight[26]'
-##ampdf_27  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[27]/LHEPdfWeight[27]'
-##ampdf_28  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[28]/LHEPdfWeight[28]'
-##ampdf_29  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[29]/LHEPdfWeight[29]'
-##ampdf_30  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[30]/LHEPdfWeight[30]'
-##ampdf_41  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[41]/LHEPdfWeight[41]'
-##ampdf_42  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[42]/LHEPdfWeight[42]'
-##ampdf_43  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[43]/LHEPdfWeight[43]'
-##ampdf_44  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[44]/LHEPdfWeight[44]'
-##ampdf_45  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[45]/LHEPdfWeight[45]'
-##ampdf_46  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[46]/LHEPdfWeight[46]'
-##ampdf_47  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[47]/LHEPdfWeight[47]'
-##ampdf_48  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[48]/LHEPdfWeight[48]'
-##ampdf_49  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[49]/LHEPdfWeight[49]'
-##ampdf_50  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[50]/LHEPdfWeight[50]'
-##ampdf_51  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[51]/LHEPdfWeight[51]'
-##ampdf_52  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[52]/LHEPdfWeight[52]'
-##ampdf_53  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[53]/LHEPdfWeight[53]'
-##ampdf_54  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[54]/LHEPdfWeight[54]'
-##ampdf_55  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[55]/LHEPdfWeight[55]'
-##ampdf_56  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[56]/LHEPdfWeight[56]'
-##ampdf_57  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[57]/LHEPdfWeight[57]'
-##ampdf_58  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[58]/LHEPdfWeight[58]'
-##ampdf_59  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[59]/LHEPdfWeight[59]'
-##ampdf_60  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[60]/LHEPdfWeight[60]'
-##ampdf_61  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[61]/LHEPdfWeight[61]'
-##ampdf_62  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[62]/LHEPdfWeight[62]'
-##ampdf_63  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[63]/LHEPdfWeight[63]'
-##ampdf_64  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[64]/LHEPdfWeight[64]'
-##ampdf_65  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[65]/LHEPdfWeight[65]'
-##ampdf_66  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[66]/LHEPdfWeight[66]'
-##ampdf_67  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[67]/LHEPdfWeight[67]'
-##ampdf_68  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[68]/LHEPdfWeight[68]'
-##ampdf_69  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[69]/LHEPdfWeight[69]'
-##ampdf_70  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[70]/LHEPdfWeight[70]'
-##ampdf_71  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[71]/LHEPdfWeight[71]'
-##ampdf_72  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[72]/LHEPdfWeight[72]'
-##ampdf_73  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[73]/LHEPdfWeight[73]'
-##ampdf_74  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[74]/LHEPdfWeight[74]'
-##ampdf_75  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[75]/LHEPdfWeight[75]'
-##ampdf_76  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[76]/LHEPdfWeight[76]'
-##ampdf_77  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[77]/LHEPdfWeight[77]'
-##ampdf_78  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[78]/LHEPdfWeight[78]'
-##ampdf_79  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[79]/LHEPdfWeight[79]'
-##ampdf_80  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[80]/LHEPdfWeight[80]'
-##ampdf_81  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[81]/LHEPdfWeight[81]'
-##ampdf_82  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[82]/LHEPdfWeight[82]'
-##ampdf_83  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[83]/LHEPdfWeight[83]'
-##ampdf_84  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[84]/LHEPdfWeight[84]'
-##ampdf_85  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[85]/LHEPdfWeight[85]'
-##ampdf_86  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[86]/LHEPdfWeight[86]'
-##ampdf_87  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[87]/LHEPdfWeight[87]'
-##ampdf_88  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[88]/LHEPdfWeight[88]'
-##ampdf_89  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[89]/LHEPdfWeight[89]'
-##ampdf_90  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[90]/LHEPdfWeight[90]'
-##ampdf_91  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[91]/LHEPdfWeight[91]'
-##ampdf_92  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[92]/LHEPdfWeight[92]'
-##ampdf_93  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[93]/LHEPdfWeight[93]'
-##ampdf_94  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[94]/LHEPdfWeight[94]'
-##ampdf_95  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[95]/LHEPdfWeight[95]'
-##ampdf_96  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[96]/LHEPdfWeight[96]'
-##ampdf_97  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[97]/LHEPdfWeight[97]'
-##ampdf_98  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[98]/LHEPdfWeight[98]'
-##ampdf_99  : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[99]/LHEPdfSumw[99]'
-##ampdf_100 : $sig : .* : templateSymm; Normalize=False, AddWeight='LHEPdfWeight[100]/LHEPdfSumw[100]'
 
 
 
@@ -418,7 +341,6 @@ pdf_100 : $$top|$wj|$VH|$Others : .* : templateSymm; Normalize=False, AddWeight=
 
 #pdf_accept : $sig  : .* : HessianPDFset; FakeRates=['vvsemilep/frs-pdfs/fr-pdf_0.txt'\,'vvsemilep/frs-pdfs/fr-pdf_1.txt'\,'vvsemilep/frs-pdfs/fr-pdf_2.txt'\,'vvsemilep/frs-pdfs/fr-pdf_3.txt'\,'vvsemilep/frs-pdfs/fr-pdf_4.txt'\,'vvsemilep/frs-pdfs/fr-pdf_5.txt'\,'vvsemilep/frs-pdfs/fr-pdf_6.txt'\,'vvsemilep/frs-pdfs/fr-pdf_7.txt'\,'vvsemilep/frs-pdfs/fr-pdf_8.txt'\,'vvsemilep/frs-pdfs/fr-pdf_9.txt'\,'vvsemilep/frs-pdfs/fr-pdf_10.txt'\,'vvsemilep/frs-pdfs/fr-pdf_11.txt'\,'vvsemilep/frs-pdfs/fr-pdf_12.txt'\,'vvsemilep/frs-pdfs/fr-pdf_13.txt'\,'vvsemilep/frs-pdfs/fr-pdf_14.txt'\,'vvsemilep/frs-pdfs/fr-pdf_15.txt'\,'vvsemilep/frs-pdfs/fr-pdf_16.txt'\,'vvsemilep/frs-pdfs/fr-pdf_17.txt'\,'vvsemilep/frs-pdfs/fr-pdf_18.txt'\,'vvsemilep/frs-pdfs/fr-pdf_19.txt'\,'vvsemilep/frs-pdfs/fr-pdf_20.txt'\,'vvsemilep/frs-pdfs/fr-pdf_21.txt'\,'vvsemilep/frs-pdfs/fr-pdf_22.txt'\,'vvsemilep/frs-pdfs/fr-pdf_23.txt'\,'vvsemilep/frs-pdfs/fr-pdf_24.txt'\,'vvsemilep/frs-pdfs/fr-pdf_25.txt'\,'vvsemilep/frs-pdfs/fr-pdf_26.txt'\,'vvsemilep/frs-pdfs/fr-pdf_27.txt'\,'vvsemilep/frs-pdfs/fr-pdf_28.txt'\,'vvsemilep/frs-pdfs/fr-pdf_29.txt'\,'vvsemilep/frs-pdfs/fr-pdf_30.txt'\,'vvsemilep/frs-pdfs/fr-pdf_31.txt'\,'vvsemilep/frs-pdfs/fr-pdf_32.txt'\,'vvsemilep/frs-pdfs/fr-pdf_33.txt'\,'vvsemilep/frs-pdfs/fr-pdf_34.txt'\,'vvsemilep/frs-pdfs/fr-pdf_35.txt'\,'vvsemilep/frs-pdfs/fr-pdf_36.txt'\,'vvsemilep/frs-pdfs/fr-pdf_37.txt'\,'vvsemilep/frs-pdfs/fr-pdf_38.txt'\,'vvsemilep/frs-pdfs/fr-pdf_39.txt'\,'vvsemilep/frs-pdfs/fr-pdf_40.txt'\,'vvsemilep/frs-pdfs/fr-pdf_41.txt'\,'vvsemilep/frs-pdfs/fr-pdf_42.txt'\,'vvsemilep/frs-pdfs/fr-pdf_43.txt'\,'vvsemilep/frs-pdfs/fr-pdf_44.txt'\,'vvsemilep/frs-pdfs/fr-pdf_45.txt'\,'vvsemilep/frs-pdfs/fr-pdf_46.txt'\,'vvsemilep/frs-pdfs/fr-pdf_47.txt'\,'vvsemilep/frs-pdfs/fr-pdf_48.txt'\,'vvsemilep/frs-pdfs/fr-pdf_49.txt'\,'vvsemilep/frs-pdfs/fr-pdf_50.txt'\,'vvsemilep/frs-pdfs/fr-pdf_51.txt'\,'vvsemilep/frs-pdfs/fr-pdf_52.txt'\,'vvsemilep/frs-pdfs/fr-pdf_53.txt'\,'vvsemilep/frs-pdfs/fr-pdf_54.txt'\,'vvsemilep/frs-pdfs/fr-pdf_55.txt'\,'vvsemilep/frs-pdfs/fr-pdf_56.txt'\,'vvsemilep/frs-pdfs/fr-pdf_57.txt'\,'vvsemilep/frs-pdfs/fr-pdf_58.txt'\,'vvsemilep/frs-pdfs/fr-pdf_59.txt'\,'vvsemilep/frs-pdfs/fr-pdf_60.txt'\,'vvsemilep/frs-pdfs/fr-pdf_61.txt'\,'vvsemilep/frs-pdfs/fr-pdf_62.txt'\,'vvsemilep/frs-pdfs/fr-pdf_63.txt'\,'vvsemilep/frs-pdfs/fr-pdf_64.txt'\,'vvsemilep/frs-pdfs/fr-pdf_65.txt'\,'vvsemilep/frs-pdfs/fr-pdf_66.txt'\,'vvsemilep/frs-pdfs/fr-pdf_67.txt'\,'vvsemilep/frs-pdfs/fr-pdf_68.txt'\,'vvsemilep/frs-pdfs/fr-pdf_69.txt'\,'vvsemilep/frs-pdfs/fr-pdf_70.txt'\,'vvsemilep/frs-pdfs/fr-pdf_71.txt'\,'vvsemilep/frs-pdfs/fr-pdf_72.txt'\,'vvsemilep/frs-pdfs/fr-pdf_73.txt'\,'vvsemilep/frs-pdfs/fr-pdf_74.txt'\,'vvsemilep/frs-pdfs/fr-pdf_75.txt'\,'vvsemilep/frs-pdfs/fr-pdf_76.txt'\,'vvsemilep/frs-pdfs/fr-pdf_77.txt'\,'vvsemilep/frs-pdfs/fr-pdf_78.txt'\,'vvsemilep/frs-pdfs/fr-pdf_79.txt'\,'vvsemilep/frs-pdfs/fr-pdf_80.txt'\,'vvsemilep/frs-pdfs/fr-pdf_81.txt'\,'vvsemilep/frs-pdfs/fr-pdf_82.txt'\,'vvsemilep/frs-pdfs/fr-pdf_83.txt'\,'vvsemilep/frs-pdfs/fr-pdf_84.txt'\,'vvsemilep/frs-pdfs/fr-pdf_85.txt'\,'vvsemilep/frs-pdfs/fr-pdf_86.txt'\,'vvsemilep/frs-pdfs/fr-pdf_87.txt'\,'vvsemilep/frs-pdfs/fr-pdf_88.txt'\,'vvsemilep/frs-pdfs/fr-pdf_89.txt'\,'vvsemilep/frs-pdfs/fr-pdf_90.txt'\,'vvsemilep/frs-pdfs/fr-pdf_91.txt'\,'vvsemilep/frs-pdfs/fr-pdf_92.txt'\,'vvsemilep/frs-pdfs/fr-pdf_93.txt'\,'vvsemilep/frs-pdfs/fr-pdf_94.txt'\,'vvsemilep/frs-pdfs/fr-pdf_95.txt'\,'vvsemilep/frs-pdfs/fr-pdf_96.txt'\,'vvsemilep/frs-pdfs/fr-pdf_97.txt'\,'vvsemilep/frs-pdfs/fr-pdf_98.txt'\,'vvsemilep/frs-pdfs/fr-pdf_99.txt'\,'vvsemilep/frs-pdfs/fr-pdf_100.txt']#\,'vvsemilep/frs-pdfs/fr-pdf_101.txt'\,'vvsemilep/frs-pdfs/fr-pdf_102.txt'] 
 
-#pdf_VH	           : $VH   : .* : normSymm : 1.02
 #pdf_WJ		   : $WJ   : .* : normSymm : 1.006
 
 ##fully correlated eigen vector by eigen vector 

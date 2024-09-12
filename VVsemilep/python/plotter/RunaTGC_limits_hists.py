@@ -51,13 +51,9 @@ def commandsToRun(dc,pf,plots_odir,WC):
     os.system("text2workspace.py {name}.txt -P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative  --X-allow-no-signal  -o  model_{name}.root  --PO eftOperators={op}".format(name=dCard_str,op=WC))
     os.system("combine -M MultiDimFit model_{name}.root  --algo=grid --points {pts}  -m 125  -t -1  --redefineSignalPOIs k_{op}  --freezeParameters r --setParameters r=1,k_{op}=0  --setParameterRanges=k_{op}={range_op} {more} ".format(op=WC,name=dCard_str,pts=points,range_op=range_op,more=options)) #--verbose 3
     #     os.system(
-
-    #combineTool.py datacard.txt -M MultiDimFit --algo grid --points 50 --rMin 0 --rMax 1 --job-mode condor --split-points 10 --sub-opts='+JobFlavour="workday"' --task-name mytask -n mytask
-    #os.system("combine -M MultiDimFit model_{name}.root  --algo=grid --points {pts}  -m 125  -t -1  --redefineSignalPOIs k_{op}  --freezeParameters r --setParameters r=1,k_{op}=0  --setParameterRanges=k_{op}={range_op} --X-rtd MINIMIZER_MaxCalls=400000  --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT  --alignEdges 1  ".format(op=WC,name=dCard_str,pts=points,range_op=range_op))
-
     os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_{op}  -lumi 58 -cms -preliminary -o {eos}/scan_{op}_{dc}.png ".format(op=WC,eos=plots_odir,dc=dCard_str))
     os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_{op}  -lumi 58 -cms -preliminary -o {eos}/scan_{op}_{dc}.pdf " .format(op=WC,eos=plots_odir,dc=dCard_str))
-    os.system("combine  -M FitDiagnostics  model_{name}.root  -t -1 --redefineSignalPOIs k_{op} --freezeParameters r,k_{op} --cminDefaultMinimizerStrategy 0 --setParameters r=1,k_{op}=0".format(name=dCard_str,op=WC)) #--saveNormalizations  --saveShapes --plots  # --robustFit=1  --toysFrequentist 
+    os.system("combine  -M FitDiagnostics  model_{name}.root  -t -1 --saveNormalizations  --customStartingPoint --saveShapes --plots --redefineSignalPOIs k_{op} --freezeParameters r,k_{op} --cminDefaultMinimizerStrategy 0 --setParameters r=1,k_{op}=0 -v 1".format(name=dCard_str,op=WC)) #  # --robustFit=1  --toysFrequentist  #skip the signal fit 
     
     return True
 
@@ -70,10 +66,10 @@ if __name__ == '__main__':
     #year=sys.argv[1]
     #pf=sys.argv[1]
 
-    date="2024-09-08" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2024-09-11" #datetime.date.today().isoformat() #"2021-12-02" #
     pf_input=""
     pf_output=""
-    for op in ['c3w','cb','cw']:
+    for op in ['cw']: #,'cb','c3w']:
         dC18=combineCards("2018","onelep",op,pf_input,False)
         commandsToRun(dC18,pf_output,plots_odir,op)
     #os.command('mv *%s* %s/'%(dC18.split('.txt')[0],cards_dir))
