@@ -55,9 +55,9 @@ bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavou
 
 
 
-theWVultimateset=['mWV','pmet','FatJet1_pt','FatJet1_sDrop_mass','mtWlep','ptWlep','pmet_phi','nBJetMedium30_Recl','nBJetLoose30_Recl','ptWV_pmet','Lep1_pt','FatJet1_pNetMD_Wtagscore']
+theWVultimateset=['mWV']#,'pmet','FatJet1_pt','FatJet1_sDrop_mass','mtWlep','ptWlep','pmet_phi','nBJetMedium30_Recl','nBJetLoose30_Recl','ptWV_pmet','Lep1_pt','FatJet1_pNetMD_Wtagscore']
 #,'dphijmet']##'nLepGood','nFatJet','nVert','dphifjpmet','dphifjlep','dphil1pmet',
-theWVultimateset_log=['mWV_logy','FatJet1_pt_logy','pmet_logy','FatJet1_sDrop_mass_logy','Lep1_pt_logy']#,'ptWV_pmet_logy','mtWlep_logy','ptWlep_logy']
+theWVultimateset_log=['mWV_logy']#,'FatJet1_pt_logy','pmet_logy','FatJet1_sDrop_mass_logy','Lep1_pt_logy']#,'ptWV_pmet_logy','mtWlep_logy','ptWlep_logy']
 theWVultimateset_noWJ=['mt1pmet_nowj','mWV_nowj','FatJet1_sDrop_mass_nowj','FatJet1_pt_nowj','pmet_nowj']
 
 
@@ -144,7 +144,7 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     subprocess.call(['python']+cmd.split())#+['/dev/null'],stderr=subprocess.PIPE)
 
 ##################
-def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,doWJ,fitCR,WCs,varTofit,acP,acC,wjDate):
+def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,doWJ,fitCR,fitCRwithcomb,WCs,varTofit,acP,acC,wjDate):
     trees        = [baseDir+'{here}'.format(here=year if year != 'all' else '')]
     fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
     showratio    = True
@@ -218,8 +218,8 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     if len(acP) > 0: extraopts += ''.join(' -E ^'+cut for cut in acP )
                     if pR in ['sig'] and 'data' in processes and blinded :  
                         processes.remove('data');  showratio   = False
-                    elif  "top" in pR and fitCR: extraopts+= ' --xp Others --xp .*quad.*  --xp QCD'
-                    elif  "wj" in pR and fitCR: extraopts+= ' --xp .*quad.* '
+                    elif  "top" in pR and fitCR: extraopts+= ' --xp Others --xp .*quad.*  --xp QCD '
+                    elif  "wj" in pR and fitCR: extraopts+= ' --xp .*quad.*  --xp QCD --xp Others '
                     makeplots  = ['{}'.format(a)  for a in plotvars]
                     print (makeplots)
                     #for op in WCs: don't wanna run plots per operator 
@@ -230,7 +230,10 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     mWV_dist=" {here} ".format(here=fitvars[varTofit])
                     if "top" in pR or 'wj' in pR: 
                         binNamecards=binName+"_"+year
-                        extraoptscards= ' --binname %s  --sp WW_sm --sp WZ_sm --xp QCD --sp SM.* '%(binNamecards) #, '--xp QCD ' if 'top' in pR else '') --xp Others --xp .*quad.*  --sp WW_sm --sp WZ_sm
+                        if not fitCRwithcomb:
+                            extraoptscards= ' --binname %s  --sp WW_sm --sp WZ_sm --xp QCD --sp SM.* '%(binNamecards) #, '--xp QCD ' if 'top' in pR else '') --xp Others --xp .*quad.*  --sp WW_sm --sp WZ_sm
+                        else:
+                            extraoptscards= ' --binname %s  --sp WW_sm --sp WZ_sm --xp QCD --sp %s '%(binNamecards, 'tt' if 'top' in pR else 'WJets')
                         #if "wjCR_hi" in pR:  extraoptscards+= "  --xp Others"
                         if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
                         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
@@ -352,6 +355,7 @@ if __name__ == '__main__':
     parser.add_option('--sel',dest='sel', action='append', default=[], help='make plots with wjCR/wjCR_lo/wjCR_hi/inclB/topCR_oneb/topCR_twobsig/sb_lo/sb_hi')
     parser.add_option('--dCF',dest='dCF', action='store_true', default=False , help='cutflow with MC & plot shapes w/o uncert')
     parser.add_option('--fCR',dest='fCR', action='store_true', default=False , help='fit to data in the CR')
+    parser.add_option('--fCRwC',dest='fCRwcomb', action='store_true', default=False , help='prepare datacards to fit using combine, basically redefining signal')
     parser.add_option('--wjD',dest='wjD', type='string', default="2023-12-19", help='date to pick WJ workspace from')
     parser.add_option('--WC',dest='WC', type='string' , default=[], action="append", help='consider terms in EFT Lag. corresponding to this aTGC operator tunred on c3w/cb/cw (for now relevant to make datacards)')
     parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/%s/%s/www/VVsemilep/"%(os.environ['USER'][0],os.environ['USER']),help='save plots here')
@@ -369,7 +373,7 @@ if __name__ == '__main__':
         date = opts.date
     if opts.results:
         print ('will make {here} {pt} for {bin}' .format(here=opts.doWhat,bin=opts.finalState,pt=(opts.plotvar if 'plots' in opts.doWhat else '')))
-        makeResults(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.sel,opts.postfix,opts.plotvar,opts.dCF,opts.WJest,opts.fCR,opts.WC,opts.fitvar,opts.acP,opts.acC,opts.wjD)
+        makeResults(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.doWhat,opts.applylepSFs,opts.blinded,opts.sel,opts.postfix,opts.plotvar,opts.dCF,opts.WJest,opts.fCR,opts.fCRwcomb,opts.WC,opts.fitvar,opts.acP,opts.acC,opts.wjD)
     if opts.alpha:
         alphaRatio(opts.year,opts.nLep,opts.lepflav,opts.finalState,opts.applylepSFs,opts.postfix,opts.plotvar,opts.WJest)
     if opts.simple:

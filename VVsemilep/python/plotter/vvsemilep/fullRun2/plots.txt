@@ -3,9 +3,9 @@
 #########################vvsemilep vars 
 debugsel       : mWV_dumy : 36,950,4550  ; XTitle="mWV"
 
-mWV            	 	  : mWV : [950,1050,1150,1250,1350,1500,1700,1900,2300,2700,4500]  ; XTitle="m_{WV} (GeV)",  MoreY=1.5, IncludeOverflows=True
-mWV_logy            	  : mWV : [950,1050,1150,1250,1350,1500,1700,1900,2300,2700,4500]  ; XTitle="m_{WV} (GeV)",  IncludeOverflows=True, MoreY=10, Logy,
-FatJet1_pt                : Selak8Jet1_pt  : [200,250,300,350,400,450,500,550,600,700,800,900,1000,2000]; XTitle="p_{T}^{jet} (GeV)",MoreY=2,MaxDigi, IncludeOverflows=True
+mWV            	 	  : mWV : [950,1050,1150,1250,1350,1500,1700,1900,2300,2700,4500]  ; XTitle="m_{WV} (GeV)",  MoreY=1.5 #, IncludeOverflows=True
+mWV_logy            	  : mWV : [950,1050,1150,1250,1350,1500,1700,1900,2300,2700,4500]  ; XTitle="m_{WV} (GeV)",  IncludeOverflows=True, MoreY=10, Logy
+FatJet1_pt                : Selak8Jet1_pt  : [200,250,300,350,400,450,500,550,600,700,800,900,1000,2000]; XTitle="p_{T}^{jet} (GeV)",MoreY=2,MaxDigi #, IncludeOverflows=True
 FatJet1_pt_logy           : Selak8Jet1_pt  : [200,250,300,350,400,450,500,550,600,700,800,900,1000,2000]; XTitle="p_{T}^{jet} (GeV)", Logy, MoreY=20 ,MaxDigi, IncludeOverflows=True
 
 

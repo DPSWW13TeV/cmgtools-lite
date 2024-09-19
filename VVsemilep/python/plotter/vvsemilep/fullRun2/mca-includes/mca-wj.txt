@@ -1,6 +1,6 @@
 ##taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py
 WJets : WJetsToLNu_HT70to100     : 1271*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets" ,years="2018"
-WJets : WJetsToLNu_HT70to100_part0 +  WJetsToLNu_HT70To100_part1     : 1271*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets" ,years="2017"
+WJets : WJetsToLNu_HT70to100_part0 +  WJetsToLNu_HT70to100_part1     : 1271*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets" ,years="2017"
 WJets : WJetsToLNu_HT100to200    : 1253*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2018"
 WJets : WJetsToLNu_HT100to200_part0+WJetsToLNu_HT100to200_part1    : 1253*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2017"
 WJets : WJetsToLNu_HT200to400    : 335.9*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets" ,years="2018"

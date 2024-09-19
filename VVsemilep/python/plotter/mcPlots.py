@@ -396,7 +396,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
             total.GetXaxis().SetTitleOffset(999) ## in outer space
             total.GetYaxis().SetTitleSize(0.058)
             total.GetYaxis().SetTitleOffset(0.75 if doWide else 1.48)
-            total.GetYaxis().SetLabelSize(0.04)
+            total.GetYaxis().SetLabelSize(0.038)
             total.GetYaxis().SetLabelOffset(0.007)
             # then we can overwrite total with background
             numkey = 'signal'
@@ -476,7 +476,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     unity.GetXaxis().SetTitleSize(0.12)
     unity.GetXaxis().SetTitleOffset(1.0)
     unity.GetXaxis().SetLabelFont(42)
-    unity.GetXaxis().SetLabelSize(0.1)
+    unity.GetXaxis().SetLabelSize(0.105)
     unity.GetXaxis().SetLabelOffset(0.015)
     unity.GetYaxis().SetNdivisions(yndiv)
     unity.GetYaxis().SetTitleFont(42)
@@ -484,7 +484,7 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     offset = 0.32 if doWide else 0.62
     unity.GetYaxis().SetTitleOffset(offset)
     unity.GetYaxis().SetLabelFont(42)
-    unity.GetYaxis().SetLabelSize(0.11)
+    unity.GetYaxis().SetLabelSize(0.1)
     unity.GetYaxis().SetLabelOffset(0.01)
     unity.GetYaxis().SetDecimals(True) 
     unity.GetYaxis().SetTitle(ylabel)
@@ -492,14 +492,14 @@ def doRatioHists(pspec,pmap,total,maxRange,fixRange=False,fitRatio=None,errorsOn
     total.GetXaxis().SetTitleOffset(999) ## in outer space
     total.GetYaxis().SetTitleSize(0.058)
     total.GetYaxis().SetTitleOffset(0.75 if doWide else 1.48)
-    total.GetYaxis().SetLabelSize(0.04)
+    total.GetYaxis().SetLabelSize(0.038)
     total.GetYaxis().SetLabelOffset(0.007)
     binlabels = pspec.getOption("xBinLabels","")
     if binlabels != "" and len(binlabels.split(",")) == unity.GetNbinsX():
         blist = binlabels.split(",")
         for i in range(1,unity.GetNbinsX()+1): 
             unity.GetXaxis().SetBinLabel(i,blist[i-1]) 
-        unity.GetXaxis().SetLabelSize(0.15*(textSize/0.035))
+        unity.GetXaxis().SetLabelSize(0.145*(textSize/0.035))
     #ratio.SetMarkerSize(0.7*ratio.GetMarkerSize()) # no it is confusing
     binlabels = pspec.getOption("xBinLabels","")
     if binlabels != "" and len(binlabels.split(",")) == unity.GetNbinsX():
@@ -860,7 +860,7 @@ class PlotMaker:
                     blist = binlabels.split(",")
                     for i in range(1,total.GetNbinsX()+1): 
                         total.GetXaxis().SetBinLabel(i,blist[i-1]) 
-                        total.GetYaxis().SetLabelSize(0.04)
+                        total.GetYaxis().SetLabelSize(0.038)
                         if pspec.hasOption('MaxDigi'): 
                             total.GetXaxis().SetMaxDigits(2);##am
                 if not self._options.emptyStack and stack.GetNhists() == 0:
@@ -880,13 +880,13 @@ class PlotMaker:
                 total.GetXaxis().SetTitleSize(0.045)
                 total.GetXaxis().SetTitleOffset(1.1)
                 total.GetXaxis().SetLabelFont(42)
-                total.GetXaxis().SetLabelSize(0.04)
+                total.GetXaxis().SetLabelSize(0.038)
                 total.GetXaxis().SetLabelOffset(0.007)
                 total.GetYaxis().SetTitleFont(42)
                 total.GetYaxis().SetTitleSize(0.045)
                 total.GetYaxis().SetTitleOffset(0.9 if doWide else 2.0)
                 total.GetYaxis().SetLabelFont(42)
-                total.GetYaxis().SetLabelSize(0.04)
+                total.GetYaxis().SetLabelSize(0.038)
                 total.GetYaxis().SetLabelOffset(0.007)
                 total.GetYaxis().SetTitle(pspec.getOption('YTitle',ytitle))
                 total.GetXaxis().SetTitle(pspec.getOption('XTitle',outputName))

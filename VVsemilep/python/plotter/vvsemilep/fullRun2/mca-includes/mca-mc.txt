@@ -59,7 +59,7 @@ Others : ZZTo2Q2L_part2+ZZTo2Q2L_part1+ZZTo2Q2L_part0	: xsec : 1 ; FillColor=ROO
 Others : ZZTo2Q2L_part1+ZZTo2Q2L_part0	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others" ,years="2017"
 
 
-QCD : QCD_Pt15to20_EMEnriched   :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt15to20_EMEnriched   :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
 QCD : QCD_Pt20to30_EMEnriched   :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt30to50_EMEnriched   :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt50to80_EMEnriched   :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
@@ -67,50 +67,32 @@ QCD : QCD_Pt80to120_EMEnriched  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#
 QCD : QCD_Pt120to170_EMEnriched :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt170to300_EMEnriched :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt300toInf_EMEnriched :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+
+
+QCD : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
 QCD : QCD_Pt20to30_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
 QCD : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt80to120_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt15to20_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt170to250_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt20to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt250toInf_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
+QCD : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
+QCD : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
+QCD : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
+QCD : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
+
+QCD : QCD_Pt15to20_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
+QCD : QCD_Pt20to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
+QCD : QCD_Pt15to30_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2017"
 QCD : QCD_Pt30to80_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt80to170_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt170to250_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt250toInf_bcToE  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 
 
 
 
-
-##QCD : QCD_Pt15to30_bcToE  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt30to80_bcToE  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt80to170_bcToE  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt170to250_bcToE  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt250toInf_bcToE  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-
-##QCD : QCD_Pt20to30_EMEnriched  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt30to50_EMEnriched  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt50to80_EMEnriched  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt80to120_EMEnriched  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt120to170_EMEnriched  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt170to300_EMEnriched  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt120to170_EMEnriched  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-
-##QCD : QCD_Pt300toInf_EMEnriched  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Mu15  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt20to30_Mu5  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt50to80_Mu5  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt80to120_Mu5  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt120to170_Mu5  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
-##QCD : QCD_Pt170to300_Mu5  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
 
 
 #taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py

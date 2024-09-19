@@ -128,8 +128,8 @@ def smoothBFlav(jetpt,ptmin,ptmax,year, subera,scale_loose=1.0):
     x = min(max(0.0, jetpt - ptmin)/(ptmax-ptmin), 1.0)
     return x*wploose[year-2016][subera]*scale_loose + (1-x)*wpmedium[year-2016][subera]
 
-
-jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] + ['jer']
+#, "HEMIssue"
+jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year" ]] + ['jer']
 #jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] 
 
 
@@ -214,19 +214,19 @@ rms_val = lambda : npdf_rms()
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import createJMECorrector
 
 
-jetmetUncertainties2016APVAll = createJMECorrector(dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
-jetmetUncertainties2016All = createJMECorrector(dataYear='UL2016', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
-jetmetUncertainties2017All = createJMECorrector(dataYear='UL2017', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
+jetmetUncertainties2016APVAll = createJMECorrector(dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
+jetmetUncertainties2016All = createJMECorrector(dataYear='UL2016', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
+jetmetUncertainties2017All = createJMECorrector(dataYear='UL2017', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
 jetmetUncertainties2018All = createJMECorrector(dataYear='UL2018', jesUncert="Merged", splitJER=False, applyHEMfix=True)
 
-jetmetUncertainties2016APVTotal = createJMECorrector(dataYear='UL2016_preVFP', jesUncert="Total", applyHEMfix=True)
-jetmetUncertainties2016Total = createJMECorrector(dataYear='UL2016', jesUncert="Total", applyHEMfix=True)
-jetmetUncertainties2017Total = createJMECorrector(dataYear='UL2017', jesUncert="Total", applyHEMfix=True)
-jetmetUncertainties2018Total = createJMECorrector(dataYear='UL2018', jesUncert="Total", applyHEMfix=True)
+jetmetUncertainties2016APVTotal = createJMECorrector(dataYear='UL2016_preVFP', jesUncert="Total", applyHEMfix=False)
+jetmetUncertainties2016Total = createJMECorrector(dataYear='UL2016', jesUncert="Total", applyHEMfix=False)
+jetmetUncertainties2017Total = createJMECorrector(dataYear='UL2017', jesUncert="Total", applyHEMfix=False)
+jetmetUncertainties2018Total = createJMECorrector(dataYear='UL2018', jesUncert="Total", applyHEMfix=False)
 
-fatjetmetUncertainties2016APVAll = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
-fatjetmetUncertainties2016All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
-fatjetmetUncertainties2017All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
+fatjetmetUncertainties2016APVAll = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
+fatjetmetUncertainties2016All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
+fatjetmetUncertainties2017All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
 fatjetmetUncertainties2018All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2018', jesUncert="Merged", splitJER=False, applyHEMfix=True)
 
 fatjetmetUncertainties2016APVTotal = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Total", applyHEMfix=True)

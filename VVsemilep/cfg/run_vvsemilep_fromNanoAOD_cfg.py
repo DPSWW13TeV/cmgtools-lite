@@ -67,7 +67,8 @@ theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         #        "VH.*"
-        "QCD_Pt120to170_EMEnriched"
+        "QCD_Pt15to20_EMEnriched"
+        #"QCD_Pt.*_Mu5",
         #        ".*aTGC.*"
         #"QCD_Mu15","QCD_Pt20to30_Mu5","QCD_Pt30to50_Mu5",
         #"QCD_Pt20to30_EMEnriched","QCD_Pt-15to20_EMEnriched",

@@ -57,13 +57,13 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All --de .*Run.* " 
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All -d WplusH " #--de .*Run.* " 
 	;;
 
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root --de .*Run.*  "
+	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root -d WplusH " #--de .*Run.*  "
 	;;
 
 fjtagged)
@@ -78,7 +78,7 @@ fjtaggeddata)
 
 goodfj)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --de .*Run.* "
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root -d WplusH " #--de .*Run.* "
 	;;
 
 goodfjdata)
