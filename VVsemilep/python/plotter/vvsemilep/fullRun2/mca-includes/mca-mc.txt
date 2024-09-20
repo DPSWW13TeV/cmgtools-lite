@@ -76,7 +76,7 @@ QCD : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"
 QCD : QCD_Pt80to120_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt120to170_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt170to300_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
+QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"  ##for 2017 only single event passes presel, hence dropped
 QCD : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
 QCD : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"
 QCD : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2018"

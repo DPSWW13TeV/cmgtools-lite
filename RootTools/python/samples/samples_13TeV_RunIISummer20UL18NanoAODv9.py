@@ -76,7 +76,11 @@ QCD_bcToE = [
 ]
 
 # # ====== W + Jets ======
-
+#s://github.com/WMass/WRemnants/blob/main/utilities/common.py#L14-L21
+WMJtomunu_PM  = kreator.makeMCComponent("WMJtomunu_PM","/WminusJetsToMuNu_H2ErratumFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM", "CMS", ".*root", 8703.87)
+WPJtomunu_PM  = kreator.makeMCComponent("WPJtomunu_PM","/WplusJetsToMuNu_H2ErratumFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM", "CMS", ".*root",  11765.9)
+WMJtotaunu_PM = kreator.makeMCComponent("WMJtotaunu_PM","/WminusJetsToTauNu_TauToMu_H2ErratumFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM", "CMS", ".*root",  8703.87*0.1739)
+WPJtotaunu_PM = kreator.makeMCComponent("WPJtotaunu_PM","/WplusJetsToTauNu_TauToMu_H2ErratumFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM", "CMS", ".*root",   11765.9*0.1739)
 
 WJetsToLNu_0J = kreator.makeMCComponent("WJetsToLNu_0J","/WJetsToLNu_0J_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 53330,fracNegWeights=9.929e-02)
 WJetsToLNu_1J = kreator.makeMCComponent("WJetsToLNu_1J","/WJetsToLNu_1J_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM", "CMS", ".*root", 8875,fracNegWeights=2.579e-01)
@@ -123,6 +127,10 @@ WJetsToLNuHT = [
 ]
 
 Ws = [ 
+    WPJtotaunu_PM,
+    WMJtotaunu_PM,
+    WPJtomunu_PM,
+    WMJtomunu_PM,
     WJetsToLNu_0J,
     WJetsToLNu_1J,
     WJetsToLNu_2J,

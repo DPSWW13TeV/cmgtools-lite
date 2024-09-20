@@ -29,23 +29,21 @@ ZZTo2Q2L              = kreator.makeMCComponent("ZZTo2Q2L", "/ZZTo2Q2L_mllmin4p0
 WZTo1L1Nu2Q           = kreator.makeMCComponent("WZTo1L1Nu2Q","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
 WWTo1L1Nu2Q           = kreator.makeMCComponent("WWTo1L1Nu2Q","/WWTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM", "CMS", ".*root",5.090e+01,fracNegWeights=2.011e-01)
 
-
-
 DiBosons = [ZZTo2Q2L,
             WZTo1L1Nu2Q,
             WWTo1L1Nu2Q
-            WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
-            WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
-            WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800,
-            WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf,
-            WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800,
-            WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf,
-            WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600,
-            WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800,
-            WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf,
-            WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600,
-            WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800,
-            WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf,
+#            WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
+#            WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
+#            WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800,
+#            WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf,
+#            WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800,
+#            WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf,
+#            WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600,
+#            WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800,
+#            WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf,
+#            WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600,
+#            WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800,
+#            WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf,
 ]
 
 
@@ -72,8 +70,9 @@ WJetsToLNu_HT600to800     = kreator.makeMCComponent("WJetsToLNu_HT600to800",  "/
 WJetsToLNu_HT800to1200    = kreator.makeMCComponent("WJetsToLNu_HT800to1200", "/WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM", "CMS", ".*root",4.936*1.21) 
 WJetsToLNu_HT1200to2500   = kreator.makeMCComponent("WJetsToLNu_HT1200to2500","/WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM", "CMS", ".*root",1.156*1.21) 
 WJetsToLNu_HT2500toInf    = kreator.makeMCComponent("WJetsToLNu_HT2500toInf", "/WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root",0.0263*1.21) 
+WJetsToLNu_LO = kreator.makeMCComponent("WJetsToLNu_LO","/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root", 3* 20508.9) # using jme nano...
 
-WJetsToLNuHT = [WJetsToLNu_NLO,
+WJetsToLNuHT = [WJetsToLNu_NLO,WJetsToLNu_LO,
                 WJetsToLNu_Sherpa,
     WJetsToLNu_HT70To100,
     WJetsToLNu_HT100to200,
@@ -89,22 +88,20 @@ WJetsToLNuHT = [WJetsToLNu_NLO,
 
 
 # # QCD enriched (cross sections form genXSecAna)
-QCD_Mu15 = kreator.makeMCComponent("QCD_Mu15", "/QCD_Pt-20_MuEnrichedPt15_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM", "CMS", ".*root", 237800) # https://cms-pdmv.cern.ch/mcm/requests?prepid=HIG-RunIISummer20UL16GENAPV-00058
-# QCD_Pt15to20_Mu5    = kreator.makeMCComponent("QCD_Pt15to20_Mu5"    , "/QCD_Pt-15to20_MuEnrichedPt5_TuneCP5_13TeV_pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16-v1/NANOAODSIM", "CMS" , ".*root", 2.785e+06)
-
-QCD_Pt20to30_Mu5    = kreator.makeMCComponent("QCD_Pt20to30_Mu5"    , "/QCD_Pt-20To30_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS" , ".*root", 2.49e+06)   
-QCD_Pt30to50_Mu5    = kreator.makeMCComponent("QCD_Pt30to50_Mu5"    , "/QCD_Pt-30To50_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root", 1.364e+06)     
-QCD_Pt50to80_Mu5    = kreator.makeMCComponent("QCD_Pt50to80_Mu5"    , "/QCD_Pt-50To80_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM" , "CMS" , ".*root", 377400)
-QCD_Pt80to120_Mu5   = kreator.makeMCComponent("QCD_Pt80to120_Mu5"   , "/QCD_Pt-80To120_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS" , ".*root", 88350)     
-QCD_Pt120to170_Mu5  = kreator.makeMCComponent("QCD_Pt120to170_Mu5"  , "/QCD_Pt-120To170_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS" , ".*root", 21250)    
-QCD_Pt170to300_Mu5  = kreator.makeMCComponent("QCD_Pt170to300_Mu5"  , "/QCD_Pt-170To300_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root", 6969) 
-QCD_Pt300to470_Mu5  = kreator.makeMCComponent("QCD_Pt300to470_Mu5"  , "/QCD_Pt-300To470_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS" , ".*root", 619.5)
-QCD_Pt470to600_Mu5  = kreator.makeMCComponent("QCD_Pt470to600_Mu5"  , "/QCD_Pt-470To600_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS" , ".*root", 58.9)
-QCD_Pt600to800_Mu5  = kreator.makeMCComponent("QCD_Pt600to800_Mu5", "/QCD_Pt-600To800_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root", 18.36)
+QCD_Mu15            = kreator.makeMCComponent("QCD_Mu15"            , "/QCD_Pt-20_MuEnrichedPt15_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"      , "CMS" , ".*root", 237800) 
+QCD_Pt20to30_Mu5    = kreator.makeMCComponent("QCD_Pt20to30_Mu5"    , "/QCD_Pt-20To30_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"   , "CMS" , ".*root", 2.49e+06)   
+QCD_Pt30to50_Mu5    = kreator.makeMCComponent("QCD_Pt30to50_Mu5"    , "/QCD_Pt-30To50_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"   , "CMS" , ".*root", 1.364e+06)     
+QCD_Pt50to80_Mu5    = kreator.makeMCComponent("QCD_Pt50to80_Mu5"    , "/QCD_Pt-50To80_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"   , "CMS" , ".*root", 377400)
+QCD_Pt80to120_Mu5   = kreator.makeMCComponent("QCD_Pt80to120_Mu5"   , "/QCD_Pt-80To120_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"  , "CMS" , ".*root", 88350)     
+QCD_Pt120to170_Mu5  = kreator.makeMCComponent("QCD_Pt120to170_Mu5"  , "/QCD_Pt-120To170_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM" , "CMS" , ".*root", 21250)    
+QCD_Pt170to300_Mu5  = kreator.makeMCComponent("QCD_Pt170to300_Mu5"  , "/QCD_Pt-170To300_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM" , "CMS" , ".*root", 6969) 
+QCD_Pt300to470_Mu5  = kreator.makeMCComponent("QCD_Pt300to470_Mu5"  , "/QCD_Pt-300To470_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM" , "CMS" , ".*root", 619.5)
+QCD_Pt470to600_Mu5  = kreator.makeMCComponent("QCD_Pt470to600_Mu5"  , "/QCD_Pt-470To600_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM" , "CMS" , ".*root", 58.9)
+QCD_Pt600to800_Mu5  = kreator.makeMCComponent("QCD_Pt600to800_Mu5"  , "/QCD_Pt-600To800_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM" , "CMS" , ".*root", 18.36)
 QCD_Pt800to1000_Mu5 = kreator.makeMCComponent("QCD_Pt800to1000_Mu5" , "/QCD_Pt-800To1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS" , ".*root", 3.253)
-QCD_Pt1000toInf_Mu5 = kreator.makeMCComponent("QCD_Pt1000toInf_Mu5" , "/QCD_Pt-1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIMM", "CMS" , ".*root", 1.075)
+QCD_Pt1000toInf_Mu5 = kreator.makeMCComponent("QCD_Pt1000toInf_Mu5" , "/QCD_Pt-1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIMM"    , "CMS" , ".*root", 1.075)
 
-QCD_Mu5s = [
+QCD_Mu5s = [QCD_Mu15,
     QCD_Pt20to30_Mu5,
     QCD_Pt30to50_Mu5,
     QCD_Pt50to80_Mu5,
@@ -113,19 +110,16 @@ QCD_Mu5s = [
     QCD_Pt170to300_Mu5,
     QCD_Pt300to470_Mu5,QCD_Pt470to600_Mu5,QCD_Pt600to800_Mu5,QCD_Pt800to1000_Mu5,QCD_Pt1000toInf_Mu5
  ]
-QCD_Mus = QCD_Mu5s #  [ QCD_Mu15 ] + 
+QCD_Mus = QCD_Mu5s 
 
 # # QCD EMEnr  (cross sections form genXSecAna)
 QCD_Pt15to20_EMEnriched   = kreator.makeMCComponent("QCD_Pt15to20_EMEnriched"  ,"/QCD_Pt-15to20_EMEnriched_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"  , "CMS", ".*root",  1.33e+06)
 QCD_Pt20to30_EMEnriched   = kreator.makeMCComponent("QCD_Pt20to30_EMEnriched"  ,"/QCD_Pt-20to30_EMEnriched_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"  , "CMS", ".*root", 4.928e+06)
-
-
-
 QCD_Pt30to50_EMEnriched   = kreator.makeMCComponent("QCD_Pt30to50_EMEnriched"  ,"/QCD_Pt-30to50_EMEnriched_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"  , "CMS", ".*root",  6.41e+06)
-QCD_Pt50to80_EMEnriched   = kreator.makeMCComponent("QCD_Pt50to80_EMEnriched", "/QCD_Pt-50to80_EMEnriched_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root",  1.986e+06)
+QCD_Pt50to80_EMEnriched   = kreator.makeMCComponent("QCD_Pt50to80_EMEnriched", "/QCD_Pt-50to80_EMEnriched_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"   , "CMS", ".*root",  1.986e+06)
 QCD_Pt80to120_EMEnriched  = kreator.makeMCComponent("QCD_Pt80to120_EMEnriched" ,"/QCD_Pt-80to120_EMEnriched_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM" , "CMS", ".*root",  370900)
-QCD_Pt120to170_EMEnriched = kreator.makeMCComponent("QCD_Pt120to170_EMEnriched","/QCD_Pt-120to170_EMEnriched_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root",  66760) # https://cms-pdmv.cern.ch/mcm/requests?prepid=HIG-RunIISummer20UL16GENAPV-00050
-QCD_Pt170to300_EMEnriched = kreator.makeMCComponent("QCD_Pt170to300_EMEnriched","/QCD_Pt-170to300_EMEnriched_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root",  16430) # https://cms-pdmv.cern.ch/mcm/requests?prepid=HIG-RunIISummer20UL16GENAPV-00052
+QCD_Pt120to170_EMEnriched = kreator.makeMCComponent("QCD_Pt120to170_EMEnriched","/QCD_Pt-120to170_EMEnriched_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root",  66760) 
+QCD_Pt170to300_EMEnriched = kreator.makeMCComponent("QCD_Pt170to300_EMEnriched","/QCD_Pt-170to300_EMEnriched_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root",  16430) 
 QCD_Pt300toInf_EMEnriched = kreator.makeMCComponent("QCD_Pt300toInf_EMEnriched","/QCD_Pt-300toInf_EMEnriched_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root",  1101) #  https://cms-pdmv.cern.ch/mcm/requests?prepid=HIG-RunIISummer20UL16GENAPV-00054
 
 QCD_EMs = [
@@ -156,15 +150,7 @@ QCD_bcToE = [
 ]
 
 # # ====== W + Jets ======
-WJetsToLNu_LO = kreator.makeMCComponent("WJetsToLNu_LO","/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM", "CMS", ".*root", 3* 20508.9) # using jme nano...
                                                           
-
-
-# # ====== TT INCLUSIVE =====
-
-# # TTbar cross section: NNLO, https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO (172.5)
-# TTJets = kreator.makeMCComponent("TTJets", "/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18NanoAODv4-Nano14Dec2018_102X_upgrade2018_realistic_v16_ext1-v1/NANOAODSIM", "CMS", ".*root", 831.76, fracNegWeights=0.319)
-
 
 TTSemi_pow = kreator.makeMCComponent("TTSemi_pow", "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM", "CMS", ".*root", 831.76*2*(3*0.108)*(1-3*0.108) )
 

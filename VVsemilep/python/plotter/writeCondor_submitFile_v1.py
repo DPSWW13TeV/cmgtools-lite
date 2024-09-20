@@ -3,6 +3,7 @@ from plots_VVsemilep import *
 
 allvars= theWVultimateset_log +theWVultimateset
 doWhat=sys.argv[1] #cards or plots
+year=sys.argv[2]
 pf=""
 
 allfavs=["mu","el","onelep"]

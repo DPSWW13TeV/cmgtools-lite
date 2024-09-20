@@ -46,10 +46,13 @@ condor)
 	;;
 esac
 
+
+
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --de .*Run.* " 
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -d QCD_Pt120to170_EMEnriched -d QCD_Pt15to20_EMEnriched -d QCD_Pt30to50_Mu5 -d QCD_Pt1000toInf_Mu5 -d QCD_Pt50to80_Mu5 -d QCD_Pt80to120_Mu5 -d QCD_Pt470to600_Mu5 -d QCD_Pt800to1000_Mu5 -d QCD_Pt120to170_Mu5 -d QCD_Pt600to800_Mu5 -d QCD_Pt170to300_Mu5 -d QCD_Pt20to30_Mu5 -d QCD_Pt15to20_Mu5 -d QCD_Pt300to470_Mu5" #--de .*Run.* "
+
 	;;
 
 recldata)
@@ -57,13 +60,13 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All -d WplusH " #--de .*Run.* " 
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All -d QCD_Pt120to170_EMEnriched -d QCD_Pt15to20_EMEnriched -d QCD_Pt30to50_Mu5 -d QCD_Pt1000toInf_Mu5 -d QCD_Pt50to80_Mu5 -d QCD_Pt80to120_Mu5 -d QCD_Pt470to600_Mu5 -d QCD_Pt800to1000_Mu5 -d QCD_Pt120to170_Mu5 -d QCD_Pt600to800_Mu5 -d QCD_Pt170to300_Mu5 -d QCD_Pt20to30_Mu5 -d QCD_Pt15to20_Mu5 -d QCD_Pt300to470_Mu5 " #--de .*Run.* " 
 	;;
 
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root -d WplusH " #--de .*Run.*  "
+	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root -d QCD_Pt120to170_EMEnriched -d QCD_Pt15to20_EMEnriched -d QCD_Pt30to50_Mu5 -d QCD_Pt1000toInf_Mu5 -d QCD_Pt50to80_Mu5 -d QCD_Pt80to120_Mu5 -d QCD_Pt470to600_Mu5 -d QCD_Pt800to1000_Mu5 -d QCD_Pt120to170_Mu5 -d QCD_Pt600to800_Mu5 -d QCD_Pt170to300_Mu5 -d QCD_Pt20to30_Mu5 -d QCD_Pt15to20_Mu5 -d QCD_Pt300to470_Mu5 " #--de .*Run.*  "
 	;;
 
 fjtagged)
@@ -78,7 +81,7 @@ fjtaggeddata)
 
 goodfj)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root -d WplusH " #--de .*Run.* "
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --de .*Run.* "
 	;;
 
 goodfjdata)
@@ -88,7 +91,7 @@ goodfjdata)
 
 wjet)
 	echo "wjet"
-	basecmd="${BCORE}/0_wjest_v5  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --de .*Run.* "  
+	basecmd="${BCORE}/0_wjest_v5  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root -d QCD_Pt800to1000_Mu5 " #--de .*Run.* "  
 
 	;;
 
