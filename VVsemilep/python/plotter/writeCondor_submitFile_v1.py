@@ -3,7 +3,6 @@ from plots_VVsemilep import *
 
 allvars= theWVultimateset_log +theWVultimateset
 doWhat=sys.argv[1] #cards or plots
-year=sys.argv[2]
 pf=""
 
 allfavs=["mu","el","onelep"]
@@ -25,7 +24,7 @@ lepsel={'topCR' : [allfavs],
         'wjCR_lo'  : [ll,fitvar_bkg],
         'wjCR_hi'  : [ll,fitvar_bkg],
 }
-ops=['cw'] #,'c3w','cb']#,'cb','cHDD','clu','cW']
+ops=['cb','c3w'] #,'c3w','cb']#,'cb','cHDD','clu','cW']
 
 
 fName='submitFile_%s.condor'%doWhat

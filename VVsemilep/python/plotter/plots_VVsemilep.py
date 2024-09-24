@@ -151,6 +151,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep.txt'  if not doWJ else 'vvsemilep/fullRun2/mca-vvsemilep_wj.txt'
     processes    = ['WW_sm','WZ_sm','tt','WJets','singletop','data','Others','QCD'] #'data','WZ_sm_lin_quad_cW','WW_sm_lin_quad_cW','WW_quad_cW','WZ_quad_cW','WW_quad_cHDD','WZ_quad_cHDD']#
+    procs_wj     = ['NLO_WJ','WJets','WJetsToLNu_012JetsNLO_34JetsLO','WJ_PM','WJetsToLNu_012J','WJ_PTB']
     vetoPlots    = ['WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cb','WZ_quad_cb','WZ_cb']
     morePs       = ['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
     if 'all' in WCs: WCs=['cw','c3w','cb']#,'cW','cHDD','clu']
@@ -190,7 +191,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         signal = if3(pR == 'sig','--sp .*c.* ', if3('topCR' in pR, ' --sp tt ', ' --sp WJets'))
         for i in processes:
             #x = re.search("^W.*_c*", i) #or re.search("^W.*_sm*", i)  #FIXME this won't scale the EFT-based SM yields if we take the SM components from aTGC samples!!
-            x = re.search(".*cw.*", i) or re.search(".*cb.*", i) or re.search(".*c3w.*", i)
+            x = re.search(".*cw.*", i) or re.search(".*cb.*", i) or re.search(".*c3w.*", i) or re.search("^W.*_sm", i) ##this assumes we are taking SM yields from the eft samples  
             if x :
                 print('gonna scale',i,x)
                 if 'sig' in pR :

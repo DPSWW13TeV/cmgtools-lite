@@ -51,7 +51,7 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -d QCD_Pt120to170_EMEnriched -d QCD_Pt15to20_EMEnriched -d QCD_Pt30to50_Mu5 -d QCD_Pt1000toInf_Mu5 -d QCD_Pt50to80_Mu5 -d QCD_Pt80to120_Mu5 -d QCD_Pt470to600_Mu5 -d QCD_Pt800to1000_Mu5 -d QCD_Pt120to170_Mu5 -d QCD_Pt600to800_Mu5 -d QCD_Pt170to300_Mu5 -d QCD_Pt20to30_Mu5 -d QCD_Pt15to20_Mu5 -d QCD_Pt300to470_Mu5" #--de .*Run.* "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence  " #--dm WJetsToLNu_012JetsNLO.* --dm WJetsToLNu_Pt.* --dm WJetsToLNu_.*J.* --dm W.*_PM " #--de .*Run.* "
 
 	;;
 

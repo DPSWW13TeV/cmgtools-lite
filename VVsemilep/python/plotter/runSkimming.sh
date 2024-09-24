@@ -5,7 +5,7 @@ skimmedTrees='NanoTrees_v9_vvsemilep_skimmed'
 Friends_recl_unskimmed='1_recl'
 
 [ ! -d "$skimmedTrees" ] && mkdir -p "$skimmedTrees"
-years=("2017") # "2018") # "2016")
+years=("2018") # "2018") # "2016")
 frnds=("4_scalefactors" "0_wjest_v5" "1_btag_SFs_fixedWP_v1" "3_ak8_sdm45" "2_jmeUnc" "2_recl_allvars" ) #"2_toppT_rw")
 
 for yr in "${years[@]}"

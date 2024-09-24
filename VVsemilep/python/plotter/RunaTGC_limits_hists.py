@@ -63,10 +63,10 @@ if __name__ == '__main__':
 
     #year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2024-09-19" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2024-09-23" #datetime.date.today().isoformat() #"2021-12-02" #
     pf_input=""
     pf_output=""
-    for op in ['cw']:#'cb','c3w']: #,'cw',']:
+    for op in ['cb']:#'cb','c3w']: #,'cw',']:
         dC18=combineCards("2018","onelep",op,pf_input,False)
         commandsToRun(dC18,pf_output,plots_odir,op)
         #os.command('mv *%s* %s/'%(dC18.split('.txt')[0],cards_dir))
