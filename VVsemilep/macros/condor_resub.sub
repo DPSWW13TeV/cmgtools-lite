@@ -1,0 +1,63 @@
+Executable = dummy.sh
+use_x509userproxy = true
+Log        = jobs/log_running_$(ProcId)_All.log
+Output     = jobs/log_running_$(ProcId)_All.out
+Error      = jobs/log_running_$(ProcId)_All.error
++JobFlavour = "longlunch"
+getenv = True
+MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"
++AccountingGroup = "group_u_CMST3.all"
+arguments  = $(info)
+queue info from (
+TT_mtt1ktoinf_part0 3
+TT_mtt1ktoinf_part1 0
+TT_mtt1ktoinf_part1 1
+TT_mttp7kto1k_part0 1
+TT_mttp7kto1k_part0 2
+TT_mttp7kto1k_part1 0
+TT_mttp7kto1k_part1 1
+TT_mttp7kto1k_part1 2
+WJetsToLNu_HT1200to2500 0
+WJetsToLNu_HT1200to2500 1
+WJetsToLNu_HT1200to2500 2
+WJetsToLNu_HT200to400_part0 0
+WJetsToLNu_HT200to400_part0 1
+WJetsToLNu_HT200to400_part0 2
+WJetsToLNu_HT200to400_part1 0
+WJetsToLNu_HT200to400_part1 1
+WJetsToLNu_HT200to400_part1 2
+WJetsToLNu_HT200to400_part2 0
+WJetsToLNu_HT200to400_part2 1
+WJetsToLNu_HT400to600 0
+WJetsToLNu_HT400to600 1
+WJetsToLNu_HT400to600 2
+WJetsToLNu_HT400to600 3
+WJetsToLNu_HT600to800 0
+WJetsToLNu_HT600to800 1
+WJetsToLNu_HT600to800 3
+WJetsToLNu_HT800to1200 0
+WJetsToLNu_HT800to1200 1
+WJetsToLNu_HT800to1200 3
+WWTo1L1Nu2Q_part0 0
+WWTo1L1Nu2Q_part0 1
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800 0
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800 1
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf 0
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf 1
+WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf 2
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800 0
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800 1
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf 0
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf 1
+WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf 2
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800 0
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800 1
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf 0
+WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf 1
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf 0
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf 1
+WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf 2
+)
+
+
+

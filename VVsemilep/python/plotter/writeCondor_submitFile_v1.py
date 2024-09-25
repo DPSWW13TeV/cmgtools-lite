@@ -24,7 +24,7 @@ lepsel={'topCR' : [allfavs],
         'wjCR_lo'  : [ll,fitvar_bkg],
         'wjCR_hi'  : [ll,fitvar_bkg],
 }
-ops=['cb','c3w'] #,'c3w','cb']#,'cb','cHDD','clu','cW']
+ops=['cw']#,'c3w'] #,'c3w','cb']#,'cb','cHDD','clu','cW']
 
 
 fName='submitFile_%s.condor'%doWhat
@@ -48,7 +48,7 @@ if 'plots' in doWhat :
    tmp_condor.write('request_memory = 10GB\n')
 tmp_condor.write('queue info from ( \n')
 
-for sel in ["wjCR_lo","wjCR_hi","topCR_incl","sig"]: #,"topCR_lo","topCR_hi"]:
+for sel in ["wjCR_lo","wjCR_hi","topCR_incl"]: #,"sig"]: #,"topCR_lo","topCR_hi"]:
    for cat in ["boosted"]: 
        for yr in ["2018"]: #2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 
