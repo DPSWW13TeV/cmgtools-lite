@@ -50,7 +50,7 @@ tmp_condor.write('queue info from ( \n')
 
 for sel in ["wjCR_lo","wjCR_hi","topCR_incl"]: #,"sig"]: #,"topCR_lo","topCR_hi"]:
    for cat in ["boosted"]: 
-       for yr in ["2018"]: #2016,2017,2018".split(","):
+       for yr in ["2017"]: #2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 
               if 'plots' in  doWhat:
                  for iVar in allvars:

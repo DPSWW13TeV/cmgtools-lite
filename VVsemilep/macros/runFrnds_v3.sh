@@ -20,7 +20,7 @@ echo $runWhat,$year,$runWhere
 ################### following should not be changed
 localTrees='local_dir_NAME/'  
 Trees='NanoTrees_v9_vvsemilep_skimmed/'
-#Trees='NanoTrees_v9_vvsemilep_06012023/'
+
 if [ ${runWhat} == "reclmc" ] ||  [ ${runWhat} == "recldata" ]
 then 
     Trees='NanoTrees_v9_vvsemilep_06012023/'
@@ -60,7 +60,7 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All  --dm WJetsToLNu_012JetsNLO.* --dm WJetsToLNu_Pt.* --dm WJetsToLNu_.*J.* --dm W.*_PM" #--de .*Run.* " 
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All " # --dm WJetsToLNu_012JetsNLO.* --dm WJetsToLNu_Pt.* --dm WJetsToLNu_.*J.* --dm W.*_PM" #--de .*Run.* " 
 	;;
 
 

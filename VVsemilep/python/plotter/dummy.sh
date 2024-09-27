@@ -26,7 +26,7 @@ case ${2} in
     plots)	
 	#ls /eos/user/a/anmehta/www/ || exit 11
 	ls /eos/user/ || exit 11
-	cmd_emore="  --dW plots --pv ${7} "
+	cmd_emore="  --dW plots --pv ${7} " #--fCR "
 	;;
     cards)
 	cmd_emore=" --dW cards --fv ${7} " #--fCRwC"
