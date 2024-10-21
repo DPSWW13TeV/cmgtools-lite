@@ -28,7 +28,8 @@ def combineCards(yr,FS,WC,pf,splittopCR=True,vartop="mWV",varwj="mWV",varsig="mW
     os.system(cmd1)
     dC = open(finalDC, 'a')
     dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
-norm_WJets rateParam *{yr}  WJets 1 [0,5]'''.format(yr=yr))
+norm_WJets_mu_{year} rateParam mu*{yr}  WJets 1 [0,5]
+norm_WJets_el_{year} rateParam el*{yr}  WJets 1 [0,5]'''.format(yr=yr))
     dC.close()
     return finalDC
     return dC
@@ -68,6 +69,6 @@ if __name__ == '__main__':
     pf_output=""
     for op in ['cb']:#'cb','c3w']: #,'cw',']:
         dC18=combineCards("2018","onelep",op,pf_input,False)
-        commandsToRun(dC18,pf_output,plots_odir,op)
+        commandsToRun("dC18",pf_output,plots_odir,op)
         #os.command('mv *%s* %s/'%(dC18.split('.txt')[0],cards_dir))
 

@@ -12,7 +12,7 @@ kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = getHeppyOption("year", "2018")
+year = getHeppyOption("year", "2016APV")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","both")
@@ -66,8 +66,9 @@ DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
-        #        "VH.*"
-        "W.*Jtotaunu_PM","W.*Jtomunu_PM","WJetsToLNu_Pt.*","WJetsToLNu_.*J",
+        "WW.*","WZ.*","ZZ.*",".*aTGC.*"
+#        "VH.*","QCD.*","W.*","T.*","Z.*"
+        #"W.*Jtotaunu_PM","W.*Jtomunu_PM" #,"WJetsToLNu_Pt.*","WJetsToLNu_.*J",
         #        "QCD_Pt300toInf_EMEnriched"
         #        "QCD_Pt300to470_Mu5"
         #        "QCD_Pt15to20_EMEnriched"

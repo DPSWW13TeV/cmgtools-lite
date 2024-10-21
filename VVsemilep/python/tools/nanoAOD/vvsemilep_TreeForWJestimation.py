@@ -152,6 +152,7 @@ class vvsemilep_TreeForWJestimation(Module):
         
         if len(leps) < self.lepMultiplicity: return False
         if len(jets) < self.fjetMultiplicity: return False
+        #print('passed leps and jet sections',len(leps),len(jets))
         self.out.fillBranch('event_presel',event.event)
         for sel in self.selection: 
             if not eval(sel): return False

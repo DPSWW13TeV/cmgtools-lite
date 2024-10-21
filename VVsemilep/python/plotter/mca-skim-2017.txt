@@ -1,3 +1,57 @@
+WPJtotaunu_PM                                  : WPJtotaunu_PM                                                   : xsec 
+WMJtotaunu_PM				       : WMJtotaunu_PM                                                   : xsec 
+WMJtomunu_PM_part0			       : WMJtomunu_PM_part0                                              : xsec 
+WMJtomunu_PM_part1			       : WMJtomunu_PM_part1                                              : xsec 
+WPJtomunu_PM_part0			       : WPJtomunu_PM_part0                                              : xsec 
+WPJtomunu_PM_part1			       : WPJtomunu_PM_part1                                              : xsec 
+WJetsToLNu_012JetsNLO_34JetsLO_part0	       : WJetsToLNu_012JetsNLO_34JetsLO_part0                            : xsec 
+WJetsToLNu_012JetsNLO_34JetsLO_part1	       : WJetsToLNu_012JetsNLO_34JetsLO_part1                            : xsec 
+WJetsToLNu_012JetsNLO_34JetsLO_part2	       : WJetsToLNu_012JetsNLO_34JetsLO_part2                            : xsec 
+WJetsToLNu_012JetsNLO_34JetsLO_part3	       : WJetsToLNu_012JetsNLO_34JetsLO_part3                            : xsec 
+WJetsToLNu_012JetsNLO_34JetsLO_part4	       : WJetsToLNu_012JetsNLO_34JetsLO_part4                            : xsec 
+WJetsToLNu_012JetsNLO_34JetsLO_part5	       : WJetsToLNu_012JetsNLO_34JetsLO_part5                            : xsec 
+WJetsToLNu_012JetsNLO_34JetsLO_part6	       : WJetsToLNu_012JetsNLO_34JetsLO_part6                            : xsec 
+WJetsToLNu_Pt100To250_part0		       : WJetsToLNu_Pt100To250_part0                                     : xsec 
+WJetsToLNu_Pt100To250_part1		       : WJetsToLNu_Pt100To250_part1                                     : xsec 
+WJetsToLNu_Pt100To250_part2		       : WJetsToLNu_Pt100To250_part2                                     : xsec 
+WJetsToLNu_Pt100To250_part3		       : WJetsToLNu_Pt100To250_part3                                     : xsec 
+WJetsToLNu_Pt100To250_part4		       : WJetsToLNu_Pt100To250_part4                                     : xsec 
+WJetsToLNu_Pt100To250_part5		       : WJetsToLNu_Pt100To250_part5                                     : xsec 
+WJetsToLNu_Pt100To250_part6		       : WJetsToLNu_Pt100To250_part6                                     : xsec 
+WJetsToLNu_Pt100To250_part7		       : WJetsToLNu_Pt100To250_part7                                     : xsec 
+WJetsToLNu_Pt100To250_part8		       : WJetsToLNu_Pt100To250_part8                                     : xsec 
+WJetsToLNu_Pt100To250_part9		       : WJetsToLNu_Pt100To250_part9                                     : xsec 
+WJetsToLNu_Pt100To250_part10		       : WJetsToLNu_Pt100To250_part10                                    : xsec 
+WJetsToLNu_Pt100To250_part11		       : WJetsToLNu_Pt100To250_part11                                    : xsec 
+WJetsToLNu_Pt100To250_part12		       : WJetsToLNu_Pt100To250_part12                                    : xsec 
+WJetsToLNu_Pt100To250_part13		       : WJetsToLNu_Pt100To250_part13                                    : xsec 
+WJetsToLNu_Pt100To250_part14		       : WJetsToLNu_Pt100To250_part14                                    : xsec 
+WJetsToLNu_Pt100To250_part15		       : WJetsToLNu_Pt100To250_part15                                    : xsec 
+WJetsToLNu_Pt100To250_part16		       : WJetsToLNu_Pt100To250_part16                                    : xsec 
+WJetsToLNu_Pt100To250_part17		       : WJetsToLNu_Pt100To250_part17                                    : xsec 
+WJetsToLNu_Pt100To250_part18		       : WJetsToLNu_Pt100To250_part18                                    : xsec 
+WJetsToLNu_Pt100To250_part19		       : WJetsToLNu_Pt100To250_part19                                    : xsec 
+WJetsToLNu_Pt100To250_part20		       : WJetsToLNu_Pt100To250_part20                                    : xsec 
+WJetsToLNu_Pt100To250_part21		       : WJetsToLNu_Pt100To250_part21                                    : xsec 
+WJetsToLNu_Pt100To250_part22		       : WJetsToLNu_Pt100To250_part22                                    : xsec 
+WJetsToLNu_Pt100To250_part23		       : WJetsToLNu_Pt100To250_part23                                    : xsec 
+WJetsToLNu_Pt100To250_part24		       : WJetsToLNu_Pt100To250_part24                                    : xsec 
+WJetsToLNu_Pt100To250_part25		       : WJetsToLNu_Pt100To250_part25                                    : xsec 
+WJetsToLNu_Pt250To400_part0		       : WJetsToLNu_Pt250To400_part0                                     : xsec 
+WJetsToLNu_Pt250To400_part1		       : WJetsToLNu_Pt250To400_part1                                     : xsec 
+WJetsToLNu_Pt250To400_part2		       : WJetsToLNu_Pt250To400_part2                                     : xsec 
+WJetsToLNu_Pt250To400_part3		       : WJetsToLNu_Pt250To400_part3                                     : xsec 
+WJetsToLNu_Pt250To400_part4		       : WJetsToLNu_Pt250To400_part4                                     : xsec 
+WJetsToLNu_Pt250To400_part5		       : WJetsToLNu_Pt250To400_part5                                     : xsec 
+WJetsToLNu_Pt250To400_part6		       : WJetsToLNu_Pt250To400_part6                                     : xsec 
+WJetsToLNu_Pt250To400_part7		       : WJetsToLNu_Pt250To400_part7                                     : xsec 
+WJetsToLNu_Pt250To400_part8		       : WJetsToLNu_Pt250To400_part8                                     : xsec 
+WJetsToLNu_Pt250To400_part9		       : WJetsToLNu_Pt250To400_part9                                     : xsec 
+WJetsToLNu_Pt250To400_part10		       : WJetsToLNu_Pt250To400_part10                                    : xsec 
+WJetsToLNu_Pt250To400_part11		       : WJetsToLNu_Pt250To400_part11                                    : xsec 
+WJetsToLNu_Pt400To600_part0		       : WJetsToLNu_Pt400To600_part0                                     : xsec 
+WJetsToLNu_Pt400To600_part1                    : WJetsToLNu_Pt400To600_part1                                     : xsec                  
+WJetsToLNu_Pt600ToInf			       : WJetsToLNu_Pt600ToInf						 : xsec
 QCD_Pt120to170_EMEnriched				        : QCD_Pt120to170_EMEnriched               			  : xsec
 QCD_Pt15to20_EMEnriched					        : QCD_Pt15to20_EMEnriched                 			  : xsec
 QCD_Pt30to50_Mu5						: QCD_Pt30to50_Mu5                        			  : xsec
@@ -112,20 +166,16 @@ WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf			: WmZToLmNujj_01j_aTGC_pTZ_150t
 WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf			: WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf                 : xsec 
 WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf			: WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf                  : xsec 
 data : SingleMuon_Run2017B_UL2017
-data : SingleMuon_Run2017C_UL2017_part1
-data : SingleMuon_Run2017C_UL2017_part0
+data : SingleMuon_Run2017C_UL2017
 data : SingleMuon_Run2017D_UL2017
-data : SingleMuon_Run2017E_UL2017_part1
-data : SingleMuon_Run2017E_UL2017_part0
-data : SingleMuon_Run2017F_UL2017_part2
-data : SingleMuon_Run2017F_UL2017_part0
-data : SingleMuon_Run2017F_UL2017_part1
+data : SingleMuon_Run2017E_UL2017
+data : SingleMuon_Run2017F_UL2017
 data : SingleElectron_Run2017B_UL2017
 data : SingleElectron_Run2017C_UL2017
 data : SingleElectron_Run2017D_UL2017
 data : SingleElectron_Run2017E_UL2017
-data : SingleElectron_Run2017F_UL2017_part1
-data : SingleElectron_Run2017F_UL2017_part0
+data : SingleElectron_Run2017F_UL2017
+
 
 
 

@@ -3,8 +3,11 @@ filters: Flag_BadPFMuonDzFilter && Flag_goodVertices && Flag_globalSuperTightHal
 
 trigger     : trigger1e || trigger1m 
 singlelep   : (nLepFO == 1 && nLepTight==1 &&  Lep1_pt>50  && Lep1_tightId && nFj > 0)
+
 singlelep   : if3(abs(Lep1_pdgId) == 13, pmet_pt > 100, pmet_pt > 150)
+
 etael1      : (abs(Lep1_pdgId) == 13 || (abs(Lep1_eta) < 1.442 || abs(Lep1_eta) > 1.556 ))
+
 el          : abs(Lep1_pdgId) == 11 && trigger1e  && pmet_pt > 150      ;          Disable=True
 mu          : abs(Lep1_pdgId) == 13 && trigger1m       ;          Disable=True
 SR          : nBJetMedium30 == 0 && (Selak8Jet1_msoftdrop >= 65 && Selak8Jet1_msoftdrop < 105);  Disable=True
@@ -24,11 +27,20 @@ Mjuppercut  : Selak8Jet1_msoftdrop < 150 ;           Disable=True
 Mwvuppercut : mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,Lep1_pt,Lep1_eta,Lep1_phi,pmet_pt,pmet_phi,0) < 4550 ;           Disable=True
 bVeto       : nBJetMedium30 == 0  ;           Disable=True
 
-wjSB        : nBJetMedium30 == 0 && (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ;    Disable=True
-wjCR_incl   : nBJetMedium30 == 0 && (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ;    Disable=True
+wjSB            : nBJetMedium30 == 0 && (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ;    Disable=True
+##amwjCR_incl   : nBJetMedium30 == 0 && (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ;    Disable=True
+##amwjCR_lo     : nBJetMedium30 == 0 && Selak8Jet1_msoftdrop < 65 ;    Disable=True
+##amwjCR_hi     : nBJetMedium30 == 0 &&  Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150;    Disable=True
 
-wjCR_lo     : nBJetMedium30 == 0 && Selak8Jet1_msoftdrop < 65 ;    Disable=True
-wjCR_hi     : nBJetMedium30 == 0 &&  Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150;    Disable=True
+wjCR_incl   :  (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ;    Disable=True
+wjCR_lo     :  Selak8Jet1_msoftdrop < 65 ;    Disable=True
+wjCR_hi     :  Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150;    Disable=True
+
+#wjCR_incl   : nBJetLoose25 == 0 && (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ;    Disable=True
+#wjCR_lo     : nBJetLoose25 == 0 && Selak8Jet1_msoftdrop < 65 ;    Disable=True
+#wjCR_hi     : nBJetLoose25 == 0 &&  Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150;    Disable=True
+
+
 topCR_incl  : nBJetMedium30 > 0  && Selak8Jet1_msoftdrop < 150 ;           Disable=True
 topCR_twob  : nBJetMedium30 == 2 && Selak8Jet1_msoftdrop < 150 ;           Disable=True
 topCR_oneb  : nBJetMedium30 == 1 && Selak8Jet1_msoftdrop < 150 ;           Disable=True

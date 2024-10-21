@@ -147,8 +147,8 @@ tGenmWV_typ0_pmet_boosted : mass_WV(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_p
 tmWV_typ0_pmet_boosted :mass_WV(ak8sDMgt45_pt[0],ak8sDMgt45_eta[0],ak8sDMgt45_phi[0],ak8sDMgt45_msoftdrop[0],LepGood1_pt,LepGood1_eta,LepGood1_phi,PuppiMET_pt,PuppiMET_phi,0): [50, 137,  156, 176,197,  220,  325, 453,  489,  526,  565,  606,  649,  693, 740,788,838,890,944,1000,1058,1118, 1181, 1246, 3558,3704, 3854, 4010, 4171, 4337, 4509]; XTitle="m_{WV} (GeV)", Logy, IncludeOverflows=False
 
 #mttbar : Mass_2(Gentops_pt[0],Gentops_eta[0],Gentops_phi[0],Gentops_mass[0],Gentops_pt[1],Gentops_eta[1],Gentops_phi[1],Gentops_mass[1]): 200,500,2500; XTitle="m_{t#bart} (GeV)", IncludeOverflows=False, Logy, MoreY=10
-mttbar : Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1]): 500,0,5000; XTitle="m_{t#bart} (GeV)", IncludeOverflows=False, MoreY=10
-Mttbar : Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1]): 500,0,5000; XTitle="m_{t#bart} (GeV)", IncludeOverflows=False, Logy, MoreY=100
+mttbar : Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1]): 500,0,5000; XTitle="m_{t#bart} (GeV)", MoreY=1.5,MaxDigi
+mttbar_logy : Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1]): 500,0,5000; XTitle="m_{t#bart} (GeV)", Logy, MoreY=100,MaxDigi
 sum_ttbar : Sum$(abs(GenPart_pdgId) == 6 && GenPart_status == 22) : [0,1,2,3,4,5]; XTitle="cutval", IncludeOverflows=False, MoreY=1.2
 
 sumBoosted_withXbb : Sum$(( (ak8sDMgt45_particleNetMD_Xbb+ak8sDMgt45_particleNetMD_Xcc+ak8sDMgt45_particleNetMD_Xqq)/(ak8sDMgt45_particleNetMD_Xcc+ak8sDMgt45_particleNetMD_Xbb+ak8sDMgt45_particleNetMD_Xqq+ak8sDMgt45_particleNetMD_QCD)) > 0.85)  : [0,1,2,3]; XTitle="cutval", IncludeOverflows=False, MoreY=2.0
@@ -255,7 +255,7 @@ dRjj:  deltaR(JetSel1_eta,JetSel1_phi,JetSel2_eta,JetSel2_phi)  : 92,0,5.0; XTit
 dRfjj:  deltaR(JetSel1_eta,JetSel1_phi,ak8sDMgt45_eta[0],ak8sDMgt45_phi[0])  : 92,0,5.0; XTitle="dRfjj [#mum]", MoreY=1.5, IncludeOverflows=False
 
 
-LHE_HT : LHE_HT : 100,0,5000 ; XTitle='LHE_HT (GeV)',Logy, MoreY=200, IncludeOverflows=False
+LHE_HT : LHE_HT : 100,0,5000 ; XTitle='LHE_HT (GeV)',Logy, MoreY=100, IncludeOverflows=False
 LHE_HT_log : LHE_HT : 100,0,5000 ; XTitle='LHE_HT (GeV)',Logy, Logx,MoreY=100, IncludeOverflows=False
 LHE_HT_lin : LHE_HT : 100,0,5000 ; XTitle='LHE_HT_lin (GeV)',MoreY=2.0, IncludeOverflows=False
 
@@ -280,13 +280,14 @@ nJet30_Recl        : nJet30_Recl        : [0,1,2,3,4,5] ; XTitle='njets with pT 
 nSelak8Jets : nSelak8Jets : : [0,1,2,3,4,5,6,7]; XTitle="nSelJetsAK8", IncludeOverflows=False, MoreY=10
 nBJetMedium30 : nBJetMedium30 :  : [0,1,2,3,4,5,6,7]; XTitle="nBJetMedium30", IncludeOverflows=False, MoreY=10
 
-
+Lep1_tightId : Lep1_tightId : [-0.5,0.5,1.5] :  XTitle="lep id", XNDdiv=505, Legend='TL'
 
 nLepFO	              : nLepFO : [0,1,2,3,4] ; XTitle='nLepFO' , MoreY=1.5
 nLepGood	      : nLepTight : [0,1,2,3,4] ; XTitle='nLepGood' , MoreY=1.5
 Lep1_eta : Lep1_eta : 25,-2.5,2.5; XTitle="#eta^{l}", IncludeOverflows=False, MoreY=10
 Lep1_phi:        Lep1_phi                                    : 20,-3.14,3.14; XTitle="Leading lepton #phi"
 Lep1_dxy:        abs(LepGood1_dxy)*10000                         : 40,0.0,100.; XTitle="Leading lepton dxy [#mum]"
+Lep1_dz :        abs(LepGood1_dz)*10000                         : 40,0.0,100.; XTitle="Leading lepton dz [#mum]"
 Lep1_ptrel:      LepGood1_jetPtRelv2                             : 40,0,40; XTitle="Leading lepton ptRel", Legend='TL'
 Lep1_sip3d:      LepGood1_sip3d                                  : 40,0,8; XTitle="Leading lepton S_{IP} 3D"
 Lep1_pdgId:      0.5*LepGood1_pdgId/abs(LepGood1_pdgId)*(abs(LepGood1_pdgId)-10) : [-2,-1,0,1,2]; XTitle="Leading lepton PDG ID (#mu^{-}/e^{-}/e^{+}/#mu^{+})", XNDdiv=505

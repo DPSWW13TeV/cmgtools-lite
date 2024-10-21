@@ -1,10 +1,16 @@
 ##taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py
-WJets : WJetsToLNu_HT70to100     : 1271*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets" ,years="2018"
-WJets : WJetsToLNu_HT70to100_part0 +  WJetsToLNu_HT70to100_part1     : 1271*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets" ,years="2017"
-WJets : WJetsToLNu_HT100to200    : 1253*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2018"
+WJets : WJetsToLNu_HT70to100     : 1271*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets" ,years="2018\,2016\,2016APV"
+
+WJets : WJetsToLNu_HT70to100_part0+WJetsToLNu_HT70to100_part1     : 1271*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets" ,years="2017"
+
+
+WJets : WJetsToLNu_HT100to200    : 1253*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2018\,2016\,2016APV"
+
 WJets : WJetsToLNu_HT100to200_part0+WJetsToLNu_HT100to200_part1    : 1253*1.21    : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2017"
-WJets : WJetsToLNu_HT200to400    : 335.9*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets" ,years="2018"
+
+WJets : WJetsToLNu_HT200to400    : 335.9*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets" ,years="2018\,2016\,2016APV"
 WJets : WJetsToLNu_HT200to400_part0+WJetsToLNu_HT200to400_part1+WJetsToLNu_HT200to400_part2    : 335.9*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets" ,years="2017"
+
 WJets : WJetsToLNu_HT400to600    : 45.21*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets"
 WJets : WJetsToLNu_HT600to800    : 10.99*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets"
 WJets : WJetsToLNu_HT800to1200   : 4.936*1.21 	: 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets"
@@ -12,12 +18,16 @@ WJets : WJetsToLNu_HT1200to2500  : 1.156*1.21 	: 1 ; FillColor=ROOT.TColor.GetCo
 WJets : WJetsToLNu_HT2500toInf   : 0.02623*1.21 : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets"
 
 
-NLO_WJ : WJetsToLNu_NLO : xsec  : 1 ; FillColor=ROOT.kRed,   Label="NLO-WJ" ,years="2018"
+NLO_WJ : WJetsToLNu_NLO : xsec  : 1 ; FillColor=ROOT.kRed,   Label="NLO-WJ" ,years="2018\,2016\,2016APV"
 
 
 
 
-WJetsToLNu_012JetsNLO_34JetsLO:  WJetsToLNu_012JetsNLO_34JetsLO_part6+ WJetsToLNu_012JetsNLO_34JetsLO_part4+ WJetsToLNu_012JetsNLO_34JetsLO_part5+ WJetsToLNu_012JetsNLO_34JetsLO_part2+ WJetsToLNu_012JetsNLO_34JetsLO_part3+ WJetsToLNu_012JetsNLO_34JetsLO_part0+WJetsToLNu_012JetsNLO_34JetsLO_part1 : xsec  : 1 ; FillColor=ROOT.kPink,   Label="WJ_XJ",years="2018"
+#WNJets:  WJetsToLNu_012JetsNLO_34JetsLO_part6+ WJetsToLNu_012JetsNLO_34JetsLO_part4+ WJetsToLNu_012JetsNLO_34JetsLO_part5+ WJetsToLNu_012JetsNLO_34JetsLO_part2+ WJetsToLNu_012JetsNLO_34JetsLO_part3+ WJetsToLNu_012JetsNLO_34JetsLO_part0+WJetsToLNu_012JetsNLO_34JetsLO_part1 : xsec  : 1 ; FillColor=ROOT.kPink,   Label="WJ_XJ", years="2018\,2017"
+
+WNJets:  WJetsToLNu_012JetsNLO_34JetsLO_part3+ WJetsToLNu_012JetsNLO_34JetsLO_part2+ WJetsToLNu_012JetsNLO_34JetsLO_part0+WJetsToLNu_012JetsNLO_34JetsLO_part1 : xsec  : 1 ; FillColor=ROOT.kPink,   Label="WJ_XJ" ,years="2016\,2016APV"
+
+
 WJ_PM : WPJtotaunu_PM  : xsec  : 1 ; FillColor=ROOT.kOrange+10,   Label="WJ_PM",years="2018"
 WJ_PM : WPJtomunu_PM_part0+ WPJtomunu_PM_part1 : xsec  : 1 ; FillColor=ROOT.kOrange+10,   Label="WJ_PM",years="2018"
 WJ_PM : WMJtotaunu_PM: xsec  : 1 ; FillColor=ROOT.kOrange+10,   Label="WJ_PM",years="2018"
@@ -31,9 +41,29 @@ WJetsToLNu_012J : WJetsToLNu_2J_part0+WJetsToLNu_2J_part1+WJetsToLNu_2J_part2: x
 
 WJ_PTB : WJetsToLNu_Pt250To400_part0+ WJetsToLNu_Pt250To400_part1+ WJetsToLNu_Pt250To400_part2+ WJetsToLNu_Pt250To400_part3+ WJetsToLNu_Pt250To400_part4+ WJetsToLNu_Pt250To400_part5+ WJetsToLNu_Pt250To400_part6+ WJetsToLNu_Pt250To400_part7+ WJetsToLNu_Pt250To400_part8+ WJetsToLNu_Pt250To400_part9+ WJetsToLNu_Pt250To400_part10+ WJetsToLNu_Pt250To400_part11 : xsec  : 1 ; FillColor=ROOT.kYellow,   Label="WJ_PTB",years="2018"
 
-WJ_PTB : WJetsToLNu_Pt400To600_part1.root+WJetsToLNu_Pt400To600_part0.root : xsec  : 1 ; FillColor=ROOT.kYellow,   Label="WJ_PTB",years="2018"
+WJ_PTB : WJetsToLNu_Pt400To600_part1+WJetsToLNu_Pt400To600_part0 : xsec  : 1 ; FillColor=ROOT.kYellow,   Label="WJ_PTB",years="2018"
+WJ_PTB : WJetsToLNu_Pt400To600 : xsec  : 1 ; FillColor=ROOT.kYellow,   Label="WJ_PTB",years="2016\,2016APV"
 
 WJ_PTB :WJetsToLNu_Pt100To250_part0+ WJetsToLNu_Pt100To250_part1+ WJetsToLNu_Pt100To250_part2+ WJetsToLNu_Pt100To250_part3+ WJetsToLNu_Pt100To250_part4+ WJetsToLNu_Pt100To250_part5+ WJetsToLNu_Pt100To250_part6+ WJetsToLNu_Pt100To250_part7+ WJetsToLNu_Pt100To250_part8+ WJetsToLNu_Pt100To250_part9+ WJetsToLNu_Pt100To250_part10+ WJetsToLNu_Pt100To250_part11+ WJetsToLNu_Pt100To250_part12+ WJetsToLNu_Pt100To250_part13+ WJetsToLNu_Pt100To250_part14+ WJetsToLNu_Pt100To250_part15+ WJetsToLNu_Pt100To250_part16+ WJetsToLNu_Pt100To250_part17+ WJetsToLNu_Pt100To250_part18+ WJetsToLNu_Pt100To250_part19+ WJetsToLNu_Pt100To250_part20+ WJetsToLNu_Pt100To250_part21+ WJetsToLNu_Pt100To250_part22+ WJetsToLNu_Pt100To250_part23+ WJetsToLNu_Pt100To250_part24+ WJetsToLNu_Pt100To250_part25+ WJetsToLNu_Pt100To250_part26 : xsec  : 1 ; FillColor=ROOT.kYellow,   Label="WJ_PTB",years="2018"
 
-WJ_PTB :  WJetsToLNu_Pt600ToInf : xsec  : 1 ; FillColor=ROOT.kYellow,   Label="WJ_PTB",years="2018"
+
+
+
+WJ_PTB : WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part13+ WJetsToLNu_Pt100To250_part18+ WJetsToLNu_Pt100To250_part22+ WJetsToLNu_Pt100To250_part4+WJetsToLNu_Pt100To250_part9+WJetsToLNu_Pt100To250_part1+WJetsToLNu_Pt100To250_part14+ WJetsToLNu_Pt100To250_part19+ WJetsToLNu_Pt100To250_part23+ WJetsToLNu_Pt100To250_part5+WJetsToLNu_Pt100To250_part10+ WJetsToLNu_Pt100To250_part15+ WJetsToLNu_Pt100To250_part2+WJetsToLNu_Pt100To250_part24+ WJetsToLNu_Pt100To250_part6+WJetsToLNu_Pt100To250_part11+ WJetsToLNu_Pt100To250_part16+ WJetsToLNu_Pt100To250_part20+ WJetsToLNu_Pt100To250_part25+ WJetsToLNu_Pt100To250_part7+WJetsToLNu_Pt100To250_part12+ WJetsToLNu_Pt100To250_part17+ WJetsToLNu_Pt100To250_part21+ WJetsToLNu_Pt100To250_part3+WJetsToLNu_Pt100To250_part8  : xsec  : 1 ; FillColor=ROOT.kYellow,   Label="WJ_PTB",years="2017"
+
+
+WJ_PTB :WJetsToLNu_Pt100To250_part0+ WJetsToLNu_Pt100To250_part1+ WJetsToLNu_Pt100To250_part2+ WJetsToLNu_Pt100To250_part3+ WJetsToLNu_Pt100To250_part4+ WJetsToLNu_Pt100To250_part5+ WJetsToLNu_Pt100To250_part6+ WJetsToLNu_Pt100To250_part7+ WJetsToLNu_Pt100To250_part8+ WJetsToLNu_Pt100To250_part9+ WJetsToLNu_Pt100To250_part10+ WJetsToLNu_Pt100To250_part11+ WJetsToLNu_Pt100To250_part12 : xsec  : 1 ; FillColor=ROOT.kYellow,   Label="WJ_PTB",years="2016APV"
+
+WJ_PTB :WJetsToLNu_Pt100To250_part0+ WJetsToLNu_Pt100To250_part1+ WJetsToLNu_Pt100To250_part2+ WJetsToLNu_Pt100To250_part3+ WJetsToLNu_Pt100To250_part4+ WJetsToLNu_Pt100To250_part5+ WJetsToLNu_Pt100To250_part6+ WJetsToLNu_Pt100To250_part7+ WJetsToLNu_Pt100To250_part8+ WJetsToLNu_Pt100To250_part9+ WJetsToLNu_Pt100To250_part10+ WJetsToLNu_Pt100To250_part11: xsec  : 1 ; FillColor=ROOT.kYellow,   Label="WJ_PTB",years="2016"
+
+
+
+WJ_PTB : WJetsToLNu_Pt250To400_part0+ WJetsToLNu_Pt250To400_part10+WJetsToLNu_Pt250To400_part2+ WJetsToLNu_Pt250To400_part4+ WJetsToLNu_Pt250To400_part6+ WJetsToLNu_Pt250To400_part8+WJetsToLNu_Pt250To400_part1+ WJetsToLNu_Pt250To400_part11+WJetsToLNu_Pt250To400_part3+ WJetsToLNu_Pt250To400_part5+ WJetsToLNu_Pt250To400_part7+ WJetsToLNu_Pt250To400_part9: xsec: 1 ; FillColor=ROOT.kYellow, Label="WJ_PTB",years="2017"
+
+WJ_PTB : WJetsToLNu_Pt250To400_part0+ WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part2+ WJetsToLNu_Pt250To400_part4+ WJetsToLNu_Pt250To400_part5+ WJetsToLNu_Pt250To400_part3: xsec: 1 ; FillColor=ROOT.kYellow, Label="WJ_PTB",years="2016\,2016APV"
+
+WJ_PTB: WJetsToLNu_Pt400To600_part0+WJetsToLNu_Pt400To600_part1  : xsec  : 1 ; FillColor=ROOT.kYellow,   Label="WJ_PTB",years="2017"
+
+WJ_PTB :  WJetsToLNu_Pt600ToInf : xsec  : 1 ; FillColor=ROOT.kYellow,   Label="WJ_PTB"
+
 

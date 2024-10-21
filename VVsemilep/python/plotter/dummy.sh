@@ -10,7 +10,7 @@ source /cvmfs/cms.cern.ch/cmsset_default.sh
 eval `scram runtime -sh`
 echo "i am in this directory ${PWD} and doingthis ${2}"
 
-basecmd="python plots_VVsemilep.py --results --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --doWJ " # --doWJ
+basecmd="python plots_VVsemilep.py --results --year ${3} --nLep 1 --finalState ${4}  --sel ${5} --lf ${6} --applylepSFs --doWJ " #
 
 if [[ $# -eq 8 ]]; then
      cmd_more="  --WC ${8}"
@@ -26,7 +26,7 @@ case ${2} in
     plots)	
 	#ls /eos/user/a/anmehta/www/ || exit 11
 	ls /eos/user/ || exit 11
-	cmd_emore="  --dW plots --pv ${7} " #--fCR "
+	cmd_emore="  --dW plots --pv ${7} " #--dCF " #--fCR "
 	;;
     cards)
 	cmd_emore=" --dW cards --fv ${7} " #--fCRwC"

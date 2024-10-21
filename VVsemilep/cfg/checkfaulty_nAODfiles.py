@@ -4,7 +4,7 @@ import numpy
 import sys, os
 
 dirname=sys.argv[1]
-basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/aTGC_Apr2024_UL17/%s/'%dirname 
+basepath_private='/eos/cms/store/cmst3/group/dpsww/aTGC_Apr2024_UL16/%s/'%dirname 
 files =   [os.path.join(basepath_private,x) for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x)) ] 
 
 ref=ROOT.TFile.Open(files[0])
