@@ -55,7 +55,7 @@ bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavou
 
 
 
-theWVultimateset=['mWV','FatJet1_pt','FatJet1_sDrop_mass','Lep1_pt','nBJetMedium30_Recl','Lep1_pt','FatJet1_pNetMD_Wtagscore']#,'pmet','mtWlep','ptWlep','pmet_phi','nBJetLoose30_Recl','ptWV_pmet']
+theWVultimateset=['FatJet1_pt','mWV','FatJet1_pt','FatJet1_sDrop_mass','Lep1_pt','nBJetMedium30_Recl','Lep1_pt','FatJet1_pNetMD_Wtagscore']#,'pmet','mtWlep','ptWlep','pmet_phi','nBJetLoose30_Recl','ptWV_pmet']
 #,'dphijmet']##'nLepGood','nFatJet','nVert','dphifjpmet','dphifjlep','dphil1pmet',
 theWVultimateset_log=['mWV_logy','FatJet1_pt_logy','FatJet1_sDrop_mass_logy','Lep1_pt_logy','pmet_logy']#,'ptWV_pmet_logy','mtWlep_logy','ptWlep_logy']
 theWVultimateset_noWJ=['mt1pmet_nowj','mWV_nowj','FatJet1_sDrop_mass_nowj','FatJet1_pt_nowj','pmet_nowj']
@@ -309,7 +309,7 @@ def makesimpleplots(year,useDressed=True):
     fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #_dressed.txt'
     bareNano    = False
     cutFlow     = False
-    processes    = ['WJ_PTB']#,'WNJets','WJetsToLNu_012J']#,'WJ_PM']'NLO_WJ',
+    processes    = ['WJ_PTB','WNJets','WJetsToLNu_012J','WJets']#,'WJ_PM']'NLO_WJ',
     #processes   = ['tt']#'WW_SMEFT_cw','WW_SMEFT_cHDD','WW_SMEFT_clu','WZ_SMEFT_sm','WZ_SMEFT_cw','WZ_SMEFT_cHDD','WZ_SMEFT_clu','WW_sm','WZ_sm','WW_SMEFT_sm','WZ_SMEFT_chl3','WW_SMEFT_chl3','WZ_SMEFT_chq','WW_SMEFT_chq','WZ_SMEFT_cll','WW_SMEFT_cll']#,'SM_WZ','tt','WJets','singletop','Others'] #['WW_sm']#,'SM_WW','SM_WZ','WZ_sm']
     #'WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT80','WJetsHT60','WJetsHT40','WJetsHT20']
     #cuts_onelep   = ['singlelep']
@@ -318,7 +318,7 @@ def makesimpleplots(year,useDressed=True):
     showratio=False
     applylepSFs=True
     nLep=1
-    plotvars   = Wjets_ht #theWVultimateset+theWVultimateset_log #MConly #Wjets_ht #theWVultimateset+theWVultimateset_log
+    plotvars   = theWVultimateset+theWVultimateset_log #MConly #Wjets_ht #theWVultimateset+theWVultimateset_log
 
     disable   = []; 
     #enable=['ttbar','nQ']#'WhadpT','mWV','leadfatjet','fatjet','ptWlep','leadlep','etacutl1'] #'ttbar','nQ']
@@ -327,7 +327,7 @@ def makesimpleplots(year,useDressed=True):
     ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  2.15'
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
-    anything = '' #--plotmode norm   --ratioNums WJ_PTB,WNJets,WJetsToLNu_012J --ratioDen WJets --ratioYLabel=NLO/LO '#--plotmode norm  --showRatio  --ratioNums NLO_WJ --ratioDen WJets   --ratioYLabel=NLO/LO ' #--plotmode nostack' #sm,sm_lin_quad_c3w,aTGC_WW_SM_incl --ratioDen WW  #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' 
+    anything = ' --plotmode norm   --ratioNums WJ_PTB,WNJets,WJetsToLNu_012J --ratioDen WJets --ratioYLabel=NLO/LO '#--plotmode norm  --showRatio  --ratioNums NLO_WJ --ratioDen WJets   --ratioYLabel=NLO/LO ' #--plotmode nostack' #sm,sm_lin_quad_c3w,aTGC_WW_SM_incl --ratioDen WW  #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' 
     extraopts = ratio + spam + legends + anything
     makeplots  = ['{}'.format(a)  for a in plotvars]
 

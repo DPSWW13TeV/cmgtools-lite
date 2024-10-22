@@ -1,7 +1,7 @@
 import os,string,sys
 from plots_VVsemilep import *
 
-allvars= theWVultimateset_log +theWVultimateset #+leptons
+allvars= theWVultimateset #theWVultimateset_log ++leptons
 doWhat=sys.argv[1] #cards or plots
 year=sys.argv[2]
 pf="WJ_ptbinned"
@@ -51,7 +51,7 @@ if 'plots' in doWhat :
    tmp_condor.write('request_memory = 10GB\n')
 tmp_condor.write('queue info from ( \n')
 
-for sel in ["wjCR_lo","wjCR_hi","topCR_incl","sig","wjCR_incl"]: #,"topCR_lo","topCR_hi"]:
+for sel in ["wjCR_lo"]:#,"wjCR_hi","topCR_incl","sig","wjCR_incl"]: #,"topCR_lo","topCR_hi"]:
    for cat in ["boosted"]: 
        for yr in years: #["2017"]: #2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 
