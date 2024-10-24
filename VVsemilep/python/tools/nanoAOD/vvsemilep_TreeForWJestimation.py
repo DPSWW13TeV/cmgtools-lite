@@ -69,7 +69,8 @@ def HEM(year,lep,jet,run,isData):
     HEM_phi_min= -1.57;  HEM_phi_max= -0.87;
     weight=1.0;  
     if run > 1: isData=True;
-    if year==2018:
+    if year == 2018:
+        #print('computing hem wt for ',year)
         vetoHEM=False;vetofj=False;vetoel=False;
         vetofj = (jet.eta < HEM_eta_max and jet.eta > HEM_eta_min and jet.phi < HEM_phi_max and jet.phi > HEM_phi_min)
         vetoel = (abs(lep.pdgId) == 11 and lep.eta > -2.5 and lep.eta < -1.479 and lep.phi < HEM_phi_max and lep.phi > HEM_phi_min)
@@ -80,7 +81,9 @@ def HEM(year,lep,jet,run,isData):
                 else:	weight=1.0;
             else:      weight=0.35; 
         else:	weight=1.0; 
-    else: weight=1.0
+    else:
+        #print('no hem issue for ',year) 
+        weight=1.0
     return weight;
 
 

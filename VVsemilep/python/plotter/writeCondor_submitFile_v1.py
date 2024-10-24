@@ -4,7 +4,7 @@ from plots_VVsemilep import *
 allvars= theWVultimateset #theWVultimateset_log ++leptons
 doWhat=sys.argv[1] #cards or plots
 year=sys.argv[2]
-pf="WJ_ptbinned"
+pf=""
 years=[]
 years.append(year)
 
@@ -14,7 +14,7 @@ fitvar_sig=['mWV']#,'mWV_fixedbW']
 fitvar_bkg=['mWV']#'fjet_pt']#,'fjet_pt_fixedbW']
 
 lepsel={'topCR' : [allfavs],
-        'topCR_incl' : [ ["onelep"],fitvar_bkg],
+        'topCR_incl' : [ ll,fitvar_bkg],
         'topCR_twob' : [ ["onelep"],fitvar_bkg],
         'topCR_oneb' : [ ["onelep"],fitvar_bkg],
         'topCR_lo'   : [ ["onelep"],fitvar_bkg],
@@ -51,9 +51,9 @@ if 'plots' in doWhat :
    tmp_condor.write('request_memory = 10GB\n')
 tmp_condor.write('queue info from ( \n')
 
-for sel in ["wjCR_lo"]:#,"wjCR_hi","topCR_incl","sig","wjCR_incl"]: #,"topCR_lo","topCR_hi"]:
+for sel in ["wjCR_lo","wjCR_hi","topCR_incl","sig","wjCR_incl"]: #,"topCR_lo","topCR_hi"]:
    for cat in ["boosted"]: 
-       for yr in years: #["2017"]: #2016,2017,2018".split(","):
+       for yr in years: #in "2016APV,2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 
               if 'plots' in  doWhat:
                  for iVar in allvars:

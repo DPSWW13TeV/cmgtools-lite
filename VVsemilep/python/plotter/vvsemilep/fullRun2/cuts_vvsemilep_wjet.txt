@@ -4,7 +4,7 @@ filters: Flag_BadPFMuonDzFilter && Flag_goodVertices && Flag_globalSuperTightHal
 trigger     : trigger1e || trigger1m 
 singlelep   : (nLepFO == 1 && nLepTight==1 &&  Lep1_pt>50  && Lep1_tightId && nFj > 0)
 
-singlelep   : if3(abs(Lep1_pdgId) == 13, pmet_pt > 100, pmet_pt > 150)
+singlelep   : if3(abs(Lep1_pdgId) == 13, pmet_pt > 150, pmet_pt > 150)
 
 etael1      : (abs(Lep1_pdgId) == 13 || (abs(Lep1_eta) < 1.442 || abs(Lep1_eta) > 1.556 ))
 

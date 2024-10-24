@@ -229,9 +229,9 @@ fatjetmetUncertainties2016All = createJMECorrector(jetType="AK8PFPuppi",dataYear
 fatjetmetUncertainties2017All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
 fatjetmetUncertainties2018All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2018', jesUncert="Merged", splitJER=False, applyHEMfix=True)
 
-fatjetmetUncertainties2016APVTotal = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Total", applyHEMfix=True)
-fatjetmetUncertainties2016Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Total", applyHEMfix=True)
-fatjetmetUncertainties2017Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Total", applyHEMfix=True)
+fatjetmetUncertainties2016APVTotal = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Total", applyHEMfix=False)
+fatjetmetUncertainties2016Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Total", applyHEMfix=False)
+fatjetmetUncertainties2017Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Total", applyHEMfix=False)
 fatjetmetUncertainties2018Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2018', jesUncert="Total", applyHEMfix=True)
 
 

@@ -1,16 +1,17 @@
-Executable = dummy_haddChunks.sh
+Executable = dummy_hadd.sh
 use_x509userproxy = true
-Log        = logs/log_haddMCChunks_$(ProcId).log
-Output     = logs/log_haddMCChunks_$(ProcId).out
-Error      = logs/log_haddMCChunks_$(ProcId).error
-+JobFlavour = "testmatch"
-getenv = True
+Log        = logs/log_copy_$(ProcId).log
+Output     = logs/log_copy_$(ProcId).out
+Error      = logs/log_copy_$(ProcId).error
++JobFlavour = "workday"
+#getenv = True
 arguments  = $(info) 
-MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"
+#MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"
 +AccountingGroup = "group_u_CMST3.all"
-queue info from ( 
-/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ jobs_2016
-)
+queue 
+#info from ( 
+#/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ jobs_2016
+#)
 #/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ aTGC_Apr2024_UL16
 #/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ Combined_aTGC_Oct2024_UL16
 #/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX

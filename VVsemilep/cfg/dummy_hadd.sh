@@ -5,11 +5,12 @@ echo $*
 echo 'i am in this directory'
 echo $PWD
 
-cd ${1}
+#cd ${1}
 echo "i am in this directory ${PWD}"
 eval $(scramv1 runtime -sh);
 
-cp -r /eos/cms/store/cmst3/group/dpsww/${2} /eos/cms/store/group/phys_smp/ec/anmehta/
+cp -r /eos/cms/store/cmst3/user/anmehta/Lumi_run3 /eos/cms/store/group/comm_luminosity/anmehta/
+#cp -r /eos/cms/store/cmst3/group/dpsww/${2} /eos/cms/store/group/phys_smp/ec/anmehta/
 
 #haddChunks.py -n  --max-size 40 /eos/cms/store/cmst3/group/dpsww/${1}
 ##amcd /eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/2018

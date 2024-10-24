@@ -9,7 +9,7 @@ cd /afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTo
 echo "i am in this directory ${PWD}"
 eval $(scramv1 runtime -sh);
 
-. runFrnds_v3.sh wjet ${1} local ${2} 
+. runFrnds_v3.sh wjet ${1} local ${2} ${3}
 
 echo "done running"
 

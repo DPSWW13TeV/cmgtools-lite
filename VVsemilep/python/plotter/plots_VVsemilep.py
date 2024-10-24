@@ -3,8 +3,8 @@ import optparse, subprocess, ROOT, datetime, math, array, copy, os, re, sys
 import numpy as np
 
 lumis = {
-    '2016APV': '19.5',
-    '2016': '16.8',
+    '2016APV': '19.5', #with HIPM
+    '2016': '16.8', #without HIPM
     '2017': '41.5',
     '2018': '59.8',
     'all' : '19.5,16.8,41.5,59.8',
@@ -55,7 +55,7 @@ bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavou
 
 
 
-theWVultimateset=['FatJet1_pt','mWV','FatJet1_pt','FatJet1_sDrop_mass','Lep1_pt','nBJetMedium30_Recl','Lep1_pt','FatJet1_pNetMD_Wtagscore']#,'pmet','mtWlep','ptWlep','pmet_phi','nBJetLoose30_Recl','ptWV_pmet']
+theWVultimateset=['FatJet1_pt','mWV','FatJet1_pt','FatJet1_sDrop_mass','Lep1_pt','nBJetMedium30_Recl','Lep1_pt','FatJet1_pNetMD_Wtagscore','nVert']#,'pmet','mtWlep','ptWlep','pmet_phi','nBJetLoose30_Recl','ptWV_pmet']
 #,'dphijmet']##'nLepGood','nFatJet','nVert','dphifjpmet','dphifjlep','dphil1pmet',
 theWVultimateset_log=['mWV_logy','FatJet1_pt_logy','FatJet1_sDrop_mass_logy','Lep1_pt_logy','pmet_logy']#,'ptWV_pmet_logy','mtWlep_logy','ptWlep_logy']
 theWVultimateset_noWJ=['mt1pmet_nowj','mWV_nowj','FatJet1_sDrop_mass_nowj','FatJet1_pt_nowj','pmet_nowj']
@@ -87,7 +87,7 @@ def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     cmd += ' -p '+','.join(processes)
     if invertedcuts:
         cmd += ''.join(' -I ^'+cut for cut in invertedcuts )
-    if applyWtsnSFs: cmd+=" -W lepSF*btagSF*triggerSF_ttH(Lep1_pdgId,Lep1_pt,0,0,1,year,suberaId) "
+    if applyWtsnSFs: cmd+=" -W L1PreFiringWeight_Nom*lepSF*btagSF*triggerSF_ttH(0) "
     if scaleprocesses:
         for proc,scale in scaleprocesses.items():
             cmd += ' --scale-process {proc} {scale} '.format(proc=proc, scale=scale)
@@ -121,9 +121,9 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     cmd += ' -p '+','.join(processes)
     if applyWtsnSFs and not bareNano:
         if doWJtypeplots:
-            cmd+=" -W lepSF*btagSF*triggerSF_ttH(Lep1_pdgId,Lep1_pt,0,0,1,year,suberaId) "
+            cmd+=" -W L1PreFiringWeight_Nom*lepSF*btagSF*triggerSF_ttH(0) "
         else:
-            cmd+=" -W L1PreFiringWeight_Nom*puWeight*lepsf*btagSF*triggerSF_ttH(LepGood1_pdgId,LepGood1_pt,0,0,1,year,suberaId) " 
+            cmd+=" -W L1PreFiringWeight_Nom*puWeight*lepsf*btagSF*triggerSF_ttH(0) " 
     else:
         if not bareNano:
             cmd += ''.join(" -W puWeight*L1PreFiringWeight_Nom")

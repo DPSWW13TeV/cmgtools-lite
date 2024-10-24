@@ -18,38 +18,35 @@ WZ_sm   : WZTo1L1Nu2Q : 11.46*1.11  : 1 ; FillColor=ROOT.TColor.GetColor("\#e425
 
 
 
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2018"
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2018"
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2018"
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2018"
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2018"
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2018"
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2018"
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2018"
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2018"
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2018"
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2018"
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2018"
 
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2018"
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2018"
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2018"
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2018"
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2018"
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2018"
-
-
-
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2017\,2016\,2016APV"
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2017\,2016\,2016APV"
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2017\,2016\,2016APV"
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2017\,2016\,2016APV"
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2017\,2016\,2016APV"
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM",years="2017\,2016\,2016APV"
-
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2018"
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2018"
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2018"
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2018"
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2018"
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2018"
 
 
 
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2017\,2016\,2016APV"
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2017\,2016\,2016APV"
+WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2017\,2016\,2016APV"
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2017\,2016\,2016APV"
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2017\,2016\,2016APV"
+WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW",years="2017\,2016\,2016APV"
+
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
+WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
+WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ",LineStyle=ROOT.kDotted,years="2017\,2016\,2016APV"
 
 
 Others : WplusH   	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
@@ -70,7 +67,7 @@ QCD : QCD_Pt120to170_EMEnriched :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#
 QCD : QCD_Pt170to300_EMEnriched :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt300toInf_EMEnriched :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 
-QCD : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt15to20_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD",years="2017\,2016\,2018"
 QCD : QCD_Pt20to30_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt30to50_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt50to80_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
@@ -81,7 +78,7 @@ QCD : QCD_Pt300to470_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac7
 QCD : QCD_Pt470to600_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt600to800_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 QCD : QCD_Pt800to1000_Mu5  	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
-QCD : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt1000toInf_Mu5   	:  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017\,2016\,2018"
 
 
 
@@ -115,17 +112,17 @@ QCD : QCD_Mu15			   	  	 :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"
 
 
 
-singletop   : T_tWch_noFullyHad                  : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top" #for 2017 and 2018
-
+singletop   : T_tWch_noFullyHad         : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top"
 singletop   : T_sch                     : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top", years="2018\,2016\,2016APV"
 singletop   : T_sch_part0+T_sch_part1   : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top", years="2017"
 singletop   : Tbar_tch                  : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top", years="2018"
+
 singletop   : Tbar_tch_part0+Tbar_tch_part1      : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top", years="2017"
 singletop   : T_tch                              : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top", years="2018\,2016\,2016APV"
 singletop   : T_tch_part0+T_tch_part1            : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top", years="2017"
 singletop   : TBar_tWch_noFullyHad   : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top", years="2016\,2016APV"
 singletop   : TBar_tch		     : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top", years="2016\,2016APV"
-singletop   : Tbar_tWch_noFullyHad : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top"  #for 2017 and 2018
+singletop   : Tbar_tWch_noFullyHad   : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top" , years="2017\,2018"
 
 
 #tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4+TTSemi_pow_part5+TTSemi_pow_part6+TTSemi_pow_part7+TTSemi_pow_part8+TTSemi_pow_part9  : xsec  : Top_pTrw ; FillColor=ROOT.TColor.GetColor("\#7a21dd"), Label="t\#bart", FriendsSimple="{P}/2_toppT_rw/"

@@ -149,9 +149,8 @@ class input_WJestimation(Module):
             lep1.SetPtEtaPhiM(leps[0].pt,leps[0].eta,leps[0].phi,0.); #leps[0].mass);
         lmet=pmet+lep1
         self.out.fillBranch('pTWlep',lmet.Pt() if tot_sel else -999.0 )
-        
         hemwt=HEM(event.year,leps[0],jets[0],event.run,isData) if tot_sel else 0.0
-        #print hemwt,event.prescaleFromSkim,event.L1PreFiringWeight_Nom,event.puWeight
+        #print hemwt, tot_sel
         eventWt=hemwt * (event.prescaleFromSkim if isData else event.L1PreFiringWeight_Nom*event.puWeight*event.prescaleFromSkim)
         self.out.fillBranch('evt_wt',eventWt if tot_sel else 0 ) #pu*prefiring*prescale*hem
         self.out.fillBranch('hem_wt',hemwt if tot_sel else 0.0 )

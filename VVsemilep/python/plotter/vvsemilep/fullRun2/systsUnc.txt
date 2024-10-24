@@ -92,8 +92,8 @@ FSR_WZ : $wzaTGC|WZ_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3
 #FSR_WZ_aTGC :  $wzaTGC : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
 
 
-pdf_WW_sm	           : WW_sm   : .* : normSymm : 1.05
-pdf_WZ_sm	           : WZ_sm   : .* : normSymm : 1.05
+pdf_WW	     	           : $wwaTGC|WW_sm   : .* : normSymm : 1.05
+pdf_WZ   	           : $wzaTGC|WZ_sm   : .* : normSymm : 1.05
 pdf_tt	           	   : $tt   : .* : normSymm : 1.03
 pdf_st	           	   : $st   : .* : normSymm : 1.02
 pdf_wj	           	   : $wj   : .* : normSymm : 1.006
@@ -134,29 +134,29 @@ CMS_eff_el : $AllFromMC : .*el.* : templateAsymm  ; AddWeights=['lepsf_el_up/lep
 CMS_eff_mu : $AllFromMC : .*lep.* : templateAsymm ; AddWeights=['lepsf_mu_up/lepsf'\,'lepsf_mu_dn/lepsf']
 CMS_eff_el : $AllFromMC : .*lep.* : templateAsymm ; AddWeights=['lepsf_el_up/lepsf'\,'lepsf_el_dn/lepsf']   
 
-CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,0\,1.0\,1)',year="2018"
-CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,0\,1.0\,1)',year="2018"
-CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,0\,1.0\,1)',year="2018"
-CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,0\,1.0\,1)',year="2017"
-CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,0\,1.0\,1)',year="2017"
-CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,0\,1.0\,1)',year="2017"
-CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016"
-CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016"
-CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016"
-CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016APV\,0\,1.0\,1)',year="2016APV"
-CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016APV\,0\,1.0\,1)',year="2016APV"
-CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016APV\,0\,1.0\,1)',year="2016APV"
+CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,1\,1.0\,1)',year="2018"
+CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,1\,1.0\,1)',year="2018"
+CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,1\,1.0\,1)',year="2018"
+CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,1\,1.0\,1)',year="2017"
+CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,1\,1.0\,1)',year="2017"
+CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,1\,1.0\,1)',year="2017"
+CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,1\,1.0\,1)',year="2016"
+CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,1\,1.0\,1)',year="2016"
+CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,1\,1.0\,1)',year="2016"
+CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016APV"
+CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016APV"
+CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016APV"
 
 
 
-CMS18_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,0\,1)', year="2018"
-CMS18_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,0\,1)', year="2018"
-CMS17_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2017\,0\,1)', year="2017"
-CMS17_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2017\,0\,1)', year="2017"
-CMS16_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,0\,1)', year="2016"
-CMS16_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,0\,1)', year="2016"
-CMS16apv_trigger_el  : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016APV\,0\,1)', year="2016APV"
-CMS16apv_trigger_mu  : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016APV\,0\,1)', year="2016APV"
+CMS18_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,1\,1)', year="2018"
+CMS18_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,1\,1)', year="2018"
+CMS17_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2017\,1\,1)', year="2017"
+CMS17_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2017\,1\,1)', year="2017"
+CMS16_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,1\,1)', year="2016"
+CMS16_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,1\,1)', year="2016"
+CMS16apv_trigger_el  : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,0\,1)', year="2016APV"
+CMS16apv_trigger_mu  : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,0\,1)', year="2016APV"
 
 
 
