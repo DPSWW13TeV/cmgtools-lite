@@ -22,6 +22,8 @@ dataSamples_Run2017B_UL2017 = [SingleElectron_Run2017B_UL2017, SingleMuon_Run201
 
 SingleElectron_Run2017C_UL2017 = kreator.makeDataComponent("SingleElectron_Run2017C_UL2017", "/SingleElectron/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD", "CMS", ".*root", json)
 SingleMuon_Run2017C_UL2017 = kreator.makeDataComponent("SingleMuon_Run2017C_UL2017", "/SingleMuon/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD", "CMS", ".*root", json)
+
+
 DoubleEG_Run2017C_UL2017 = kreator.makeDataComponent("DoubleEG_Run2017C_UL2017", "/DoubleEG/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD", "CMS", ".*root", json)
 MuonEG_Run2017C_UL2017 = kreator.makeDataComponent("MuonEG_Run2017C_UL2017", "/MuonEG/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD", "CMS", ".*root", json)
 DoubleMuon_Run2017C_UL2017 = kreator.makeDataComponent("DoubleMuon_Run2017C_UL2017", "/DoubleMuon/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD", "CMS", ".*root", json)
@@ -60,10 +62,18 @@ DoubleEG_Run2017F_UL2017 = kreator.makeDataComponent("DoubleEG_Run2017F_UL2017",
 MuonEG_Run2017F_UL2017 = kreator.makeDataComponent("MuonEG_Run2017F_UL2017", "/MuonEG/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD", "CMS", ".*root", json)
 DoubleMuon_Run2017F_UL2017 = kreator.makeDataComponent("DoubleMuon_Run2017F_UL2017", "/DoubleMuon/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD", "CMS", ".*root", json)
 
+SingleMuon_Run2017B_GT_UL2017 = kreator.makeDataComponent("SingleMuon_Run2017B_GT_UL2017", "/SingleMuon/Run2017B-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD", "CMS", ".*root", json) 
+SingleMuon_Run2017C_GT_UL2017 = kreator.makeDataComponent("SingleMuon_Run2017C_GT_UL2017", "/SingleMuon/Run2017C-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD", "CMS", ".*root", json)
+SingleMuon_Run2017D_GT_UL2017 = kreator.makeDataComponent("SingleMuon_Run2017D_GT_UL2017", "/SingleMuon/Run2017D-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD", "CMS", ".*root", json)
+SingleMuon_Run2017E_GT_UL2017 = kreator.makeDataComponent("SingleMuon_Run2017E_GT_UL2017", "/SingleMuon/Run2017E-UL2017_MiniAODv2_NanoAODv9_GT36-v2/NANOAOD", "CMS", ".*root", json)
+SingleMuon_Run2017F_GT_UL2017 = kreator.makeDataComponent("SingleMuon_Run2017F_GT_UL2017", "/SingleMuon/Run2017F-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD", "CMS", ".*root", json)
+
+
+more=[SingleMuon_Run2017B_GT_UL2017,SingleMuon_Run2017C_GT_UL2017,SingleMuon_Run2017D_GT_UL2017,SingleMuon_Run2017E_GT_UL2017,SingleMuon_Run2017F_GT_UL2017]
 
 dataSamples_Run2017F_UL2017 = [SingleElectron_Run2017F_UL2017, SingleMuon_Run2017F_UL2017] #, DoubleEG_Run2017F_UL2017, MuonEG_Run2017F_UL2017, DoubleMuon_Run2017F_UL2017]
 
-dataSamples_UL2017 = dataSamples_Run2017B_UL2017 + dataSamples_Run2017C_UL2017 + dataSamples_Run2017D_UL2017 + dataSamples_Run2017E_UL2017 + dataSamples_Run2017F_UL2017
+dataSamples_UL2017 =  more #dataSamples_Run2017B_UL2017 + dataSamples_Run2017C_UL2017 + dataSamples_Run2017D_UL2017 + dataSamples_Run2017E_UL2017 + dataSamples_Run2017F_UL2017 +
 
 
 dataSamples =  dataSamples_UL2017

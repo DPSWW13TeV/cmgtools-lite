@@ -165,6 +165,7 @@ WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800			: WmWpToLmNujj_01j_aTGC_pTW_15
 WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf			: WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf                  : xsec 
 WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf			: WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf                 : xsec 
 WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf			: WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf                  : xsec 
+
 data : SingleMuon_Run2017B_UL2017
 data : SingleMuon_Run2017C_UL2017
 data : SingleMuon_Run2017D_UL2017
@@ -177,6 +178,12 @@ data : SingleElectron_Run2017E_UL2017
 data : SingleElectron_Run2017F_UL2017
 
 
-
-
-
+data : SingleMuon_Run2017C_GT_UL2017_part0
+data : SingleMuon_Run2017C_GT_UL2017_part1
+data : SingleMuon_Run2017D_GT_UL2017
+data : SingleMuon_Run2017F_GT_UL2017_part0
+data : SingleMuon_Run2017F_GT_UL2017_part2
+data : SingleMuon_Run2017B_GT_UL2017
+data : SingleMuon_Run2017G_GT_UL2017
+data : SingleMuon_Run2017E_GT_UL2017_part0
+data : SingleMuon_Run2017E_GT_UL2017_part1

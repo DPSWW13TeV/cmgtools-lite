@@ -12,11 +12,22 @@ data : SingleElectron_Run2017C_UL2017; years="2017"
 data : SingleElectron_Run2017D_UL2017; years="2017"
 data : SingleElectron_Run2017E_UL2017; years="2017"
 data : SingleElectron_Run2017F_UL2017; years="2017"
-data : SingleMuon_Run2017B_UL2017; years="2017"
-data : SingleMuon_Run2017C_UL2017; years="2017"
-data : SingleMuon_Run2017D_UL2017; years="2017"
-data : SingleMuon_Run2017E_UL2017; years="2017"
-data : SingleMuon_Run2017F_UL2017; years="2017"
+
+#data : SingleMuon_Run2017B_UL2017; years="2017"
+#data : SingleMuon_Run2017C_UL2017; years="2017"
+#data : SingleMuon_Run2017D_UL2017; years="2017"
+#data : SingleMuon_Run2017E_UL2017; years="2017"
+#data : SingleMuon_Run2017F_UL2017; years="2017"
+
+
+data : SingleMuon_Run2017B_GT_UL2017; 	    years="2017"
+data : SingleMuon_Run2017C_GT_UL2017_part0; years="2017"
+data : SingleMuon_Run2017C_GT_UL2017_part1; years="2017"
+data : SingleMuon_Run2017D_GT_UL2017; 	    years="2017"
+data : SingleMuon_Run2017E_GT_UL2017_part0; years="2017"
+data : SingleMuon_Run2017E_GT_UL2017_part1; years="2017"
+data : SingleMuon_Run2017F_GT_UL2017_part0; years="2017"
+data : SingleMuon_Run2017F_GT_UL2017_part2; years="2017"
 
 
 data : SingleElectron_Run2016F_UL16; years="2016"

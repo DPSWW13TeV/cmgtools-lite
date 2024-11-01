@@ -1,12 +1,12 @@
 import os,string,sys
 from plots_VVsemilep import *
 
-allvars= theWVultimateset #theWVultimateset_log ++leptons
+allvars= theWVultimateset + theWVultimateset_log #++leptons
 doWhat=sys.argv[1] #cards or plots
-year=sys.argv[2]
-pf=""
-years=[]
-years.append(year)
+#year=sys.argv[2]
+pf="" #plotsForAN"
+years=["2017","2018"]#"2016APV","2016",
+#years.append(year)
 
 allfavs=["mu","el","onelep"]
 ll=["mu","el"]
@@ -27,7 +27,7 @@ lepsel={'topCR' : [allfavs],
         'wjCR_lo'  : [ll,fitvar_bkg],
         'wjCR_hi'  : [ll,fitvar_bkg],
 }
-ops=['cw']#,'c3w'] #,'c3w','cb']#,'cb','cHDD','clu','cW']
+ops=['cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
 
 
 fName='submitFile_%s.condor'%doWhat
@@ -51,7 +51,7 @@ if 'plots' in doWhat :
    tmp_condor.write('request_memory = 10GB\n')
 tmp_condor.write('queue info from ( \n')
 
-for sel in ["wjCR_lo","wjCR_hi","topCR_incl","sig","wjCR_incl"]: #,"topCR_lo","topCR_hi"]:
+for sel in ["wjCR_lo","wjCR_hi","topCR_incl","sig","wjCR_incl"]: #,"topCR_incl","topCR_lo","topCR_hi"]
    for cat in ["boosted"]: 
        for yr in years: #in "2016APV,2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 

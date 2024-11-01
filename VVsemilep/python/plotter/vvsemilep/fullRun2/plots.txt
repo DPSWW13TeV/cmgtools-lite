@@ -259,7 +259,8 @@ LHE_HT : LHE_HT : 100,0,5000 ; XTitle='LHE_HT (GeV)',Logy, MoreY=100, IncludeOve
 LHE_HT_log : LHE_HT : 100,0,5000 ; XTitle='LHE_HT (GeV)',Logy, Logx,MoreY=100, IncludeOverflows=False
 LHE_HT_lin : LHE_HT : 100,0,5000 ; XTitle='LHE_HT_lin (GeV)',MoreY=2.0, IncludeOverflows=False
 
-LHE_Vpt : LHE_Vpt : 100,0,3500 ; XTitle='LHE_Vpt (GeV)',Logy,MoreY=150, IncludeOverflows=False
+LHE_Vpt_log : LHE_Vpt : 100,0,3500 ; XTitle='LHE_Vpt (GeV)',Logy,MoreY=150, IncludeOverflows=False
+LHE_Vpt : LHE_Vpt : 100,0,3500 ; XTitle='LHE_Vpt (GeV)',MoreY=1.5, IncludeOverflows=False
 
 htJet30          : Sum$(JetSel_Recl_pt)       : 150,0,1500 ; XTitle='ht(jets)', Logy,IncludeOverflows=False
 htFatJet200      : Sum$(ak8sDMgt45_pt)       : 150,0,1500 ; XTitle='ht(fatjets)', Logy,IncludeOverflows=False

@@ -75,7 +75,7 @@ fjtagged)
 
 fjtaggeddata)
 	echo "fjtaggeddata"
-	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.* "
+	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*GT.* "
 	;;
 
 goodfj)
@@ -96,7 +96,7 @@ wjet)
 
 wjet_data)
 	echo "wjet data"
-	basecmd="${BCORE}/0_wjest_v5  ${CMGT} input_wjest_data  -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  --dm .*Run.* "
+	basecmd="${BCORE}/0_wjest_v5  ${CMGT} input_wjest_data  -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  --dm .*GT.* " #  --dm .*Run.* "
 	;;
 
 nnpdf)

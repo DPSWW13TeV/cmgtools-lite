@@ -12,12 +12,12 @@ kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = getHeppyOption("year", "2016APV")
+year = getHeppyOption("year", "2017")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","both")
-selectComponents = getHeppyOption("selectComponents","MC")
-#selectComponents = getHeppyOption("selectComponents","DATA")
+#selectComponents = getHeppyOption("selectComponents","MC")
+selectComponents = getHeppyOption("selectComponents","DATA")
 test = getHeppyOption("test","") #testam")
 ##amprint 'year                   ',getHeppyOption("year")
 ##amprint 'analysis               ',getHeppyOption("analysis")

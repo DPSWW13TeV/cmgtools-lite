@@ -9,7 +9,7 @@ echo $PWD
 echo "i am in this directory ${PWD}"
 eval $(scramv1 runtime -sh);
 
-cp -r /eos/cms/store/cmst3/user/anmehta/Lumi_run3 /eos/cms/store/group/comm_luminosity/anmehta/
+cp -r /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_skim2lss /eos/cms/store/cmst3/user/anmehta/ 
 #cp -r /eos/cms/store/cmst3/group/dpsww/${2} /eos/cms/store/group/phys_smp/ec/anmehta/
 
 #haddChunks.py -n  --max-size 40 /eos/cms/store/cmst3/group/dpsww/${1}
