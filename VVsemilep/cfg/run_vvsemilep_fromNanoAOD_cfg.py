@@ -16,8 +16,8 @@ year = getHeppyOption("year", "2017")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","both")
-#selectComponents = getHeppyOption("selectComponents","MC")
-selectComponents = getHeppyOption("selectComponents","DATA")
+selectComponents = getHeppyOption("selectComponents","MC")
+#selectComponents = getHeppyOption("selectComponents","DATA")
 test = getHeppyOption("test","") #testam")
 ##amprint 'year                   ',getHeppyOption("year")
 ##amprint 'analysis               ',getHeppyOption("analysis")
@@ -66,7 +66,9 @@ DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
-        "WW.*","WZ.*","ZZ.*",".*aTGC.*"
+        "ZH.*"
+        #"WplusH","WminusH","ZH.*"
+       # "WW.*","WZ.*","ZZ.*",".*aTGC.*","T.*","WJetsToLNu_Pt.*","VH.*"
 #        "VH.*","QCD.*","W.*","T.*","Z.*"
         #"W.*Jtotaunu_PM","W.*Jtomunu_PM" #,"WJetsToLNu_Pt.*","WJetsToLNu_.*J",
         #        "QCD_Pt300toInf_EMEnriched"
@@ -222,7 +224,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import Pos
 
 # in the cut string, keep only the main cuts to have it simpler
 modules = vvsemilep_sequence_step1
-cut = vvsemilep_skim_cut
+cut = wvsemilep_skim_cut #vvsemilep_skim_cut
 compression = "ZLIB:3" #"LZ4:4" #"LZMA:9"
 branchsel_in = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_in.txt"
 branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_out.txt"

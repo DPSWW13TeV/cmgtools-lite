@@ -9,8 +9,9 @@ cd ${1}
 echo "i am in this directory ${PWD}"
 eval $(scramv1 runtime -sh);
 
+#cp -r /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7* /eos/cms/store/group/phys_smp/ec/anmehta/
 #cp -r ${1}/${2}  /eos/cms/store/cmst3/group/dpsww/
 #echo "done copying"
-haddChunks.py -n /eos/cms/store/cmst3/group/dpsww/${2} --max-size 25
+haddChunks.py -n /eos/cms/store/cmst3/group/dpsww/${2} --max-size 35
 
 

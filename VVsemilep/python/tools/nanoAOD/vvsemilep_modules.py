@@ -1,7 +1,8 @@
 import os
 import ROOT 
 import copy 
-conf = dict(
+
+conf_old = dict(
         looselepPt=10,
         tightlepPt=30,
         muPt = 10, 
@@ -24,11 +25,37 @@ conf = dict(
         metcut=40,
 )
 
+conf = dict(
+        looselepPt=10,
+        tightlepPt=30,
+        muPt = 10, 
+        elePt = 10, 
+        sip3dloose = 8, 
+        sip3dtight = 4, 
+        dxy =  0.05, 
+        dz = 0.2, 
+        eleIdloose = "mvaFall17V2Iso_WPL",
+        eleIdtight = "mvaFall17V2Iso_WP90",
+        muIdloose = "looseId",
+        muIdtight = "tightId",
+        mutrk = "isTracker",
+        muIsoloose=0.40,
+        muIsotight=0.15,
+        fatjetptcut=200,
+        fatjetmsdcut=40,
+        jetptcut=25,
+        jeteta=2.4,
+        metcut=50
+)
+
 nElTight = "Sum$(Electron_pt > {tightlepPt} && Electron_sip3d < {sip3dtight}  && Electron_{eleIdloose} && Electron_{eleIdtight})".format(**conf)
 nElLoose = "Sum$(Electron_pt > {looselepPt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose})".format(**conf)
-nMuLoose = "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose})".format(**conf)
-nMuTight = "Sum$(Muon_pt > {tightlepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsotight})".format(**conf)
-nJetLoose = "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < {jeteta}  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0) )".format(**conf)
+##amnMuLoose = "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose})".format(**conf)
+##amnMuTight = "Sum$(Muon_pt > {tightlepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsotight})".format(**conf)
+nMuLoose = "Sum$(Muon_pt > {looselepPt}  && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso04_all < {muIsoloose})".format(**conf)
+nMuTight = "Sum$(Muon_pt > {tightlepPt}  && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso04_all < {muIsotight})".format(**conf)
+nJetLoose = "( Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0 ) ".format(**conf)
+#nJetLoose = "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < {jeteta}  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0) )".format(**conf)
 metsel   = "PuppiMET_pt > {metcut}".format(**conf)
 ##MET CUT can be added to the preskim selection
 vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
@@ -40,26 +67,31 @@ vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
 
 wvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
                       "{nMuTight} + {nElTight} == 1  &&" + 
-                      "{nJetLoose} && " + "{metsel}" + 
+                      "{nJetLoose} && " + "{metsel} && " + 
                       "{nMuLoose} + {nElLoose} >= 1 &&" +
-                      "{nMuLoose} + {nElLoose} < 3 && ").format(metsel=metsel,nMuTight = nMuTight, nElTight = nElTight, nJetLoose = nJetLoose, nMuLoose= nMuLoose, nElLoose = nElLoose)
+                      "{nMuLoose} + {nElLoose} < 3 ").format(metsel=metsel,nMuTight = nMuTight, nElTight = nElTight, nJetLoose = nJetLoose, nMuLoose= nMuLoose, nElLoose = nElLoose)
 
 
 muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["looselepPt" ] and l.sip3d < conf["sip3dloose"] and \
                     abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["muIdloose"]) and  \
+                    l.pfRelIso04_all < conf["muIsoloose"]
+
+muonSelection_old     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["looselepPt" ] and l.sip3d < conf["sip3dloose"] and \
+                    abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["muIdloose"]) and  \
                     getattr(l, conf["mutrk"]) and l.pfRelIso03_all < conf["muIsoloose"]
+
 electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["looselepPt"] and l.sip3d < conf["sip3dloose"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["eleIdloose"])
 
 def clean_and_FO_selection_VVsemilep(lep,year, subera): ##am for tight leptn ids not sure if era is needed now
     if abs(lep.pdgId) == 13:
         return ( abs(lep.eta) < 2.4 and lep.pt > conf["looselepPt" ] and lep.sip3d < conf["sip3dloose"] and \
                     abs(lep.dxy) < conf["dxy"] and abs(lep.dz) < conf["dz"] and getattr(lep, conf["muIdloose"]) and  \
-                    getattr(lep, conf["mutrk"]) and lep.pfRelIso03_all < conf["muIsoloose"])
+                     lep.pfRelIso04_all < conf["muIsoloose"])
     else:
         return ( ttH_idEmu_cuts_E3(lep) and \
                  abs(lep.eta) < 2.5 and lep.pt > conf["looselepPt"] and lep.sip3d < conf["sip3dloose"] and abs(lep.dxy) < conf["dxy"] and abs(lep.dz) < conf["dz"] and getattr(lep, conf["eleIdloose"]) )
 
-tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and lep.pt>conf["tightlepPt"] and lep.sip3d < conf["sip3dtight"] and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso03_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
+tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and lep.pt>conf["tightlepPt"] and lep.sip3d < conf["sip3dtight"] and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso04_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
 
 foTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and abs(tau.dxy) < 1000 and abs(tau.dz) < 0.2  and (int(tau.idDeepTau2017v2p1VSjet)>>1 & 1) # VVLoose WP
 tightTauSel = lambda tau: (int(tau.idDeepTau2017v2p1VSjet)>>2 & 1) # VLoose WP
@@ -70,7 +102,7 @@ lepSkim = ttHPrescalingLepSkimmer(5,
                 muonSel = muonSelection, electronSel = electronSelection,
                 minLeptonsNoPrescale = 1, # things with less than 2 leptons are rejected irrespectively of the prescale
                 minLeptons = 1, requireOppSignPair = True,
-                jetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) <  conf["jeteta"] and j.jetId > 0, 
+                jetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) <  conf["jeteta"] and j.jetId >=2, ##changed
                 fatjetSel = lambda f : f.pt > conf["fatjetptcut"] and abs(f.eta) < conf["jeteta"],  ##not all samples have fatjets
                 minJets = 4, minMET = 40, minFatJets = 1)
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger import collectionMerger
@@ -95,7 +127,7 @@ vvsemilep_sequence_step1 = [lepSkim, lepMerge, autoPuWeight, yearTag, lepJetBTag
 #==== 
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR
 from CMGTools.VVsemilep.tools.nanoAOD.ttHLepQCDFakeRateAnalyzer import ttHLepQCDFakeRateAnalyzer
-centralJetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) < conf["jeteta"] and j.jetId > 0
+centralJetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) < conf["jeteta"] and j.jetId >= 2   ##changed
 lepFR = ttHLepQCDFakeRateAnalyzer(jetSel = centralJetSel,
                                   pairSel = lambda pair : deltaR(pair[0].eta, pair[0].phi, pair[1].eta, pair[1].phi) > 0.7,
                                   maxLeptons = 1, requirePair = True)
@@ -142,7 +174,7 @@ recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
                                                            tightLeptonSel = tightLeptonSel,
                                                            FOTauSel = foTauSel,
                                                            tightTauSel = tightTauSel,
-                                                           selectJet =    lambda jet: jet.pt > conf["jetptcut"] and abs(jet.eta) < conf["jeteta"] and jet.jetId > 0, # pt and eta cuts are (hard)coded in the step2 
+                                                           selectJet =    lambda jet: jet.pt > conf["jetptcut"] and abs(jet.eta) < conf["jeteta"] and jet.jetId >=2 , # pt and eta cuts are (hard)coded in the step2 ##changed
                                                            selectFatJet = lambda fatjet: fatjet.pt > conf["fatjetptcut"] and abs(fatjet.eta) < conf["jeteta"], # and fatjet.msoftdrop > conf["fatjetmsdcut"], 
                                                            coneptdef =    lambda lep: conept_TTH(lep),
 )
@@ -244,13 +276,13 @@ def _fires(ev, path):
 
 triggerGroups=dict(
     Trigger_1e={
-        2016 : lambda ev : _fires(ev,'HLT_Ele27_WPTight_Gsf') or _fires(ev,'HLT_Ele25_eta2p1_WPTight_Gsf') or _fires(ev,'HLT_Ele27_eta2p1_WPLoose_Gsf'),
-        2017 : lambda ev : _fires(ev,'HLT_Ele32_WPTight_Gsf') or _fires(ev,'HLT_Ele35_WPTight_Gsf'),
+        2016 : lambda ev : _fires(ev,'HLT_Ele27_WPTight_Gsf'), # or _fires(ev,'HLT_Ele25_eta2p1_WPTight_Gsf') or _fires(ev,'HLT_Ele27_eta2p1_WPLoose_Gsf'),
+        2017 : lambda ev : _fires(ev,'HLT_Ele32_WPTight_Gsf') or _fires(ev,'HLT_Ele35_WPTight_Gsf') or _fires(ev,'HLT_Ele32_WPTight_Gsf_L1DoubleEG'),
         2018 : lambda ev : _fires(ev,'HLT_Ele32_WPTight_Gsf'),
     },
     Trigger_1m={
-        2016 : lambda ev : _fires(ev,'HLT_IsoMu24') or _fires(ev,'HLT_IsoTkMu24') or _fires(ev,'HLT_IsoMu22_eta2p1') or _fires(ev,'HLT_IsoTkMu22_eta2p1') or _fires(ev,'HLT_IsoMu22') or _fires(ev,'HLT_IsoTkMu22'),
-        2017 : lambda ev : _fires(ev,'HLT_IsoMu24') or _fires(ev,'HLT_IsoMu27'),
+        2016 : lambda ev : _fires(ev,'HLT_IsoMu24') or _fires(ev,'HLT_IsoTkMu24'),# or _fires(ev,'HLT_IsoMu22_eta2p1') or _fires(ev,'HLT_IsoTkMu22_eta2p1') or _fires(ev,'HLT_IsoMu22') or _fires(ev,'HLT_IsoTkMu22'),
+        2017 : lambda ev : _fires(ev,'HLT_IsoMu27'),# or _fires(ev,'HLT_IsoMu24'),
         2018 : lambda ev : _fires(ev,'HLT_IsoMu24'),
     },
     Trigger_2e={
@@ -348,8 +380,8 @@ bTagSFs = lambda : BtagSFs("JetSel_Recl",
 #                                    corrs=jecGroups,
 #                        )
 
-from CMGTools.VVsemilep.tools.nanoAOD.lepScaleFactors import lepScaleFactors
-leptonSFs = lambda : lepScaleFactors()
+from CMGTools.VVsemilep.tools.nanoAOD.triggerScaleFactors_el import triggerScaleFactors_el
+trigSFs_el = lambda : triggerScaleFactors_el()
 
 scaleFactorSequence_2016APV = [btagSF2016APV_dj,bTagSFs] 
 scaleFactorSequence_2016    = [btagSF2016_dj,bTagSFs] 

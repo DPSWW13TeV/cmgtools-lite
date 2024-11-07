@@ -3,25 +3,18 @@ use_x509userproxy = true
 Log        = jobs/log_running_$(ProcId)_All.log
 Output     = jobs/log_running_$(ProcId)_All.out
 Error      = jobs/log_running_$(ProcId)_All.error
-+JobFlavour = "longlunch"
++JobFlavour = "workday"
 getenv = True
 MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"
 +AccountingGroup = "group_u_CMST3.all"
 arguments  = $(info)
 queue info from (
-2017  SingleMuon_Run2017C_GT_UL2017_part1 1 
-2017  SingleMuon_Run2017E_GT_UL2017_part0 6
-2017  SingleMuon_Run2017E_GT_UL2017_part0 7
-2017  SingleMuon_Run2017E_GT_UL2017_part0 11
-2017  SingleMuon_Run2017E_GT_UL2017_part0 13
-2017  SingleMuon_Run2017F_GT_UL2017_part0 6
-2017  SingleMuon_Run2017F_GT_UL2017_part0 7
-2017  SingleMuon_Run2017F_GT_UL2017_part0 8
-2017  SingleMuon_Run2017F_GT_UL2017_part0 12
-2017  SingleMuon_Run2017C_GT_UL2017_part0 3
-2017  SingleMuon_Run2017C_GT_UL2017_part0 4
-2017  SingleMuon_Run2017C_GT_UL2017_part0 10
-2017  SingleMuon_Run2017C_GT_UL2017_part0 13
-2017  SingleMuon_Run2017C_GT_UL2017_part0 19
-2017  SingleMuon_Run2017B_GT_UL2017 1
+2016APV TBar_tWch_noFullyHad
+2016APV TBar_tch
+2016APV TTSemi_pow_part0
+2016APV TTSemi_pow_part1
+2016APV WJetsToLNu_Pt100To250_part0
+2016APV WJetsToLNu_Pt100To250_part1
+2016APV WJetsToLNu_Pt250To400_part2
+2016APV WJetsToLNu_Pt250To400_part3
 )

@@ -5,7 +5,7 @@ allvars= theWVultimateset + theWVultimateset_log #++leptons
 doWhat=sys.argv[1] #cards or plots
 #year=sys.argv[2]
 pf="" #plotsForAN"
-years=["2017","2018"]#"2016APV","2016",
+years=["2017"]#,"2018"]#"2016APV","2016",
 #years.append(year)
 
 allfavs=["mu","el","onelep"]

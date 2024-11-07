@@ -148,15 +148,19 @@ CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeigh
 CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016APV"
 
 
+#CMS18_trigger_el     : $AllFromMC : .*el.*|.*lep.* :  : templateAsymm  ; AddWeights=['triggerSF_el_up/triggerSF_el'\,'triggerSF_el_dn/triggerSF_el']
+#CMS18_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* :  : templateAsymm  ; AddWeights=['trgsf_mu_up/trgsf_mu'\,'trgsf_mu_dn/trgsf_mu']
 
-CMS18_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,1\,1)', year="2018"
-CMS18_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,1\,1)', year="2018"
-CMS17_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2017\,1\,1)', year="2017"
-CMS17_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2017\,1\,1)', year="2017"
-CMS16_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,1\,1)', year="2016"
-CMS16_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,1\,1)', year="2016"
-CMS16apv_trigger_el  : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,0\,1)', year="2016APV"
-CMS16apv_trigger_mu  : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,0\,1)', year="2016APV"
+
+
+##amCMS18_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,1\,1)', year="2018"
+##amCMS18_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2018\,1\,1)', year="2018"
+##amCMS17_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2017\,1\,1)', year="2017"
+##amCMS17_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2017\,1\,1)', year="2017"
+##amCMS16_trigger_el     : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,1\,1)', year="2016"
+##amCMS16_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,1\,1)', year="2016"
+##amCMS16apv_trigger_el  : $AllFromMC : .*el.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,0\,1)', year="2016APV"
+##amCMS16apv_trigger_mu  : $AllFromMC : .*mu.*|.*lep.* : templateSymm; Normalize=False, AddWeight='triggerSF_ttH(Lep1_pdgId\,Lep1_pt\,Lep1_pdgId\,Lep1_pt\,1\,2016\,0\,1)', year="2016APV"
 
 
 

@@ -55,9 +55,9 @@ fitvars={
 ''                  : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]"
 }
 
-baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_skimmed/' #skimmed parent trees 
-ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/' #unskimmed parent trees
-MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc','1_btag_SFs_fixedWP_v1']#,'nnpdf_rms'] #1_btag_SFs'
+baseDir     = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_02112024/' #skimmed parent trees 
+ubaseDir    = '/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_02112024/' #06012023/' #unskimmed parent trees
+MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc','1_btag_SFs_fixedWP_v1',"3_eltrigsf"]#,'nnpdf_rms'] #1_btag_SFs'
 Datafriends = ['1_recl']
 friends     = ['3_ak8_sdm45','0_wjest_v5']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
@@ -109,7 +109,7 @@ def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     cmd += ' -p '+','.join(processes)
     if invertedcuts:
         cmd += ''.join(' -I ^'+cut for cut in invertedcuts )
-    if applyWtsnSFs: cmd+=" -W puWeight*L1PreFiringWeight_Nom*lepSF*btagSF*triggerSF_ttH(0) "
+    if applyWtsnSFs: cmd+=" -W puWeight*L1PreFiringWeight_Nom*lepSF*btagSF*triggerSF_el*trgsf_mu "
     if scaleprocesses:
         for proc,scale in scaleprocesses.items():
             cmd += ' --scale-process {proc} {scale} '.format(proc=proc, scale=scale)
@@ -143,9 +143,9 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
     cmd += ' -p '+','.join(processes)
     if applyWtsnSFs and not bareNano:
         if doWJtypeplots:
-            cmd+=" -W L1PreFiringWeight_Nom*puWeight*lepSF*btagSF*triggerSF_ttH(0) "
+            cmd+=" -W L1PreFiringWeight_Nom*puWeight*lepSF*btagSF*triggerSF_el*trgsf_mu "
         else:
-            cmd+=" -W L1PreFiringWeight_Nom*puWeight*lepsf*btagSF*triggerSF_ttH(0) " 
+            cmd+=" -W L1PreFiringWeight_Nom*puWeight*lepsf*btagSF*triggerSF_el*trgsf_mu " 
     else:
         if not bareNano:
             cmd += ''.join(" -W puWeight*L1PreFiringWeight_Nom")
