@@ -19,11 +19,11 @@ echo $runWhat,$year,$runWhere
 
 ################### following should not be changed
 localTrees='local_dir_NAME/'  
-Trees='NanoTrees_v9_vvsemilep_02112024/' #_skimmed/'
+Trees='NanoTrees_v9_vvsemilep_13112024_skimmed/'
 
 if [ ${runWhat} == "reclmc" ] ||  [ ${runWhat} == "recldata" ]
 then 
-    Trees='NanoTrees_v9_vvsemilep_02112024/' #06012023/'
+    Trees='NanoTrees_v9_vvsemilep_13112024/' #06012023/'
 fi 
 
 nEvt=120000 
@@ -51,31 +51,22 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence  " # #--de .*Run.* "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence  --de .*Run.* "
 	;;
+
 
 recldata)
 	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence --dm .*Run.* "
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All --de .*Run.* "
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All  --de .*Run.* "
 	;;
 
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}2_recl_allvars/ ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root " #--de .*Run.* "
-	;;
-
-fjtagged)
-	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --de .*Run.* "
-	;;
-
-fjtaggeddata)
-	echo "fjtaggeddata"
-	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*GT.* "
+	basecmd="${BCORE}2_recl_allvars/ ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root  --de .*Run.* "
 	;;
 
 goodfj)
@@ -90,7 +81,7 @@ goodfjdata)
 
 trigsf)
 	echo "el trigger sfs"
-        basecmd="${BCORE}3_eltrigsf  ${CMGT} trigSFs_el -F Friends ${Parent}/1_recl/{cname}_Friend.root --de .*Run.* "
+        basecmd="${BCORE}3_eltrigsf  ${CMGT} trigSFs_el -F Friends ${Parent}/1_recl/{cname}_Friend.root  --de .*Run.* "
 	;;
 
 wjet)
@@ -111,7 +102,7 @@ nnpdf)
 
 skimwjet) 
 	echo "wj skim"
-	basecmd="${BCORE}/wjest_skim_v1  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root "
+	basecmd="${BCORE}/wjest_skim  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root "
 	;;
 
 top)

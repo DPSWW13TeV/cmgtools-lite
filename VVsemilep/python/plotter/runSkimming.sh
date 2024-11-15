@@ -1,7 +1,7 @@
 #!/bin/bash
 baseDir='/eos/cms/store/cmst3/group/dpsww/'
-Trees='NanoTrees_v9_vvsemilep_02112024/' #06012023/' #'vvsemilep/' 
-skimmedTrees='NanoTrees_v9_vvsemilep_02112024_skimmed' 
+Trees='NanoTrees_v9_vvsemilep_13112024/' #06012023/' #'vvsemilep/' 
+skimmedTrees='NanoTrees_v9_vvsemilep_13112024_skimmed' 
 Friends_recl_unskimmed='1_recl'
 
 [ ! -d "$skimmedTrees" ] && mkdir -p "$skimmedTrees"

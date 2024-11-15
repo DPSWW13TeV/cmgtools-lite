@@ -28,12 +28,13 @@ conf_old = dict(
 conf = dict(
         looselepPt=10,
         tightlepPt=30,
+        tightlepPt_recl=40,
         muPt = 10, 
         elePt = 10, 
         sip3dloose = 8, 
         sip3dtight = 4, 
         dxy =  0.05, 
-        dz = 0.2, 
+        dz = 0.1, 
         eleIdloose = "mvaFall17V2Iso_WPL",
         eleIdtight = "mvaFall17V2Iso_WP90",
         muIdloose = "looseId",
@@ -45,7 +46,7 @@ conf = dict(
         fatjetmsdcut=40,
         jetptcut=25,
         jeteta=2.4,
-        metcut=50
+        metcut=30
 )
 
 nElTight = "Sum$(Electron_pt > {tightlepPt} && Electron_sip3d < {sip3dtight}  && Electron_{eleIdloose} && Electron_{eleIdtight})".format(**conf)
@@ -65,10 +66,11 @@ vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
                       "{nMuLoose} + {nElLoose} >= 1 &&" +
                       "{nMuLoose} + {nElLoose} < 3").format(nMuTight = nMuTight, nElTight = nElTight, nJetLoose = nJetLoose, nMuLoose= nMuLoose, nElLoose = nElLoose)
 
-wvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
-                      "{nMuTight} + {nElTight} == 1  &&" + 
+wvsemilep_skim_cut = ("nMuon + nElectron > 0  &&" +
+                      "{nMuTight} + {nElTight} > 0  &&"+ 
+                      "{nMuTight} + {nElTight} < 3 && " + 
                       "{nJetLoose} && " + "{metsel} && " + 
-                      "{nMuLoose} + {nElLoose} >= 1 &&" +
+                      "{nMuLoose} + {nElLoose} > 0  &&" +
                       "{nMuLoose} + {nElLoose} < 3 ").format(metsel=metsel,nMuTight = nMuTight, nElTight = nElTight, nJetLoose = nJetLoose, nMuLoose= nMuLoose, nElLoose = nElLoose)
 
 
@@ -91,7 +93,7 @@ def clean_and_FO_selection_VVsemilep(lep,year, subera): ##am for tight leptn ids
         return ( ttH_idEmu_cuts_E3(lep) and \
                  abs(lep.eta) < 2.5 and lep.pt > conf["looselepPt"] and lep.sip3d < conf["sip3dloose"] and abs(lep.dxy) < conf["dxy"] and abs(lep.dz) < conf["dz"] and getattr(lep, conf["eleIdloose"]) )
 
-tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and lep.pt>conf["tightlepPt"] and lep.sip3d < conf["sip3dtight"] and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso04_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
+tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and lep.pt>conf["tightlepPt_recl"] and lep.sip3d < conf["sip3dtight"] and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso04_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
 
 foTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and abs(tau.dxy) < 1000 and abs(tau.dz) < 0.2  and (int(tau.idDeepTau2017v2p1VSjet)>>1 & 1) # VVLoose WP
 tightTauSel = lambda tau: (int(tau.idDeepTau2017v2p1VSjet)>>2 & 1) # VLoose WP
@@ -100,11 +102,11 @@ from CMGTools.VVsemilep.tools.nanoAOD.ttHPrescalingLepSkimmer import ttHPrescali
 # NB: do not wrap lepSkim a lambda, as we modify the configuration in the cfg itself 
 lepSkim = ttHPrescalingLepSkimmer(5, 
                 muonSel = muonSelection, electronSel = electronSelection,
-                minLeptonsNoPrescale = 1, # things with less than 2 leptons are rejected irrespectively of the prescale
+                minLeptonsNoPrescale = 1, # things with less than 1 lepton are rejected irrespectively of the prescale
                 minLeptons = 1, requireOppSignPair = True,
-                jetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) <  conf["jeteta"] and j.jetId >=2, ##changed
-                fatjetSel = lambda f : f.pt > conf["fatjetptcut"] and abs(f.eta) < conf["jeteta"],  ##not all samples have fatjets
-                minJets = 4, minMET = 40, minFatJets = 1)
+                jetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) <  conf["jeteta"] and j.jetId >=0,
+                fatjetSel = lambda f : f.pt > conf["fatjetptcut"] and abs(f.eta) < conf["jeteta"], 
+                minJets = 4, minMET = 30, minFatJets = 1)
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger import collectionMerger
 lepMerge = collectionMerger(input = ["Electron","Muon"], 
                             output = "LepGood", 
@@ -122,12 +124,12 @@ from CMGTools.VVsemilep.tools.nanoAOD.LepMVAULFriend import lepMVA
 
 
 
-vvsemilep_sequence_step1 = [lepSkim, lepMerge, autoPuWeight, yearTag, lepJetBTagDeepFlav, xsecTag, lepMasses]
+vvsemilep_sequence_step1 = [lepSkim, lepMerge, autoPuWeight, yearTag, lepJetBTagDeepFlav, xsecTag]#, lepMasses]
 
 #==== 
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR
 from CMGTools.VVsemilep.tools.nanoAOD.ttHLepQCDFakeRateAnalyzer import ttHLepQCDFakeRateAnalyzer
-centralJetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) < conf["jeteta"] and j.jetId >= 2   ##changed
+centralJetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) < conf["jeteta"] and j.jetId >= 0   ##changed
 lepFR = ttHLepQCDFakeRateAnalyzer(jetSel = centralJetSel,
                                   pairSel = lambda pair : deltaR(pair[0].eta, pair[0].phi, pair[1].eta, pair[1].phi) > 0.7,
                                   maxLeptons = 1, requirePair = True)
@@ -164,7 +166,7 @@ def smoothBFlav(jetpt,ptmin,ptmax,year, subera,scale_loose=1.0):
 jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year" ]] + ['jer']
 #jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] 
 
-
+###jets used for cleaning should be loose herejet.jetId > 0
 from CMGTools.VVsemilep.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning
 from CMGTools.VVsemilep.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
 recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
@@ -174,8 +176,8 @@ recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
                                                            tightLeptonSel = tightLeptonSel,
                                                            FOTauSel = foTauSel,
                                                            tightTauSel = tightTauSel,
-                                                           selectJet =    lambda jet: jet.pt > conf["jetptcut"] and abs(jet.eta) < conf["jeteta"] and jet.jetId >=2 , # pt and eta cuts are (hard)coded in the step2 ##changed
-                                                           selectFatJet = lambda fatjet: fatjet.pt > conf["fatjetptcut"] and abs(fatjet.eta) < conf["jeteta"], # and fatjet.msoftdrop > conf["fatjetmsdcut"], 
+                                                           selectJet =    lambda jet: jet.pt > conf["jetptcut"] and abs(jet.eta) < conf["jeteta"] and jet.jetId >=0 , # pt and eta cuts are (hard)coded in the step2 ##changed
+                                                           selectFatJet = lambda fatjet: fatjet.pt > conf["fatjetptcut"] and abs(fatjet.eta) < conf["jeteta"], 
                                                            coneptdef =    lambda lep: conept_TTH(lep),
 )
 recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
@@ -194,7 +196,6 @@ recleaner_step2_mc = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel=
                                                           cleanJetsWithFOTaus=True,
                                                           doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                                           jetPts=[25,30],
-                                                          ##amjetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
                                                           btagL_thr=99, # they are set at runtime 
                                                           btagM_thr=99,
                                                           isMC = True,
@@ -276,13 +277,13 @@ def _fires(ev, path):
 
 triggerGroups=dict(
     Trigger_1e={
-        2016 : lambda ev : _fires(ev,'HLT_Ele27_WPTight_Gsf'), # or _fires(ev,'HLT_Ele25_eta2p1_WPTight_Gsf') or _fires(ev,'HLT_Ele27_eta2p1_WPLoose_Gsf'),
-        2017 : lambda ev : _fires(ev,'HLT_Ele32_WPTight_Gsf') or _fires(ev,'HLT_Ele35_WPTight_Gsf') or _fires(ev,'HLT_Ele32_WPTight_Gsf_L1DoubleEG'),
+        2016 : lambda ev : _fires(ev,'HLT_Ele27_WPTight_Gsf'), 
+        2017 : lambda ev : _fires(ev,'HLT_Ele32_WPTight_Gsf') or _fires(ev,'HLT_Ele35_WPTight_Gsf'), # or _fires(ev,'HLT_Ele32_WPTight_Gsf_L1DoubleEG'),
         2018 : lambda ev : _fires(ev,'HLT_Ele32_WPTight_Gsf'),
     },
     Trigger_1m={
-        2016 : lambda ev : _fires(ev,'HLT_IsoMu24') or _fires(ev,'HLT_IsoTkMu24'),# or _fires(ev,'HLT_IsoMu22_eta2p1') or _fires(ev,'HLT_IsoTkMu22_eta2p1') or _fires(ev,'HLT_IsoMu22') or _fires(ev,'HLT_IsoTkMu22'),
-        2017 : lambda ev : _fires(ev,'HLT_IsoMu27'),# or _fires(ev,'HLT_IsoMu24'),
+        2016 : lambda ev : _fires(ev,'HLT_IsoMu24') or _fires(ev,'HLT_IsoTkMu24'), 
+        2017 : lambda ev : _fires(ev,'HLT_IsoMu27'),
         2018 : lambda ev : _fires(ev,'HLT_IsoMu24'),
     },
     Trigger_2e={
@@ -317,13 +318,13 @@ triggerGroups=dict(
 
 triggerGroups_dict=dict(
     Trigger_1e={
-        2016 :  ['HLT_Ele27_WPTight_Gsf' , 'HLT_Ele25_eta2p1_WPTight_Gsf' , 'HLT_Ele27_eta2p1_WPLoose_Gsf'],
-        2017 :  ['HLT_Ele32_WPTight_Gsf' , 'HLT_Ele35_WPTight_Gsf'],
-        2018 :  ['HLT_Ele32_WPTight_Gsf'],
+        2016 :  ['HLT_Ele27_WPTight_Gsf' ],
+        2017 :  ['HLT_Ele32_WPTight_Gsf' , 'HLT_Ele35_WPTight_Gsf'], # , 'HLT_Ele32_WPTight_Gsf_L1DoubleEG'],
+        2018 :  ['HLT_Ele32_WPTight_Gsf' ],
     },
     Trigger_1m={
-        2016 :  ['HLT_IsoMu24' , 'HLT_IsoTkMu24' , 'HLT_IsoMu22_eta2p1' , 'HLT_IsoTkMu22_eta2p1' , 'HLT_IsoMu22' , 'HLT_IsoTkMu22'],
-        2017 :  ['HLT_IsoMu24' , 'HLT_IsoMu27'],
+        2016 :  ['HLT_IsoMu24' , 'HLT_IsoTkMu24' ],
+        2017 :  ['HLT_IsoMu27'],
         2018 :  ['HLT_IsoMu24'],
     },
     Trigger_2e={

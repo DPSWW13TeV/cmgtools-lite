@@ -5,19 +5,21 @@ echo $*
 echo 'i am in this directory'
 echo $PWD
 
-#cd ${1}
+cd ${1}
 echo "i am in this directory ${PWD}"
 eval $(scramv1 runtime -sh);
 
+#cp -r /eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_skimmed/2016 /eos/cms/store/cmst3/user/anmehta/
 #cp -r /eos/cms/store/cmst3/group/dpsww/NanoTrees_v7_dpsww_skim2lss /eos/cms/store/cmst3/user/anmehta/ 
 #cp -r /eos/cms/store/cmst3/group/dpsww/aTGC_Apr2024_UL16/*  /eos/cms/store/group/phys_smp/ec/anmehta/aTGC_Nov2024_UL16
 
-#haddChunks.py -n  --max-size 40 /eos/cms/store/cmst3/group/dpsww/${1}
+haddChunks.py -n  --max-size 40 /eos/cms/store/cmst3/group/dpsww/${2}
+
 ##amcd /eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/2018
 ##am#echo "i am in this directory ${PWD}"
 
 #python checkfaulty_nAODfiles.py ${2}
-python runhaddNano.py ${2} ${3} ${4}
+#python runhaddNano.py ${2} ${3} ${4}
 
 #haddnano.py ${1} ${2} ${3}
 #fi

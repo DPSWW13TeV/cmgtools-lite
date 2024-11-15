@@ -99,7 +99,7 @@ class vvsemilep_TreeForWJestimation(Module):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        for var in 'pt,eta,phi,pdgId,tightId'.split(','):
+        for var in 'pt,eta,phi,pdgId,tightId,pfRelIso04_all,mvaFall17V2Iso_WP90'.split(','):
             for l in range(self.lepMultiplicity):
                 self.out.branch('Lep%d_%s'%(l+1,var),'F')
         
@@ -165,7 +165,7 @@ class vvsemilep_TreeForWJestimation(Module):
         self.out.fillBranch('nLepTight',event.nLepTight_Recl)
 
         for lep in range(self.lepMultiplicity):
-            for var in 'pt,eta,phi,pdgId'.split(','):
+            for var in 'pt,eta,phi,pdgId,pfRelIso04_all,mvaFall17V2Iso_WP90'.split(','):
                 self.out.fillBranch('Lep%d_%s'%(lep+1,var), getattr(leps[lep],var))
             self.out.fillBranch('Lep%d_tightId'%(lep+1), getattr(leps[lep],"isLepTight_Recl"))
         for jet in range(self.fjetMultiplicity):

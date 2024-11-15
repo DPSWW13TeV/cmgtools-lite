@@ -12,7 +12,7 @@ kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = getHeppyOption("year", "2017")
+year = getHeppyOption("year", "2016APV")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","both")
@@ -66,63 +66,14 @@ DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
-        "ZH.*"
-        #"WplusH","WminusH","ZH.*"
-       # "WW.*","WZ.*","ZZ.*",".*aTGC.*","T.*","WJetsToLNu_Pt.*","VH.*"
-#        "VH.*","QCD.*","W.*","T.*","Z.*"
+        "Tbar_.*",
+        #".*QCD.*",
+        #".*aTGC.*.",
+        #"VH.*",
+        #"WplusH","WminusH","ZH.*","ZZTo2Q2L","WZTo1L1Nu2Q","WWTo1L1Nu2Q",
+        #"TTSemi.*","T_.*","TT_mtt.*","WJetsToLNu_Pt.*", #"WJetsToLNu_HT.*",
         #"W.*Jtotaunu_PM","W.*Jtomunu_PM" #,"WJetsToLNu_Pt.*","WJetsToLNu_.*J",
-        #        "QCD_Pt300toInf_EMEnriched"
-        #        "QCD_Pt300to470_Mu5"
-        #        "QCD_Pt15to20_EMEnriched"
-        #"QCD_Pt.*_Mu5",
-        #        ".*aTGC.*"
-        #"QCD_Mu15","QCD_Pt20to30_Mu5","QCD_Pt30to50_Mu5",
-        #"QCD_Pt20to30_EMEnriched","QCD_Pt-15to20_EMEnriched",
-        #        "W.*","Z.*","QCD.*",
-        ##am        #  # triboson
-        #"WWW"
-        #"QCD.*"
-        #        "QCD_Pt20to30_bcToE"        
-        #        "WplusH","ZH","GGH","WminusH"
-        #        "WJetsToLNu_.*J","WJetsToLNu_Pt.*"
-        #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600"
-        #".*aTGC.*mWV.*",
-        #        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600",
-        #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",#problem
-        #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
-        #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf"
-        #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
         #".*SMEFT_LO.*",
-        #     "WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
-        #      "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
-        #       "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
-        #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
-        #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
-        #        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf", 
-
-#        "WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
-#        "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
-#        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
-#        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
-#        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
-#        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
-        #".*_aTGC_pTZ.*"
-        #".*aTGC.*"
-        #"WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX",
-        #"WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX"
-        # diboson
-        #        "ZZTo2Q2L", "ZH","GGH","VHToNonbb",
-        #        "WZTo2Q2L" #, #       "WZTo1L1Nu2Q",
-        #        "WWTo1L1Nu2Q",
-        #"WJets.*",
-        #   "WJetsToLNu_HT70To100",
-        #"DYJetsToLL_M50", 
-        #"DYJetsToLL_M50_LO",
-        #"WZToLNuQQ01j_5f_amcatnloFxFx",
-        #"DYJetsToLL_M10to50_LO",
-        #  "DYJets.*",
-        #"TTJets",   
-        #"TTSemi_pow",        "TT_mtt.*",
 
      ])
     ##am removed double el triggers for 2018 

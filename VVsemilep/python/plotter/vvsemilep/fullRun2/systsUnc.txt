@@ -11,7 +11,7 @@ $alias : top    : $st|$ttbar
 $alias : qcd    : QCD.*
 $alias : wwaTGC : WW_sm_lin_quad.*|WW_quad.*
 $alias : wzaTGC : WZ_sm_lin_quad.*|WZ_quad.*
-$alias : AllFromMC  : $top|$vvsm|$qcd|$wj|$Others|$VH|$aTGC
+$alias : AllFromMC  : $top|$vvsm|$qcd|$wj|$Others|$VH|$wwaTGC|$wzaTGC
 $alias : PNET       : $top|$vvsm|$aTGC|$Others|$VH
 $alias : bkg        : $top|$wj|$VH|$vvsm|$Others
 $alias : sig        : $wwaTGC|$wzaTGC
@@ -52,7 +52,7 @@ lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.001; year="2017"
 CMS_qcdscales_shape_VH : $VH : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 CMS_qcdscales_shape_Others : $Others : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 
-CMS_qcdscales_shape_WW : $wwaTGC|WW_sm : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+CMS_qcdscales_shape_WW : $wwaTGC|WW_sm : .* : envelope ;  FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 CMS_qcdscales_shape_WZ : $wzaTGC|WZ_sm : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 
 
@@ -75,10 +75,10 @@ ISR_st : $st : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
 FSR_st : $st : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
 ISR_Others : $Others : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
 FSR_Others : $Others : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
-ISR_WW : $wwaTGC|WW_sm : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
-FSR_WW : $wwaTGC|WW_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
-ISR_WZ : $wzaTGC|WZ_sm : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
-FSR_WZ : $wzaTGC|WZ_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
+ISR_WW : $wwaTGC|WW_sm : .*:templateAsymm; Normalize=True , AddWeights=['PSWeight[0]'\,'PSWeight[2]']
+FSR_WW : $wwaTGC|WW_sm : .*:templateAsymm; Normalize=True , AddWeights=['PSWeight[1]'\,'PSWeight[3]']
+ISR_WZ : $wzaTGC|WZ_sm : .*:templateAsymm; Normalize=True , AddWeights=['PSWeight[0]'\,'PSWeight[2]']
+FSR_WZ : $wzaTGC|WZ_sm : .*:templateAsymm; Normalize=True , AddWeights=['PSWeight[1]'\,'PSWeight[3]']
 
 #ISR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
 #FSR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
@@ -92,11 +92,11 @@ FSR_WZ : $wzaTGC|WZ_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3
 #FSR_WZ_aTGC :  $wzaTGC : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
 
 
-pdf_WW	     	           : $wwaTGC|WW_sm   : .* : normSymm : 1.05
-pdf_WZ   	           : $wzaTGC|WZ_sm   : .* : normSymm : 1.05
+pdf_WW	     	           : $wwaTGC|WW_sm   : .* : normSymm ; Normalize=True: 1.05
+pdf_WZ   	           : $wzaTGC|WZ_sm   : .* : normSymm ; Normalize=True:1.05
 pdf_tt	           	   : $tt   : .* : normSymm : 1.03
 pdf_st	           	   : $st   : .* : normSymm : 1.02
-pdf_wj	           	   : $wj   : .* : normSymm : 1.006
+pdf_wj	           	   : $wj   : .* : normSymm : 1.06
 pdf_Others           	   : $Others   : .* : normSymm : 1.02
 
 
@@ -119,7 +119,6 @@ pdf_Others           	   : $Others   : .* : normSymm : 1.02
 CMS16_L1PreFiring : $AllFromMC : .* : templateAsymm; AddWeights=['L1PreFiringWeight_Up/L1PreFiringWeight_Nom'\,'L1PreFiringWeight_Dn/L1PreFiringWeight_Nom'], year="2016\,2016APV"
 CMS17_L1PreFiring : $AllFromMC : .* : templateAsymm; AddWeights=['L1PreFiringWeight_Up/L1PreFiringWeight_Nom'\,'L1PreFiringWeight_Dn/L1PreFiringWeight_Nom'], year="2017"
 
-#pu
 
 
 CMS_pileup_2016 : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight'], year="2016\,2016APV"
@@ -148,8 +147,8 @@ CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeigh
 CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016APV"
 
 
-#CMS18_trigger_el     : $AllFromMC : .*el.*|.*lep.* :  : templateAsymm  ; AddWeights=['triggerSF_el_up/triggerSF_el'\,'triggerSF_el_dn/triggerSF_el']
-#CMS18_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* :  : templateAsymm  ; AddWeights=['trgsf_mu_up/trgsf_mu'\,'trgsf_mu_dn/trgsf_mu']
+CMS18_trigger_el     : $AllFromMC : .*el.*|.*lep.* :   templateAsymm  ; AddWeights=['triggerSF_el_up/triggerSF_el'\,'triggerSF_el_dn/triggerSF_el']
+CMS18_trigger_mu     : $AllFromMC : .*mu.*|.*lep.* :   templateAsymm  ; AddWeights=['trgsf_mu_up/trgsf_mu'\,'trgsf_mu_dn/trgsf_mu']
 
 
 

@@ -4,8 +4,8 @@ from plots_VVsemilep import *
 allvars= theWVultimateset + theWVultimateset_log #++leptons
 doWhat=sys.argv[1] #cards or plots
 #year=sys.argv[2]
-pf="" #plotsForAN"
-years=["2017"]#,"2018"]#"2016APV","2016",
+pf=""
+years=["2016"]#,"2016APV","2017","2018"]#"2016APV","2016",
 #years.append(year)
 
 allfavs=["mu","el","onelep"]
@@ -14,20 +14,23 @@ fitvar_sig=['mWV']#,'mWV_fixedbW']
 fitvar_bkg=['mWV']#'fjet_pt']#,'fjet_pt_fixedbW']
 
 lepsel={'topCR' : [allfavs],
-        'topCR_incl' : [ ll,fitvar_bkg],
-        'topCR_twob' : [ ["onelep"],fitvar_bkg],
-        'topCR_oneb' : [ ["onelep"],fitvar_bkg],
-        'topCR_lo'   : [ ["onelep"],fitvar_bkg],
-        'topCR_hi'   : [ ["onelep"],fitvar_bkg],
-        'inclB' : [ll,fitvar_bkg],
-        'sig'   : [ll,fitvar_sig],
-        'sb_lo' : [allfavs,fitvar_sig],
-        'sb_hi' : [allfavs,fitvar_sig],
-        'wjCR_incl': [ll,fitvar_bkg],
-        'wjCR_lo'  : [ll,fitvar_bkg],
-        'wjCR_hi'  : [ll,fitvar_bkg],
+        'topCR_incl'  : [ ll,fitvar_bkg],
+        'topCR_twob'  : [ ["onelep"],fitvar_bkg],
+        'topCR_oneb'  : [ ["onelep"],fitvar_bkg],
+        'topCR_lo'    : [ ["onelep"],fitvar_bkg],
+        'topCR_hi'    : [ ["onelep"],fitvar_bkg],
+        'inclB'       : [ll,fitvar_bkg],
+        'sig'         : [ll,fitvar_sig],
+        'SR'          : [ll,fitvar_sig],
+        'sig_lo'      : [ll,fitvar_sig],
+        'sig_hi'      : [ll,fitvar_sig],
+        'sb_lo'       : [allfavs,fitvar_sig],
+        'sb_hi'       : [allfavs,fitvar_sig],
+        'wjCR_incl'   : [ll,fitvar_bkg],
+        'wjCR_lo'     : [ll,fitvar_bkg],
+        'wjCR_hi'     : [ll,fitvar_bkg],
 }
-ops=['cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
+ops=['all']#'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
 
 
 fName='submitFile_%s.condor'%doWhat
@@ -51,7 +54,7 @@ if 'plots' in doWhat :
    tmp_condor.write('request_memory = 10GB\n')
 tmp_condor.write('queue info from ( \n')
 
-for sel in ["wjCR_lo","wjCR_hi","topCR_incl","sig","wjCR_incl"]: #,"topCR_incl","topCR_lo","topCR_hi"]
+for sel in ["wjCR_lo","wjCR_hi","topCR_incl","sig_lo","sig_hi"]: #,"sig","wjCR_incl"]: #,"topCR_incl","topCR_lo","topCR_hi"]
    for cat in ["boosted"]: 
        for yr in years: #in "2016APV,2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 

@@ -4,7 +4,8 @@ lumis = {
     '2016': '16.8', #without HIPM
     '2017': '41.5',
     '2018': '59.8',
-    'all' : '19.5,16.8,41.5,59.8',
+    'run2': '136.6',
+    '2016combo': '36.3',
 }
 plots_odir="/eos/user/a/anmehta/www/VVsemilep/EFT_nllscans/"
 baseDir=os.getcwd()
@@ -19,8 +20,8 @@ def combineCards(yr,FS,WC,pf,splittopCR=False,vartop="mWV",varwj="mWV",varsig="m
     if splittopCR:
         topCRpart= '''top_cr_hi_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_hi_{vartop}_{year}/boosted_onelep_topCR_hi_{year}.txt top_cr_lo_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_lo_{vartop}_{year}/boosted_onelep_topCR_lo_{year}.txt'''.format(year=yr,date_dC=date_dC,vartop=vartop)
     else:
-        topCRpart= '''top_cr_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_incl_{vartop}_{year}/boosted_onelep_topCR_incl_{year}.txt '''.format(year=yr,date_dC=date_dC,vartop=vartop)
-        #topCRpart= '''el_top_cr_{year}=Cards/cards_{date_dC}_boosted_el_topCR_incl_{vartop}_{year}/boosted_el_topCR_incl_{year}.txt mu_top_cr_{year}=Cards/cards_{date_dC}_boosted_mu_topCR_incl_{vartop}_{year}/boosted_mu_topCR_incl_{year}.txt'''.format(year=yr,date_dC=date_dC,vartop=vartop)
+        #topCRpart= '''top_cr_{year}=Cards/cards_{date_dC}_boosted_onelep_topCR_incl_{vartop}_{year}/boosted_onelep_topCR_incl_{year}.txt '''.format(year=yr,date_dC=date_dC,vartop=vartop)
+        topCRpart= '''el_top_cr_{year}=Cards/cards_{date_dC}_boosted_el_topCR_incl_{vartop}_{year}/boosted_el_topCR_incl_{year}.txt mu_top_cr_{year}=Cards/cards_{date_dC}_boosted_mu_topCR_incl_{vartop}_{year}/boosted_mu_topCR_incl_{year}.txt'''.format(year=yr,date_dC=date_dC,vartop=vartop)
 
     if FS == "onelep":
         wjCRpart= '''mu_wj_cr_hi_{year}=Cards/cards_{date_dC}_boosted_mu_wjCR_hi_{varwj}_{year}/boosted_mu_wjCR_hi_{year}.txt mu_wj_cr_lo_{year}=Cards/cards_{date_dC}_boosted_mu_wjCR_lo_{varwj}_{year}/boosted_mu_wjCR_lo_{year}.txt   el_wj_cr_hi_{year}=Cards/cards_{date_dC}_boosted_el_wjCR_hi_{varwj}_{year}/boosted_el_wjCR_hi_{year}.txt el_wj_cr_lo_{year}=Cards/cards_{date_dC}_boosted_el_wjCR_lo_{varwj}_{year}/boosted_el_wjCR_lo_{year}.txt'''.format(year=yr,date_dC=date_dC,varwj=varwj)
@@ -35,13 +36,16 @@ def combineCards(yr,FS,WC,pf,splittopCR=False,vartop="mWV",varwj="mWV",varsig="m
     os.system(cmd1)
     dC = open(finalDC, 'a')
     dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
-norm_WJets_mu_{yr} rateParam mu_sig_{yr}  WJets 1 [0,5]
-norm_WJets_el_{yr} rateParam el_sig_{yr}  WJets 1 [0,5]'''.format(yr=yr))
+norm_WJ_PTB_mu_{yr} rateParam mu*{yr}  WJ_PTB 1 [0,5]
+norm_WJ_PTB_el_{yr} rateParam el*{yr}  WJ_PTB 1 [0,5]'''.format(yr=yr))
     dC.close()
     return finalDC
     return dC
-#norm_WJets_mu_{yr} rateParam mu_sig_{yr}  mu_top_cr_{yr} WJets 1 [0,5]
-#norm_WJets_el_{yr} rateParam el_sig_{yr}  el_top_cr_{yr} WJets 1 [0,5]'''.format(yr=yr))
+
+#norm_WJets_mu_{yr} rateParam mu_sig_{yr}  WJets 1 [0,5]
+#norm_WJets_el_{yr} rateParam el_sig_{yr}  WJets 1 [0,5]'''.format(yr=yr))
+#norm_WJ_PTB_mu_{yr} rateParam mu_sig_{yr}  mu_top_cr_{yr} WJ_PTB 1 [0,5]
+#norm_WJ_PTB_el_{yr} rateParam el_sig_{yr}  el_top_cr_{yr} WJ_PTB 1 [0,5]'''.format(yr=yr))
 
 
 def commandsToRun(yr,dc,pf,plots_odir,WC):
@@ -72,13 +76,20 @@ def commandsToRun(yr,dc,pf,plots_odir,WC):
 
 if __name__ == '__main__':
 
-    year=sys.argv[1]
+    #year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2024-09-23" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2024-11-11" #datetime.date.today().isoformat() #"2021-12-02" #
     pf_input=""
     pf_output=""
-    for op in ['cw']:#'cb','c3w']: #,'cw',']:
-        dC18=combineCards(year,"onelep",op,pf_input,False)
-        commandsToRun(year,dC18,pf_output,plots_odir,op)
+    for op in ['c3w','cw']: #'cb'
+        #dC18=combineCards("2018","onelep",op,pf_input,False)
+        #dC17=combineCards("2017","onelep",op,pf_input,False)
+        dC16=combineCards("2016","onelep",op,pf_input,False)
+        dC16_apv=combineCards("2016APV","onelep",op,pf_input,False)
+        superdC='dc_{date}_{op}_2016combined.txt'.format(date=date,op=op)
+        #cmd='combineCards.py {yr1} {yr2} {yr3} {yr4}> {dc}'.format(dc=superdC,yr1=dC16,yr2=dC17,yr3=dC18,yr4=dC16_apv)
+        cmd='combineCards.py {yr1} {yr2} > {dc}'.format(dc=superdC,yr1=dC16,yr2=dC16_apv)
+        os.system(cmd)
+        commandsToRun("2016combo",superdC,pf_output,plots_odir,op)
         #os.command('mv *%s* %s/'%(dC18.split('.txt')[0],cards_dir))
 
