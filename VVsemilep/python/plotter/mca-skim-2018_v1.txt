@@ -56,8 +56,7 @@ QCD_Pt600to800_Mu5	  : QCD_Pt600to800_Mu5	      : xsec
 QCD_Pt30to50_Mu5 	  : QCD_Pt30to50_Mu5 	      : xsec
 QCD_Pt1000toInf_Mu5 	  : QCD_Pt1000toInf_Mu5       : xsec
 
-QCD_Pt20to30_Mu5      : QCD_Pt20to30_Mu5      : xsec
-QCD_Pt15to20_Mu5      :	QCD_Pt15to20_Mu5      : xsec
+
 QCD_Pt50to80_Mu5      :	QCD_Pt50to80_Mu5      : xsec
 QCD_Pt80to120_Mu5     :	QCD_Pt80to120_Mu5     : xsec
 QCD_Pt470to600_Mu5    :	QCD_Pt470to600_Mu5    : xsec
@@ -72,18 +71,15 @@ QCD_Pt250toInf_bcToE : QCD_Pt250toInf_bcToE : xsec
 QCD_Pt170to250_bcToE : QCD_Pt170to250_bcToE : xsec 
 
 QCD_Pt30to80_bcToE : QCD_Pt30to80_bcToE : xsec
-QCD_Pt15to20_bcToE : QCD_Pt15to20_bcToE : xsec
 QCD_Pt20to30_bcToE : QCD_Pt20to30_bcToE : xsec
 
 WminusH : WminusH : xsec
 WplusH  : WplusH : xsec 
 
-QCD_Pt20to30_EMEnriched   : QCD_Pt20to30_EMEnriched   : xsec 
-QCD_Pt30to50_EMEnriched   : QCD_Pt30to50_EMEnriched   : xsec
+
 QCD_Pt300toInf_EMEnriched : QCD_Pt300toInf_EMEnriched : xsec
 QCD_Pt170to300_EMEnriched : QCD_Pt170to300_EMEnriched : xsec
 QCD_Pt15to20_EMEnriched   : QCD_Pt15to20_EMEnriched   : xsec
-QCD_Pt50to80_EMEnriched	  : QCD_Pt50to80_EMEnriched   : xsec
 QCD_Pt80to120_EMEnriched  : QCD_Pt80to120_EMEnriched  : xsec
 QCD_Pt120to170_EMEnriched :QCD_Pt120to170_EMEnriched  : xsec
 

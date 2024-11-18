@@ -5,8 +5,8 @@ WJ_PTB :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part3+WJetsToLNu_Pt2
 WJ_PTB :  WJetsToLNu_Pt400To600 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets"
 WJ_PTB :  WJetsToLNu_Pt600ToInf: xsec   : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets"
 WJ_PTB :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2016\,2016APV"
-WJ_PTB :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2016"
-WJ_PTB :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2+WJetsToLNu_Pt250To400_part3 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2016APV"
+WJ_PTB :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2016\,2016APV"
+
 
 
 

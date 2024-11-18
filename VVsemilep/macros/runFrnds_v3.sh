@@ -37,7 +37,7 @@ CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules ";
 case ${runWhere} in
 condor)
 	echo "running on condor"
-	cmd_1=" -q condor --maxruntime 280 --log $PWD/logs" #180 
+	cmd_1=" -q condor --maxruntime 480 --log $PWD/logs" #180 
 
 	;;
 *) 
@@ -60,7 +60,7 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All  --de .*Run.* "
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All --de .*Run.* "
 	;;
 
 
@@ -86,8 +86,7 @@ trigsf)
 
 wjet)
 	echo "wjet"
-	basecmd="${BCORE}/0_wjest_v5  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  --de .*Run.* "
-
+	basecmd="${BCORE}/0_wjest_v5  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --de .*Run.* "
 	;;
 
 wjet_data)
@@ -107,7 +106,7 @@ skimwjet)
 
 top)
 	echo "top pT reweighting "
-	basecmd="${BCORE}2_toppT_rw  ${CMGT} topsf   --dm TT.* "
+	basecmd="${BCORE}2_toppT_rw  ${CMGT} topsf --dm TT.* "
 	;;
 
 genInfo)

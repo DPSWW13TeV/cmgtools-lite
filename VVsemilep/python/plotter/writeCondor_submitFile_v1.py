@@ -5,7 +5,7 @@ allvars= theWVultimateset + theWVultimateset_log #++leptons
 doWhat=sys.argv[1] #cards or plots
 #year=sys.argv[2]
 pf=""
-years=["2016"]#,"2016APV","2017","2018"]#"2016APV","2016",
+years=["2016APV"] #"2016","2017"] #"2016APV","2017"] #,"2018"]#"2016APV","2016",
 #years.append(year)
 
 allfavs=["mu","el","onelep"]
@@ -54,7 +54,7 @@ if 'plots' in doWhat :
    tmp_condor.write('request_memory = 10GB\n')
 tmp_condor.write('queue info from ( \n')
 
-for sel in ["wjCR_lo","wjCR_hi","topCR_incl","sig_lo","sig_hi"]: #,"sig","wjCR_incl"]: #,"topCR_incl","topCR_lo","topCR_hi"]
+for sel in ["topCR_incl","sig","wjCR_incl"]: #"wjCR_lo","wjCR_hi","sig_lo","sig_hi"]: #, #,"topCR_incl","topCR_lo","topCR_hi"]
    for cat in ["boosted"]: 
        for yr in years: #in "2016APV,2016,2017,2018".split(","):
            for lep in lepsel[sel][0]: 

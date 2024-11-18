@@ -1,3 +1,26 @@
+QCD_Pt600to800_Mu5	  : QCD_Pt600to800_Mu5	      : xsec
+QCD_Pt30to50_Mu5 	  : QCD_Pt30to50_Mu5 	      : xsec
+QCD_Pt1000toInf_Mu5 	  : QCD_Pt1000toInf_Mu5       : xsec
+
+QCD_Pt20to30_Mu5      : QCD_Pt20to30_Mu5      : xsec
+QCD_Pt50to80_Mu5      :	QCD_Pt50to80_Mu5      : xsec
+QCD_Pt80to120_Mu5     :	QCD_Pt80to120_Mu5     : xsec
+QCD_Pt470to600_Mu5    :	QCD_Pt470to600_Mu5    : xsec
+QCD_Pt800to1000_Mu5   :	QCD_Pt800to1000_Mu5   : xsec
+QCD_Pt120to170_Mu5    :	QCD_Pt120to170_Mu5    : xsec
+QCD_Pt170to300_Mu5    :	QCD_Pt170to300_Mu5    : xsec
+
+
+QCD_Pt80to170_bcToE : QCD_Pt80to170_bcToE : xsec
+QCD_Pt250toInf_bcToE : QCD_Pt250toInf_bcToE : xsec
+QCD_Pt170to250_bcToE : QCD_Pt170to250_bcToE : xsec 
+
+
+QCD_Pt300toInf_EMEnriched : QCD_Pt300toInf_EMEnriched : xsec
+QCD_Pt170to300_EMEnriched : QCD_Pt170to300_EMEnriched : xsec
+QCD_Pt80to120_EMEnriched  : QCD_Pt80to120_EMEnriched  : xsec
+QCD_Pt120to170_EMEnriched :QCD_Pt120to170_EMEnriched  : xsec
+
 data : SingleElectron_Run2017B_UL2017
 data : SingleElectron_Run2017E_UL2017
 data : SingleMuon_Run2017E_GT_UL2017
