@@ -16,7 +16,7 @@ sb_lo      : (Selak8Jet1_msoftdrop > 45    && Selak8Jet1_msoftdrop < 65);    Dis
 sb_hi      : Selak8Jet1_msoftdrop >= 105  ;   Disable=True
 SB	   : ((Selak8Jet1_msoftdrop > 45   && Selak8Jet1_msoftdrop < 65) ||  Selak8Jet1_msoftdrop >= 105  );   Disable=True
 
-sig        :  (Selak8Jet1_msoftdrop >= 65   && Selak8Jet1_msoftdrop < 105);   Disable=True
+sig_incl   :  (Selak8Jet1_msoftdrop >= 65   && Selak8Jet1_msoftdrop < 105);   Disable=True
 sig_lo     :  (Selak8Jet1_msoftdrop >= 65   && Selak8Jet1_msoftdrop < 85);    Disable=True
 sig_hi     :  (Selak8Jet1_msoftdrop >= 85   && Selak8Jet1_msoftdrop < 105);   Disable=True
 

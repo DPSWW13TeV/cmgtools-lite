@@ -4,8 +4,10 @@
 debugsel       : mWV_dumy : 36,950,4550  ; XTitle="mWV"
 
 mWV            	 	  : mWV : [950,1050,1150,1250,1350,1500,1700,1900,2300,2700,4500]  ; XTitle="m_{WV} (GeV)",  MoreY=1.5 #, IncludeOverflows=True
+mWV_fine            	  : mWV : [950,1050,1150,1250,1350,1450,1550,1650,1750,1850,2000,2500,3500,4500]  ; XTitle="m_{WV} (GeV)",  MoreY=1.2 #, IncludeOverflows=True
 mWV_logy            	  : mWV : [950,1050,1150,1250,1350,1500,1700,1900,2300,2700,4500]  ; XTitle="m_{WV} (GeV)",  IncludeOverflows=True, MoreY=10, Logy
 FatJet1_pt                : Selak8Jet1_pt  : [200,300,400,500,600,800,1000,2000]; XTitle="p_{T}^{jet} (GeV)",MoreY=2,MaxDigi #, IncludeOverflows=True
+FatJet1_pt_fine           : Selak8Jet1_pt  : [200,300,400,500,550,600,650,700,750,800,850,900,1000,1500,2000]; XTitle="p_{T}^{jet} (GeV)",MoreY=1.2,MaxDigi #, IncludeOverflows=True
 FatJet1_pt_logy           : Selak8Jet1_pt  : [200,300,400,500,600,800,1000,2000]; XTitle="p_{T}^{jet} (GeV)", Logy, MoreY=20 ,MaxDigi, IncludeOverflows=True
 
 #mWV_logy       	  : mWV : [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,4500]  ; XTitle="m_{WV} (GeV)",  MoreY=10, Logy, IncludeOverflows=True

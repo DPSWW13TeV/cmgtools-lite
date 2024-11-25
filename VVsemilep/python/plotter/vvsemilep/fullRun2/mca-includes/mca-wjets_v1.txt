@@ -1,11 +1,11 @@
 ##taken from https://github.com/UHH2/UHH2-datasets/blob/master/CrossSectionHelper.py
 
-WJ_PTB :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1+WJetsToLNu_Pt100To250_part2 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2017\,2018"
-WJ_PTB :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part3+WJetsToLNu_Pt250To400_part5+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2+WJetsToLNu_Pt250To400_part4+WJetsToLNu_Pt250To400_part6 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2017\,2018"
-WJ_PTB :  WJetsToLNu_Pt400To600 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets"
-WJ_PTB :  WJetsToLNu_Pt600ToInf: xsec   : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets"
-WJ_PTB :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2016\,2016APV"
-WJ_PTB :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2016\,2016APV"
+WJets :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1+WJetsToLNu_Pt100To250_part2 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2017\,2018"
+WJets :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part3+WJetsToLNu_Pt250To400_part5+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2+WJetsToLNu_Pt250To400_part4: xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2017\,2018"
+WJets :  WJetsToLNu_Pt400To600 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets"
+WJets :  WJetsToLNu_Pt600ToInf: xsec   : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets"
+WJets :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2016\,2016APV"
+WJets :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2 : xsec  : 1 ; FillColor=ROOT.TColor.GetColor("\#5790fc"),   Label="W+jets",years="2016\,2016APV"
 
 
 
