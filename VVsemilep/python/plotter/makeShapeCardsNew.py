@@ -44,16 +44,21 @@ if not os.path.exists(outdir): os.mkdir(outdir)
 report={}
 if options.infile:
     infile = ROOT.TFile(outdir+binname+".bare.root","read")
+    print("in here with infile")
     for p in mca.listSignals(True)+mca.listBackgrounds(True)+['data']:
+        print("this is p",p)
         variations = mca.getProcessNuisances(p) if p != "data" else []
+        print("variations",variations)
         h = readHistoWithNuisances(infile, "x_"+p, variations, mayBeMissing=True)
         if h: report[p] = h
 else:
     if options.categ:
        cexpr, cbins, _ = options.categ
+       print("for debugging",cexpr,args[2],makeBinningProductString(args[3],cbins), cuts.allCuts(),options.asimov)
        report = mca.getPlotsRaw("x", cexpr+":"+args[2], makeBinningProductString(args[3],cbins), cuts.allCuts(), nodata=options.asimov) 
     else:
-       report = mca.getPlotsRaw("x", args[2], args[3], cuts.allCuts(), nodata=options.asimov) 
+        print("this is the issue",args[2], args[3], cuts.allCuts(),options.asimov)
+        report = mca.getPlotsRaw("x", args[2], args[3], cuts.allCuts(), nodata=options.asimov) 
     for p,h in report.iteritems(): h.cropNegativeBins(threshold=1e-5)
 
 if options.savefile:

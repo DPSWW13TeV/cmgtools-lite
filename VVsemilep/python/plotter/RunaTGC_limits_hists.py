@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
     year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2024-11-23" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2024-11-25" #datetime.date.today().isoformat() #"2021-12-02" #
     pf_input=""
     pf_output=""
     for op in ['c3w','cw','cb']:

@@ -677,6 +677,7 @@ class PlotMaker:
             for pspec in pspecs:
                 print ("    plot: ",pspec.name)
                 pmap = mca.getPlots(pspec,cut,makeSummary=True,closeTreeAfter=True)
+                print("AM check this one",pspec,cut)
                 #
                 # blinding policy
                 blind = pspec.getOption('Blinded','None') if 'data' in pmap else 'None'

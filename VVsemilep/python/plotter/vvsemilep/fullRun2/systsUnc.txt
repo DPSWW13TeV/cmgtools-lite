@@ -59,7 +59,8 @@ CMS_qcdscales_shape_WZ : $wzaTGC|WZ_sm : .* : envelope ; FakeRates=['vvsemilep/f
 CMS_qcdscales_shape_tt : $ttbar : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 CMS_qcdscales_shape_singletop : $st : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 CMS_qcdscales_shape_wj : $wj  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
-CMS_qcdscales_shape_QCD : $qcd  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
+
+#CMS_qcdscales_shape_QCD : $qcd  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
 
 
 #CMS_qcdscales_shape_WZ_aTGC : $wzaTGC : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
@@ -94,6 +95,7 @@ FSR_WZ : $wzaTGC|WZ_sm : .*:templateAsymm; Normalize=True , AddWeights=['PSWeigh
 
 #pdf_WW	     	           : $wwaTGC|WW_sm   : .* : normSymm ; Normalize=True: 1.05
 #pdf_WZ   	           : $wzaTGC|WZ_sm   : .* : normSymm ; Normalize=True:1.05
+
 pdf_tt	           	   : $tt   : .* : normSymm : 1.03
 pdf_st	           	   : $st   : .* : normSymm : 1.02
 pdf_wj	           	   : $wj   : .* : normSymm : 1.06
@@ -133,18 +135,18 @@ CMS_eff_el : $AllFromMC : .*el.* : templateAsymm  ; AddWeights=['lepsf_el_up/lep
 CMS_eff_mu : $AllFromMC : .*lep.* : templateAsymm ; AddWeights=['lepsf_mu_up/lepsf'\,'lepsf_mu_dn/lepsf']
 CMS_eff_el : $AllFromMC : .*lep.* : templateAsymm ; AddWeights=['lepsf_el_up/lepsf'\,'lepsf_el_dn/lepsf']   
 
-CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,1\,1.0\,1)',year="2018"
-CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,1\,1.0\,1)',year="2018"
-CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,1\,1.0\,1)',year="2018"
-CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,1\,1.0\,1)',year="2017"
-CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,1\,1.0\,1)',year="2017"
-CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,1\,1.0\,1)',year="2017"
-CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,1\,1.0\,1)',year="2016"
-CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,1\,1.0\,1)',year="2016"
-CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,1\,1.0\,1)',year="2016"
-CMS_pNettag_eff      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016APV"
-CMS_pNettag_eff      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016APV"
-CMS_pNettag_eff      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016APV"
+CMS_pNettag_eff_2018      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,1\,1.0\,1)',year="2018"
+CMS_pNettag_eff_2018      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,1\,1.0\,1)',year="2018"
+CMS_pNettag_eff_2018      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2018\,1\,1.0\,1)',year="2018"
+CMS_pNettag_eff_2017      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,1\,1.0\,1)',year="2017"
+CMS_pNettag_eff_2017      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,1\,1.0\,1)',year="2017"
+CMS_pNettag_eff_2017      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2017\,1\,1.0\,1)',year="2017"
+CMS_pNettag_eff_2016      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,1\,1.0\,1)',year="2016"
+CMS_pNettag_eff_2016      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,1\,1.0\,1)',year="2016"
+CMS_pNettag_eff_2016      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,1\,1.0\,1)',year="2016"
+CMS_pNettag_eff_2016      : $PNET : .*el.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016APV"
+CMS_pNettag_eff_2016      : $PNET : .*mu.*  : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016APV"
+CMS_pNettag_eff_2016      : $PNET : .*lep.* : templateSymm; Normalize=False, AddWeight='pNetSFMD_WvsQCD(Selak8Jet1_pt\,2016\,0\,1.0\,1)',year="2016APV"
 
 
 CMS18_trigger_el     : $AllFromMC : .*el.*|.*lep.* :   templateAsymm  ; AddWeights=['triggerSF_el_up/triggerSF_el'\,'triggerSF_el_dn/triggerSF_el']
