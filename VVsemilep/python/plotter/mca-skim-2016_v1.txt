@@ -1,3 +1,5 @@
+WWToLNujj_01j_SMEFT_LO : WWToLNujj_01j_SMEFT_LO : xsec
+WZToLNujj_01j_SMEFT_LO : WZToLNujj_01j_SMEFT_LO : xsec
 WJetsToLNu_Pt100To250_part0				  :  WJetsToLNu_Pt100To250_part0                        : xsec                             
 WJetsToLNu_Pt100To250_part1				  :  WJetsToLNu_Pt100To250_part1                        : xsec                             
 WJetsToLNu_Pt250To400_part0				  :  WJetsToLNu_Pt250To400_part0                        : xsec                             

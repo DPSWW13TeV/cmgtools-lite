@@ -25,8 +25,8 @@ nJet30\b       : nJet30_Recl; AlsoData
 nBJetLoose25\b : nBJetLoose25_Recl; AlsoData
 nBJetMedium25\b: nBJetMedium25_Recl; AlsoData
 nBJetTight25\b : nBJetTight25_Recl; AlsoData
-nBJetLoose40\b : nBJetLoose40_Recl; AlsoData
-nBJetMedium40\b: nBJetMedium40_Recl; AlsoData
+nBJetLoose30\b : nBJetLoose30_Recl; AlsoData
+nBJetMedium30\b: nBJetMedium30_Recl; AlsoData
 nBJetTight40\b : nBJetTight40_Recl; AlsoData
 mZ1\b	       : mZ1_Recl; AlsoData
 mZ2\b	       : mZ2_Recl; AlsoData

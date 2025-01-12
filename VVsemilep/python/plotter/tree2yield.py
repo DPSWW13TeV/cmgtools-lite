@@ -539,11 +539,15 @@ class TreeToYield:
             for (var,variations) in variations.itervalues():
  #               if var.unc_type != 'envelope': 
                 if var.unc_type != 'envelope' and  "pdfset" not in var.unc_type.lower(): 
+                    print("issue in tree2yld",plotspec,var.unc_type,var.name)
                     if 'up'   not in variations: variations['up']    = var.getTrivial("up",  [nominal,None,None])
                     if 'down' not in variations: variations['down']  = var.getTrivial("down",  [nominal,variations['up'],None])
                     var.postProcess(nominal, [variations['up'], variations['down']])
+                    print("AM done tree2")
                 else: 
+                    print("issue in tree2yld else",plotspec,var.unc_type,var.name)
                     var.postProcess(nominal, [v for k,v in variations.iteritems()])
+                    print("AM done else tree2")
                 for k,v in variations.iteritems(): 
                     ret.addVariation(var.name, k, v)
 

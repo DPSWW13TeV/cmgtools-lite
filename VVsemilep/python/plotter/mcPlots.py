@@ -677,7 +677,7 @@ class PlotMaker:
             for pspec in pspecs:
                 print ("    plot: ",pspec.name)
                 pmap = mca.getPlots(pspec,cut,makeSummary=True,closeTreeAfter=True)
-                print("AM check this one",pspec,cut)
+                ##amprint("AM check this one",pspec,cut)
                 #
                 # blinding policy
                 blind = pspec.getOption('Blinded','None') if 'data' in pmap else 'None'
@@ -820,8 +820,8 @@ class PlotMaker:
                 for p in itertools.chain(reversed(mca.listBackgrounds(allProcs=True)), reversed(mca.listSignals(allProcs=True)), extraProcesses):
                     if p in pmap: 
                         plot = pmap[p]
-                        #if plot.Integral() == 0:
-                        #    print 'Warning: plotting histo %s with zero integral, there might be problems in the following'%p
+                        if plot.Integral() == 0:
+                            print 'Warning: plotting histo %s with zero integral, there might be problems in the following'%p
                         if plot.Integral() < 0:
                             print ('Warning: plotting histo %s with negative integral (%f), the stack plot will probably be incorrect.'%(p,plot.Integral()))
                         if 'TH1' in plot.ClassName():
@@ -932,7 +932,7 @@ class PlotMaker:
                     if p2: p2.SetLogx(True)
                     total.GetXaxis().SetNoExponent(True)
                     total.GetXaxis().SetMoreLogLabels(True)
-                if islog: total.SetMaximum(2*total.GetMaximum())
+                if islog: total.SetMaximum(5*total.GetMaximum())
                 if not islog: total.SetMinimum(0)
                 total.Draw("HIST")
                 if plotmode == "stack":

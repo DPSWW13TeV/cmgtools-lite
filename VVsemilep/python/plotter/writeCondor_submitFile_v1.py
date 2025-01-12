@@ -1,11 +1,10 @@
 import os,string,sys
 from plots_VVsemilep import *
-
-allvars= fitCR #theWVultimateset_log + theWVultimateset ##++leptons
+allvars= missing #theWVultimateset_log + theWVultimateset ##++leptons fitCR #mWVs #missing #fitCR #+
 doWhat=sys.argv[1] #cards or plots
 #year=sys.argv[2]
 pf="" #withoutTaggernHEEP"
-years=["2018","2016APV","2017","2016"] #,"fullRun2"] #,"all"] 
+years=["fullRun2"]#"2018","2017","2016","2016APV"]#,"fullRun2"] #,"all"] 
 #years.append(year)
 
 allfavs=["mu","el","onelep"]
@@ -31,11 +30,12 @@ lepsel={'topCR' : [allfavs],
         'wjCR_lo'     : [ll,fitvar_bkg],
         'wjCR_hi'     : [ll,fitvar_bkg],
 }
-ops=[''] #'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
+
+ops=['all']#'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
 
 fName='submitFile_%s.condor'%doWhat
 tmp_condor = open('jobs/%s'%fName, 'w')
-tmp_condor.write('''Executable = dummy.sh
+tmp_condor.write('''Executable = dummy_2.sh
 use_x509userproxy = true
 getenv      = True                                                                                                              
 Log        = jobs/{dW}_$(Cluster)_$(ProcId).log
@@ -54,7 +54,8 @@ if 'plots' in doWhat :
    tmp_condor.write('request_memory = 10GB\n')
 tmp_condor.write('queue info from ( \n')
 
-for sel in ["wjCR_incl","wjCR_hi","wjCR_lo"]: 
+for sel in ["wjCR_incl"]: #,"topCR_incl","sig_incl"]: 
+#for sel in ["topCR_incl","wjCR_hi","wjCR_lo","sig_lo","sig_hi"]:
    # "sig_incl","topCR_incl",""topCR_incl","wjCR_hi","sig_lo","sig_hi"]: #"wjCR_lo","sig_incl"]: # #"wjCR_incl","sig_incl"]:#]: #, #,"topCR_incl","topCR_lo","topCR_hi"]
    for cat in ["boosted"]: 
        for yr in years: #in "2016APV,2016,2017,2018".split(","):

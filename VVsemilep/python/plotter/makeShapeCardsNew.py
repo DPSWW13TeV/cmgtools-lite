@@ -59,7 +59,10 @@ else:
     else:
         print("this is the issue",args[2], args[3], cuts.allCuts(),options.asimov)
         report = mca.getPlotsRaw("x", args[2], args[3], cuts.allCuts(), nodata=options.asimov) 
-    for p,h in report.iteritems(): h.cropNegativeBins(threshold=1e-5)
+        print("not an issue")
+    for p,h in report.iteritems(): 
+        print("cropping")
+        h.cropNegativeBins(threshold=1e-3)
 
 if options.savefile:
     savefile = ROOT.TFile(outdir+binname+".bare.root","recreate")
@@ -75,10 +78,14 @@ if options.asimov:
     else: raise RuntimeError("the --asimov option requires to specify signal/sig/s/s+b or background/bkg/b/b-only")
     tomerge = None
     for p in asimovprocesses:
+        print("shapecards issue on mergin",p)
         if p in report: 
-            if tomerge is None: 
+            if tomerge is None:
+                print("is it this one merge issue") 
                 tomerge = report[p].raw().Clone("x_data_obs"); tomerge.SetDirectory(None)
-            else: tomerge.Add(report[p].raw())
+            else:
+                print("is it this one issue else merhe")
+                tomerge.Add(report[p].raw())
     report['data_obs'] = HistoWithNuisances(tomerge)
 else:
     report['data_obs'] = report['data'].Clone("x_data_obs") 
@@ -158,9 +165,11 @@ for binname, report in allreports.iteritems():
             variants = list(h.getVariation(name))
             for hv,d in zip(variants, ('up','down')):
                 k = hv.Integral()/n0
-                if k == 0: 
+                if k == 0:
+                    print("is it this one issue")
                     print "Warning: underflow template for %s %s %s %s. Will take the nominal scaled down by a factor 2" % (binname, p, name, d)
                     hv.Add(h.raw()); hv.Scale(0.5)
+                    print("no issue")
                 elif k < 0.2 or k > 5:
                     print "Warning: big shift in template for %s %s %s %s: kappa = %g " % (binname, p, name, d, k)
             # prevent variations from going to zero by symmetrizing

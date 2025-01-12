@@ -68,18 +68,19 @@ if __name__ == '__main__':
 
     year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2024-11-25" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2025-01-10" #datetime.date.today().isoformat() #"2021-12-02" #
     pf_input=""
     pf_output=""
     for op in ['c3w','cw','cb']:
         
         if year == "fullRun2":
+            
             dC18=combineCards("2018","onelep",op,pf_input,False,True)
             dC17=combineCards("2017","onelep",op,pf_input,False,True)
             dC16=combineCards("2016","onelep",op,pf_input,False,True)
             dC16_apv=combineCards("2016APV","onelep",op,pf_input,False,True)
-            superdC='dc_{date}_{op}_{yr}combined.txt'.format(date=date,op=op,yr=yr)
-            cmd='combineCards.py {yr1} {yr2} {yr3} {yr4} > {dc}'.format(dc=superdC,yr1=dC16,yr2=dC16_apv,yr3=dc17,yr4=dc18)
+            superdC='dc_{date}_{op}_{yr}combined.txt'.format(date=date,op=op,yr=year)
+            cmd='combineCards.py {yr1} {yr2} {yr3} {yr4} > {dc}'.format(dc=superdC,yr1=dC16,yr2=dC16_apv,yr3=dC17,yr4=dC18)
             os.system(cmd)
         elif year  == "2016combo":
             dC16=combineCards("2016","onelep",op,pf_input,False,True)

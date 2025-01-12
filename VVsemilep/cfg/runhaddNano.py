@@ -1,7 +1,6 @@
 import os,sys
 import subprocess
 
-
 eospath="/eos/cms/store/group/phys_smp/ec/anmehta/"
 #indir="aTGC_Apr2024_UL16" #/eos/cms/store/cmst3/group/dpsww/"
 #odir= "Combined_aTGC_Oct2024_UL16"

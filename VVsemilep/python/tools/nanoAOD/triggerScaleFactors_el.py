@@ -10,7 +10,8 @@ class triggerScaleFactors_el(Module):
         self.triggerSF     = {}
 
         for year in '2016APV,2016,2017,2018'.split(','):
-            self.triggerSF['%s'%year]=loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/VVsemilep/data/triggerSF/triggerSF_%s_20200422.root'%year,'EGamma_SF2D')
+            #self.triggerSF['%s'%year]=loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/VVsemilep/data/triggerSF/triggerSF_%s_20200422.root'%year,'EGamma_SF2D')
+            self.triggerSF['%s'%year]=loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/VVsemilep/data/triggerSF/singleElTrigEff_%s.root'%year,'EGamma_SF2D')
 
 
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):

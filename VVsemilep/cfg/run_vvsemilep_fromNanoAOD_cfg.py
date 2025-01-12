@@ -66,14 +66,14 @@ DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
-        "Tbar_.*",
+        #"Tbar_.*",
         #".*QCD.*",
         #".*aTGC.*.",
         #"VH.*",
         #"WplusH","WminusH","ZH.*","ZZTo2Q2L","WZTo1L1Nu2Q","WWTo1L1Nu2Q",
         #"TTSemi.*","T_.*","TT_mtt.*","WJetsToLNu_Pt.*", #"WJetsToLNu_HT.*",
         #"W.*Jtotaunu_PM","W.*Jtomunu_PM" #,"WJetsToLNu_Pt.*","WJetsToLNu_.*J",
-        #".*SMEFT_LO.*",
+        ".*SMEFT_LO.*",
 
      ])
     ##am removed double el triggers for 2018 

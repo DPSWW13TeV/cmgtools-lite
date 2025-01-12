@@ -332,8 +332,13 @@ float HEMhandle(int year, float phi1, float eta1, float phi2, float eta2, int pd
 }
 
 
-float triggerSF_ttH( int var=0){
-  return 1.*(1 + var*0.02);
+float triggerSF_ttH( int var=0, int pdgid1=11){
+  float sf =1.0;
+  if( abs(pdgid1) == 11){
+	sf= 1.*(1 + var*0.02);
+      }
+    else{ sf =1.0;}
+  return sf;
 }
 float triggerSF_ttH(int pdgid1, float pt1, int pdgid2, float pt2, int nlep, int year, int suberaid, int var=0){
 

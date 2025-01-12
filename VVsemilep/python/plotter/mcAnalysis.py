@@ -19,7 +19,7 @@ def _runYields(args):
 def _runPlot(args):
     key,tty,plotspec,cut,closeTree,fsplit = args
     #timer = ROOT.TStopwatch()
-    #print "Starting plot %s for %s, %s" % (plotspec.name,key,tty._cname)
+    print "Starting plot %s for %s, %s" % (plotspec.name,key,tty._cname)
     ret = (key,tty.getPlot(plotspec,cut,fsplit=fsplit,closeTreeAfter=closeTree))
     #print "Done plot %s for %s, %s, fsplit %s in %s s, at %.2f; entries = %d, time/entry = %.3f ms" % (plotspec.name,key,tty._cname,fsplit,timer.RealTime(), 0.001*(long(ROOT.gSystem.Now()) - _T0), ret[1].GetEntries(), (long(ROOT.gSystem.Now()) - _T0)/float(ret[1].GetEntries()))
     return ret
@@ -496,6 +496,7 @@ class MCAnalysis:
                 cut += "(%s)" % cv
             else:
                 cut = cv
+            print("is this the issue",cut,process,nodata,makeSummary)
             report.append((cn,self.getPlotsRaw('yield','1','1,0.5,1.5',cut,process,nodata,makeSummary)))
         formatted_report = []
         for cn,ret in report:
@@ -518,18 +519,24 @@ class MCAnalysis:
         allSig = []; allBg = []
         tasks = []
         for key,ttys in self._allData.items():
+            #print("AM procs",key)
             if key == 'data' and nodata: continue
             if process != None and key != process: continue
             for tty in ttys:
-                if tty.isEmpty(): continue
+                if tty.isEmpty(): 
+                    continue
+                    print("AM empty keys ttys ",keys)
                 tasks.append((key,tty,plotspec,cut,closeTreeAfter,None))
         if self._options.splitFactor > 1 or  self._options.splitFactor == -1:
+            #print("AM tasks",tasks)
             tasks = self._splitTasks(tasks)
+            print("AM",plotspec.name)
         retlist = self._processTasks(_runPlot, tasks, name="plot "+plotspec.name) # list of pairs (idkey, result)
                                                                                    # note that a key can appear multiple times if a task is split!
         ## then gather results with the same process
         mergemap = {}
         for (k,v) in retlist: 
+            print("new AM",k,v)
             if k not in mergemap: mergemap[k] = []
             mergemap[k].append(v)
         ret = dict([ (k,mergePlots(plotspec.name+"_"+k,v)) for k,v in mergemap.items() ])

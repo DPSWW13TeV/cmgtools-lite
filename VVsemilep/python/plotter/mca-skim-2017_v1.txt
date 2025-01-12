@@ -1,3 +1,6 @@
+WWToLNujj_01j_SMEFT_LO : WWToLNujj_01j_SMEFT_LO : xsec
+WZToLNujj_01j_SMEFT_LO : WZToLNujj_01j_SMEFT_LO : xsec
+
 QCD_Pt600to800_Mu5	  : QCD_Pt600to800_Mu5	      : xsec
 QCD_Pt30to50_Mu5 	  : QCD_Pt30to50_Mu5 	      : xsec
 QCD_Pt1000toInf_Mu5 	  : QCD_Pt1000toInf_Mu5       : xsec

@@ -1,3 +1,6 @@
+WWToLNujj_01j_SMEFT_LO : WWToLNujj_01j_SMEFT_LO : xsec
+WZToLNujj_01j_SMEFT_LO : WZToLNujj_01j_SMEFT_LO : xsec
+
 data : SingleElectron_Run2016E_HIPM_UL16
 data : SingleElectron_Run2016Bv2_HIPM_UL16
 data : SingleMuon_Run2016F_HIPM_UL16
