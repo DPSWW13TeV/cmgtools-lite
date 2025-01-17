@@ -112,9 +112,9 @@ class Uncertainty:
                     if var.Integral():
                         var.Scale(h0/var.Integral())
                     else: 
-                        print("issue in uncert",type(h0),var.GetName(),var.Integral(),h0)
+                        ##print("issue in uncert",type(h0),var.GetName(),var.Integral(),h0)
                         var.Reset(); var.Add(h0)
-                        print("issue not in uncert",type(h0),var.GetName(),var.Integral(),h0)
+                        ##print("issue not in uncert",type(h0),var.GetName(),var.Integral(),h0)
             else:
                 for var in variations: 
                     var.Scale(0)

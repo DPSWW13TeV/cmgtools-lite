@@ -1,0 +1,213 @@
+import ROOT, os, optparse, copy, re
+from ROOT import TCanvas, TFile, TColor, TH1F, TH2F
+from ROOT import gROOT, gBenchmark, gRandom, gSystem
+import numpy as np
+from array import array 
+import math
+ROOT.gROOT.SetBatch()
+ROOT.gStyle.SetOptStat(0)
+
+
+lumis = {
+    '2016APV'     : '19.5', #with HIPM /pre-vfp
+    '2016'        : '16.8', #without HIPM
+    '2017'        : '41.5',
+    '2018'        : '59.8',
+    'all'         : '19.5,16.8,41.5,59.8',
+    'fullRun2'    : '19.5,16.8,41.5,59.8',
+}
+def drawSLatex(xpos,ypos,text,size):
+    latex = ROOT.TLatex()
+    latex.SetNDC()
+    latex.SetTextAlign(12)
+    latex.SetTextSize(size)
+    latex.SetTextFont(42)
+    latex.DrawLatex(xpos,ypos,text)
+
+
+processes={
+    'Others':[ROOT.kPink+6,"Others"],
+    'WJets':[ROOT.kGreen-4,"WJets"],
+    'WW_sm':[ROOT.kOrange+7,"WW"],
+    'WZ_sm':[ROOT.kAzure+1,"WZ"],
+    'singletop':[ROOT.kGray,"S-top"],
+    'tt':[ROOT.kViolet+7,"tt"],
+    'data':[ROOT.kBlack,"Data"],
+    'total':[ROOT.kBlue,"total"],
+    'total_signal':[ROOT.kRed+1,"tot sig"],
+    'total_background':[ROOT.kBlue,"tot bkg"]
+}
+
+
+
+
+fit="fit_s" #prefit" #fit_b #fit_s
+
+FS=["el","mu"]
+FS=FS[1]
+CR=['wj_cr_hi']#,'wj_cr_lo','top_cr']
+CR=CR[0]
+
+
+for yr in ["2018"]: #["2016","2016APV","2017","2018"]:
+    temp=[]
+    filetoread = ROOT.TFile.Open('fitDiagnosticsTest_SM_dc_2025-01-16_onelep_%s_wjCR.root'%yr)
+    temp.append(filetoread)
+    histInfo={};
+    hist= filetoread.Get("shapes_{fit}/{FS}_{CR}_{yr}/WJets".format(FS=FS,CR=CR,yr=yr,fit=fit)); hist.Reset();
+    for proc in processes.keys():
+        if proc == "data":            hist.Sumw2()        
+        hist_el_temp = filetoread.Get("shapes_{fit}/{FS}_{CR}_{yr}/{p}".format(FS=FS,CR=CR,yr=yr,fit=fit,p=proc));    temp.append(hist_el_temp);
+        #print(type(hist_el_temp),type(hist),hist_el_temp.GetName(),hist_el_temp.Integral())
+        yvals=[];yerrs=[];
+        for i in range(1,hist.GetNbinsX()+1):
+            if not (hist_el_temp.InheritsFrom(ROOT.TH1.Class())):
+                x = ROOT.Double(0.);   y1 = ROOT.Double(0.) 
+                hist_el_temp.GetPoint(i-1,x,y1);
+                yvals.append(y1);yerrs.append(math.sqrt(y1))
+            else:
+                yvals.append(hist_el_temp.GetBinContent(i)); yerrs.append(hist_el_temp.GetBinError(i));
+
+        for i in range(len(yvals)):
+            hist.SetBinContent(i+1,yvals[i]);                   hist.SetBinError(i+1,yerrs[i])
+        hist.SetName(proc);hist.SetDirectory(0)
+        if proc !="data": 
+            print(proc,hist.Integral(),'color',processes[proc][0])
+            hist.SetFillColor(processes[proc][0]); hist.SetLineColor(ROOT.kBlack);hist.SetLineWidth(1);
+        else:
+            hist.SetFillStyle(0);hist.SetMarkerColor(1);hist.SetMarkerStyle(20);
+        hist.SetDirectory(0);           
+        histInfo[proc]=hist
+    for ip,ih in histInfo.iteritems():
+        errAll=[];
+        for i in range(1,hist.GetNbinsX()+1):
+            
+            errAll.append(histInfo[ip].GetBinError(i))
+        #print '%-15s   %.3f +/- %.2f'%(ip,histInfo[ip].Integral(),sum(errAll))
+
+
+
+    Canv = ROOT.TCanvas("Canv_{yr}_{CR}_{FS}".format(yr=yr,FS=FS,CR=CR),"",800,600)
+    Canv.Range(0,0,1,1);   Canv.SetFillColor(0);   Canv.SetBorderMode(0);  
+    Canv.SetTickx(1);   Canv.SetTicky(1);   Canv.SetLeftMargin(0.12);   Canv.SetRightMargin(0.05);
+    Canv.SetBottomMargin(0.13);   Canv.SetFrameFillStyle(0);   Canv.SetFrameBorderMode(0);        
+    Canv.SetTopMargin(0.1);
+    
+    legend = ROOT.TLegend(0.25,0.625,0.85,0.88);
+    legend.SetNColumns(3);legend.SetFillColor(0);legend.SetFillStyle(0); legend.SetShadowColor(0);   legend.SetLineColor(0);
+    legend.SetTextFont(42);  legend.SetBorderSize(0);   legend.SetTextSize(0.06);
+    hs=ROOT.THStack("hs_{yr}_{CR}_{FS}".format(yr=yr,CR=CR,FS=FS),""); 
+    histtotbkg=histInfo['total'] 
+    histdata=histInfo['data']
+    histdata.SetMarkerSize(0.7);  
+    histdata.SetMarkerStyle(20);histdata.SetMarkerColor(1);
+    histdata.SetLineColor(1);  histdata.SetLineWidth(1);
+
+
+    hs.Add(histInfo['WJets']);
+    hs.Add(histInfo['tt']);
+    hs.Add(histInfo['singletop']);
+    hs.Add(histInfo['WW_sm']);
+    hs.Add(histInfo['WZ_sm']);
+    hs.Add(histInfo['Others']);
+    
+    
+    legend.AddEntry(histInfo['data'],processes['data'][1],"elp");
+    legend.AddEntry(histInfo['WJets'],processes['WJets'][1],"f");
+    legend.AddEntry(histInfo['tt'],processes['tt'][1],"f");
+    legend.AddEntry(histInfo['singletop'],processes['singletop'][1],"f");
+    legend.AddEntry(histInfo['WZ_sm'],processes['WZ_sm'][1],"f");
+    legend.AddEntry(histInfo['WW_sm'],processes['WW_sm'][1],"f");
+    legend.AddEntry(histInfo['Others'],processes['Others'][1],"f");
+    ## ratio plot
+    errorData=[]
+    
+    hist_ratio=histdata.Clone("hist_ratio");hist_ratio.Sumw2();
+    hist_num=histInfo['total'].Clone("hist_num")
+    hist_ratio.Divide(hist_num);
+    
+    
+    c1_1 = ROOT.TPad("c1_1","ratioplot",0.01,0.01,0.99,0.33);    c1_1.Draw();    c1_1.cd(); #c1_1.SetLogy();
+    c1_1.SetTopMargin(0.041); c1_1.SetBottomMargin(0.3);   c1_1.SetRightMargin(0.05);c1_1.SetBorderMode(0);c1_1.SetTicky(1);
+    c1_1.SetBorderSize(2); c1_1.SetFillStyle(0);c1_1.SetFrameBorderMode(0);c1_1.SetFrameLineWidth(2);c1_1.SetFrameBorderMode(0); 
+    
+    
+    
+    line1 = ROOT.TLine(0,1.0,histdata.GetNbinsX(),1.0);    line1.SetLineColor(58);   line1.SetLineWidth(2);   line1.SetLineStyle(1);
+    
+    #shaded uncert band around the ratio plot
+    band=histdata.Clone("band%s"%yr); band.Reset();
+    band.SetFillColor(ROOT.kCyan);   band.SetMarkerSize(0); 
+    band.SetFillStyle(1001);        
+    
+    band.Divide(histtotbkg,histtotbkg,1,1,"b");
+    
+
+    for ibin in range(1,histdata.GetNbinsX()):
+        #band.GetXaxis().SetBinLabel(ibin,str(outbins_labels[ibin-1]))
+        if (histInfo['total'].GetBinError(ibin) == 0 or histInfo['total'].GetBinContent(ibin) == 0):
+            band.SetBinError(ibin, 1)
+        else:
+            #print("errors",histInfo['total'].GetBinError(ibin),histInfo['total'].GetBinContent(ibin))
+            band.SetBinError(ibin,histInfo['total'].GetBinError(ibin)/histInfo['total'].GetBinContent(ibin) )
+ 
+    band.GetXaxis().SetTitleFont(42);    band.GetXaxis().SetLabelSize(0.1);    band.GetXaxis().SetTitleSize(0.15);
+    band.GetXaxis().SetTitleOffset(0.95);band.GetYaxis().SetTitle("Data/bkg.");    #    band.GetXaxis().SetMaxDigits(1);
+    band.GetYaxis().SetLabelSize(0.135);    band.GetYaxis().SetTitleSize(0.15);    band.GetYaxis().SetTitleOffset(0.31);
+    band.GetYaxis().SetRangeUser(0.5,2.0 if fit == "fit_s" else 2.5);      band.GetYaxis().SetNdivisions(607);    ROOT.gStyle.SetErrorX(0.5);     band.GetXaxis().SetTitle("m_{WV} (GeV)");
+    hist_ratio.SetMarkerStyle(20);   hist_ratio.SetMarkerColor(1);   hist_ratio.SetMarkerSize(0.7);    hist_ratio.SetLineColor(1);  hist_ratio.SetLineWidth(1);
+
+    band.Draw("E2SAME");
+    line1.Draw("LSAMES");
+    hist_ratio.Draw("Ex0SAME"); 
+
+    c1_1.Update();
+    
+    legend2 = ROOT.TLegend(0.55,0.82,0.7,0.92); #,NULL,"brNDC");
+    legend2.SetTextFont(42);
+    legend2.SetTextSize(0.12);
+    legend2.SetFillColor(0);
+    legend2.SetLineColor(0);
+    legend2.SetFillStyle(0);
+    legend2.SetShadowColor(0)
+    legend2.SetNColumns(1);
+    legend2.AddEntry(band,"Total background unc.","f");
+    legend2.Draw("same");
+    
+    Canv.cd();
+    
+    c1_2 = ROOT.TPad("c1_2", "newpad",0.01,0.33,0.99,0.99);
+    c1_2.Draw();        c1_2.cd(); #c1_2.SetLogy();
+    c1_2.SetTopMargin(0.1);  c1_2.SetBottomMargin(0.04);  c1_2.SetRightMargin(0.05);        c1_2.SetFillStyle(0);
+    c1_2.SetBorderMode(0);        c1_2.SetBorderSize(2);c1_2.SetFrameBorderMode(0);c1_2.SetFrameLineWidth(2);
+    c1_2.SetFrameBorderMode(0);   c1_2.SetTicky(1);
+    hs.Draw("HIST");
+
+    hs.GetXaxis().SetTitle("m_{WV} (GeV)"); 
+    hs.GetYaxis().SetTitle("Events");
+    hs.GetYaxis().SetLabelSize(0.06);    hs.GetYaxis().SetTitleSize(0.075);    hs.GetYaxis().SetTitleOffset(0.65);    hs.GetXaxis().SetLabelSize(0.0000001);    hs.GetXaxis().SetTitleSize(0.0000001);   hs.GetXaxis().SetTitleOffset(999);
+    hs.GetXaxis().SetTitleFont(42);    hs.GetYaxis().SetTitleFont(42);    hs.SetMaximum(hs.GetHistogram().GetMaximum()*1.5);
+    
+    h_err = histInfo['total'].Clone()
+    h_err.SetMarkerStyle(0)
+    h_err.SetFillStyle(3344);
+    h_err.SetFillColor(ROOT.kGray+2)    #h_err.SetLineColor(1)#ROOT.kGray+1)
+
+    h_err.Draw("PE2 SAME")    
+    histdata.Draw("E SAME");
+
+    
+
+    legend.AddEntry(h_err,"Total unc.","f");
+    legend.Draw("same");
+    
+    #t2a = drawSLatex(0.1,0.94,"#bf{CMS}",0.085); 
+    t2a = drawSLatex(0.1,0.93,"#bf{CMS} #it{Preliminary}",0.05);
+    t3a = drawSLatex(0.67,0.94,"%s fb^{#minus1} (13 TeV)"%lumis[yr],0.085);
+    t4a = drawSLatex(0.25,0.50,FS,0.085);
+    
+        
+    Canv.Update();
+    
+    Canv.Print("/eos/user/a/anmehta/www/VVsemilep/postfit_{CR}_{yr}_{FS}_{fit}.pdf".format(yr=yr,fit=fit,CR=CR,FS=FS))
+    Canv.Print("/eos/user/a/anmehta/www/VVsemilep/postfit_{CR}_{yr}_{FS}_{fit}.png".format(yr=yr,fit=fit,CR=CR,FS=FS))

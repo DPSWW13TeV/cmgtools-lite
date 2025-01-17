@@ -325,7 +325,7 @@ def doNormFit(pspec,pmap,mca,saveScales=False):
         w.nodelete.append(x)
         nuisanceList.add(w.var(nuisance))
     # roofitize templates 
-    print("AM going to roofit with NP list", nuisanceList)
+    #    print("AM going to roofit with NP list", nuisanceList)
     roofit = roofitizeReport(pmap, w, xvarName=pspec.name, density=pspec.getOption('Density',False))
     # create the data
     obs = ROOT.RooArgList(roofit.xvar)

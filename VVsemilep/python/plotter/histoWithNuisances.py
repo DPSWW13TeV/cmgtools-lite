@@ -621,7 +621,7 @@ class HistoWithNuisances:
         roofitContext = self._rooFit["context"]
         templates = ROOT.TList()
         nuisances = ROOT.RooArgList()
-        print("issue in histoNP")
+        #print("issue in histoNP")
         templates.Add(roofitContext.hist2roofit(self.central))
         norm0 = self.central.Integral()
         normfactor = ROOT.ProcessNormalization("%s_norm" % self.central.GetName(), "", norm0)
@@ -630,7 +630,7 @@ class HistoWithNuisances:
             if not nuis: raise RuntimeError("ERROR: can't find nuisance %s needed to parameterize %s" % var, self.central.GetName())
             if self.isShapeVariation(var):
                 nuisances.add(nuis)
-                print("issue in histoNP",nuis)
+                #print("issue in histoNP",nuis)
                 templates.Add(roofitContext.hist2roofit(hup))
                 templates.Add(roofitContext.hist2roofit(hdown))
             if norm0==0: raise RuntimeError('%s has zero central normalization'%self.central.GetName())
@@ -848,7 +848,7 @@ class SumWithNuisances(HistoWithNuisances):
             #self._doPostFit()
             self.nominal = _cloneNoDir(self._histos[0].nominal, "%s_postfit" % self.central.GetName())
             for h in self._histos[1:]:
-                print("issue in histoNP")
+                #print("issue in histoNP")
                 self.nominal.Add(h.nominal)
         else: 
             self.nominal = self.central
@@ -1033,7 +1033,7 @@ def mergePlots(name,plots):
     if isinstance(one, HistoWithNuisances):
         for p in plots[1:]: one+=p
     elif isinstance(one, ROOT.TH1):
-        print("issue in histoNP")
+        #        print("issue in histoNP")
         for p in plots[1:]: one.Add(p)
     elif isinstance(one, ROOT.TGraph):
         others = ROOT.TList()
@@ -1102,7 +1102,7 @@ def roofitizeReport(histoWithNuisanceMap, workspace=None, xvarName="x", density=
     # sanity check all inputs, and get one representative histogram
     h0 = None
     for k,h in histoWithNuisanceMap.items():
-        print('running for AM', h.GetName(),k)
+        #print('running for AM', h.GetName(),k)
         if k == "data": continue
         if not isinstance(h, HistoWithNuisances):
             raise RuntimeError("element %s (%s, %s) is not a HistoWithNuisances" % (h, h.GetName() if h else "<nil>"))
