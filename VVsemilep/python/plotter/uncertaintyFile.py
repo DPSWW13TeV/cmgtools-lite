@@ -63,7 +63,7 @@ class Uncertainty:
                 self.normUnc[idx] = float(self.args[1-idx])
         elif self.unc_type=='normSymm':
             if len(self.args) != 1:
-                raise RuntimeError("normAsymm requires one argument")
+                raise RuntimeError("normSymm requires one argument")
             self.fakerate = [None,None]
             self.trivialFunc = ['apply_norm_up','apply_norm_dn']
             self.normUnc[0] = float(self.args[0])

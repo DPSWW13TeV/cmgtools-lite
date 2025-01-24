@@ -57,11 +57,11 @@ else:
        print("for debugging",cexpr,args[2],makeBinningProductString(args[3],cbins), cuts.allCuts(),options.asimov)
        report = mca.getPlotsRaw("x", cexpr+":"+args[2], makeBinningProductString(args[3],cbins), cuts.allCuts(), nodata=options.asimov) 
     else:
-        print("this is the issue",args[2], args[3], cuts.allCuts(),options.asimov)
+        #print("this is the issue",args[2], args[3], cuts.allCuts(),options.asimov)
         report = mca.getPlotsRaw("x", args[2], args[3], cuts.allCuts(), nodata=options.asimov) 
-        print("not an issue")
+        #print("not an issue")
     for p,h in report.iteritems(): 
-        print("cropping")
+        print("cropping",h.GetName())
         h.cropNegativeBins(threshold=1e-3)
 
 if options.savefile:

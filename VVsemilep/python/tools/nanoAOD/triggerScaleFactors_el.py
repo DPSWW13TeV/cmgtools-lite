@@ -25,7 +25,8 @@ class triggerScaleFactors_el(Module):
             if len(leps)>0:
                 if abs(leps[0].pdgId) == 11:
                     hist_1e=self.triggerSF['%s'%(year)]
-                    thebin=hist_1e.FindBin(leps[0].eta, min(500.,leps[0].pt))
+                    thebin=hist_1e.FindBin(leps[0].eta, min(200.,leps[0].pt))
+
                     shift= 0 if var == '' else 1 if 'up' in var else -1 
                     self.out.fillBranch('triggerSF_el%s'%var, hist_1e.GetBinContent(thebin) + shift*hist_1e.GetBinError(thebin))
                 else:

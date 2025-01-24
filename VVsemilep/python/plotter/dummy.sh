@@ -29,7 +29,7 @@ case ${2} in
 	cmd_emore="  --dW plots --pv ${7} " # --fCR " #--postfitCR " #" # --dCF " #--fCR "
 	;;
     cards)
-	cmd_emore=" --dW cards --fv ${7} --fCRwC"
+	cmd_emore=" --dW cards --fv ${7} " #--fCRwC"
 	;;    
 esac
 echo ${basecmd} ${cmd_more} ${cmd_emore}

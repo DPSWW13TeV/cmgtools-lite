@@ -69,34 +69,14 @@ CMS_qcdscales_shape_wj : $wj  : .* : envelope; FakeRates=['vvsemilep/fullRun2/fr
 
 
 
-##amISR_wj : $wj : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
-##amFSR_wj : $wj : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
-##amISR_tt : $ttbar : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
-##amFSR_tt : $ttbar : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
-##amISR_st : $st : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
-##amFSR_st : $st : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
-##amISR_Others : $Others : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
-##amFSR_Others : $Others : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
-##amISR_WW : $wwaTGC|WW_sm : .*:templateAsymm; Normalize=True , AddWeights=['PSWeight[0]'\,'PSWeight[2]']
-##am#FSR_WW : $wwaTGC|WW_sm : .*:templateAsymm; Normalize=True , AddWeights=['PSWeight[1]'\,'PSWeight[3]']
 ##amISR_WZ : $wzaTGC|WZ_sm : .*:templateAsymm; Normalize=True , AddWeights=['PSWeight[0]'\,'PSWeight[2]']
 ##amFSR_WZ : $wzaTGC|WZ_sm : .*:templateAsymm; Normalize=True , AddWeights=['PSWeight[1]'\,'PSWeight[3]']
 
 #ISR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
 #FSR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
-#ISR_WZ_sm : WZ_sm : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
-#FSR_WZ_sm : WZ_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
 
-
-#ISR_WW_aTGC :  $wwaTGC : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
-#FSR_WW_aTGC :  $wwaTGC : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
-#ISR_WZ_aTGC :  $wzaTGC : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
-#FSR_WZ_aTGC :  $wzaTGC : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
-
-
-#pdf_WW	     	           : $wwaTGC|WW_sm   : .* : normSymm ; Normalize=True: 1.05
-#pdf_WZ   	           : $wzaTGC|WZ_sm   : .* : normSymm ; Normalize=True:1.05
-
+pdf_WW_sm	     	   : WW_sm   : .* : normSymm : 1.05
+pdf_WZ_sm   	           : WZ_sm   : .* : normSymm : 1.05
 pdf_tt	           	   : $tt   : .* : normSymm : 1.03
 pdf_st	           	   : $st   : .* : normSymm : 1.02
 pdf_wj	           	   : $wj   : .* : normSymm : 1.06
@@ -107,13 +87,13 @@ pdf_Others           	   : $Others   : .* : normSymm : 1.02
 CMS_PS_wj :       $wj  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_tt :       $ttbar  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_st :       $st  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-CMS_PS_WW_aTGC :  $wwaTGC  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-CMS_PS_WZ_aTGC :  $wzaTGC  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-CMS_PS_WW_sm :    WW_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-CMS_PS_WZ_sm :    WZ_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+CMS_PS_WW :  	  $wwaTGC|WW_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+CMS_PS_WZ :  	  $wzaTGC|WZ_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+#CMS_PS_WW_sm :   WW_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+#CMS_PS_WZ_sm :   WZ_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_Others :   $Others  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_VH     :   $VH  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-CMS_PS_QCD     :   $QCD  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+CMS_PS_QCD     :  $QCD  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 
 
 

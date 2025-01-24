@@ -80,7 +80,7 @@ fitvars={
 'mWV_binning_res'   : "mWV [950,1000,1058,1118,1181,1246,1313,1383,1455,1530,1607,1687,1770,1856,1945,2037,2132,2231,2332,2438,2546,2659,2775,2895,3019,3147,3279,3416,3558,3704, 3854, 4010, 4171, 4337, 4509,4550]",
 'mWV_fixedbW'       : "mWV 36,950,4550",
 #'mWV'               : "mWV [950,1050,1150,1250,1350,1450,1550,1650,1750,1900,2100,2300,2500,2700,3000,3300,3600,3900,4550]", 
-'mWV'               : "mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,Lep1_pt,Lep1_eta,Lep1_phi,pmet_pt,pmet_phi,0) [950,1050,1150,1250,1350,1450,1550,1650,1750,1900,2100,2300,2500,2700,3000,3300,3600,3900,4550]", 
+'mWV'               : "mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,Lep1_pt,Lep1_eta,Lep1_phi,pmet_pt,pmet_phi,0) [950,1050,1150,1250,1350,1450,1550,1650,1750,1900,2100,2300,2500,2700,3000,3300,4550]", 
 'fjet_pt'           : "Selak8Jet1_pt [200,250,300,350,400,450,500,600,700,800,2000]",
 'fjet_pt_fixedbW'   : "Selak8Jet1_pt 18,200,2000",
 ''                  : "mWV [950,1050,1150,1250,1350,1450,1550,1700,1900,2500,4550]"
@@ -105,7 +105,7 @@ aTGC_chk   =['tmWV_typ0_pmet_boosted','Lep1_pt_vBins','Genptlepmet','tptleppmet'
 mWV=['ratio_typ0','ratio_typ1','ratio_typ2','ratio_typ3','mWV_typ0_pmet_boosted','mWV_typ01_pmet_boosted','mWV_typ10_pmet_boosted','mWV_typ11_pmet_boosted','mWV_typ20_pmet_boosted','mWV_typ21_pmet_boosted','mWV_typ30_pmet_boosted','mWV_typ31_pmet_boosted']
 topCR=['mWV_typ0_met_boosted','FatJet1_pt','FatJet1_sDrop_mass']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
-missing=['FatJet1_pNetMD_Wtagscore']#'nBJetMedium30_Recl']
+missing=['Lep1_pt_logy']#FatJet1_pNetMD_Wtagscore']#'nBJetMedium30_Recl']
 
 
 mWVs=['mWV_fitCR','mWV_new','mWV_cards','mWV_res','mWV_fine','mWV','mWV_logy','mWV_fine_logy','mWV_res_logy','mWV_cards_logy','FatJet1_pNetMD_Wtagscore']
@@ -214,18 +214,36 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     processes    = ['WW_sm','WZ_sm','tt','WJets','singletop','data','Others']#,'QCD'] #'WJets','data','WZ_sm_lin_quad_cW','WW_sm_lin_quad_cW','WW_quad_cW','WZ_quad_cW','WW_quad_cHDD','WZ_quad_cHDD']#
     vetoPlots    = ['WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w','WZ_sm_lin_quad_cb','WZ_quad_cb','WZ_cb']
     morePs       = ['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
-    if 'all' in WCs: WCs=['cw','c3w','cb']#,'cW','cHDD','clu']
-
+    mixedPs      = ['WW_sm_lin_quad_mixed_','WZ_sm_lin_quad_mixed_']
+    #morePlots    = ['WZ_lin_','WZ_quad_','WW_lin_','WW_quad_']
+    mixedOps     = []
+    singleOps    = []
+    if 'singles' in WCs or 'all' in WCs: 
+        singleOps=['cw','c3w','cb']
     for op in WCs:
-        if len(op) == 0:
-            processes=processes
+        if 'M' in op: #op not in ['cw','c3w','cb','']:
+            mixedOps.append(op.replace('M',''))
+            WCs.remove(op)
+            WCs.append(op.replace('M',''))
+            WCs.append(op.partition('M')[0])
+            WCs.append(op.partition('M')[-1])
         else:
-            if 'cards' in doWhat:
-                processes+=[s + op for s in morePs if s not in vetoPlots]            
-            else:
-                processes+=[s + op for s in ['WW_','WZ_'] if str(s+op) not in vetoPlots]
-                WCs=['all']
-    #print(processes)
+            singleOps.append(op)
+    print('running on these',singleOps,mixedOps)
+    for mop in mixedOps:
+        processes+=[s + mop for s in mixedPs]
+
+    for op in singleOps:
+        if len(op) == 0:
+            continue
+        if 'cards' in doWhat:
+            processes+=[s + op for s in morePs if s not in vetoPlots if len(op) > 0]            
+        else:
+            #processes+=[s + op for s in morePs if s not in vetoPlots]
+            processes+=[s + op for s in ['WW_','WZ_'] if str(s+op) not in vetoPlots]
+            WCs=['cw','c3w','cb']
+
+    print(processes)
     genprocesses = ['WJetsHT10','WJetsHT7','WJetsHT250','WJetsHT120','WJetsHT60','WJetsHT40','WJetsHT20','WJetsHT80']#,,'signal','testHT','testTT']
     cuts_boosted = ['ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','Mwvuppercut','Mjuppercut']
     cuts_btagEff = ['btagSR','bpartonFlav','Loosebtag','Medbtag','Tightbtag'] ##here for reference ['lightpartonFlav','cpartonFlav']
@@ -240,7 +258,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     ratio   = ' --ratioYNDiv 505 --fixRatioRange --maxRatioRange 0.25 2.0  '
     # --ratioNums WW_sm_lin_quad_2p25_cw,WW_quad_2p25_cw,WW_sm_lin_quad_cw,WW_quad_cw,WW_sm_lin_quad_1p8_c3w,WW_quad_1p8_c3w,WW_sm_lin_quad_c3w,WW_quad_c3w  --ratioDen WW_sm --ratioYLabel=aTGC/SM  --plotmode nostack ' 
 
-    more = '' # --plotmode norm' if cutflow else ''
+    more = ' ' # --plotmode nostack ' # --plotmode norm' if cutflow else ''
     extraopts = ratio + spam  + ubands  + exclude + signal + more
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
 
@@ -284,7 +302,6 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                     print("no tagger cut")
                 else:
                     enable.append(FS);
-                #                enable.append(FS); #tagger
                 if 'top' not in pR: enable.append('bVeto');
                 anything = "  --binname %s "%binName ##--pseudoData all, dropping pdf uncertainties from the plotting part, it's an overkill # --xu .*pdf.*
                 extraopts+= anything
@@ -294,8 +311,6 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                         processes.remove('data'); 
                         showratio   = False
 
-                    #elif  "top" in pR and fitCR: extraopts+= ' --xp Others  --xp QCD --xp .*quad.* '
-                    #elif  "wj" in pR and fitCR: extraopts+= '  --xp QCD --xp Others --xp .*quad.* '
                     elif  "top" in pR : extraopts+= '  --xp .*quad.* ' #--xp Others  --xp QCD
                     elif  "wj" in pR: extraopts+= '   --xp .*quad.* ' #--xp Others  --xp QCD
 
@@ -308,27 +323,20 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
 
                 else:
                     mWV_dist=" {here} ".format(here=fitvars[varTofit])
-                    if "top" in pR or 'wj' in pR: 
-                        binNamecards=binName+"_"+year
-                        if not fitCRwithcomb:
-                            extraoptscards= ' --binname %s  --sp WW_sm --sp WZ_sm --xp QCD --sp SM.* '%(binNamecards) #, '--xp QCD ' if 'top' in pR else '') --xp Others --xp .*quad.*  --sp WW_sm --sp WZ_sm
-                        else:
-                            extraoptscards= ' --binname %s --xp QCD --sp %s '%(binNamecards, 'tt' if 'top' in pR else 'WJets')
-                        #if "wjCR_hi" in pR:  extraoptscards+= "  --xp Others"
-                        if len(acC) > 0:extraoptscards += ''.join(' -E ^'+cut for cut in acC )
-                        runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
-                    else:
-                        extraoptscards= ' --sp WW_sm --xp QCD --sp WZ_sm --sp SM.* '
-                        if len(acC) > 0:extraoptscards+=''.join(' -E ^'+cut for cut in acC )
-                        if len(WCs) > 0:
-                            for op in WCs:
-                                binNamecards=binName+"_"+op+"_"+year
+                    extraoptscards= ' --sp WW_sm --xp QCD --sp WZ_sm --sp SM.* '
+                    if len(acC) > 0:extraoptscards+=''.join(' -E ^'+cut for cut in acC )
+                    if len(WCs) > 0:
+                        for op in WCs:
+                            binNamecards=binName+"_"+op+"_"+year
+                            if fitCRwithcomb:
+                                extraoptscards= ' --binname %s  --sp %s '%(binNamecards, 'tt' if 'top' in pR else 'WJets') #overwrite the extropts 
+                            else :
                                 extraoptscards+=' --binname %s '%(binNamecards)
-                                runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
-                        else:
-                            binNamecards=binName+"_"+year
-                            extraoptscards+=' --binname %s '%(binNamecards)
                             runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
+                    else:
+                        binNamecards=binName+"_"+year
+                        extraoptscards+=' --binname %s '%(binNamecards)
+                        runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,LF,pR,wjDate,extraoptscards,invert)
                                 
 
 #####################################
