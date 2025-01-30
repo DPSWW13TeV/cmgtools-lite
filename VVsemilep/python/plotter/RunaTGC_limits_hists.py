@@ -55,7 +55,7 @@ def commandsToRun(yr,dc,pf,plots_odir,WC,runEFT=True):
         range_op="-3,3"
         points="2000"
         os.system("text2workspace.py {name}.txt -P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative  --X-allow-no-signal  -o  model_{name}.root  --PO eftOperators={op}".format(name=dCard_str,op=WC))
-        #os.system("combine -M MultiDimFit model_{name}.root  --algo=grid --points {pts}  -m 125  -t -1  --redefineSignalPOIs k_{op}  --freezeParameters r --setParameters r=1,k_{op}=0  --setParameterRanges=k_{op}={range_op} {more} ".format(op=WC,name=dCard_str,pts=points,range_op=range_op,more=options)) #--verbose 3
+       # os.system("combine -M MultiDimFit model_{name}.root  --algo=grid --points {pts}  -m 125  -t -1  --redefineSignalPOIs k_{op}  --freezeParameters r --setParameters r=1,k_{op}=0  --setParameterRanges=k_{op}={range_op} {more} ".format(op=WC,name=dCard_str,pts=points,range_op=range_op,more=options)) #--verbose 3
         #os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_{op}  -lumi {lumi} -cms -preliminary -o {eos}/scan_{op}_{dc}.png ".format(op=WC,eos=plots_odir,dc=dCard_str,lumi=lumis[yr]))
         #os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_{op}  -lumi {lumi} -cms -preliminary -o {eos}/scan_{op}_{dc}.pdf " .format(op=WC,eos=plots_odir,dc=dCard_str,lumi=lumis[yr]))
         #os.system("cp higgsCombineTest.MultiDimFit.mH125.root higgsCombineTest.MultiDimFit.mH125_{op}_{yr}.root".format(op=WC,yr=yr))
@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
     year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2025-01-24" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2025-01-29" #datetime.date.today().isoformat() #"2021-12-02" #
     pf_input=""
     pf_output=""
     doWhat=sys.argv[2]
@@ -102,7 +102,7 @@ if __name__ == '__main__':
 
             commandsToRun(year,superdC,pf_output,plots_odir,'',False)    
     else:    
-        for op in ['cw','c3w','cb']:
+        for op in ['cw']: #,'c3w','cb']:
         
             if year == "fullRun2":
                 dC18=combineCards("2018","onelep",op,pf_input,"full",True)

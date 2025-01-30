@@ -31,7 +31,7 @@ lepsel={'topCR' : [allfavs],
         'wjCR_hi'     : [ll,fitvar_bkg],
 }
 
-ops=['cw','c3w','cb','c3wMcw','c3wMcb','cwMcb','']#,'']#,'']#'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
+ops=['cnb','c3wMcnb','cwMcnb'] #'cw','c3w','cb','c3wMcw','c3wMcb','cwMcb','']#,'']#,'']#'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
 nT=False
 fName='submitFile_%s.condor'%doWhat
 tmp_condor = open('jobs/%s'%fName, 'w')

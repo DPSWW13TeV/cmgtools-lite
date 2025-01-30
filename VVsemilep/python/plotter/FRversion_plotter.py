@@ -26,12 +26,12 @@ def drawSLatex(xpos,ypos,text,size):
 
 
 processes={
-    'Others':[ROOT.kPink+6,"Others"],
-    'WJets':[ROOT.kGreen-4,"WJets"],
-    'WW_sm':[ROOT.kOrange+7,"WW"],
-    'WZ_sm':[ROOT.kAzure+1,"WZ"],
-    'singletop':[ROOT.kGray,"S-top"],
-    'tt':[ROOT.kViolet+7,"tt"],
+    'Others':[ROOT.TColor.GetColor("\#964a8b"),"Others"],
+    'WJets':[ROOT.TColor.GetColor("\#5790fc"),"WJets"],
+    'WW_sm':[ROOT.TColor.GetColor("\#ffa90e"),"WW"],
+    'WZ_sm':[ROOT.TColor.GetColor("\#e42536"),"WZ"],
+    'singletop':[ROOT.TColor.GetColor("\#9c9ca1"),"S-top"],
+    'tt':[ROOT.TColor.GetColor("\#7a21dd"),"tt"],
     'data':[ROOT.kBlack,"Data"],
     'total':[ROOT.kBlue,"total"],
     'total_signal':[ROOT.kRed+1,"tot sig"],
@@ -39,12 +39,14 @@ processes={
 }
 nice_names={'wj_cr_hi':'m_{SD}^{jet} > 105','wj_cr_lo':'m_{SD}^{jet} < 65','top_cr':'t#bar{t}','wjCR':'W+jets'}
 
-fit="fit_s" #prefit" #fit_b #fit_s
+fit="fit_b" #prefit" #fit_b #fit_s
 
+channels={'2016':'ch1','2016APV':'ch2','2017':'ch3','2018':'ch4'}
 
 binning=[950,1050,1150,1250,1350,1450,1550,1650,1750,1900,2100,2300,2500,2700,3000,3300,4550]
 
 def makePlot(CR,FS,yr,logy):
+    chan=channels[yr]
     temp=[]
     fstr=''
     if 'top' in CR: 
@@ -57,9 +59,9 @@ def makePlot(CR,FS,yr,logy):
     for proc in processes.keys():
         print('looking for',proc,CR,FS,yr,"shapes_{fit}/{FS}_{CR}_{yr}/{p}".format(FS=FS,CR=CR,yr=yr,fit=fit,p=proc))
         if proc == "data":           
-            hist = filetoread.Get("shapes_{fit}/{FS}_{CR}_{yr}/WJets".format(FS=FS,CR=CR,yr=yr,fit=fit)); hist.Reset();           
+            hist = filetoread.Get("shapes_{fit}/{chan}_{FS}_{CR}_{yr}/WJets".format(FS=FS,CR=CR,yr=yr,fit=fit,chan=chan)); hist.Reset();           
             hist.Sumw2()        
-        hist_el_temp = filetoread.Get("shapes_{fit}/{FS}_{CR}_{yr}/{p}".format(FS=FS,CR=CR,yr=yr,fit=fit,p=proc));   
+        hist_el_temp = filetoread.Get("shapes_{fit}/{chan}_{FS}_{CR}_{yr}/{p}".format(FS=FS,CR=CR,yr=yr,fit=fit,p=proc,chan=chan));   
 
         if proc != "data":  
             hist=hist_el_temp.Clone(proc);
@@ -229,16 +231,16 @@ def makePlot(CR,FS,yr,logy):
     legend.Draw("same");
     
     #t2a = drawSLatex(0.1,0.94,"#bf{CMS}",0.085); 
-    t2a = drawSLatex(0.1,0.92,"#bf{CMS} #it{Preliminary}",0.085);
-    t3a = drawSLatex(0.66,0.93,"%s fb^{#minus1} (13 TeV)"%lumis[yr],0.085);
-    t4a = drawSLatex(0.6,0.6,nice_names[CR],0.085);
-    t4a = drawSLatex(0.6,0.5,FS+' channel',0.085);
+    t2a = drawSLatex(0.1,0.94,"#bf{CMS} #it{Preliminary}",0.085);
+    t3a = drawSLatex(0.66,0.94,"%s fb^{#minus1} (13 TeV)"%lumis[yr],0.085);
+    t4a = drawSLatex(0.65,0.6,nice_names[CR],0.085);
+    t4a = drawSLatex(0.65,0.5,FS+' channel',0.085);
     #print("now canv time over 11")
         
     Canv.Update();
     
-    Canv.Print("/eos/user/a/anmehta/www/VVsemilep/postfit_{CR}_{yr}_{FS}_{fit}{log}.pdf".format(yr=yr,fit=fit,CR=CR,FS=FS,log='_log' if logy else ''))
-    Canv.Print("/eos/user/a/anmehta/www/VVsemilep/postfit_{CR}_{yr}_{FS}_{fit}{log}.png".format(yr=yr,fit=fit,CR=CR,FS=FS,log='_log' if logy else ''))
+    Canv.Print("/eos/user/a/anmehta/www/VVsemilep/postfitplots/postfit_{CR}_{yr}_{FS}_{fit}{log}.pdf".format(yr=yr,fit=fit,CR=CR,FS=FS,log='_log' if logy else ''))
+    Canv.Print("/eos/user/a/anmehta/www/VVsemilep/postfitplots/postfit_{CR}_{yr}_{FS}_{fit}{log}.png".format(yr=yr,fit=fit,CR=CR,FS=FS,log='_log' if logy else ''))
     Canv.Close();
     filetoread.Close();
 

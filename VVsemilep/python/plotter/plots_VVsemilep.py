@@ -257,7 +257,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
 
     for op in WCs:
         if 'M' in op: 
-            mixedOps.append(op.replace('M',''))
+            mixedOps.append(op.replace('M','_'))
             singleOps.append(op.partition('M')[0])
             singleOps.append(op.partition('M')[-1])            
         else:
@@ -302,7 +302,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         signal = if3(pR == 'sig','--sp .*c.* ', if3('topCR' in pR, ' --sp tt ', ' --sp WJets'))
         for i in processes:
             #x = re.search("^W.*_c*", i) #or re.search("^W.*_sm*", i)  #FIXME this won't scale the EFT-based SM yields if we take the SM components from aTGC samples!!
-            x = re.search(".*cw.*", i) or re.search(".*cb.*", i) or re.search(".*c3w.*", i) or re.search("^W.*_sm", i) ##this assumes we are taking SM yields from the eft samples  
+            x = re.search(".*cw.*", i) or re.search(".*cb.*", i) or re.search(".*c3w.*", i) or re.search("^W.*_sm", i) or re.search(".*cnb.*", i) ##this assumes we are taking SM yields from the eft samples  
             if x :
                 if 'sig' in pR  or 'SR' in pR:
                     scalethem[i]=scaleEFTylds[year]['sig'][i.split('_')[0]]
@@ -357,7 +357,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                         if len(mixedOps)>0:
                             for mop in mixedOps:
                                 MoreMprocs=[]
-                                binNamecards=binName+"_"+op+"_"+year
+                                binNamecards=binName+"_"+mop+"_"+year
                                 MoreMprocs=[s + mop for s in mixedPs]
                                 Moreprocs=[]
                                 for op in singleOps:
