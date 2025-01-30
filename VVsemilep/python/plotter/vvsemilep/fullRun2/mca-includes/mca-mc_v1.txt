@@ -78,8 +78,8 @@ WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   : xsec : LHEReweighting
 
 
 
-WW_SMEFT_sm : WWToLNujj_01j_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kPink, Label="SMEFT\#rightarrowWW SM" #, genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
-WZ_SMEFT_sm : WZToLNujj_01j_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kBlue, Label="SMEFT\#rightarrowWZ SM" ,LineStyle=ROOT.kDashed #, genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
+WW_SMEFT_sm : WWToLNujj_01j_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kPink, Label="SMEFT\#rightarrowWW SM",LineStyle=ROOT.kDotted  #, genSumWeightName="LHEReweightingSumw[0]*genEventSumw",LineStyle=ROOT.kDotted
+WZ_SMEFT_sm : WZToLNujj_01j_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kBlue, Label="SMEFT\#rightarrowWZ SM" ,LineStyle=ROOT.kDashed #, genSumWeightName="LHEReweightingSumw[0]*genEventSumw",LineStyle=ROOT.kDashed
 
 
 Others : WplusH   	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"

@@ -31,7 +31,7 @@ lepsel={'topCR' : [allfavs],
         'wjCR_hi'     : [ll,fitvar_bkg],
 }
 
-ops=['singles','c3wMcw','c3wMcb','cwMcb','']#,'']#,'']#'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
+ops=['cw','c3w','cb','c3wMcw','c3wMcb','cwMcb','']#,'']#,'']#'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
 nT=False
 fName='submitFile_%s.condor'%doWhat
 tmp_condor = open('jobs/%s'%fName, 'w')
@@ -55,7 +55,7 @@ if 'plots' in doWhat :
 tmp_condor.write('queue info from ( \n')
 
 #for sel in ["wjCR_incl"]: #,"topCR_incl","sig_incl"]: 
-for sel in ["topCR_incl","wjCR_hi","wjCR_lo","sig_lo","sig_hi"]:
+for sel in ['sig_incl',"topCR_incl","wjCR_hi","wjCR_lo","sig_lo","sig_hi"]:
    # "sig_incl","topCR_incl",""topCR_incl","wjCR_hi","sig_lo","sig_hi"]: #"wjCR_lo","sig_incl"]: # #"wjCR_incl","sig_incl"]:#]: #, #,"topCR_incl","topCR_lo","topCR_hi"]
    for cat in ["boosted"]: 
        for yr in years: #in "2016APV,2016,2017,2018".split(","):

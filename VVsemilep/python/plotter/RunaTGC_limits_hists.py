@@ -55,15 +55,15 @@ def commandsToRun(yr,dc,pf,plots_odir,WC,runEFT=True):
         range_op="-3,3"
         points="2000"
         os.system("text2workspace.py {name}.txt -P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative  --X-allow-no-signal  -o  model_{name}.root  --PO eftOperators={op}".format(name=dCard_str,op=WC))
-        os.system("combine -M MultiDimFit model_{name}.root  --algo=grid --points {pts}  -m 125  -t -1  --redefineSignalPOIs k_{op}  --freezeParameters r --setParameters r=1,k_{op}=0  --setParameterRanges=k_{op}={range_op} {more} ".format(op=WC,name=dCard_str,pts=points,range_op=range_op,more=options)) #--verbose 3
-        os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_{op}  -lumi {lumi} -cms -preliminary -o {eos}/scan_{op}_{dc}.png ".format(op=WC,eos=plots_odir,dc=dCard_str,lumi=lumis[yr]))
-        os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_{op}  -lumi {lumi} -cms -preliminary -o {eos}/scan_{op}_{dc}.pdf " .format(op=WC,eos=plots_odir,dc=dCard_str,lumi=lumis[yr]))
-        os.system("cp higgsCombineTest.MultiDimFit.mH125.root higgsCombineTest.MultiDimFit.mH125_{op}_{yr}.root".format(op=WC,yr=yr))
+        #os.system("combine -M MultiDimFit model_{name}.root  --algo=grid --points {pts}  -m 125  -t -1  --redefineSignalPOIs k_{op}  --freezeParameters r --setParameters r=1,k_{op}=0  --setParameterRanges=k_{op}={range_op} {more} ".format(op=WC,name=dCard_str,pts=points,range_op=range_op,more=options)) #--verbose 3
+        #os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_{op}  -lumi {lumi} -cms -preliminary -o {eos}/scan_{op}_{dc}.png ".format(op=WC,eos=plots_odir,dc=dCard_str,lumi=lumis[yr]))
+        #os.system("mkEFTScan.py higgsCombineTest.MultiDimFit.mH125.root  -p k_{op}  -lumi {lumi} -cms -preliminary -o {eos}/scan_{op}_{dc}.pdf " .format(op=WC,eos=plots_odir,dc=dCard_str,lumi=lumis[yr]))
+        #os.system("cp higgsCombineTest.MultiDimFit.mH125.root higgsCombineTest.MultiDimFit.mH125_{op}_{yr}.root".format(op=WC,yr=yr))
         #os.system("cp {dc}.txt {eos}/scan_{op}_{dc}.txt" .format(op=WC,eos=plots_odir,dc=dCard_str))
-        #os.system("combine  -M FitDiagnostics  model_{name}.root  -t -1 --saveNormalizations  --customStartingPoint --saveShapes  --redefineSignalPOIs k_{op} --freezeParameters r,k_{op} --cminDefaultMinimizerStrategy 0 --setParameters r=0,k_{op}=0 -v 1 ".format(name=dCard_str,op=WC)) #  # --plots --robustFit=1  --toysFrequentist  #skip the signal fit 
+        os.system("combine  -M FitDiagnostics  model_{name}.root  -t -1 --saveNormalizations  --customStartingPoint --saveShapes  --redefineSignalPOIs k_{op} --freezeParameters r,k_{op} --cminDefaultMinimizerStrategy 0 --setParameters r=0,k_{op}=0 -v 1 ".format(name=dCard_str,op=WC)) #  # --plots --robustFit=1  --toysFrequentist  #skip the signal fit 
     else:
             os.system("text2workspace.py {name}.txt -o  {name}_SM_ws.root ".format(name=dCard_str))
-            os.system("combine -M FitDiagnostics {name}_SM_ws.root --X-rtd MINIMIZER_MaxCalls=9999999999999 --cminDefaultMinimizerStrategy 0 --saveShapes --saveWithUncertainties ".format(name=dCard_str)) #  # --plots --robustFit=1  --toysFrequentist  #skip the signal fit  --saveNormalizations  --saveShapes  --plots 
+            os.system("combine -M FitDiagnostics {name}_SM_ws.root --X-rtd MINIMIZER_MaxCalls=9999999999999 --cminDefaultMinimizerStrategy 0 --saveNormalizations --saveShapes --saveWithUncertainties ".format(name=dCard_str)) #  # --plots --robustFit=1  --toysFrequentist  #skip the signal fit  --saveNormalizations  --saveShapes  --plots 
             os.system("mv fitDiagnosticsTest.root fitDiagnosticsTest_SM_%s.root"%dCard_str)
             #os.system("combine -M MultiDimFit {name}_SM_ws.root -m 125  --saveWorkspace -n .bestfit_SM_{name}".format(name=dCard_str))
 
@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
     year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2025-01-21" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2025-01-24" #datetime.date.today().isoformat() #"2021-12-02" #
     pf_input=""
     pf_output=""
     doWhat=sys.argv[2]

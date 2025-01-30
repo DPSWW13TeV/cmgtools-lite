@@ -1,8 +1,5 @@
-WW_SMEFT_sm :   WmWpToLmNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kBlack,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM" , genSumWeightName="LHEReweightingSumw[0]*genEventSumw",years="2018"
-WW_SMEFT_sm :   WpWmToLpNujj_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kBlack,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM" , genSumWeightName="LHEReweightingSumw[0]*genEventSumw",years="2018"
-WZ_SMEFT_sm :   WpZToLpNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kBlack,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted , genSumWeightName="LHEReweightingSumw[0]*genEventSumw",years="2018"
-WZ_SMEFT_sm :   WmZToLmNujj_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kBlack,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted , genSumWeightName="LHEReweightingSumw[0]*genEventSumw",years="2018"
-
+WW_SMEFT_sm :   WWToLNujj_01j_SMEFT_LO : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kBlack,   Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM" , genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
+WZ_SMEFT_sm :   WZToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kBlack,   Label="SMEFT\#rightarrowW^{\#pm}Z SM"       ,LineStyle=ROOT.kDotted , genSumWeightName="LHEReweightingSumw[0]*genEventSumw"
 
 
 ##https://github.com/raggleton/aTGCsAnalysis/blob/472a635fba97990c6f0a899557424d0589a81061/Common/test/addWeightSamples.cpp#L37

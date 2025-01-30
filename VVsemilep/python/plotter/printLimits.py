@@ -16,7 +16,7 @@ yrs=['2016','2017','2018','fullRun2']#,'2016combo']
 for op in ops: 
     for yr in yrs: 
         print('op and yr',op,yr)
-        cmd=f"mkEFTScan.py higgsCombineTest.MultiDimFit.mH125_{op}_{yr}.root  -p k_{op}  -lumi lumis[{yr}] -cms -preliminary -o {plots_odir}/scan_{op}_{yr}.png "
+        cmd=f"mkEFTScan.py higgsCombine.{op}.individual.MultiDimFit.mH125.root  -p k_{op}  -lumi lumis[{yr}] -cms -preliminary -o {plots_odir}/scan_{op}_{yr}.png "
         output = subprocess.check_output(cmd, shell=True)
         #        print(output,type(output))
         limit[op+'_'+yr+'_1sig']=str(output).split('more')[0].replace('b\'','')
