@@ -9,11 +9,10 @@ $alias : VH     : WH|VH.*|ZH|WplusH|WminusH
 $alias : Others : WH|VH.*|ZH.*|WplusH|WminusH|ZZ.*
 $alias : top    : $st|$ttbar
 $alias : qcd    : QCD.*
-$alias : wwaTGC : WW_sm_lin_quad.*|WW_quad.*
-$alias : wzaTGC : WZ_sm_lin_quad.*|WZ_quad.*
-$alias : smeft	: WW_SMEFT_sm|WZ_SMEFT_sm
-$alias : AllFromMC  : $top|$vvsm|$qcd|$wj|$Others|$VH|$wwaTGC|$wzaTGC|$smeft
-$alias : PNET       : $top|$vvsm|$aTGC|$Others|$VH|$smeft
+$alias : wwaTGC : WW_sm_lin_quad.*|WW_quad.*|WW_c.*
+$alias : wzaTGC : WZ_sm_lin_quad.*|WZ_quad.*|WZ_c.*
+$alias : AllFromMC  : $top|$vvsm|$qcd|$wj|$Others|$VH|$wwaTGC|$wzaTGC
+$alias : PNET       : $top|$vvsm|$aTGC|$Others|$VH|
 $alias : bkg        : $top|$wj|$VH|$vvsm|$Others
 $alias : sig        : $wwaTGC|$wzaTGC
 
@@ -75,12 +74,12 @@ CMS_qcdscales_shape_wj : $wj  : .* : envelope; FakeRates=['vvsemilep/fullRun2/fr
 #ISR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
 #FSR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
 
-pdf_WW_sm	     	   : WW_sm   : .* : normSymm : 1.05
-pdf_WZ_sm   	           : WZ_sm   : .* : normSymm : 1.05
-pdf_tt	           	   : $tt   : .* : normSymm : 1.03
-pdf_st	           	   : $st   : .* : normSymm : 1.02
-pdf_wj	           	   : $wj   : .* : normSymm : 1.06
-pdf_Others           	   : $Others   : .* : normSymm : 1.02
+pdf_WW_sm	     	   : WW_sm   : .* : normSymm : 1.03
+pdf_WZ_sm   	           : WZ_sm   : .* : normSymm : 1.03
+pdf_tt	           	   : $tt     : .* : normSymm : 1.03
+pdf_st	           	   : $st     : .* : normSymm : 1.02
+pdf_wj	           	   : $wj     : .* : normSymm : 1.06
+pdf_Others           	   : $Others : .* : normSymm : 1.02
 
 
 
@@ -89,19 +88,16 @@ CMS_PS_tt :       $ttbar  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps
 CMS_PS_st :       $st  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_WW :  	  $wwaTGC|WW_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_WZ :  	  $wzaTGC|WZ_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-#CMS_PS_WW_sm :   WW_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-#CMS_PS_WZ_sm :   WZ_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-CMS_PS_Others :   $Others  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_VH     :   $VH  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_QCD     :  $QCD  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-
+CMS_PS_Others :   $Others  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 
 
 
 # L1 ECAL prefiring
 CMS16_L1PreFiring : $AllFromMC : .* : templateAsymm; AddWeights=['L1PreFiringWeight_Up/L1PreFiringWeight_Nom'\,'L1PreFiringWeight_Dn/L1PreFiringWeight_Nom'], year="2016\,2016APV"
 CMS17_L1PreFiring : $AllFromMC : .* : templateAsymm; AddWeights=['L1PreFiringWeight_Up/L1PreFiringWeight_Nom'\,'L1PreFiringWeight_Dn/L1PreFiringWeight_Nom'], year="2017"
-
+CMS18_L1PreFiring : $AllFromMC : .* : templateAsymm; AddWeights=['L1PreFiringWeight_Up/L1PreFiringWeight_Nom'\,'L1PreFiringWeight_Dn/L1PreFiringWeight_Nom'], year="2018"
 
 
 CMS_pileup_2016 : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight'], year="2016\,2016APV"
@@ -149,8 +145,13 @@ CMS_trigger_mu     : $AllFromMC : .*mu.*|.*lep.*  :   templateAsymm  ; AddWeight
 CMS_top_pT_rwgt  : $ttbar : .* : templateSymm; Normalize=False, AddWeight='1.0/Top_pTrw'
 
 
-CMS_pmet_UnclusteredEn : $AllFromMC : .*mu.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
-CMS_pmet_UnclusteredEn : $AllFromMC : .*el.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt']
+
+CMS_pmet_UnclusteredEn_2016 : $AllFromMC : .*mu.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt'], year="2016\,2016APV"
+CMS_pmet_UnclusteredEn_2016 : $AllFromMC : .*el.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt'], year="2016\,2016APV"
+CMS_pmet_UnclusteredEn_2018 : $AllFromMC : .*mu.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt'], year="2018"
+CMS_pmet_UnclusteredEn_2018 : $AllFromMC : .*el.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt'], year="2018"
+CMS_pmet_UnclusteredEn_2017 : $AllFromMC : .*mu.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt'], year="2017"
+CMS_pmet_UnclusteredEn_2017 : $AllFromMC : .*el.* : templateAsymm;      FakeRates=['vvsemilep/fullRun2/fr-unclUp.txt'\,'vvsemilep/fullRun2/fr-unclDn.txt'], year="2017"
 
 CMS_pmet_JES : $AllFromMC : .*el.*  : templateAsymm;         FakeRates=['vvsemilep/fullRun2/fr-jesUp.txt'\,'vvsemilep/fullRun2/fr-jesDn.txt']
 CMS_pmet_JER : $AllFromMC : .*el.*  : templateAsymm;         FakeRates=['vvsemilep/fullRun2/fr-jerUp.txt'\,'vvsemilep/fullRun2/fr-jerDn.txt']
@@ -226,14 +227,14 @@ CMS_res_2018  		  : $AllFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullR
 
 CMS_btagSFbc_correlated         : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_correlated/btagSF'\,'btagSF_light_down_correlated/btagSF']
 CMS_btagSFlight_correlated      : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_correlated/btagSF'\,'btagSF_heavy_down_correlated/btagSF']
-CMS_btagSFbc                    : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2018"
-CMS_btagSFlight                 : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2018"
-CMS_btagSFbc                    : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2017"
-CMS_btagSFlight                 : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2017"
-CMS_btagSFbc                    : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2016"
-CMS_btagSFlight                 : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2016"
-CMS_btagSFbc                    : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2016APV"
-CMS_btagSFlight                 : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2016APV"
+CMS_btagSFbc_2018               : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2018"
+CMS_btagSFlight_2018            : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2018"
+CMS_btagSFbc_2017               : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2017"
+CMS_btagSFlight_2017            : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2017"
+CMS_btagSFbc_2016               : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2016"
+CMS_btagSFlight_2016            : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2016"
+CMS_btagSFbc_2016APV            : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_heavy_up_uncorrelated/btagSF'\,'btagSF_heavy_down_uncorrelated/btagSF'], year="2016APV"
+CMS_btagSFlight_2016APV         : $AllFromMC : .* : templateAsymm; AddWeights=['btagSF_light_up_uncorrelated/btagSF'\,'btagSF_light_down_uncorrelated/btagSF'], year="2016APV"
 
 
 

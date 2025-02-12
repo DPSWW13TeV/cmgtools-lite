@@ -19,9 +19,9 @@ parser.add_option("--categorize-by-ranges", dest="categ_ranges", type="string", 
 parser.add_option("--regularize", dest="regularize", action="store_true", default=False, help="Regularize templates")
 parser.add_option("--threshold", dest="threshold", type=float, default=0.0, help="Minimum event yield to consider processes")
 parser.add_option("--filter", dest="filter", type="string", default=None, help="File with list of processes to be removed from the datacards")
-parser.add_option("--lf","--lepflav", dest="lepflav", type="string", default="mu", help="which lepton flav to run on, needed to read WJ workspace")
-parser.add_option("--wjD", dest="wjDate", type="string", default="", help="date for WJ workspace to be picked")
-parser.add_option("--sel", dest="sel", type="string", default="", help="selection region string")
+#parser.add_option("--lf","--lepflav", dest="lepflav", type="string", default="mu", help="which lepton flav to run on, needed to read WJ workspace")
+#parser.add_option("--wjD", dest="wjDate", type="string", default="", help="date for WJ workspace to be picked")
+#parser.add_option("--sel", dest="sel", type="string", default="", help="selection region string")
 
 (options, args) = parser.parse_args()
 options.weight = True

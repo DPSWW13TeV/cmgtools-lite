@@ -19,7 +19,7 @@ for x in glob(basepath+"/*.root"):
     n_p=fIn.Get("Events").GetEntries();
     frndpath=os.path.join(basepath,frnds_dir) 
     frnd_file=frndpath+"/"+proc+"_Friend.root"
-    if "Run20" in proc and frnds_dir not in ['1_recl','3_ak8_sdm45','0_wjest_v5']: continue
+    if "Run20" in proc and frnds_dir not in ['1_recl','3_ak8_sdm45','0_wjest_v6']: continue
     #print("looking for this frnd",frnd_file)
     if os.path.isfile(frnd_file):
         fIn=ROOT.TFile.Open(frnd_file)

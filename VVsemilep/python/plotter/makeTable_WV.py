@@ -4,27 +4,27 @@ procs={0:['WJets','\Wj'],1:['tt',"\\ttbar"],
        7:['data','data']}
 nice_names={'wjCR_incl':'\\WJ control region', 'topCR_incl' :'\\ttbar control region', 'sig_incl': 'signal region', 'el': 'electron','mu':'muon'}
 
-finalState=['mu','el']#,'ll_noee']
+finalState=['mu'] #,'el']#,'ll_noee']
 classifier='mWV' 
 years=['2016APV','2016','2017','2018','fullRun2']
-dateStamp="2025-01-10"
+dateStamp="2025-02-09"
 info={}
-pf="_all_withoutTagger"
+pf="_eft_withoutTagger"
 
 txtfilename = "{od}/table.txt".format(od=os.getcwd())
 txtfile = open(txtfilename,'w')
 fmtstring = "%-25s & %15s & %15s & %15s & %15s  & %15s \\\\"
 
-for reg in ["wjCR_incl"]: #,"topCR_incl","sig_incl"]:
+for reg in ["wjCR_incl"]: #"topCR_incl","sig_incl"]: #
     for lep in finalState:
         for yr in years:
             baseDir="/eos/user/a/anmehta/www/VVsemilep/{yr}/{reg}/{dateStamp}_boosted_{lep}_{breg}{pf}/".format(pf=pf,yr=yr,lep=lep,breg=reg,reg=reg.split("_")[0],dateStamp=dateStamp)
             fstr="%s.root"%classifier
-            #print(fname)
+            print(baseDir+fstr)
             fOpen=ROOT.TFile.Open(baseDir+fstr,"read")
             for proc,pName in procs.items():
                 if ("sig" in reg  and pName[0] == "data" ):
-                    row="\\NA"
+                    row=""
                 else:
                     hist=classifier+"_"+pName[0]
                     #print(hist)
@@ -33,7 +33,7 @@ for reg in ["wjCR_incl"]: #,"topCR_incl","sig_incl"]:
                     h1_int = h1.IntegralAndError(0, h1.GetNbinsX() + 1, h1_err)
                     row = "$%.2f\pm%.2f$" % (h1_int,h1_err)
 
-                    info.update({pName[0]+"-"+lep+"-"+yr:row})
+                info.update({pName[0]+"-"+lep+"-"+yr:row})
 
         txtfile.write("\\begin{table}[ht!] \n \\begin{tabular}{llllll}\n \\hline\\hline\n\n")
         txtfile.write("\multicolumn{1}{c}{\multirow{2}{*}{Process}} & \multicolumn{5}{c}{Event yields}    \\\\ \\cline{2-6} \n")
@@ -45,7 +45,8 @@ for reg in ["wjCR_incl"]: #,"topCR_incl","sig_incl"]:
             yld_2017=info[pName[0]+"-"+lep+"-2017"]
             yld_2018=info[pName[0]+"-"+lep+"-2018"]
             yld_Run2=info[pName[0]+"-"+lep+"-fullRun2"]
-            if ("sig" in reg  and pName[0] == "data" ): continue
+            if ("sig" in reg  and pName[0] == "data" ):                 continue;
+
             txtfile.write(fmtstring % (pName[1],yld_2016APV,yld_2016,yld_2017,yld_2018,yld_Run2))
             txtfile.write(" \\hline \n")
 

@@ -60,7 +60,7 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All --de .*Run.* "
+	basecmd="${BCORE}2_jmeUncT/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All --de .*Run.* "
 	;;
 
 
@@ -86,12 +86,12 @@ trigsf)
 
 wjet)
 	echo "wjet"
-	basecmd="${BCORE}/0_wjest_v5  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --dm .*SMEFT_LO.* " # " #--de .*Run.* "
+	basecmd="${BCORE}/0_wjest_v6  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --de .*Run.* "
 	;;
 
 wjet_data)
 	echo "wjet data"
-	basecmd="${BCORE}/0_wjest_v5  ${CMGT} input_wjest_data  -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root   --dm .*Run.* "
+	basecmd="${BCORE}/0_wjest_v6  ${CMGT} input_wjest_data  -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root   --dm .*Run.* "
 	;;
 
 nnpdf)

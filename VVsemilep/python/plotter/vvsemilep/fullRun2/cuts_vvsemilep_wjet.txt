@@ -28,9 +28,9 @@ dphifjlep    : dphi_fjlep > 2.0 ; Disable=True
 dphifjmet    : dphi_fjmet > 2.0 ; Disable=True
 ptWlep       : pTWlep  > 200 ; Disable=True
 
-mWVtyp0pmet  : mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,Lep1_pt,Lep1_eta,Lep1_phi,pmet_pt,pmet_phi,0) > 950 ;           Disable=True
+mWVtyp0pmet  : mWV  > 950 ;           Disable=True
 Mjuppercut   : Selak8Jet1_msoftdrop < 250 ;           Disable=True
-Mwvuppercut  : mass_WV(Selak8Jet1_pt,Selak8Jet1_eta,Selak8Jet1_phi,Selak8Jet1_msoftdrop,Lep1_pt,Lep1_eta,Lep1_phi,pmet_pt,pmet_phi,0) < 4550 ;           Disable=True
+Mwvuppercut  : mWV < 4550 ;           Disable=True
 bVeto        : nBJetMedium30_Recl == 0  ;           Disable=True
 wjSB         : (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop >= 105 )) ;    Disable=True
 

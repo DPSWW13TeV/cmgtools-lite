@@ -28,4 +28,5 @@ change: MT_met_lep2\b: MT_met_lep2_jesFlavorQCDDown
 change: MT_met_lep3\b: MT_met_lep3_jesFlavorQCDDown
 change: mbb_loose\b: mbb_loose_jesFlavorQCDDown
 change: mbb_medium\b: mbb_medium_jesFlavorQCDDown
+change: mWV\b: mWV_jesFlavorQCDDown
 weight:1

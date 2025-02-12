@@ -1,7 +1,8 @@
 import os,string,sys
 from plots_VVsemilep import *
-allvars=missing #theWVultimateset_log + theWVultimateset ##++leptons fitCR #mWVs #missing #fitCR #+
+allvars=['mWV'] #theWVultimateset_log + theWVultimateset ##++leptons fitCR #mWVs #missing #fitCR #+
 doWhat=sys.argv[1] #cards or plots
+
 #year=sys.argv[2]
 pf="" #withoutTaggernHEEP"
 years=["2018","2017","2016","2016APV"]#,"fullRun2"] #,"all"] 
@@ -31,49 +32,69 @@ lepsel={'topCR' : [allfavs],
         'wjCR_hi'     : [ll,fitvar_bkg],
 }
 
-ops=['cnb','c3wMcnb','cwMcnb'] #'cw','c3w','cb','c3wMcw','c3wMcb','cwMcb','']#,'']#,'']#'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
+list_ops={'smeft':['cW','clu','cWMclu','cHWBMcHD'],'eft':['cw','c3w','cb','c3wMcw','c3wMcb','cwMcb','cnb','c3wMcnb','cwMcnb']}
+
+#ops=['all'] #'cnb','c3wMcnb','cwMcnb'] #'cW','clu','cw','c3w','cb','c3wMcw','c3wMcb','cwMcb','']#,'']#,'']#'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
+
+
 nT=False
-fName='submitFile_%s.condor'%doWhat
+if "cards" in  doWhat:
+   nT=False 
+else:
+   nT=nT
+
+smeft=False
+basis="smeft" if smeft else ''
+fName='submitFile_%s%s%s.condor'%(doWhat,basis,'nT' if nT else '')
 tmp_condor = open('jobs/%s'%fName, 'w')
 tmp_condor.write('''Executable = dummy{here}.sh
 use_x509userproxy = true
 getenv      = True                                                                                                              
-Log        = jobs/{dW}_$(Cluster)_$(ProcId).log
-Output     = jobs/{dW}_$(Cluster)_$(ProcId).out
-Error      = jobs/{dW}_$(Cluster)_$(ProcId).error
+Log        = jobs/{dW}{tag}{basis}_$(Cluster)_$(ProcId).log
+Output     = jobs/{dW}{tag}{basis}_$(Cluster)_$(ProcId).out
+Error      = jobs/{dW}{tag}{basis}_$(Cluster)_$(ProcId).error
 +JobFlavour = "tomorrow"
 arguments  = $(info) 
 on_exit_remove = (ExitBySignal == False) && (ExitCode == 0)
 max_retries    = 3
-request_memory = 10GB
 requirements   = Machine =!= LastRemoteHost
-MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"\n'''.format(dW=doWhat,here='_2' if nT else ''))
+MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"\n'''.format(dW=doWhat,here='_2' if nT else '',basis=basis,tag='_nT' if nT else ''))
 if os.environ['USER'] in ['anmehta', 'vmilosev']:
    tmp_condor.write('+AccountingGroup = "group_u_CMST3.all"\n')
 if 'plots' in doWhat :
    tmp_condor.write('request_memory = 10GB\n')
 tmp_condor.write('queue info from ( \n')
 
-#for sel in ["wjCR_incl"]: #,"topCR_incl","sig_incl"]: 
-for sel in ['sig_incl',"topCR_incl","wjCR_hi","wjCR_lo","sig_lo","sig_hi"]:
-   # "sig_incl","topCR_incl",""topCR_incl","wjCR_hi","sig_lo","sig_hi"]: #"wjCR_lo","sig_incl"]: # #"wjCR_incl","sig_incl"]:#]: #, #,"topCR_incl","topCR_lo","topCR_hi"]
-   for cat in ["boosted"]: 
-       for yr in years: #in "2016APV,2016,2017,2018".split(","):
-           for lep in lepsel[sel][0]: 
-              if 'plots' in  doWhat:
-                 for iVar in allvars:
-                    if len(ops) > 0:   
-                       for op in ops: 
-                          tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {iVar} {op} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,op=op,cmssw=os.environ['PWD']))
-                    else:
-                       tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {iVar} {pf} \n'.format(iVar=iVar,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,cmssw=os.environ['PWD']))
-              else:
-                 for fv in lepsel[sel][1]:
-                    for op in ops: 
-                       if len(op) > 0:
-                          tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {fv} {op} {pf} \n'.format(cmssw=os.environ['PWD'],cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,doWhat=doWhat,op=op,fv=fv ) )
-                       else:
-                          tmp_condor.write('{cmssw} {doWhat} {yr} {cat} {sel} {lf} {fv} {pf} \n'.format(doWhat=doWhat,cat=cat,yr=yr,sel=sel,lf=lep,pf=pf,cmssw=os.environ['PWD'],fv=fv ) )
+configs=[]
+
+ops=list_ops['smeft'] if smeft else list_ops['eft']
+if "plots" in doWhat and not nT:
+   ops=['all']
+   configs=["topCR_incl"] #'sig_incl',"topCR_incl","wjCR_incl"]
+elif "plots" in doWhat and nT:
+   ops=['all']
+   configs=['wjCR_incl']
+elif "cards" in doWhat:
+   configs=["wjCR_lo","sig_incl","topCR_incl","wjCR_hi","sig_lo","sig_hi"]
+else: configs=[]
+      
+for sel in configs:
+   for yr in years: #in "2016APV,2016,2017,2018".split(","):
+      for lep in lepsel[sel][0]: 
+         if 'plots' in  doWhat:
+            for iVar in allvars:
+               if len(ops) > 0:   
+#                  for op in ops:  #ops should be 'all' for plotting or else empty string
+                  tmp_condor.write('{cmssw} {doWhat} {yr}  {sel} {lf} {iVar} {op} {basis} \n'.format(iVar=iVar,yr=yr,sel=sel,lf=lep,basis=basis,doWhat=doWhat,op='all',cmssw=os.environ['PWD']))
+               else:
+                  tmp_condor.write('{cmssw} {doWhat} {yr}  {sel} {lf} {iVar} {basis} \n'.format(iVar=iVar,yr=yr,sel=sel,lf=lep,basis=basis,doWhat=doWhat,cmssw=os.environ['PWD']))
+         else:
+            for fv in lepsel[sel][1]:
+               for op in ops: 
+                  if len(op) > 0:
+                     tmp_condor.write('{cmssw} {doWhat} {yr}  {sel} {lf} {fv} {op} {basis} \n'.format(cmssw=os.environ['PWD'],yr=yr,sel=sel,lf=lep,basis=basis,doWhat=doWhat,op=op,fv=fv ) )
+                  else:
+                     tmp_condor.write('{cmssw} {doWhat} {yr}  {sel} {lf} {fv} {basis} \n'.format(doWhat=doWhat,yr=yr,sel=sel,lf=lep,basis=basis,cmssw=os.environ['PWD'],fv=fv ) )
 
 tmp_condor.write(') \n')
 tmp_condor.close()

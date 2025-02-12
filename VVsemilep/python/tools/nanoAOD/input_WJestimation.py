@@ -6,13 +6,33 @@ import math
 from math import sqrt, cos, sin
 from array import array
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR, deltaPhi
-from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import calcmassWV, pNetSFMD_WvsQCD, HEM
+from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import pNetSFMD_WvsQCD, HEM
 #_rootLeafType2rootBranchType = { 'UChar_t':'b', 'Char_t':'B', 'UInt_t':'i', 'Int_t':'I', 'Float_t':'F', 'Double_t':'D', 'ULong64_t':'l', 'Long64_t':'L', 'Bool_t':'O'}
 
 from copy import deepcopy
 
 def if3(cond, iftrue, iffalse):
     return iftrue if cond else iffalse
+def calcmassWV(l1,fjet,metpt,metphi,jetpt):
+    from ROOT.heppy import METzCalculator
+        
+    NeutrinoPz = METzCalculator()
+    met=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    metV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    lepton1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    fatjet1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    mWV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    met.SetPtEtaPhiM(metpt,0.,metphi,0.);
+    lepton1.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,0);
+    fatjet1.SetPtEtaPhiM(jetpt,fjet.eta,fjet.phi,fjet.msoftdrop); #particleNet_mass);
+    NeutrinoPz.SetMET(met);
+    NeutrinoPz.SetLepton(lepton1);
+    NeutrinoPz.SetLeptonType(l1.pdgId);
+    nu_pz=NeutrinoPz.Calculate(0)
+    metV.SetPxPyPzE(metpt*cos(metphi), metpt*sin(metphi),nu_pz,sqrt(metpt*metpt+nu_pz*nu_pz));
+    mWV=lepton1+fatjet1+metV;
+    massWV=mWV.M();
+    return massWV
 
 class input_WJestimation(Module):
     def __init__(self, isMC,lepMultiplicity, fjetMultiplicity, selection,massVar='sD',jecs=[]):
@@ -29,7 +49,8 @@ class input_WJestimation(Module):
             self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
             self.vars+=["msoftdrop_"+jec+sh for jec in self.jecs for sh in self.shift]
         self.pmet_uncert=['JES','JER','Unclustered']
-        if self.isMC:self.pmet_vars+=[pmetV+uncert+sh for pmetV in self.pmet_vars for uncert in self.pmet_uncert for sh in self.shift]
+        if self.isMC:
+            self.pmet_vars+=[pmetV+uncert+sh for pmetV in self.pmet_vars for uncert in self.pmet_uncert for sh in self.shift]
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
@@ -41,8 +62,17 @@ class input_WJestimation(Module):
         for var in self.vars: #'pt,eta,phi,mass,particleNetMD_Xqq,msoftdrop,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetWtagSF'.split(','): 
             for j in range(self.fjetMultiplicity):
                 self.out.branch('Selak8Jet%d_%s'%(j+1,var), 'F')
+
+        if self.isMC:
+            for jec in self.jecs:
+                for sh in self.shift:
+                    self.out.branch('mWV_%s%s'%(jec,sh), 'F')
+
         for var in self.pmet_vars:
             self.out.branch('pmet_%s'%(var), 'F')
+        for var in self.pmet_uncert:
+            for sh in self.shift:
+                self.out.branch('mWV_pmet_%s%s'%(var,sh), 'F')
         self.out.branch('nFj','I')
         #for jec in self.jecs:
         #    for sh in self.shift:
@@ -131,7 +161,22 @@ class input_WJestimation(Module):
             self.out.fillBranch('Selak8Jet%d_pNetWtagSF'%(jet+1),pnetsf)
         for i in self.pmet_vars:
             self.out.fillBranch('pmet_%s'%i,getattr(event,'PuppiMET_%s'%i) if tot_sel else -999.0)
-        self.out.fillBranch('mWV',calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi) if tot_sel else -999.0)
+        for i in self.pmet_uncert:
+            for sh in self.shift:
+                value=-999
+                if tot_sel:
+                    value=calcmassWV(leps[0],jets[0],getattr(event,'PuppiMET_pt%s%s'%(i,sh)),getattr(event,'PuppiMET_phi%s%s'%(i,sh)),jets[0].pt) 
+                self.out.fillBranch('mWV_pmet_%s%s'%(i,sh), value)
+
+
+        if self.isMC:
+            for jec in self.jecs:
+                for sh in self.shift:
+                    if tot_sel:
+                        self.out.fillBranch('mWV_%s%s'%(jec,sh), calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi,getattr(event,"ak8sDMgt45_pt_%s%s"%(jec,sh))[0]) if tot_sel else -999.0) #"ak8%sMgt45"
+
+
+        self.out.fillBranch('mWV', calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi,jets[0].pt) if tot_sel else -999.0) #"ak8%sMgt45"
         self.out.fillBranch('pmet',event.PuppiMET_pt if tot_sel else -999.0)
         #       self.out.fillBranch('pmet_phi',event.PuppiMET_phi if tot_sel else -999.0)
         self.out.fillBranch('trigger1e',event.Trigger_1e if tot_sel else 0)
