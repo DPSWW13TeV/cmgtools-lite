@@ -23,9 +23,9 @@ def combineCards(yr,FS,WC,pf,runOn="full",splitsig=True,vartop="mWV",varwj="mWV"
     finalDC='dc_{date_dC}_{FS}_{yr}{op}_{runOn}.txt'.format(date_dC=date_dC,yr=yr,op=WC,FS=FS,runOn=runOn)
     #finalDC='dc_{date_dC}_{FS}_{yr}{op}_{vartop}topCR{top}_{varwj}wjCR_{varsig}sig.txt'.format(date_dC=date_dC,yr=yr,op=WC,FS=FS,vartop=vartop,top='incl' if not splittopCR else '',varwj=varwj,varsig=varsig)
     topCRpart='';wjCRpart='';sigpart='';
-    if "full" in runOn or "topCR" in runOn: 
+    if "full" in runOn or "topCR" in runOn or "CRonly" in runOn: 
         topCRpart= '''el_top_cr_{year}=Cards/cards_{date_dC}_boosted_el_topCR_incl_{vartop}_{year}/boosted_el_topCR_incl{WC}_{year}.txt mu_top_cr_{year}=Cards/cards_{date_dC}_boosted_mu_topCR_incl_{vartop}_{year}/boosted_mu_topCR_incl{WC}_{year}.txt'''.format(year=yr,date_dC=date_dC,vartop=vartop,WC=eft_sig)
-    if "full" in runOn or "wjCR" in runOn:
+    if "full" in runOn or "wjCR" in runOn or "CRonly" in runOn:
         wjCRpart= '''mu_wj_cr_hi_{year}=Cards/cards_{date_dC}_boosted_mu_wjCR_hi_{varwj}_{year}/boosted_mu_wjCR_hi{WC}_{year}.txt mu_wj_cr_lo_{year}=Cards/cards_{date_dC}_boosted_mu_wjCR_lo_{varwj}_{year}/boosted_mu_wjCR_lo{WC}_{year}.txt   el_wj_cr_hi_{year}=Cards/cards_{date_dC}_boosted_el_wjCR_hi_{varwj}_{year}/boosted_el_wjCR_hi{WC}_{year}.txt el_wj_cr_lo_{year}=Cards/cards_{date_dC}_boosted_el_wjCR_lo_{varwj}_{year}/boosted_el_wjCR_lo{WC}_{year}.txt'''.format(year=yr,date_dC=date_dC,varwj=varwj,WC=eft_sig)
     if "full" in runOn:
         if splitsig:
@@ -35,7 +35,7 @@ def combineCards(yr,FS,WC,pf,runOn="full",splitsig=True,vartop="mWV",varwj="mWV"
     cmd = 'combineCards.py   {sig} {topCR}  {wjCRpart} > {dc}'.format(dc=finalDC,sig=sigpart,topCR=topCRpart,wjCRpart=wjCRpart)
     print cmd
     os.system(cmd)
-    if "full" in runOn : 
+    if "full" in runOn or "CRonly" in runOn: 
         dC = open(finalDC, 'a')
         dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
 norm_WJets_mu_{yr} rateParam mu*{yr}  WJets 1 [0,5]
@@ -62,8 +62,8 @@ def commandsToRun(yr,dc,pf,plots_odir,WC,runEFT=True):
         os.system("combine  -M FitDiagnostics  model_{name}.root --rMin -2 --rMax 2  -t -1 --saveNormalizations  --customStartingPoint --saveShapes --saveWithUncertainties  --redefineSignalPOIs k_{op} --freezeParameters r,k_{op} --setParameters r=0,k_{op}=0 -v 1 {mops}".format(name=dCard_str,mops=options,op=WC)) #  # --plots --robustFit=1  --toysFrequentist  #skip the signal fit 
     else:
         print('running the SM case')
-        os.system("text2workspace.py {name}.txt -o {name}_SM_ws.root ".format(name=dCard_str))
-        os.system("combine -M FitDiagnostics {name}_SM_ws.root ".format(name=dCard_str,mops=options))  #saveNormalizations --saveShapes --saveWithUncertainties
+        os.system("text2workspace.py {name}.txt -o {name}.root ".format(name=dCard_str))
+        os.system("combine -M FitDiagnostics {name}.root ".format(name=dCard_str,mops=options))  #saveNormalizations --saveShapes --saveWithUncertainties
         os.system("mv fitDiagnosticsTest.root fitDiagnosticsTest_SM_%s.root"%dCard_str)
         #os.system("combine -M MultiDimFit {name}_SM_ws.root -m 125  --saveWorkspace -n .bestfit_SM_{name}".format(name=dCard_str))
 
@@ -82,7 +82,7 @@ if __name__ == '__main__':
     pf_output=""
     doWhat=sys.argv[2]
     if "SM" in doWhat: 
-        for CR in ["wjCR","topCR"]: 
+        for CR in ["wjCR","topCR"]: #,"CRonly"]: 
             if year == "fullRun2":
                 dC18=combineCards("2018","onelep",'',pf_input,CR,True)
                 dC17=combineCards("2017","onelep",'',pf_input,CR,True)
@@ -100,7 +100,7 @@ if __name__ == '__main__':
             else:
                 superdC=combineCards(year,"onelep",'',pf_input,CR,True)
 
-            commandsToRun(year,superdC,pf_output,plots_odir,'',False)    
+            #commandsToRun(year,superdC,pf_output,plots_odir,'',False)    
     else:    
         for op in ['cw']: #,'c3w','cb']:
             superdC=''

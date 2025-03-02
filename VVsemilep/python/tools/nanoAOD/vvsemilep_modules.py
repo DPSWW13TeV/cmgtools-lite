@@ -284,7 +284,7 @@ triggerGroups=dict(
     Trigger_1m={
         2016 : lambda ev : _fires(ev,'HLT_IsoMu24') or _fires(ev,'HLT_IsoTkMu24'), 
         2017 : lambda ev : _fires(ev,'HLT_IsoMu27'),
-        2018 : lambda ev : _fires(ev,'HLT_IsoMu24'),
+        2018 : lambda ev : _fires(ev,'HLT_IsoMu24'),   # or _fires(ev,'HLT_Mu50'),
     },
     Trigger_2e={
         2016 : lambda ev : _fires(ev,'HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ'),
@@ -325,7 +325,7 @@ triggerGroups_dict=dict(
     Trigger_1m={
         2016 :  ['HLT_IsoMu24' , 'HLT_IsoTkMu24' ],
         2017 :  ['HLT_IsoMu27'],
-        2018 :  ['HLT_IsoMu24'],
+        2018 :  ['HLT_IsoMu24' ],  #, 'HLT_Mu50'
     },
     Trigger_2e={
         2016 :  ['HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ'],

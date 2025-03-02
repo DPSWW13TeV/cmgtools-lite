@@ -7,7 +7,6 @@
 
 ######## fixed inputs no matter what
 baseDir='/eos/cms/store/cmst3/group/dpsww/'
-localtest='/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/'
 ######## MVA WPs, year ans steps to run on 
 runWhat=${1}; shift;
 year=${1}; shift; 
@@ -18,13 +17,15 @@ echo $runWhat,$year,$runWhere
 
 
 ################### following should not be changed
-localTrees='local_dir_NAME/'  
+localTrees='WW_2018/'  
 Trees='NanoTrees_v9_vvsemilep_13112024_skimmed/'
 
 if [ ${runWhat} == "reclmc" ] ||  [ ${runWhat} == "recldata" ]
 then 
     Trees='NanoTrees_v9_vvsemilep_13112024/' #06012023/'
 fi 
+
+#Trees='WW_2018/'
 
 nEvt=120000 
 Parent=${baseDir}/${Trees}/${year}
@@ -51,7 +52,7 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --de .*Run.* "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --dm .*SMEFT.* " #--de .*Run.* "
 	;;
 
 

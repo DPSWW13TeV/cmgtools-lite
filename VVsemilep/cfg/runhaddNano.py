@@ -1,13 +1,15 @@
 import os,sys
 import subprocess
 
-eospath="/eos/cms/store/group/phys_smp/ec/anmehta/"
+eospath="/eos/cms/store/cmst3/group/dpsww/SMEFT_samples/"
+#eospath="/eos/cms/store/group/phys_smp/ec/anmehta/"
 #indir="aTGC_Apr2024_UL16" #/eos/cms/store/cmst3/group/dpsww/"
 #odir= "Combined_aTGC_Oct2024_UL16"
+eosOut="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_smeft_FEB2025_UL_FR2/"
 samples=[]
-sample=sys.argv[1]
-indir=sys.argv[2]
-odir=sys.argv[3]
+indir=sys.argv[1]
+sample=sys.argv[2]
+#odir=sys.argv[3]
 samples.append(sample)
 
 
@@ -15,7 +17,7 @@ for iproc in samples:
     newName=iproc.split('_4f_NLO_FXFX')[0].replace('-','_')
     print "running for process",newName
     basepath_private=os.path.join(eospath,indir,iproc)
-    outdir=os.path.join(eospath,odir,newName)#  basepath_private #+"_hadded"
+    outdir=os.path.join(eosOut,indir,newName)#  basepath_private #+"_hadded"
     if not  os.path.exists(outdir):
         os.system("mkdir -p %s"%outdir)
     files=[os.path.join(basepath_private,x) for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x)) ]

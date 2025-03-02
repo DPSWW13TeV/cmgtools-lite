@@ -1,11 +1,11 @@
 import os,string,sys
 from plots_VVsemilep import *
-allvars=['mWV'] #theWVultimateset_log + theWVultimateset ##++leptons fitCR #mWVs #missing #fitCR #+
+allvars=mWVs #['mWV'] #theWVultimateset_log + theWVultimateset ##++leptons fitCR #mWVs #missing #fitCR #+
 doWhat=sys.argv[1] #cards or plots
 
 #year=sys.argv[2]
 pf="" #withoutTaggernHEEP"
-years=["2018","2017","2016","2016APV"]#,"fullRun2"] #,"all"] 
+years=["2018","2017","2016","2016APV","fullRun2"] #,"all"] 
 #years.append(year)
 
 allfavs=["mu","el","onelep"]
@@ -32,7 +32,7 @@ lepsel={'topCR' : [allfavs],
         'wjCR_hi'     : [ll,fitvar_bkg],
 }
 
-list_ops={'smeft':['cW','clu','cWMclu','cHWBMcHD'],'eft':['cw','c3w','cb','c3wMcw','c3wMcb','cwMcb','cnb','c3wMcnb','cwMcnb']}
+list_ops={'smeft':['cW','clu','cWMclu','cHWBMcHD'],'eft':['']}#'cw','c3w','cb','c3wMcw','c3wMcb','cwMcb','cnb','c3wMcnb','cwMcnb']}
 
 #ops=['all'] #'cnb','c3wMcnb','cwMcnb'] #'cW','clu','cw','c3w','cb','c3wMcw','c3wMcb','cwMcb','']#,'']#,'']#'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
 

@@ -1,30 +1,35 @@
-##amWJetsSR : WJetsToLNu_HT70to100     : 1271*1.21   ; AddWeight="(((ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0])/(ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0]+ak8pNMgt40_particleNetMD_QCD[0]) > 0.85) && ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105)",FakeRate="vvsemilep/fullRun2/alphaRatio_wjSR.txt";  FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-##amWJetsSR : WJetsToLNu_HT100to200    : 1253*1.21    ; AddWeight="(((ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0])/(ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0]+ak8pNMgt40_particleNetMD_QCD[0]) > 0.85) && ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105)",FakeRate="vvsemilep/fullRun2/alphaRatio_wjSR.txt", FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-##amWJetsSR : WJetsToLNu_HT200to400    : 335.9*1.21   ; AddWeight="(((ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0])/(ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0]+ak8pNMgt40_particleNetMD_QCD[0]) > 0.85) && ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105)",FakeRate="vvsemilep/fullRun2/alphaRatio_wjSR.txt", FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-##amWJetsSR : WJetsToLNu_HT400to600    : 45.21*1.21   ; AddWeight="(((ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0])/(ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0]+ak8pNMgt40_particleNetMD_QCD[0]) > 0.85) && ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105)",FakeRate="vvsemilep/fullRun2/alphaRatio_wjSR.txt", FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-##amWJetsSR : WJetsToLNu_HT600to800    : 10.99*1.21   ; AddWeight="(((ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0])/(ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0]+ak8pNMgt40_particleNetMD_QCD[0]) > 0.85) && ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105)",FakeRate="vvsemilep/fullRun2/alphaRatio_wjSR.txt", FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-##amWJetsSR : WJetsToLNu_HT800to1200   : 4.936*1.21   ; AddWeight="(((ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0])/(ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0]+ak8pNMgt40_particleNetMD_QCD[0]) > 0.85) && ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105)",FakeRate="vvsemilep/fullRun2/alphaRatio_wjSR.txt", FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-##amWJetsSR : WJetsToLNu_HT1200to2500  : 1.156*1.21   ; AddWeight="(((ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0])/(ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0]+ak8pNMgt40_particleNetMD_QCD[0]) > 0.85) && ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105)",FakeRate="vvsemilep/fullRun2/alphaRatio_wjSR.txt", FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-##amWJetsSR : WJetsToLNu_HT2500toInf   : 0.02623*1.21 ; AddWeight="(((ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0])/(ak8pNMgt40_particleNetMD_Xcc[0]+ak8pNMgt40_particleNetMD_Xqq[0]+ak8pNMgt40_particleNetMD_QCD[0]) > 0.85) && ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105)",FakeRate="vvsemilep/fullRun2/alphaRatio_wjSR.txt", FillColor=ROOT.kAzure+1,   Label="WjetsSR"
+
+WJets_CR :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1+WJetsToLNu_Pt100To250_part2 : xsec  : (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ; FillColor=ROOT.kOrange+7,   Label="CR",years="2017\,2018"
+WJets_CR :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part3+WJetsToLNu_Pt250To400_part5+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2+WJetsToLNu_Pt250To400_part4: xsec  : (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ; FillColor=ROOT.kOrange+7,   Label="CR",years="2017\,2018"
+WJets_CR :  WJetsToLNu_Pt400To600 : xsec  : (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ; FillColor=ROOT.kOrange+7,   Label="CR"
+WJets_CR :  WJetsToLNu_Pt600ToInf : xsec  : (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ; FillColor=ROOT.kOrange+7,   Label="CR"
+WJets_CR :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1 : xsec  : (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ; FillColor=ROOT.kOrange+7,   Label="CR",years="2016\,2016APV"
+WJets_CR :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2 : xsec  : (Selak8Jet1_msoftdrop < 65 || (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150)) ; FillColor=ROOT.kOrange+7,   Label="CR",years="2016\,2016APV"
 
 
-WJetsSR : WJetsToLNu_HT70to100     : 1271*1.21    :  ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105; FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-WJetsSR : WJetsToLNu_HT100to200    : 1253*1.21    :  ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105; FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-WJetsSR : WJetsToLNu_HT200to400    : 335.9*1.21   :  ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105; FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-WJetsSR : WJetsToLNu_HT400to600    : 45.21*1.21   :  ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105; FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-WJetsSR : WJetsToLNu_HT600to800    : 10.99*1.21   :  ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105; FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-WJetsSR : WJetsToLNu_HT800to1200   : 4.936*1.21   :  ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105; FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-WJetsSR : WJetsToLNu_HT1200to2500  : 1.156*1.21   :  ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105; FillColor=ROOT.kAzure+1,   Label="WjetsSR"
-WJetsSR : WJetsToLNu_HT2500toInf   : 0.02623*1.21 :  ak8pNMgt40_particleNet_mass[0] >= 65 && ak8pNMgt40_particleNet_mass[0] <= 105; FillColor=ROOT.kAzure+1,   Label="WjetsSR"
+WJets_CR_lo :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1+WJetsToLNu_Pt100To250_part2 : xsec  : (Selak8Jet1_msoftdrop < 65) ; FillColor=ROOT.kAzure+1,   Label="CR_lo",years="2017\,2018" ,LineStyle=ROOT.kDashed
+WJets_CR_lo :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part3+WJetsToLNu_Pt250To400_part5+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2+WJetsToLNu_Pt250To400_part4: xsec  : (Selak8Jet1_msoftdrop < 65) ; FillColor=ROOT.kAzure+1,   Label="CR-lo",years="2017\,2018",LineStyle=ROOT.kDashed
+WJets_CR_lo :  WJetsToLNu_Pt400To600 : xsec  : (Selak8Jet1_msoftdrop < 65) ; FillColor=ROOT.kAzure+1,   Label="CR-lo" ,LineStyle=ROOT.kDashed
+WJets_CR_lo :  WJetsToLNu_Pt600ToInf : xsec  : (Selak8Jet1_msoftdrop < 65) ; FillColor=ROOT.kAzure+1,   Label="CR-lo",LineStyle=ROOT.kDashed
+WJets_CR_lo :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1 : xsec  : (Selak8Jet1_msoftdrop < 65) ; FillColor=ROOT.kAzure+1,   Label="CR-lo",years="2016\,2016APV",LineStyle=ROOT.kDashed
+WJets_CR_lo :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2 : xsec  : (Selak8Jet1_msoftdrop < 65) ; FillColor=ROOT.kAzure+1,   Label="CR-lo",years="2016\,2016APV",LineStyle=ROOT.kDashed
 
 
 
 
-WJetsCR : WJetsToLNu_HT70to100     : 1271*1.21    :  (ak8pNMgt40_particleNet_mass[0] < 65 || (ak8pNMgt40_particleNet_mass[0] > 105 && ak8pNMgt40_particleNet_mass[0] < 150))  ; FillColor=ROOT.kOrange+7,   Label="WjetsCR"
-WJetsCR : WJetsToLNu_HT100to200    : 1253*1.21    :  (ak8pNMgt40_particleNet_mass[0] < 65 || (ak8pNMgt40_particleNet_mass[0] > 105 && ak8pNMgt40_particleNet_mass[0] < 150))  ; FillColor=ROOT.kOrange+7,   Label="WjetsCR"
-WJetsCR : WJetsToLNu_HT200to400    : 335.9*1.21   : (ak8pNMgt40_particleNet_mass[0] < 65 || (ak8pNMgt40_particleNet_mass[0] > 105 && ak8pNMgt40_particleNet_mass[0] < 150)) ; FillColor=ROOT.kOrange+7,   Label="WjetsCR"
-WJetsCR : WJetsToLNu_HT400to600    : 45.21*1.21   : (ak8pNMgt40_particleNet_mass[0] < 65 || (ak8pNMgt40_particleNet_mass[0] > 105 && ak8pNMgt40_particleNet_mass[0] < 150)) ; FillColor=ROOT.kOrange+7,   Label="WjetsCR"
-WJetsCR : WJetsToLNu_HT600to800    : 10.99*1.21   : (ak8pNMgt40_particleNet_mass[0] < 65 || (ak8pNMgt40_particleNet_mass[0] > 105 && ak8pNMgt40_particleNet_mass[0] < 150)) ; FillColor=ROOT.kOrange+7,   Label="WjetsCR"
-WJetsCR : WJetsToLNu_HT800to1200   : 4.936*1.21   : (ak8pNMgt40_particleNet_mass[0] < 65 || (ak8pNMgt40_particleNet_mass[0] > 105 && ak8pNMgt40_particleNet_mass[0] < 150)) ; FillColor=ROOT.kOrange+7,   Label="WjetsCR"
-WJetsCR : WJetsToLNu_HT1200to2500  : 1.156*1.21   : (ak8pNMgt40_particleNet_mass[0] < 65 || (ak8pNMgt40_particleNet_mass[0] > 105 && ak8pNMgt40_particleNet_mass[0] < 150)) ; FillColor=ROOT.kOrange+7,   Label="WjetsCR"
-WJetsCR : WJetsToLNu_HT2500toInf   : 0.02623*1.21 : (ak8pNMgt40_particleNet_mass[0] < 65 || (ak8pNMgt40_particleNet_mass[0] > 105 && ak8pNMgt40_particleNet_mass[0] < 150)) ; FillColor=ROOT.kOrange+7,   Label="WjetsCR"
+
+WJets_CR_hi :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1+WJetsToLNu_Pt100To250_part2 : xsec  : (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150) ; FillColor=ROOT.kMagenta+1,   Label="CR-hi",years="2017\,2018",LineStyle=ROOT.kDotted
+WJets_CR_hi :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part3+WJetsToLNu_Pt250To400_part5+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2+WJetsToLNu_Pt250To400_part4: xsec  : (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150) ; FillColor=ROOT.kMagenta+1,   Label="CR-hi",years="2017\,2018",LineStyle=ROOT.kDotted
+WJets_CR_hi :  WJetsToLNu_Pt400To600 : xsec  : (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150) ; FillColor=ROOT.kMagenta+1,   Label="CR-hi",LineStyle=ROOT.kDotted
+WJets_CR_hi :  WJetsToLNu_Pt600ToInf : xsec  : (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150) ; FillColor=ROOT.kMagenta+1,   Label="CR-hi",LineStyle=ROOT.kDotted
+WJets_CR_hi :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1 : xsec  : (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150) ; FillColor=ROOT.kMagenta+1,   Label="CR-hi",years="2016\,2016APV",LineStyle=ROOT.kDotted
+WJets_CR_hi :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2 : xsec  : (Selak8Jet1_msoftdrop > 105 && Selak8Jet1_msoftdrop < 150) ; FillColor=ROOT.kMagenta+1,   Label="CR-hi",years="2016\,2016APV",LineStyle=ROOT.kDotted
+
+
+WJets_SR :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1+WJetsToLNu_Pt100To250_part2 : xsec  : (Selak8Jet1_msoftdrop >= 65 && Selak8Jet1_msoftdrop < 105) ; FillColor=ROOT.kGreen+2,   Label="SR",years="2017\,2018"
+WJets_SR :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part3+WJetsToLNu_Pt250To400_part5+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2+WJetsToLNu_Pt250To400_part4: xsec  : (Selak8Jet1_msoftdrop >= 65 && Selak8Jet1_msoftdrop < 105) ; FillColor=ROOT.kGreen+2,   Label="SR",years="2017\,2018"
+WJets_SR :  WJetsToLNu_Pt400To600 : xsec  : (Selak8Jet1_msoftdrop >= 65 && Selak8Jet1_msoftdrop < 105) ; FillColor=ROOT.kGreen+2,   Label="SR"
+WJets_SR :  WJetsToLNu_Pt600ToInf : xsec  : (Selak8Jet1_msoftdrop >= 65 && Selak8Jet1_msoftdrop < 105) ; FillColor=ROOT.kGreen+2,   Label="SR"
+WJets_SR :  WJetsToLNu_Pt100To250_part0+WJetsToLNu_Pt100To250_part1 : xsec  : (Selak8Jet1_msoftdrop >= 65 && Selak8Jet1_msoftdrop < 105) ; FillColor=ROOT.kGreen+2,   Label="SR",years="2016\,2016APV"
+WJets_SR :  WJetsToLNu_Pt250To400_part1+WJetsToLNu_Pt250To400_part0+WJetsToLNu_Pt250To400_part2 : xsec  : (Selak8Jet1_msoftdrop >= 65 && Selak8Jet1_msoftdrop < 105) ; FillColor=ROOT.kGreen+2,   Label="SR",years="2016\,2016APV"
+

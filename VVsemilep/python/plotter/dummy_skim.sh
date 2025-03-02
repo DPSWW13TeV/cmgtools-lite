@@ -11,7 +11,8 @@ eval `scram runtime -sh`
 echo "i am in this directory ${PWD} and doingthis ${2}"
 
 #source ${2} ${3}
-python ${2} ${3}
+#python ${2} ${3}
+python plots_VVsemilep.py --alpha --lf onelep --year ${2}
 #cp -r /eos/cms/store/cmst3/group/dpsww/SMEFT_samples /eos/cms/store/group/phys_smp/ec/anmehta/
 
 #python ${2}

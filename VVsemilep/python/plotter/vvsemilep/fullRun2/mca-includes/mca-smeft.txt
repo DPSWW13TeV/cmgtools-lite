@@ -11,6 +11,12 @@ WW_sm_lin_quad_cW+ :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[4];
 WZ_sm_lin_quad_cW+ :   WZToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[4]; FillColor=ROOT.TColor.GetColor("\#832db6"),   Label="WZ_cW",LineStyle=ROOT.kDashed 
 
 
+#WW_cW_plus 		   :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[4]; FillColor=ROOT.TColor.GetColor("\#832db6"),  Label="c_{W+}^{WW}"  ,LineStyle=ROOT.kDotted
+#WW_cW_minus 		   :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[3]; FillColor=ROOT.TColor.GetColor("\#832db6"),  Label="c_{W-}^{WW}"  ,LineStyle=ROOT.kDashed
+#WW_clu_plus      	   :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[42];FillColor=ROOT.TColor.GetColor("\#94a4a2"),  Label="c_{lu+}^{WW}" ,LineStyle=ROOT.kDotted
+#WW_clu_minus      	   :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[41];FillColor=ROOT.TColor.GetColor("\#94a4a2"),  Label="c_{lu-}^{WW}" ,LineStyle=ROOT.kDashed
+
+
 WW_clu+      	         :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[42]; 			        FillColor=ROOT.TColor.GetColor("\#94a4a2"),  Label="c_{lu}^{WW}"  ,LineStyle=ROOT.kDotted
 WZ_clu+      		 :   WZToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[42]; 			        FillColor=ROOT.TColor.GetColor("\#94a4a2"),  Label="c_{lu}^{WZ}",LineStyle=ROOT.kDashed 
 WW_lin_clu+  		 :   WWToLNujj_01j_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[42]-LHEReweightingWeight[41]);  FillColor=ROOT.TColor.GetColor("\#94a4a2"),  Label="c_{lu}^{WW}(I.)" 

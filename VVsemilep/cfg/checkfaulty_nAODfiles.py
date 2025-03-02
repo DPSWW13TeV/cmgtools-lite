@@ -4,7 +4,8 @@ import numpy
 import sys, os
 
 dirname=sys.argv[1]
-basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/%s/'%dirname 
+proc=sys.argv[2]
+basepath_private='/eos/cms/store/cmst3/group/dpsww/SMEFT_samples/%s/%s'%(dirname,proc) # '/eos/cms/store/group/phys_smp/ec/anmehta/%s/'%dirname 
 files =   [os.path.join(basepath_private,x) for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x)) ] 
 
 ref=ROOT.TFile.Open(files[0])

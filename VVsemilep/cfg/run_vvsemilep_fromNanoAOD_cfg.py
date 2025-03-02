@@ -12,7 +12,7 @@ kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = getHeppyOption("year", "2016APV")
+year=getHeppyOption("year","2016APV")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","both")
@@ -64,6 +64,7 @@ from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules import triggerGroups_dic
 
 DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
+print("this is the year tag",theyear)
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
         #"Tbar_.*",
@@ -73,7 +74,8 @@ if analysis == "main":
         #"WplusH","WminusH","ZH.*","ZZTo2Q2L","WZTo1L1Nu2Q","WWTo1L1Nu2Q",
         #"TTSemi.*","T_.*","TT_mtt.*","WJetsToLNu_Pt.*", #"WJetsToLNu_HT.*",
         #"W.*Jtotaunu_PM","W.*Jtomunu_PM" #,"WJetsToLNu_Pt.*","WJetsToLNu_.*J",
-        ".*SMEFT_LO.*",
+        ".*SMEFT_LO.*", 
+        #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf","WWTo1L1Nu2Q"
 
      ])
     ##am removed double el triggers for 2018 
