@@ -239,9 +239,12 @@ mcMatch_seq   = [ isMatchRightCharge, mcMatchId ,mcPromptGamma]
 
 from CMGTools.VVsemilep.tools.nanoAOD.toppTrwt import toppTrwt
 topsf = lambda : toppTrwt()
+from CMGTools.VVsemilep.tools.nanoAOD.genak8Jet_tagger import genak8Jet_tagger
+mctruth =  lambda : genak8Jet_tagger() 
 from CMGTools.VVsemilep.tools.nanoAOD.npdf_rms import npdf_rms
 rms_val = lambda : npdf_rms()
-
+from CMGTools.VVsemilep.tools.nanoAOD.HeavyFlavBaseProducer import HeavyFlavBaseProducer
+HFP  = lambda : HeavyFlavBaseProducer()
 
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import createJMECorrector
@@ -399,7 +402,7 @@ taggedfj_data      = lambda : saveVtaggedJet(isMC = False,massVar='sD')
 
 from CMGTools.VVsemilep.tools.nanoAOD.saveGoodak8Jet import saveGoodak8Jet
 goodfj           = lambda : saveGoodak8Jet(isMC = True, massVar='sD',jecs = jevariations)
-goodfj_data           = lambda : saveGoodak8Jet(isMC = False,massVar='sD')
+goodfj_data      = lambda : saveGoodak8Jet(isMC = False,massVar='sD')
 
 event_sel=  ['event.nLepFO_Recl == 1                                 ',
             'event.PuppiMET_pt > 110                                 ',

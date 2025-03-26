@@ -48,13 +48,14 @@ class input_WJestimation(Module):
         if self.isMC: 
             self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
             self.vars+=["msoftdrop_"+jec+sh for jec in self.jecs for sh in self.shift]
+            self.vars+=["mcTruth_W","pNetWtagSF_TM"]#,"mcTruth_H","mcTruth_T","mcTruth_Z","pNetZtagSF_TM",""]
         self.pmet_uncert=['JES','JER','Unclustered']
         if self.isMC:
             self.pmet_vars+=[pmetV+uncert+sh for pmetV in self.pmet_vars for uncert in self.pmet_uncert for sh in self.shift]
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        for var in 'pt,eta,phi,pdgId,tightId'.split(','):
+        for var in 'pt,eta,phi,pdgId,tightId,dxy,dz,sip3d,dxy,dz,sip3d,miniPFRelIso_all,pfRelIso03_all,pfRelIso04_all'.split(','):
             for l in range(self.lepMultiplicity):
                 self.out.branch('Lep%d_%s'%(l+1,var),'F')
 
@@ -144,20 +145,20 @@ class input_WJestimation(Module):
         self.out.fillBranch('nLepTight',event.nLepTight_Recl  if tot_sel else 0)
         #if tot_sel: print "finally ",tot_sel,event.event
         for lep in range(self.lepMultiplicity):
-            for var in 'pt,eta,phi,pdgId'.split(','):
+            for var in 'pt,eta,phi,pdgId,dxy,dz,sip3d,miniPFRelIso_all,pfRelIso03_all,pfRelIso04_all'.split(','):
                 self.out.fillBranch('Lep%d_%s'%(lep+1,var), getattr(leps[lep],var) if tot_sel else -999.0)
             self.out.fillBranch('Lep%d_tightId'%(lep+1), getattr(leps[lep],"isLepTight_Recl") if tot_sel else 0)
         for jet in range(self.fjetMultiplicity): 
             for var in self.vars: #'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore'.split(','): 
-                if "pNetWtagSF" in var: 
+                if "pNetWtagSF" in var or "mcTruth" in var: 
                     continue
                 else:
                     self.out.fillBranch('Selak8Jet%d_%s'%(jet+1,var), getattr(jets[jet],var) if tot_sel else -999.0)
-            #if tot_sel:print event.event,getattr(jets[jet],"pt"),getattr(jets[jet],"eta"),getattr(jets[jet],"msoftdrop")
+
             pnetsf=1.0;
             if tot_sel:
                 pnetsf=pNetSFMD_WvsQCD(getattr(jets[jet],'pt'),event.year,event.suberaId) if not isData else 1.0
-            #print "event \t",event.event,"\t pNetWscore \t",pNetWscore
+
             self.out.fillBranch('Selak8Jet%d_pNetWtagSF'%(jet+1),pnetsf)
         for i in self.pmet_vars:
             self.out.fillBranch('pmet_%s'%i,getattr(event,'PuppiMET_%s'%i) if tot_sel else -999.0)
@@ -214,12 +215,87 @@ class input_WJestimation(Module):
                 #print event.LHEReweightingWeight[j]
                 tmp[j]=event.LHEReweightingWeight[j]
         self.out.fillBranch('aGC_wt', tmp)
+        quarks=[];bosons=[];
+        if not isData:
+            genparts=Collection(event,"GenPart")
+            for idx, gp in enumerate(genparts):
+                if 'dauIdx' not in gp.__dict__:
+                    gp.dauIdx = []
+                if gp.genPartIdxMother >= 0:
+                    mom = genparts[gp.genPartIdxMother]
+                    if 'dauIdx' not in mom.__dict__:
+                        mom.dauIdx = [idx]
+                    else:
+                        mom.dauIdx.append(idx)
+            event.genparts = genparts
+            hadGenTops = [];             hadGenZs = [];        hadGenHs = []            #lepGenTops=[];
+            hadGenWs = [];     
+
+            def isHadronic(gp):
+                if len(gp.dauIdx) == 0:
+                    raise ValueError('Particle has no daughters!')
+                for idx in gp.dauIdx:
+                    if abs(genparts[idx].pdgId) < 6:
+                        return True
+                return False
+
+            def getFinal(gp):
+                for idx in gp.dauIdx:
+                    dau = genparts[idx]
+                    if dau.pdgId == gp.pdgId:
+                        return getFinal(dau)
+                return gp
+
+            for gp in genparts:
+                if gp.statusFlags &  ( 1 << 13) == 0: continue 
+                if abs(gp.pdgId) ==6:
+                    for idx in gp.dauIdx:
+                        dau = genparts[idx]
+                        if abs(dau.pdgId) == 24:
+                            genW = getFinal(dau)
+                            gp.genW = genW
+                            #if isHadronic(genW): hadGenTops.append(gp)
+                            #else: lepGenTops.append(gp)
+                        elif abs(dau.pdgId) in (1, 3, 5): gp.genB = dau
+                elif abs(gp.pdgId) == 24: 
+                    if isHadronic(gp):  
+                        #                        print(type(gp))
+                        hadGenWs.append(gp)
+                elif abs(gp.pdgId) == 23: 
+                    if isHadronic(gp): 
+                        hadGenZs.append(gp)
+                elif abs(gp.pdgId) == 25: 
+                    if isHadronic(gp):  
+                        hadGenHs.append(gp)
+            #print(len(hadGenZs),len(hadGenWs),len(hadGenHs))
+            for jet in range(self.fjetMultiplicity):
+                if not tot_sel: continue
+                dR=9999;pnetsf_n=1.0;
+                if len(hadGenWs) > 0:
+                    dR=deltaR(getattr(jets[jet],"eta"),getattr(jets[jet],"phi"),hadGenWs[0].eta,hadGenWs[0].phi)
+                    #print('delta R for fj',dR,getattr(jets[jet],"eta"),getattr(jets[jet],"pt"))
+                    if dR < 0.81 : 
+                        pnetsf_n=pNetSFMD_WvsQCD(getattr(jets[jet],'pt'),event.year,event.suberaId)
+                    #print( pnetsf_n)
+                self.out.fillBranch('Selak8Jet%d_pNetWtagSF_TM'%(jet+1),pnetsf_n if tot_sel  else 1.0)
+                self.out.fillBranch('Selak8Jet%d_mcTruth_W'%(jet+1),dR if tot_sel else 999)
+
+                #dR=deltaR(getattr(jets[jet],"eta"),getattr(jets[jet],"phi"),hadGenZs[0].eta,hadGenZs[0].phi)
+                #print('delta R for fj',dR,getattr(jets[jet],"eta"),getattr(jets[jet],"pt"))
+                #self.out.fillBranch('Selak8Jet%d_mcTruth_Z'%(jet+1),dR)
+                #dR=deltaR(getattr(jets[jet],"eta"),getattr(jets[jet],"phi"),hadGenTs[0].eta,hadGenTs[0].phi)
+                #print('delta R for fj',dR,getattr(jets[jet],"eta"),getattr(jets[jet],"pt"))
+                #self.out.fillBranch('Selak8Jet%d_mcTruth_T'%(jet+1),dR)
+                #
+                #dR=deltaR(getattr(jets[jet],"eta"),getattr(jets[jet],"phi"),hadGenHs[0].eta,hadGenHs[0].phi)
+                #print('delta R for fj',dR,getattr(jets[jet],"eta"),getattr(jets[jet],"pt"))
+                #self.out.fillBranch('Selak8Jet%d_mcTruth_H'%(jet+1),dR)
 
         topsf=1.0;
         if not isData:
             tops=[];
             genparticles=Collection(event,"GenPart")
-            foundt=False;foundtbar=False; tgenPt=0.0; AtopPt=0.0;
+            foundt=False;foundtbar=False; tgenPt=0.0; AtopPt=0.0; quarks=[];
             for iGen in genparticles:
                 if abs(iGen.pdgId) == 6:
                     lastcopy=ROOT.TMath.Odd(iGen.statusFlags/(1<<13))
@@ -231,7 +307,7 @@ class input_WJestimation(Module):
                 if len(tops)==2 and foundt and foundtbar:
                     topsf=(math.sqrt(math.exp(0.0615 - 0.0005 * topPt) * math.exp(0.0615 - 0.0005 * AtopPt)))
         self.out.fillBranch('Top_pTrw',topsf if tot_sel else -999.0 )    
-
+        
         return True
 
 
@@ -249,3 +325,32 @@ class input_WJestimation(Module):
 
 
 
+#        if self.isMC:
+#            quarks=[];          bosons=[]; 
+#            for iGen in genparticles:
+#                if abs(iGen.pdgId) < 6:
+#                    lastcopy=ROOT.TMath.Odd(iGen.statusFlags/(1<<13))
+#                    if iGen.genPartIdxMother != -1 and lastcopy:
+#                        for m,iMa in enumerate(genparticles):
+#                            if m == iGen.genPartIdxMother and (abs(iMa.pdgId) in [24,23,25]): #,abs(iGen.pdgId)]):
+#                                bosons.append(iMa);quarks.append(iGen)
+#                                break;
+#                            else: continue
+#
+#
+#            foundCombo=False;                dRJ=[]
+#            if len(quarks) == 2 and  quarks[0].pdgId*quarks[1].pdgId <0 and len(bosons) > 0 :
+#            #    print('i found the combo',quarks[0].pdgId,quarks[1].pdgId)
+#                foundCombo=True
+#
+#            for i,j in enumerate(fjets):
+#                dR1=0;dR2=0;
+#                if foundCombo:
+#                    dR1=deltaR(j.eta,j.phi,quarks[0].eta,quarks[0].phi)
+#                    dR2=deltaR(j.eta,j.phi,quarks[1].eta,quarks[1].phi)
+#                    print('delta R for fj',i,' ',dR1,dR2,j.pt,j.eta,max([dR1,dR2]))
+#                dRJ.append(max([dR1,dR2]))
+#            print("this is the list",dRJ)
+#            self.out.fillBranch('ak8%sMgt45_mcTruth'%(self.massVar),dRJ)
+
+#        if self.isMC:        self.out.branch('ak8%sMgt45_mcTruth'%(self.massVar), "F", lenVar="nak8%sMgt45"%self.massVar)

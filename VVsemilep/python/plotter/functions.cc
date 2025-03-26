@@ -457,11 +457,13 @@ float triggerSF_ttH(int pdgid1, float pt1, int pdgid2, float pt2, int nlep, int 
 
 }
 
-
-
 //##########################################
-float pNetSFMD_WvsQCD(float pt, int year, int suberaid, float WP=1.0,int var=0){
+float pNetSFMD_WvsQCD(float pt, int year, int suberaid, float WP=1.0,int var=0,float mcT=0.0){
   //WP 0.5/1.0/2.5% of mistag rate
+  if (mcT > 0.81){
+    return 1.0;
+  }
+  else {
   TString yearString= TString::Format("%d",year) + (( year == 2016 && suberaid == 0) ? "APV" : "");
   if (yearString == "2018"){
 
@@ -635,7 +637,7 @@ float pNetSFMD_WvsQCD(float pt, int year, int suberaid, float WP=1.0,int var=0){
 
   //need to implement 2016 
 
-
+  }
 }//pNet
 
 

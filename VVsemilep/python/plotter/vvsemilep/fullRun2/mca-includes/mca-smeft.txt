@@ -11,10 +11,6 @@ WW_sm_lin_quad_cW+ :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[4];
 WZ_sm_lin_quad_cW+ :   WZToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[4]; FillColor=ROOT.TColor.GetColor("\#832db6"),   Label="WZ_cW",LineStyle=ROOT.kDashed 
 
 
-#WW_cW_plus 		   :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[4]; FillColor=ROOT.TColor.GetColor("\#832db6"),  Label="c_{W+}^{WW}"  ,LineStyle=ROOT.kDotted
-#WW_cW_minus 		   :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[3]; FillColor=ROOT.TColor.GetColor("\#832db6"),  Label="c_{W-}^{WW}"  ,LineStyle=ROOT.kDashed
-#WW_clu_plus      	   :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[42];FillColor=ROOT.TColor.GetColor("\#94a4a2"),  Label="c_{lu+}^{WW}" ,LineStyle=ROOT.kDotted
-#WW_clu_minus      	   :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[41];FillColor=ROOT.TColor.GetColor("\#94a4a2"),  Label="c_{lu-}^{WW}" ,LineStyle=ROOT.kDashed
 
 
 WW_clu+      	         :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[42]; 			        FillColor=ROOT.TColor.GetColor("\#94a4a2"),  Label="c_{lu}^{WW}"  ,LineStyle=ROOT.kDotted
@@ -27,12 +23,16 @@ WW_sm_lin_quad_clu+      :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeig
 WZ_sm_lin_quad_clu+      :   WZToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[42]; FillColor=ROOT.TColor.GetColor("\#94a4a2"),    Label="c_{lu}^{WZ}",LineStyle=ROOT.kDashed 
 
 
-WW_sm_lin_quad_cHWB+       :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[6]; FillColor=ROOT.kViolet+6,   Label="WW_cHWB",LineStyle=ROOT.kDotted
-WZ_sm_lin_quad_cHWB+       :   WZToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[6]; FillColor=ROOT.kViolet+6,   Label="WZ_cHWB",LineStyle=ROOT.kDashed 
-WW_lin_cHWB+   		   :   WWToLNujj_01j_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[6]-LHEReweightingWeight[5]); FillColor=ROOT.kViolet+6,   Label="WW_cHWB(I.)" 
-WZ_lin_cHWB+   		   :   WZToLNujj_01j_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[6]-LHEReweightingWeight[5]); FillColor=ROOT.kViolet+6,  Label="WZ_cHWB(I.)",LineStyle=ROOT.kDashed 
-WW_quad_cHWB+  		   :   WWToLNujj_01j_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[6]+LHEReweightingWeight[5])-LHEReweightingWeight[0]; FillColor=ROOT.kViolet+6,    Label="WW_cHWB(Q.)" 
-WZ_quad_cHWB+  		   :   WZToLNujj_01j_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[6]+LHEReweightingWeight[5])-LHEReweightingWeight[0]; FillColor=ROOT.kViolet+6,   Label="WZ_cHWB(Q.)",LineStyle=ROOT.kDashed 
+
+WW_cHWB+    		 :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[6]; FillColor=ROOT.kViolet+6,   Label="WW_cHWB",LineStyle=ROOT.kDotted
+WZ_cHWB+   		 :   WZToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[6]; FillColor=ROOT.kViolet+6,   Label="WZ_cHWB",LineStyle=ROOT.kDashed 
+
+WW_sm_lin_quad_cHWB+    :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[6]; FillColor=ROOT.kViolet+6,   Label="WW_cHWB",LineStyle=ROOT.kDotted
+WZ_sm_lin_quad_cHWB+    :   WZToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[6]; FillColor=ROOT.kViolet+6,   Label="WZ_cHWB",LineStyle=ROOT.kDashed 
+WW_lin_cHWB+   		:   WWToLNujj_01j_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[6]-LHEReweightingWeight[5]); FillColor=ROOT.kViolet+6,   Label="WW_cHWB(I.)" 
+WZ_lin_cHWB+   		:   WZToLNujj_01j_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[6]-LHEReweightingWeight[5]); FillColor=ROOT.kViolet+6,  Label="WZ_cHWB(I.)",LineStyle=ROOT.kDashed 
+WW_quad_cHWB+  		:   WWToLNujj_01j_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[6]+LHEReweightingWeight[5])-LHEReweightingWeight[0]; FillColor=ROOT.kViolet+6,    Label="WW_cHWB(Q.)" 
+WZ_quad_cHWB+  		:   WZToLNujj_01j_SMEFT_LO  : xsec : 0.5*(LHEReweightingWeight[6]+LHEReweightingWeight[5])-LHEReweightingWeight[0]; FillColor=ROOT.kViolet+6,   Label="WZ_cHWB(Q.)",LineStyle=ROOT.kDashed 
 
 WW_sm_lin_quad_cHD+      :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[12]; FillColor=ROOT.kMagenta,   Label="WW_cHD"  ,LineStyle=ROOT.kDotted
 WZ_sm_lin_quad_cHD+      :   WZToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[12]; FillColor=ROOT.kMagenta,   Label="WZ_cHD",LineStyle=ROOT.kDashed 

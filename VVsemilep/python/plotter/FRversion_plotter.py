@@ -63,7 +63,7 @@ def makePlot(CR,FS,yr,logy):
         hist_el_temp = filetoread.Get("shapes_{fit}/{chan}_{FS}_{CR}_{yr}/{p}".format(FS=FS,CR=CR,yr=yr,fit=fit,p=proc,chan=chan));   
         if proc != "data":  hist=hist_el_temp.Clone(proc);
         yvals=[];yerrs=[];
-        print('input',hist.GetNbinsX())
+        #print('input',hist.GetNbinsX())
         for i in range(1,hist.GetNbinsX()+1):
 
             if not (hist_el_temp.InheritsFrom(ROOT.TH1.Class())):
@@ -72,7 +72,7 @@ def makePlot(CR,FS,yr,logy):
                 yvals.append(y1);yerrs.append(math.sqrt(y1))
             else:
                 yvals.append(hist_el_temp.GetBinContent(i)); yerrs.append(hist_el_temp.GetBinError(i));
-        print("stored",len(yvals))
+        #print("stored",len(yvals),yvals)
         for i in range(len(yvals)):
             hist.SetBinContent(i+1,yvals[i]);                   hist.SetBinError(i+1,yerrs[i])
         hist.SetName(proc);hist.SetDirectory(0)
@@ -94,6 +94,8 @@ def makePlot(CR,FS,yr,logy):
 
     ROOT.gROOT.SetBatch()
     ROOT.gStyle.SetOptStat(0)
+    fout=ROOT.TFile("/eos/user/a/anmehta/www/VVsemilep/postfitplots/output_{CR}_{yr}_{FS}_{fit}{log}.root".format(yr=yr,fit=fit,CR=CR,FS=FS,log='_log' if logy else ''),"recreate");
+    fout.cd();
     Canv = ROOT.TCanvas("Canv_{yr}_{CR}_{FS}".format(yr=yr,FS=FS,CR=CR),"",800,600)
     Canv.Range(0,0,1,1);   Canv.SetFillColor(0);   Canv.SetBorderMode(0);  
     Canv.SetTickx(1);   Canv.SetTicky(1);   Canv.SetLeftMargin(0.12);   Canv.SetRightMargin(0.05);
@@ -240,7 +242,8 @@ def makePlot(CR,FS,yr,logy):
     Canv.Print("/eos/user/a/anmehta/www/VVsemilep/postfitplots/postfit_{CR}_{yr}_{FS}_{fit}{log}.png".format(yr=yr,fit=fit,CR=CR,FS=FS,log='_log' if logy else ''))
     Canv.Close();
     filetoread.Close();
-
+    fout.Write()
+    fout.Close()
     return True
 
 

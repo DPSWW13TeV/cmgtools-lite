@@ -4,18 +4,18 @@ procs={0:['WJets','\Wj'],1:['tt',"\\ttbar"],
        7:['data','data']}
 nice_names={'wjCR_incl':'\\WJ control region', 'topCR_incl' :'\\ttbar control region', 'sig_incl': 'signal region', 'el': 'electron','mu':'muon'}
 
-finalState=['mu'] #,'el']#,'ll_noee']
+finalState=['mu','el']#,'ll_noee']
 classifier='mWV' 
 years=['2016APV','2016','2017','2018','fullRun2']
-dateStamp="2025-02-09"
+dateStamp="2025-03-07"
 info={}
-pf="_eft_withoutTagger"
+pf="_all_eft"
 
 txtfilename = "{od}/table.txt".format(od=os.getcwd())
 txtfile = open(txtfilename,'w')
 fmtstring = "%-25s & %15s & %15s & %15s & %15s  & %15s \\\\"
 
-for reg in ["wjCR_incl"]: #"topCR_incl","sig_incl"]: #
+for reg in ["wjCR_incl","topCR_incl","sig_incl"]: #
     for lep in finalState:
         for yr in years:
             baseDir="/eos/user/a/anmehta/www/VVsemilep/{yr}/{reg}/{dateStamp}_boosted_{lep}_{breg}{pf}/".format(pf=pf,yr=yr,lep=lep,breg=reg,reg=reg.split("_")[0],dateStamp=dateStamp)
@@ -27,8 +27,12 @@ for reg in ["wjCR_incl"]: #"topCR_incl","sig_incl"]: #
                     row=""
                 else:
                     hist=classifier+"_"+pName[0]
-                    #print(hist)
+                    
                     h1=fOpen.Get(hist)
+                    if not h1: 
+                        hist=classifier+"_logy_"+pName[0]
+                        h1=fOpen.Get(hist)
+                    print(h1.GetName())
                     h1_err = ROOT.Double(0.)
                     h1_int = h1.IntegralAndError(0, h1.GetNbinsX() + 1, h1_err)
                     row = "$%.2f\pm%.2f$" % (h1_int,h1_err)

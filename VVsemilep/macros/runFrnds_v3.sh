@@ -61,18 +61,18 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUncT/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All --de .*Run.* "
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All --de .*Run.* "  #--dm .*SMEFT.* "
 	;;
 
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}2_recl_allvars/ ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root  --de .*Run.* "
+	basecmd="${BCORE}2_recl_allvars/ ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root --dm .*SMEFT.* " # --de .*Run.* "
 	;;
 
 goodfj)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --de .*Run.* " 
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root  --dm .*SMEFT.* " #--de .*Run.* " 
 	;;
 
 goodfjdata)
@@ -82,17 +82,18 @@ goodfjdata)
 
 trigsf)
 	echo "el trigger sfs"
-        basecmd="${BCORE}3_eltrigsf_v1  ${CMGT} trigSFs_el -F Friends ${Parent}/1_recl/{cname}_Friend.root  --de .*Run.* "
+        basecmd="${BCORE}3_eltrigsf_v1  ${CMGT} trigSFs_el -F Friends ${Parent}/1_recl/{cname}_Friend.root  --dm .*SMEFT.* " # --de .*Run.* "
 	;;
 
 wjet)
 	echo "wjet"
-	basecmd="${BCORE}/0_wjest_v6  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root --de .*Run.* "
+	basecmd="${BCORE}/0_wjest_v8  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  --de .*Run.* "
 	;;
+
 
 wjet_data)
 	echo "wjet data"
-	basecmd="${BCORE}/0_wjest_v6  ${CMGT} input_wjest_data  -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root   --dm .*Run.* "
+	basecmd="${BCORE}/0_wjest_v8 ${CMGT} input_wjest_data  -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root   --dm .*Run.* "
 	;;
 
 nnpdf)
@@ -107,7 +108,18 @@ skimwjet)
 
 top)
 	echo "top pT reweighting "
-	basecmd="${BCORE}2_toppT_rw  ${CMGT} topsf --dm TT.* "
+	basecmd="${BCORE}2_toppT_rw  ${CMGT} topsf  --dm TT.* "
+	;;
+
+
+mcT)
+	echo "ak8 gen matching "
+	basecmd="${BCORE}3_ak8mcT  ${CMGT} mctruth   -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  -d TTSemi_pow_part0 -c 0 -N 2000 "
+	;;
+
+HFT)
+	echo "ak8 gen matching "
+	basecmd="${BCORE}3_HFT  ${CMGT} HFP   -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  -d TTSemi_pow_part0 -c 0 -N 2000 "
 	;;
 
 genInfo)

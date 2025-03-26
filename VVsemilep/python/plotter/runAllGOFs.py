@@ -11,11 +11,11 @@ import ROOT, os, optparse, copy
 #datacards['2018' ] = 'dc_2021-12-23-SoBord_sqV3m3lm4l_ll_noee_2018_cs_combined.txt'
 
 
-def makeAllToys(periods, crs,algos):
+def makeAllToys(periods, crs,algos,op):
 
     for period in periods:
         for cr in crs:
-            dc='dc_2025-02-11_onelep_{period}_{cr}.txt'.format(period=period,cr=cr)
+            dc='dc_2025-03-25_onelep_{period}{op}_{cr}.txt'.format(period=period,cr=cr,op=op)
             outdir = 'toystudies_'+cr+"_"+period
             os.system('mkdir -p {od}'.format(od=outdir))
     
@@ -32,7 +32,7 @@ def makeAllToys(periods, crs,algos):
         
                 allfiles = ' '.join(['higgs*.mH120.'+str(ns)+'.root' for ns in rr])
                 print 'this is allfiles', allfiles
-                haddcmd = 'hadd {od}/oldcombine_GOF_1000toys_{algo}.root {fs}'.format(algo=algo, fs = allfiles, od=outdir)
+                haddcmd = 'hadd -f {od}/oldcombine_GOF_1000toys_{algo}.root {fs}'.format(algo=algo, fs = allfiles, od=outdir)
                 os.system(haddcmd)
             
                 os.system('mkdir -p {od}/toys_{algo}'.format(algo=algo,od=outdir))
@@ -124,6 +124,7 @@ if __name__ == '__main__':
     parser.add_option('--njobs'  , type=int, default=20   , help='number of jobs, default %default')
     parser.add_option('--nperj'  , type=int, default=50   , help='number of toys per job. default %default')
     parser.add_option('--cr' ,     type=str, default='all', help='specify a control region either wj/top/all. default %default')
+    parser.add_option('--op' ,     type=str, default='cw',  help=' operator string')
     ##parser.add_option('--outdir' , type=str, default='all', help='specify a certain period, either 2016,2017,super,all. default %default')
     (options, args) = parser.parse_args()
 
@@ -132,11 +133,11 @@ if __name__ == '__main__':
 
 
     if options.period == 'all': 
-        periods = ['fullRun2', '2017', '2016','2018']
+        periods = ['fullRun2', '2017', '2016combo','2018']
     else:
         periods = options.period.split(',')
     if options.cr == 'all': 
-        crs = ['topCR','wjCR'] 
+        crs = ['CRonly'] #'topCR','wjCR'] 
     else:
         crs = options.cr.split(',')
 
@@ -146,7 +147,7 @@ if __name__ == '__main__':
         algos = options.algo.split(',')
 
     if options.doToys:
-        makeAllToys(periods, crs,algos)
+        makeAllToys(periods, crs,algos,options.op)
     
     if options.doPlots:
         makePlots(periods, crs,algos)

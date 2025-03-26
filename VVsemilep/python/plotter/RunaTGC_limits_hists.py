@@ -35,11 +35,14 @@ def combineCards(yr,FS,WC,pf,runOn="full",splitsig=True,vartop="mWV",varwj="mWV"
     cmd = 'combineCards.py   {sig} {topCR}  {wjCRpart} > {dc}'.format(dc=finalDC,sig=sigpart,topCR=topCRpart,wjCRpart=wjCRpart)
     print cmd
     os.system(cmd)
-    if "full" in runOn or "CRonly" in runOn: 
+    if "full" in runOn :
         dC = open(finalDC, 'a')
         dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
 norm_WJets_mu_{yr} rateParam mu*{yr}  WJets 1 [0,5]
 norm_WJets_el_{yr} rateParam el*{yr}  WJets 1 [0,5]'''.format(yr=yr))
+    elif  "CRonly" in runOn: 
+        dC = open(finalDC, 'a')
+        dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]'''.format(yr=yr))
         dC.close()
     return finalDC
 
@@ -77,24 +80,24 @@ if __name__ == '__main__':
 
     year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2025-02-11" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2025-03-25" #datetime.date.today().isoformat() #"2021-12-02" #
     pf_input=""
     pf_output=""
     doWhat=sys.argv[2]
     if "SM" in doWhat: 
-        for CR in ["wjCR","topCR"]: #,"CRonly"]: 
+        for CR in ["CRonly"]: #"wjCR","topCR",
             if year == "fullRun2":
-                dC18=combineCards("2018","onelep",'',pf_input,CR,True)
-                dC17=combineCards("2017","onelep",'',pf_input,CR,True)
-                dC16=combineCards("2016","onelep",'',pf_input,CR,True)
-                dC16_apv=combineCards("2016APV","onelep",'',pf_input,CR,True)
-                superdC='dc_{date}_onelep_{yr}_{CR}.txt'.format(CR=CR,date=date,yr=year)
+                dC18=combineCards("2018","onelep",'cw',pf_input,CR,True)
+                dC17=combineCards("2017","onelep",'cw',pf_input,CR,True)
+                dC16=combineCards("2016","onelep",'cw',pf_input,CR,True)
+                dC16_apv=combineCards("2016APV","onelep",'cw',pf_input,CR,True)
+                superdC='dc_{date}_onelep_{yr}{op}_{CR}.txt'.format(CR=CR,date=date,yr=year,op='cw')
                 cmd='combineCards.py {yr1} {yr2} {yr3} {yr4} > {dc}'.format(dc=superdC,yr1=dC16,yr2=dC16_apv,yr3=dC17,yr4=dC18)
                 os.system(cmd)
             elif year  == "2016combo":
-                dC16=combineCards("2016","onelep",'',pf_input,CR,True)
-                dC16_apv=combineCards("2016APV","onelep",'',pf_input,CR,True)
-                superdC='dc_{date}_onelep_{yr}_{CR}.txt'.format(CR=CR,date=date,yr=year)
+                dC16=combineCards("2016","onelep",'cw',pf_input,CR,True)
+                dC16_apv=combineCards("2016APV","onelep",'cw',pf_input,CR,True)
+                superdC='dc_{date}_onelep_{yr}{op}_{CR}.txt'.format(op='cw',CR=CR,date=date,yr=year)
                 cmd='combineCards.py {yr1} {yr2} > {dc}'.format(dc=superdC,yr1=dC16,yr2=dC16_apv)
                 os.system(cmd)
             else:
