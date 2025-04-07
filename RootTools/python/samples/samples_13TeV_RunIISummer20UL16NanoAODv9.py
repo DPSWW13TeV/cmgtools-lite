@@ -202,10 +202,15 @@ WZTo1L1Nu2Q           = kreator.makeMCComponent("WZTo1L1Nu2Q","/WZTo1L1Nu2Q_4f_T
 WWTo1L1Nu2Q           = kreator.makeMCComponent("WWTo1L1Nu2Q","/WWTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM", "CMS", ".*root",5.090e+01,fracNegWeights=2.011e-01)
 
 
+basepath_smeft_v1="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_Mar2025/2016/"
+WWToLNuJJ_01j_SMEFT_LO=kreator.makeMCComponentSimple('WWToLNuJJ_01j_SMEFT_LO',"/WWToLNuJJ_01j_SMEFT_LO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,86.52,prefix='root://xrootd-cms.infn.it/')
+WZToLNuJJ_01j_SMEFT_LO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_SMEFT_LO',"/WZToLNuJJ_01j_SMEFT_LO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,23.82,prefix='root://xrootd-cms.infn.it/')
+WWToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO',"/WWToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,59.16,prefix='root://xrootd-cms.infn.it/')
+WZToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO',"/WZToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,10.5,prefix='root://xrootd-cms.infn.it/')
 
 
 
-DiBosons = [ZZTo2Q2L,WZTo1L1Nu2Q,WWTo1L1Nu2Q,WWToLNujj_01j_SMEFT_LO,WZToLNujj_01j_SMEFT_LO,
+DiBosons = [ZZTo2Q2L,WZTo1L1Nu2Q,WWTo1L1Nu2Q,WWToLNujj_01j_SMEFT_LO,WZToLNujj_01j_SMEFT_LO, WWToLNuJJ_01j_SMEFT_LO,WZToLNuJJ_01j_SMEFT_LO,WWToLNuJJ_01j_LO_EWdim6NLO,WZToLNuJJ_01j_LO_EWdim6NLO,
             WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
             WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
             WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800,

@@ -74,7 +74,7 @@ if analysis == "main":
         #"WplusH","WminusH","ZH.*","ZZTo2Q2L","WZTo1L1Nu2Q","WWTo1L1Nu2Q",
         #"TTSemi.*","T_.*","TT_mtt.*","WJetsToLNu_Pt.*", #"WJetsToLNu_HT.*",
         #"W.*Jtotaunu_PM","W.*Jtomunu_PM" #,"WJetsToLNu_Pt.*","WJetsToLNu_.*J",
-        ".*SMEFT_LO.*", 
+        "WZToLNuJJ_01j_SMEFT_LO","WWToLNuJJ_01j_SMEFT_LO", ".*EWdim6NLO",
         #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf","WWTo1L1Nu2Q"
 
      ])

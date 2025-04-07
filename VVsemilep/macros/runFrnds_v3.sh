@@ -52,7 +52,7 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --dm .*SMEFT.* " #--de .*Run.* "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --dm .*JJ.*LO.* " #--de .*Run.* "
 	;;
 
 
@@ -61,18 +61,18 @@ recldata)
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All --de .*Run.* "  #--dm .*SMEFT.* "
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All  --dm .*JJ.*LO.* " #--de .*Run.* "  #--dm .*SMEFT.* "
 	;;
 
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}2_recl_allvars/ ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root --dm .*SMEFT.* " # --de .*Run.* "
+	basecmd="${BCORE}2_recl_allvars/ ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root --dm .*JJ.*LO.*  " # --de .*Run.* "
 	;;
 
 goodfj)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root  --dm .*SMEFT.* " #--de .*Run.* " 
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --dm .*JJ.*LO.*  " #--de .*Run.* " 
 	;;
 
 goodfjdata)
@@ -82,12 +82,12 @@ goodfjdata)
 
 trigsf)
 	echo "el trigger sfs"
-        basecmd="${BCORE}3_eltrigsf_v1  ${CMGT} trigSFs_el -F Friends ${Parent}/1_recl/{cname}_Friend.root  --dm .*SMEFT.* " # --de .*Run.* "
+        basecmd="${BCORE}3_eltrigsf_v1  ${CMGT} trigSFs_el -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*JJ.*LO.*  " # --de .*Run.* "
 	;;
 
 wjet)
 	echo "wjet"
-	basecmd="${BCORE}/0_wjest_v8  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  --de .*Run.* "
+	basecmd="${BCORE}/0_wjest_v8  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  --dm .*JJ.*LO.* " #--de .*Run.* "
 	;;
 
 
@@ -96,6 +96,12 @@ wjet_data)
 	basecmd="${BCORE}/0_wjest_v8 ${CMGT} input_wjest_data  -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root   --dm .*Run.* "
 	;;
 
+corr)
+	echo "sm to bsm corrections"
+	basecmd="${BCORE}/0_corr_bsm  ${CMGT} correction --FMC Friends ${Parent}/0_wjest_v8/{cname}_Friend.root  --dm .*JJ.*LO.* " #--de .*Run.* "
+	;;
+
+	
 nnpdf)
 	echo "npdf"
 	basecmd="${BCORE}nnpdf_rms  ${CMGT} rms_val --de .*Run.* "
@@ -105,6 +111,7 @@ skimwjet)
 	echo "wj skim"
 	basecmd="${BCORE}/wjest_skim  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root "
 	;;
+
 
 top)
 	echo "top pT reweighting "

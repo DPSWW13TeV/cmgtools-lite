@@ -5,13 +5,13 @@ skimmedTrees='NanoTrees_v9_vvsemilep_13112024_skimmed'
 Friends_recl_unskimmed='1_recl'
 
 [ ! -d "$skimmedTrees" ] && mkdir -p "$skimmedTrees"
-years=("2018" "2016")
+years=("2017") # "2016")
 frnds=("4_scalefactors" "0_wjest_v5" "1_btag_SFs_fixedWP_v1" "3_ak8_sdm45" "2_jmeUnc" "2_recl_allvars" ) #"2_toppT_rw")
 
 for yr in "${years[@]}"
 do
     echo "running skimming for $yr"
-    python skimTreesNew.py mca-skim-${yr}_v1.txt  vvsemilep/fullRun2/skim_1l_2los_FO.txt ${baseDir}/${skimmedTrees}/${yr}/ -P ${baseDir}/${Trees}/${yr} --Fs ${baseDir}/${Trees}/${yr}/${Friends_recl_unskimmed}  --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  -j 2  --tree NanoAOD --skim-friends --skip-existing
+    python skimTreesNew.py mca-skim-${yr}.txt  vvsemilep/fullRun2/skim_1l_2los_FO.txt ${baseDir}/${skimmedTrees}/${yr}/ -P ${baseDir}/${Trees}/${yr} --Fs ${baseDir}/${Trees}/${yr}/${Friends_recl_unskimmed}  --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  -j 2  --tree NanoAOD --skim-friends --skip-existing
 
 #    for frnd in "${frnds[@]}"
 #    do

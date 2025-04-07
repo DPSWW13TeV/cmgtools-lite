@@ -387,6 +387,9 @@ bTagSFs = lambda : BtagSFs("JetSel_Recl",
 from CMGTools.VVsemilep.tools.nanoAOD.triggerScaleFactors_el import triggerScaleFactors_el
 trigSFs_el = lambda : triggerScaleFactors_el()
 
+from CMGTools.VVsemilep.tools.nanoAOD.BSMtoSM_ratio_save import BSMtoSM_ratio_save
+correction = lambda : BSMtoSM_ratio_save()
+
 scaleFactorSequence_2016APV = [btagSF2016APV_dj,bTagSFs] 
 scaleFactorSequence_2016    = [btagSF2016_dj,bTagSFs] 
 scaleFactorSequence_2017    = [btagSF2017_dj,bTagSFs] 
