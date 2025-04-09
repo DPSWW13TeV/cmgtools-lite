@@ -16,6 +16,12 @@ $alias : PNET       : $top|$vvsm|$aTGC|$Others|$VH|
 $alias : bkg        : $top|$wj|$VH|$vvsm|$Others
 $alias : sig        : $wwaTGC|$wzaTGC
 
+$alias : eftww	    : WW.*cw.*|WW.*cb.*|WW.*c3w.* 
+$alias : eftwz	    : WZ.*cw.*|WZ.*cb.*|WZ.*c3w.* 
+$alias : smeftww    : WW.*cW.*|WW.*cl.*|WW.*cH.* 
+$alias : smeftwz    : WZ.*cW.*|WZ.*cl.*|WZ.*cH.* 
+
+
 ### Uncertainties
 
 # lumi from https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#LumiComb
@@ -109,6 +115,24 @@ CMS18_L1PreFiring : $AllFromMC : .* : templateAsymm; AddWeights=['L1PreFiringWei
 CMS_pileup_2016 : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight'], year="2016\,2016APV"
 CMS_pileup_2017 : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight'],	year="2017"
 CMS_pileup_2018 : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight'],	year="2018"
+
+signal_shape_WW	: $eftww    : .* : templateAsymm; AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2018"
+signal_shape_WW	: $eftww    : .* : templateAsymm; AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2017"
+signal_shape_WW	: $eftww    : .* : templateAsymm; AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2016"
+signal_shape_WW	: $eftww    : .* : templateAsymm; AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2016APV"
+signal_shape_WZ	: $eftwz    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2018"
+signal_shape_WZ	: $eftwz    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2017"
+signal_shape_WZ	: $eftwz    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2016"
+signal_shape_WZ	: $eftwz    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2016APV"
+
+signal_shape_WW	: $smeftww    : .* : templateAsymm; AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2018"
+signal_shape_WW	: $smeftww    : .* : templateAsymm; AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2017"
+signal_shape_WW	: $smeftww    : .* : templateAsymm; AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2016"
+signal_shape_WW	: $smeftww    : .* : templateAsymm; AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2016APV"
+signal_shape_WZ	: $smeftwz    : .* : templateAsymm; AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2018"
+signal_shape_WZ	: $smeftwz    : .* : templateAsymm; AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2017"
+signal_shape_WZ	: $smeftwz    : .* : templateAsymm; AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2016"
+signal_shape_WZ	: $smeftwz    : .* : templateAsymm; AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2016APV"
 
 
 

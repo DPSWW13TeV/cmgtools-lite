@@ -6,7 +6,7 @@ ROOT.gStyle.SetOptStat(0)
 ROOT.gStyle.SetOptFit(1111)
 
 def makePlot(vname,yr,ff):
-    inFile=ROOT.TFile.Open("/eos/user/a/anmehta/www/VVsemilep/%s/boosted/2025-04-04_WZ_nostack//mWV_logy_AND_FatJet1_pt_logy_AND_FatJet1_sDrop_mass_logy.root"%yr)
+    inFile=ROOT.TFile.Open("/eos/user/a/anmehta/www/VVsemilep/%s/boosted/2025-04-08_WZ_nostack//mWV_logy_AND_FatJet1_pt_logy_AND_FatJet1_sDrop_mass_logy.root"%yr)
     outFile=ROOT.TFile("/eos/user/a/anmehta/www/VVsemilep/res_%s_%s_%s.root"%(yr,vname,ff),"recreate")
     for sm in ["WZ","WW"]:
         for bsm in ["eft","smeft"]:
@@ -14,12 +14,17 @@ def makePlot(vname,yr,ff):
             canv=ROOT.TCanvas("canv", "%s_%s_%s"%(vname,sm,bsm));
             print("this is what i m looking for","%s_%s"%(vname,sm))
             h_sm=inFile.Get("%s_%s"%(vname,sm))
-            h_eft=inFile.Get("%s_%s_%s"%(vname,sm,bsm))
-            h_eft.Divide(h_sm)
-            h1=h_eft.Clone("ratio_%s_%s_%s_%s"%(vname,sm,bsm,yr));
+            if bsm == "smeft":
+                h_eft=inFile.Get("%s_%s_%s"%(vname,sm,bsm))
+            else:
+                h_eft=inFile.Get("%s_%s_sm"%(vname,sm)) #eftdim6 are labeled as WW_sm in the files
+            print("integrals",h_sm.Integral(),"\t ",bsm,"\t",h_eft.Integral())
+            ratio=h_sm.Clone("ratio")
+            ratio.Divide(h_eft)
+            h1=ratio.Clone("ratio_%s_%s_%s_%s"%(vname,sm,bsm,yr));
             h1.Fit(ff);
             h1.GetXaxis().SetTitle("mWV");
-            h1.GetYaxis().SetTitle("eft/sm");
+            h1.GetYaxis().SetTitle("sm/eft");
             #rtrp1 = ROOT.TRatioPlot(h1);
             #rp1.Draw();
             #rp1.GetLowerRefYaxis().SetTitle("sm/eft");

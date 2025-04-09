@@ -10,7 +10,7 @@ class BSMtoSM_ratio_save(Module):
     def __init__(self):
         self.ratio     = {}
 
-        for year in '2017,2018'.split(','): #2016APV,2016,
+        for year in '2017,2018,2016APV,2016'.split(','): #
             #self.triggerSF['%s'%year]=loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/VVsemilep/data/triggerSF/triggerSF_%s_20200422.root'%year,'EGamma_SF2D')
             self.ratio['WW_eft_%s'%year]=loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/VVsemilep/data/BSMtoSMratios/res_%s_mWV_logy_expo.root'%year,'ratio_mWV_logy_WW_eft_%s'%year)
             self.ratio['WW_smeft_%s'%year]=loadHisto(os.environ['CMSSW_BASE'] + '/src/CMGTools/VVsemilep/data/BSMtoSMratios/res_%s_mWV_logy_expo.root'%year,'ratio_mWV_logy_WW_smeft_%s'%year)

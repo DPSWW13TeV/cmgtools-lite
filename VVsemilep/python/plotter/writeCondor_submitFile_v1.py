@@ -1,11 +1,11 @@
 import os,string,sys
 from plots_VVsemilep import *
-allvars= leptons #['FatJet1_pNetMD_Wtagscore']##theWVultimateset_log + theWVultimateset ##++leptons fitCR #mWVs #missing #fitCR #+
+allvars= theWVultimateset_log + theWVultimateset #['FatJet1_pNetMD_Wtagscore']##theWVultimateset_log + theWVultimateset ##++leptons fitCR #mWVs #missing #fitCR #+
 doWhat=sys.argv[1] #cards or plots
 
 #year=sys.argv[2]
 pf="" #withoutTaggernHEEP"
-years=["2018","2017","2016","2016APV","fullRun2"] #,"all"] 
+years=["2018","2017","2016","2016APV"] #,"fullRun2"] #,"all"] 
 #years.append(year)
 
 allfavs=["mu","el","onelep"]
@@ -32,14 +32,14 @@ lepsel={'topCR' : [allfavs],
         'wjCR_hi'     : [ll,fitvar_bkg],
 }
 
-list_ops={'smeft':['cW','clu','cWMclu','cHWBMcHD'],'eft':['cw','c3w','cb','c3wMcw','c3wMcb','cwMcb']} #,'cnb','c3wMcnb','cwMcnb']}
+list_ops={'smeft':['cW','clu','cWtil','cHWB','cHD','cHj3','cHj1','clj1','cWMclu','cHWBMcHD','cHDMcW','cHWBMcW'],'eft':['cw','c3w','cb','Odd_cw','Odd_c3w','c3wMcw','c3wMcb','cwMcb']} #,'cnb','c3wMcnb','cwMcnb']}
 
 #ops=['all'] #'cnb','c3wMcnb','cwMcnb'] #'cW','clu','cw','c3w','cb','c3wMcw','c3wMcb','cwMcb','']#,'']#,'']#'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
 
 
-nT=False 
+nT=True
 
-smeft=False
+smeft=True
 basis="smeft" if smeft else ''
 fName='submitFile_%s%s%s.condor'%(doWhat,basis,'nT' if nT else '')
 tmp_condor = open('jobs/%s'%fName, 'w')
@@ -72,7 +72,7 @@ elif "plots" in doWhat and nT:
    configs=['wjCR_incl']
 elif "cards" in doWhat:
    nT=False
-   configs=["wjCR_lo","topCR_incl","wjCR_hi"] #,"sig_lo","sig_hi"] #] #,"sig_incl"
+   configs=["wjCR_lo","topCR_incl","wjCR_hi","sig_lo","sig_hi"] #] #,"sig_incl"
    if "fullRun2" in years: 
       years.remove('fullRun2');
 else: configs=[]

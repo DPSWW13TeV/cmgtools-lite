@@ -72,7 +72,7 @@ recl_allvars)
 
 goodfj)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --dm .*JJ.*LO.*  " #--de .*Run.* " 
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root " #--dm .*JJ.*LO.*  " #--de .*Run.* " 
 	;;
 
 goodfjdata)
@@ -87,7 +87,7 @@ trigsf)
 
 wjet)
 	echo "wjet"
-	basecmd="${BCORE}/0_wjest_v8  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  --dm .*JJ.*LO.* " #--de .*Run.* "
+	basecmd="${BCORE}/0_wjest_v8  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  -d WZToLNuJJ_01j_SMEFT_LO " #--dm .*JJ.*LO.* " #--de .*Run.* "
 	;;
 
 
