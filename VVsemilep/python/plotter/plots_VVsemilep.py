@@ -242,11 +242,10 @@ def runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsys
 def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selection,postfix,plotvars,cutflow,doWJ,notagger,smeft,fitCR,postfitCR,fitCRwithcomb,WCs,varTofit,acP,acC):
     trees        = [baseDir+'{here}'.format(here=year  if year not in ['all','fullRun2'] else '')]
     fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
-    showratio    = False
+    showratio    = True
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep_eft.txt' if not smeft else 'vvsemilep/fullRun2/mca-vvsemilep_smeft.txt'
     SMprocs      = ['WW_sm','WZ_sm','tt','WJets','singletop','data','Others']#,'QCD'] ] #,'SM_WW','SM_WZ']#
-    vetoPlots    = [] #'WZ_sm_lin_quad_cb','WZ_quad_cb','WZ_cb','WZ_sm_lin_quad_clu','WZ_clu','WZ_quad_clu'] #'WW_sm_lin_quad_c3w','WZ_sm_lin_quad_c3w',
     morePs       = ['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
     mixedPs      = ['WW_sm_lin_quad_mixed_','WZ_sm_lin_quad_mixed_']
     mixedOps     = []
@@ -272,7 +271,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         for mop in mixedOps:
             Moreprocs+=[s + mop for s in mixedPs]
         for op in  singleOps:
-            MMoreprocs+=[s + op for s in ['WW_sm_lin_quad_','WZ_sm_lin_quad_'] if str(s+op) not in vetoPlots]
+            MMoreprocs+=[s + op for s in ['WW_sm_lin_quad_','WZ_sm_lin_quad_'] ] #if str(s+op) not in vetoPlots]
 
     processes=SMprocs+Moreprocs+MMoreprocs #all set for plotting 
     print(processes)
@@ -313,10 +312,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                 enable.append(LF); 
                 enable.append(pR)
                 #enable+=cuts_btagEff
-                if notagger:
-                    print("no tagger cut")
-                else:
-                    enable.append(FS);
+                if not notagger:                    enable.append(FS);
                 if 'top' not in pR: enable.append('bVeto');
                 anything = "  --binname %s "%binName ##--pseudoData all, 
                 extraopts+= anything
@@ -356,7 +352,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                                 binNamecards=binName+"_"+mop+"_"+year
                                 MoreMprocs=[s + mop for s in mixedPs]
                                 for op in singleOps:
-                                    singleprocs+=[s + op for s in morePs if s not in vetoPlots if len(op) > 0]
+                                    singleprocs+=[s + op for s in morePs  if len(op) > 0]
                                 processes=SMprocs+singleprocs+MoreMprocs
                                 print('for cards',processes)
                                 extraoptscards= ' --binname {bnc}  {more}'.format(more=add_set, bnc=binNamecards)
@@ -364,7 +360,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                                 runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,extraoptscards,invert)
                         else: #look for single ops only if mixed ops are not there
                             for op in singleOps:
-                                Moreprocs=[s + op for s in morePs if s not in vetoPlots if len(op) > 0]                        
+                                Moreprocs=[s + op for s in morePs  if len(op) > 0]                        
                                 binNamecards=binName+"_"+op+"_"+year
                                 processes=SMprocs+Moreprocs
                                 print('to be used for op',op,processes)
@@ -418,42 +414,43 @@ def alphaRatio(year,lepflav,plotvars):
         runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, year, nLep,extraopts,invert,cutflow,bareNano,doWJ)
 
 ########################################
-def makesimpleplots(year,sel,useDressed=True):
+def makesimpleplots(year,sel,proc,smeft,useDressed=True):
     trees       = [baseDir+'{here}'.format(here=year  if year not in ['all','fullRun2']  else '')]
-    targetdir   = os.path.join(eos,'{yr}/{sel}/{date}{pf}_WZ_nostack/'.format(sel=sel[0].split('_')[0],yr=year,date=date,pf=('_dressed' if useDressed else '') ))
-    fmca        = 'vvsemilep/fullRun2/mca-includes/mca-mc.txt' #mca-vvsemilep_eft.txt' #mca-vvsemilep_eft.txt' #vvsemilep/fullRun2/mca-vvsemilep-gen.txt'
+    targetdir   = os.path.join(eos,'{yr}/{sel}/{date}{pf}_{proc}_{smeft}/'.format(smeft='smeft' if smeft else 'eft' ,proc=proc,sel=sel[0].split('_')[0],yr=year,date=date,pf=('_dressed' if useDressed else '') ))
+    fmca        = 'vvsemilep/fullRun2/mca-vvsemilep_{smeft}.txt'.format(smeft='smeft' if smeft else 'eft') 
     fsyst       = '' #vvsemilep/fullRun2/systsUnc.txt'
     fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #dressed.txt' #wjet.txt' #_dressed.txt'
     bareNano    = False
     cutFlow     = False
     doWJtypeplots = True
-    processes   = ['WW','WZ_eft','WZ_smeft','WZ_sm','WZ','WW_sm','WZ_sm','WW_eft','WW_smeft'] #,#'WW_cHDD','WW_clu','WW_cW','WW_cHWB','WZ_cHWB','WW_cHj3','WZ_cHj3'] #'WZ_quad_c3w','WZ_lin_c3w','WZ_lin_cw','WZ_quad_cw','WW_lin_c3w','WW_quad_c3w','WW_lin_cw','WW_quad_cw','WW_quad_cb','WW_lin_cb']
+    vetoplots=['WW_lin_cb','WW_lin_cHD','WW_lin_clu']
+    WCs=['cw','c3w','cb','Odd_c3w','Odd_cw']
+    if smeft:
+        WCs=['cW','clu','cWtil','cHWB','cHD','cHj3','cHj1','clj1']
+    procs=[]
+    procs.append(proc+'_sm')
+    terms=['_lin_','_quad_']
+    #processes=['WW_sm','WZ_sm']
 
+    for op in  WCs:
+        procs+=[proc + s + op for s in terms  ] 
+    processes= [x for x in procs if x not in vetoplots]
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
-#    for i in processes:
-#        x = re.search(".*cw.*", i) or re.search(".*cb.*", i) or re.search(".*c3w.*", i) or re.search("^W.*_sm", i) ##this assumes we are taking SM yields from the eft samples  
-#        if x :
-#            if 'sig' in sel  or 'SR' in sel:
-#                scalethem[i]=scaleEFTylds[year]['sig'][i.split('_')[0]]
-#            else:
-#                scalethem[i]=scaleEFTylds[year]['sb'][i.split('_')[0]]
-#            print('gonna scale',i,scalethem[i])
-                    
-    showratio=False
+    showratio=True
     applylepSFs=True
     nLep=1
     plotvars   = ratios #theWVultimateset + theWVultimateset_log #['mWV_logy'] #FatJet1_sDrop_mass_SR_logy']#'FatJet_eta_phi']#'mWV_copy','mWV_copy_logy']#basics #theWVultimateset #+theWVultimateset_log #+Wjets_ht #theWVultimateset+theWVultimateset_log#MConly 
     #['Mttbar','Mttbar_logy'] #
     disable   = []; 
-    #enable=['singlelep_dressed','ttbar','nQ']#'WhadpT','mWV','leadfatjet','fatjet','ptWlep','leadlep','etacutl1'] #'ttbar','nQ']
-    #enable=['ptWlep','mWV','fatjet']#'phi_var']#,'ptWlep']
     enable  = ['singlelep','ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','Mjuppercut','Mwvuppercut']#'singlelep']
     if len(sel) > 0:
         enable+=sel
     ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  2.5'
     spam    = ' --topSpamSize 1.0 --noCms '
-    legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
-    anything = ' --plotmode nostack  --showMCError ' # --showRatio  --ratioNums WZ_sm,SMEFT_WZ,WZ_eft --ratioDen SM_WZ   --ratioYLabel=aTGC#rightarrowSM/SM ' #--plotmode nostack   --ratioNums WW_sm --ratioDen SM_WW --ratioYLabel=aTGC#rightarrow SM/SM-excl '# ' #--plotmode nostack' #sm,sm_lin_quad_c3w,aTGC_WW_SM_incl --ratioDen WW  #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' 
+    legends = ' --legendFontSize 0.024 --legendBorder 0 --legendWidth  0.62  --legendColumns 4 '
+    #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
+    addNterms=','.join(x for x in processes)
+    anything = ' --plotmode norm   --showMCError  --showRatio  --ratioNums %s --ratioDen %s_sm   --ratioYLabel=aTGC#rightarrowSM/SM' %(addNterms,proc)  #--plotmode nostack   --ratioNums WW_sm --ratioDen SM_WW --ratioYLabel=aTGC#rightarrow SM/SM-excl '# ' #--plotmode nostack' #sm,sm_lin_quad_c3w,aTGC_WW_SM_incl --ratioDen WW  #--ratioDen py8_cuet_2017_bareNano --ratioNums py8_cp5_bareNano,newsim_bareNano,py8_cuet_bareNano,py8_cp5_2017_bareNano,py8_cp5_2018_bareNano,hw7_2017_bareNano,hw7_2018_bareNano,hwpp_bareNano  --ratioYLabel=py_cp5,hw,dSh/py_cuet' # --uf ' 
     extraopts = ratio + spam + legends + anything
     makeplots  = ['{}'.format(a)  for a in plotvars]
     runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, year, nLep,extraopts,invert,cutFlow,bareNano,doWJtypeplots) 
@@ -526,6 +523,8 @@ if __name__ == '__main__':
     parser.add_option('--fCRwC',dest='fCRwcomb', action='store_true', default=False , help='prepare datacards to fit CRs using combine, basically redefining signal')
     #parser.add_option('--wjD',dest='wjD', type='string', default="2023-12-19", help='date to pick WJ workspace from')
     parser.add_option('--WC',dest='WC', type='string' , default=[], action="append", help='consider terms in EFT Lag. corresponding to this aTGC operator tunred on c3w/cb/cw (for now relevant to make datacards)')
+
+    parser.add_option('--proc',dest='proc', type='string' , default='WW',  help='SM process')
     parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/%s/%s/www/VVsemilep/"%(os.environ['USER'][0],os.environ['USER']),help='save plots here')
     parser.add_option('--nT',dest='notagger', action='store_true', default=False , help='flag to turn off tagger requirement')
 
@@ -547,7 +546,7 @@ if __name__ == '__main__':
     if opts.alpha:
         alphaRatio(opts.year,opts.lepflav,opts.plotvar)
     if opts.simple:
-        makesimpleplots(opts.year,opts.sel,opts.genDressed)
+        makesimpleplots(opts.year,opts.sel,opts.proc,opts.smeft,opts.genDressed)
     if opts.trigchk:
         makesimpleplots_trigchk(opts.year,opts.sel)
 

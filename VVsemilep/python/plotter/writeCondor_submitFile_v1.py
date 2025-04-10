@@ -5,7 +5,7 @@ doWhat=sys.argv[1] #cards or plots
 
 #year=sys.argv[2]
 pf="" #withoutTaggernHEEP"
-years=["2018","2017","2016","2016APV"] #,"fullRun2"] #,"all"] 
+years=["2018","2017","2016","2016APV","fullRun2"] #,"all"] 
 #years.append(year)
 
 allfavs=["mu","el","onelep"]
@@ -37,9 +37,9 @@ list_ops={'smeft':['cW','clu','cWtil','cHWB','cHD','cHj3','cHj1','clj1','cWMclu'
 #ops=['all'] #'cnb','c3wMcnb','cwMcnb'] #'cW','clu','cw','c3w','cb','c3wMcw','c3wMcb','cwMcb','']#,'']#,'']#'cw','c3w','cb']#,'cb','cHDD','clu','cW']'all']#
 
 
-nT=True
+nT=False
 
-smeft=True
+smeft=False
 basis="smeft" if smeft else ''
 fName='submitFile_%s%s%s.condor'%(doWhat,basis,'nT' if nT else '')
 tmp_condor = open('jobs/%s'%fName, 'w')
