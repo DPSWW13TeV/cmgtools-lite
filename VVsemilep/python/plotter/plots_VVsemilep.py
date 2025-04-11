@@ -256,7 +256,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         if not smeft :
             WCs=['cw','c3w','cb','Odd_c3w','Odd_cw']
         else:
-             WCs=['cW','clu','cWtil','cHWB','cHD','cHj3','cHj1','clj1']
+            WCs=['cHDD', 'cW', 'cHWB', 'cHWBtil', 'cHWtil', 'cHd', 'cHe', 'cHj1', 'cHj3', 'cHl1', 'cHl3', 'cHu', 'cWtil', 'ced', 'ceu', 'cje', 'cld', 'clj1', 'clj3', 'cll1', 'clu']
 
     for op in WCs:
         if 'M' in op: 
@@ -368,7 +368,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                                 runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,extraoptscards,invert)
                     else:
                         binNamecards=binName+"_"+year                                                
-                        extraoptscards= ' --binname {bnc} {more} '.format(bnc=binNamecards,more=add_set)
+                        extraoptscards= ' --xu signal_shape_WW --xu signal_shape_WZ --binname {bnc} {more} '.format(bnc=binNamecards,more=add_set)
                         runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,extraoptscards,invert)
                                 
 
@@ -426,7 +426,7 @@ def makesimpleplots(year,sel,proc,smeft,useDressed=True):
     vetoplots=['WW_lin_cb','WW_lin_cHD','WW_lin_clu']
     WCs=['cw','c3w','cb','Odd_c3w','Odd_cw']
     if smeft:
-        WCs=['cW','clu','cWtil','cHWB','cHD','cHj3','cHj1','clj1']
+        WCs=['cHDD', 'cW', 'cHWB', 'cHWBtil', 'cHWtil', 'cHd', 'cHe', 'cHj1', 'cHj3', 'cHl1', 'cHl3', 'cHu', 'cWtil', 'ced', 'ceu', 'cje', 'cld', 'clj1', 'clj3', 'cll1', 'clu']
     procs=[]
     procs.append(proc+'_sm')
     terms=['_lin_','_quad_']

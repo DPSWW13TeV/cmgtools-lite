@@ -124,7 +124,6 @@ signal_shape_WZ	: $eftwz    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/co
 signal_shape_WZ	: $eftwz    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2017"
 signal_shape_WZ	: $eftwz    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2016"
 signal_shape_WZ	: $eftwz    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2016APV"
-
 signal_shape_WW	: $smeftww    : .* : templateAsymm; AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2018"
 signal_shape_WW	: $smeftww    : .* : templateAsymm; AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2017"
 signal_shape_WW	: $smeftww    : .* : templateAsymm; AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2016"
