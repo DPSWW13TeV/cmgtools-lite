@@ -5,25 +5,25 @@ import ROOT as rt
 #   Translated in Python by: Joshua Hardenbrook (Princeton)
 #
 
-cmsText     = "CMS";
+cmsText     = "#bf{CMS} #it{Preliminary}";
 #cmsText     = "";
-cmsTextFont   = 61  
+cmsTextFont   = 42  
 
 writeExtraText = True
-extraText   = "Preliminary"
-extraTextFont = 52 
+extraText   = "#it{Preliminary}"
+extraTextFont = 42 
 
 lumiTextSize     = 0.6
 lumiTextOffset   = 0.2
 
-cmsTextSize      = 0.75
+cmsTextSize      = 0.5
 cmsTextOffset    = 0.1
 
-relPosX    = 0.045
-relPosY    = 0.035
+relPosX    = 0.065
+relPosY    = 0.055
 relExtraDY = 1.2
 
-extraOverCmsTextSize  = 0.76
+extraOverCmsTextSize  = 0.6
 
 lumi_13TeV = "35.922 fb^{-1}"
 lumi_8TeV  = "19.7 fb^{-1}" 

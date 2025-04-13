@@ -129,7 +129,7 @@ class MCAnalysis:
                 if k[-1] == ":": extra[k[:-1]] = v # forced overwrite
                 elif k[-1] == "+": extra[k[:-1]] += v # forced append
                 else:
-                    if k in extra: raise RuntimeError('You are trying to overwrite an extra option already set')
+                    if k in extra: raise RuntimeError('You are trying to overwrite an extra option already set',k)
                     extra[k] = v
             field = [f.strip() for f in line.split(':')]
             if len(field) == 1 and field[0] == "*":
@@ -518,26 +518,40 @@ class MCAnalysis:
         allSig = []; allBg = []
         tasks = []
         for key,ttys in self._allData.items():
+            #print("AM procs",key)
             if key == 'data' and nodata: continue
             if process != None and key != process: continue
             for tty in ttys:
-                if tty.isEmpty(): continue
+                if tty.isEmpty(): 
+                    continue
+                    #print("AM empty keys ttys ",keys)
                 tasks.append((key,tty,plotspec,cut,closeTreeAfter,None))
         if self._options.splitFactor > 1 or  self._options.splitFactor == -1:
+            #print("AM tasks",tasks)
             tasks = self._splitTasks(tasks)
+            #print("AM",plotspec.name)
         retlist = self._processTasks(_runPlot, tasks, name="plot "+plotspec.name) # list of pairs (idkey, result)
                                                                                    # note that a key can appear multiple times if a task is split!
         ## then gather results with the same process
         mergemap = {}
         for (k,v) in retlist: 
+            #print("new AM",k,v)
             if k not in mergemap: mergemap[k] = []
             mergemap[k].append(v)
         ret = dict([ (k,mergePlots(plotspec.name+"_"+k,v)) for k,v in mergemap.items() ])
         
         ## construct envelope variations if any
-        for p,h in ret.items():
-            h.buildEnvelopes() 
-
+        if  self.variationsFile:
+            for var in self.variationsFile.uncertainty():
+                for p,h in ret.items():
+                    if not var.procmatch().match(p): continue
+                    if var.unc_type == "envelope":
+                        h.buildEnvelopes(var.name) ## construct envelope variations if any
+                    elif "pdfset" in var.unc_type.lower(): #hessian pdf
+                        h.buildEnvelopesForPDFs(var.name)
+        #for p,h in ret.items():
+            #h.buildEnvelopes() 
+            
         rescales = []
         self.compilePlotScaleMap(self._options.plotscalemap,rescales)
         for p,v in list(ret.items()):

@@ -63,7 +63,7 @@ class Uncertainty:
                 self.normUnc[idx] = float(self.args[1-idx])
         elif self.unc_type=='normSymm':
             if len(self.args) != 1:
-                raise RuntimeError("normAsymm requires one argument")
+                raise RuntimeError("normSymm requires one argument")
             self.fakerate = [None,None]
             self.trivialFunc = ['apply_norm_up','apply_norm_dn']
             self.normUnc[0] = float(self.args[0])
@@ -73,7 +73,10 @@ class Uncertainty:
                 raise RuntimeError("A set of FakeRates are needed for envelope")
             self.fakerate = [ FakeRate( fr, loadFilesNow=False, year=self._options.year) for fr in self.extra['FakeRates'] ]
 
-
+        elif self.unc_type=='HessianPDFset':
+            if 'FakeRates' not in self.extra:
+                raise RuntimeError("A set of FakeRates are needed for HessianPDFset")
+            self.fakerate = [ FakeRate( fr, loadFilesNow=False, year=self._options.year) for fr in self.extra['FakeRates'] ]
         elif self.unc_type=='none':
             pass
         else: raise RuntimeError('Uncertainty type "%s" not recognised' % self.unc_type)
@@ -109,7 +112,9 @@ class Uncertainty:
                     if var.Integral():
                         var.Scale(h0/var.Integral())
                     else: 
+                        ##print("issue in uncert",type(h0),var.GetName(),var.Integral(),h0)
                         var.Reset(); var.Add(h0)
+                        ##print("issue not in uncert",type(h0),var.GetName(),var.Integral(),h0)
             else:
                 for var in variations: 
                     var.Scale(0)

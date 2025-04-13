@@ -387,7 +387,7 @@ Output     = {logdir}/out.$(cluster).$(Dataset).$({chunk})
 Log        = {logdir}/log.$(cluster).$(Dataset).$({chunk})
 use_x509userproxy = True
 getenv = True
-requirements = (OpSysAndVer =?= "CentOS7")
+MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"
 request_memory = 2000
 +MaxRuntime = {maxruntime}
 {accounting_group}

@@ -1,80 +1,92 @@
-WV : WZTo1L1Nu2Q : 10.71: 1 ; FillColor=30, Label="WV (SM)"
-WV : WWTo1L1Nu2Q : 5.090e+01 : 1 ; FillColor=30, Label="WV (SM)"
 
-#SM_WZ1 : WZTo1L1Nu2Q : 11.46  : LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ plus"
-#SM_WZ2 : WZTo1L1Nu2Q : 11.46  : LepGood1_charge < 0 ; FillColor=ROOT.kTeal-7, Label="SM WZ minus"
+#WW_smeft :   WWToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kRed,    Label="WW-smeftOld",LineStyle=ROOT.kDotted  
+#WZ_smeft :   WZToLNujj_01j_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kPink,   Label="WZ-smeftOld",LineStyle=ROOT.kDotted
 
-##https://github.com/raggleton/aTGCsAnalysis/blob/472a635fba97990c6f0a899557424d0589a81061/Common/test/addWeightSamples.cpp#L37
-#pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)
-#Selak8Jet1_pNetWtagSF
+#WW_smeft :   WWToLNuJJ_01j_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kBlue+2,    Label="WW-smeft" 
+#WZ_smeft :   WZToLNuJJ_01j_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kGreen+2,   Label="WZ-smeft"
 
-#SM_WW   : WWTo1L1Nu2Q : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LepGood1_charge > 0 ; FillColor=30, Label="WW SM plus" ,SkipMe=True
-#SM_WW   : WWTo1L1Nu2Q : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LepGood1_charge < 0 ; FillColor=30, Label="WW SM minus",SkipMe=True
+SM_WZ : WZTo1L1Nu2Q : 11.46*1.11 : 1 ; FillColor=ROOT.TColor.GetColor("\#e42536"),  Label="SM-WZ",LineStyle=ROOT.kDotted
+SM_WW : WWTo1L1Nu2Q : xsec*1.12 : 1 ;  FillColor=ROOT.TColor.GetColor("\#ffa90e"),  Label="SM-WW",LineStyle=ROOT.kDotted
 
-SM_WW   : WWTo1L1Nu2Q : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)   : 1 ; FillColor=30, Label="WW SM" 
-SM_WZ   : WZTo1L1Nu2Q : 11.46*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)  : 1 ; FillColor=ROOT.kTeal-7, Label="WZ SM"
+#WZ : WZTo1L1Nu2Q : 11.46*1.11 : 1 ; FillColor=46,  Label="SM-WZ",LineStyle=ROOT.kDotted
+#WW : WWTo1L1Nu2Q : xsec*1.12 : 1 ;  FillColor=30,  Label="SM-WW",LineStyle=ROOT.kDotted
 
 
-Fiveflav_WZplus  : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge > 0 ; FillColor=ROOT.kTeal-7, Label="WZ SM5FP" #,SkipMe=True
-Fiveflav_WZminus : WZToLNuQQ01j_5f_amcatnloFxFx  : 21.82 :  LepGood1_charge < 0 ; FillColor=ROOT.kTeal-7, Label="WZ SM 5fM"#,SkipMe=True
+#WW_eft : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),  Label="WW-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WW_eft : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),  Label="WW-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WW_eft : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),  Label="WW-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WW_eft : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),  Label="WW-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WW_eft : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),  Label="WW-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WW_eft : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf  : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),  Label="WW-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WZ_eft : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),  Label="WZ-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WZ_eft : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),  Label="WZ-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WZ_eft : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),  Label="WZ-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WZ_eft : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),  Label="WZ-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WZ_eft : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),  Label="WZ-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WZ_eft : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf   : xsec : LHEReweightingWeight[62]; FillColor=ROOT.TColor.GetColor("\#e42536"),  Label="WZ-eftdim6Old" ,LineStyle=ROOT.kDotted
+#WW_sm : WWToLNuJJ_01j_LO_EWdim6NLO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),   Label="WW-eftdim6" #,FriendsSimple="{P}/0_corr_bsm/"
+#WZ_sm : WZToLNuJJ_01j_LO_EWdim6NLO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="WZ-eftdim6"#,FriendsSimple="{P}/0_corr_bsm/"
 
 
-
-
-
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1  : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2  : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-WW_sm : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2  : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10, Label="aTGC\#rightarrowW^{\#pm}W^{\#mp} SM "
-
-
-
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
-WZ_sm : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
-WZ_sm : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : LHEReweightingWeight[62]; FillColor=ROOT.kAzure+10,   Label="aTGC\#rightarrowW^{\#pm}Z SM",LineStyle=ROOT.kDotted
+tt : TTSemi_pow_part0+TTSemi_pow_part1  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<=700) ; FillColor=ROOT.TColor.GetColor("\#7a21dd"), Label="ttbar",FriendsSimple="{P}/2_toppT_rw/", years="2016\,2016APV"
+tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<=700) ; FillColor=ROOT.TColor.GetColor("\#7a21dd"), Label="ttbar",FriendsSimple="{P}/2_toppT_rw/", years="2017"
+tt : TTSemi_pow_part0+TTSemi_pow_part1+TTSemi_pow_part2+TTSemi_pow_part3+TTSemi_pow_part4  : xsec  : Top_pTrw*(Mass_2(Genalltops_pt[0],Genalltops_eta[0],Genalltops_phi[0],Genalltops_mass[0],Genalltops_pt[1],Genalltops_eta[1],Genalltops_phi[1],Genalltops_mass[1])<=700); FillColor=ROOT.TColor.GetColor("\#7a21dd"), Label="ttbar",FriendsSimple="{P}/2_toppT_rw/", years="2018"
+tt : TT_mtt1ktoinf  : xsec : Top_pTrw ; FillColor=ROOT.TColor.GetColor("\#7a21dd"), Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
+tt : TT_mttp7kto1k  : xsec : Top_pTrw ; FillColor=ROOT.TColor.GetColor("\#7a21dd"), Label="ttbar",FriendsSimple="{P}/2_toppT_rw/"
 
 
 
 
+T_sch   : T_sch		   : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top"
 
-WZ_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-WZ_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-WZ_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-WZ_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-WZ_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-WZ_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   : xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]+LHEReweightingWeight[12]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(Q.)=3.6 TeV^{\#minus2}"
-
-
-WZ_sm_lin_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_c3w+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_c3w+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12]) ; FillColor=ROOT.kYellow-7, Label="WZ c_{3W}(I.)",LineStyle=ROOT.kDashed
+singletop   : T_sch		   : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top"
+singletop   : T_tWch_noFullyHad	   : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top"
+singletop   : T_tch		   : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top"
+singletop   : Tbar_tWch_noFullyHad : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top", years="2017\,2016\,2016APV"
+singletop   : Tbar_tWch_incldecays : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top", years="2018"
+singletop   : Tbar_tch		   : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#9c9ca1"), Label="Single top"
 
 
 
-WZ_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}"
-WZ_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}"
-WZ_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}"
-WZ_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}"
-WZ_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}"
-WZ_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :  xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]+LHEReweightingWeight[52]-2*LHEReweightingWeight[62]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(Q.)=4.5 TeV^{\#minus2}"
-
-WZ_sm_lin_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cw+ : WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_150to600_v1   :   xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_600to800_v1   :   xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
-WZ_sm_lin_quad_cw+ : WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf_v2   :   xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[72]-LHEReweightingWeight[52]) ; FillColor=ROOT.kRed-7, Label="WZ c_{W}(I.)",LineStyle=ROOT.kDashed
 
 
+#QCD : QCD_Mu15  :  xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
 
+
+#QCD : QCD_Pt15to30_bcToE    :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt20to30_bcToE    :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2018"
+QCD : QCD_Pt30to80_bcToE    :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2018"
+QCD : QCD_Pt80to170_bcToE   :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt170to250_bcToE  :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt250toInf_bcToE  :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD" #, years="2017\,2016\,2018"
+
+
+#QCD : QCD_Pt15to20_Mu5      :  xsec : (abs(Lep1_pdgId) == 13) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017"
+QCD : QCD_Pt20to30_Mu5      :  xsec : (abs(Lep1_pdgId) == 13) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017\,2016\,2016APV"
+QCD : QCD_Pt30to50_Mu5      :  xsec : (abs(Lep1_pdgId) == 13) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt50to80_Mu5      :  xsec : (abs(Lep1_pdgId) == 13) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt80to120_Mu5     :  xsec : (abs(Lep1_pdgId) == 13) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt120to170_Mu5    :  xsec : (abs(Lep1_pdgId) == 13) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt170to300_Mu5    :  xsec : (abs(Lep1_pdgId) == 13) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt470to600_Mu5    :  xsec : (abs(Lep1_pdgId) == 13) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt600to800_Mu5    :  xsec : (abs(Lep1_pdgId) == 13) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt800to1000_Mu5   :  xsec : (abs(Lep1_pdgId) == 13) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD"
+QCD : QCD_Pt1000toInf_Mu5   :  xsec : (abs(Lep1_pdgId) == 13) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD", years="2017\,2016\,2018"
+
+QCD : QCD_Pt15to20_EMEnriched    :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD" , years="2018"
+QCD : QCD_Pt20to30_EMEnriched    :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD" , years="2016APV"
+QCD : QCD_Pt30to50_EMEnriched    :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD" , years="2016APV"
+#QCD : QCD_Pt50to80_EMEnriched    :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD" , years="2017"
+QCD : QCD_Pt80to120_EMEnriched   :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD" 
+QCD : QCD_Pt120to170_EMEnriched  :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD" 
+QCD : QCD_Pt170to300_EMEnriched  :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD" 
+QCD : QCD_Pt300toInf_EMEnriched  :  xsec : (abs(Lep1_pdgId) == 11) ; FillColor=ROOT.TColor.GetColor("\#b9ac70"), Label="QCD" 
+
+
+
+
+
+#<<<<<<< 104X_dev_nano_UL_csengeV1
 WW_sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600_v1: xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)" 
 WW_sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800_v2: xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
 WW_sm_lin_quad_c3w+ : WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0) : 0.5*(LHEReweightingWeight[112]-LHEReweightingWeight[12])  ; FillColor=ROOT.kRed+1,   Label="WW c_{3W}(I.)"
@@ -406,3 +418,10 @@ WW_quad_2p25_cw : WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf_v2: xsec*pNetS
 
 
 #pNetSFMD_WvsQCD(ak8sDMgt45_pt[0],year,suberaId,0)
+#=======
+Others : WplusH   	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
+Others : WminusH 	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
+Others : ZH      	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
+Others : VHToNonbb  	: xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
+Others : ZZTo2Q2L       : xsec : 1 ; FillColor=ROOT.TColor.GetColor("\#964a8b"), Label="Others"
+#>>>>>>> 104X_dev_nano_UL_ankita

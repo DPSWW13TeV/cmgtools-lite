@@ -1,0 +1,6 @@
+Q1 =(N(k1,0) +N(-k1,0) -2*N(0,0))/2*k1*k1,  i used quad_cG for Q1 in the datacard
+Q2  =(N(0,k2) +N(0,-k2) -2*N(0,0))/2*k2*k2, i used quad_cGtil for Q2 in the datacard
+L1 =(N(k1,0) -N(-k1,0))/2*k1  //which corresponds to linear term 1, I used N(k1,0 ) = N(4x10-4,0) sample
+L2 =(N(0,k2) -N(0,-k2))/2*k2  //which corresponds to linear term 2, I used N(0,k2) = N(0, 5x10-7) sample
+
+S+l1+l2+Q1+Q2+2M12 = ((N(k1,k2) +N(-k1,-k2) -(2*N(0,0)(1+k1*k2)) +2*k1*k2(S+L1+Q1) +2*k1*k2(S+L2+Q2)-(2*k1*k1*Q1)-(2*k2*k2*Q2))/2*k1*k2)

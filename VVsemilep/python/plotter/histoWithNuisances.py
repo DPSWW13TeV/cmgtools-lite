@@ -614,11 +614,14 @@ class HistoWithNuisances:
                 return
             print("WARNING, discarding already existing RooFit context")
         self._rooFit = { "context":roofitContext, "workspace":roofitContext.workspace }
+
+
     def _makePdfAndNorm(self):
         self.cropNegativeBins() # can't do with this
         roofitContext = self._rooFit["context"]
         templates = ROOT.TList()
         nuisances = ROOT.RooArgList()
+        #print("issue in histoNP")
         templates.Add(roofitContext.hist2roofit(self.central))
         norm0 = self.central.Integral()
         normfactor = ROOT.ProcessNormalization("%s_norm" % self.central.GetName(), "", norm0)
@@ -627,6 +630,7 @@ class HistoWithNuisances:
             if not nuis: raise RuntimeError("ERROR: can't find nuisance %s needed to parameterize %s" % var, self.central.GetName())
             if self.isShapeVariation(var):
                 nuisances.add(nuis)
+                #print("issue in histoNP",nuis)
                 templates.Add(roofitContext.hist2roofit(hup))
                 templates.Add(roofitContext.hist2roofit(hdown))
             if norm0==0: raise RuntimeError('%s has zero central normalization'%self.central.GetName())
@@ -641,7 +645,7 @@ class HistoWithNuisances:
         self._rooFit["templates"] = templates
         self._rooFit["scaleFactors"] = {}
 
-    def buildEnvelopes(self):
+    def buildEnvelopes(self,var):
         for var in self.getVariationList():
             if len( self.getVariation(var) ) < 3: continue
             up   = _cloneNoDir( self.central, self.central.GetName() + 'envUp' )
@@ -660,8 +664,41 @@ class HistoWithNuisances:
             del self.variations[var]
             self.addVariation( var, 'up', up)
             self.addVariation( var, 'down', down)
+    
+    def buildEnvelopesForPDFs(self, var):
+        #print(self.getVariation(var),var,len(self.getVariation(var)))
+        #### NOTE: we will assume that ALL the entries, except the last two, correspond with
+        # the variations of the PDF weights, and the last two are  the alphaS uncertainties. 
+        # hopefully and a priori, it should not affect the result).
+        up   = _cloneNoDir( self.central, self.central.GetName() + 'envUp' )
+        down = _cloneNoDir( self.central, self.central.GetName() + 'envDown' )
+        if not var  in self.variations:
+            return
+        nvars = len(self.getVariation(var))
+        if nvars == 2:
+            if self.getVariation(var)[0].GetName() == self.central.GetName() + 'envUp': # already processed, probably in a multi-year processing
+                return
+        for x in range(1, self.central.GetNbinsX() + 1):
+            for y in range(1, self.central.GetNbinsY() + 1):
+                ibin    = self.central.GetBin(x, y)
+                nomVal  = self.central.GetBinContent(ibin)
+                deltaUp = 0; deltaDn = 0
+                for iV in range(1,nvars - 2):
+                    cont = self.getVariation(var)[iV].GetBinContent(ibin)
+                    deltaUp += (cont - nomVal)**2
+                    #if cont >= nomVal: deltaUp += (cont - nomVal)**2
+                    #else:              deltaDn += (nomVal - cont)**2
+                alphaSunc = (self.getVariation(var)[nvars-1].GetBinContent(ibin) - self.getVariation(var)[nvars - 2].GetBinContent(ibin)) / 2.
+                       
+                up.SetBinContent(  ibin, nomVal + sqrt(deltaUp + alphaSunc**2))
+                down.SetBinContent(ibin, nomVal - sqrt(deltaUp + alphaSunc**2))
 
-
+                
+        del self.variations[var]
+        self.addVariation( var, 'up', up)
+        self.addVariation( var, 'down', down)
+        return 
+        
     def _dropPdfAndNorm(self):
         if self._rooFit:
             for k in "norm", "pdf", "nuisances", "templates", "scaleFactors":
@@ -811,6 +848,7 @@ class SumWithNuisances(HistoWithNuisances):
             #self._doPostFit()
             self.nominal = _cloneNoDir(self._histos[0].nominal, "%s_postfit" % self.central.GetName())
             for h in self._histos[1:]:
+                #print("issue in histoNP")
                 self.nominal.Add(h.nominal)
         else: 
             self.nominal = self.central
@@ -995,6 +1033,7 @@ def mergePlots(name,plots):
     if isinstance(one, HistoWithNuisances):
         for p in plots[1:]: one+=p
     elif isinstance(one, ROOT.TH1):
+        #        print("issue in histoNP")
         for p in plots[1:]: one.Add(p)
     elif isinstance(one, ROOT.TGraph):
         others = ROOT.TList()
@@ -1063,14 +1102,20 @@ def roofitizeReport(histoWithNuisanceMap, workspace=None, xvarName="x", density=
     # sanity check all inputs, and get one representative histogram
     h0 = None
     for k,h in histoWithNuisanceMap.items():
+        #print('running for AM', h.GetName(),k)
         if k == "data": continue
         if not isinstance(h, HistoWithNuisances):
             raise RuntimeError("element %s (%s, %s) is not a HistoWithNuisances" % (h, h.GetName() if h else "<nil>"))
         if not str(h.raw().ClassName()).startswith("TH1"): 
             raise RuntimeError("element %s (%s, %s) is not a TH1" % (h, h.GetName() if h else "<nil>", h.ClassName() if h else "<nil>"))
-        if h.Integral() <= 0: continue
-        if h0 == None: h0 = h
+        if h.Integral() <= 0: 
+            print("integral is neg or zero",h.GetName(),k,h.Integral())
+            continue
+        if h0 == None: 
+            h0 = h;
+            print("asigned h to h0",h0,h0.GetName())
     if h0 == None: raise RuntimeError("Empty report")
+    
     roofit = context
     if context != None:
         if workspace != None and workspace != context.workspace: 

@@ -16,7 +16,10 @@ class saveVtaggedJet(Module):
         print jecs
         self.shift=["Up","Down"] 
         self.vars=["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","msoftdrop","deepTag_WvsQCD","tau1","tau2","hadronFlavour","muonIdx3SJ","electronIdx3SJ","nBHadrons","nCHadrons"] if self.isMC else ["eta","phi","mass","pt","btagDeepB","particleNetMD_Xqq","particleNetMD_Xbb","particleNetMD_Xcc","particleNetMD_QCD","particleNet_WvsQCD","particleNet_ZvsQCD","particleNet_mass","deepTag_WvsQCD","tau1","tau2","msoftdrop"]
-        if self.isMC: self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
+        if self.isMC: 
+            self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
+            self.vars+=["msoftdrop_"+jec+sh for jec in self.jecs for sh in self.shift]
+
         print type(self.vars)
         self.WPL = 0.64
         self.WPM = 0.85

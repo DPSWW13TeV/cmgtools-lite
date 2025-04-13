@@ -3,16 +3,16 @@ import ROOT
 import numpy
 import sys, os
 
-#basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/WmWpToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX/'
 dirname=sys.argv[1]
-basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/Feb2024/%s/'%dirname #WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX/' #/eos/cms/store/group/phys_smp/ec/anmehta/aTGCSep2023/%s/'%dirname
+proc=sys.argv[2]
+basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/Combined_Mar2025/%s/%s'%(dirname,proc) #/Mar2025UL_FR2//%s/%s'%(dirname,proc) 
 files =   [os.path.join(basepath_private,x) for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x)) ] 
 
 ref=ROOT.TFile.Open(files[0])
 faultyfiles=[]
 def checkfaulty(fname):
     probe=ROOT.TFile.Open(fname)
-
+    print(fname)
     for e in ref.GetListOfKeys():
         name = e.GetName()
         #print("checking" + str(name))

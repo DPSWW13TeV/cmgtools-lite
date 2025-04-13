@@ -12,7 +12,7 @@ kreator = ComponentCreator()
 def byCompName(components, regexps):
     return [ c for c in components if any(re.match(r, c.name) for r in regexps) ]
 
-year = getHeppyOption("year", "2018")
+year=getHeppyOption("year","2018")
 analysis = getHeppyOption("analysis", "main")
 preprocessor = getHeppyOption("nanoPreProcessor")
 #selectComponents = getHeppyOption("selectComponents","both")
@@ -37,8 +37,7 @@ if year == '2018':
     from CMGTools.RootTools.samples.samples_13TeV_DATA2018_NanoAOD import dataSamples as allData
 elif year == '2017':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL17NanoAODv9 import samples as mcSamples_
-    #from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_UL2017 as allData
-    from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_Run2017B_UL2017 as allData
+    from CMGTools.RootTools.samples.samples_13TeV_DATA2017_NanoAOD import dataSamples_UL2017 as allData
 elif year == '2016':
     from CMGTools.RootTools.samples.samples_13TeV_RunIISummer20UL16NanoAODv9 import samples as mcSamples_
     from CMGTools.RootTools.samples.samples_13TeV_DATA2016_NanoAOD import dataSamples_UL16 as allData
@@ -65,55 +64,19 @@ from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules import triggerGroups_dic
 
 DatasetsAndTriggers = []
 theyear=int(year) if year != '2016APV' else 2016
+print("this is the year tag",theyear)
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
-        #"T_tch", "Tbar_tch", "T_tWch.*", "Tbar_tWch.*",
-        ##am        # conversions
-        #"WGToLNuG", "ZGTo2LG", # , "TGJets_lep",
-        ##am        #  # triboson
-        #"WWW"
-        #"QCD.*"
-        #        "QCD_Pt20to30_bcToE"        
-        #        "WplusH","ZH","GGH","WminusH"
-        #        "WJetsToLNu_.*J","WJetsToLNu_Pt.*"
-        #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600"
-        #".*aTGC.*mWV.*",
-        #        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600",
-        #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",#problem
-        #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
-        #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf"
-        #"WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800"
-
-        #     "WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
-        #      "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
-        #       "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
-        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
-        #"WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
-        #        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf", 
-
-#        "WmZToLmNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
-#        "WpZToLpNujj_01j_aTGC_pTZ_150toInf_mWV_800toInf",
-#        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
-#        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
-#        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800",
-#        "WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf",
-        #".*_aTGC_pTZ.*"
-        #".*aTGC.*"
-        #"WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX",
-        #"WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX"
-        # diboson
-        #"ZZTo2Q2L", 
-        #        "WZTo2Q2L" #, #       "WZTo1L1Nu2Q",
-        #        "WWTo1L1Nu2Q",
-        #"WJets.*",
-        #   "WJetsToLNu_HT70To100",
-        #"DYJetsToLL_M50", 
-        #"DYJetsToLL_M50_LO",
-        #"WZToLNuQQ01j_5f_amcatnloFxFx",
-        #"DYJetsToLL_M10to50_LO",
-        #  "DYJets.*",
-        #"TTJets",   
-        #"TTSemi_pow",        "TT_mtt.*",
+        #"Tbar_.*",
+        #".*QCD.*",
+        #".*aTGC.*.",
+        #"VH.*",
+        #"WplusH","WminusH","ZH.*","ZZTo2Q2L","WZTo1L1Nu2Q","WWTo1L1Nu2Q",
+        #"TTSemi.*","T_.*","TT_mtt.*","WJetsToLNu_Pt.*", #"WJetsToLNu_HT.*",
+        #"W.*Jtotaunu_PM","W.*Jtomunu_PM" #,"WJetsToLNu_Pt.*","WJetsToLNu_.*J",
+        #"WZToLNuJJ_01j_SMEFT_LO","WWToLNuJJ_01j_SMEFT_LO",
+        ".*EWdim6NLO",
+        #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf","WWTo1L1Nu2Q"
 
      ])
     ##am removed double el triggers for 2018 
@@ -215,7 +178,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import Pos
 
 # in the cut string, keep only the main cuts to have it simpler
 modules = vvsemilep_sequence_step1
-cut = vvsemilep_skim_cut
+cut = wvsemilep_skim_cut #vvsemilep_skim_cut
 compression = "ZLIB:3" #"LZ4:4" #"LZMA:9"
 branchsel_in = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_in.txt"
 branchsel_out = os.environ['CMSSW_BASE']+"/src/CMGTools/VVsemilep/python/tools/nanoAOD/branchsel_out.txt"

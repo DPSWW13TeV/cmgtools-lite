@@ -1,7 +1,8 @@
 import os
 import ROOT 
 import copy 
-conf = dict(
+
+conf_old = dict(
         looselepPt=10,
         tightlepPt=30,
         muPt = 10, 
@@ -20,14 +21,43 @@ conf = dict(
         fatjetptcut=200,
         fatjetmsdcut=40,
         jetptcut=25,
-        jeteta=2.4
+        jeteta=2.4,
+        metcut=40,
+)
+
+conf = dict(
+        looselepPt=10,
+        tightlepPt=30,
+        tightlepPt_recl=40,
+        muPt = 10, 
+        elePt = 10, 
+        sip3dloose = 8, 
+        sip3dtight = 4, 
+        dxy =  0.05, 
+        dz = 0.1, 
+        eleIdloose = "mvaFall17V2Iso_WPL",
+        eleIdtight = "mvaFall17V2Iso_WP90",
+        muIdloose = "looseId",
+        muIdtight = "tightId",
+        mutrk = "isTracker",
+        muIsoloose=0.40,
+        muIsotight=0.15,
+        fatjetptcut=200,
+        fatjetmsdcut=40,
+        jetptcut=25,
+        jeteta=2.4,
+        metcut=30
 )
 
 nElTight = "Sum$(Electron_pt > {tightlepPt} && Electron_sip3d < {sip3dtight}  && Electron_{eleIdloose} && Electron_{eleIdtight})".format(**conf)
 nElLoose = "Sum$(Electron_pt > {looselepPt} && Electron_sip3d < {sip3dloose}  && Electron_{eleIdloose})".format(**conf)
-nMuLoose = "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose})".format(**conf)
-nMuTight = "Sum$(Muon_pt > {tightlepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsotight})".format(**conf)
-nJetLoose = "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < {jeteta}  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0) )".format(**conf)
+##amnMuLoose = "Sum$(Muon_pt > {looselepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsoloose})".format(**conf)
+##amnMuTight = "Sum$(Muon_pt > {tightlepPt}  && Muon_{mutrk} && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso03_all < {muIsotight})".format(**conf)
+nMuLoose = "Sum$(Muon_pt > {looselepPt}  && Muon_sip3d < {sip3dloose} && Muon_{muIdloose} &&  Muon_pfRelIso04_all < {muIsoloose})".format(**conf)
+nMuTight = "Sum$(Muon_pt > {tightlepPt}  && Muon_sip3d < {sip3dtight} && Muon_{muIdloose} &&  Muon_pfRelIso04_all < {muIsotight})".format(**conf)
+nJetLoose = "( Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0 ) ".format(**conf)
+#nJetLoose = "( (Sum$(Jet_pt > {jetptcut} && abs(Jet_eta) < {jeteta}  && Jet_jetId > 0) > 1 ) || (Sum$(FatJet_pt > {fatjetptcut} && abs(FatJet_eta) < {jeteta}) > 0) )".format(**conf)
+metsel   = "PuppiMET_pt > {metcut}".format(**conf)
 ##MET CUT can be added to the preskim selection
 vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
                       "{nMuTight} + {nElTight} >= 1 &&" + 
@@ -36,23 +66,34 @@ vvsemilep_skim_cut = ("nMuon + nElectron >= 1 &&" +
                       "{nMuLoose} + {nElLoose} >= 1 &&" +
                       "{nMuLoose} + {nElLoose} < 3").format(nMuTight = nMuTight, nElTight = nElTight, nJetLoose = nJetLoose, nMuLoose= nMuLoose, nElLoose = nElLoose)
 
+wvsemilep_skim_cut = ("nMuon + nElectron > 0  &&" +
+                      "{nMuTight} + {nElTight} > 0  &&"+ 
+                      "{nMuTight} + {nElTight} < 3 && " + 
+                      "{nJetLoose} && " + "{metsel} && " + 
+                      "{nMuLoose} + {nElLoose} > 0  &&" +
+                      "{nMuLoose} + {nElLoose} < 3 ").format(metsel=metsel,nMuTight = nMuTight, nElTight = nElTight, nJetLoose = nJetLoose, nMuLoose= nMuLoose, nElLoose = nElLoose)
 
 
 muonSelection     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["looselepPt" ] and l.sip3d < conf["sip3dloose"] and \
                     abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["muIdloose"]) and  \
+                    l.pfRelIso04_all < conf["muIsoloose"]
+
+muonSelection_old     = lambda l : abs(l.eta) < 2.4 and l.pt > conf["looselepPt" ] and l.sip3d < conf["sip3dloose"] and \
+                    abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["muIdloose"]) and  \
                     getattr(l, conf["mutrk"]) and l.pfRelIso03_all < conf["muIsoloose"]
+
 electronSelection = lambda l : abs(l.eta) < 2.5 and l.pt > conf["looselepPt"] and l.sip3d < conf["sip3dloose"] and abs(l.dxy) < conf["dxy"] and abs(l.dz) < conf["dz"] and getattr(l, conf["eleIdloose"])
 
 def clean_and_FO_selection_VVsemilep(lep,year, subera): ##am for tight leptn ids not sure if era is needed now
     if abs(lep.pdgId) == 13:
         return ( abs(lep.eta) < 2.4 and lep.pt > conf["looselepPt" ] and lep.sip3d < conf["sip3dloose"] and \
                     abs(lep.dxy) < conf["dxy"] and abs(lep.dz) < conf["dz"] and getattr(lep, conf["muIdloose"]) and  \
-                    getattr(lep, conf["mutrk"]) and lep.pfRelIso03_all < conf["muIsoloose"])
+                     lep.pfRelIso04_all < conf["muIsoloose"])
     else:
         return ( ttH_idEmu_cuts_E3(lep) and \
                  abs(lep.eta) < 2.5 and lep.pt > conf["looselepPt"] and lep.sip3d < conf["sip3dloose"] and abs(lep.dxy) < conf["dxy"] and abs(lep.dz) < conf["dz"] and getattr(lep, conf["eleIdloose"]) )
 
-tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and lep.pt>conf["tightlepPt"] and lep.sip3d < conf["sip3dtight"] and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso03_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
+tightLeptonSel = lambda lep,year,era : clean_and_FO_selection_VVsemilep(lep,year,era) and lep.pt>conf["tightlepPt_recl"] and lep.sip3d < conf["sip3dtight"] and (abs(lep.pdgId)!=13 or (lep.tightId and lep.pfRelIso04_all < conf["muIsotight"])) and (abs(lep.pdgId)!=11 or lep.mvaFall17V2Iso_WP90)
 
 foTauSel = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and abs(tau.dxy) < 1000 and abs(tau.dz) < 0.2  and (int(tau.idDeepTau2017v2p1VSjet)>>1 & 1) # VVLoose WP
 tightTauSel = lambda tau: (int(tau.idDeepTau2017v2p1VSjet)>>2 & 1) # VLoose WP
@@ -61,11 +102,11 @@ from CMGTools.VVsemilep.tools.nanoAOD.ttHPrescalingLepSkimmer import ttHPrescali
 # NB: do not wrap lepSkim a lambda, as we modify the configuration in the cfg itself 
 lepSkim = ttHPrescalingLepSkimmer(5, 
                 muonSel = muonSelection, electronSel = electronSelection,
-                minLeptonsNoPrescale = 1, # things with less than 2 leptons are rejected irrespectively of the prescale
+                minLeptonsNoPrescale = 1, # things with less than 1 lepton are rejected irrespectively of the prescale
                 minLeptons = 1, requireOppSignPair = True,
-                jetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) <  conf["jeteta"] and j.jetId > 0, 
-                fatjetSel = lambda f : f.pt > conf["fatjetptcut"] and abs(f.eta) < conf["jeteta"],  ##not all samples have fatjets
-                minJets = 4, minMET = 50, minFatJets = 1)
+                jetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) <  conf["jeteta"] and j.jetId >=0,
+                fatjetSel = lambda f : f.pt > conf["fatjetptcut"] and abs(f.eta) < conf["jeteta"], 
+                minJets = 4, minMET = 30, minFatJets = 1)
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger import collectionMerger
 lepMerge = collectionMerger(input = ["Electron","Muon"], 
                             output = "LepGood", 
@@ -83,12 +124,12 @@ from CMGTools.VVsemilep.tools.nanoAOD.LepMVAULFriend import lepMVA
 
 
 
-vvsemilep_sequence_step1 = [lepSkim, lepMerge, autoPuWeight, yearTag, lepJetBTagDeepFlav, xsecTag, lepMasses]
+vvsemilep_sequence_step1 = [lepSkim, lepMerge, autoPuWeight, yearTag, lepJetBTagDeepFlav, xsecTag]#, lepMasses]
 
 #==== 
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR
 from CMGTools.VVsemilep.tools.nanoAOD.ttHLepQCDFakeRateAnalyzer import ttHLepQCDFakeRateAnalyzer
-centralJetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) < conf["jeteta"] and j.jetId > 0
+centralJetSel = lambda j : j.pt > conf["jetptcut"] and abs(j.eta) < conf["jeteta"] and j.jetId >= 0   ##changed
 lepFR = ttHLepQCDFakeRateAnalyzer(jetSel = centralJetSel,
                                   pairSel = lambda pair : deltaR(pair[0].eta, pair[0].phi, pair[1].eta, pair[1].phi) > 0.7,
                                   maxLeptons = 1, requirePair = True)
@@ -121,11 +162,11 @@ def smoothBFlav(jetpt,ptmin,ptmax,year, subera,scale_loose=1.0):
     x = min(max(0.0, jetpt - ptmin)/(ptmax-ptmin), 1.0)
     return x*wploose[year-2016][subera]*scale_loose + (1-x)*wpmedium[year-2016][subera]
 
+#, "HEMIssue"
+jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year" ]] + ['jer']
+#jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] 
 
-#jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] + ['jer%d'%j for j in range(6)]
-jevariations=['jes%s'%x for x in ["FlavorQCD", "RelativeBal", "HF", "BBEC1", "EC2", "Absolute", "BBEC1_year", "EC2_year", "Absolute_year", "HF_year", "RelativeSample_year", "HEMIssue" ]] 
-
-
+###jets used for cleaning should be loose herejet.jetId > 0
 from CMGTools.VVsemilep.tools.combinedObjectTaggerForCleaning import CombinedObjectTaggerForCleaning
 from CMGTools.VVsemilep.tools.nanoAOD.fastCombinedObjectRecleaner import fastCombinedObjectRecleaner
 recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
@@ -135,8 +176,8 @@ recleaner_step1 = lambda : CombinedObjectTaggerForCleaning("InternalRecl",
                                                            tightLeptonSel = tightLeptonSel,
                                                            FOTauSel = foTauSel,
                                                            tightTauSel = tightTauSel,
-                                                           selectJet =    lambda jet: jet.pt > conf["jetptcut"] and abs(jet.eta) < conf["jeteta"] and jet.jetId > 0, # pt and eta cuts are (hard)coded in the step2 
-                                                           selectFatJet = lambda fatjet: fatjet.pt > conf["fatjetptcut"] and abs(fatjet.eta) < conf["jeteta"], # and fatjet.msoftdrop > conf["fatjetmsdcut"], 
+                                                           selectJet =    lambda jet: jet.pt > conf["jetptcut"] and abs(jet.eta) < conf["jeteta"] and jet.jetId >=0 , # pt and eta cuts are (hard)coded in the step2 ##changed
+                                                           selectFatJet = lambda fatjet: fatjet.pt > conf["fatjetptcut"] and abs(fatjet.eta) < conf["jeteta"], 
                                                            coneptdef =    lambda lep: conept_TTH(lep),
 )
 recleaner_step2_mc_allvariations = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel="_InternalRecl",
@@ -155,7 +196,6 @@ recleaner_step2_mc = lambda : fastCombinedObjectRecleaner(label="Recl", inlabel=
                                                           cleanJetsWithFOTaus=True,
                                                           doVetoZ=False, doVetoLMf=False, doVetoLMt=False,
                                                           jetPts=[25,30],
-                                                          ##amjetPtsFwd=[25,60], # second number for 2.7 < abseta < 3, the first for the rest
                                                           btagL_thr=99, # they are set at runtime 
                                                           btagM_thr=99,
                                                           isMC = True,
@@ -199,32 +239,35 @@ mcMatch_seq   = [ isMatchRightCharge, mcMatchId ,mcPromptGamma]
 
 from CMGTools.VVsemilep.tools.nanoAOD.toppTrwt import toppTrwt
 topsf = lambda : toppTrwt()
+from CMGTools.VVsemilep.tools.nanoAOD.genak8Jet_tagger import genak8Jet_tagger
+mctruth =  lambda : genak8Jet_tagger() 
 from CMGTools.VVsemilep.tools.nanoAOD.npdf_rms import npdf_rms
 rms_val = lambda : npdf_rms()
-
+from CMGTools.VVsemilep.tools.nanoAOD.HeavyFlavBaseProducer import HeavyFlavBaseProducer
+HFP  = lambda : HeavyFlavBaseProducer()
 
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import createJMECorrector
 
 
-jetmetUncertainties2016APVAll = createJMECorrector(dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
-jetmetUncertainties2016All = createJMECorrector(dataYear='UL2016', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
-jetmetUncertainties2017All = createJMECorrector(dataYear='UL2017', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
+jetmetUncertainties2016APVAll = createJMECorrector(dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
+jetmetUncertainties2016All = createJMECorrector(dataYear='UL2016', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
+jetmetUncertainties2017All = createJMECorrector(dataYear='UL2017', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
 jetmetUncertainties2018All = createJMECorrector(dataYear='UL2018', jesUncert="Merged", splitJER=False, applyHEMfix=True)
 
-jetmetUncertainties2016APVTotal = createJMECorrector(dataYear='UL2016_preVFP', jesUncert="Total", applyHEMfix=True)
-jetmetUncertainties2016Total = createJMECorrector(dataYear='UL2016', jesUncert="Total", applyHEMfix=True)
-jetmetUncertainties2017Total = createJMECorrector(dataYear='UL2017', jesUncert="Total", applyHEMfix=True)
-jetmetUncertainties2018Total = createJMECorrector(dataYear='UL2018', jesUncert="Total", applyHEMfix=True)
+jetmetUncertainties2016APVTotal = createJMECorrector(dataYear='UL2016_preVFP', jesUncert="Total", applyHEMfix=False)
+jetmetUncertainties2016Total = createJMECorrector(dataYear='UL2016', jesUncert="Total", applyHEMfix=False)
+jetmetUncertainties2017Total = createJMECorrector(dataYear='UL2017', jesUncert="Total", applyHEMfix=False)
+jetmetUncertainties2018Total = createJMECorrector(dataYear='UL2018', jesUncert="Total", applyHEMfix=False)
 
-fatjetmetUncertainties2016APVAll = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
-fatjetmetUncertainties2016All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
-fatjetmetUncertainties2017All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Merged", splitJER=True)#, applyHEMfix=True)
+fatjetmetUncertainties2016APVAll = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
+fatjetmetUncertainties2016All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
+fatjetmetUncertainties2017All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Merged", splitJER=False)#, applyHEMfix=True)
 fatjetmetUncertainties2018All = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2018', jesUncert="Merged", splitJER=False, applyHEMfix=True)
 
-fatjetmetUncertainties2016APVTotal = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Total", applyHEMfix=True)
-fatjetmetUncertainties2016Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Total", applyHEMfix=True)
-fatjetmetUncertainties2017Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Total", applyHEMfix=True)
+fatjetmetUncertainties2016APVTotal = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016_preVFP', jesUncert="Total", applyHEMfix=False)
+fatjetmetUncertainties2016Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2016', jesUncert="Total", applyHEMfix=False)
+fatjetmetUncertainties2017Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2017', jesUncert="Total", applyHEMfix=False)
 fatjetmetUncertainties2018Total = createJMECorrector(jetType="AK8PFPuppi",dataYear='UL2018', jesUncert="Total", applyHEMfix=True)
 
 
@@ -237,14 +280,14 @@ def _fires(ev, path):
 
 triggerGroups=dict(
     Trigger_1e={
-        2016 : lambda ev : _fires(ev,'HLT_Ele27_WPTight_Gsf') or _fires(ev,'HLT_Ele25_eta2p1_WPTight_Gsf') or _fires(ev,'HLT_Ele27_eta2p1_WPLoose_Gsf'),
-        2017 : lambda ev : _fires(ev,'HLT_Ele32_WPTight_Gsf') or _fires(ev,'HLT_Ele35_WPTight_Gsf'),
+        2016 : lambda ev : _fires(ev,'HLT_Ele27_WPTight_Gsf'), 
+        2017 : lambda ev : _fires(ev,'HLT_Ele32_WPTight_Gsf') or _fires(ev,'HLT_Ele35_WPTight_Gsf'), # or _fires(ev,'HLT_Ele32_WPTight_Gsf_L1DoubleEG'),
         2018 : lambda ev : _fires(ev,'HLT_Ele32_WPTight_Gsf'),
     },
     Trigger_1m={
-        2016 : lambda ev : _fires(ev,'HLT_IsoMu24') or _fires(ev,'HLT_IsoTkMu24') or _fires(ev,'HLT_IsoMu22_eta2p1') or _fires(ev,'HLT_IsoTkMu22_eta2p1') or _fires(ev,'HLT_IsoMu22') or _fires(ev,'HLT_IsoTkMu22'),
-        2017 : lambda ev : _fires(ev,'HLT_IsoMu24') or _fires(ev,'HLT_IsoMu27'),
-        2018 : lambda ev : _fires(ev,'HLT_IsoMu24'),
+        2016 : lambda ev : _fires(ev,'HLT_IsoMu24') or _fires(ev,'HLT_IsoTkMu24'), 
+        2017 : lambda ev : _fires(ev,'HLT_IsoMu27'),
+        2018 : lambda ev : _fires(ev,'HLT_IsoMu24'),   # or _fires(ev,'HLT_Mu50'),
     },
     Trigger_2e={
         2016 : lambda ev : _fires(ev,'HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ'),
@@ -278,14 +321,14 @@ triggerGroups=dict(
 
 triggerGroups_dict=dict(
     Trigger_1e={
-        2016 :  ['HLT_Ele27_WPTight_Gsf' , 'HLT_Ele25_eta2p1_WPTight_Gsf' , 'HLT_Ele27_eta2p1_WPLoose_Gsf'],
-        2017 :  ['HLT_Ele32_WPTight_Gsf' , 'HLT_Ele35_WPTight_Gsf'],
-        2018 :  ['HLT_Ele32_WPTight_Gsf'],
+        2016 :  ['HLT_Ele27_WPTight_Gsf' ],
+        2017 :  ['HLT_Ele32_WPTight_Gsf' , 'HLT_Ele35_WPTight_Gsf'], # , 'HLT_Ele32_WPTight_Gsf_L1DoubleEG'],
+        2018 :  ['HLT_Ele32_WPTight_Gsf' ],
     },
     Trigger_1m={
-        2016 :  ['HLT_IsoMu24' , 'HLT_IsoTkMu24' , 'HLT_IsoMu22_eta2p1' , 'HLT_IsoTkMu22_eta2p1' , 'HLT_IsoMu22' , 'HLT_IsoTkMu22'],
-        2017 :  ['HLT_IsoMu24' , 'HLT_IsoMu27'],
-        2018 :  ['HLT_IsoMu24'],
+        2016 :  ['HLT_IsoMu24' , 'HLT_IsoTkMu24' ],
+        2017 :  ['HLT_IsoMu27'],
+        2018 :  ['HLT_IsoMu24' ],  #, 'HLT_Mu50'
     },
     Trigger_2e={
         2016 :  ['HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ'],
@@ -341,8 +384,11 @@ bTagSFs = lambda : BtagSFs("JetSel_Recl",
 #                                    corrs=jecGroups,
 #                        )
 
-from CMGTools.VVsemilep.tools.nanoAOD.lepScaleFactors import lepScaleFactors
-leptonSFs = lambda : lepScaleFactors()
+from CMGTools.VVsemilep.tools.nanoAOD.triggerScaleFactors_el import triggerScaleFactors_el
+trigSFs_el = lambda : triggerScaleFactors_el()
+
+from CMGTools.VVsemilep.tools.nanoAOD.BSMtoSM_ratio_save import BSMtoSM_ratio_save
+correction = lambda : BSMtoSM_ratio_save()
 
 scaleFactorSequence_2016APV = [btagSF2016APV_dj,bTagSFs] 
 scaleFactorSequence_2016    = [btagSF2016_dj,bTagSFs] 
@@ -357,49 +403,55 @@ from CMGTools.VVsemilep.tools.nanoAOD.saveVtaggedJet import saveVtaggedJet
 taggedfj           = lambda : saveVtaggedJet(isMC = True, massVar='sD',jecs = jevariations)
 taggedfj_data      = lambda : saveVtaggedJet(isMC = False,massVar='sD')
 
+from CMGTools.VVsemilep.tools.nanoAOD.saveGoodak8Jet import saveGoodak8Jet
+goodfj           = lambda : saveGoodak8Jet(isMC = True, massVar='sD',jecs = jevariations)
+goodfj_data      = lambda : saveGoodak8Jet(isMC = False,massVar='sD')
+
+event_sel=  ['event.nLepFO_Recl == 1                                 ',
+            'event.PuppiMET_pt > 110                                 ',
+            'event.nBJetMedium30_Recl == 0                           ', 
+            '(event.Trigger_1e or  event.Trigger_1m)                 ',
+            'event.LepGood_pt[event.iLepFO_Recl[0]] > 50             ',
+            'event.LepGood_isLepTight_Recl[event.iLepFO_Recl[0]] == 1',
+            'event.nFatJetSel_Recl > 0                               ',
+            'event.nLepTight_Recl == 1                               ',
+            'event.Flag_goodVertices                                 ',
+            'event.Flag_globalSuperTightHalo2016Filter               ',
+            'event.Flag_HBHENoiseFilter                              ',
+            'event.Flag_HBHENoiseIsoFilter                           ',
+            'event.Flag_EcalDeadCellTriggerPrimitiveFilter           ',
+            'event.Flag_BadPFMuonFilter                              ',
+            'event.year == 2016 or event.Flag_ecalBadCalibFilter     ', 
+            'event.run ==1 or event.Flag_eeBadScFilter               ',
+            'event.Flag_BadPFMuonDzFilter                             '
+]
+
 from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import vvsemilep_TreeForWJestimation
-wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,1,
-                                                 ['event.nLepFO_Recl  == 1                                         ',
-                                                 'event.PuppiMET_pt > 110                                 ',
-                                                  'event.nBJetMedium30_Recl == 0', 
-                                                 '(event.Trigger_1e or  event.Trigger_1m)',
-                                                 'event.LepGood_pt[event.iLepFO_Recl[0]] > 50                                          ',
-                                                 'event.LepGood_isLepTight_Recl[event.iLepFO_Recl[0]] == 1                             ',
-                                                 'event.nFatJetSel_Recl > 0                                ',
-                                                 'event.nLepTight_Recl == 1                                ',
-                                                 'event.Flag_goodVertices ==1                              ',
-                                                 'event.Flag_globalSuperTightHalo2016Filter ==1            ',
-                                                 'event.Flag_HBHENoiseFilter ==1                           ',
-                                                 'event.Flag_HBHENoiseIsoFilter ==1                        ',
-                                                 'event.Flag_EcalDeadCellTriggerPrimitiveFilter ==1        ',
-                                                 'event.Flag_BadPFMuonFilter ==1                           ',
-                                                 '(event.year == 2016 or event.Flag_ecalBadCalibFilter)     ', 
-                                                 '(event.run ==1 or event.Flag_eeBadScFilter)         ',
-                                                  'event.Flag_BadPFMuonDzFilter == 1'
-])
+wvsemilep_tree = lambda  : vvsemilep_TreeForWJestimation(1,1,event_sel)
+event_sel_incl=['event.nLepFO_Recl == 1                             ',
+            'event.PuppiMET_pt > 40                                 ',
+            '(event.Trigger_1e or  event.Trigger_1m)                 ',
+            'event.LepGood_pt[event.iLepFO_Recl[0]] > 50             ',
+            'event.LepGood_isLepTight_Recl[event.iLepFO_Recl[0]] == 1',
+            'event.nFatJetSel_Recl > 0                               ',
+            'event.nLepTight_Recl == 1                               ',
+            'event.Flag_goodVertices                                 ',
+            'event.Flag_globalSuperTightHalo2016Filter               ',
+            'event.Flag_HBHENoiseFilter                              ',
+            'event.Flag_HBHENoiseIsoFilter                           ',
+            'event.Flag_EcalDeadCellTriggerPrimitiveFilter           ',
+            'event.Flag_BadPFMuonFilter                              ',
+            'event.year == 2016 or event.Flag_ecalBadCalibFilter     ', 
+            'event.run ==1 or event.Flag_eeBadScFilter               ',
+            'event.Flag_BadPFMuonDzFilter                             '
+]
 
 
 from CMGTools.VVsemilep.tools.nanoAOD.input_WJestimation import input_WJestimation
-input_wjest = lambda  : input_WJestimation(1,1,
-                                                 ['event.nLepFO_Recl  == 1                                         ',
-                                                 'event.PuppiMET_pt > 110                                 ',
-                                                  'event.nBJetMedium30_Recl == 0', 
-                                                 '(event.Trigger_1e or  event.Trigger_1m)',
-                                                 'event.LepGood_pt[event.iLepFO_Recl[0]] > 50                                          ',
-                                                 'event.LepGood_isLepTight_Recl[event.iLepFO_Recl[0]] == 1                             ',
-                                                 'event.nFatJetSel_Recl > 0                                ',
-                                                 'event.nLepTight_Recl == 1                                ',
-                                                 'event.Flag_goodVertices ==1                              ',
-                                                 'event.Flag_globalSuperTightHalo2016Filter ==1            ',
-                                                 'event.Flag_HBHENoiseFilter ==1                           ',
-                                                 'event.Flag_HBHENoiseIsoFilter ==1                        ',
-                                                 'event.Flag_EcalDeadCellTriggerPrimitiveFilter ==1        ',
-                                                 'event.Flag_BadPFMuonFilter ==1                           ',
-                                                 '(event.year == 2016 or event.Flag_ecalBadCalibFilter)     ', 
-                                                 '(event.run ==1 or event.Flag_eeBadScFilter)         ',
-                                                  'event.Flag_BadPFMuonDzFilter == 1'
+input_wjest_mc   = lambda  : input_WJestimation(isMC = True, lepMultiplicity=1,fjetMultiplicity=1,selection=event_sel_incl,massVar='sD',jecs = jevariations)
+input_wjest_data = lambda  : input_WJestimation(isMC = False, lepMultiplicity=1,fjetMultiplicity=1,selection=event_sel_incl,massVar='sD')
 
-])
+
 
 
 from CMGTools.VVsemilep.tools.nanoAOD.genFriendProducer import genFriendProducer

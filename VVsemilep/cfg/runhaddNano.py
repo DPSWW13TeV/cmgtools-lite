@@ -1,39 +1,26 @@
 import os,sys
 import subprocess
 
-
-eospath="/eos/cms/store/group/phys_smp/ec/anmehta/"
-indir="Feb2024" #/eos/cms/store/cmst3/group/dpsww/"
-odir= "Combined_March2024"
+#eospath="/eos/cms/store/cmst3/group/dpsww/SMEFT_samples/"
+eospath="/eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/"
+#indir="aTGC_Apr2024_UL16" #/eos/cms/store/cmst3/group/dpsww/"
+#odir= "Combined_aTGC_Oct2024_UL16"
+#eosOut="/eos/cms/store/cmst3/group/dpsww/SMEFT_samplesmerged/"
+eosOut="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_Mar2025/"
 samples=[]
-sample=sys.argv[1]
+year=sys.argv[1] 
+sample=sys.argv[2]
+#odir=sys.argv[3]
 samples.append(sample)
-
-#samples=[
-#'WmWpToLmNujj_01j_aTGC_4f_NLO_FXFX',
-#'WpWmToLpNujj_01j_aTGC_4f_NLO_FXFX']
-
-#'WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-150to600_4f_NLO_FXFX',
-#'WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-600to800_4f_NLO_FXFX',
-#'WmZToLmNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX',
-#'WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-150to600_4f_NLO_FXFX',
-#'WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-600to800_4f_NLO_FXFX',
-#'WpZToLpNujj_01j_aTGC_pTZ-150toInf_mWV-800toInf_4f_NLO_FXFX',
-#'WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX',
-#'WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX',
-#'WmWpToLmNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX',
-#'WmWpToLpNujj_01j_aTGC_pTW-150toInf_mWV-600to800_4f_NLO_FXFX',
-#'WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-150to600_4f_NLO_FXFX',
-#'WpWmToLpNujj_01j_aTGC_pTW-150toInf_mWV-800toInf_4f_NLO_FXFX',
-#]
 
 
 for iproc in samples:
-    newName=iproc.split('_4f_NLO_FXFX')[0].replace('-','_')
+    newName=iproc.split('_4f_NLO_FXFX')[0].replace('-','_').replace('jj','JJ')
     print "running for process",newName
-    basepath_private=os.path.join(eospath,indir,iproc)
-    outdir=os.path.join(eospath,odir,newName)#  basepath_private #+"_hadded"
-    os.system("mkdir -p %s"%outdir)
+    basepath_private=os.path.join(eospath,year,iproc)
+    outdir=os.path.join(eosOut,year,newName)#  basepath_private #+"_hadded"
+    if not  os.path.exists(outdir):
+        os.system("mkdir -p %s"%outdir)
     files=[os.path.join(basepath_private,x) for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x)) ]
     maxSize=30
     tot_size=0;
@@ -51,7 +38,7 @@ for iproc in samples:
             else:
                 continue
         else:
-            ikey=str(outdir+'/'+iproc+'_part'+str(len(subtasks)))
+            ikey=str(outdir+'/'+newName+'_part'+str(len(subtasks)))
             subtasks[ikey]=elements;
             elements=[i]; tot_size=os.path.getsize(i);
             continue;

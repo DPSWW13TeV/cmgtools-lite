@@ -19,9 +19,9 @@ parser.add_option("--categorize-by-ranges", dest="categ_ranges", type="string", 
 parser.add_option("--regularize", dest="regularize", action="store_true", default=False, help="Regularize templates")
 parser.add_option("--threshold", dest="threshold", type=float, default=0.0, help="Minimum event yield to consider processes")
 parser.add_option("--filter", dest="filter", type="string", default=None, help="File with list of processes to be removed from the datacards")
-parser.add_option("--lf","--lepflav", dest="lepflav", type="string", default="mu", help="which lepton flav to run on, needed to read WJ workspace")
-parser.add_option("--wjD", dest="wjDate", type="string", default="", help="date for WJ workspace to be picked")
-parser.add_option("--sel", dest="sel", type="string", default="", help="selection region string")
+#parser.add_option("--lf","--lepflav", dest="lepflav", type="string", default="mu", help="which lepton flav to run on, needed to read WJ workspace")
+#parser.add_option("--wjD", dest="wjDate", type="string", default="", help="date for WJ workspace to be picked")
+#parser.add_option("--sel", dest="sel", type="string", default="", help="selection region string")
 
 (options, args) = parser.parse_args()
 options.weight = True
@@ -44,17 +44,25 @@ if not os.path.exists(outdir): os.mkdir(outdir)
 report={}
 if options.infile:
     infile = ROOT.TFile(outdir+binname+".bare.root","read")
+    print("in here with infile")
     for p in mca.listSignals(True)+mca.listBackgrounds(True)+['data']:
+        print("this is p",p)
         variations = mca.getProcessNuisances(p) if p != "data" else []
+        print("variations",variations)
         h = readHistoWithNuisances(infile, "x_"+p, variations, mayBeMissing=True)
         if h: report[p] = h
 else:
     if options.categ:
        cexpr, cbins, _ = options.categ
+       print("for debugging",cexpr,args[2],makeBinningProductString(args[3],cbins), cuts.allCuts(),options.asimov)
        report = mca.getPlotsRaw("x", cexpr+":"+args[2], makeBinningProductString(args[3],cbins), cuts.allCuts(), nodata=options.asimov) 
     else:
-       report = mca.getPlotsRaw("x", args[2], args[3], cuts.allCuts(), nodata=options.asimov) 
-    for p,h in report.iteritems(): h.cropNegativeBins(threshold=1e-5)
+        #print("this is the issue",args[2], args[3], cuts.allCuts(),options.asimov)
+        report = mca.getPlotsRaw("x", args[2], args[3], cuts.allCuts(), nodata=options.asimov) 
+        #print("not an issue")
+    for p,h in report.iteritems(): 
+        print("cropping",h.GetName())
+        h.cropNegativeBins(threshold=1e-3)
 
 if options.savefile:
     savefile = ROOT.TFile(outdir+binname+".bare.root","recreate")
@@ -70,10 +78,14 @@ if options.asimov:
     else: raise RuntimeError("the --asimov option requires to specify signal/sig/s/s+b or background/bkg/b/b-only")
     tomerge = None
     for p in asimovprocesses:
+        print("shapecards issue on mergin",p)
         if p in report: 
-            if tomerge is None: 
+            if tomerge is None:
+                print("is it this one merge issue") 
                 tomerge = report[p].raw().Clone("x_data_obs"); tomerge.SetDirectory(None)
-            else: tomerge.Add(report[p].raw())
+            else:
+                print("is it this one issue else merhe")
+                tomerge.Add(report[p].raw())
     report['data_obs'] = HistoWithNuisances(tomerge)
 else:
     report['data_obs'] = report['data'].Clone("x_data_obs") 
@@ -153,9 +165,11 @@ for binname, report in allreports.iteritems():
             variants = list(h.getVariation(name))
             for hv,d in zip(variants, ('up','down')):
                 k = hv.Integral()/n0
-                if k == 0: 
+                if k == 0:
+                    print("is it this one issue")
                     print "Warning: underflow template for %s %s %s %s. Will take the nominal scaled down by a factor 2" % (binname, p, name, d)
                     hv.Add(h.raw()); hv.Scale(0.5)
+                    print("no issue")
                 elif k < 0.2 or k > 5:
                     print "Warning: big shift in template for %s %s %s %s: kappa = %g " % (binname, p, name, d, k)
             # prevent variations from going to zero by symmetrizing
@@ -204,8 +218,8 @@ for binname, report in allreports.iteritems():
   for cutline in str(cuts).split("\n"):  datacard.write("##   %s\n" % cutline)
   datacard.write("shapes *        * %s.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % binname)
 
-  if options.lepflav in ["el","mu"]:
-      datacard.write("shapes WJets    * WJets_est/Cards/{dd}/cards_sDM_weighted_{FS}_WPM_950_4550//WWWZ_{CR}_{FS}_ws.root proc_WWWZ_{CR}_{FS}:WJets_mj_{CR}_{FS}\n". format(FS=options.lepflav,dd=options.wjDate,CR=options.sel))
+##AM for WJE if options.lepflav in ["el","mu"]:
+##AM  for WJE    datacard.write("shapes WJets    * WJets_est/Cards/{dd}/cards_sDM_weighted_{FS}_WPM_950_4550//WWWZ_{CR}_{FS}_ws.root proc_WWWZ_{CR}_{FS}:WJets_mj_{CR}_{FS}\n". format(FS=options.lepflav,dd=options.wjDate,CR=options.sel))
 
   ##am placeholder for WJets shapes
   datacard.write('##----------------------------------\n')
@@ -222,10 +236,11 @@ for binname, report in allreports.iteritems():
   datacard.write((npatt % 'bin    ')+(" "*6)+(" ".join([kpatt % binname  for p in procs]))+"\n")
   datacard.write((npatt % 'process')+(" "*6)+(" ".join([kpatt % p        for p in procs]))+"\n")
   datacard.write((npatt % 'process')+(" "*6)+(" ".join([kpatt % iproc[p] for p in procs]))+"\n")
-  datacard.write((npatt % 'rate   ')+(" "*6)+(" ".join([fpatt % allyields[p] if 'WJets' not in p else kpatt_am % rate_str for p in procs ]))+"\n")
-  #datacard.write((npatt % 'rate   ')+(" "*6)+(" ".join([kpatt_am % rate_str for p in procs]))+"\n")
+  ##AM forWJE  datacard.write((npatt % 'rate   ')+(" "*6)+(" ".join([fpatt % allyields[p] if 'WJets' not in p else kpatt_am % rate_str for p in procs ]))+"\n")
+  datacard.write((npatt % 'rate   ')+(" "*6)+(" ".join([fpatt % allyields[p] for p in procs]))+"\n")
+
   datacard.write('##----------------------------------\n')
-  towrite = [ report[p].raw() for p in procs if "WJ" not in p] + [ report["data_obs"].raw() ] ##AM
+  towrite = [ report[p].raw() for p in procs ] + [ report["data_obs"].raw() ]
   for name in nuisances:
     (kind,effmap,effshape) = systs[name]
     datacard.write(('%s %5s' % (npatt % name,kind)) + " ".join([kpatt % effmap[p]  for p in procs]) +"\n")

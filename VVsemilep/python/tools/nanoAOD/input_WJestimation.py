@@ -6,34 +6,80 @@ import math
 from math import sqrt, cos, sin
 from array import array
 from PhysicsTools.NanoAODTools.postprocessing.tools import deltaR, deltaPhi
+from CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_TreeForWJestimation import pNetSFMD_WvsQCD, HEM
 #_rootLeafType2rootBranchType = { 'UChar_t':'b', 'Char_t':'B', 'UInt_t':'i', 'Int_t':'I', 'Float_t':'F', 'Double_t':'D', 'ULong64_t':'l', 'Long64_t':'L', 'Bool_t':'O'}
 
 from copy import deepcopy
 
 def if3(cond, iftrue, iffalse):
     return iftrue if cond else iffalse
+def calcmassWV(l1,fjet,metpt,metphi,jetpt):
+    from ROOT.heppy import METzCalculator
+        
+    NeutrinoPz = METzCalculator()
+    met=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    metV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    lepton1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    fatjet1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    mWV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
+    met.SetPtEtaPhiM(metpt,0.,metphi,0.);
+    lepton1.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,0);
+    fatjet1.SetPtEtaPhiM(jetpt,fjet.eta,fjet.phi,fjet.msoftdrop); #particleNet_mass);
+    NeutrinoPz.SetMET(met);
+    NeutrinoPz.SetLepton(lepton1);
+    NeutrinoPz.SetLeptonType(l1.pdgId);
+    nu_pz=NeutrinoPz.Calculate(0)
+    metV.SetPxPyPzE(metpt*cos(metphi), metpt*sin(metphi),nu_pz,sqrt(metpt*metpt+nu_pz*nu_pz));
+    mWV=lepton1+fatjet1+metV;
+    massWV=mWV.M();
+    return massWV
 
 class input_WJestimation(Module):
-    def __init__(self, lepMultiplicity, fjetMultiplicity, selection,mvar='sD'):
+    def __init__(self, isMC,lepMultiplicity, fjetMultiplicity, selection,massVar='sD',jecs=[]):
         self.lepMultiplicity=lepMultiplicity
         self.fjetMultiplicity=fjetMultiplicity
         self.selection=selection
-        self.mvar=mvar
+        self.mvar=massVar
+        self.isMC=isMC
+        self.jecs=jecs
+        self.pmet_vars=['pt','phi']
+        self.shift=["Up","Down"]
+        self.vars=['pt','eta','phi','mass','particleNetMD_Xqq','msoftdrop','particleNetMD_Xbb','particleNetMD_Xcc','particleNetMD_QCD','pNetWtagscore','pNetWtagSF']
+        if self.isMC: 
+            self.vars+=["pt_"+jec+sh for jec in self.jecs for sh in self.shift]
+            self.vars+=["msoftdrop_"+jec+sh for jec in self.jecs for sh in self.shift]
+            self.vars+=["mcTruth_W","pNetWtagSF_TM"]#,"mcTruth_H","mcTruth_T","mcTruth_Z","pNetZtagSF_TM",""]
+        self.pmet_uncert=['JES','JER','Unclustered']
+        if self.isMC:
+            self.pmet_vars+=[pmetV+uncert+sh for pmetV in self.pmet_vars for uncert in self.pmet_uncert for sh in self.shift]
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        for var in 'pt,eta,phi,pdgId,tightId'.split(','):
+        for var in 'pt,eta,phi,pdgId,tightId,dxy,dz,sip3d,dxy,dz,sip3d,miniPFRelIso_all,pfRelIso03_all,pfRelIso04_all'.split(','):
             for l in range(self.lepMultiplicity):
                 self.out.branch('Lep%d_%s'%(l+1,var),'F')
 
 
-        for var in 'pt,eta,phi,mass,particleNetMD_Xqq,msoftdrop,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetWtagSF'.split(','): #msoftdrop,particleNet_mass,
+        for var in self.vars: #'pt,eta,phi,mass,particleNetMD_Xqq,msoftdrop,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore,pNetWtagSF'.split(','): 
             for j in range(self.fjetMultiplicity):
                 self.out.branch('Selak8Jet%d_%s'%(j+1,var), 'F')
-        for nsel in self.selection:
-            self.out.branch('event_sel%d'%self.selection.index(nsel), 'L')
-        self.out.branch('event', 'L')
+
+        if self.isMC:
+            for jec in self.jecs:
+                for sh in self.shift:
+                    self.out.branch('mWV_%s%s'%(jec,sh), 'F')
+
+        for var in self.pmet_vars:
+            self.out.branch('pmet_%s'%(var), 'F')
+        for var in self.pmet_uncert:
+            for sh in self.shift:
+                self.out.branch('mWV_pmet_%s%s'%(var,sh), 'F')
         self.out.branch('nFj','I')
+        #for jec in self.jecs:
+        #    for sh in self.shift:
+        #         self.out.branch('nFj_%s%s'%(jec,sh),'I')
+        #         self.out.branch('nBJetMedium30_%s%s'%(jec,sh),'I')
+        self.out.branch('event', 'L')
         self.out.branch('nLep','I')
         self.out.branch('nLepFO','I')
         self.out.branch('nLepTight','I')
@@ -41,7 +87,7 @@ class input_WJestimation(Module):
         self.out.branch('event_presel', 'L')
         self.out.branch('nBJetMedium30', 'I')
         self.out.branch('pmet'       ,'F')
-        self.out.branch('pmet_phi'   ,'F')
+        #self.out.branch('pmet_phi'   ,'F')
         self.out.branch('evt_wt'       ,'F') #pu*prefiring*prescale*hem
         self.out.branch('pu_wt'       ,'F') #pu
         self.out.branch('prefiring_wt'       ,'F') #prefiring
@@ -69,76 +115,6 @@ class input_WJestimation(Module):
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
     
-
-    def calcmassWV(self,l1,fjet,metpt,metphi):
-        from ROOT.heppy import METzCalculator
-        
-        NeutrinoPz = METzCalculator()
-        met=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        metV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        lepton1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        fatjet1=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        mWV=ROOT.TLorentzVector(0.0,0.0,0.0,0.0);
-        met.SetPtEtaPhiM(metpt,0.,metphi,0.);
-        lepton1.SetPtEtaPhiM(l1.pt,l1.eta,l1.phi,l1.mass);
-        fatjet1.SetPtEtaPhiM(fjet.pt,fjet.eta,fjet.phi,fjet.msoftdrop); #particleNet_mass);
-        NeutrinoPz.SetMET(met);
-        NeutrinoPz.SetLepton(lepton1);
-        NeutrinoPz.SetLeptonType(l1.pdgId);
-        nu_pz=NeutrinoPz.Calculate(0)
-        metV.SetPxPyPzE(metpt*cos(metphi), metpt*sin(metphi),nu_pz,sqrt(metpt*metpt+nu_pz*nu_pz));
-        mWV=lepton1+fatjet1+metV;
-        massWV=mWV.M();
-        return massWV
-
-    def pNetSFMD_WvsQCD(self,pt,year,suberaid,WP=1.0,var=0):
-        yearString= str(year)+if3(year == 2016 and suberaid == 0,"APV","")
-        if (yearString == "2018"):
-            if(pt >= 200 and pt < 300):
-                return if3(WP == 0.5,0.81*(1 + var*0.03),if3(WP == 1.0,0.87*(1 + var*0.02),if3(var > 0,0.92*(1 + var*0.03),0.92*(1 + var*0.02))))
-            elif(pt >= 300 and pt < 400):
-                return if3(WP == 0.5,0.81*(1 + var*0.02),if3(WP == 1.0,0.86*(1 + var*0.02),0.92*(1 + var*0.02)))
-            else:
-                return if3(WP == 0.5,0.77*(1 + var*0.04), if3(WP == 1.0,0.82*(1 + var*0.04),0.87*(1 + var*0.04)))
-        elif (yearString == "2017"):
-            if(pt >= 200 and pt < 300):
-                return if3(WP == 0.5,0.85*(1 + var*0.03),if3(WP == 1.0,0.91*(1 + var*0.02),0.96*(1 + var*0.03)))
-            elif(pt >= 300 and pt < 400):
-                return if3(WP == 0.5,0.85*(1 + var*0.03),if3(WP == 1.0,0.90*(1 + var*0.02),if3(var > 0,0.95*(1 + var*0.03),0.95*(1 + var*0.02))))
-            else: return if3(WP == 0.5,0.86*(1 + var*0.05),if3(WP == 1.0,if3(var > 0, 0.89*(1 + var*0.05),0.89*(1 + var*0.04)),0.98*(1 + var*0.05)))
-        elif (yearString == "2016APV"):
-            if(pt >= 200 and pt < 300):
-                return if3(WP == 0.5,0.85*(1 + var*0.03),if3(WP == 1.0,0.90*(1 + var*0.03),0.90*(1 + var*0.02)))
-            elif(pt >= 300 and pt < 400):
-                return if3(WP == 0.5,0.86*(1 + var*0.04),if3(WP == 1.0,0.87*(1 + var*0.04),0.94*(1 + var*0.04)))
-            else:
-                return if3(WP == 0.5,0.86*(1 + var*0.08),if3(WP == 1.0,if3(var > 0,0.92*(1 + var*0.08),0.92*(1 + var*0.07)),0.94*(1 + var*0.07)))
-        else:
-            if(pt >= 200 and pt < 300):
-                return if3(WP == 0.5,0.85*(1 + var*0.04),if3(WP == 1.0,if3(var > 0,0.89*(1 + var*0.04),0.89*(1 + var*0.03)),0.95*(1 + var*0.04)))
-            elif(pt >= 300 and pt < 400):
-                return if3(WP == 0.5,0.83*(1 + var*0.04),if3(WP == 1.0,0.86*(1 + var*0.04),0.91*(1 + var*0.04)))
-            else: return if3(WP == 0.5,if3(var > 0,0.69*(1 + var*0.07),0.69*(1 + var*0.06)),if3(WP == 1.0,0.73*(1 + var*0.07),0.84*(1 + var*0.07)))
-
-    def HEM(self,year,lep,jet,run,isData):
-        HEM_eta_min =  -3.2;  HEM_eta_max = -1.3;
-        HEM_phi_min= -1.57;  HEM_phi_max= -0.87;
-        weight=1.0;  
-        if run > 1: isData=True;
-        if year==2018:
-            vetoHEM=False;vetofj=False;vetoel=False;
-            vetofj = (jet.eta < HEM_eta_max and jet.eta > HEM_eta_min and jet.phi < HEM_phi_max and jet.phi > HEM_phi_min)
-            vetoel = (abs(lep.pdgId) == 11 and lep.eta > -2.5 and lep.eta < -1.479 and lep.phi < HEM_phi_max and lep.phi > HEM_phi_min)
-            vetoHEM = vetofj or vetoel;
-            if (vetoHEM):
-                if (isData):
-                    if(run >= 319077): 	weight=0;    
-                    else:	weight=1.0;
-                else:      weight=0.35; 
-            else:	weight=1.0; 
-        else: weight=1.0
-        return weight;
-
     def analyze(self, event):
         isData = (event.run > 1) or not hasattr(event,"GenDressedLepton_pt")
         self.out.fillBranch('event',event.event)
@@ -148,46 +124,65 @@ class input_WJestimation(Module):
         leps = [all_leps[chosen[i]] for i in xrange(nFO)]
         jets = [j for j in Collection(event,"ak8%sMgt45"%self.mvar)]
         self.out.fillBranch('event_presel',event.event)        
-        tot_sel=False;sel=False
-
+        tot_sel=False;sel_i=False
         for isel in self.selection:
             if eval(isel):
-                sel=True
-                #print 'passed %s'%isel
-                self.out.fillBranch('event_sel%d'%self.selection.index(isel),1)        
+                sel_i=True
             else: 
-                sel=False
-                self.out.fillBranch('event_sel%d'%self.selection.index(isel),0)        
-                #print 'failed ',isel,event.event
+                sel_i=False;
                 break;
-        tot_sel=sel and len(leps) == self.lepMultiplicity  and  len(jets) > 0
+        tot_sel= sel_i and len(leps) == self.lepMultiplicity  and  len(jets) > 0
         self.out.fillBranch('event_sel',tot_sel)        
-        self.out.fillBranch('nFj',event.nFatJetSel_Recl)
-        self.out.fillBranch('nLep',len(leps))
-        self.out.fillBranch('nLepFO',event.nLepFO_Recl)
-        self.out.fillBranch('nLepTight',event.nLepTight_Recl)
+        self.out.fillBranch('nFj',event.nFatJetSel_Recl if tot_sel else 0)
+        
+        #for jec in self.jecs:
+        #    for sh in self.shift:
+        #        self.out.fillBranch('nFj_%s%s'%(jec,sh),getattr(event,'nFatJet_%s%s_Recl'%(jec,sh))  if tot_sel else 0)
+        #        self.out.fillBranch('nBJetMedium30_%s%s'%(jec,sh),getattr(event,'nBJetMedium30_%s%s_Recl'%(jec,sh))  if tot_sel else 999)
+
+        self.out.fillBranch('nLep',len(leps) if tot_sel else 0)
+        self.out.fillBranch('nLepFO',event.nLepFO_Recl  if tot_sel else 0)
+        self.out.fillBranch('nLepTight',event.nLepTight_Recl  if tot_sel else 0)
         #if tot_sel: print "finally ",tot_sel,event.event
         for lep in range(self.lepMultiplicity):
-            for var in 'pt,eta,phi,pdgId'.split(','):
+            for var in 'pt,eta,phi,pdgId,dxy,dz,sip3d,miniPFRelIso_all,pfRelIso03_all,pfRelIso04_all'.split(','):
                 self.out.fillBranch('Lep%d_%s'%(lep+1,var), getattr(leps[lep],var) if tot_sel else -999.0)
             self.out.fillBranch('Lep%d_tightId'%(lep+1), getattr(leps[lep],"isLepTight_Recl") if tot_sel else 0)
         for jet in range(self.fjetMultiplicity): 
-            for var in 'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD'.split(','): #,pNetWtagscore#,msoftdrop particleNet_mass,
-                self.out.fillBranch('Selak8Jet%d_%s'%(jet+1,var), getattr(jets[jet],var) if tot_sel else -999.0)
-            pNetWscore=0.0;pnetsf=1.0;
+            for var in self.vars: #'pt,eta,phi,mass,msoftdrop,particleNetMD_Xqq,particleNetMD_Xbb,particleNetMD_Xcc,particleNetMD_QCD,pNetWtagscore'.split(','): 
+                if "pNetWtagSF" in var or "mcTruth" in var: 
+                    continue
+                else:
+                    self.out.fillBranch('Selak8Jet%d_%s'%(jet+1,var), getattr(jets[jet],var) if tot_sel else -999.0)
+
+            pnetsf=1.0;
             if tot_sel:
-                pNetWscore=(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq'))/(getattr(jets[jet],'particleNetMD_Xcc')+getattr(jets[jet],'particleNetMD_Xqq')+getattr(jets[jet],'particleNetMD_QCD'))
-                pnetsf=self.pNetSFMD_WvsQCD(getattr(jets[jet],'pt'),event.year,event.suberaId) if not isData else 1.0
-            #print "event \t",event.event,"\t pNetWscore \t",pNetWscore
+                pnetsf=pNetSFMD_WvsQCD(getattr(jets[jet],'pt'),event.year,event.suberaId) if not isData else 1.0
+
             self.out.fillBranch('Selak8Jet%d_pNetWtagSF'%(jet+1),pnetsf)
-            self.out.fillBranch('Selak8Jet%d_pNetWtagscore'%(jet+1), pNetWscore)
-                
-        self.out.fillBranch('mWV',self.calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi) if tot_sel else -999.0)
+        for i in self.pmet_vars:
+            self.out.fillBranch('pmet_%s'%i,getattr(event,'PuppiMET_%s'%i) if tot_sel else -999.0)
+        for i in self.pmet_uncert:
+            for sh in self.shift:
+                value=-999
+                if tot_sel:
+                    value=calcmassWV(leps[0],jets[0],getattr(event,'PuppiMET_pt%s%s'%(i,sh)),getattr(event,'PuppiMET_phi%s%s'%(i,sh)),jets[0].pt) 
+                self.out.fillBranch('mWV_pmet_%s%s'%(i,sh), value)
+
+
+        if self.isMC:
+            for jec in self.jecs:
+                for sh in self.shift:
+                    if tot_sel:
+                        self.out.fillBranch('mWV_%s%s'%(jec,sh), calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi,getattr(event,"ak8sDMgt45_pt_%s%s"%(jec,sh))[0]) if tot_sel else -999.0) #"ak8%sMgt45"
+
+
+        self.out.fillBranch('mWV', calcmassWV(leps[0],jets[0],event.PuppiMET_pt,event.PuppiMET_phi,jets[0].pt) if tot_sel else -999.0) #"ak8%sMgt45"
         self.out.fillBranch('pmet',event.PuppiMET_pt if tot_sel else -999.0)
-        self.out.fillBranch('pmet_phi',event.PuppiMET_phi if tot_sel else -999.0)
+        #       self.out.fillBranch('pmet_phi',event.PuppiMET_phi if tot_sel else -999.0)
         self.out.fillBranch('trigger1e',event.Trigger_1e if tot_sel else 0)
         self.out.fillBranch('trigger1m',event.Trigger_1m if tot_sel else 0)
-        self.out.fillBranch('nBJetMedium30',event.nBJetMedium30_Recl if tot_sel else 999)
+        self.out.fillBranch('nBJetMedium30',event.nBJetMedium30_Recl if tot_sel else -999)
                 
         self.out.fillBranch('dR_fjlep',deltaR(leps[0].eta,leps[0].phi,jets[0].eta,jets[0].phi) if tot_sel else 999.0)
         self.out.fillBranch('dphi_fjlep',abs(deltaPhi(leps[0].phi,jets[0].phi)) if tot_sel else -999.0 )
@@ -200,9 +195,8 @@ class input_WJestimation(Module):
             lep1.SetPtEtaPhiM(leps[0].pt,leps[0].eta,leps[0].phi,0.); #leps[0].mass);
         lmet=pmet+lep1
         self.out.fillBranch('pTWlep',lmet.Pt() if tot_sel else -999.0 )
-        
-        hemwt=self.HEM(event.year,leps[0],jets[0],event.run,isData) if tot_sel else 0.0
-        #print hemwt,event.prescaleFromSkim,event.L1PreFiringWeight_Nom,event.puWeight
+        hemwt=HEM(event.year,leps[0],jets[0],event.run,isData) if tot_sel else 0.0
+        #print hemwt, tot_sel
         eventWt=hemwt * (event.prescaleFromSkim if isData else event.L1PreFiringWeight_Nom*event.puWeight*event.prescaleFromSkim)
         self.out.fillBranch('evt_wt',eventWt if tot_sel else 0 ) #pu*prefiring*prescale*hem
         self.out.fillBranch('hem_wt',hemwt if tot_sel else 0.0 )
@@ -221,12 +215,87 @@ class input_WJestimation(Module):
                 #print event.LHEReweightingWeight[j]
                 tmp[j]=event.LHEReweightingWeight[j]
         self.out.fillBranch('aGC_wt', tmp)
+        quarks=[];bosons=[];
+        if not isData:
+            genparts=Collection(event,"GenPart")
+            for idx, gp in enumerate(genparts):
+                if 'dauIdx' not in gp.__dict__:
+                    gp.dauIdx = []
+                if gp.genPartIdxMother >= 0:
+                    mom = genparts[gp.genPartIdxMother]
+                    if 'dauIdx' not in mom.__dict__:
+                        mom.dauIdx = [idx]
+                    else:
+                        mom.dauIdx.append(idx)
+            event.genparts = genparts
+            hadGenTops = [];             hadGenZs = [];        hadGenHs = []            #lepGenTops=[];
+            hadGenWs = [];     
+
+            def isHadronic(gp):
+                if len(gp.dauIdx) == 0:
+                    raise ValueError('Particle has no daughters!')
+                for idx in gp.dauIdx:
+                    if abs(genparts[idx].pdgId) < 6:
+                        return True
+                return False
+
+            def getFinal(gp):
+                for idx in gp.dauIdx:
+                    dau = genparts[idx]
+                    if dau.pdgId == gp.pdgId:
+                        return getFinal(dau)
+                return gp
+
+            for gp in genparts:
+                if gp.statusFlags &  ( 1 << 13) == 0: continue 
+                if abs(gp.pdgId) ==6:
+                    for idx in gp.dauIdx:
+                        dau = genparts[idx]
+                        if abs(dau.pdgId) == 24:
+                            genW = getFinal(dau)
+                            gp.genW = genW
+                            #if isHadronic(genW): hadGenTops.append(gp)
+                            #else: lepGenTops.append(gp)
+                        elif abs(dau.pdgId) in (1, 3, 5): gp.genB = dau
+                elif abs(gp.pdgId) == 24: 
+                    if isHadronic(gp):  
+                        #                        print(type(gp))
+                        hadGenWs.append(gp)
+                elif abs(gp.pdgId) == 23: 
+                    if isHadronic(gp): 
+                        hadGenZs.append(gp)
+                elif abs(gp.pdgId) == 25: 
+                    if isHadronic(gp):  
+                        hadGenHs.append(gp)
+            #print(len(hadGenZs),len(hadGenWs),len(hadGenHs))
+            for jet in range(self.fjetMultiplicity):
+                if not tot_sel: continue
+                dR=9999;pnetsf_n=1.0;
+                if len(hadGenWs) > 0:
+                    dR=deltaR(getattr(jets[jet],"eta"),getattr(jets[jet],"phi"),hadGenWs[0].eta,hadGenWs[0].phi)
+                    #print('delta R for fj',dR,getattr(jets[jet],"eta"),getattr(jets[jet],"pt"))
+                    if dR < 0.81 : 
+                        pnetsf_n=pNetSFMD_WvsQCD(getattr(jets[jet],'pt'),event.year,event.suberaId)
+                    #print( pnetsf_n)
+                self.out.fillBranch('Selak8Jet%d_pNetWtagSF_TM'%(jet+1),pnetsf_n if tot_sel  else 1.0)
+                self.out.fillBranch('Selak8Jet%d_mcTruth_W'%(jet+1),dR if tot_sel else 999)
+
+                #dR=deltaR(getattr(jets[jet],"eta"),getattr(jets[jet],"phi"),hadGenZs[0].eta,hadGenZs[0].phi)
+                #print('delta R for fj',dR,getattr(jets[jet],"eta"),getattr(jets[jet],"pt"))
+                #self.out.fillBranch('Selak8Jet%d_mcTruth_Z'%(jet+1),dR)
+                #dR=deltaR(getattr(jets[jet],"eta"),getattr(jets[jet],"phi"),hadGenTs[0].eta,hadGenTs[0].phi)
+                #print('delta R for fj',dR,getattr(jets[jet],"eta"),getattr(jets[jet],"pt"))
+                #self.out.fillBranch('Selak8Jet%d_mcTruth_T'%(jet+1),dR)
+                #
+                #dR=deltaR(getattr(jets[jet],"eta"),getattr(jets[jet],"phi"),hadGenHs[0].eta,hadGenHs[0].phi)
+                #print('delta R for fj',dR,getattr(jets[jet],"eta"),getattr(jets[jet],"pt"))
+                #self.out.fillBranch('Selak8Jet%d_mcTruth_H'%(jet+1),dR)
 
         topsf=1.0;
         if not isData:
             tops=[];
             genparticles=Collection(event,"GenPart")
-            foundt=False;foundtbar=False; tgenPt=0.0; AtopPt=0.0;
+            foundt=False;foundtbar=False; tgenPt=0.0; AtopPt=0.0; quarks=[];
             for iGen in genparticles:
                 if abs(iGen.pdgId) == 6:
                     lastcopy=ROOT.TMath.Odd(iGen.statusFlags/(1<<13))
@@ -238,7 +307,7 @@ class input_WJestimation(Module):
                 if len(tops)==2 and foundt and foundtbar:
                     topsf=(math.sqrt(math.exp(0.0615 - 0.0005 * topPt) * math.exp(0.0615 - 0.0005 * AtopPt)))
         self.out.fillBranch('Top_pTrw',topsf if tot_sel else -999.0 )    
-
+        
         return True
 
 
@@ -252,3 +321,36 @@ class input_WJestimation(Module):
 ##pu*prefiring*prescale*hemwt
 ##pnetscore*lepSF
 ##trigger SF
+
+
+
+
+#        if self.isMC:
+#            quarks=[];          bosons=[]; 
+#            for iGen in genparticles:
+#                if abs(iGen.pdgId) < 6:
+#                    lastcopy=ROOT.TMath.Odd(iGen.statusFlags/(1<<13))
+#                    if iGen.genPartIdxMother != -1 and lastcopy:
+#                        for m,iMa in enumerate(genparticles):
+#                            if m == iGen.genPartIdxMother and (abs(iMa.pdgId) in [24,23,25]): #,abs(iGen.pdgId)]):
+#                                bosons.append(iMa);quarks.append(iGen)
+#                                break;
+#                            else: continue
+#
+#
+#            foundCombo=False;                dRJ=[]
+#            if len(quarks) == 2 and  quarks[0].pdgId*quarks[1].pdgId <0 and len(bosons) > 0 :
+#            #    print('i found the combo',quarks[0].pdgId,quarks[1].pdgId)
+#                foundCombo=True
+#
+#            for i,j in enumerate(fjets):
+#                dR1=0;dR2=0;
+#                if foundCombo:
+#                    dR1=deltaR(j.eta,j.phi,quarks[0].eta,quarks[0].phi)
+#                    dR2=deltaR(j.eta,j.phi,quarks[1].eta,quarks[1].phi)
+#                    print('delta R for fj',i,' ',dR1,dR2,j.pt,j.eta,max([dR1,dR2]))
+#                dRJ.append(max([dR1,dR2]))
+#            print("this is the list",dRJ)
+#            self.out.fillBranch('ak8%sMgt45_mcTruth'%(self.massVar),dRJ)
+
+#        if self.isMC:        self.out.branch('ak8%sMgt45_mcTruth'%(self.massVar), "F", lenVar="nak8%sMgt45"%self.massVar)

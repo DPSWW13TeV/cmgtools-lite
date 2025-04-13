@@ -7,7 +7,6 @@
 
 ######## fixed inputs no matter what
 baseDir='/eos/cms/store/cmst3/group/dpsww/'
-localtest='/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/'
 ######## MVA WPs, year ans steps to run on 
 runWhat=${1}; shift;
 year=${1}; shift; 
@@ -18,8 +17,16 @@ echo $runWhat,$year,$runWhere
 
 
 ################### following should not be changed
-localTrees='local_dir_NAME/'  
-Trees='NanoTrees_v9_vvsemilep_06012023/'
+localTrees='WW_2018/'  
+Trees='NanoTrees_v9_vvsemilep_13112024_skimmed/'
+
+if [ ${runWhat} == "reclmc" ] ||  [ ${runWhat} == "recldata" ]
+then 
+    Trees='NanoTrees_v9_vvsemilep_13112024/' #06012023/'
+fi 
+
+#Trees='WW_2018/'
+
 nEvt=120000 
 Parent=${baseDir}/${Trees}/${year}
 BCORE="python prepareEventVariablesFriendTree.py -a group_u_CMST3.all -t NanoAOD ${Parent} ${Parent}/";
@@ -31,7 +38,7 @@ CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules ";
 case ${runWhere} in
 condor)
 	echo "running on condor"
-	cmd_1=" -q condor --maxruntime 280 --log $PWD/logs" #180 
+	cmd_1=" -q condor --maxruntime 480 --log $PWD/logs" #180 
 
 	;;
 *) 
@@ -40,57 +47,90 @@ condor)
 	;;
 esac
 
+
+
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --de .*Run.* " 
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --dm .*JJ.*LO.* " #--de .*Run.* "
 	;;
 
+
 recldata)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence  --dm .*Run.* "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence --dm .*Run.* "
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All  --de .*Run.* "
-
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All  --dm .*JJ.*LO.* " #--de .*Run.* "  #--dm .*SMEFT.* "
 	;;
 
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}2_recl_allvars/   ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root " #--de .*Run.*  "
+	basecmd="${BCORE}2_recl_allvars/ ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root --dm .*JJ.*LO.*  " # --de .*Run.* "
 	;;
 
-fjtagged)
+goodfj)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root --de .*Run.* "
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root " #--dm .*JJ.*LO.*  " #--de .*Run.* " 
 	;;
 
-fjtaggeddata)
-	basecmd="${BCORE}3_ak8Wtagged_sdm45to150  ${CMGT} taggedfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*Run.*"
+goodfjdata)
+	 echo "fjtagged data"
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj_data -F Friends ${Parent}/1_recl/{cname}_Friend.root  --dm .*Run.* "
 	;;
 
-wjet)		
-	basecmd="${BCORE}/0_wjest_v2  ${CMGT} input_wjest --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Wtagged_sdm45to150/{cname}_Friend.root "
+trigsf)
+	echo "el trigger sfs"
+        basecmd="${BCORE}3_eltrigsf_v1  ${CMGT} trigSFs_el -F Friends ${Parent}/1_recl/{cname}_Friend.root --dm .*JJ.*LO.*  " # --de .*Run.* "
 	;;
 
-skim_wjet)		
-	basecmd="${BCORE}/wjest_skim  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8Wtagged_sdm45to150/{cname}_Friend.root "
+wjet)
+	echo "wjet"
+	basecmd="${BCORE}/0_wjest_v8  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  -d WZToLNuJJ_01j_SMEFT_LO " #--dm .*JJ.*LO.* " #--de .*Run.* "
 	;;
 
-top)
-	echo "top pT reweighting "
-	basecmd="${BCORE}2_toppT_rw  ${CMGT} topsf   --dm TT.* "
+
+wjet_data)
+	echo "wjet data"
+	basecmd="${BCORE}/0_wjest_v8 ${CMGT} input_wjest_data  -F Friends ${Parent}/1_recl/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root   --dm .*Run.* "
 	;;
 
-npdf)
+corr)
+	echo "sm to bsm corrections"
+	basecmd="${BCORE}/0_corr_bsm  ${CMGT} correction --FMC Friends ${Parent}/0_wjest_v8/{cname}_Friend.root  --dm .*JJ.*LO.* " #--de .*Run.* "
+	;;
+
+	
+nnpdf)
 	echo "npdf"
 	basecmd="${BCORE}nnpdf_rms  ${CMGT} rms_val --de .*Run.* "
 	;;
 
+skimwjet) 
+	echo "wj skim"
+	basecmd="${BCORE}/wjest_skim  ${CMGT} wvsemilep_tree --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root "
+	;;
+
+
+top)
+	echo "top pT reweighting "
+	basecmd="${BCORE}2_toppT_rw  ${CMGT} topsf  --dm TT.* "
+	;;
+
+
+mcT)
+	echo "ak8 gen matching "
+	basecmd="${BCORE}3_ak8mcT  ${CMGT} mctruth   -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  -d TTSemi_pow_part0 -c 0 -N 2000 "
+	;;
+
+HFT)
+	echo "ak8 gen matching "
+	basecmd="${BCORE}3_HFT  ${CMGT} HFP   -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  -d TTSemi_pow_part0 -c 0 -N 2000 "
+	;;
 
 genInfo)
-	echo "genInfo ${BCORE} ${CMGT}"
+	echo "genInfo ${BCORE} ${CMGT}, this module is pretty old and no longer maintained"
 	basecmd="${BCORE}genInfo/ ${CMGT} whad_info --de .*Run.* "
 	echo $basecmd
 	;; 

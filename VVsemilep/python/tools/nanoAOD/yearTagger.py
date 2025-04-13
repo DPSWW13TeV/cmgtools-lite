@@ -13,7 +13,8 @@ class yearTagger( Module ):
         return True
     def initComponent(self, component):
         if hasattr(component, 'year'):
-            self._year = component.year
+            #self._year = component.year
+            print("this is from the year tagging module",component.year)
         elif ("Autumn18" in component.dataset) or ("UL18" in component.dataset) or ("Run2018" in component.dataset):
             self._year = 2018
         elif ("Fall17" in component.dataset) or ("UL17" in component.dataset) or ("Run2017" in component.dataset):
@@ -22,7 +23,7 @@ class yearTagger( Module ):
             self._year = 2016
         else:
             raise RuntimeError("Can't detect year scenario for %s, %s" % (component.name, component.dataset))
-
+        #print("endlich",self._year)
         if hasattr(component, 'suberaId'):
             self._suberaId = component.suberaId
         elif self._year ==2016:
@@ -32,5 +33,5 @@ class yearTagger( Module ):
                 self._suberaId=1 # post-VFP
         else:
             self._suberaId = 0 # no suberas for 2017 or 18
-
+        #print("subera",self._suberaId)
 yearTag = lambda : yearTagger()

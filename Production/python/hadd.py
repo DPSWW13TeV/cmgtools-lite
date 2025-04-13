@@ -236,6 +236,7 @@ def haddChunks(idir, removeDestDir=False, cleanUp=False, ignoreDirs=None, maxSiz
                                         ich=urlfile.read().rstrip()
                                     found=True
                         if not found: print 'missing root file in %s'%(chunk)
+                        print('checking this one',chunk)
                         tot_size+= os.path.getsize(ich.split("root://eoscms.cern.ch/")[-1])
                         if(tot_size < maxSize*(1024.**3)):
                             elements.append(chunk)

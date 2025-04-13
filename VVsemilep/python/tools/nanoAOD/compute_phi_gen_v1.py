@@ -141,7 +141,7 @@ def computephi(l1,fj,metpt,metphi,neutrino,useLHE=False):
     # print wv_sys.Pt()
     c_wlep_boson=ROOT.TLorentzVector(0.,0.,0.,0.);
     c_wlep_boson+=lep
-    c_wlep_boson += neu
+    c_wlep_boson+= neu
     #print "step 1",c_wlep_boson.Pt(),c_wlep_boson.Phi(),c_wlep_boson.X(),c_wlep_boson.Y(),c_wlep_boson.Z();
     r_uvec= wv_sys.Vect().Unit(); 
     z_uvec = c_wlep_boson.Vect().Unit();  ##direction of w_lep boson

@@ -90,6 +90,7 @@ if __name__ == "__main__":
         for D in options.friendTreesSimple + options.friendTreesMCSimple + options.friendTreesDataSimple:
             for P in options.path:
                 d = D.replace("{P}",P)
+                print("from script",d)
                 if not os.path.exists(d): continue
                 os.system("python %s --elist %s %s %s  > /dev/null" % (skimFTrees, options.elist, outdir, d))
             print("Skimmed %s" % os.path.basename(D))
