@@ -7,15 +7,15 @@ nice_names={'wjCR_incl':'\\WJ control region', 'topCR_incl' :'\\ttbar control re
 finalState=['mu','el']#,'ll_noee']
 classifier='mWV' 
 years=['2016APV','2016','2017','2018','fullRun2']
-dateStamp="2025-03-07"
+dateStamp="2025-04-10"
 info={}
-pf="_all_eft"
+pf="_all_eft_withoutTagger"
 
 txtfilename = "{od}/table.txt".format(od=os.getcwd())
 txtfile = open(txtfilename,'w')
 fmtstring = "%-25s & %15s & %15s & %15s & %15s  & %15s \\\\"
 
-for reg in ["wjCR_incl","topCR_incl","sig_incl"]: #
+for reg in ["wjCR_incl"]: #,"topCR_incl","sig_incl"]: #
     for lep in finalState:
         for yr in years:
             baseDir="/eos/user/a/anmehta/www/VVsemilep/{yr}/{reg}/{dateStamp}_boosted_{lep}_{breg}{pf}/".format(pf=pf,yr=yr,lep=lep,breg=reg,reg=reg.split("_")[0],dateStamp=dateStamp)

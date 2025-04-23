@@ -3,8 +3,8 @@ from array import array
 from glob import glob
 
 
-year=sys.argv[1]
-frnds_dir=sys.argv[2]
+year=sys.argv[2]
+frnds_dir=sys.argv[1]
 #frnds_dir="3_ak8Vtagged_sdm45"
 eospath="/eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_13112024_skimmed" #06012023" #_skimmed"
 

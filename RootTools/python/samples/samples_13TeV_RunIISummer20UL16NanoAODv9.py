@@ -186,10 +186,10 @@ WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf=kreator.makeMCComponentSimple('W
 WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600=kreator.makeMCComponentSimple('WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600',"/WWToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,2.014e+00*0.6741,prefix='root://xrootd-cms.infn.it/')
 WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800=kreator.makeMCComponentSimple('WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800',"/WWToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,3.467e-01*0.6741,prefix='root://xrootd-cms.infn.it/')
 WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf=kreator.makeMCComponentSimple('WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf',"/WWToLNujj_01j_aTGC/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_eos,3.713e-01*0.6741,prefix='root://xrootd-cms.infn.it/')
-basepath_smeft="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_smeft_FEB2025_UL_FR2/2016/"
 
-WWToLNujj_01j_SMEFT_LO=kreator.makeMCComponentSimple('WWToLNujj_01j_SMEFT_LO',"/WWToLNujj_01j_SMEFT_LO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft,91.27*0.69911,prefix='root://xrootd-cms.infn.it/')
-WZToLNujj_01j_SMEFT_LO=kreator.makeMCComponentSimple('WZToLNujj_01j_SMEFT_LO',"/WZToLNujj_01j_SMEFT_LO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft,26.49*0.6741,prefix='root://xrootd-cms.infn.it/')
+#basepath_smeft="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_smeft_FEB2025_UL_FR2/2016/"
+#WWToLNujj_01j_SMEFT_LO=kreator.makeMCComponentSimple('WWToLNujj_01j_SMEFT_LO',"/WWToLNujj_01j_SMEFT_LO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft,91.27*0.69911,prefix='root://xrootd-cms.infn.it/')
+#WZToLNujj_01j_SMEFT_LO=kreator.makeMCComponentSimple('WZToLNujj_01j_SMEFT_LO',"/WZToLNujj_01j_SMEFT_LO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft,26.49*0.6741,prefix='root://xrootd-cms.infn.it/')
 
 ##ambasepath_smeft="/eos/cms/store/cmst3/group/dpsww/SMEFT_samples/2016/"
 ##amWmZToLmNujj_SMEFT_LO=kreator.makeMCComponentSimple('WmZToLmNujj_SMEFT_LO',"/WmZToLmNujj_SMEFT_LO/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_smeft,3.10204*0.69911,prefix='root://xrootd-cms.infn.it/')
@@ -207,10 +207,15 @@ WWToLNuJJ_01j_SMEFT_LO=kreator.makeMCComponentSimple('WWToLNuJJ_01j_SMEFT_LO',"/
 WZToLNuJJ_01j_SMEFT_LO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_SMEFT_LO',"/WZToLNuJJ_01j_SMEFT_LO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,23.82,prefix='root://xrootd-cms.infn.it/')
 WWToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO',"/WWToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,59.16,prefix='root://xrootd-cms.infn.it/')
 WZToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO',"/WZToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,10.5,prefix='root://xrootd-cms.infn.it/')
+#WWToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WWToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WWToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,86.33,prefix='root://xrootd-cms.infn.it/')
+#WZToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WZToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WZToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,20.25,prefix='root://xrootd-cms.infn.it/')
 
 
 
-DiBosons = [ZZTo2Q2L,WZTo1L1Nu2Q,WWTo1L1Nu2Q,WWToLNujj_01j_SMEFT_LO,WZToLNujj_01j_SMEFT_LO, WWToLNuJJ_01j_SMEFT_LO,WZToLNuJJ_01j_SMEFT_LO,WWToLNuJJ_01j_LO_EWdim6NLO,WZToLNuJJ_01j_LO_EWdim6NLO,
+DiBosons = [ZZTo2Q2L,WZTo1L1Nu2Q,WWTo1L1Nu2Q,
+            #WWToLNujj_01j_SMEFT_LO,WZToLNujj_01j_SMEFT_LO, 
+#           WWToLNuJJ_01j_SMEFT_LO_noEFTDecay,WZToLNuJJ_01j_SMEFT_LO_noEFTDecay,
+            WWToLNuJJ_01j_SMEFT_LO,WZToLNuJJ_01j_SMEFT_LO,WWToLNuJJ_01j_LO_EWdim6NLO,WZToLNuJJ_01j_LO_EWdim6NLO,
             WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
             WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
             WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800,

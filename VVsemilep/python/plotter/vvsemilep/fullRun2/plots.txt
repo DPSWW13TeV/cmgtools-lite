@@ -47,7 +47,7 @@ FatJet1_phi          	  : Selak8Jet1_phi  : 24,-3.2,3.2; XTitle="#phi^{jet}", In
 FatJet1_sDrop_mass        : Selak8Jet1_msoftdrop        : 21,45,255; XTitle="m_{SD}^{jet} (GeV)", MoreY=2.0, IncludeOverflows=False
 FatJet1_sDrop_mass_logy   : Selak8Jet1_msoftdrop        : 21,45,255; XTitle="m_{SD}^{jet} (GeV)", Logy, IncludeOverflows=False
 
-FatJet1_sDrop_mass_SR        : Selak8Jet1_msoftdrop        : 6,55,115; XTitle="m_{SD}^{jet} (GeV)", MoreY=2.0, IncludeOverflows=False
+FatJet1_sDrop_mass_SR        : Selak8Jet1_msoftdrop        : 6,55,115; XTitle="m_{SD}^{jet} (GeV)", MoreY=1.25,IncludeOverflows=False
 FatJet1_sDrop_mass_SR_logy   : Selak8Jet1_msoftdrop        : 6,55,115; XTitle="m_{SD}^{jet} (GeV)", Logy, IncludeOverflows=False
 
 

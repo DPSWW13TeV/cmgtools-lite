@@ -5,8 +5,8 @@
 #WW_smeft :   WWToLNuJJ_01j_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kBlue+2,    Label="WW-smeft" 
 #WZ_smeft :   WZToLNuJJ_01j_SMEFT_LO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kGreen+2,   Label="WZ-smeft"
 
-SM_WZ : WZTo1L1Nu2Q : 11.46*1.11 : 1 ; FillColor=ROOT.TColor.GetColor("\#e42536"),  Label="SM-WZ",LineStyle=ROOT.kDotted
-SM_WW : WWTo1L1Nu2Q : xsec*1.12 : 1 ;  FillColor=ROOT.TColor.GetColor("\#ffa90e"),  Label="SM-WW",LineStyle=ROOT.kDotted
+SM_WZ : WZTo1L1Nu2Q : 11.46*1.11 : 1 ; FillColor=46,  Label="SM WZ at NLO ",LineStyle=ROOT.kDotted
+SM_WW : WWTo1L1Nu2Q : xsec*1.12 : 1 ;  FillColor=30,  Label="SM WW at NLO",LineStyle=ROOT.kDotted
 
 #WZ : WZTo1L1Nu2Q : 11.46*1.11 : 1 ; FillColor=46,  Label="SM-WZ",LineStyle=ROOT.kDotted
 #WW : WWTo1L1Nu2Q : xsec*1.12 : 1 ;  FillColor=30,  Label="SM-WW",LineStyle=ROOT.kDotted
