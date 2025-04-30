@@ -341,8 +341,8 @@ WZToLNuJJ_01j_SMEFT_LO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_SMEFT_LO',"/
 WWToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO',"/WWToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,59.16,prefix='root://xrootd-cms.infn.it/')
 WZToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO',"/WZToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,10.5,prefix='root://xrootd-cms.infn.it/')
 
-#WWToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WWToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WWToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,86.33,prefix='root://xrootd-cms.infn.it/')
-#WZToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WZToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WZToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,20.25,prefix='root://xrootd-cms.infn.it/')
+WWToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WWToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WWToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,86.33,prefix='root://xrootd-cms.infn.it/')
+WZToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WZToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WZToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL18NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,20.25,prefix='root://xrootd-cms.infn.it/')
 
 
 
@@ -350,9 +350,9 @@ WZToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim
 
 
 DiBosons = [WWToLNuJJ_01j_SMEFT_LO,WZToLNuJJ_01j_SMEFT_LO,
-    WWToLNuJJ_01j_LO_EWdim6NLO,WZToLNuJJ_01j_LO_EWdim6NLO,
-    #WZToLNujj_01j_SMEFT_LO,WWToLNujj_01j_SMEFT_LO, 
-            #           WWToLNuJJ_01j_SMEFT_LO_noEFTDecay,WZToLNuJJ_01j_SMEFT_LO_noEFTDecay,
+            WWToLNuJJ_01j_LO_EWdim6NLO,WZToLNuJJ_01j_LO_EWdim6NLO,
+            #            WZToLNujj_01j_SMEFT_LO,WWToLNujj_01j_SMEFT_LO, 
+            WWToLNuJJ_01j_SMEFT_LO_noEFTDecay,WZToLNuJJ_01j_SMEFT_LO_noEFTDecay,
     GluGluToContinToZZTo4e      ,
     GluGluToContinToZZTo4mu     ,
     GluGluToContinToZZTo4tau    ,

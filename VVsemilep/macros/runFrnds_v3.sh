@@ -52,7 +52,7 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --de .*Run.* " 
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --dm  .*SMEFT_LO_noEFTDecay.*" #--de .*Run.* " 
 	#--de .*Run.* "
 	;;
 

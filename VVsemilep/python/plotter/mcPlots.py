@@ -933,7 +933,9 @@ class PlotMaker:
                     if p2: p2.SetLogx(True)
                     total.GetXaxis().SetNoExponent(True)
                     total.GetXaxis().SetMoreLogLabels(True)
-                if islog: total.SetMaximum(5*total.GetMaximum())
+                if islog: 
+                    total.SetMaximum(5*total.GetMaximum())
+                    total.SetMinimum(0.1)###LOGS
                 if not islog: total.SetMinimum(0)
                 total.Draw("HIST")
                 if plotmode == "stack":

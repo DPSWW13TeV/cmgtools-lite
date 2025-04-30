@@ -1,3 +1,7 @@
+WZToLNuJJ_01j_SMEFT_LO_noEFTDecay              :WZToLNuJJ_01j_SMEFT_LO_noEFTDecay               : xsec 
+WWToLNuJJ_01j_SMEFT_LO_noEFTDecay              :WWToLNuJJ_01j_SMEFT_LO_noEFTDecay               : xsec
+
+
 WZToLNuJJ_01j_SMEFT_LO              :WZToLNuJJ_01j_SMEFT_LO               : xsec 
 WWToLNuJJ_01j_SMEFT_LO              :WWToLNuJJ_01j_SMEFT_LO               : xsec
 WWToLNuJJ_01j_LO_EWdim6NLO          :WWToLNuJJ_01j_LO_EWdim6NLO           : xsec 

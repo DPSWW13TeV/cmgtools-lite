@@ -7,10 +7,10 @@ nice_names={'wjCR_incl':'\\WJ control region', 'topCR_incl' :'\\ttbar control re
 finalState=['mu','el']#,'ll_noee']
 classifier='mWV' 
 years=['2016APV','2016','2017','2018','fullRun2']
-dateStamp="2025-04-10"
+dateStamp="2025-04-24"
 info={}
 pf="_all_eft_withoutTagger"
-
+#pf="_all_smeft"
 txtfilename = "{od}/table.txt".format(od=os.getcwd())
 txtfile = open(txtfilename,'w')
 fmtstring = "%-25s & %15s & %15s & %15s & %15s  & %15s \\\\"

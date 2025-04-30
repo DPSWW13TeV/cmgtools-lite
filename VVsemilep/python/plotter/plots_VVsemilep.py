@@ -431,14 +431,16 @@ def makesimpleplots(year,sel,proc,smeft,sanitychk=True):
     #procs=['WW_sm','WZ_sm','SM_WW','SM_WZ']
     procs=[];    Mprocs=[]; addNterms=''
     if sanitychk:
-        procs.append(proc+'_sm')
-        procs.append('SM_'+proc)
+        #procs.append(proc+'_sm')
+        #procs.append('SM_'+proc)
+        procs=['WW_sm','WZ_sm','SM_WW','SM_WZ','WW_eft_sm','WZ_eft_sm']
     else:
         procs.append(proc+'_sm')
         terms=['_sm_lin_quad_']
         for op in  WCs:
             Mprocs+=[proc + s + op for s in terms  ] 
         addNterms=','.join(x for x in Mprocs)
+
     print(Mprocs)
     processes= procs+Mprocs 
     disable   = [];    invert    = [];    fittodata = [];    scalethem = {}
@@ -456,7 +458,7 @@ def makesimpleplots(year,sel,proc,smeft,sanitychk=True):
     legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.62  --legendColumns 2 '
     #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
     if sanitychk:
-        anything = '  --showMCError --plotmode norm --showRatio --ratioDen SM_%s --ratioNums %s_sm  --ratioYLabel=aTGC#rightarrowSM/SM '%(proc,proc) 
+        anything = '  --showMCError --plotmode nostack ' #--showRatio --ratioDen SM_%s --ratioNums %s_sm  --ratioYLabel=aTGC#rightarrowSM/SM '%(proc,proc) 
     else:
         anything = '  --showMCError --plotmode norm --showRatio --ratioNums %s --ratioDen %s_sm  --ratioYLabel=BSM/SM '%(addNterms,proc)
     extraopts = ratio + spam + legends + anything
@@ -465,9 +467,9 @@ def makesimpleplots(year,sel,proc,smeft,sanitychk=True):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-def makesimpleplots_perWC(year,sel,proc,smeft):
+def makesimpleplots_perWC(year,sel,proc,smeft,pm):
     trees       = [baseDir+'{here}'.format(here=year  if year not in ['all','fullRun2']  else '')]
-    targetdir   = os.path.join(eos,'{yr}/{sel}/{date}_{proc}_{smeft}/'.format(smeft='smeft' if smeft else 'eft' ,proc=proc,sel=sel[0].split('_')[0],yr=year,date=date ))
+    targetdir   = os.path.join(eos,'{yr}/{sel}/{date}_{proc}_{smeft}_{pm}/'.format(smeft='smeft' if smeft else 'eft' ,proc=proc,sel=sel[0].split('_')[0],yr=year,date=date,pm=pm ))
     fmca        = 'vvsemilep/fullRun2/mca-vvsemilep_{smeft}.txt'.format(smeft='smeft' if smeft else 'eft') 
     fsyst       = '' #vvsemilep/fullRun2/systsUnc.txt'
     fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #dressed.txt' #wjet.txt' #_dressed.txt'
@@ -483,7 +485,7 @@ def makesimpleplots_perWC(year,sel,proc,smeft):
 
     #procs.append('SM_'+proc)
     #terms=['_sm_lin_quad_'] 
-    terms=['_lin_','_quad_']
+    terms=['_quad_','_sm_lin_quad_']#'_lin_',
     #processes=['WW_sm','WZ_sm']
 
     for op in  WCs:
@@ -505,7 +507,7 @@ def makesimpleplots_perWC(year,sel,proc,smeft):
         legends = ' --legendFontSize 0.024 --legendBorder 0 --legendWidth  0.62  --legendColumns 3 '
         #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'
         addNterms=','.join(x for x in processes if '_sm' not in x)
-        anything = '   --plotmode nostack ' #--showMCError --showRatio --ratioNums %s --ratioDen %s_sm   --ratioYLabel=BSM/SM '%(addNterms,proc) # --plotmode norm 
+        anything = '   --plotmode %s ' %pm #--showMCError --showRatio --ratioNums %s --ratioDen %s_sm   --ratioYLabel=BSM/SM '%(addNterms,proc) # --plotmode norm 
         extraopts = ratio + spam + legends + anything
         makeplots  = ['{}'.format(a)  for a in plotvars]
         runPlots(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, fplots, enable, disable, processes, scalethem, fittodata,makeplots,showratio, applylepSFs, year, nLep,extraopts,invert,cutFlow,bareNano,doWJtypeplots) 
@@ -583,10 +585,11 @@ if __name__ == '__main__':
     parser.add_option('--WC',dest='WC', type='string' , default=[], action="append", help='consider terms in EFT Lag. corresponding to this aTGC operator tunred on c3w/cb/cw (for now relevant to make datacards)')
 
     parser.add_option('--proc',dest='proc', type='string' , default='WW',  help='SM process')
+    parser.add_option('--pm',dest='pm', type='string' , default='norm',  help='norm or nostack')
     parser.add_option('--pD',dest='plotsDir', type='string', default="/eos/user/%s/%s/www/VVsemilep/"%(os.environ['USER'][0],os.environ['USER']),help='save plots here')
     parser.add_option('--nT',dest='notagger', action='store_true', default=False , help='flag to turn off tagger requirement')
     parser.add_option('--pWC',dest='perWC', action='store_true', default=False , help='flag to turn on plots per eft op')
-
+    
 
     (opts, args) = parser.parse_args()
 
@@ -605,7 +608,7 @@ if __name__ == '__main__':
         alphaRatio(opts.year,opts.lepflav,opts.plotvar)
     if opts.simple:
         if opts.perWC:
-            makesimpleplots_perWC(opts.year,opts.sel,opts.proc,opts.smeft)
+            makesimpleplots_perWC(opts.year,opts.sel,opts.proc,opts.smeft,opts.pm)
         else:
             makesimpleplots(opts.year,opts.sel,opts.proc,opts.smeft,opts.sanitychk)
         

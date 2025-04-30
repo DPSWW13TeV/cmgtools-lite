@@ -6,7 +6,6 @@ import sys, os
 dirname=sys.argv[1]
 proc=sys.argv[2]
 basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2//%s/%s'%(dirname,proc) #
-#basepath_private='/eos/user/r/rasharma/post_doc_ihep/aTGC/SMEFT_samples//%s/%s'%(dirname,proc)
 #basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/Combined_Mar2025/%s/%s'%(dirname,proc) #/Mar2025UL_FR2//%s/%s'%(dirname,proc) 
 files =   [os.path.join(basepath_private,x) for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x)) ] 
 
@@ -14,7 +13,7 @@ ref=ROOT.TFile.Open(files[0])
 faultyfiles=[]
 def checkfaulty(fname):
     probe=ROOT.TFile.Open(fname)
-    #print(fname)
+    print(fname)
     for e in ref.GetListOfKeys():
         name = e.GetName()
         #print("checking" + str(name))
