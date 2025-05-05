@@ -238,9 +238,15 @@ WZToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim
 WWToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WWToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WWToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,86.33,prefix='root://xrootd-cms.infn.it/')
 WZToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WZToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WZToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,20.25,prefix='root://xrootd-cms.infn.it/')
 
+#WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000    =kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000',  "/WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft,59.0164,prefix='root://xrootd-cms.infn.it/') 
+#WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000    =kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000',  "/WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft,10.5000,prefix='root://xrootd-cms.infn.it/')
+#WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf  =kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf',"/WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft,0.03461,prefix='root://xrootd-cms.infn.it/') 
+#WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf  =kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf',"/WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft,0.01568,prefix='root://xrootd-cms.infn.it/') 
 
-DiBosons = [ZZTo2Q2L,WZTo1L1Nu2Q,WWTo1L1Nu2Q,ZH,WminusH,WplusH,VHToNonbb,
+
+DiBosons = [ZZTo2Q2L,WZTo1L1Nu2Q,WWTo1L1Nu2Q,ZH,WminusH,WplusH,VHToNonbb, 
             #WZToLNujj_01j_SMEFT_LO,WWToLNujj_01j_SMEFT_LO,  
+            #WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000,WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000,WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf,WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf,
             WWToLNuJJ_01j_SMEFT_LO_noEFTDecay,WZToLNuJJ_01j_SMEFT_LO_noEFTDecay,
             WWToLNuJJ_01j_SMEFT_LO,
             WZToLNuJJ_01j_SMEFT_LO,

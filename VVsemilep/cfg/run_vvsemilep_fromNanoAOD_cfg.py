@@ -76,7 +76,7 @@ if analysis == "main":
         #"W.*Jtotaunu_PM","W.*Jtomunu_PM" #,"WJetsToLNu_Pt.*","WJetsToLNu_.*J",
        # "WZToLNuJJ_01j_SMEFT_LO","WWToLNuJJ_01j_SMEFT_LO",
         #".*EWdim6NLO",
-        ".*noEFTDecay"
+        ".*noEFTDecay",".*EWdim6NLO_HT.*"
         #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf","WWTo1L1Nu2Q"
 
      ])
