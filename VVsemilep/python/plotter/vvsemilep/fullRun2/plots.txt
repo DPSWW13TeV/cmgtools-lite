@@ -23,7 +23,7 @@ mWV_fine_logy             : mWV : [950,1000,1058,1118,1181,1246,1313,1383,1455,1
 mWV_fitCR		  : mWV	: 18,950,4550  ; XTitle="mWV"
 FatJet1_pt                : Selak8Jet1_pt  : [200,300,400,500,600,700,800,900,1000,2000]; XTitle="p_{T}^{jet} (GeV)",MoreY=2,MaxDigi #, IncludeOverflows=False
 FatJet1_pt_fine           : Selak8Jet1_pt  : [200,300,400,500,550,600,650,700,750,800,850,900,1000,1500,2000]; XTitle="p_{T}^{jet} (GeV)",MoreY=1.2,MaxDigi #, IncludeOverflows=False
-FatJet1_pt_logy           : Selak8Jet1_pt  : [200,300,400,500,600,700,800,900,1000,2000]; XTitle="p_{T}^{jet} (GeV)", Logy, MoreY=10 ,MaxDigi, IncludeOverflows=False
+FatJet1_pt_logy           : Selak8Jet1_pt  : [200,300,400,500,600,700,800,900,1000,2000]; XTitle="p_{T}^{jet} (GeV)", Logy, MoreY=3 ,MaxDigi, IncludeOverflows=False
 
 Jet1_pt_logy                   : JetSel1_pt  : 49,20,1000 ; XTitle="p_{T}^{ak4jet} (GeV)",Logy, IncludeOverflows=True
 Jet1_phi_logy                  : JetSel1_phi  : 8,-3.2,3.2 ; XTitle="#phi^{ak4jet} (GeV)",Logy
@@ -47,7 +47,7 @@ FatJet1_phi          	  : Selak8Jet1_phi  : 24,-3.2,3.2; XTitle="#phi^{jet}", In
 FatJet1_sDrop_mass        : Selak8Jet1_msoftdrop        : 21,45,255; XTitle="m_{SD}^{jet} (GeV)", MoreY=2.0, IncludeOverflows=False
 FatJet1_sDrop_mass_logy   : Selak8Jet1_msoftdrop        : 21,45,255; XTitle="m_{SD}^{jet} (GeV)", Logy, IncludeOverflows=False
 
-FatJet1_sDrop_mass_SR        : Selak8Jet1_msoftdrop        : 6,55,115; XTitle="m_{SD}^{jet} (GeV)", MoreY=2.0, IncludeOverflows=False
+FatJet1_sDrop_mass_SR        : Selak8Jet1_msoftdrop        : 6,55,115; XTitle="m_{SD}^{jet} (GeV)", MoreY=1.25,IncludeOverflows=False
 FatJet1_sDrop_mass_SR_logy   : Selak8Jet1_msoftdrop        : 6,55,115; XTitle="m_{SD}^{jet} (GeV)", Logy, IncludeOverflows=False
 
 

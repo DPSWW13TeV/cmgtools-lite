@@ -1,3 +1,11 @@
+WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000          :  WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000          :        xsec      
+WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000          :  WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000          :        xsec      
+WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf        :  WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf        :        xsec      
+WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf        :  WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf        :        xsec      
+
+
+WZToLNuJJ_01j_SMEFT_LO_noEFTDecay              :WZToLNuJJ_01j_SMEFT_LO_noEFTDecay               : xsec 
+WWToLNuJJ_01j_SMEFT_LO_noEFTDecay              :WWToLNuJJ_01j_SMEFT_LO_noEFTDecay               : xsec
 WZToLNuJJ_01j_SMEFT_LO              :WZToLNuJJ_01j_SMEFT_LO               : xsec 
 WWToLNuJJ_01j_SMEFT_LO              :WWToLNuJJ_01j_SMEFT_LO               : xsec
 WWToLNuJJ_01j_LO_EWdim6NLO          :WWToLNuJJ_01j_LO_EWdim6NLO           : xsec 

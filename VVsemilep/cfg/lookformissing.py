@@ -8,6 +8,7 @@ for i in os.listdir(idir):
     if os.path.isfile(os.path.join(idir,i)) : continue
     for j in os.listdir(os.path.join(idir,i)):
         if 'url' in j:
+            print(j)
             found=True
             break
     if  not found:

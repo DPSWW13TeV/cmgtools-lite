@@ -34,6 +34,7 @@ TBCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ";
 CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules ";
 
 
+
 ###################################################
 case ${runWhere} in
 condor)
@@ -52,27 +53,26 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --dm .*JJ.*LO.* " #--de .*Run.* "
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -d WZToLNuJJ_01j_SMEFT_LO_noEFTDecay -d WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf -d WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000 -d WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000 -d WWToLNuJJ_01j_SMEFT_LO_noEFTDecay -d WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf " #--de .*Run.* " 
+	#--de .*Run.* "
 	;;
-
 
 recldata)
 	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_data,triggerSequence --dm .*Run.* "
 	;;
 
 jme)
-	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All  --dm .*JJ.*LO.* " #--de .*Run.* "  #--dm .*SMEFT.* "
+	basecmd="${BCORE}2_jmeUnc/ ${CMGT} fatjetmetUncertainties${year}All,jetmetUncertainties${year}All   --dm .*JJ_01j_SMEFT_LO.*  "  # --de .*Run.* "
 	;;
-
 
 recl_allvars)
 	echo 'i assume you have already got jme frnds'
-	basecmd="${BCORE}2_recl_allvars/ ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root --dm .*JJ.*LO.*  " # --de .*Run.* "
+	basecmd="${BCORE}2_recl_allvars/ ${CMGT} recleaner_step1,recleaner_step2_mc_allvariations,mcMatch_seq,triggerSequence -F Friends ${Parent}/2_jmeUnc/{cname}_Friend.root   --dm .*JJ.*LO.*  " #--de .*Run.* "
 	;;
 
 goodfj)
 	echo "fjtagged + vars"
-	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root " #--dm .*JJ.*LO.*  " #--de .*Run.* " 
+	basecmd="${BCORE}3_ak8_sdm45  ${CMGT} goodfj -F Friends ${Parent}/2_recl_allvars/{cname}_Friend.root  --dm .*JJ.*LO.*  " #--de .*Run.* " 
 	;;
 
 goodfjdata)
@@ -87,7 +87,7 @@ trigsf)
 
 wjet)
 	echo "wjet"
-	basecmd="${BCORE}/0_wjest_v8  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  -d WZToLNuJJ_01j_SMEFT_LO " #--dm .*JJ.*LO.* " #--de .*Run.* "
+	basecmd="${BCORE}/0_wjest_v8  ${CMGT} input_wjest_mc --FMC Friends ${Parent}/4_scalefactors/{cname}_Friend.root -F Friends ${Parent}/1_recl/{cname}_Friend.root --FMC Friends  ${Parent}/2_recl_allvars/{cname}_Friend.root  -F Friends ${Parent}/3_ak8_sdm45/{cname}_Friend.root  --dm .*JJ.*LO.* " #--de .*Run.* "
 	;;
 
 

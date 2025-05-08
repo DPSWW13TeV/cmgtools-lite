@@ -17,11 +17,11 @@ WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf=kreator.makeMCComponentSimple('W
 WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600=kreator.makeMCComponentSimple('WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600',"/WWToLNujj_01j_aTGC/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_eos,2.014e+00*0.6741,prefix='root://xrootd-cms.infn.it/')
 WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800=kreator.makeMCComponentSimple('WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800',"/WWToLNujj_01j_aTGC/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_eos,3.467e-01*0.6741,prefix='root://xrootd-cms.infn.it/')
 WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf=kreator.makeMCComponentSimple('WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_800toInf',"/WWToLNujj_01j_aTGC/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_eos,3.713e-01*0.6741,prefix='root://xrootd-cms.infn.it/')
-basepath_smeft="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_smeft_FEB2025_UL_FR2/2016preVFP/"
+#basepath_smeft="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_smeft_FEB2025_UL_FR2/2016preVFP/"
 ##ambasepath_smeft="/eos/cms/store/cmst3/group/dpsww/SMEFT_samples/2016/"
 
-WWToLNujj_01j_SMEFT_LO=kreator.makeMCComponentSimple('WWToLNujj_01j_SMEFT_LO',"/WWToLNujj_01j_SMEFT_LO/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft,91.27*0.69911,prefix='root://xrootd-cms.infn.it/')
-WZToLNujj_01j_SMEFT_LO=kreator.makeMCComponentSimple('WZToLNujj_01j_SMEFT_LO',"/WZToLNujj_01j_SMEFT_LO/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft,26.49*0.6741,prefix='root://xrootd-cms.infn.it/')
+#WWToLNujj_01j_SMEFT_LO=kreator.makeMCComponentSimple('WWToLNujj_01j_SMEFT_LO',"/WWToLNujj_01j_SMEFT_LO/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft,91.27*0.69911,prefix='root://xrootd-cms.infn.it/')
+#WZToLNujj_01j_SMEFT_LO=kreator.makeMCComponentSimple('WZToLNujj_01j_SMEFT_LO',"/WZToLNujj_01j_SMEFT_LO/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft,26.49*0.6741,prefix='root://xrootd-cms.infn.it/')
 
 ##amWmZToLmNujj_SMEFT_LO=kreator.makeMCComponentSimple('WmZToLmNujj_SMEFT_LO',"/WmZToLmNujj_SMEFT_LO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft,3.10204*0.69911,prefix='root://xrootd-cms.infn.it/')
 ##amWpZToLpNujj_SMEFT_LO=kreator.makeMCComponentSimple('WpZToLpNujj_SMEFT_LO',"/WpZToLpNujj_SMEFT_LO/RunIISummer20UL16NanoAODv9-Dummy/NANOAODSIM",basepath_smeft,4.91575*0.69911,prefix='root://xrootd-cms.infn.it/')
@@ -34,6 +34,12 @@ WZToLNuJJ_01j_SMEFT_LO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_SMEFT_LO',"/
 
 WWToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO',"/WWToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,59.16,prefix='root://xrootd-cms.infn.it/')
 WZToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO',"/WZToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,10.5,prefix='root://xrootd-cms.infn.it/')
+WWToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WWToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WWToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,86.33,prefix='root://xrootd-cms.infn.it/')
+WZToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WZToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WZToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,20.25,prefix='root://xrootd-cms.infn.it/')
+WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000    =kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000',  "/WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,59.0164,prefix='root://xrootd-cms.infn.it/') 
+WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000    =kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000',  "/WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,10.5000,prefix='root://xrootd-cms.infn.it/')
+WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf  =kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf',"/WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,0.03461,prefix='root://xrootd-cms.infn.it/') 
+WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf  =kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf',"/WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf/RunIISummer20UL16APVNanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,0.01568,prefix='root://xrootd-cms.infn.it/') 
 
 
 
@@ -41,10 +47,13 @@ ZZTo2Q2L              = kreator.makeMCComponent("ZZTo2Q2L", "/ZZTo2Q2L_mllmin4p0
 WZTo1L1Nu2Q           = kreator.makeMCComponent("WZTo1L1Nu2Q","/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM", "CMS", ".*root", 9.370, fracNegWeights=2.049e-01)
 WWTo1L1Nu2Q           = kreator.makeMCComponent("WWTo1L1Nu2Q","/WWTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM", "CMS", ".*root",5.090e+01,fracNegWeights=2.011e-01)
 
-DiBosons = [WWToLNuJJ_01j_SMEFT_LO,WZToLNuJJ_01j_SMEFT_LO,
+
+DiBosons = [WWToLNuJJ_01j_SMEFT_LO,WZToLNuJJ_01j_SMEFT_LO, 
+            WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000,WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000,WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf,WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf,
             WWToLNuJJ_01j_LO_EWdim6NLO,WZToLNuJJ_01j_LO_EWdim6NLO,
-            WWToLNujj_01j_SMEFT_LO,
-            WZToLNujj_01j_SMEFT_LO,
+            #            WWToLNujj_01j_SMEFT_LO,
+            #           WZToLNujj_01j_SMEFT_LO,
+            WWToLNuJJ_01j_SMEFT_LO_noEFTDecay,WZToLNuJJ_01j_SMEFT_LO_noEFTDecay,
             ZZTo2Q2L,
             WZTo1L1Nu2Q,
             WWTo1L1Nu2Q,

@@ -5,7 +5,8 @@ import sys, os
 
 dirname=sys.argv[1]
 proc=sys.argv[2]
-basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/Combined_Mar2025/%s/%s'%(dirname,proc) #/Mar2025UL_FR2//%s/%s'%(dirname,proc) 
+basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2//%s/%s'%(dirname,proc) #
+#basepath_private='/eos/cms/store/group/phys_smp/ec/anmehta/Combined_Mar2025/%s/%s'%(dirname,proc) #/Mar2025UL_FR2//%s/%s'%(dirname,proc) 
 files =   [os.path.join(basepath_private,x) for x in os.listdir(basepath_private) if os.path.isfile(os.path.join(basepath_private, x)) ] 
 
 ref=ROOT.TFile.Open(files[0])

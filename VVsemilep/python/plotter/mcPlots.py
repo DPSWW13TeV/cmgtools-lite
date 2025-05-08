@@ -876,7 +876,8 @@ class PlotMaker:
 
 
                 stack.Draw("GOFF")
-                ytitle = "Events" if not self._options.printBinning else "Events / %s" %(self._options.printBinning)
+                ytitle1 = "Events" if not self._options.printBinning else "Events / %s" %(self._options.printBinning)
+                ytitle = "Events/bin" if pspec.getOption('Density',False) else ytitle1
                 total.GetXaxis().SetTitleFont(42)
                 total.GetXaxis().SetTitleSize(0.045)
                 total.GetXaxis().SetTitleOffset(1.1)
@@ -932,7 +933,9 @@ class PlotMaker:
                     if p2: p2.SetLogx(True)
                     total.GetXaxis().SetNoExponent(True)
                     total.GetXaxis().SetMoreLogLabels(True)
-                if islog: total.SetMaximum(5*total.GetMaximum())
+                if islog: 
+                    total.SetMaximum(5*total.GetMaximum())
+                    total.SetMinimum(0.1)###LOGS
                 if not islog: total.SetMinimum(0)
                 total.Draw("HIST")
                 if plotmode == "stack":
@@ -943,7 +946,7 @@ class PlotMaker:
                         ROOT.gStyle.SetErrorX(0.5)
                         stack.Draw("SAME E NOSTACK")
                     else:
-                        stack.Draw("SAME HIST NOSTACK")
+                        stack.Draw("SAME E HIST NOSTACK") ###errore
                 if pspec.getOption('MoreY',1.0) > 1.0:
                     total.SetMaximum(pspec.getOption('MoreY',1.0)*total.GetMaximum())
                 totalError=None
