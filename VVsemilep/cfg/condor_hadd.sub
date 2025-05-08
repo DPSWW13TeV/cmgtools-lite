@@ -5,23 +5,23 @@ Output     = logs/log_$(Cluster)_$(ProcId).out
 Error      = logs/log_$(Cluster)_$(ProcId).error
 +JobFlavour = "workday"
 +AccountingGroup = "group_u_CMST3.all"
-#queue 
-arguments  = $(info) 
-getenv = True
-MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"
-queue info from ( 
-/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2016 WWToLNuJJ_01j_SMEFT_LO_noEFTDecay
-#/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2018 WWToLNuJJ_01j_LO_EWdim6NLO
-#/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2018 WZToLNuJJ_01j_LO_EWdim6NLO
-#/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2018 WWToLNuJJ_01j_SMEFT_LO_noEFTDecay
-#/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2018 WZToLNuJJ_01j_SMEFT_LO_noEFTDecay
-#/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2017 WWToLNuJJ_01j_SMEFT_LO_noEFTDecay
-#/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2017 WZToLNuJJ_01j_SMEFT_LO_noEFTDecay
+queue 
+#arguments  = $(info) 
+#getenv = True
+#MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"
+#queue info from ( 
 #/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2016 WWToLNuJJ_01j_SMEFT_LO_noEFTDecay
-#/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2016 WZToLNuJJ_01j_SMEFT_LO_noEFTDecay
-#/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2016preVFP WWToLNuJJ_01j_SMEFT_LO_noEFTDecay
-#/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2016preVFP WZToLNuJJ_01j_SMEFT_LO_noEFTDecay
-)
+##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2018 WWToLNuJJ_01j_LO_EWdim6NLO
+##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2018 WZToLNuJJ_01j_LO_EWdim6NLO
+##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2018 WWToLNuJJ_01j_SMEFT_LO_noEFTDecay
+##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2018 WZToLNuJJ_01j_SMEFT_LO_noEFTDecay
+##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2017 WWToLNuJJ_01j_SMEFT_LO_noEFTDecay
+##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2017 WZToLNuJJ_01j_SMEFT_LO_noEFTDecay
+##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2016 WWToLNuJJ_01j_SMEFT_LO_noEFTDecay
+##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2016 WZToLNuJJ_01j_SMEFT_LO_noEFTDecay
+##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2016preVFP WWToLNuJJ_01j_SMEFT_LO_noEFTDecay
+##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2016preVFP WZToLNuJJ_01j_SMEFT_LO_noEFTDecay
+#)
 ##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2017 WZToLNujj_01j_SMEFT_LO 
 ##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2017 WWToLNujj_01j_SMEFT_LO 
 ##/afs/cern.ch/work/a/anmehta/public/cmgtools_WVsemilep/CMSSW_10_6_29/src/CMGTools/VVsemilep/cfg/ 2017 WZToLNuJJ_01j_LO_EWdim6NLO

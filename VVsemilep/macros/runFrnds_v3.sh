@@ -34,6 +34,7 @@ TBCORE="python prepareEventVariablesFriendTree.py -t NanoAOD ${Parent} ";
 CMGT="  -I CMGTools.VVsemilep.tools.nanoAOD.vvsemilep_modules ";
 
 
+
 ###################################################
 case ${runWhere} in
 condor)
@@ -52,7 +53,7 @@ esac
 case ${runWhat} in
 
 reclmc)
-	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence --dm  .*SMEFT_LO_noEFTDecay.*" #--de .*Run.* " 
+	basecmd="${BCORE}1_recl/  ${CMGT} recleaner_step1,recleaner_step2_mc,mcMatch_seq,triggerSequence -d WZToLNuJJ_01j_SMEFT_LO_noEFTDecay -d WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf -d WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000 -d WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000 -d WWToLNuJJ_01j_SMEFT_LO_noEFTDecay -d WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf " #--de .*Run.* " 
 	#--de .*Run.* "
 	;;
 

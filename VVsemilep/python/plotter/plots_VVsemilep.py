@@ -123,7 +123,7 @@ MCfriends   = ['1_recl','2_recl_allvars','4_scalefactors','2_jmeUnc','1_btag_SFs
 Datafriends = ['1_recl']
 friends     = ['3_ak8_sdm45','0_wjest_v8']
 fplots      = 'vvsemilep/fullRun2/plots.txt'
-fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
+#fmca        = 'vvsemilep/fullRun2/mca-vvsemilep.txt'
 
 
 
@@ -245,7 +245,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     showratio    = True
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
     fmca         = 'vvsemilep/fullRun2/mca-vvsemilep_eft.txt' if not smeft else 'vvsemilep/fullRun2/mca-vvsemilep_smeft.txt'
-    SMprocs      = ['WW_sm','WZ_sm','tt','WJets','singletop','data','Others']#,'QCD'] ] #,'SM_WW','SM_WZ']#
+    SMprocs      = ['WW_sm','WZ_sm']#,'tt','WJets','singletop','data','Others']#,'QCD'] ] #,'SM_WW','SM_WZ']#
     morePs       = ['WZ_sm_lin_quad_','WZ_quad_','WW_sm_lin_quad_','WW_quad_']
     mixedPs      = ['WW_sm_lin_quad_mixed_','WZ_sm_lin_quad_mixed_']
     mixedOps     = []
@@ -416,9 +416,9 @@ def alphaRatio(year,lepflav,plotvars):
 ########################################
 def makesimpleplots(year,sel,proc,smeft,sanitychk=True):
     trees       = [baseDir+'{here}'.format(here=year  if year not in ['all','fullRun2']  else '')]
-    targetdir   = os.path.join(eos,'{yr}/{sel}/{date}_{proc}_{smeft}_{pf}/'.format(proc=proc,smeft='smeft' if smeft else 'eft' ,sel=sel[0].split('_')[0],yr=year,date=date,pf=('sanitychk' if sanitychk else 'SMvsEFT') ))
+    targetdir   = os.path.join(eos,'{yr}/{sel}/{date}_{proc}_{smeft}_{pf}_onlyQCDscalevar/'.format(proc=proc,smeft='smeft' if smeft else 'eft' ,sel=sel[0].split('_')[0],yr=year,date=date,pf=('sanitychk' if sanitychk else 'SMvsEFT') ))
     fmca        = 'vvsemilep/fullRun2/mca-vvsemilep_{smeft}.txt'.format(smeft='smeft' if smeft else 'eft') 
-    fsyst       = '' #vvsemilep/fullRun2/systsUnc.txt'
+    fsyst       = 'vvsemilep/fullRun2/systsUnc_v1.txt'
     fcut        = 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' 
     bareNano    = False
     cutFlow     = False
@@ -433,7 +433,7 @@ def makesimpleplots(year,sel,proc,smeft,sanitychk=True):
     if sanitychk:
         #procs.append(proc+'_sm')
         #procs.append('SM_'+proc)
-        procs=['WW_sm','WZ_sm','SM_WW','SM_WZ','WW_eft_sm','WZ_eft_sm']
+        procs=['WW_smeft_sm','WZ_smeft_sm','SM_WW','SM_WZ','WW_eft_sm','WZ_eft_sm']
     else:
         procs.append(proc+'_sm')
         terms=['_sm_lin_quad_']
@@ -453,7 +453,7 @@ def makesimpleplots(year,sel,proc,smeft,sanitychk=True):
     enable  = ['singlelep','ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','Mjuppercut','Mwvuppercut','boosted']
     if len(sel) > 0:
         enable+=sel
-    ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  2.5'
+    ratio   = ' --fixRatioRange  --ratioYNDiv 505 --maxRatioRange 0.5  2.5 --xu CMS_qcdscales_WW --xu CMS_qcdscales_WZ'
     spam    = ' --topSpamSize 1.0 --noCms '
     legends = ' --legendFontSize 0.025 --legendBorder 0 --legendWidth  0.62  --legendColumns 2 '
     #legends = ' --legendFontSize 0.04 --legendBorder 0 --legendWidth  0.62 --legendColumns 2'

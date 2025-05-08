@@ -5,6 +5,11 @@ echo $*
 echo 'i am in this directory'
 echo $PWD
 
+cp -r /eos/cms/store/cmst3/group/dpsww/SMEFT_samples/2017/*HT* /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2017/
+
+#cp -r /eos/user/r/rasharma/post_doc_ihep/aTGC/SMEFT_samples/2016/*  /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2016/
+#cp -r /eos/user/r/rasharma/post_doc_ihep/aTGC/SMEFT_samples/2016preVFP/* /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2016preVFP/
+
 #cp /eos/user/r/rasharma/post_doc_ihep/aTGC/SMEFT_samples/2018/WZToLNuJJ_01j_LO_EWdim6NLO/* /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2018/WZToLNuJJ_01j_LO_EWdim6NLO/
 #cp /eos/user/r/rasharma/post_doc_ihep/aTGC/SMEFT_samples/2018/WWToLNuJJ_01j_LO_EWdim6NLO/* /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2018/WWToLNuJJ_01j_LO_EWdim6NLO/
 #cp -r /eos/user/r/rasharma/post_doc_ihep/aTGC/SMEFT_samples/2018/*_noEFTDecay  /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2018/
@@ -39,9 +44,9 @@ echo $PWD
 #cp -r /eos/cms/store/cmst3/group/dpsww/SMEFT_samples/${1} /eos/cms/store/group/phys_smp/ec/anmehta/smeft_FEB2025_UL_FR2/
 
 
-cd ${1}
-eval $(scramv1 runtime -sh);
-python runhaddNano.py ${2} ${3} 
+#cd ${1}
+#eval $(scramv1 runtime -sh);
+#python runhaddNano.py ${2} ${3} 
 
 #haddChunks.py -n  --max-size 40 /eos/cms/store/cmst3/group/dpsww/jobs_${2}
 

@@ -1,7 +1,9 @@
 # vim: syntax=sh
 
 ### Alias definitions. Careful to avoid trailing '.*' to avoid matching _promptsub
-$alias : vvsm   : WV|WW_sm|WZ_sm|SM.*
+$alias : vvsm   : WV|WW_sm|WZ_sm|SM.*|WW.*|WZ.*
+$alias : wwsm   : WW_sm|SM_WW|WW.*sm
+$alias : wzsm   : WZ_sm|SM_WZ|WZ.*sm
 $alias : wj     : WJets.*|WJ_PTB|WJ_PM|WNJets
 $alias : st     : singletop|T_[a-z]+ch|T[a-z]+_[a-z]+ch|TBar.*
 $alias : ttbar  : TTJets|TTJets_part.*|ttsemi|tt|TT*
@@ -11,8 +13,8 @@ $alias : top    : $st|$ttbar
 $alias : qcd    : QCD.*
 $alias : wwaTGC : WW_sm_lin_quad.*|WW_quad.*|WW_c.*
 $alias : wzaTGC : WZ_sm_lin_quad.*|WZ_quad.*|WZ_c.*
-$alias : AllFromMC  : $top|$vvsm|$qcd|$wj|$Others|$VH|$wwaTGC|$wzaTGC
-$alias : PNET       : $top|$vvsm|$aTGC|$Others|$VH|
+$alias : AllFromMC  : $top|$vvsm|$qcd|$wj|$Others|$VH|$wwaTGC|$wzaTGC|$wwsm|$wzsm
+$alias : PNET       : $top|$vvsm|$aTGC|$Others|$VH|$wwsm|$wzsm
 $alias : bkg        : $top|$wj|$VH|$vvsm|$Others
 $alias : sig        : $wwaTGC|$wzaTGC
 
@@ -67,15 +69,15 @@ CMS_qcdscales_singletop : $st : .* : envelope ; FakeRates=['vvsemilep/fullRun2/f
 #CMS_qcdscales_QCD : $qcd  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt'] 
 
 
-CMS_qcdscales_WW_ACCEPT : $wwaTGC|WW_sm : .* : envelope ;  FakeRates=['vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_0p5.txt']
-CMS_qcdscales_WZ_ACCEPT : $wzaTGC|WZ_sm : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_0p5.txt']
+CMS_qcdscales_WW_ACCEPT : $wwaTGC|$wwsm : .* : envelope ;  FakeRates=['vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_0p5.txt']
+CMS_qcdscales_WZ_ACCEPT : $wzaTGC|$wzsm : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_0p5.txt']
 CMS_qcdscales_tt_ACCEPT : $ttbar : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_0p5.txt']
 CMS_qcdscales_WJets_ACCEPT : $wj  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_0p5.txt'] 
 
 
 
-CMS_qcdscales_WW : $wwaTGC|WW_sm : .* : envelope ;  FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
-CMS_qcdscales_WZ : $wzaTGC|WZ_sm : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+CMS_qcdscales_WW : $wwaTGC|$wwsm : .* : envelope ;  FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
+CMS_qcdscales_WZ : $wzaTGC|$wzsm : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales/fr-muR_0p5_muF_0p5.txt']
 
 
 
@@ -99,8 +101,8 @@ pdf_Others           	   : $Others : .* : normSymm : 1.02
 CMS_PS_WJets  :  $wj  	        : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_tt     :  $ttbar         : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_st     :  $st  	        : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-CMS_PS_WW     :  $wwaTGC|WW_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-CMS_PS_WZ     :  $wzaTGC|WZ_sm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+CMS_PS_WW     :  $wwaTGC|$wwsm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
+CMS_PS_WZ     :  $wzaTGC|$wzsm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_VH     :  $VH  		: .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_QCD    :  $QCD  		: .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_Others :  $Others  	: .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
@@ -116,22 +118,22 @@ CMS_pileup_2016 : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWei
 CMS_pileup_2017 : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight'],	year="2017"
 CMS_pileup_2018 : $AllFromMC : .* : templateAsymm; AddWeights=['puWeightUp/puWeight'\,'puWeightDown/puWeight'],	year="2018"
 
-signal_shape_WW_2018	: $eftww|WW_sm    : .* : templateAsymm; AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2018"
-signal_shape_WW_2017	: $eftww|WW_sm    : .* : templateAsymm; AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2017"
-signal_shape_WW_2016	: $eftww|WW_sm    : .* : templateAsymm; AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2016"
-signal_shape_WW_2016APV	: $eftww|WW_sm    : .* : templateAsymm; AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2016APV"
-signal_shape_WZ_2018	: $eftwz|WZ_sm    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2018"
-signal_shape_WZ_2017	: $eftwz|WZ_sm    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2017"
-signal_shape_WZ_2016	: $eftwz|WZ_sm    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2016"
-signal_shape_WZ_2016APV	: $eftwz|WZ_sm    : .* : templateAsymm; AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2016APV"
-signal_shape_WW_2018	: $smeftww|WW_sm    : .* : templateAsymm; AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2018"
-signal_shape_WW_2017	: $smeftww|WW_sm    : .* : templateAsymm; AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2017"
-signal_shape_WW_2016	: $smeftww|WW_sm    : .* : templateAsymm; AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2016"
-signal_shape_WW_2016APV	: $smeftww|WW_sm    : .* : templateAsymm; AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2016APV"
-signal_shape_WZ_2018	: $smeftwz|WZ_sm    : .* : templateAsymm; AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2018"
-signal_shape_WZ_2017	: $smeftwz|WZ_sm    : .* : templateAsymm; AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2017"
-signal_shape_WZ_2016	: $smeftwz|WZ_sm    : .* : templateAsymm; AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2016"
-signal_shape_WZ_2016APV	: $smeftwz|WZ_sm    : .* : templateAsymm; AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2016APV"
+#signal_modeling_WW_2018	     : $eftww|WW_sm      : .* : templateAsymm; Normalize=False, AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2018"
+#signal_modeling_WW_2017	     : $eftww|WW_sm      : .* : templateAsymm; Normalize=False, AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2017"
+#signal_modeling_WW_2016	     : $eftww|WW_sm      : .* : templateAsymm; Normalize=False, AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2016"
+#signal_modeling_WW_2016APV   : $eftww|WW_sm      : .* : templateAsymm; Normalize=False, AddWeights=['corr_WW_eft_up/corr_WW_eft'\,'corr_WW_eft_dn/corr_WW_eft'],	year="2016APV"
+#signal_modeling_WZ_2018	     : $eftwz|WZ_sm      : .* : templateAsymm; Normalize=False, AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2018"
+#signal_modeling_WZ_2017	     : $eftwz|WZ_sm      : .* : templateAsymm; Normalize=False, AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2017"
+#signal_modeling_WZ_2016	     : $eftwz|WZ_sm      : .* : templateAsymm; Normalize=False, AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2016"
+#signal_modeling_WZ_2016APV   : $eftwz|WZ_sm      : .* : templateAsymm; Normalize=False, AddWeights=['corr_WZ_eft_up/corr_WZ_eft'\,'corr_WZ_eft_dn/corr_WZ_eft'],	year="2016APV"
+#signal_modeling_WW_2018	     : $smeftww|WW_sm    : .* : templateAsymm; Normalize=False, AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2018"
+#signal_modeling_WW_2017	     : $smeftww|WW_sm    : .* : templateAsymm; Normalize=False, AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2017"
+#signal_modeling_WW_2016	     : $smeftww|WW_sm    : .* : templateAsymm; Normalize=False, AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2016"
+#signal_modeling_WW_2016APV   : $smeftww|WW_sm    : .* : templateAsymm; Normalize=False, AddWeights=['corr_WW_smeft_up/corr_WW_smeft'\,'corr_WW_smeft_dn/corr_WW_smeft'],	year="2016APV"
+#signal_modeling_WZ_2018	     : $smeftwz|WZ_sm    : .* : templateAsymm; Normalize=False, AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2018"
+#signal_modeling_WZ_2017	     : $smeftwz|WZ_sm    : .* : templateAsymm; Normalize=False, AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2017"
+#signal_modeling_WZ_2016	     : $smeftwz|WZ_sm    : .* : templateAsymm; Normalize=False, AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2016"
+#signal_modeling_WZ_2016APV   : $smeftwz|WZ_sm    : .* : templateAsymm; Normalize=False, AddWeights=['corr_WZ_smeft_up/corr_WZ_smeft'\,'corr_WZ_smeft_dn/corr_WZ_smeft'],	year="2016APV"
 
 
 

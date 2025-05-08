@@ -1,0 +1,36 @@
+# vim: syntax=sh
+
+### Alias definitions. Careful to avoid trailing '.*' to avoid matching _promptsub
+$alias : vvsm   : WV|WW_sm|WZ_sm|SM.*|WW.*|WZ.*
+$alias : wwsm   : WW_sm|SM_WW|WW.*sm
+$alias : wzsm   : WZ_sm|SM_WZ|WZ.*sm
+$alias : wj     : WJets.*|WJ_PTB|WJ_PM|WNJets
+$alias : st     : singletop|T_[a-z]+ch|T[a-z]+_[a-z]+ch|TBar.*
+$alias : ttbar  : TTJets|TTJets_part.*|ttsemi|tt|TT*
+$alias : VH     : WH|VH.*|ZH|WplusH|WminusH
+$alias : Others : WH|VH.*|ZH.*|WplusH|WminusH|ZZ.*
+$alias : top    : $st|$ttbar
+$alias : qcd    : QCD.*
+$alias : wwaTGC : WW_sm_lin_quad.*|WW_quad.*|WW_c.*
+$alias : wzaTGC : WZ_sm_lin_quad.*|WZ_quad.*|WZ_c.*
+$alias : AllFromMC  : $top|$vvsm|$qcd|$wj|$Others|$VH|$wwaTGC|$wzaTGC|$wwsm|$wzsm
+$alias : PNET       : $top|$vvsm|$aTGC|$Others|$VH|$wwsm|$wzsm
+$alias : bkg        : $top|$wj|$VH|$vvsm|$Others
+$alias : sig        : $wwaTGC|$wzaTGC
+
+$alias : eftww	    : WW.*cw.*|WW.*cb.*|WW.*c3w.* 
+$alias : eftwz	    : WZ.*cw.*|WZ.*cb.*|WZ.*c3w.* 
+$alias : smeftww    : WW.*cW.*|WW.*cl.*|WW.*cH.* 
+$alias : smeftwz    : WZ.*cW.*|WZ.*cl.*|WZ.*cH.* 
+
+
+### Uncertainties
+
+
+
+CMS_qcdscales_WW_ACCEPT : $wwaTGC|$wwsm : .* : envelope ;  FakeRates=['vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_0p5.txt']
+CMS_qcdscales_WZ_ACCEPT : $wzaTGC|$wzsm : .* : envelope ; FakeRates=['vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_1p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_1p0_muF_0p5.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_2p0_muF_2p0.txt'\,'vvsemilep/fullRun2/frs-scales-acc/fr-muR_0p5_muF_0p5.txt']
+
+
+
+
