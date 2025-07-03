@@ -5,17 +5,14 @@ ROOT.gStyle.SetOptStat(0);
 ROOT.gStyle.SetOptStat(0)
 ROOT.gStyle.SetOptFit(1111)
 plotsdir="/eos/user/a/anmehta/www/VVsemilep/SMratios/newsamples/"
-def makePlot(vname,yr,ff,gen):
-    pf=""
-    if gen:        pf="_gen"
-    outFile=ROOT.TFile("%s/res_%s_%s_%s%s.root"%(plotsdir,yr,vname,ff,pf),"recreate")
-    for bsm in ["eft_HTbinned","smeftprod"]:
-        for sm in ["WZ","WW","WV"]:
+def makePlot(vname,yr,ff):
+    outFile=ROOT.TFile("%s/res_%s_%s_%s.root"%(plotsdir,yr,vname,ff),"recreate")
+    for bsm in ["smeftprod","eft_HTbinned"]:
+        for sm in ["WZ","WW"]:
             bsm1="smeft" if "smeft" in bsm else "eft"
-            inFile=ROOT.TFile.Open("/eos/user/a/anmehta/www/VVsemilep/%s/boosted/2025-06-18_%s_%s_sanitychk//mWV_logy_AND_FatJet1_pt_logy_AND_mWV_den_logy.root"%(yr,sm,bsm1))
-            #inFile=ROOT.TFile.Open("/eos/user/a/anmehta/www/VVsemilep/%s/2025-06-12_gencorr_%s%s//LHE_HT_AND_LHE_HT_log_AND_LHE_Vpt_log_AND_GenmWV_typ0_pmet_boosted_AND_LHE_Vpt1_log.root"%(yr,sm,bsm1))
+            inFile=ROOT.TFile.Open("/eos/user/a/anmehta/www/VVsemilep/%s/boosted/2025-05-14_%s_%s_sanitychk//mWV_logy_AND_FatJet1_pt_logy_AND_mWV_den_logy.root"%(yr,sm,bsm1))
             outFile.cd();
-            canv=ROOT.TCanvas("canv", "%s_%s_%s_%s"%(vname,sm,bsm,yr),600,600);
+            canv=ROOT.TCanvas("canv", "%s_%s_%s"%(vname,sm,bsm),600,600);
             print("this is what i m looking for","%s_%s"%(vname,sm),inFile.GetName())
             h_sm=inFile.Get("%s_SM_%s"%(vname,sm))
             #if bsm == "smeft":
@@ -42,8 +39,8 @@ def makePlot(vname,yr,ff,gen):
             #rp1.GetLowerRefYaxis().SetTitle("sm/eft");
             #rp1.GetUpperRefYaxis().SetTitle("sm/eft");
             canv.Update();
-            canv.Print('%s/res_%s_%s_%s_%s_%s%s.pdf'%(plotsdir,vname,yr,sm,bsm,ff,pf))
-            canv.Print('%s/res_%s_%s_%s_%s_%s%s.png'%(plotsdir,vname,yr,sm,bsm,ff,pf))
+            canv.Print('%s/res_%s_%s_%s_%s_%s_new.pdf'%(plotsdir,vname,yr,sm,bsm,ff))
+            canv.Print('%s/res_%s_%s_%s_%s_%s_new.png'%(plotsdir,vname,yr,sm,bsm,ff))
             canv.Close()
             h1.Write()
     outFile.Write();
@@ -55,15 +52,10 @@ if __name__ == '__main__':
     #parser.add_option('--sm',  dest='sm',type="string", default="WW", help='make plots for this FS')
     #parser.add_option('--bsm',  dest='bsm',type="string", default="SMEFT_WW", help='make plots for this FS')
     parser.add_option('--vname',  dest='vname',type="string", default="mWV_logy", help='make plots for this FS')
-    #parser.add_option('--vname',  dest='vname',type="string", default="GenmWV_typ0_pmet_boosted", help='make plots for this FS')
-    parser.add_option('--ff',  dest='ff',type="string", default="pol1", help='fit fxn')
-    parser.add_option('--gen',  dest='gen', action='store_true' , default=False , help='compute gen level correction')
+    parser.add_option('--ff',  dest='ff',type="string", default="expo", help='fit fxm')
 
     global opts
     (opts, args) = parser.parse_args()
-    if opts.gen:
-        v_name="GenmWV_typ0_pmet_boosted"
-    else:
-        v_name=opts.vname
 
-    makePlot(v_name,opts.yr,opts.ff,opts.gen)
+
+    makePlot(opts.vname,opts.yr,opts.ff)

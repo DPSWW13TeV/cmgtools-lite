@@ -24,21 +24,27 @@ def histStyle(hist,xtitle,ytitle,xoffset,yoffset,titlesize,labelsize):
 
     hist.SetDirectory(0)
     return hist
-
+plotsdir="/eos/user/a/anmehta/www/VVsemilep/SMratios/newsamples/"
 def makePlot(vname,yr,ff):
-    outFile=ROOT.TFile("/eos/user/a/anmehta/www/VVsemilep/res_%s_%s_%s_uncert.root"%(yr,vname,ff),"recreate")
-    inFile=ROOT.TFile.Open("/eos/user/a/anmehta/www/VVsemilep/%s/boosted/2025-05-06_WV_smeft_sanitychk//mWV_logy_AND_FatJet1_pt_logy_AND_FatJet1_sDrop_mass_logy.root"%(yr))
-    for bsm in ["smeft"]:
-        for sm in ["WZ","WW"]:
+    outFile=ROOT.TFile("%s/res_%s_%s_%s_PSuncert.root"%(plotsdir,yr,vname,ff),"recreate")
+    for bsm in ["eft_HTbinned","smeftprod"]:
+        for sm in ["WW","WZ"]:
+            bsm1="smeft" if "smeft" in bsm else "eft"
+            inFile=ROOT.TFile.Open("/eos/user/a/anmehta/www/VVsemilep/%s/boosted/2025-06-06_%s_%s_sanitychk//mWV_logy_AND_FatJet1_pt_logy_AND_mWV_den_logy_AND_LHE_HT_AND_LHE_HT_log_AND_LHE_HT_lin_AND_LHE_Vpt_AND_LHE_Vpt_log.root"%(yr,sm,bsm1))
             outFile.cd();
-            canv=ROOT.TCanvas("canv", "%s_%s_%s"%(vname,sm,bsm),600,600);
+            canv=ROOT.TCanvas("canv", "%s_%s_%s"%(vname,sm,bsm1),600,600);
             h_sm=inFile.Get("%s_SM_%s"%(vname,sm))
-            h_sm_up=inFile.Get("%s_SM_%s_CMS_qcdscales_%s_ACCEPTUp"%(vname,sm,sm))
-            h_sm_dn=inFile.Get("%s_SM_%s_CMS_qcdscales_%s_ACCEPTDown"%(vname,sm,sm))
+            h_sm_up=inFile.Get("%s_SM_%s_CMS_PS_%sUp"%(vname,sm,sm))
+            h_sm_dn=inFile.Get("%s_SM_%s_CMS_PS_%sDown"%(vname,sm,sm))
+            #h_sm_up=inFile.Get("%s_SM_%s_CMS_qcdscales_%s_ACCEPTUp"%(vname,sm,sm))
+            #h_sm_dn=inFile.Get("%s_SM_%s_CMS_qcdscales_%s_ACCEPTDown"%(vname,sm,sm))
+
             h_eft=inFile.Get("%s_%s_%s_sm"%(vname,sm,bsm))
             print(type(h_eft))
-            h_eft_up=inFile.Get("%s_%s_%s_sm_CMS_qcdscales_%s_ACCEPTUp"%(vname,sm,bsm,sm)) 
-            h_eft_dn=inFile.Get("%s_%s_%s_sm_CMS_qcdscales_%s_ACCEPTDown"%(vname,sm,bsm,sm)) 
+            h_eft_up=inFile.Get("%s_%s_%s_sm_CMS_PS_%sUp"%(vname,sm,bsm,sm)) 
+            h_eft_dn=inFile.Get("%s_%s_%s_sm_CMS_PS_%sDown"%(vname,sm,bsm,sm)) 
+            #h_eft_up=inFile.Get("%s_%s_%s_sm_CMS_qcdscales_%s_ACCEPTUp"%(vname,sm,bsm,sm)) 
+            #h_eft_dn=inFile.Get("%s_%s_%s_sm_CMS_qcdscales_%s_ACCEPTDown"%(vname,sm,bsm,sm)) 
 
             print("integrals",h_sm.Integral(),"\t ",bsm,"\t",h_eft.Integral())
             ratio_sm=h_sm.Clone("ratio_sm")
@@ -62,9 +68,7 @@ def makePlot(vname,yr,ff):
             gr_sm_u        = ROOT.TGraphAsymmErrors(ratio_sm_dn.GetNbinsX()+1);
 
             for i in range (ratio_sm_dn.GetNbinsX()+1 ):
-#                print(i+1,ratio_sm_dn.GetXaxis().GetBinLowEdge(i+1))
                 x.append(ratio_sm_dn.GetXaxis().GetBinLowEdge(i+1))
-
                 gr_eft_d.SetPoint(i+1,ratio_sm_dn.GetXaxis().GetBinLowEdge(i+1),ratio_eft_dn.GetBinContent(i+1));
                 gr_eft_u.SetPoint(i+1,ratio_sm_dn.GetXaxis().GetBinLowEdge(i+1),ratio_eft_up.GetBinContent(i+1));
                 gr_sm_d.SetPoint(i+1,ratio_sm_dn.GetXaxis().GetBinLowEdge(i+1),ratio_sm_dn.GetBinContent(i+1));
@@ -80,11 +84,10 @@ def makePlot(vname,yr,ff):
             gr_eft_d       = graphStyle(gr_eft_d,ROOT.kViolet+5,23,8)
             gr_eft_u       = graphStyle(gr_eft_u,ROOT.kAzure+1,22,8)
             step=0.005
-            #y= numpy.arange(0.98, 1.04, step,)
-            #print(array('d',x),array('d',y))
             y=[0.8,0.98, 0.985, 0.99, 0.995, 1.0, 1.005, 1.01, 1.015, 1.02, 1.025, 1.03, 1.035, 1.04,1.045,1.05,1.1,1.2,1.4]
-            histX = ROOT.TH2D("histX{he}".format(he=sm),"",len(x),x[0]-100,x[-1]+50,len(y),y[0],y[-1])
-            histX =histStyle(histX,"mWV (GeV)","{proc} var./nom.".format(proc=sm),0.9,0.95,0.045,0.035);
+            
+            histX = ROOT.TH2D("histX{he}".format(he=sm),"",len(x),x[0]-10,x[-2],len(y),y[0],y[-1])
+            histX =  histStyle(histX,"mWV (GeV)","{proc} var./nom.".format(proc=sm),0.9,0.95,0.045,0.035);
             
             histX.SetStats(0);#histX.GetXaxis().SetTitleOffset(0.8);
             legend = ROOT.TLegend(0.25,0.75,0.85,0.88);
@@ -93,8 +96,8 @@ def makePlot(vname,yr,ff):
             legend.SetNColumns(2);
             legend.AddEntry(gr_sm_d,"SM Down/Nom.","P");
             legend.AddEntry(gr_sm_u,"SM Up/Nom.","P");
-            legend.AddEntry(gr_eft_d,"SMEFT Down/Nom.","P");
-            legend.AddEntry(gr_eft_u,"SMEFT Up/Nom.","P");
+            legend.AddEntry(gr_eft_d,"%s Down/Nom."%bsm,"P");
+            legend.AddEntry(gr_eft_u,"%s Up/Nom."%bsm,"P");
             histX.Draw();
 
 
@@ -102,7 +105,7 @@ def makePlot(vname,yr,ff):
             mgraphX.Add(gr_sm_d);
             mgraphX.Add(gr_eft_u);
             mgraphX.Add(gr_eft_d);
-            mgraphX.Draw('P'); 
+            mgraphX.Draw('LP'); 
             #gr_sm_u.Draw("ACP");
             #gr_sm_d.Draw("CP same");
             #gr_eft_u.Draw("CP same");
@@ -114,8 +117,8 @@ def makePlot(vname,yr,ff):
             #rp1.GetLowerRefYaxis().SetTitle("sm/eft");
             #rp1.GetUpperRefYaxis().SetTitle("sm/eft");
             canv.Update();
-            canv.Print('/eos/user/a/anmehta/www/VVsemilep/SMratios/%s_%s_%s_qcd_scaleuncert.pdf'%(vname,yr,sm))
-            canv.Print('/eos/user/a/anmehta/www/VVsemilep/SMratios/%s_%s_%s_qcd_scaleuncert.png'%(vname,yr,sm))
+            canv.Print('%s/%s_%s_%s_%s_PSuncert.pdf'%(plotsdir,vname,yr,sm,bsm))
+            canv.Print('%s/%s_%s_%s_%s_PSuncert.png'%(plotsdir,vname,yr,sm,bsm))
             canv.Close()
             #            h1.Write()
     outFile.Write();

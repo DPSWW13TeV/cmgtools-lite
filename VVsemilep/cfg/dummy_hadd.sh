@@ -5,7 +5,9 @@ echo $*
 echo 'i am in this directory'
 echo $PWD
 
-cp -r /eos/cms/store/cmst3/group/dpsww/SMEFT_samples/2017/*HT* /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2017/
+#cp -r /eos/user/r/rasharma/post_doc_ihep/aTGC/SMEFT_samples/2016preVFP/WVToLNuJJ_01j_LO_SMEFTsim_noEFTDecay/* /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2016preVFP/WVToLNuJJ_01j_LO_SMEFTsim/
+#cp -r /eos/user/r/rasharma/post_doc_ihep/aTGC/SMEFT_samples/2016/WVToLNuJJ_01j_LO_SMEFTsim_noEFTDecay/* /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2016/WVToLNuJJ_01j_LO_SMEFTsim/
+#cp -r /eos/cms/store/cmst3/group/dpsww/SMEFT_samples/2017/*HT* /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2017/
 
 #cp -r /eos/user/r/rasharma/post_doc_ihep/aTGC/SMEFT_samples/2016/*  /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2016/
 #cp -r /eos/user/r/rasharma/post_doc_ihep/aTGC/SMEFT_samples/2016preVFP/* /eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/2016preVFP/
@@ -44,11 +46,11 @@ cp -r /eos/cms/store/cmst3/group/dpsww/SMEFT_samples/2017/*HT* /eos/cms/store/gr
 #cp -r /eos/cms/store/cmst3/group/dpsww/SMEFT_samples/${1} /eos/cms/store/group/phys_smp/ec/anmehta/smeft_FEB2025_UL_FR2/
 
 
-#cd ${1}
+cd ${1}
 #eval $(scramv1 runtime -sh);
 #python runhaddNano.py ${2} ${3} 
 
-#haddChunks.py -n  --max-size 40 /eos/cms/store/cmst3/group/dpsww/jobs_${2}
+haddChunks.py -n  --max-size 40 /eos/cms/store/cmst3/group/dpsww/jobs_${2}
 
 ##amcd /eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/2018
 ##am#echo "i am in this directory ${PWD}"

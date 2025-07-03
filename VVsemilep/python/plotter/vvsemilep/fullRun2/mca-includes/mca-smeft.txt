@@ -1,7 +1,15 @@
 
-WW_sm :    WWToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : corr_WW_smeft*LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),    FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM" #,LineStyle=ROOT.kDashed
-WZ_sm :    WZToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : corr_WZ_smeft*LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#e42536"),   FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowW^{\#pm}Z SM"    #,LineStyle=ROOT.kDashed
+WW_sm :    WWToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : corr_WW_smeft*LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#ffa90e"),    FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM" ,LineStyle=ROOT.kDashed
+WZ_sm :    WZToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : corr_WZ_smeft*LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#e42536"),   FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowW^{\#pm}Z SM"    ,LineStyle=ROOT.kDashed
 
+WW_sm_gencorr :    WWToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : corr_gen_WW_smeft*LHEReweightingWeight[0]; FillColor=ROOT.kMagenta+1,    FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM (gen corr.) " ,LineStyle=ROOT.kDashed
+WZ_sm_gencorr :    WZToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : corr_gen_WZ_smeft*LHEReweightingWeight[0]; FillColor=ROOT.kMagenta+1,   FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowW^{\#pm}Z SM (gen corr.)"  ,LineStyle=ROOT.kDashed
+
+WW_sm_pol1_gencorr :    WWToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : pol1_corr_gen_WW_smeft*LHEReweightingWeight[0]; FillColor=ROOT.kViolet+5,    FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM (gen- pol1)",LineStyle=ROOT.kDotted
+WZ_sm_pol1_gencorr :    WZToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : pol1_corr_gen_WZ_smeft*LHEReweightingWeight[0]; FillColor=ROOT.kViolet+5,   FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowW^{\#pm}Z SM (gen- pol1)" ,LineStyle=ROOT.kDotted
+
+WW_sm_pol1 :    WWToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : pol1_corr_WW_smeft*LHEReweightingWeight[0]; FillColor=ROOT.kPink+4,    FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowW^{\#pm}W^{\#mp} SM (pol1)",LineStyle=ROOT.kDashed
+WZ_sm_pol1 :    WZToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : pol1_corr_WZ_smeft*LHEReweightingWeight[0]; FillColor=ROOT.kPink+4,   FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowW^{\#pm}Z SM (pol1)" ,LineStyle=ROOT.kDashed
 
 WW_quad_cHDD+ 	:  WWToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : corr_WW_smeft*0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]; FillColor=ROOT.kOrange-3,  FriendsSimple="{P}/0_corr_bsm/",Label="c_{HDD}^{WW}(Q.)", LineStyle=9
 WZ_quad_cHDD+ 	:  WZToLNuJJ_01j_SMEFT_LO_noEFTDecay  : xsec : corr_WZ_smeft*0.5*(LHEReweightingWeight[2]+LHEReweightingWeight[1])-LHEReweightingWeight[0]; FillColor=ROOT.kOrange-3,  FriendsSimple="{P}/0_corr_bsm/",Label="c_{HDD}^{WZ}(Q.)", LineStyle=9

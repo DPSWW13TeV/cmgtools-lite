@@ -1,10 +1,13 @@
 import os, sys
 year=sys.argv[1] 
+eos=sys.argv[2]
+if eos == "dps":
+    eosDir="/eos/cms/store/cmst3/group/dpsww/SMEFT_samples/%s/"%(year)
+else:
+    eosDir="/eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/%s/"%(year)
 
-eosDir="/eos/cms/store/cmst3/group/dpsww/SMEFT_samples/%s/"%(year)
-#eosDir="/eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/%s/"%(year)
 for sample in [x[0] for x in os.walk(eosDir)]: # ["WZToLNuJJ_01j_LO_EWdim6NLO","WWToLNuJJ_01j_LO_EWdim6NLO","WWToLNujj_01j_SMEFT_LO","WZToLNujj_01j_SMEFT_LO"]:
-    if not "ToLNuJJ" in sample: continue 
+    if not "WV" in sample: continue 
     print("sample ",sample)
     os.system("ls  %s/*root | wc -l "%(sample))
 

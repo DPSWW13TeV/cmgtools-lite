@@ -70,7 +70,7 @@ def fitTGraph(graph, order=1, nToys=1000, nPoints=1000):
         xlist.add(xv)
         xset.add(xv)
         parvec[i] = result.Parameter(i)
-    #print parvec
+        print("param i",i,"\t=\t",parvec[i])
     #cov.Print()
     points = [ (xmin + i*(xmax-xmin)/(nPoints-1), []) for i in xrange(nPoints) ]
     mvg = ROOT.RooMultiVarGaussian("mvg","", xlist, parvec, cov)
@@ -87,6 +87,8 @@ def fitTGraph(graph, order=1, nToys=1000, nPoints=1000):
         poly.SetParameter(k, result.Parameter(k))
     band68 = ROOT.TGraphAsymmErrors(nPoints) 
     band95 = ROOT.TGraphAsymmErrors(nPoints) 
+    band68_err=[]
+    band95_err=[]
     for i,(x,ys) in enumerate(points):
         ys.sort()
         ny = len(ys)
@@ -100,14 +102,21 @@ def fitTGraph(graph, order=1, nToys=1000, nPoints=1000):
         #print "at %3d: x = %.4f: %g [%g,%g], [%g,%g], %g +/- %g" % (i,x,y,ylo68,yhi68,ylo95,yhi95, mean, rms)
         band68.SetPoint(i, x, y)
         band95.SetPoint(i, x, y)
+ #       print('band68',i, x, y)
+  #      print('band95',i, x, y)
         dx = 0.5*(xmax-xmin)/(nPoints-1)
         #band68.SetPointError(i, dx, dx, rms, rms)
         #band95.SetPointError(i, 0, 0, 2*rms, 2*rms)
         band68.SetPointError(i, 0, 0, (y-ylo68), (yhi68-y))
         band95.SetPointError(i, 0, 0, (y-ylo95), (yhi95-y))
+        err1=((y-ylo68), (yhi68-y))
+        band68_err.append(err1)
+        band95_err.append(((y-ylo95), (yhi95-y)))
     # plot the best fit and bands
     poly.SetLineColor(ROOT.kRed)
     poly.SetLineWidth(2)
+   # print('68',band68_err)
+   # print('95',band95_err)
     band68.SetFillColor(ROOT.kGreen)
     band95.SetFillColor(ROOT.kYellow)
     band68.SetLineColor(ROOT.kRed)

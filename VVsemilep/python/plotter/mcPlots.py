@@ -848,7 +848,7 @@ class PlotMaker:
                                 ref = pmap['data'].Integral() if 'data' in pmap else 1.0
                                 if (plot.Integral()): plot.Scale(ref/plot.Integral())
                             stack.Add(plot.raw())
-                            total.SetMaximum(max(total.GetMaximum(),1.3*plot.GetMaximum()))
+                            total.SetMaximum(max(total.GetMaximum(),20*plot.GetMaximum())) ##am
                         if self._options.errors and plotmode != "stack":
                             plot.SetMarkerColor(plot.GetFillColor())
                             plot.SetMarkerStyle(21)
@@ -877,7 +877,8 @@ class PlotMaker:
 
                 stack.Draw("GOFF")
                 ytitle1 = "Events" if not self._options.printBinning else "Events / %s" %(self._options.printBinning)
-                ytitle = "Events/bin" if pspec.getOption('Density',False) else ytitle1
+                ytitle = "Events/GeV" if pspec.getOption('Density',False) else ytitle1
+                #total.SetMinimum(0.0005 if pspec.getOption('Density',False) else 0.01)
                 total.GetXaxis().SetTitleFont(42)
                 total.GetXaxis().SetTitleSize(0.045)
                 total.GetXaxis().SetTitleOffset(1.1)
@@ -893,6 +894,7 @@ class PlotMaker:
                 total.GetYaxis().SetTitle(pspec.getOption('YTitle',ytitle))
                 total.GetXaxis().SetTitle(pspec.getOption('XTitle',outputName))
                 total.GetXaxis().SetNdivisions(pspec.getOption('XNDiv',510))
+
                 if pspec.hasOption('MaxDigi'):
                     ROOT.gStyle.SetPadRightMargin(800.*0.065/plotformat[0])
                     total.GetXaxis().SetMaxDigits(2);##am
@@ -935,7 +937,7 @@ class PlotMaker:
                     total.GetXaxis().SetMoreLogLabels(True)
                 if islog: 
                     total.SetMaximum(5*total.GetMaximum())
-                    total.SetMinimum(0.1)###LOGS
+                    total.SetMinimum(0.01)###LOGS
                 if not islog: total.SetMinimum(0)
                 total.Draw("HIST")
                 if plotmode == "stack":
@@ -1121,14 +1123,15 @@ class PlotMaker:
                                     plot = pmap[p]
                                     if "TGraph" in plot.ClassName(): continue
                                     c1.SetRightMargin(0.2)
-                                    plot.SetContour(100)
+                                    plot.SetContour(50)
+                                    ROOT.gStyle.SetPalette(91);
                                     ROOT.gStyle.SetPaintTextFormat(pspec.getOption("PaintTextFormat","g"))
                                     plot.SetMarkerSize(pspec.getOption("MarkerSize",1))
                                     if pspec.hasOption('ZMin') and pspec.hasOption('ZMax'):
                                         plot.GetZaxis().SetRangeUser(pspec.getOption('ZMin',1.0), pspec.getOption('ZMax',1.0))
                                     plot.SetMarkerStyle(mca.getProcessOption(p,'MarkerStyle',1,noThrow=True))
                                     plot.SetMarkerColor(mca.getProcessOption(p,'FillColor',ROOT.kBlack,noThrow=True))
-                                    plot.Draw(pspec.getOption("PlotMode","COLZ TEXT45"))
+                                    plot.Draw(pspec.getOption("PlotMode","COLZ ")) #TEXT45"))
                                     c1.Print("%s/%s_%s.%s" % (fdir, outputName, p, ext))
                                 if "data" in pmap and "TGraph" in pmap["data"].ClassName():
                                     pmap["data"].SetMarkerStyle(mca.getProcessOption('data','MarkerStyle',1))

@@ -7,6 +7,7 @@ eospath="/eos/cms/store/group/phys_smp/ec/anmehta/Mar2025UL_FR2/"
 #odir= "Combined_aTGC_Oct2024_UL16"
 #eosOut="/eos/cms/store/cmst3/group/dpsww/SMEFT_samplesmerged/"
 eosOut="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_Mar2025/"
+#eosOut="/eos/cms/store/cmst3/group/dpsww/Combined_Mar2025/"
 samples=[]
 year=sys.argv[1] 
 sample=sys.argv[2]

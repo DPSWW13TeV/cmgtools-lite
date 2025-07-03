@@ -13,7 +13,7 @@ ref=ROOT.TFile.Open(files[0])
 faultyfiles=[]
 def checkfaulty(fname):
     probe=ROOT.TFile.Open(fname)
-    print(fname)
+    #print(fname)
     for e in ref.GetListOfKeys():
         name = e.GetName()
         #print("checking" + str(name))

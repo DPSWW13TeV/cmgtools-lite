@@ -233,25 +233,36 @@ VHToNonbb = kreator.makeMCComponent("VHToNonbb", "/VHToNonbb_M125_TuneCP5_13TeV-
 basepath_smeft_v1="/eos/cms/store/group/phys_smp/ec/anmehta/Combined_Mar2025/2017/"
 WWToLNuJJ_01j_SMEFT_LO=kreator.makeMCComponentSimple('WWToLNuJJ_01j_SMEFT_LO',"/WWToLNuJJ_01j_SMEFT_LO/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,86.52,prefix='root://xrootd-cms.infn.it/')
 WZToLNuJJ_01j_SMEFT_LO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_SMEFT_LO',"/WZToLNuJJ_01j_SMEFT_LO/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,23.82,prefix='root://xrootd-cms.infn.it/')
-WWToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO',"/WWToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,59.16,prefix='root://xrootd-cms.infn.it/')
-WZToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO',"/WZToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,10.5,prefix='root://xrootd-cms.infn.it/')
+#WWToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO',"/WWToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,59.16,prefix='root://xrootd-cms.infn.it/')
+#WZToLNuJJ_01j_LO_EWdim6NLO=kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO',"/WZToLNuJJ_01j_LO_EWdim6NLO/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,10.5,prefix='root://xrootd-cms.infn.it/')
 WWToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WWToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WWToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,86.33,prefix='root://xrootd-cms.infn.it/')
 WZToLNuJJ_01j_SMEFT_LO_noEFTDecay=kreator.makeMCComponentSimple('WZToLNuJJ_01j_SMEFT_LO_noEFTDecay',"/WZToLNuJJ_01j_SMEFT_LO_noEFTDecay/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,20.25,prefix='root://xrootd-cms.infn.it/')
 
-WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000    =kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000',  "/WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,59.0164,prefix='root://xrootd-cms.infn.it/') 
-WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000    =kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000',  "/WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,10.5000,prefix='root://xrootd-cms.infn.it/')
-WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf  =kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf',"/WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,0.03461,prefix='root://xrootd-cms.infn.it/') 
-WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf  =kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf',"/WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,0.01568,prefix='root://xrootd-cms.infn.it/') 
 
+WWToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000   = kreator.makeMCComponentSimple("WWToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000","/WWToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,  4.176e-03,prefix='root://xrootd-cms.infn.it/')
+WWToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf    = kreator.makeMCComponentSimple("WWToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf", "/WWToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM", basepath_smeft_v1, 1.532e-04,prefix='root://xrootd-cms.infn.it/')
+WZToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000   = kreator.makeMCComponentSimple("WZToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000","/WZToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1, 2.024e-03,prefix='root://xrootd-cms.infn.it/')
+WZToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf    = kreator.makeMCComponentSimple("WZToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf", "/WZToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM", basepath_smeft_v1, 1.178e-04,prefix='root://xrootd-cms.infn.it/')
 
-DiBosons = [ZZTo2Q2L,WZTo1L1Nu2Q,WWTo1L1Nu2Q,ZH,WminusH,WplusH,VHToNonbb, 
+WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000    =kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000',  "/WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,2.229e+01,prefix='root://xrootd-cms.infn.it/') 
+WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000    =kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000',  "/WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,3.791,prefix='root://xrootd-cms.infn.it/')
+WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf  =kreator.makeMCComponentSimple('WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf',"/WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,4.155e-03,prefix='root://xrootd-cms.infn.it/') 
+WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf  =kreator.makeMCComponentSimple('WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf',"/WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,2.212e-03,prefix='root://xrootd-cms.infn.it/') 
+
+WVToLNuJJ_01j_LO_SMEFTsim = kreator.makeMCComponentSimple("WVToLNuJJ_01j_LO_SMEFTsim","/WVToLNuJJ_01j_LO_SMEFTsim/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,9.683e+01,prefix='root://xrootd-cms.infn.it/')
+WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000 = kreator.makeMCComponentSimple("WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000","/WVToLNuJJ_01j_LO_SMEFTsim_HT1000To2000/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,7.693e+01,prefix='root://xrootd-cms.infn.it/')
+WVToLNuJJ_01j_LO_SMEFTsim_HT1000To2000 = kreator.makeMCComponentSimple("WVToLNuJJ_01j_LO_SMEFTsim_HT1000To2000","WVToLNuJJ_01j_LO_SMEFTsim_HT1000To2000/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,1.165e+01,prefix='root://xrootd-cms.infn.it/')
+WVToLNuJJ_01j_LO_SMEFTsim_HT2000ToInf= kreator.makeMCComponentSimple("WVToLNuJJ_01j_LO_SMEFTsim_HT2000ToInf","WVToLNuJJ_01j_LO_SMEFTsim_HT2000ToInf/RunIISummer20UL17NanoAODv9-Dummy/NANOAODSIM",basepath_smeft_v1,6.691,prefix='root://xrootd-cms.infn.it/')
+
+DiBosons = [ZZTo2Q2L,WZTo1L1Nu2Q,WWTo1L1Nu2Q,ZH,WminusH,WplusH,VHToNonbb, WVToLNuJJ_01j_LO_SMEFTsim, WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000,WVToLNuJJ_01j_LO_SMEFTsim_HT1000To2000,WVToLNuJJ_01j_LO_SMEFTsim_HT2000ToInf,
+            WWToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000,WWToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf,WZToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000,WZToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf,
             #WZToLNujj_01j_SMEFT_LO,WWToLNujj_01j_SMEFT_LO,  
             WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000,WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000,WWToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf,WZToLNuJJ_01j_LO_EWdim6NLO_HT1000ToInf,
             WWToLNuJJ_01j_SMEFT_LO_noEFTDecay,WZToLNuJJ_01j_SMEFT_LO_noEFTDecay,
             WWToLNuJJ_01j_SMEFT_LO,
             WZToLNuJJ_01j_SMEFT_LO,
-            WWToLNuJJ_01j_LO_EWdim6NLO,
-            WZToLNuJJ_01j_LO_EWdim6NLO,
+ #           WWToLNuJJ_01j_LO_EWdim6NLO,
+#            WZToLNuJJ_01j_LO_EWdim6NLO,
  #           WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
  #           WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_150to600,
  #           WpWmToLpNujj_01j_aTGC_pTW_150toInf_mWV_600to800,

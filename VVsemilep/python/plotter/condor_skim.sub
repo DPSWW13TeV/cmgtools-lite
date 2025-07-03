@@ -4,8 +4,8 @@ getenv      = True
 Log        = jobs/alpha_$(Cluster)_$(ProcId).log
 Output     = jobs/alpha_$(Cluster)_$(ProcId).out
 Error      = jobs/alpha_$(Cluster)_$(ProcId).error
-+JobFlavour = "testmatch"
-arguments  = $(info) 
++JobFlavour = "workday"
+#arguments  = $(info) 
 MY.SingularityImage = "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-cat/cmssw-lxplus/cmssw-el7-lxplus:latest/"
 +AccountingGroup = "group_u_CMST3.all"
 queue
