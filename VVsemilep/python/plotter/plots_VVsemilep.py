@@ -484,7 +484,7 @@ def makesimpleplots(year,sel,proc,smeft,sanitychk):
     showratio=False
     applylepSFs=True
     nLep=1
-    plotvars   =  ratios #+ Wjets_ht #+ ratios #,'FatJet1_sDrop_mass_SR_logy'] #ratios #theWVultimateset + theWVultimateset_log #['mWV_logy'] #FatJet1_sDrop_mass_SR_logy']#'FatJet_eta_phi']#'mWV_copy','mWV_copy_logy']#basics #theWVultimateset #+theWVultimateset_log #+Wjets_ht #theWVultimateset+theWVultimateset_log#MConly 
+    plotvars   =  ['LHE_Vpt1_log'] #+ Wjets_ht #+ ratios #,'FatJet1_sDrop_mass_SR_logy'] #ratios #theWVultimateset + theWVultimateset_log #['mWV_logy'] #FatJet1_sDrop_mass_SR_logy']#'FatJet_eta_phi']#'mWV_copy','mWV_copy_logy']#basics #theWVultimateset #+theWVultimateset_log #+Wjets_ht #theWVultimateset+theWVultimateset_log#MConly 
     #['Mttbar','Mttbar_logy'] #
     disable   = []; 
     enable  = ['singlelep','ptWlep','dRfjlep','dphifjmet','dphifjlep','mWVtyp0pmet','Mjuppercut','Mwvuppercut','boosted']
@@ -519,7 +519,7 @@ def makesimpleplots_perWC(year,sel,proc,smeft,pm):
 
     WCs=['cw','c3w','cb','Odd_c3w','Odd_cw']
     if smeft:
-            WCs=['cll1','cG','cHd','cHDD','cHj3','cjj38','cHWtil','cHj1','cju1','cuu8','cdd8','cuu1','cdd1','cHG','cHe','cHl1',	'cHWB',	'cHl3',	'cju8',	'cjd1',	'clu',	'cWtil','clj3',	'cjj11','cHu',	'ceu','cHWBtil','ced','clj1','cjj18','cGtil','cW','cld','cje', 'cjd8','cud8','cud1','cjj31','cHGtil']
+            WCs=['cll1','cG','cHd','cHDD','cHj3','cjj38','cHWtil','cHj1','cju1','cuu8','cdd8','cuu1','cdd1','cHG','cHe','cHl1',	'cHWB','cHl3','cju8','cjd1','clu','cWtil','clj3','cjj11','cHu','ceu','cHWBtil','ced','clj1','cjj18','cGtil','cW','cld','cje', 'cjd8','cud8','cud1','cjj31','cHGtil']
 
     procs=[]
 

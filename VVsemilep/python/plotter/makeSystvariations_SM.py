@@ -6,7 +6,7 @@ import array
 from array import array
 import math
 ROOT.gROOT.SetBatch();ROOT.gStyle.SetOptStat(0);    ROOT.gStyle.SetOptTitle(0)
-varname='mWV'
+varname='mWV_logy'
 def hStyle(hist,color,xtitle,ytitle="Events",xtoff=1.02,lstyle=1,xloff=0.007,ytoff=0.88,tsize=0.04,lsize=0.035, mstyle=22,msize=0.85,fStyle=0,lwidth=2):
 
     hist.GetXaxis().SetTitleOffset(xtoff);             hist.GetYaxis().SetTitleOffset(ytoff)
@@ -62,7 +62,7 @@ def getRatiobbb(hNom,hUp,hDn):
             h_ratioU.SetBinError(ibin,error);
         return h_ratioU,h_ratioD
 
-def getPlots(fName,proc,odir):
+def getPlots(fName,proc,odir,uncerts):
     filetoread = ROOT.TFile(fName,'read')
     allhists={};NPs=[]
     for key in list(filetoread.GetListOfKeys()):
@@ -74,7 +74,8 @@ def getPlots(fName,proc,odir):
                     variation='Up' if 'Up' in objectName else 'Down'
                     #mWV_logy_WW_sm_CMS_pNettag_eff_2018Up
                     NP=objectName.split(varname+'_'+proc)[-1].split(variation)[0]
-                    if NP not in NPs and len(NP)>0:
+                    if NP not in NPs and len(NP)>0: #to save all variations for all NPs
+                    #if NP in uncerts:
                         #print('this is the NP',NP,'from',objectName)
                         NPs.append(NP)
                         
@@ -154,7 +155,7 @@ def makeCanvas(h_nom,h_up,h_dn,odir,proc,np,nlegcol=3):
     h_ratioD=hStyle(h_ratioD,ROOT.kRed,xtitle="m_{WV} (GeV)",ytitle="var/nom",xtoff=0.8,ytoff=0.5,tsize=0.085,lsize=0.08,lwidth=2,mstyle=20,msize=0.5)
     h_ratioU=hStyle(h_ratioU,ROOT.kGreen+2,xtitle="m_{WV} (GeV)",ytitle="var/nom",xtoff=0.8,ytoff=0.5,tsize=0.085,lsize=0.08,lwidth=2,mstyle=20,msize=0.5)
     h_ratioU.GetYaxis().SetRangeUser(0.8,1.2)
-    h_ratioU.Draw("p");    h_ratioD.Draw("psame");     line1.Draw("E2SAME");
+    h_ratioU.Draw("hist");    h_ratioD.Draw("histsame");     line1.Draw("E2SAME");
 
     canv.SaveAs('{od}/{wz}{mww}_{fs}.pdf'.format(od=outdir,wz=proc,fs=FS,mww=np))
     canv.SaveAs('{od}/{wz}{mww}_{fs}.png'.format(od=outdir,wz=proc,fs=FS,mww=np))
@@ -163,18 +164,22 @@ def makeCanvas(h_nom,h_up,h_dn,odir,proc,np,nlegcol=3):
 
 if __name__ == '__main__':
     parser = optparse.OptionParser(usage='usage: %prog [opts] ', version='%prog 1.0')
-    parser.add_option('-p','--proc', dest='proc', type='string' , default="WW_sm,WZ_sm,Others,tt,singletop,WJets",help='plots for this proc')
-    parser.add_option('-u','--uncert', dest='uncert', type='string' ,default="CMS_qcdscales_WZ_ACCEPT,CMS_qcdscales_WW_ACCEPT,CMS_PS_WZ,CMS_PS_WW",help='comma separated uncert srcs')
+    #    parser.add_option('-p','--proc', dest='proc', type='string' , default="WW_sm,WZ_sm,Others,tt,singletop,WJets",help='plots for this proc')
+    parser.add_option('-p','--proc', dest='proc', type='string' , default="WV_sm_lin_quad,WV_quad",help='plots for this proc')
+    parser.add_option('-o','--op', dest='op', type='string' , default="cll1,cG,cHd,cHDD,cHj3,cjj38,cHWtil,cHj1,cju1,cuu8,cdd8,cuu1,cdd1,cHG,cHe,cHl1,cHWB,cHl3,cju8,cjd1,clu,cWtil,clj3,cjj11,cHu,ceu,cHWBtil,ced,clj1,cjj18,cGtil,cW,cld,cje,cjd8,cud8,cud1,cjj31,cHGtil",help='plots for this op')
+    parser.add_option('-u','--uncert', dest='uncert', type='string' ,default="CMS_qcdscales_WV_ACCEPT,CMS_PS_WV",help='comma separated uncert srcs')
    # parser.add_option('-y','--year', dest='year', type='string' , default="2016,2016APV,2017,2018,fullRun2", help='plots for this year')
-    parser.add_option('-y','--year', dest='year', type='string' , default="fullRun2", help='plots for this year')
-    parser.add_option('-f','--fs', dest='fs', type='string' , default="lep", help='el/mu')
-    parser.add_option('-c','--cr',   dest='cr', type='string' , default="boosted")##,topCR,sig_incl", help='phase space region')
+    parser.add_option('-y','--year', dest='year', type='string' , default="2018,2017,2016,2016APV", help='plots for this year')
+    parser.add_option('-f','--fs', dest='fs', type='string' , default="el,mu", help='el/mu')
+    parser.add_option('-c','--cr',   dest='cr', type='string' , default="sig_incl")##,topCR,sig_incl", help='phase space region')
     (opts,args) = parser.parse_args()
     ROOT.gROOT.SetBatch();ROOT.gStyle.SetOptStat(0);    ROOT.gStyle.SetOptTitle(0)
 
     eosDir="/eos/user/a/anmehta/www/VVsemilep/"
-    odir=os.path.join(eosDir,"syst_variations")
-    processes = opts.proc.split(',') 
+    odir=os.path.join(eosDir,"syst_variations_2025-07-15")
+    terms = opts.proc.split(',') 
+    ops=opts.op.split(',')
+    processes=[x+"_"+y for x in terms for y in ops]
     years = opts.year.split(',')
     finalStates=opts.fs.split(',')
     regions=opts.cr.split(',')
@@ -185,10 +190,10 @@ if __name__ == '__main__':
         for FS in finalStates:
             for cr in regions:
                 for proc in processes:
-                    in_file="{eosDir}/{yr}/{crd}/2025-05-06_boosted_{FS}_{cr}_all_eft/{vname}.root".format(eosDir=eosDir,vname=varname,crd=cr.split('_')[0],cr=cr,FS=FS,yr=yr)
+                    in_file="{eosDir}/{yr}/{crd}/2025-07-15_boosted_{FS}_{cr}_all_smeft/{vname}.root".format(eosDir=eosDir,vname=varname,crd=cr.split('_')[0],cr=cr,FS=FS,yr=yr)
                     outdir='{Here}/{yr}/{cr}_{FS}'.format(Here=odir,cr=cr,FS=FS,yr=yr)
                     createOutdir(outdir)
-                    getPlots(in_file,proc,outdir)
+                    getPlots(in_file,proc,outdir,uncerts)
 
 
 #/eos/user/a/anmehta/www/VVsemilep/2018/wjCR/2025-02-04_boosted_mu_wjCR_incl_all_eft_withoutTagger

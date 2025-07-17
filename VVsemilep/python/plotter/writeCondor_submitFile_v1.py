@@ -42,8 +42,8 @@ list_ops={'smeft':ops_smeft,'eft':ops_eft}
 
 
 
-nT=False
-smeft=True
+nT=True
+smeft=False
 basis="smeft" if smeft else ''
 fName='submitFile_%s%s%s.condor'%(doWhat,basis,'nT' if nT else '')
 tmp_condor = open('jobs/%s'%fName, 'w')
