@@ -47,7 +47,7 @@ norm_WJets_el_{yr} rateParam el*{yr}  WJets 1 [0,5]'''.format(yr=yr))
     return finalDC
 
 
-def commandsToRun(yr,dc,pf,plots_odir,WC,runEFT=True):
+def commandsToRun(yr,dc,pf,plots_odir,WC,runEFT=False):
     outdir=os.path.join(baseDir,cards_dir)
     os.chdir(outdir)
     print "i am here",os.getcwd()
@@ -65,9 +65,10 @@ def commandsToRun(yr,dc,pf,plots_odir,WC,runEFT=True):
         os.system("combine  -M FitDiagnostics  model_{name}.root --rMin -2 --rMax 2  -t -1 --saveNormalizations  --customStartingPoint --saveShapes --saveWithUncertainties  --redefineSignalPOIs k_{op} --freezeParameters r,k_{op} --setParameters r=0,k_{op}=0 -v 1 {mops}".format(name=dCard_str,mops=options,op=WC)) #  # --plots --robustFit=1  --toysFrequentist  #skip the signal fit 
     else:
         print('running the SM case')
-        os.system("text2workspace.py {name}.txt -o {name}.root ".format(name=dCard_str))
-        os.system("combine -M FitDiagnostics {name}.root ".format(name=dCard_str,mops=options))  #saveNormalizations --saveShapes --saveWithUncertainties
-        os.system("mv fitDiagnosticsTest.root fitDiagnosticsTest_SM_%s.root"%dCard_str)
+        #os.system("text2workspace.py {name}.txt -o {name}.root ".format(name=dCard_str))
+        #os.system("combine -M Significance {name}.txt -t -1 --expectSignal=1".format(name=dCard_str))
+        os.system("combine -M FitDiagnostics {name}.root -t -1 --expectSignal=1 ".format(name=dCard_str,mops=options))  #saveNormalizations --saveShapes --saveWithUncertainties
+        #os.system("mv fitDiagnosticsTest.root fitDiagnosticsTest_SM_%s.root"%dCard_str)
         #os.system("combine -M MultiDimFit {name}_SM_ws.root -m 125  --saveWorkspace -n .bestfit_SM_{name}".format(name=dCard_str))
 
     return True
@@ -80,12 +81,12 @@ if __name__ == '__main__':
 
     year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2025-03-25" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2025-09-01" #datetime.date.today().isoformat() #"2021-12-02" #
     pf_input=""
     pf_output=""
     doWhat=sys.argv[2]
     if "SM" in doWhat: 
-        for CR in ["CRonly"]: #"wjCR","topCR",
+        for CR in ["CRonly"]: #"wjCR","topCR"]: #
             if year == "fullRun2":
                 dC18=combineCards("2018","onelep",'cw',pf_input,CR,True)
                 dC17=combineCards("2017","onelep",'cw',pf_input,CR,True)
@@ -116,13 +117,13 @@ if __name__ == '__main__':
                 cmd='combineCards.py {yr1} {yr2} {yr3} {yr4} > {dc}'.format(dc=superdC,yr1=dC16,yr2=dC16_apv,yr3=dC17,yr4=dC18)
                 os.system(cmd)
             elif year  == "2016combo":
-                dC16=combineCards("2016","onelep",op,pf_input,"full",True)
-                dC16_apv=combineCards("2016APV","onelep",op,pf_input,"full",True)
+                dC16=combineCards("2016","onelep",op,pf_input,"full",False)
+                dC16_apv=combineCards("2016APV","onelep",op,pf_input,"full",False)
                 superdC='dc_{date}_onelep_{yr}{op}_full.txt'.format(date=date,op=op,yr=year)
                 cmd='combineCards.py {yr1} {yr2} > {dc}'.format(dc=superdC,yr1=dC16,yr2=dC16_apv)
                 os.system(cmd)
             else:
-                superdC=combineCards(year,"onelep",op,pf_input,"full",True)
+                superdC=combineCards(year,"onelep",op,pf_input,"full",False)
 
             commandsToRun(year,superdC,pf_output,plots_odir,op)
             #os.command('mv *%s* %s/'%(dC18.split('.txt')[0],cards_dir))

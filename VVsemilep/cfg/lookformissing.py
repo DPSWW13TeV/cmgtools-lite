@@ -7,7 +7,7 @@ for i in os.listdir(idir):
     found=False
     if os.path.isfile(os.path.join(idir,i)) : continue
     for j in os.listdir(os.path.join(idir,i)):
-        if 'url' in j:
+        if 'url' in j and i in j:
             print(j)
             found=True
             break

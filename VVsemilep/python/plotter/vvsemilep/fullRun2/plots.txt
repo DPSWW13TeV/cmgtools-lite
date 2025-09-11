@@ -52,8 +52,14 @@ FatJet1_phi          	  : Selak8Jet1_phi  : 24,-3.2,3.2; XTitle="#phi^{jet}", In
 FatJet1_sDrop_mass        : Selak8Jet1_msoftdrop        : 21,45,255; XTitle="m_{SD}^{jet} (GeV)", MoreY=2.0, IncludeOverflows=False
 FatJet1_sDrop_mass_logy   : Selak8Jet1_msoftdrop        : 21,45,255; XTitle="m_{SD}^{jet} (GeV)", Logy, MoreY=10, IncludeOverflows=False
 
-FatJet1_sDrop_mass_SR        : Selak8Jet1_msoftdrop        : 6,55,115; XTitle="m_{SD}^{jet} (GeV)", MoreY=1.25,IncludeOverflows=False
-FatJet1_sDrop_mass_SR_logy   : Selak8Jet1_msoftdrop        : 6,55,115; XTitle="m_{SD}^{jet} (GeV)", Logy, IncludeOverflows=False
+
+FatJet1_sDrop_mass_spl_low       : Selak8Jet1_msoftdrop        : 44,40,260; XTitle="m_{SD}^{jet} (GeV) for  mWV #leq 1500 GeV", Logy, MoreY=10, IncludeOverflows=False
+FatJet1_sDrop_mass_spl_med       : Selak8Jet1_msoftdrop        : 44,40,260; XTitle="m_{SD}^{jet} (GeV) for mWV #subset [1500\,2000] GeV", Logy, MoreY=10, IncludeOverflows=False
+FatJet1_sDrop_mass_spl_M         : Selak8Jet1_msoftdrop        : 44,40,260; XTitle="m_{SD}^{jet} (GeV) for  mWV #subset [2000\,2500] GeV", Logy, MoreY=10, IncludeOverflows=False
+FatJet1_sDrop_mass_spl_H         : Selak8Jet1_msoftdrop        : 44,40,260; XTitle="m_{SD}^{jet} (GeV) for  mWV > 2500 GeV", Logy, MoreY=10, IncludeOverflows=False
+
+FatJet1_sDrop_mass_SR        : Selak8Jet1_msoftdrop        : 16,45,125; XTitle="m_{SD}^{jet} (GeV)", MoreY=1.25,IncludeOverflows=False
+FatJet1_sDrop_mass_SR_logy   : Selak8Jet1_msoftdrop        : 16,45,125; XTitle="m_{SD}^{jet} (GeV)", Logy, IncludeOverflows=False
 
 
 mtWlep                    : mt_2(Lep1_pt,Lep1_phi,pmet_pt,pmet_phi) : 20,0,200; XTitle="m_{T}(l\,p_{T}^{miss}) (GeV)",MoreY=2.0, IncludeOverflows=False

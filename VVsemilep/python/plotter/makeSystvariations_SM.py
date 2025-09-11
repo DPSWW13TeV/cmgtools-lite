@@ -165,8 +165,8 @@ def makeCanvas(h_nom,h_up,h_dn,odir,proc,np,nlegcol=3):
 if __name__ == '__main__':
     parser = optparse.OptionParser(usage='usage: %prog [opts] ', version='%prog 1.0')
     #    parser.add_option('-p','--proc', dest='proc', type='string' , default="WW_sm,WZ_sm,Others,tt,singletop,WJets",help='plots for this proc')
-    parser.add_option('-p','--proc', dest='proc', type='string' , default="WV_sm_lin_quad,WV_quad",help='plots for this proc')
-    parser.add_option('-o','--op', dest='op', type='string' , default="cll1,cG,cHd,cHDD,cHj3,cjj38,cHWtil,cHj1,cju1,cuu8,cdd8,cuu1,cdd1,cHG,cHe,cHl1,cHWB,cHl3,cju8,cjd1,clu,cWtil,clj3,cjj11,cHu,ceu,cHWBtil,ced,clj1,cjj18,cGtil,cW,cld,cje,cjd8,cud8,cud1,cjj31,cHGtil",help='plots for this op')
+    parser.add_option('-p','--proc', dest='proc', type='string' , default="WV_quad",help='plots for this proc') #WV_sm_lin_quad,
+    parser.add_option('-o','--op', dest='op', type='string' , default="cW,cWtil,cHWB,cHWBtil,cHl3,cHd,cHu,cHj1,cHj3,cll1,cjj38,cju1,clu,clj3,cjj11,cjd1,clj1,cld,cjj18,cjj31,cju8,cjd8",help='plots for this op')
     parser.add_option('-u','--uncert', dest='uncert', type='string' ,default="CMS_qcdscales_WV_ACCEPT,CMS_PS_WV",help='comma separated uncert srcs')
    # parser.add_option('-y','--year', dest='year', type='string' , default="2016,2016APV,2017,2018,fullRun2", help='plots for this year')
     parser.add_option('-y','--year', dest='year', type='string' , default="2018,2017,2016,2016APV", help='plots for this year')

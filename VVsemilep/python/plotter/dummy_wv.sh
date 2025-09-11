@@ -8,7 +8,7 @@ echo $PWD
 cd ${1}
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 eval `scram runtime -sh`
-echo "i am in this directory ${PWD} and doingthis ${2}"
+#echo "i am in this directory ${PWD} and doingthis ${2}"
 
 basecmd="python plots_VVsemilep.py --results --year ${3} --nLep 1 --finalState boosted  --sel ${4} --lf ${5} --applylepSFs --doWJ  " #
 
@@ -26,10 +26,10 @@ case ${2} in
     plots)	
 	#ls /eos/user/a/anmehta/www/ || exit 11
 	ls /eos/user/ || exit 11
-	cmd_emore="  --dW plots --pv ${6} " # --fCR " #--postfitCR " #" # --dCF " #--fCR "
+	cmd_emore="  --dW plots --pv ${6} " #--postfitCR " # --fCR " #--postfitCR " #" # --dCF " #--fCR "
 	;;
     cards)
-	cmd_emore=" --dW cards --fv ${6} " #--fCRwC"
+	cmd_emore=" --dW cards --fv ${6} " #--fCRwC" #
 	;;    
 esac
 echo ${basecmd} ${cmd_more} ${cmd_emore}

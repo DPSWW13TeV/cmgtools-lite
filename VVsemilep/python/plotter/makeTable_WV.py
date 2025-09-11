@@ -5,17 +5,19 @@ procs={0:['WJets','\Wj'],1:['tt',"\\ttbar"],
 nice_names={'wjCR_incl':'\\WJ control region', 'topCR_incl' :'\\ttbar control region', 'sig_incl': 'signal region', 'el': 'electron','mu':'muon'}
 
 finalState=['mu','el']#,'ll_noee']
-classifier='mWV' 
+classifier='mWV_logy' 
 years=['2016APV','2016','2017','2018','fullRun2']
-dateStamp="2025-04-24"
+dateStamp="2025-08-06"
 info={}
 pf="_all_eft_withoutTagger"
-#pf="_all_smeft"
+#pf="_all_eft" #_smeft
 txtfilename = "{od}/table.txt".format(od=os.getcwd())
 txtfile = open(txtfilename,'w')
 fmtstring = "%-25s & %15s & %15s & %15s & %15s  & %15s \\\\"
-
-for reg in ["wjCR_incl"]: #,"topCR_incl","sig_incl"]: #
+regions=["wjCR_incl","topCR_incl","sig_incl"]
+if "withoutTagge" in pf:
+    regions=["wjCR_incl"]
+for reg in regions:
     for lep in finalState:
         for yr in years:
             baseDir="/eos/user/a/anmehta/www/VVsemilep/{yr}/{reg}/{dateStamp}_boosted_{lep}_{breg}{pf}/".format(pf=pf,yr=yr,lep=lep,breg=reg,reg=reg.split("_")[0],dateStamp=dateStamp)

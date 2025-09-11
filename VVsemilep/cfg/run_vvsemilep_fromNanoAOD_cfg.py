@@ -27,7 +27,7 @@ test = getHeppyOption("test","") #testam")
 ##amprint 'justSummary            ',getHeppyOption("justSummary")
 ##amprint 'test                   ',getHeppyOption("test")
 ##amprint 'autoAAAverbose         ',getHeppyOption("autoAAAverbose")
-##amprint 'checkNumOfFilesPerJob  ',getHeppyOption("checkNumOfFilesPerJob")
+print 'THIS checkNumOfFilesPerJob  ',getHeppyOption("checkNumOfFilesPerJob")
 ##amprint 'mergeExtensionsVerbose ',getHeppyOption("mergeExtensionsVerbose")
 ##amprint 'setCompFiles           ',getHeppyOption("setCompFiles")
 ##amprint 'cropToLumi             ',getHeppyOption("cropToLumi")
@@ -67,7 +67,7 @@ theyear=int(year) if year != '2016APV' else 2016
 print("this is the year tag",theyear)
 if analysis == "main":
     mcSamples =  byCompName(mcSamples_, [
-        #"Tbar_.*",
+        "Tbar_.*",
         #".*QCD.*",
         #".*aTGC.*.",
         #"VH.*",
@@ -78,7 +78,7 @@ if analysis == "main":
         #".*EWdim6NLO",
         #        ".*noEFTDecay",".*EWdim6NLO_HT.*"
 #        "WVToLNuJJ_01j_LO_SMEFTsim"
-        "WVToLNuJJ_01j_LO_SMEFTsim_HT.*",
+#        "WVToLNuJJ_01j_LO_SMEFTsim_HT.*",
         #".*HT2000ToInf.*",".*HT1000To2000.*"
         #        "WmWpToLmNujj_01j_aTGC_pTW_150toInf_mWV_800toInf","WWTo1L1Nu2Q"
 
