@@ -1,25 +1,11 @@
 import os,string,sys
 from plots_VVsemilep import *
-allvars= theWVultimateset_log + theWVultimateset #['FatJet1_pNetMD_Wtagscore']##theWVultimateset_log + theWVultimateset ##++leptons fitCR #mWVs #missing #fitCR #+
+allvars= basics #theWVultimateset_log + theWVultimateset #['FatJet1_pNetMD_Wtagscore']##theWVultimateset_log + theWVultimateset ##++leptons fitCR #mWVs #missing #fitCR #+
 doWhat=sys.argv[1] #cards or plots
-#allvars=[
-#"FatJet1_sDrop_mass_logy",
-#"FatJet1_pt_logy",
-#"FatJet1_pNetMD_Wtagscore",
-#"mWV_logy",
-#"pmet_phi",
-#"pmet_logy",
-#"nVert",
-#"mtWlep",
-#"ptWlep",
-#"dRfjlep",
-#"dphifjpmet",
-#"dphifjlep",
-#"nBJetMedium30_Recl"
-#]
 
 #year=sys.argv[2]
 pf="" #withoutTaggernHEEP"
+#years=["fullRun2"]#
 years=["2018","2017","2016","2016APV"] #,"fullRun2"] #,"all"] 
 #years.append(year)
 
@@ -48,10 +34,10 @@ lepsel={'topCR' : [allfavs],
         'Old_wjCR_incl'   : [ll,fitvar_bkg],
 
 }
-
+WCs=["cjj38","cju1","clu","clj3","cjj11","cjd1","clj1","cld","cjj18","cjj31","cju8","cjd8","cW","cWtil","cHWB","cHWBtil","cHl3","cHd","cHu","cHj1","cHj3","cll1"]#,
 ops_smeft=["clj3","cjj18","cW","cWtil","cHWB","cHWBtil","cHl3","cHd","cHu","cHj1","cHj3","cll1","cjj38","cju1","clu","cjj11","cjd1","clj1","cld","cjj31"] #,"cju8","cjd8"]
 ops_smeft_All=['cll1','cG','cHd','cHDD','cHj3','cjj38','cHWtil','cHj1','cju1','cuu8','cdd8','cuu1','cdd1','cHG','cHe','cHl1', 'cHWB', 'cHl3', 'cju8', 'cjd1', 'clu',  'cWtil','clj3', 'cjj11','cHu',  'ceu','cHWBtil','ced','clj1','cjj18','cGtil','cW','cld','cje', 'cjd8','cud8','cud1','cjj31','cHGtil']
-ops_eft=['cw']#,'Odd_cw','Odd_c3w','c3w','cb']
+ops_eft=['cw','Odd_cw','Odd_c3w','c3w','cb']
 
 
 
@@ -81,7 +67,8 @@ Mops_eft=[i+'M'+j for i in ops_eft for j in ops_eft if  "WW_sm_lin_quad_mixed_"+
 
 
 #print(Mops_eft)
-list_ops={'smeft':Mops_smeft,'eft':Mops_eft}
+#list_ops={'smeft':ops_smeft+Mops_smeft,'eft':ops_eft+Mops_eft}
+list_ops={'smeft':WCs,'eft':ops_eft+Mops_eft}
 
 #logsDir='jobs_%s'%basis
 logsDir='jobs' 
@@ -111,7 +98,7 @@ configs=[]
 ops=list_ops['smeft'] if smeft else list_ops['eft']
 if "plots" in doWhat and not nT:
    ops=['all']
-   configs=['sig_incl',"topCR_incl","wjCR_incl"]
+   configs=['sig_incl']#,"topCR_incl","wjCR_incl"]
 elif "plots" in doWhat and nT:
    ops=['all']
    configs=['wjCR_incl']
@@ -129,20 +116,20 @@ for sel in configs:
             for iVar in allvars:
                if len(ops) > 0:   
 #                  for op in ops:  #ops should be 'all' for plotting or else empty string
-                  tmp_condor.write('{cmssw} {doWhat} {yr}  {sel} {lf} {iVar} {op} {basis} \n'.format(iVar=iVar,yr=yr,sel=sel,lf=lep,basis=basis,doWhat=doWhat,op='all',cmssw=os.environ['PWD']))
+                  tmp_condor.write('{cmssw} {doWhat} {yr} {sel} {lf} {iVar} {op} {basis} \n'.format(iVar=iVar,yr=yr,sel=sel,lf=lep,basis=basis,doWhat=doWhat,op='all',cmssw=os.environ['PWD']))
                else:
-                  tmp_condor.write('{cmssw} {doWhat} {yr}  {sel} {lf} {iVar} {basis} \n'.format(iVar=iVar,yr=yr,sel=sel,lf=lep,basis=basis,doWhat=doWhat,cmssw=os.environ['PWD']))
+                  tmp_condor.write('{cmssw} {doWhat} {yr} {sel} {lf} {iVar} {basis} \n'.format(iVar=iVar,yr=yr,sel=sel,lf=lep,basis=basis,doWhat=doWhat,cmssw=os.environ['PWD']))
          else:
             for fv in lepsel[sel][1]:
                for op in ops: 
                   if len(op) > 0:
-                     tmp_condor.write('{cmssw} {doWhat} {yr}  {sel} {lf} {fv} {op} {basis} \n'.format(cmssw=os.environ['PWD'],yr=yr,sel=sel,lf=lep,basis=basis,doWhat=doWhat,op=op,fv=fv ) )
+                     tmp_condor.write('{cmssw} {doWhat} {yr}  {sel} {lf} {fv} {op} {basis} \n'.format(cmssw=os.environ['PWD'],yr=yr,sel=sel,lf=lep,basis=basis if smeft else "",doWhat=doWhat,op=op,fv=fv ) )
                   else:
-                     tmp_condor.write('{cmssw} {doWhat} {yr}  {sel} {lf} {fv} {basis} \n'.format(doWhat=doWhat,yr=yr,sel=sel,lf=lep,basis=basis,cmssw=os.environ['PWD'],fv=fv ) )
+                     tmp_condor.write('{cmssw} {doWhat} {yr}  {sel} {lf} {fv} {basis} \n'.format(doWhat=doWhat,yr=yr,sel=sel,lf=lep,basis=basis if smeft else "",cmssw=os.environ['PWD'],fv=fv ) )
 
 tmp_condor.write(') \n')
 tmp_condor.close()
-
+#print("did you updated fixed cW xsec in the mca file") #vvsemilep/fullRun2/mca-includes/mca-wv-smeft.txt
 print 'condor_submit %s/%s'%(logsDir,fName)
 os.system('condor_submit %s/%s'%(logsDir,fName))
 

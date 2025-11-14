@@ -81,24 +81,25 @@ if __name__ == '__main__':
 
     year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2025-09-01" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2025-10-07" #datetime.date.today().isoformat() #"2021-12-02" #
     pf_input=""
     pf_output=""
     doWhat=sys.argv[2]
     if "SM" in doWhat: 
-        for CR in ["CRonly"]: #"wjCR","topCR"]: #
+        for CR in ["CRonly"]: #"wjCR","topCR","CRonly"]: #
             if year == "fullRun2":
-                dC18=combineCards("2018","onelep",'cw',pf_input,CR,True)
-                dC17=combineCards("2017","onelep",'cw',pf_input,CR,True)
-                dC16=combineCards("2016","onelep",'cw',pf_input,CR,True)
-                dC16_apv=combineCards("2016APV","onelep",'cw',pf_input,CR,True)
-                superdC='dc_{date}_onelep_{yr}{op}_{CR}.txt'.format(CR=CR,date=date,yr=year,op='cw')
+                dC18=combineCards("2018","onelep",'',pf_input,CR,True)
+                dC17=combineCards("2017","onelep",'',pf_input,CR,True)
+                dC16=combineCards("2016","onelep",'',pf_input,CR,True)
+                dC16_apv=combineCards("2016APV","onelep",'',pf_input,CR,True)
+                superdC='dc_{date}_onelep_{yr}{op}_{CR}.txt'.format(CR=CR,date=date,yr=year,op='')
                 cmd='combineCards.py {yr1} {yr2} {yr3} {yr4} > {dc}'.format(dc=superdC,yr1=dC16,yr2=dC16_apv,yr3=dC17,yr4=dC18)
+                print(cmd)
                 os.system(cmd)
             elif year  == "2016combo":
-                dC16=combineCards("2016","onelep",'cw',pf_input,CR,True)
-                dC16_apv=combineCards("2016APV","onelep",'cw',pf_input,CR,True)
-                superdC='dc_{date}_onelep_{yr}{op}_{CR}.txt'.format(op='cw',CR=CR,date=date,yr=year)
+                dC16=combineCards("2016","onelep",'',pf_input,CR,True)
+                dC16_apv=combineCards("2016APV","onelep",'',pf_input,CR,True)
+                superdC='dc_{date}_onelep_{yr}{op}_{CR}.txt'.format(op='',CR=CR,date=date,yr=year)
                 cmd='combineCards.py {yr1} {yr2} > {dc}'.format(dc=superdC,yr1=dC16,yr2=dC16_apv)
                 os.system(cmd)
             else:

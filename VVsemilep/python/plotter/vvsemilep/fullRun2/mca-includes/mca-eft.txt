@@ -1,11 +1,15 @@
 
 ##factor     = if3(self.POI[i] == "cwww",3.6, if3(self.POI[i] == "cb",20,1.0))		
 
+#WZ_sm : WZTo1L1Nu2Q : 11.46*1.11 : 1 ; FillColor=46,  Label="W^{\#pm}Z at NLO"
+#WW_sm : WWTo1L1Nu2Q : xsec*1.12 : 1 ;  FillColor=30,  Label="W^{\#pm}W^{\#mp} at NLO"
+#WV_sm : WZTo1L1Nu2Q : 11.46*1.11 : 1 ; FillColor=46,  Label="W^{\#pm}Z at NLO"
+#WV_sm : WWTo1L1Nu2Q : xsec*1.12 : 1 ;  FillColor=30,  Label="W^{\#pm}W^{\#mp} at NLO"
+
 
 WW_sm : WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000     :  xsec*pol1_corr_WW_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="EFTdim6 \#rightarrow W^{\#pm}W^{\#mp} SM" ,FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDashed
 WW_sm : WWToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000  :  xsec*pol1_corr_WW_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="EFTdim6 \#rightarrow W^{\#pm}W^{\#mp} SM" ,FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDashed
 WW_sm : WWToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf   :  xsec*pol1_corr_WW_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#e42536"),   Label="EFTdim6 \#rightarrow W^{\#pm}W^{\#mp} SM" ,FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDashed
-
 WZ_sm : WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000     :  xsec*pol1_corr_WZ_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#c849a9"),   Label="EFTdim6 \#rightarrowW^{\#pm}Z SM",FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDashed
 WZ_sm : WZToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000  :  xsec*pol1_corr_WZ_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#c849a9"),   Label="EFTdim6 \#rightarrowW^{\#pm}Z SM",FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDashed
 WZ_sm : WZToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf   :  xsec*pol1_corr_WZ_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#c849a9"),   Label="EFTdim6 \#rightarrowW^{\#pm}Z SM",FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDashed
@@ -16,7 +20,6 @@ WW_sm_pol1 : WWToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf   :  xsec*pol1_corr_WW_eft_F
 WZ_sm_pol1 : WZToLNuJJ_01j_LO_EWdim6NLO_HT0To1000     :  xsec*pol1_corr_WZ_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.kPink-4,   Label="EFTdim6 \#rightarrowW^{\#pm}Z SM pol1",FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDotted
 WZ_sm_pol1 : WZToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000  :  xsec*pol1_corr_WZ_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.kPink-4,   Label="EFTdim6 \#rightarrowW^{\#pm}Z SM pol1",FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDotted
 WZ_sm_pol1 : WZToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf   :  xsec*pol1_corr_WZ_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.kPink-4,   Label="EFTdim6 \#rightarrowW^{\#pm}Z SM pol1",FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDotted
-
 WW_sm_gencorr : WWToLNuJJ_01j_LO_EWdim6NLO_HT0To1000     :  xsec*corr_gen_WW_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.kAzure+10,   Label="EFTdim6 \#rightarrow W^{\#pm}W^{\#mp} SM(gen corr.)" ,FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDashed
 WW_sm_gencorr : WWToLNuJJ_01j_LO_EWdim6NLO_HT1000To2000  :  xsec*corr_gen_WW_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.kAzure+10,   Label="EFTdim6 \#rightarrow W^{\#pm}W^{\#mp} SM(gen corr.)" ,FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDashed
 WW_sm_gencorr : WWToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf   :  xsec*corr_gen_WW_eft_FR2 : LHEReweightingWeight[0]; FillColor=ROOT.kAzure+10,   Label="EFTdim6 \#rightarrow W^{\#pm}W^{\#mp} SM(gen corr.)" ,FriendsSimple="{P}/0_corr_bsm/"  ,LineStyle=ROOT.kDashed

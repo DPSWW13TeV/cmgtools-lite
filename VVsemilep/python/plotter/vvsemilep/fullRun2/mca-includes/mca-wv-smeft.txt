@@ -1,4 +1,7 @@
-WV_sm              :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_WV_smeft_FR2*LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#e42536"),    FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowWV SM" #,LineStyle=ROOT.kDashed
+WV_sm              :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_WV_smeft_FR2*LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#e42536"),    FriendsSimple="{P}/0_corr_bsm/",Label="WV SM" #,LineStyle=ROOT.kDashed
+
+WV_sm_lin_quad_cW+ 	  :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_WV_smeft_FR2*LHEReweightingWeight[64]; FillColor=32,  FriendsSimple="{P}/0_corr_bsm/"  ,Label="c_{W}^{WV}= 1 TeV^{\#minus2}", LineStyle=5   
+#WV_sm              :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_WV_smeft_FR2*LHEReweightingWeight[0]; FillColor=ROOT.TColor.GetColor("\#e42536"),    FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowWV SM" #,LineStyle=ROOT.kDashed
 
 #WV_sm_gencorr      :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : corr_gen_WV_smeft_FR2*LHEReweightingWeight[0]; FillColor=ROOT.kMagenta+1,     FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowWV SM (gen corr.) " ,LineStyle=ROOT.kDashed
 #WV_sm_pol1_gencorr :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_gen_WV_smeft_FR2*LHEReweightingWeight[0]; FillColor=ROOT.kViolet+5, FriendsSimple="{P}/0_corr_bsm/",Label="SMEFT\#rightarrowWV SM (gen- pol1)",LineStyle=ROOT.kDotted
@@ -337,7 +340,9 @@ WV_sm_lin_quad_ced+ 	  :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_cor
 WV_sm_lin_quad_clj1+ 	  :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_WV_smeft_FR2*LHEReweightingWeight[58]; FillColor=29,  FriendsSimple="{P}/0_corr_bsm/"  ,Label="c_{lj1}^{WV}"      , LineStyle=5   
 WV_sm_lin_quad_cjj18+     :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_WV_smeft_FR2*LHEReweightingWeight[60]; FillColor=30,  FriendsSimple="{P}/0_corr_bsm/"  ,Label="c_{jjl8}^{WV}"     , LineStyle=5   
 WV_sm_lin_quad_cGtil+     :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_WV_smeft_FR2*LHEReweightingWeight[62]; FillColor=31,  FriendsSimple="{P}/0_corr_bsm/"  ,Label="c_{Gtil}^{WV}"     , LineStyle=5   
-WV_sm_lin_quad_cW+ 	  :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_WV_smeft_FR2*LHEReweightingWeight[64]; FillColor=32,  FriendsSimple="{P}/0_corr_bsm/"  ,Label="c_{W}^{WV}"        , LineStyle=5   
+
+
+
 WV_sm_lin_quad_cld+ 	  :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_WV_smeft_FR2*LHEReweightingWeight[66]; FillColor=33,  FriendsSimple="{P}/0_corr_bsm/"  ,Label="c_{ld}^{WV}"       , LineStyle=5   
 WV_sm_lin_quad_cje+ 	  :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_WV_smeft_FR2*LHEReweightingWeight[68]; FillColor=34,  FriendsSimple="{P}/0_corr_bsm/"  ,Label="c_{je}^{WV}"       , LineStyle=5   
 WV_sm_lin_quad_cjd8+ 	  :  WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000  : xsec : pol1_corr_WV_smeft_FR2*LHEReweightingWeight[70]; FillColor=35,  FriendsSimple="{P}/0_corr_bsm/"  ,Label="c_{jd8}^{WV}"      , LineStyle=5   

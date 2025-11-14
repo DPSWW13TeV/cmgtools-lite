@@ -52,9 +52,9 @@ WV_eft_HTbinned_noCorr : WZToLNuJJ_01j_LO_EWdim6NLO_HT2000ToInf    : xsec : LHER
 
 
 
-WV_smeft_noCorr : WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000    : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kTeal-2, ,Label="SMEFT\#rightarrowWV SM (no corr.)" ,LineStyle=ROOT.kDotted
-WV_smeft_noCorr : WVToLNuJJ_01j_LO_SMEFTsim_HT1000To2000 : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kTeal-2, ,Label="SMEFT\#rightarrowWV SM (no corr.)" ,LineStyle=ROOT.kDotted
-WV_smeft_noCorr : WVToLNuJJ_01j_LO_SMEFTsim_HT2000ToInf  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kTeal-2, ,Label="SMEFT\#rightarrowWV SM (no corr.)" ,LineStyle=ROOT.kDotted
+#WV_smeft_noCorr : WVToLNuJJ_01j_LO_SMEFTsim_HT0To1000    : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kTeal-2, ,Label="SMEFT\#rightarrowWV SM (no corr.)" ,LineStyle=ROOT.kDotted
+#WV_smeft_noCorr : WVToLNuJJ_01j_LO_SMEFTsim_HT1000To2000 : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kTeal-2, ,Label="SMEFT\#rightarrowWV SM (no corr.)" ,LineStyle=ROOT.kDotted
+#WV_smeft_noCorr : WVToLNuJJ_01j_LO_SMEFTsim_HT2000ToInf  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kTeal-2, ,Label="SMEFT\#rightarrowWV SM (no corr.)" ,LineStyle=ROOT.kDotted
 
 
 WW_eft_sm : WWToLNuJJ_01j_LO_EWdim6NLO  : xsec : LHEReweightingWeight[0]; FillColor=ROOT.kViolet+5,   Label="HISZ \#rightarrow W^{\#pm}W^{\#mp} SM",LineStyle=ROOT.kDashed

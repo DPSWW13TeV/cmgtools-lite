@@ -11,6 +11,7 @@ lumis = {
     'all'         : '19.5,16.8,41.5,59.8',
     'fullRun2'    : '19.5,16.8,41.5,59.8',
     'combo'       : '19.5,16.8',
+#    'fullRun2'    : '19.5,16.8,41.5,59.8',
 }
 flavors = {
     'el': 'el',
@@ -143,7 +144,7 @@ topCR=['mWV_typ0_met_boosted','FatJet1_pt','FatJet1_sDrop_mass']
 bTag_eff=['Jet_eta_pt','Jet_partonFlavour','Jet_btagDeepFlavB','Jet_hadronFlavour','nJet30_Recl','nJet20','Jet_pt_eta']
 missing=['Lep1_pt_logy']#FatJet1_pNetMD_Wtagscore']#'nBJetMedium30_Recl']
 
-basics=['mWV_logy','mWV','FatJet1_sDrop_mass_logy']
+basics=['mWV_logy','mWV_den_logy']#'mWV','FatJet1_sDrop_mass_logy']
 
 mWVs=['mWV_fitCR']#,'mWV_new','mWV_cards','mWV_res','mWV_fine','mWV','mWV_logy','mWV_fine_logy','mWV_res_logy','mWV_cards_logy','FatJet1_pNetMD_Wtagscore']
 theWVultimateset=['dRfjlep','mtWlep','ptWlep','nBJetMedium30_Recl','FatJet1_pNetMD_Wtagscore','pmet_phi','nVert','dphifjpmet','dphifjlep','dphil1pmet']#,'FatJet1_eta','FatJet1_phi','mWV','mWV_den','nBJetLoose30_Recl']#,'Lep1_pt','FatJet1_pt','mWV','pmet','pmet_phi','nBJetLoose30_Recl','ptWV_pmet'],'FatJet1_sDrop_mass','mWV','FatJet1_pt'
@@ -167,9 +168,9 @@ def if3(cond, iftrue, iffalse):
 
 #####################
 
-def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses,applyWtsnSFs, year,nLep,extraopts = '',invertedcuts = []):
+def runCards(trees, friends, MCfriends, Datafriends, targetdir, fmca, fcut, fsyst, plotbin, enabledcuts, disabledcuts, processes, scaleprocesses,applyWtsnSFs, year,nLep,extraopts = '',invertedcuts = [],ncut=0):
     varToFit= '{plotvar} {binning}'.format(plotvar=plotbin.split()[0], binning=plotbin.split()[1]) #assumes WJ type frnds are being used  
-    cmd = 'makeShapeCardsNew.py -f -j 8 -l {lumi} --od {CARDSOUTDIR} --tree NanoAOD --year {YEAR} --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt  --WA hem_wt*prescaleFromSkim {fmca} {fcut}  --amc  --autoMCStatsThreshold 0 --threshold 0.01 --split-factor=-1 --unc {fsyst}  {varName}'.format(lumi=lumis[year],CARDSOUTDIR=targetdir, trees=trees, fmca=fmca, fcut=fcut,YEAR=year if year not in year_splits.keys()  else year_splits[year] ,fsyst=fsyst,varName=varToFit) #--asimov signal #--amc --threshold 0.01 --amc
+    cmd = 'makeShapeCardsNew.py -f -j 8 -l {lumi} --od {CARDSOUTDIR} --tree NanoAOD --year {YEAR} --mcc vvsemilep/fullRun2/lepchoice-ttH-FO.txt  --mcc vvsemilep/fullRun2/mcc-METFixEE2017.txt  --WA hem_wt*prescaleFromSkim {fmca} {fcut}  --amc  --autoMCStatsThreshold 0 --threshold {ncut} --split-factor=-1 --unc {fsyst}  {varName}'.format(ncut=ncut,lumi=lumis[year],CARDSOUTDIR=targetdir, trees=trees, fmca=fmca, fcut=fcut,YEAR=year if year not in year_splits.keys()  else year_splits[year] ,fsyst=fsyst,varName=varToFit) #--asimov signal #--amc --threshold 0.01 --amc
     cmd += ''.join(' -P '+Ptree for Ptree in trees)
     cmd += ''.join(' --Fs {P}/'+frnd for frnd in friends)
     cmd += ''.join(' --FMCs {P}/'+frnd for frnd in MCfriends)
@@ -249,16 +250,16 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
     fsyst        = 'vvsemilep/fullRun2/systsUnc.txt' if not cutflow else ''
     showratio    = True
     fcut         = 'vvsemilep/fullRun2/cuts_vvsemilep.txt' if not doWJ else 'vvsemilep/fullRun2/cuts_vvsemilep_wjet.txt' #
-    fmca         = 'vvsemilep/fullRun2/mca-vvsemilep_eft.txt' if not smeft else 'vvsemilep/fullRun2/mca-vvsemilep_smeft.txt'
+    fmca         = 'vvsemilep/fullRun2/mca-vvsemilep_smeft.txt' if smeft else 'vvsemilep/fullRun2/mca-vvsemilep_eft.txt'
     SMprocs      = ['tt','WJets','singletop','data','Others']#,'QCD'] ] 
 
     signal_proc=[];    morePs       =[]; mixedPs=[];
-    if proc == "WV" or smeft: 
+    if smeft:  #proc == "WV" or
         signal_proc=['WV']
         smeft=True
     else:
         signal_proc=['WW','WZ']
-
+        smeft=False
     for i in signal_proc:
         SMprocs.append(i+"_sm")
         morePs.append(i+'_sm_lin_quad_'); morePs.append(i+'_quad_');
@@ -272,8 +273,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
         if not smeft and  proc != "WV":
             WCs=['cw','c3w','cb','Odd_c3w','Odd_cw']
         else:
-                WCs=["cW","cWtil","cHWB","cHWBtil","cHl3","cHd","cHu","cHj1","cHj3","cll1","cjj38","cju1","clu","clj3","cjj11","cjd1","clj1","cld","cjj18","cjj31","cju8","cjd8"]
-            #WCs=['cll1','cG','cHd','cHDD','cHj3','cjj38','cHWtil','cHj1','cju1','cuu8','cdd8','cuu1','cdd1','cHG','cHe','cHl1', 'cHWB', 'cHl3','cju8',	'cjd1',	'clu',	'cWtil','clj3',	'cjj11','cHu',	'ceu','cHWBtil','ced','clj1','cjj18','cGtil','cW','cld','cje', 'cjd8','cud8','cud1','cjj31','cHGtil']
+            WCs=["cW","cWtil","cHWB","cHWBtil","cHl3","cHd","cHu","cHj1","cHj3","cll1","cjj38","cju1","clu","clj3","cjj11","cjd1","clj1","cld","cjj18","cjj31","cju8","cjd8"]
     print(WCs)
     for op in WCs:
         if 'M' in op: 
@@ -355,19 +355,23 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
 
                 else:
                     mWV_dist=" {here} ".format(here=fitvars[varTofit])
+                    ncut=0 if "sig" in pR else 10.0
                     extraoptscards= ' '
                     if len(acC) > 0:extraoptscards+=''.join(' -E ^'+cut for cut in acC )
                     if fitCRwithcomb:
                         #print('im here wj',pR)
                         #add_set= " --xu CMS_top_pT_rwgt_shape --xu CMS_qcdscales_tt_ACCEPT --xu CMS_qcdscales_WJets   --xu CMS_qcdscales_WW_ACCEPT --xu CMS_qcdscales_WZ_ACCEPT  --sp WJets " #fitting CRs simult.
-                        #add_set= "  --xu CMS_top_pT_rwgt_shape  --xu CMS_qcdscales_WJets_ACCEPT --xu CMS_qcdscales_WW --xu CMS_qcdscales_WZ --xu CMS_qcdscales_WV --sp WV_sm --sp WW_sm --xp QCD --sp WZ_sm" #to run SM xsec meas
-                        if 'top' in pR:
-                            print('im here',pR)
-                            add_set= " --xu CMS_top_pT_rwgt --xu CMS_qcdscales_tt --xu CMS_qcdscales_WJets_ACCEPT  --xu CMS_qcdscales_WW_ACCEPT --xu CMS_qcdscales_WZ_ACCEPT --xu CMS_qcdscales_WV_ACCEPT --sp tt " ##for atcg 
-                        else "wj" in pR: 
-                            print('im here wj',pR)
-                            add_set= " --xu CMS_top_pT_rwgt_shape --xu CMS_qcdscales_tt_ACCEPT --xu CMS_qcdscales_WJets   --xu CMS_qcdscales_WW_ACCEPT --xu CMS_qcdscales_WZ_ACCEPT --xu CMS_qcdscales_WV_ACCEPT  --sp WJets "
-
+                        add_set= "  --xu CMS_top_pT_rwgt_shape  --xu CMS_qcdscales_WJets_ACCEPT --xu CMS_qcdscales_WW --xu CMS_qcdscales_WZ --xu CMS_qcdscales_WV --sp WV_sm --sp WW_sm --xp QCD --sp WZ_sm" #to run SM xsec meas
+                        #if 'top' in pR:
+                         #   print('im here',pR)
+                         #   add_set= " --xu CMS_top_pT_rwgt --xu CMS_qcdscales_tt --xu CMS_qcdscales_WJets_ACCEPT  --xu CMS_qcdscales_WW_ACCEPT --xu CMS_qcdscales_WZ_ACCEPT --xu CMS_qcdscales_WV_ACCEPT --sp tt " ##for atcg 
+                        #else: # "wj" in pR: 
+                            #print('im here wj',pR)
+                            #add_set= " --xu CMS_top_pT_rwgt_shape --xu CMS_qcdscales_tt_ACCEPT --xu CMS_qcdscales_WJets   --xu CMS_qcdscales_WW_ACCEPT --xu CMS_qcdscales_WZ_ACCEPT --xu CMS_qcdscales_WV_ACCEPT  --sp WJets "
+                        processes=SMprocs  #to run SM xsec meas
+                        binNamecards=binName+"_"+year
+                        extraoptscards= ' --binname {bnc}  {more} '.format(bnc=binNamecards,more=add_set)
+                        runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,extraoptscards,invert,ncut)
                     else:
                         add_set=" --xu CMS_qcdscales_WJets_ACCEPT --xu CMS_qcdscales_tt_ACCEPT --xu CMS_top_pT_rwgt_shape  --xu CMS_qcdscales_WW --xu CMS_qcdscales_WZ --xu CMS_qcdscales_WV --sp WV_sm --sp WW_sm --xp QCD --sp WZ_sm --sp SM.* "
                     extraoptscards+=add_set
@@ -383,7 +387,7 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                                 print('for cards',processes)
                                 extraoptscards= ' --binname {bnc}  {more}'.format(more=add_set, bnc=binNamecards)
                                 print('used for mixed op',mop,processes)
-                                runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,extraoptscards,invert)
+                                runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,extraoptscards,invert,ncut)
                         else: #look for single ops only if mixed ops are not there
                             for op in singleOps:
                                 Moreprocs=[s + op for s in morePs  if len(op) > 0]                        
@@ -391,11 +395,11 @@ def makeResults(year,nLep,lepflav,finalState,doWhat,applylepSFs,blinded,selectio
                                 processes=SMprocs+Moreprocs
                                 print('to be used for op',op,processes)
                                 extraoptscards= ' --binname {bnc}  {more} '.format(bnc=binNamecards,more=add_set)
-                                runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,extraoptscards,invert)
+                                runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,extraoptscards,invert,ncut)
                     else:
                         binNamecards=binName+"_"+year                                                
                         extraoptscards= ' --xu signal_shape_WW --xu signal_shape_WZ --binname {bnc} {more} '.format(bnc=binNamecards,more=add_set)
-                        runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,extraoptscards,invert)
+                        runCards(trees, friends, MCfriends, Datafriends, targetcarddir, fmca, fcut,fsyst, mWV_dist, enable, disable, processes, scalethem,applylepSFs,year,nLep,extraoptscards,invert,ncut)
                                 
 
 #####################################

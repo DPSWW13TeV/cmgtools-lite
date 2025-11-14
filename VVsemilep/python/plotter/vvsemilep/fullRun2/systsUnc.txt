@@ -30,33 +30,53 @@ $alias : sig        : $aTGC
 
 # lumi from https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#LumiComb
 
-lumi_13TeV_2016		: $AllFromMC : .* : normSymm : 1.022; year="2016"
-lumi_13TeV_2016		: $AllFromMC : .* : normSymm : 1.022; year="2016APV"
-lumi_13TeV_2017		: $AllFromMC : .* : normSymm : 1.020; year="2017"
-lumi_13TeV_2018		: $AllFromMC : .* : normSymm : 1.015; year="2018"
+lumi_13TeV_2016_lnN 		: $AllFromMC : .* : normSymm : 1.022;    year="2016"
+lumi_13TeV_2016_lnN 		: $AllFromMC : .* : normSymm : 1.022;    year="2016APV"
+lumi_13TeV_2017_lnN 		: $AllFromMC : .* : normSymm : 1.020;    year="2017"
+lumi_13TeV_2018_lnN 		: $AllFromMC : .* : normSymm : 1.015;    year="2018"
+lumi_13TeV_XY_lnN 		: $AllFromMC : .* : normSymm : 1.009;    year="2016"
+lumi_13TeV_XY_lnN 		: $AllFromMC : .* : normSymm : 1.009;    year="2016APV"
+lumi_13TeV_XY_lnN 		: $AllFromMC : .* : normSymm : 1.008;    year="2017"
+lumi_13TeV_XY_lnN 		: $AllFromMC : .* : normSymm : 1.020;    year="2018"
+lumi_13TeV_LS_lnN 		: $AllFromMC : .* : normSymm : 1.003;    year="2017"
+lumi_13TeV_LS_lnN 		: $AllFromMC : .* : normSymm : 1.002;    year="2018"
+lumi_13TeV_BBD_lnN 		: $AllFromMC : .* : normSymm : 1.004;    year="2016"
+lumi_13TeV_BBD_lnN 		: $AllFromMC : .* : normSymm : 1.004;    year="2016APV"
+lumi_13TeV_BBD_lnN 		: $AllFromMC : .* : normSymm : 1.004;    year="2017" 
+lumi_13TeV_DB_lnN  		: $AllFromMC : .* : normSymm : 1.005;    year="2016"
+lumi_13TeV_DB_lnN  		: $AllFromMC : .* : normSymm : 1.005;    year="2016APV"
+lumi_13TeV_DB_lnN  		: $AllFromMC : .* : normSymm : 1.005;    year="2017" 
+lumi_13TeV_BCC_lnN  		: $AllFromMC : .* : normSymm : 1.003;    year="2017"
+lumi_13TeV_BCC_lnN  		: $AllFromMC : .* : normSymm : 1.002;    year="2018" 
+lumi_13TeV_GS_lnN  		: $AllFromMC : .* : normSymm : 1.004;    year="2016"
+lumi_13TeV_GS_lnN  		: $AllFromMC : .* : normSymm : 1.004;    year="2016APV"
+lumi_13TeV_GS_lnN  		: $AllFromMC : .* : normSymm : 1.001;    year="2017"
 
-lumi_13TeV_XY		: $AllFromMC : .* : normSymm : 1.009; year="2016"
-lumi_13TeV_XY		: $AllFromMC : .* : normSymm : 1.009; year="2016APV"
-lumi_13TeV_XY		: $AllFromMC : .* : normSymm : 1.008; year="2017"
-lumi_13TeV_XY		: $AllFromMC : .* : normSymm : 1.020; year="2018"
 
-lumi_13TeV_LS		: $AllFromMC : .* : normSymm : 1.003; year="2017"
-lumi_13TeV_LS		: $AllFromMC : .* : normSymm : 1.002; year="2018"
 
-lumi_13TeV_BBD		: $AllFromMC : .* : normSymm : 1.004; year="2016"
-lumi_13TeV_BBD		: $AllFromMC : .* : normSymm : 1.004; year="2016APV"
-lumi_13TeV_BBD		: $AllFromMC : .* : normSymm : 1.004; year="2017" 
 
-lumi_13TeV_DB 		: $AllFromMC : .* : normSymm : 1.005; year="2016"
-lumi_13TeV_DB 		: $AllFromMC : .* : normSymm : 1.005; year="2016APV"
-lumi_13TeV_DB 		: $AllFromMC : .* : normSymm : 1.005; year="2017" 
+#umi_13TeV_2016_lnN 		: $AllFromMC : .* : normSymm : 1.022;  lnU=True, year="2016"
+#umi_13TeV_2016_lnN 		: $AllFromMC : .* : normSymm : 1.022;  lnU=True, year="2016APV"
+#umi_13TeV_2017_lnN 		: $AllFromMC : .* : normSymm : 1.020;  lnU=True, year="2017"
+#umi_13TeV_2018_lnN 		: $AllFromMC : .* : normSymm : 1.015;  lnU=True, year="2018"
+#umi_13TeV_XY_lnN 		: $AllFromMC : .* : normSymm : 1.009;  lnU=True, year="2016"
+#umi_13TeV_XY_lnN 		: $AllFromMC : .* : normSymm : 1.009;  lnU=True, year="2016APV"
+#umi_13TeV_XY_lnN 		: $AllFromMC : .* : normSymm : 1.008;  lnU=True, year="2017"
+#umi_13TeV_XY_lnN 		: $AllFromMC : .* : normSymm : 1.020;  lnU=True, year="2018"
+#umi_13TeV_LS_lnN 		: $AllFromMC : .* : normSymm : 1.003;  lnU=True, year="2017"
+#umi_13TeV_LS_lnN 		: $AllFromMC : .* : normSymm : 1.002;  lnU=True, year="2018"
+#umi_13TeV_BBD_lnN 		: $AllFromMC : .* : normSymm : 1.004;  lnU=True, year="2016"
+#umi_13TeV_BBD_lnN 		: $AllFromMC : .* : normSymm : 1.004;  lnU=True, year="2016APV"
+#umi_13TeV_BBD_lnN 		: $AllFromMC : .* : normSymm : 1.004;  lnU=True, year="2017" 
+#umi_13TeV_DB_lnN  		: $AllFromMC : .* : normSymm : 1.005;  lnU=True, year="2016"
+#umi_13TeV_DB_lnN  		: $AllFromMC : .* : normSymm : 1.005;  lnU=True, year="2016APV"
+#umi_13TeV_DB_lnN  		: $AllFromMC : .* : normSymm : 1.005;  lnU=True, year="2017" 
+#umi_13TeV_BCC_lnN  		: $AllFromMC : .* : normSymm : 1.003;  lnU=True, year="2017"
+#umi_13TeV_BCC_lnN  		: $AllFromMC : .* : normSymm : 1.002;  lnU=True, year="2018" 
+#umi_13TeV_GS_lnN  		: $AllFromMC : .* : normSymm : 1.004;  lnU=True, year="2016"
+#umi_13TeV_GS_lnN  		: $AllFromMC : .* : normSymm : 1.004;  lnU=True, year="2016APV"
+#umi_13TeV_GS_lnN  		: $AllFromMC : .* : normSymm : 1.001;  lnU=True, year="2017"
 
-lumi_13TeV_BCC 		: $AllFromMC : .* : normSymm : 1.003; year="2017"
-lumi_13TeV_BCC 		: $AllFromMC : .* : normSymm : 1.002; year="2018" 
-
-lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.004; year="2016"
-lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.004; year="2016APV"
-lumi_13TeV_GS 		: $AllFromMC : .* : normSymm : 1.001; year="2017"
 
 #nnpdf : $allbutqcd :  .* : templateSymm; Normalize=False, AddWeight='nnpdf_rms' #, year="2018"
 
@@ -92,22 +112,28 @@ CMS_qcdscales_WV : $smeftwv|$wvsm  : .* : envelope ;  FakeRates=['vvsemilep/full
 #ISR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
 #FSR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
 
-pdf_WW_sm	     	   : $wwsm   : .* : normSymm : 1.03
-pdf_WZ_sm   	           : $wzsm   : .* : normSymm : 1.03
-pdf_WV_sm                  : $wvsm   : .* : normSymm : 1.03
-pdf_tt	           	   : $tt     : .* : normSymm : 1.03
-pdf_st	           	   : $st     : .* : normSymm : 1.02
-pdf_WJets	           : $wj     : .* : normSymm : 1.06
-pdf_Others           	   : $Others : .* : normSymm : 1.02
+pdf_WW_sm_lnN	   : $wwsm   : .* : normSymm : 1.048; #lnU=True
+pdf_WZ_sm_lnN  	   : $wzsm   : .* : normSymm : 1.048; #lnU=True
+pdf_WV_sm_lnN      : $wvsm   : .* : normSymm : 1.048; #lnU=True
+NLO_WW_sm_lnU	   : $wwsm   : .* : normSymm : 10.0; lnU=True
+NLO_WZ_sm_lnU  	   : $wzsm   : .* : normSymm : 10.0; lnU=True
+NLO_WV_sm_lnU      : $wvsm   : .* : normSymm : 10.0; lnU=True
+
+pdf_tt_lnN	   : $tt     : .* : normSymm : 1.042; #lnU=True
+pdf_st_lnN	   : $st     : .* : normSymm : 1.042; #lnU=True
+pdf_WJets_lnN	   : $wj     : .* : normSymm : 1.06; #lnU=True
+pdf_Others_lnN     : $Others : .* : normSymm : 1.02; #lnU=True
+
+#CMS_PS_WV     :  $smeftwv|$wvsm : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 
 
+CMS_PS_WV_lnN	: $smeftwv|$wvsm   : .* : normSymm : 1.055; #lnU=True
 
 CMS_PS_WJets  :  $wj  	        : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_tt     :  $ttbar         : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_st     :  $st  	        : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_WW     :  $wwaTGC|$wwsm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_WZ     :  $wzaTGC|$wzsm  : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
-CMS_PS_WV     :  $smeftwv|$wvsm : .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_VH     :  $VH  		: .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_QCD    :  $QCD  		: .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 
 CMS_PS_Others :  $Others  	: .* : envelope; FakeRates=['vvsemilep/fullRun2/frs-ps/fr-isr_2_fsr_1.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_0p5.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_1_fsr_2.txt'\,'vvsemilep/fullRun2/frs-ps/fr-isr_0p5_fsr_1.txt'] 

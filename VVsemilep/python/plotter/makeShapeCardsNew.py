@@ -17,7 +17,7 @@ parser.add_option("--savefile", dest="savefile", action="store_true", default=Fa
 parser.add_option("--categorize", dest="categ", type="string", nargs=3, default=None, help="Split in categories. Requires 3 arguments: expression, binning, bin labels")
 parser.add_option("--categorize-by-ranges", dest="categ_ranges", type="string", nargs=2, default=None, help="Split in categories according to the signal extraction variables. Requires 2 arguments: binning (in bin numbers), bin labels")
 parser.add_option("--regularize", dest="regularize", action="store_true", default=False, help="Regularize templates")
-parser.add_option("--threshold", dest="threshold", type=float, default=0.0, help="Minimum event yield to consider processes")
+parser.add_option("--threshold", dest="threshold", type=float, default=5.0, help="Minimum event yield to consider processes")
 parser.add_option("--filter", dest="filter", type="string", default=None, help="File with list of processes to be removed from the datacards")
 #parser.add_option("--lf","--lepflav", dest="lepflav", type="string", default="mu", help="which lepton flav to run on, needed to read WJ workspace")
 #parser.add_option("--wjD", dest="wjDate", type="string", default="", help="date for WJ workspace to be picked")
@@ -62,7 +62,7 @@ else:
         #print("not an issue")
     for p,h in report.iteritems(): 
         print("cropping",h.GetName())
-        h.cropNegativeBins(threshold=1e-3)
+        h.cropNegativeBins(threshold=1e-5)
 
 if options.savefile:
     savefile = ROOT.TFile(outdir+binname+".bare.root","recreate")
@@ -166,7 +166,6 @@ for binname, report in allreports.iteritems():
             for hv,d in zip(variants, ('up','down')):
                 k = hv.Integral()/n0
                 if k == 0:
-                    print("is it this one issue")
                     print "Warning: underflow template for %s %s %s %s. Will take the nominal scaled down by a factor 2" % (binname, p, name, d)
                     hv.Add(h.raw()); hv.Scale(0.5)
                     print("no issue")
@@ -205,8 +204,10 @@ for binname, report in allreports.iteritems():
                 effyield[p] = "%.3f/%.3f" % (kdn,kup)
                 isNorm = True
         if isNorm:
-            if name.endswith("_lnU"):
-                systs[name] = ("lnU", effyield, {})
+            if name.endswith("_lnN"):
+                systs[name.split("_lnN")[0]] = ("lnN", effyield, {}) ##am
+            elif name.endswith("_lnU"):
+                systs[name.split("_lnU")[0]] = ("lnU", effyield, {}) ##am
             else:
                 systs[name] = ("lnN", effyield, {})
   # make a new list with only the ones that have an effect

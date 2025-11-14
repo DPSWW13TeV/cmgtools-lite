@@ -149,12 +149,12 @@ def doTinyCmsPrelim(textLeft="_default_",textRight="_default_",hasExpo=False,tex
     if textRight == "_default_": textRight = options.rspam
     if lumi      == None       : lumi      = sum(map(float, options.lumi.split(',')))
     if   lumi > 3.54e+1: lumitext = "%.0f fb^{-1}" % lumi
-    elif lumi > 3.54e+0: lumitext = "%.1f fb^{-1}" % lumi
+    elif lumi > 3.54e+0: lumitext = "%.0f fb^{-1}" % lumi
     elif lumi > 3.54e-1: lumitext = "%.2f fb^{-1}" % lumi
     elif lumi > 3.54e-2: lumitext = "%.0f pb^{-1}" % (lumi*1000)
     elif lumi > 3.54e-3: lumitext = "%.1f pb^{-1}" % (lumi*1000)
     else               : lumitext = "%.2f pb^{-1}" % (lumi*1000)
-    lumitext = "%.1f fb^{#minus1}" % float(lumi)
+    lumitext = "%.0f fb^{#minus1}" % float(lumi)
     textLeft = textLeft.replace("%(lumi)",lumitext)
     textRight = textRight.replace("%(lumi)",lumitext)
     if textLeft not in ['', None]:
@@ -1160,7 +1160,8 @@ def addPlotMakerOptions(parser, addAlsoMCAnalysis=True):
     if addAlsoMCAnalysis: addMCAnalysisOptions(parser)
     parser.add_option("--ss",  "--scale-signal", dest="signalPlotScale", default=1.0, type="float", help="scale the signal in the plots by this amount");
     #parser.add_option("--lspam", dest="lspam",   type="string", default="CMS Simulation", help="Spam text on the right hand side");
-    parser.add_option("--lspam", dest="lspam",   type="string", default="#bf{CMS} #it{Preliminary}", help="Spam text on the right hand side");
+    parser.add_option("--lspam", dest="lspam",   type="string", default="#bf{CMS} #it{Private Work}", help="Spam text on the right hand side");
+    #parser.add_option("--lspam", dest="lspam",   type="string", default="#bf{CMS} #it{Preliminary}", help="Spam text on the right hand side");
     parser.add_option("--rspam", dest="rspam",   type="string", default="%(lumi) (13 TeV)", help="Spam text on the right hand side");
     parser.add_option("--addspam", dest="addspam", type = "string", default=None, help="Additional spam text on the top left side, in the frame");
     parser.add_option("--topSpamSize", dest="topSpamSize",   type="float", default=1.2, help="Zoom factor for the top spam");

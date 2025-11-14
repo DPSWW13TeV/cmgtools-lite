@@ -15,7 +15,8 @@ def makeAllToys(periods, crs,algos,op):
 
     for period in periods:
         for cr in crs:
-            dc='dc_2025-08-14_onelep_{period}{op}_{cr}.txt'.format(period=period,cr=cr,op=op)
+            #dc='dc_2025-08-14_onelep_{period}{op}_{cr}.txt'.format(period=period,cr=cr,op=op)
+            dc='dc_2025-09-01_onelep_fullRun2cw_full.txt'
             outdir = 'toystudies_'+cr+"_"+period
             os.system('mkdir -p {od}'.format(od=outdir))
     
@@ -133,11 +134,11 @@ if __name__ == '__main__':
 
 
     if options.period == 'all': 
-        periods = ['fullRun2', '2017', '2016combo','2018']
+        periods = ['fullRun2']#, '2017', '2016combo','2018']
     else:
         periods = options.period.split(',')
     if options.cr == 'all': 
-        crs = ['CRonly'] #'topCR','wjCR']  #'CRonly'] #
+        crs = ['SMWV'] #'topCR','wjCR']  #'CRonly'] #
     else:
         crs = options.cr.split(',')
 
