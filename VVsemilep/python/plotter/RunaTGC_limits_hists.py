@@ -38,12 +38,20 @@ def combineCards(yr,FS,WC,pf,runOn="full",splitsig=True,vartop="mWV",varwj="mWV"
     if "full" in runOn :
         dC = open(finalDC, 'a')
         dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
+norm_WV rateParam *{yr}  *sm* 1.0 [0,5]
 norm_WJets_mu_{yr} rateParam mu*{yr}  WJets 1 [0,5]
 norm_WJets_el_{yr} rateParam el*{yr}  WJets 1 [0,5]'''.format(yr=yr))
     elif  "CRonly" in runOn: 
         dC = open(finalDC, 'a')
-        dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]'''.format(yr=yr))
+        dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
+norm_WV rateParam *{yr}  *sm* 1.0 [0,5]'''.format(yr=yr))
         dC.close()
+    else:
+        dC = open(finalDC, 'a')
+        dC.write('''norm_tt       rateParam *{yr}  tt 1 [0,5]
+norm_WV rateParam *{yr} *sm* 1.0 [0,5]'''.format(yr=yr))
+        dC.close()
+        
     return finalDC
 
 
@@ -81,12 +89,12 @@ if __name__ == '__main__':
 
     year=sys.argv[1]
     #pf=sys.argv[1]
-    date="2025-10-07" #datetime.date.today().isoformat() #"2021-12-02" #
+    date="2025-12-02" #datetime.date.today().isoformat() #"2021-12-02" #
     pf_input=""
     pf_output=""
     doWhat=sys.argv[2]
     if "SM" in doWhat: 
-        for CR in ["CRonly"]: #"wjCR","topCR","CRonly"]: #
+        for CR in ["wjCR","topCR"]: #,"CRonly"]: #
             if year == "fullRun2":
                 dC18=combineCards("2018","onelep",'',pf_input,CR,True)
                 dC17=combineCards("2017","onelep",'',pf_input,CR,True)

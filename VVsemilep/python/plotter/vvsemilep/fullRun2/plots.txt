@@ -14,6 +14,7 @@ mWV_den            	  : mWV : [950,1050,1150,1250,1350,1450,1550,1650,1750,1900,
 #mWV_den_logy              : mWV : [950,1050,1150,1250,1350,1450,1550,1650,1750,1900,2100,2300,2500,2700,3000,4550]  ; XTitle="m_{WV} (GeV)",Logy, Density=True, IncludeOverflows=False, YMin=0.0001, YMax=1000  
 mWV_den_logy              : mWV : [950,1050,1150,1250,1350,1450,1550,1650,1750,1900,2100,2300,2500,2700,3000,4550]  ; XTitle="m_{WV} (GeV)",Logy, Density=True, IncludeOverflows=False, YMin=0.0001, YMax=200  
 
+mWV_norm_logy            	  : mWV : [950,1050,1150,1250,1350,1450,1550,1650,1750,1900,2100,2300,2500,2700,3000,4550]  ; XTitle="m_{WV} (GeV)",Logy, IncludeOverflows=False, YMin=0.0001
 mWV_logy            	  : mWV : [950,1050,1150,1250,1350,1450,1550,1650,1750,1900,2100,2300,2500,2700,3000,4550]  ; XTitle="m_{WV} (GeV)",Logy, IncludeOverflows=False, YMin=0.9, YMax=10000  
 GenmWV_typ0_pmet_boosted  : mass_WV(GenJetAK8_pt[0],GenJetAK8_eta[0],GenJetAK8_phi[0],GenJetAK8_mass[0],GenDressedLepton_pt[0],GenDressedLepton_eta[0],GenDressedLepton_phi[0],GenMET_pt,GenMET_phi,0): [0,200,400,600,800,950,1050,1150,1250,1350,1450,1550,1650,1750,1900,2100,2300,2500,2700,3000,4550]; XTitle="m_{WV} (GeV)", Logy, MoreY=10, IncludeOverflows=False, YTitle="Events"
 

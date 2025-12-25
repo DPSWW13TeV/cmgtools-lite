@@ -51,7 +51,7 @@ ops_eft=['cw','Odd_cw','Odd_c3w','c3w','cb']
 
 
 nT=False
-smeft=False
+smeft=True
 basis="smeft" if smeft else 'eft'
 
 keepIt=[]
@@ -68,7 +68,7 @@ Mops_eft=[i+'M'+j for i in ops_eft for j in ops_eft if  "WW_sm_lin_quad_mixed_"+
 
 #print(Mops_eft)
 #list_ops={'smeft':ops_smeft+Mops_smeft,'eft':ops_eft+Mops_eft}
-list_ops={'smeft':WCs,'eft':ops_eft+Mops_eft}
+list_ops={'smeft':Mops_smeft,'eft':ops_eft+Mops_eft}
 
 #logsDir='jobs_%s'%basis
 logsDir='jobs' 

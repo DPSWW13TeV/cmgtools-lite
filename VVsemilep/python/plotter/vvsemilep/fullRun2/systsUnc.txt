@@ -112,12 +112,12 @@ CMS_qcdscales_WV : $smeftwv|$wvsm  : .* : envelope ;  FakeRates=['vvsemilep/full
 #ISR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[0]'\,'PSWeight[2]']
 #FSR_WW_sm : WW_sm : .*:templateAsymm;AddWeights=['PSWeight[1]'\,'PSWeight[3]']
 
-pdf_WW_sm_lnN	   : $wwsm   : .* : normSymm : 1.048; #lnU=True
-pdf_WZ_sm_lnN  	   : $wzsm   : .* : normSymm : 1.048; #lnU=True
-pdf_WV_sm_lnN      : $wvsm   : .* : normSymm : 1.048; #lnU=True
-NLO_WW_sm_lnU	   : $wwsm   : .* : normSymm : 10.0; lnU=True
-NLO_WZ_sm_lnU  	   : $wzsm   : .* : normSymm : 10.0; lnU=True
-NLO_WV_sm_lnU      : $wvsm   : .* : normSymm : 10.0; lnU=True
+pdf_WW_lnN	   : $wwaTGC|$wwsm   : .* : normSymm : 1.048; #lnU=True
+pdf_WZ_lnN  	   : $wzaTGC|$wzsm   : .* : normSymm : 1.048; #lnU=True
+pdf_WV_lnN         : $smeftwv|$wvsm  : .* : normSymm : 1.048; #lnU=True
+#NLO_WW_lnU	   : $wwaTGC|$wwsm   : .* : normSymm : 10.0; lnU=True
+#NLO_WZ_lnU  	   : $wzaTGC|$wzsm   : .* : normSymm : 10.0; lnU=True
+#NLO_WV_lnU        : $smeftwv|$wvsm  : .* : normSymm : 10.0; lnU=True
 
 pdf_tt_lnN	   : $tt     : .* : normSymm : 1.042; #lnU=True
 pdf_st_lnN	   : $st     : .* : normSymm : 1.042; #lnU=True
@@ -227,7 +227,7 @@ CMS_scale_j_Absolute_2017 		: $AllFromMC : .* : templateAsymm; FakeRates=['vvsem
 CMS_scale_j_Absolute_2018 		: $AllFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesAbsolute_yearDown.txt'], year="2018"
 
 
-CMS_scale_j_EC2           		: $AllFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2Up.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2Down.txt'] 
+CMS_scale_j_EC2           : $AllFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2Up.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2Down.txt'] 
 CMS_scale_j_EC2_2016      : $AllFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearDown.txt'], year="2016"
 CMS_scale_j_EC2_2016APV   : $AllFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearDown.txt'], year="2016APV"
 CMS_scale_j_EC2_2017      : $AllFromMC : .* : templateAsymm; FakeRates=['vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearUp.txt'\,'vvsemilep/fullRun2/frs-jecs/fr-jesEC2_yearDown.txt'], year="2014"

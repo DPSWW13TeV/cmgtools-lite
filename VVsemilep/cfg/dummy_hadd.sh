@@ -50,7 +50,8 @@ cd ${1}
 #eval $(scramv1 runtime -sh);
 #python runhaddNano.py ${2} ${3} 
 
-haddChunks.py -n  --max-size 40 /eos/cms/store/group/phys_smp/ec/WV/SBANSAL_2018_v3/jobs_${2}/ #/eos/cms/store/cmst3/group/dpsww/jobs_${2}
+haddChunks.py -n  --max-size 40 /eos/cms/store/group/phys_smp/ec/WV/${2}/ #/eos/cms/store/cmst3/group/dpsww/jobs_${2}
+
 
 ##amcd /eos/cms/store/cmst3/group/dpsww/NanoTrees_v9_vvsemilep_06012023/2018
 ##am#echo "i am in this directory ${PWD}"
